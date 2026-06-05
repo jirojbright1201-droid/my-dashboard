@@ -160,9 +160,9 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 #habitTracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 600px) { #habitTracks { grid-template-columns: 1fr; } }
 .habit-track-card { background: var(--surface); border-radius: 10px; padding: 16px 18px; }
-.habit-track-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.habit-track-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-.habit-track-meta { display: flex; align-items: center; gap: 10px; }
+.habit-track-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 6px; }
+.habit-track-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
+.habit-track-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .habit-streak { font-size: 0.8125rem; font-weight: 700; color: var(--accent); }
 .habit-pct { font-size: 0.6875rem; font-weight: 700; color: var(--silver); background: var(--surface-2); padding: 2px 9px; border-radius: 9999px; }
 .habit-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
@@ -583,7 +583,9 @@ function renderHabits(){
       const onclick=!isFuture?`onclick="cycleHabit('${curMonth}','${ds}','${h}')"`:'' ;
       cells+=`<div class="habit-cal-day ${cls}${todayCls}" ${onclick}>${d}</div>`;
     }
-    const pct=totalLogged>0?Math.round(doneCount/totalLogged*100):0;
+    const isCurrentMonth=`${y}-${p2(m)}`===monthOf(td);
+    const elapsed=isCurrentMonth?parseInt(td.split('-')[2]):days;
+    const pct=elapsed>0?Math.round(doneCount/elapsed*100):0;
     const streak=streaks[h];
     return `<div class="habit-track-card">
       <div class="habit-track-header">
