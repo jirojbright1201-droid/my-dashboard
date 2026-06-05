@@ -157,31 +157,27 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
 
 /* ── HABITS TAB ── */
-.habit-track-card {
-  background: var(--surface); border-radius: 10px;
-  padding: 16px 18px; margin-bottom: 10px;
-}
-.habit-track-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 12px;
-}
+.habit-track-card { background: var(--surface); border-radius: 10px; padding: 16px 18px; margin-bottom: 10px; }
+.habit-track-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .habit-track-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 .habit-track-meta { display: flex; align-items: center; gap: 10px; }
 .habit-streak { font-size: 0.8125rem; font-weight: 700; color: var(--accent); }
-.habit-pct {
-  font-size: 0.6875rem; font-weight: 700; color: var(--silver);
-  background: var(--surface-2); padding: 2px 9px; border-radius: 9999px;
+.habit-pct { font-size: 0.6875rem; font-weight: 700; color: var(--silver); background: var(--surface-2); padding: 2px 9px; border-radius: 9999px; }
+.habit-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.habit-cal-head { text-align: center; font-size: 0.5625rem; font-weight: 700; color: var(--silver); padding: 4px 0; }
+.habit-cal-day {
+  aspect-ratio: 1; border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6875rem; font-weight: 600; color: var(--silver);
+  transition: transform 0.1s; user-select: none;
 }
-.habit-dots { display: flex; flex-wrap: wrap; gap: 4px; }
-.hdot {
-  width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
-  cursor: pointer; transition: transform 0.1s;
-}
-.hdot:hover { transform: scale(1.4); z-index: 1; position: relative; }
-.hdot.done { background: rgba(30,215,96,0.7); }
-.hdot.fail { background: rgba(243,114,127,0.2); }
-.hdot.nodata { background: var(--surface-3); }
-.hdot.future { background: rgba(255,255,255,0.04); }
+.habit-cal-day:hover:not(.empty):not(.future) { transform: scale(1.12); }
+.habit-cal-day.empty { cursor: default; }
+.habit-cal-day.done { background: rgba(30,215,96,0.6); color: #1ed760; }
+.habit-cal-day.fail { background: rgba(243,114,127,0.18); color: rgba(243,114,127,0.7); }
+.habit-cal-day.nodata { background: var(--surface-3); }
+.habit-cal-day.future { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.15); cursor: default; }
+.habit-cal-day.today-day { outline: 2px solid var(--accent); outline-offset: -2px; }
 
 /* ── MODAL ── */
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100; align-items: center; justify-content: center; }
@@ -561,17 +557,25 @@ function renderHabits(){
     streaks[h]=s;
   });
 
+  const startDow=new Date(y,m-1,1).getDay();
+  const dayHeaders=TH_DAYS_SHORT.map(d=>`<div class="habit-cal-head">${d}</div>`).join('');
+
   const html=HABITS.map(h=>{
     let doneCount=0, totalLogged=0;
-    const dots=[];
+    let cells='';
+    for(let i=0;i<startDow;i++) cells+=`<div class="habit-cal-day empty"></div>`;
     for(let d=1;d<=days;d++){
       const ds=`${y}-${p2(m)}-${p2(d)}`;
       const val=(log[ds]||{})[h];
+      const isFuture=ds>td, isToday=ds===td;
       let cls;
-      if(val===true){ cls='done'; doneCount++; totalLogged++; }
+      if(isFuture) cls='future';
+      else if(val===true){ cls='done'; doneCount++; totalLogged++; }
       else if(val===false){ cls='fail'; totalLogged++; }
-      else{ cls=ds>td?'future':'nodata'; }
-      dots.push(`<div class="hdot ${cls}" title="${d} ${TH_MONTHS_SHORT[m-1]}" onclick="cycleHabit('${curMonth}','${ds}','${h}')"></div>`);
+      else cls='nodata';
+      const todayCls=isToday?' today-day':'';
+      const onclick=!isFuture?`onclick="cycleHabit('${curMonth}','${ds}','${h}')"`:'' ;
+      cells+=`<div class="habit-cal-day ${cls}${todayCls}" ${onclick}>${d}</div>`;
     }
     const pct=totalLogged>0?Math.round(doneCount/totalLogged*100):0;
     const streak=streaks[h];
@@ -583,7 +587,7 @@ function renderHabits(){
           <span class="habit-pct">${pct}%</span>
         </div>
       </div>
-      <div class="habit-dots">${dots.join('')}</div>
+      <div class="habit-cal-grid">${dayHeaders}${cells}</div>
     </div>`;
   }).join('');
 
