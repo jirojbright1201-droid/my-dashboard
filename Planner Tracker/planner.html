@@ -163,12 +163,10 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .habit-track-meta { display: flex; align-items: center; gap: 10px; }
 .habit-streak { font-size: 0.8125rem; font-weight: 700; color: var(--accent); }
 .habit-pct { font-size: 0.6875rem; font-weight: 700; color: var(--silver); background: var(--surface-2); padding: 2px 9px; border-radius: 9999px; }
-.habit-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
-.habit-cal-head { text-align: center; font-size: 0.5rem; font-weight: 700; color: var(--silver); padding: 3px 0; }
+.habit-cal-grid { display: grid; grid-template-columns: repeat(7, 12px); gap: 2px; }
+.habit-cal-head { width: 12px; text-align: center; font-size: 0.4375rem; font-weight: 700; color: var(--surface-3); padding: 0 0 2px; }
 .habit-cal-day {
-  aspect-ratio: 1; border-radius: 4px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.5625rem; font-weight: 600; color: var(--silver);
+  width: 12px; height: 12px; border-radius: 3px; cursor: pointer;
   transition: transform 0.1s; user-select: none;
 }
 .habit-cal-day:hover:not(.empty):not(.future) { transform: scale(1.12); }
@@ -575,7 +573,7 @@ function renderHabits(){
       else cls='nodata';
       const todayCls=isToday?' today-day':'';
       const onclick=!isFuture?`onclick="cycleHabit('${curMonth}','${ds}','${h}')"`:'' ;
-      cells+=`<div class="habit-cal-day ${cls}${todayCls}" ${onclick}>${d}</div>`;
+      cells+=`<div class="habit-cal-day ${cls}${todayCls}" title="${d}" ${onclick}></div>`;
     }
     const pct=totalLogged>0?Math.round(doneCount/totalLogged*100):0;
     const streak=streaks[h];
