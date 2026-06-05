@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --accent: #8b5cf6; --accent-hover: #7c3aed; --accent-soft: rgba(139,92,246,0.12);
+  --accent: #1ed760; --accent-hover: #1db954; --accent-soft: rgba(30,215,96,0.12);
   --bg: #121212; --surface: #181818; --surface-2: #1f1f1f; --surface-3: #282828;
   --text: #ffffff; --silver: #b3b3b3; --near-white: #cbcbcb;
   --border: #4d4d4d; --border-soft: #2a2a2a;
@@ -46,7 +46,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .month-label { font-size: 0.8125rem; font-weight: 700; min-width: 96px; text-align: center; }
 .btn-today {
   background: var(--accent); border: none; border-radius: 9999px;
-  padding: 5px 12px; font-size: 0.75rem; font-weight: 700; color: #fff; cursor: pointer; transition: background .15s;
+  padding: 5px 12px; font-size: 0.75rem; font-weight: 700; color: #000; cursor: pointer; transition: background .15s;
 }
 .btn-today:hover { background: var(--accent-hover); }
 .updated { color: var(--silver); font-size: 0.7rem; white-space: nowrap; }
@@ -150,7 +150,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .cal-events-list { display: flex; flex-direction: column; gap: 2px; }
 .cal-ev-chip {
   font-size: 0.5625rem; padding: 2px 5px; border-radius: 4px;
-  background: rgba(139,92,246,.3); color: var(--near-white);
+  background: rgba(30,215,96,.2); color: var(--near-white);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .cal-todo-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; }
