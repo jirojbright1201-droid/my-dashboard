@@ -375,7 +375,7 @@ function render() {
   donutChart.update();
 
   // Expense table
-  document.getElementById('expenseRows').innerHTML = expenses.slice(0, 5).map(e =>
+  document.getElementById('expenseRows').innerHTML = [...expenses].sort((a,b)=>b.date.localeCompare(a.date)).slice(0, 5).map(e =>
     `<tr><td>${fmtDate(e.date)}</td><td>${e.name}</td><td class="cat-label">${e.category}</td><td class="amount-neg">-฿${e.amount.toLocaleString()}</td></tr>`
   ).join('') || '<tr><td colspan="4" style="text-align:center;color:#bbb;padding:20px">ไม่มีรายจ่าย</td></tr>';
 
