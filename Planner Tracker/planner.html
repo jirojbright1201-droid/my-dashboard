@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #8b5cf6; --accent-hover: #7c3aed; --accent-soft: rgba(139,92,246,0.12);
+  --bg: #121212; --surface: #181818; --surface-2: #1f1f1f; --surface-3: #282828;
+  --text: #ffffff; --silver: #b3b3b3; --near-white: #cbcbcb;
+  --border: #4d4d4d; --border-soft: #2a2a2a;
+  --red: #f3727f; --orange: #ffa42b; --green: #1ed760; --blue: #60a5fa;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+/* ── Topbar ── */
+.topbar {
+  background: var(--bg); padding: 0 24px; height: 60px;
+  display: flex; align-items: center; gap: 16px; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--border-soft);
+}
+.topbar-title { font-size: 1.25rem; font-weight: 700; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+.tabs { display: flex; gap: 2px; }
+.tab-btn {
+  background: none; border: none; cursor: pointer;
+  padding: 6px 14px; border-radius: 9999px;
+  font-size: 0.8125rem; font-weight: 600; color: var(--silver); transition: all .15s;
+}
+.tab-btn:hover { color: var(--text); background: var(--surface-2); }
+.tab-btn.active { color: var(--text); background: var(--surface-3); }
+.topbar-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.month-picker { display: flex; align-items: center; gap: 4px; }
+.month-picker button {
+  background: var(--surface-2); border: none; border-radius: 9999px;
+  width: 30px; height: 30px; cursor: pointer; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text); transition: background .15s;
+}
+.month-picker button:hover { background: var(--surface-3); }
+.month-picker button:disabled { opacity: 0.3; cursor: default; }
+.month-label { font-size: 0.8125rem; font-weight: 700; min-width: 96px; text-align: center; }
+.btn-today {
+  background: var(--accent); border: none; border-radius: 9999px;
+  padding: 5px 12px; font-size: 0.75rem; font-weight: 700; color: #fff; cursor: pointer; transition: background .15s;
+}
+.btn-today:hover { background: var(--accent-hover); }
+.updated { color: var(--silver); font-size: 0.7rem; white-space: nowrap; }
+
+/* ── Layout ── */
+.container { max-width: 1080px; margin: 0 auto; padding: 28px 20px 64px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.card { background: var(--surface); border-radius: 8px; padding: 20px 22px; margin-bottom: 14px; }
+.section-title { font-size: 0.6875rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 14px; }
+.empty { color: var(--silver); font-size: 0.875rem; text-align: center; padding: 24px 0; }
+.divider { border: none; border-top: 1px solid var(--border-soft); margin: 0; }
+
+/* ── AGENDA ── */
+.day-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+.day-nav button {
+  background: var(--surface-2); border: none; border-radius: 9999px;
+  width: 34px; height: 34px; cursor: pointer; font-size: 0.95rem;
+  display: flex; align-items: center; justify-content: center; color: var(--text); transition: background .15s;
+}
+.day-nav button:hover { background: var(--surface-3); }
+.day-heading { flex: 1; }
+.day-heading .date-big { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.4px; }
+.day-heading .date-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
+.day-heading .date-sub.today-label { color: var(--accent); font-weight: 600; }
+.event-item { display: flex; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--border-soft); }
+.event-item:last-child { border-bottom: none; }
+.event-time { font-size: 0.8125rem; color: var(--silver); width: 90px; flex-shrink: 0; padding-top: 1px; }
+.event-title { font-size: 0.9375rem; font-weight: 600; }
+.event-cat { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
+.habits-today { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.habit-today-item { background: var(--surface-2); border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; gap: 9px; }
+.habit-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.habit-dot.done { background: var(--green); }
+.habit-dot.not-done { background: var(--red); opacity: 0.5; }
+.habit-dot.no-log { background: transparent; border: 2px solid var(--border); }
+.habit-name { font-size: 0.8125rem; font-weight: 500; color: var(--near-white); }
+
+/* ── TODO ITEMS ── */
+.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
+.todo-item:last-child { border-bottom: none; }
+.todo-bar { width: 3px; min-height: 18px; border-radius: 9999px; flex-shrink: 0; margin-top: 3px; }
+.todo-content { flex: 1; min-width: 0; }
+.todo-title { font-size: 0.9rem; font-weight: 500; word-break: break-word; }
+.todo-title.done { text-decoration: line-through; color: var(--silver); }
+.todo-meta { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
+.chip { font-size: 0.6375rem; font-weight: 700; padding: 2px 7px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+.chip-todo { background: rgba(139,139,139,.18); color: var(--silver); }
+.chip-inprogress { background: rgba(255,164,43,.2); color: var(--orange); }
+.chip-done { background: rgba(30,215,96,.2); color: var(--green); }
+.chip-due { background: var(--border-soft); color: var(--silver); }
+.chip-due.overdue { background: rgba(243,114,127,.2); color: var(--red); }
+.chip-cat { background: var(--surface-3); color: var(--near-white); }
+
+/* ── TODOS TAB ── */
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+.stat-card { background: var(--surface); border-radius: 8px; padding: 16px 18px; text-align: center; }
+.stat-num { font-size: 1.625rem; font-weight: 700; }
+.stat-lbl { font-size: 0.6375rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
+.filter-row { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.filter-btn {
+  background: var(--surface-2); border: 1px solid transparent; border-radius: 9999px;
+  padding: 5px 12px; font-size: 0.775rem; font-weight: 600;
+  color: var(--silver); cursor: pointer; transition: all .15s;
+}
+.filter-btn:hover { color: var(--text); }
+.filter-btn.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.filter-sep { width: 1px; height: 22px; background: var(--border-soft); flex-shrink: 0; }
+.todo-list-card { background: var(--surface); border-radius: 8px; padding: 4px 18px; }
+
+/* ── CALENDAR ── */
+.cal-wrap { background: var(--surface); border-radius: 8px; padding: 20px 22px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.cal-head { text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 1px; padding: 6px 0 10px; }
+.cal-day {
+  background: var(--surface-2); border-radius: 6px; min-height: 80px;
+  padding: 7px 6px; cursor: pointer; transition: background .15s;
+}
+.cal-day:hover { background: var(--surface-3); }
+.cal-day.empty { background: transparent; cursor: default; pointer-events: none; }
+.cal-day.today-day { background: var(--accent-soft); }
+.cal-num { font-size: 0.8125rem; font-weight: 600; color: var(--near-white); margin-bottom: 5px; }
+.cal-day.today-day .cal-num { color: var(--accent); font-weight: 700; }
+.cal-events-list { display: flex; flex-direction: column; gap: 2px; }
+.cal-ev-chip {
+  font-size: 0.5625rem; padding: 2px 5px; border-radius: 4px;
+  background: rgba(139,92,246,.3); color: var(--near-white);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cal-todo-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; }
+.cal-dot { width: 5px; height: 5px; border-radius: 50%; }
+
+/* ── HABITS TAB ── */
+.streak-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 16px; }
+.streak-card { background: var(--surface); border-radius: 8px; padding: 14px 14px; text-align: center; }
+.streak-name { font-size: 0.75rem; font-weight: 600; color: var(--near-white); margin-bottom: 4px; }
+.streak-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.streak-lbl { font-size: 0.6375rem; color: var(--silver); margin-top: 2px; }
+.habit-table-wrap { overflow-x: auto; }
+.habit-table { border-collapse: separate; border-spacing: 3px; }
+.habit-table th { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--silver); padding: 4px 6px; text-align: center; white-space: nowrap; }
+.habit-table .th-day { text-align: left; padding-left: 0; min-width: 80px; }
+.habit-table .td-day { font-size: 0.75rem; color: var(--silver); font-weight: 600; padding: 3px 10px 3px 0; white-space: nowrap; }
+.habit-table .td-day.today-row { color: var(--accent); }
+.hcell { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
+.hcell.done { background: rgba(30,215,96,.2); color: var(--green); }
+.hcell.fail { background: rgba(243,114,127,.12); color: rgba(243,114,127,.45); }
+.hcell.nodata { background: var(--surface-2); }
+
+/* ── MODAL ── */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100; align-items: center; justify-content: center; }
+.overlay.active { display: flex; }
+.modal { background: var(--surface-3); border-radius: 8px; width: 440px; max-width: 95vw; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.5); }
+.modal-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--border-soft); display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0; }
+.modal-title { font-size: 1.0625rem; font-weight: 700; }
+.modal-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
+.modal-close { background: var(--surface-2); border: none; cursor: pointer; border-radius: 9999px; width: 30px; height: 30px; color: var(--text); display: flex; align-items: center; justify-content: center; transition: background .15s; font-size: 0.875rem; }
+.modal-close:hover { background: var(--border); }
+.modal-body { overflow-y: auto; padding: 14px 22px 20px; }
+.modal-empty { padding: 28px; text-align: center; color: var(--silver); font-size: 0.875rem; }
+.modal-sec-title { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--silver); margin-bottom: 8px; margin-top: 14px; }
+.modal-sec-title:first-child { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-title">Planner</div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('agenda',this)">Agenda</button>
+    <button class="tab-btn" onclick="switchTab('todos',this)">Todos</button>
+    <button class="tab-btn" onclick="switchTab('calendar',this)">Calendar</button>
+    <button class="tab-btn" onclick="switchTab('habits',this)">Habits</button>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-today" onclick="goToToday()">Today</button>
+    <div class="month-picker">
+      <button id="btnPrev" onclick="changeMonth(-1)">&#8592;</button>
+      <span class="month-label" id="monthLabel"></span>
+      <button id="btnNext" onclick="changeMonth(1)">&#8594;</button>
+    </div>
+    <span class="updated">อัพเดต: <span class="updated-ts">—</span></span>
+  </div>
+</div>
+
+<!-- Agenda -->
+<div id="tab-agenda" class="tab-content active">
+  <div class="container">
+    <div class="day-nav">
+      <button onclick="changeDay(-1)">&#8592;</button>
+      <div class="day-heading">
+        <div class="date-big" id="agendaDateBig"></div>
+        <div class="date-sub" id="agendaDateSub"></div>
+      </div>
+      <button onclick="changeDay(1)">&#8594;</button>
+    </div>
+    <div class="card">
+      <div class="section-title">Events</div>
+      <div id="agendaEvents"></div>
+    </div>
+    <div class="card">
+      <div class="section-title">Tasks</div>
+      <div id="agendaTodos"></div>
+    </div>
+    <div class="card">
+      <div class="section-title">Habits</div>
+      <div class="habits-today" id="agendaHabits"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Todos -->
+<div id="tab-todos" class="tab-content">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Total</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--silver)" id="statTodo">0</div><div class="stat-lbl">Todo</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--orange)" id="statProgress">0</div><div class="stat-lbl">In Progress</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--green)" id="statDone">0</div><div class="stat-lbl">Done</div></div>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn on" onclick="setFilter('status','all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('status','todo',this)">Todo</button>
+      <button class="filter-btn" onclick="setFilter('status','in-progress',this)">In Progress</button>
+      <button class="filter-btn" onclick="setFilter('status','done',this)">Done</button>
+      <div class="filter-sep"></div>
+      <button class="filter-btn on" onclick="setFilter('priority','all',this)" data-pg="p">All</button>
+      <button class="filter-btn" onclick="setFilter('priority','high',this)" data-pg="p" style="color:var(--red)">High</button>
+      <button class="filter-btn" onclick="setFilter('priority','medium',this)" data-pg="p" style="color:var(--orange)">Medium</button>
+      <button class="filter-btn" onclick="setFilter('priority','low',this)" data-pg="p">Low</button>
+    </div>
+    <div class="todo-list-card" id="todosList"></div>
+  </div>
+</div>
+
+<!-- Calendar -->
+<div id="tab-calendar" class="tab-content">
+  <div class="container">
+    <div id="calWrap"></div>
+  </div>
+</div>
+
+<!-- Habits -->
+<div id="tab-habits" class="tab-content">
+  <div class="container">
+    <div class="streak-row" id="streakRow"></div>
+    <div class="card">
+      <div class="section-title">Habit Log</div>
+      <div class="habit-table-wrap">
+        <table class="habit-table" id="habitTable"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title" id="modalTitle"></div><div class="modal-sub" id="modalSub"></div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA (agent manages these) ──────────────────────────────────────────
+const ALL_DATA = {};
+const KEYS = [];
+
+const HABITS = ['exercise','read','meditate','water','sleep_early'];
+const HABIT_LABELS = {exercise:'ออกกำลังกาย',read:'อ่านหนังสือ',meditate:'สมาธิ',water:'ดื่มน้ำ',sleep_early:'นอนก่อนเที่ยง'};
+
+// ── CONSTANTS ────────────────────────────────────────────────────────────
+const TH_MONTHS_SHORT = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const TH_MONTHS_FULL  = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const TH_DAYS_SHORT   = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+const TH_DAYS_FULL    = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const PCOLOR = {high:'var(--red)',medium:'var(--orange)',low:'var(--silver)'};
+const CAT_EV = {meeting:'ประชุม',appointment:'นัดหมาย',social:'สังสรรค์',deadline:'Deadline',other:'อื่นๆ'};
+const CAT_TODO = {work:'งาน',personal:'ส่วนตัว',health:'สุขภาพ',study:'เรียน',other:'อื่นๆ'};
+
+// ── STATE ────────────────────────────────────────────────────────────────
+let curMonth = '';   // "YYYY-MM"
+let selDay   = '';   // "YYYY-MM-DD"
+let activeTab = 'agenda';
+let fStatus   = 'all';
+let fPriority = 'all';
+
+// ── UTILS ────────────────────────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function today(){ const d=new Date(); return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; }
+function p2(n){ return String(n).padStart(2,'0'); }
+function fmtDate(d){ return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; }
+function monthOf(dateStr){ return dateStr.slice(0,7); }
+function getMonthData(m){ return ALL_DATA[m] || {todos:[],events:[],habits:[]}; }
+function allMonthsData(){ return KEYS.map(k=>getMonthData(k)); }
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+function init(){
+  const td = today();
+  const mm = monthOf(td);
+  selDay   = td;
+  curMonth = KEYS.includes(mm) ? mm : (KEYS[KEYS.length-1] || mm);
+  updateMonthLabel();
+  updateMonthBtns();
+  renderTab(activeTab);
+}
+
+// ── NAV ──────────────────────────────────────────────────────────────────
+function switchTab(tab, btn){
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  renderTab(tab);
+}
+
+function changeMonth(dir){
+  const [y,m] = curMonth.split('-').map(Number);
+  const d = new Date(y, m-1+dir, 1);
+  curMonth = `${d.getFullYear()}-${p2(d.getMonth()+1)}`;
+  updateMonthLabel(); updateMonthBtns(); renderTab(activeTab);
+}
+
+function changeDay(dir){
+  const d = new Date(selDay+'T00:00:00');
+  d.setDate(d.getDate()+dir);
+  selDay = fmtDate(d);
+  const mm = monthOf(selDay);
+  if(mm !== curMonth){ curMonth=mm; updateMonthLabel(); updateMonthBtns(); }
+  renderAgenda();
+}
+
+function goToToday(){
+  selDay = today();
+  curMonth = monthOf(selDay);
+  updateMonthLabel(); updateMonthBtns();
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-agenda').classList.add('active');
+  activeTab='agenda';
+  renderAgenda();
+}
+
+function updateMonthLabel(){
+  const [y,m] = curMonth.split('-').map(Number);
+  document.getElementById('monthLabel').textContent = `${TH_MONTHS_FULL[m-1]} ${y}`;
+}
+function updateMonthBtns(){
+  const idx = KEYS.indexOf(curMonth);
+  document.getElementById('btnPrev').disabled = KEYS.length>0 && idx<=0;
+  document.getElementById('btnNext').disabled = KEYS.length>0 && idx>=KEYS.length-1;
+  if(KEYS.length===0){ document.getElementById('btnPrev').disabled=true; document.getElementById('btnNext').disabled=true; }
+}
+
+function setFilter(type, val, btn){
+  if(type==='status'){
+    fStatus=val;
+    document.querySelectorAll('.filter-row .filter-btn:not([data-pg])').forEach(b=>b.classList.remove('on'));
+  } else {
+    fPriority=val;
+    document.querySelectorAll('.filter-row .filter-btn[data-pg="p"]').forEach(b=>b.classList.remove('on'));
+  }
+  btn.classList.add('on');
+  renderTodos();
+}
+
+// ── RENDER DISPATCH ──────────────────────────────────────────────────────
+function renderTab(tab){
+  if(tab==='agenda')   renderAgenda();
+  else if(tab==='todos')    renderTodos();
+  else if(tab==='calendar') renderCalendar();
+  else if(tab==='habits')   renderHabits();
+}
+
+// ── AGENDA ───────────────────────────────────────────────────────────────
+function renderAgenda(){
+  const d   = new Date(selDay+'T00:00:00');
+  const isT = selDay===today();
+  document.getElementById('agendaDateBig').textContent =
+    `วัน${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}`;
+  const sub = document.getElementById('agendaDateSub');
+  sub.textContent = isT ? 'วันนี้' : '';
+  sub.className = 'date-sub'+(isT?' today-label':'');
+
+  const allData = allMonthsData();
+  const dayEvents = allData.flatMap(m=>m.events||[]).filter(e=>e.date===selDay);
+  dayEvents.sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+
+  const evEl = document.getElementById('agendaEvents');
+  evEl.innerHTML = dayEvents.length===0
+    ? '<div class="empty">ไม่มี event</div>'
+    : dayEvents.map(e=>`
+        <div class="event-item">
+          <div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div>
+          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${CAT_EV[e.category]||esc(e.category)||''}</div></div>
+        </div>`).join('');
+
+  // todos: due today, overdue, then active (limit 7 total)
+  const allTodos = allData.flatMap(m=>m.todos||[]);
+  const dueToday = allTodos.filter(t=>t.due===selDay);
+  const overdue  = allTodos.filter(t=>t.status!=='done'&&t.due&&t.due<selDay);
+  const active   = allTodos.filter(t=>t.status!=='done'&&!t.due&&t.date===selDay);
+  const seen=new Set(); const display=[];
+  [...dueToday,...overdue,...active].forEach(t=>{ const k=t.title+t.date; if(!seen.has(k)&&display.length<7){seen.add(k);display.push(t);} });
+
+  const tdEl = document.getElementById('agendaTodos');
+  tdEl.innerHTML = display.length===0
+    ? '<div class="empty">ไม่มี task วันนี้</div>'
+    : display.map(renderTodoItem).join('');
+
+  // habits
+  const habitLog = allData.flatMap(m=>m.habits||[]).find(h=>h.date===selDay);
+  document.getElementById('agendaHabits').innerHTML = HABITS.map(h=>{
+    const state = !habitLog ? 'no-log' : (habitLog[h] ? 'done' : 'not-done');
+    return `<div class="habit-today-item"><div class="habit-dot ${state}"></div><span class="habit-name">${HABIT_LABELS[h]}</span></div>`;
+  }).join('');
+}
+
+// ── TODOS ────────────────────────────────────────────────────────────────
+function renderTodos(){
+  const data  = getMonthData(curMonth);
+  const todos = data.todos||[];
+  const cnt   = {todo:0,'in-progress':0,done:0};
+  todos.forEach(t=>{ if(cnt[t.status]!==undefined) cnt[t.status]++; });
+  document.getElementById('statTotal').textContent   = todos.length;
+  document.getElementById('statTodo').textContent    = cnt.todo;
+  document.getElementById('statProgress').textContent= cnt['in-progress'];
+  document.getElementById('statDone').textContent    = cnt.done;
+
+  let list = todos;
+  if(fStatus!=='all')   list=list.filter(t=>t.status===fStatus);
+  if(fPriority!=='all') list=list.filter(t=>t.priority===fPriority);
+  const po={high:0,medium:1,low:2};
+  list.sort((a,b)=>{
+    if(a.status==='done'&&b.status!=='done') return 1;
+    if(a.status!=='done'&&b.status==='done') return -1;
+    const d=(po[a.priority]??2)-(po[b.priority]??2); if(d!==0) return d;
+    return (a.due||'9999').localeCompare(b.due||'9999');
+  });
+
+  const el=document.getElementById('todosList');
+  el.innerHTML = list.length===0
+    ? '<div class="empty">ไม่มี task</div>'
+    : list.map(renderTodoItem).join('');
+}
+
+function renderTodoItem(t){
+  const isDone=t.status==='done', pc=PCOLOR[t.priority]||'var(--silver)', td=today();
+  const over=t.due&&t.due<td&&!isDone;
+  const sc={'todo':'chip-todo','in-progress':'chip-inprogress','done':'chip-done'}[t.status]||'chip-todo';
+  const sl={'todo':'Todo','in-progress':'In Progress','done':'Done'}[t.status]||t.status;
+  const dueChip=t.due?`<span class="chip chip-due${over?' overdue':''}">${over?'เกิน ':''} ${t.due}</span>`:'';
+  const catLbl=CAT_TODO[t.category]||t.category||'';
+  return `<div class="todo-item">
+    <div class="todo-bar" style="background:${pc}"></div>
+    <div class="todo-content">
+      <div class="todo-title${isDone?' done':''}">${esc(t.title)}</div>
+      <div class="todo-meta">
+        <span class="chip ${sc}">${sl}</span>
+        ${dueChip}
+        ${catLbl?`<span class="chip chip-cat">${catLbl}</span>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── CALENDAR ─────────────────────────────────────────────────────────────
+function renderCalendar(){
+  const [y,m]=curMonth.split('-').map(Number);
+  const data=getMonthData(curMonth);
+  const events=data.events||[], todos=data.todos||[];
+  const days=new Date(y,m,0).getDate(), startDow=new Date(y,m-1,1).getDay(), td=today();
+
+  const byDate={};
+  events.forEach(e=>{ byDate[e.date]??={ev:[],td:[]}; byDate[e.date].ev.push(e); });
+  todos.forEach(t=>{ const dk=t.due||t.date; if(dk){ byDate[dk]??={ev:[],td:[]}; byDate[dk].td.push(t); } });
+
+  const heads=TH_DAYS_SHORT.map(d=>`<div class="cal-head">${d}</div>`).join('');
+  let cells='';
+  for(let i=0;i<startDow;i++) cells+=`<div class="cal-day empty"></div>`;
+  for(let day=1;day<=days;day++){
+    const ds=`${y}-${p2(m)}-${p2(day)}`, isT=ds===td, dd=byDate[ds]||{ev:[],td:[]};
+    const evChips=dd.ev.slice(0,2).map(e=>`<div class="cal-ev-chip">${esc(e.title)}</div>`).join('');
+    const more=dd.ev.length>2?`<div class="cal-ev-chip" style="opacity:.6">+${dd.ev.length-2}</div>`:'';
+    const dots=dd.td.slice(0,6).map(t=>`<div class="cal-dot" style="background:${PCOLOR[t.priority]||'var(--silver)'}" title="${esc(t.title)}"></div>`).join('');
+    cells+=`<div class="cal-day${isT?' today-day':''}" onclick="openModal('${ds}')">
+      <div class="cal-num">${day}</div>
+      <div class="cal-events-list">${evChips}${more}</div>
+      ${dots?`<div class="cal-todo-dots">${dots}</div>`:''}
+    </div>`;
+  }
+  document.getElementById('calWrap').innerHTML=`<div class="cal-wrap"><div class="cal-grid">${heads}${cells}</div></div>`;
+}
+
+// ── HABITS ───────────────────────────────────────────────────────────────
+function renderHabits(){
+  const [y,m]=curMonth.split('-').map(Number);
+  const data=getMonthData(curMonth);
+  const habits=data.habits||[], days=new Date(y,m,0).getDate(), td=today();
+  const allH=KEYS.flatMap(k=>(ALL_DATA[k]||{habits:[]}).habits||[]).sort((a,b)=>b.date.localeCompare(a.date));
+
+  const streaks={};
+  HABITS.forEach(h=>{
+    let s=0;
+    for(const log of allH){ if(log.date>td)continue; if(log[h])s++; else break; }
+    streaks[h]=s;
+  });
+
+  document.getElementById('streakRow').innerHTML=HABITS.map(h=>`
+    <div class="streak-card">
+      <div class="streak-name">${HABIT_LABELS[h]}</div>
+      <div class="streak-num">${streaks[h]}</div>
+      <div class="streak-lbl">วันติดต่อกัน</div>
+    </div>`).join('');
+
+  const heads=`<th class="th-day">วันที่</th>${HABITS.map(h=>`<th>${HABIT_LABELS[h]}</th>`).join('')}`;
+  const rows=[];
+  for(let d=1;d<=days;d++){
+    const ds=`${y}-${p2(m)}-${p2(d)}`;
+    if(ds>td) break;
+    const log=habits.find(h=>h.date===ds);
+    const isT=ds===td;
+    const cells=HABITS.map(h=>{
+      if(!log) return `<td><div class="hcell nodata"></div></td>`;
+      return log[h]
+        ? `<td><div class="hcell done">✓</div></td>`
+        : `<td><div class="hcell fail">✗</div></td>`;
+    }).join('');
+    rows.push(`<tr><td class="td-day${isT?' today-row':''}">${d} ${TH_MONTHS_SHORT[m-1]}</td>${cells}</tr>`);
+  }
+  document.getElementById('habitTable').innerHTML=`<thead><tr>${heads}</tr></thead><tbody>${rows.join('')}</tbody>`;
+}
+
+// ── MODAL ────────────────────────────────────────────────────────────────
+function openModal(ds){
+  const d=new Date(ds+'T00:00:00');
+  const data=getMonthData(curMonth);
+  const evs=(data.events||[]).filter(e=>e.date===ds);
+  const tds=(data.todos||[]).filter(t=>(t.due||t.date)===ds);
+  document.getElementById('modalTitle').textContent=`${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
+  document.getElementById('modalSub').textContent=`วัน${TH_DAYS_FULL[d.getDay()]}`;
+  let html='';
+  if(evs.length){
+    html+=`<div class="modal-sec-title">Events</div>`;
+    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${CAT_EV[e.category]||''}</div></div></div>`).join('');
+  }
+  if(tds.length){
+    html+=`<div class="modal-sec-title" style="margin-top:${evs.length?'14':'0'}px">Tasks</div>`;
+    html+=tds.map(renderTodoItem).join('');
+  }
+  if(!html) html=`<div class="modal-empty">ไม่มีรายการ</div>`;
+  document.getElementById('modalBody').innerHTML=html;
+  document.getElementById('overlay').classList.add('active');
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('active'); }
+
+// ── START ────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
