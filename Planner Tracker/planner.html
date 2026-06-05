@@ -175,7 +175,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .habit-dots { display: flex; flex-wrap: wrap; gap: 4px; }
 .hdot {
   width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
-  cursor: default; transition: transform 0.1s;
+  cursor: pointer; transition: transform 0.1s;
 }
 .hdot:hover { transform: scale(1.4); z-index: 1; position: relative; }
 .hdot.done { background: rgba(30,215,96,0.7); }
@@ -380,10 +380,8 @@ function updateMonthLabel(){
   document.getElementById('monthLabel').textContent = `${TH_MONTHS_FULL[m-1]} ${y}`;
 }
 function updateMonthBtns(){
-  const idx = KEYS.indexOf(curMonth);
-  document.getElementById('btnPrev').disabled = KEYS.length>0 && idx<=0;
-  document.getElementById('btnNext').disabled = KEYS.length>0 && idx>=KEYS.length-1;
-  if(KEYS.length===0){ document.getElementById('btnPrev').disabled=true; document.getElementById('btnNext').disabled=true; }
+  document.getElementById('btnPrev').disabled = false;
+  document.getElementById('btnNext').disabled = false;
 }
 
 function setFilter(type, val, btn){
@@ -526,17 +524,40 @@ function renderCalendar(){
   document.getElementById('calWrap').innerHTML=`<div class="cal-wrap"><div class="cal-grid">${heads}${cells}</div></div>`;
 }
 
+// ── HABIT STORAGE (localStorage) ─────────────────────────────────────────
+function getHabitLog(monthKey){
+  try{ return JSON.parse(localStorage.getItem('hlog_'+monthKey))||{}; }
+  catch(e){ return {}; }
+}
+function saveHabitLog(monthKey,log){
+  localStorage.setItem('hlog_'+monthKey, JSON.stringify(log));
+}
+function cycleHabit(monthKey, dateStr, habit){
+  const log=getHabitLog(monthKey);
+  if(!log[dateStr]) log[dateStr]={};
+  const cur=log[dateStr][habit];
+  if(cur===undefined||cur===null) log[dateStr][habit]=true;
+  else if(cur===true) log[dateStr][habit]=false;
+  else delete log[dateStr][habit];
+  saveHabitLog(monthKey,log);
+  renderHabits();
+}
+
 // ── HABITS ───────────────────────────────────────────────────────────────
 function renderHabits(){
   const [y,m]=curMonth.split('-').map(Number);
-  const data=getMonthData(curMonth);
-  const habits=data.habits||[], days=new Date(y,m,0).getDate(), td=today();
-  const allH=KEYS.flatMap(k=>(ALL_DATA[k]||{habits:[]}).habits||[]).sort((a,b)=>b.date.localeCompare(a.date));
+  const days=new Date(y,m,0).getDate(), td=today();
+  const log=getHabitLog(curMonth);
 
+  // Streaks: count consecutive days from today backwards
   const streaks={};
   HABITS.forEach(h=>{
-    let s=0;
-    for(const log of allH){ if(log.date>td)continue; if(log[h])s++; else break; }
+    let s=0, d=new Date(td+'T00:00:00');
+    for(let i=0;i<366;i++){
+      const ds=fmtDate(d), mk=monthOf(ds);
+      if((getHabitLog(mk)[ds]||{})[h]===true){ s++; d.setDate(d.getDate()-1); }
+      else break;
+    }
     streaks[h]=s;
   });
 
@@ -545,19 +566,12 @@ function renderHabits(){
     const dots=[];
     for(let d=1;d<=days;d++){
       const ds=`${y}-${p2(m)}-${p2(d)}`;
-      const log=habits.find(hh=>hh.date===ds);
-      const isFuture=ds>td;
-      if(isFuture){
-        dots.push(`<div class="hdot future" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
-      } else if(!log){
-        dots.push(`<div class="hdot nodata" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
-      } else if(log[h]){
-        doneCount++; totalLogged++;
-        dots.push(`<div class="hdot done" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
-      } else {
-        totalLogged++;
-        dots.push(`<div class="hdot fail" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
-      }
+      const val=(log[ds]||{})[h];
+      let cls;
+      if(val===true){ cls='done'; doneCount++; totalLogged++; }
+      else if(val===false){ cls='fail'; totalLogged++; }
+      else{ cls=ds>td?'future':'nodata'; }
+      dots.push(`<div class="hdot ${cls}" title="${d} ${TH_MONTHS_SHORT[m-1]}" onclick="cycleHabit('${curMonth}','${ds}','${h}')"></div>`);
     }
     const pct=totalLogged>0?Math.round(doneCount/totalLogged*100):0;
     const streak=streaks[h];
