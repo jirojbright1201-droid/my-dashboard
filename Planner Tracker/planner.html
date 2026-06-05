@@ -157,21 +157,31 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
 
 /* ── HABITS TAB ── */
-.streak-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 16px; }
-.streak-card { background: var(--surface); border-radius: 8px; padding: 14px 14px; text-align: center; }
-.streak-name { font-size: 0.75rem; font-weight: 600; color: var(--near-white); margin-bottom: 4px; }
-.streak-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
-.streak-lbl { font-size: 0.6375rem; color: var(--silver); margin-top: 2px; }
-.habit-table-wrap { overflow-x: auto; }
-.habit-table { border-collapse: separate; border-spacing: 3px; }
-.habit-table th { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--silver); padding: 4px 6px; text-align: center; white-space: nowrap; }
-.habit-table .th-day { text-align: left; padding-left: 0; min-width: 80px; }
-.habit-table .td-day { font-size: 0.75rem; color: var(--silver); font-weight: 600; padding: 3px 10px 3px 0; white-space: nowrap; }
-.habit-table .td-day.today-row { color: var(--accent); }
-.hcell { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
-.hcell.done { background: rgba(30,215,96,.2); color: var(--green); }
-.hcell.fail { background: rgba(243,114,127,.12); color: rgba(243,114,127,.45); }
-.hcell.nodata { background: var(--surface-2); }
+.habit-track-card {
+  background: var(--surface); border-radius: 10px;
+  padding: 16px 18px; margin-bottom: 10px;
+}
+.habit-track-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.habit-track-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.habit-track-meta { display: flex; align-items: center; gap: 10px; }
+.habit-streak { font-size: 0.8125rem; font-weight: 700; color: var(--accent); }
+.habit-pct {
+  font-size: 0.6875rem; font-weight: 700; color: var(--silver);
+  background: var(--surface-2); padding: 2px 9px; border-radius: 9999px;
+}
+.habit-dots { display: flex; flex-wrap: wrap; gap: 4px; }
+.hdot {
+  width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
+  cursor: default; transition: transform 0.1s;
+}
+.hdot:hover { transform: scale(1.4); z-index: 1; position: relative; }
+.hdot.done { background: rgba(30,215,96,0.7); }
+.hdot.fail { background: rgba(243,114,127,0.2); }
+.hdot.nodata { background: var(--surface-3); }
+.hdot.future { background: rgba(255,255,255,0.04); }
 
 /* ── MODAL ── */
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100; align-items: center; justify-content: center; }
@@ -269,13 +279,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 <!-- Habits -->
 <div id="tab-habits" class="tab-content">
   <div class="container">
-    <div class="streak-row" id="streakRow"></div>
-    <div class="card">
-      <div class="section-title">Habit Log</div>
-      <div class="habit-table-wrap">
-        <table class="habit-table" id="habitTable"></table>
-      </div>
-    </div>
+    <div id="habitTracks"></div>
   </div>
 </div>
 
@@ -536,29 +540,40 @@ function renderHabits(){
     streaks[h]=s;
   });
 
-  document.getElementById('streakRow').innerHTML=HABITS.map(h=>`
-    <div class="streak-card">
-      <div class="streak-name">${HABIT_LABELS[h]}</div>
-      <div class="streak-num">${streaks[h]}</div>
-      <div class="streak-lbl">วันติดต่อกัน</div>
-    </div>`).join('');
+  const html=HABITS.map(h=>{
+    let doneCount=0, totalLogged=0;
+    const dots=[];
+    for(let d=1;d<=days;d++){
+      const ds=`${y}-${p2(m)}-${p2(d)}`;
+      const log=habits.find(hh=>hh.date===ds);
+      const isFuture=ds>td;
+      if(isFuture){
+        dots.push(`<div class="hdot future" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
+      } else if(!log){
+        dots.push(`<div class="hdot nodata" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
+      } else if(log[h]){
+        doneCount++; totalLogged++;
+        dots.push(`<div class="hdot done" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
+      } else {
+        totalLogged++;
+        dots.push(`<div class="hdot fail" title="${d} ${TH_MONTHS_SHORT[m-1]}"></div>`);
+      }
+    }
+    const pct=totalLogged>0?Math.round(doneCount/totalLogged*100):0;
+    const streak=streaks[h];
+    return `<div class="habit-track-card">
+      <div class="habit-track-header">
+        <span class="habit-track-name">${HABIT_LABELS[h]}</span>
+        <div class="habit-track-meta">
+          ${streak>0?`<span class="habit-streak">🔥 ${streak} วัน</span>`:''}
+          <span class="habit-pct">${pct}%</span>
+        </div>
+      </div>
+      <div class="habit-dots">${dots.join('')}</div>
+    </div>`;
+  }).join('');
 
-  const heads=`<th class="th-day">วันที่</th>${HABITS.map(h=>`<th>${HABIT_LABELS[h]}</th>`).join('')}`;
-  const rows=[];
-  for(let d=1;d<=days;d++){
-    const ds=`${y}-${p2(m)}-${p2(d)}`;
-    if(ds>td) break;
-    const log=habits.find(h=>h.date===ds);
-    const isT=ds===td;
-    const cells=HABITS.map(h=>{
-      if(!log) return `<td><div class="hcell nodata"></div></td>`;
-      return log[h]
-        ? `<td><div class="hcell done">✓</div></td>`
-        : `<td><div class="hcell fail">✗</div></td>`;
-    }).join('');
-    rows.push(`<tr><td class="td-day${isT?' today-row':''}">${d} ${TH_MONTHS_SHORT[m-1]}</td>${cells}</tr>`);
-  }
-  document.getElementById('habitTable').innerHTML=`<thead><tr>${heads}</tr></thead><tbody>${rows.join('')}</tbody>`;
+  document.getElementById('habitTracks').innerHTML=html;
 }
 
 // ── MODAL ────────────────────────────────────────────────────────────────
