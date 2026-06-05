@@ -51,6 +51,23 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .btn-today:hover { background: var(--accent-hover); }
 .updated { color: var(--silver); font-size: 0.7rem; white-space: nowrap; }
 
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+  .topbar {
+    flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px;
+    row-gap: 6px;
+  }
+  .topbar-title { font-size: 1rem; }
+  .tabs { order: 3; width: 100%; overflow-x: auto; padding-bottom: 2px; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .topbar-right { order: 2; gap: 6px; }
+  .updated { display: none; }
+  .month-label { min-width: 80px; font-size: 0.75rem; }
+  .container { padding: 20px 12px 48px; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .streak-row { grid-template-columns: repeat(2,1fr); }
+}
+
 /* ── Layout ── */
 .container { max-width: 1080px; margin: 0 auto; padding: 28px 20px 64px; }
 .tab-content { display: none; }

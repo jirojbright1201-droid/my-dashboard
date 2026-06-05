@@ -121,9 +121,11 @@
   .modal td { padding: 12px 24px; }
 
   @media (max-width: 768px) {
+    body { overflow-x: hidden; }
     .summary-grid, .grid2, .grid2-wide { grid-template-columns: 1fr; }
-    .topbar { flex-wrap: wrap; height: auto; padding: 12px 20px; gap: 10px; }
-    .container { padding: 28px 16px 48px; }
+    .topbar { flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px; }
+    .container { padding: 20px 12px 48px; }
+    .budget-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
