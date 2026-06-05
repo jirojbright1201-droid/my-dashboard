@@ -157,7 +157,9 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
 
 /* ── HABITS TAB ── */
-.habit-track-card { background: var(--surface); border-radius: 10px; padding: 16px 18px; margin-bottom: 10px; }
+#habitTracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 600px) { #habitTracks { grid-template-columns: 1fr; } }
+.habit-track-card { background: var(--surface); border-radius: 10px; padding: 16px 18px; }
 .habit-track-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .habit-track-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 .habit-track-meta { display: flex; align-items: center; gap: 10px; }
