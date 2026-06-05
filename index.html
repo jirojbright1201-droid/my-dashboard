@@ -54,15 +54,43 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #121212; color: 
 .sidebar.collapsed .nav-label { opacity: 0; pointer-events: none; }
 
 /* Main */
-.main { flex: 1; overflow: hidden; }
-iframe {
-  width: 100%; height: 100%;
-  border: none; display: none;
-}
+.main { flex: 1; overflow: hidden; position: relative; }
+iframe { width: 100%; height: 100%; border: none; display: none; }
 iframe.active { display: block; }
+
+/* Mobile overlay */
+.backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 10;
+}
+.backdrop.show { display: block; }
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed; top: 0; left: 0; height: 100%;
+    z-index: 20; transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    width: 220px !important; min-width: 220px !important;
+  }
+  .sidebar.mobile-open { transform: translateX(0); }
+  .sidebar.collapsed .sidebar-title { opacity: 1; pointer-events: auto; }
+  .sidebar.collapsed .nav-label { opacity: 1; pointer-events: auto; }
+
+  .topbar-ham {
+    display: flex; align-items: center; height: 52px;
+    padding: 0 14px; background: #181818;
+    border-bottom: 1px solid #2a2a2a; flex-shrink: 0;
+  }
+  .main { display: flex; flex-direction: column; }
+  .main iframe { flex: 1; height: 0; }
+}
+
+.topbar-ham { display: none; }
 </style>
 </head>
 <body>
+
+<div class="backdrop" id="backdrop" onclick="closeSidebar()"></div>
 
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
@@ -84,13 +112,32 @@ iframe.active { display: block; }
 </div>
 
 <div class="main">
+  <div class="topbar-ham">
+    <button class="ham-btn" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
   <iframe id="frame-money"  src="Money Tracker/index.html"       class="active"></iframe>
   <iframe id="frame-planner" src="Planner Tracker/planner.html"></iframe>
 </div>
 
 <script>
+const isMobile = () => window.innerWidth <= 768;
+
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('collapsed');
+  const sb = document.getElementById('sidebar');
+  const bd = document.getElementById('backdrop');
+  if (isMobile()) {
+    const open = sb.classList.toggle('mobile-open');
+    bd.classList.toggle('show', open);
+  } else {
+    sb.classList.toggle('collapsed');
+  }
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('backdrop').classList.remove('show');
 }
 
 function switchTo(name, btn) {
@@ -98,6 +145,7 @@ function switchTo(name, btn) {
   document.querySelectorAll('iframe').forEach(f => f.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('frame-' + name).classList.add('active');
+  if (isMobile()) closeSidebar();
 }
 </script>
 </body>
