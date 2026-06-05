@@ -583,9 +583,7 @@ function renderHabits(){
       const onclick=!isFuture?`onclick="cycleHabit('${curMonth}','${ds}','${h}')"`:'' ;
       cells+=`<div class="habit-cal-day ${cls}${todayCls}" ${onclick}>${d}</div>`;
     }
-    const isCurrentMonth=`${y}-${p2(m)}`===monthOf(td);
-    const elapsed=isCurrentMonth?parseInt(td.split('-')[2]):days;
-    const pct=elapsed>0?Math.round(doneCount/elapsed*100):0;
+    const pct=totalLogged>0?Math.round(doneCount/totalLogged*100):0;
     const streak=streaks[h];
     return `<div class="habit-track-card">
       <div class="habit-track-header">
