@@ -489,6 +489,7 @@ function renderTodoItem(t){
   const sl={'todo':'Todo','in-progress':'In Progress','done':'Done'}[t.status]||t.status;
   const dueChip=t.due?`<span class="chip chip-due${over?' overdue':''}">${over?'เกิน ':''} ${t.due}</span>`:'';
   const catLbl=CAT_TODO[t.category]||t.category||'';
+  const estChip=t.est?`<span class="chip chip-cat">⏱ ${esc(t.est)}</span>`:'';
   return `<div class="todo-item">
     <div class="todo-bar" style="background:${pc}"></div>
     <div class="todo-content">
@@ -497,6 +498,7 @@ function renderTodoItem(t){
         <span class="chip ${sc}">${sl}</span>
         ${dueChip}
         ${catLbl?`<span class="chip chip-cat">${catLbl}</span>`:''}
+        ${estChip}
       </div>
     </div>
   </div>`;
