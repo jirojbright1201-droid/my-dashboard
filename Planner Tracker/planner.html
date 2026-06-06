@@ -116,8 +116,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .chip-done { background: rgba(30,215,96,.2); color: var(--green); }
 .chip-due { background: var(--border-soft); color: var(--silver); }
 .chip-due.overdue { background: rgba(243,114,127,.2); color: var(--red); }
-.chip-cat { background: var(--surface-3); color: var(--near-white); }
-.chip-ev-cat { background: rgba(255,255,255,.12); color: var(--near-white); }
+.chip-cat { background: rgba(255,255,255,.12); color: var(--near-white); }
 
 /* ── TODOS TAB ── */
 .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
@@ -427,7 +426,7 @@ function renderAgenda(){
     : dayEvents.map(e=>`
         <div class="event-item">
           <div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div>
-          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-ev-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-ev-cat">⏱ ${esc(e.est)}</span>`:''}</div></div>
+          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div>
         </div>`).join('');
 
   // todos: all incomplete tasks across all months
@@ -622,7 +621,7 @@ function openModal(ds){
   let html='';
   if(evs.length){
     html+=`<div class="modal-sec-title">Events</div>`;
-    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-ev-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-ev-cat">⏱ ${esc(e.est)}</span>`:''}</div></div></div>`).join('');
+    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div></div>`).join('');
   }
   if(tds.length){
     html+=`<div class="modal-sec-title" style="margin-top:${evs.length?'14':'0'}px">Tasks</div>`;
