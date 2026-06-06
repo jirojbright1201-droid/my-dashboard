@@ -298,7 +298,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 
 <script>
 // ── DATA (agent manages these) ──────────────────────────────────────────
-const ALL_DATA = {"2026-06":{"todos":[{"title":"ทำ Agent Workflow Youtube","status":"todo","priority":"high","category":"Ai","notes":"","est":"2h"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","category":"งานประจำ","notes":""}],"habits":[]}};
+const ALL_DATA = {"2026-06":{"todos":[{"title":"ทำ Agent Workflow Youtube","status":"todo","priority":"high","category":"Ai","notes":"","est":"2h"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","category":"งานประจำ","est":"9h","notes":""}],"habits":[]}};
 const KEYS = ["2026-06"];
 
 const HABITS = ['exercise','read','water','sleep_early'];
@@ -426,7 +426,7 @@ function renderAgenda(){
     : dayEvents.map(e=>`
         <div class="event-item">
           <div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div>
-          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${CAT_EV[e.category]||esc(e.category)||''}</div></div>
+          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${CAT_EV[e.category]||esc(e.category)||''}${e.est?' · ⏱ '+esc(e.est):''}</div></div>
         </div>`).join('');
 
   // todos: all incomplete tasks across all months
@@ -618,7 +618,7 @@ function openModal(ds){
   let html='';
   if(evs.length){
     html+=`<div class="modal-sec-title">Events</div>`;
-    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${CAT_EV[e.category]||''}</div></div></div>`).join('');
+    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${CAT_EV[e.category]||esc(e.category)||''}${e.est?' · ⏱ '+esc(e.est):''}</div></div></div>`).join('');
   }
   if(tds.length){
     html+=`<div class="modal-sec-title" style="margin-top:${evs.length?'14':'0'}px">Tasks</div>`;
