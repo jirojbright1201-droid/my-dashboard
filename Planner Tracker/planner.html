@@ -609,7 +609,8 @@ function openModal(ds){
   const d=new Date(ds+'T00:00:00');
   const data=getMonthData(curMonth);
   const evs=(data.events||[]).filter(e=>e.date===ds);
-  const tds=(data.todos||[]).filter(t=>(t.due||t.date)===ds);
+  const td2=today();
+  const tds=(data.todos||[]).filter(t=>t.status!=='done'&&(t.due||t.date||td2)===ds);
   document.getElementById('modalTitle').textContent=`${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
   document.getElementById('modalSub').textContent=`วัน${TH_DAYS_FULL[d.getDay()]}`;
   let html='';
