@@ -270,11 +270,6 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
       <button class="filter-btn" onclick="setFilter('status','todo',this)">Todo</button>
       <button class="filter-btn" onclick="setFilter('status','in-progress',this)">In Progress</button>
       <button class="filter-btn" onclick="setFilter('status','done',this)">Done</button>
-      <div class="filter-sep"></div>
-      <button class="filter-btn on" onclick="setFilter('priority','all',this)" data-pg="p">All</button>
-      <button class="filter-btn" onclick="setFilter('priority','high',this)" data-pg="p" style="color:var(--red)">High</button>
-      <button class="filter-btn" onclick="setFilter('priority','medium',this)" data-pg="p" style="color:var(--orange)">Medium</button>
-      <button class="filter-btn" onclick="setFilter('priority','low',this)" data-pg="p">Low</button>
     </div>
     <div class="todo-list-card" id="todosList"></div>
   </div>
@@ -307,7 +302,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 
 <script>
 // ── DATA (agent manages these) ──────────────────────────────────────────
-const ALL_DATA = {"2026-06":{"todos":[{"date":"2026-06-06","title":"ทำ Agent Workflow Youtube","status":"todo","priority":"high","notes":"","est":"2h"},{"date":"2026-06-07","title":"ทำความสะอาดห้อง","status":"todo","priority":"medium","notes":""}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""}],"habits":[]}};
+const ALL_DATA = {"2026-06":{"todos":[{"date":"2026-06-06","title":"ทำ Agent Workflow Youtube","status":"todo","notes":"","est":"2h"},{"date":"2026-06-07","title":"ทำความสะอาดห้อง","status":"todo","notes":""}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""}],"habits":[]}};
 const KEYS = ["2026-06"];
 
 const HABITS = ['exercise','read','water','sleep_early'];
@@ -318,14 +313,13 @@ const TH_MONTHS_SHORT = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.
 const TH_MONTHS_FULL  = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 const TH_DAYS_SHORT   = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
 const TH_DAYS_FULL    = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
-const PCOLOR = {high:'var(--red)',medium:'var(--orange)',low:'var(--silver)'};
+const TODO_DOT = 'var(--silver)';
 
 // ── STATE ────────────────────────────────────────────────────────────────
 let curMonth = '';   // "YYYY-MM"
 let selDay   = '';   // "YYYY-MM-DD"
 let activeTab = 'agenda';
 let fStatus   = 'all';
-let fPriority = 'all';
 
 // ── UTILS ────────────────────────────────────────────────────────────────
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -394,13 +388,8 @@ function updateMonthBtns(){
 }
 
 function setFilter(type, val, btn){
-  if(type==='status'){
-    fStatus=val;
-    document.querySelectorAll('.filter-row .filter-btn:not([data-pg])').forEach(b=>b.classList.remove('on'));
-  } else {
-    fPriority=val;
-    document.querySelectorAll('.filter-row .filter-btn[data-pg="p"]').forEach(b=>b.classList.remove('on'));
-  }
+  fStatus=val;
+  document.querySelectorAll('.filter-row .filter-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   renderTodos();
 }
@@ -434,15 +423,7 @@ function renderAgenda(){
 
   // todos: all incomplete tasks across all months
   const allTodos = allData.flatMap(m=>m.todos||[]);
-  const po={high:0,medium:1,low:2};
-  const display = allTodos
-    .filter(t=>t.status!=='done')
-    .sort((a,b)=>{
-      const over_a=a.due&&a.due<selDay, over_b=b.due&&b.due<selDay;
-      if(over_a&&!over_b) return -1; if(!over_a&&over_b) return 1;
-      const d=(po[a.priority]??2)-(po[b.priority]??2); if(d!==0) return d;
-      return (a.due||'9999').localeCompare(b.due||'9999');
-    });
+  const display = allTodos.filter(t=>t.status!=='done');
 
   const tdEl = document.getElementById('agendaTodos');
   tdEl.innerHTML = display.length===0
@@ -468,15 +449,12 @@ function renderTodos(){
   document.getElementById('statProgress').textContent= cnt['in-progress'];
   document.getElementById('statDone').textContent    = cnt.done;
 
-  let list = todos;
-  if(fStatus!=='all')   list=list.filter(t=>t.status===fStatus);
-  if(fPriority!=='all') list=list.filter(t=>t.priority===fPriority);
-  const po={high:0,medium:1,low:2};
+  let list = todos.slice();
+  if(fStatus!=='all') list=list.filter(t=>t.status===fStatus);
   list.sort((a,b)=>{
     if(a.status==='done'&&b.status!=='done') return 1;
     if(a.status!=='done'&&b.status==='done') return -1;
-    const d=(po[a.priority]??2)-(po[b.priority]??2); if(d!==0) return d;
-    return (a.due||'9999').localeCompare(b.due||'9999');
+    return 0;
   });
 
   const el=document.getElementById('todosList');
@@ -486,16 +464,16 @@ function renderTodos(){
 }
 
 function renderTodoItem(t){
-  const isDone=t.status==='done', pc=PCOLOR[t.priority]||'var(--silver)', td=today();
-  const over=t.due&&t.due<td&&!isDone;
+  const isDone=t.status==='done';
   const sl={'todo':'Todo','in-progress':'In Progress','done':'Done'}[t.status]||t.status;
-  const prioLbl={high:'High',medium:'Medium',low:'Low'}[t.priority]||'';
-  const parts=[sl, prioLbl, t.est?'⏱ '+t.est:''].filter(Boolean).join(' · ');
+  const statusCls={'todo':'chip-todo','in-progress':'chip-inprogress','done':'chip-done'}[t.status]||'chip-todo';
+  const chips=[`<span class="chip ${statusCls}">${esc(sl)}</span>`];
+  if(t.est) chips.push(`<span class="chip chip-cat">⏱ ${esc(t.est)}</span>`);
   return `<div class="todo-item">
-    <div class="todo-bar" style="background:${pc}"></div>
+    <div class="todo-bar" style="background:var(--border)"></div>
     <div class="todo-content">
       <div class="todo-title${isDone?' done':''}">${esc(t.title)}</div>
-      ${parts?`<div class="todo-meta"><span class="chip chip-cat">${esc(parts)}</span></div>`:''}
+      <div class="todo-meta">${chips.join('')}</div>
     </div>
   </div>`;
 }
@@ -521,10 +499,8 @@ function renderCalendar(){
   const days=new Date(y,m,0).getDate(), startDow=new Date(y,m-1,1).getDay(), td=today();
 
   // Tasks have no due date — every incomplete task is pending on every day
-  const po={high:0,medium:1,low:2};
   const pendingTodos=allMonthsData().flatMap(mm=>mm.todos||[])
-    .filter(t=>t.status!=='done')
-    .sort((a,b)=>(po[a.priority]??2)-(po[b.priority]??2));
+    .filter(t=>t.status!=='done');
 
   const byDate={};
   events.forEach(e=>{ byDate[e.date]??={ev:[]}; byDate[e.date].ev.push(e); });
@@ -536,7 +512,7 @@ function renderCalendar(){
     const ds=`${y}-${p2(m)}-${p2(day)}`, isT=ds===td, dd=byDate[ds]||{ev:[]};
     const evChips=dd.ev.slice(0,2).map(e=>`<div class="cal-ev-chip">${esc(e.title)}</div>`).join('');
     const more=dd.ev.length>2?`<div class="cal-ev-chip" style="opacity:.6">+${dd.ev.length-2}</div>`:'';
-    const dots=pendingTodos.slice(0,6).map(t=>`<div class="cal-dot" style="background:${PCOLOR[t.priority]||'var(--silver)'}" title="${esc(t.title)}"></div>`).join('');
+    const dots=pendingTodos.slice(0,6).map(t=>`<div class="cal-dot" style="background:${TODO_DOT}" title="${esc(t.title)}"></div>`).join('');
     cells+=`<div class="cal-day${isT?' today-day':''}" onclick="openModal('${ds}')">
       <div class="cal-num">${day}</div>
       <div class="cal-events-list">${evChips}${more}</div>
@@ -625,10 +601,8 @@ function openModal(ds){
   const d=new Date(ds+'T00:00:00');
   const data=getMonthData(curMonth);
   const evs=(data.events||[]).filter(e=>e.date===ds);
-  const po={high:0,medium:1,low:2};
   const tds=allMonthsData().flatMap(mm=>mm.todos||[])
-    .filter(t=>t.status!=='done')
-    .sort((a,b)=>(po[a.priority]??2)-(po[b.priority]??2));
+    .filter(t=>t.status!=='done');
   document.getElementById('modalTitle').textContent=`${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
   document.getElementById('modalSub').textContent=`วัน${TH_DAYS_FULL[d.getDay()]}`;
   let html='';
