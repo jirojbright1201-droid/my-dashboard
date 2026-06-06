@@ -100,7 +100,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .day-heading .date-sub.today-label { color: var(--accent); font-weight: 600; }
 .event-item { display: flex; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--border-soft); }
 .event-item:last-child { border-bottom: none; }
-.event-time { font-size: 0.8125rem; color: var(--silver); width: 90px; flex-shrink: 0; padding-top: 1px; }
+.event-time { font-size: 0.8125rem; font-weight: 600; color: var(--near-white); flex-shrink: 0; padding-top: 2px; white-space: nowrap; }
 .event-title { font-size: 0.9375rem; font-weight: 600; }
 .event-cat { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
 .habits-today { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
@@ -430,14 +430,7 @@ function renderAgenda(){
   const evEl = document.getElementById('agendaEvents');
   evEl.innerHTML = dayEvents.length===0
     ? '<div class="empty">ไม่มี event</div>'
-    : dayEvents.map(e=>{ const ep=[e.time?(e.time+(e.end_time?' – '+e.end_time:'')):'', e.est?'⏱ '+e.est:''].filter(Boolean).join(' · '); return `
-        <div class="todo-item">
-          <div class="todo-bar" style="background:var(--accent)"></div>
-          <div class="todo-content">
-            <div class="todo-title">${esc(e.title)}</div>
-            ${ep?`<div class="todo-meta"><span class="chip chip-cat">${esc(ep)}</span></div>`:''}
-          </div>
-        </div>`; }).join('');
+    : dayEvents.map(renderEventItem).join('');
 
   // todos: all incomplete tasks across all months
   const allTodos = allData.flatMap(m=>m.todos||[]);
@@ -503,6 +496,19 @@ function renderTodoItem(t){
     <div class="todo-content">
       <div class="todo-title${isDone?' done':''}">${esc(t.title)}</div>
       ${parts?`<div class="todo-meta"><span class="chip chip-cat">${esc(parts)}</span></div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderEventItem(e){
+  const time = e.time ? (e.time + (e.end_time?' – '+e.end_time:'')) : '';
+  const tags = ['Planner', e.est?'⏱ '+e.est:''].filter(Boolean);
+  return `<div class="todo-item">
+    ${time?`<div class="event-time">${esc(time)}</div>`:''}
+    <div class="todo-bar" style="background:var(--accent)"></div>
+    <div class="todo-content">
+      <div class="todo-title">${esc(e.title)}</div>
+      <div class="todo-meta">${tags.map(t=>`<span class="chip chip-cat">${esc(t)}</span>`).join('')}</div>
     </div>
   </div>`;
 }
@@ -628,7 +634,7 @@ function openModal(ds){
   let html='';
   if(evs.length){
     html+=`<div class="modal-sec-title">Events</div>`;
-    html+=evs.map(e=>{ const ep=[e.time?(e.time+(e.end_time?' – '+e.end_time:'')):'', e.est?'⏱ '+e.est:''].filter(Boolean).join(' · '); return `<div class="todo-item"><div class="todo-bar" style="background:var(--accent)"></div><div class="todo-content"><div class="todo-title">${esc(e.title)}</div>${ep?`<div class="todo-meta"><span class="chip chip-cat">${esc(ep)}</span></div>`:''}</div></div>`; }).join('');
+    html+=evs.map(renderEventItem).join('');
   }
   if(tds.length){
     html+=`<div class="modal-sec-title" style="margin-top:${evs.length?'14':'0'}px">Tasks</div>`;
