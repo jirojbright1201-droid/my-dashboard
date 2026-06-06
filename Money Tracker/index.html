@@ -276,10 +276,10 @@ const KEYS = ["2026-06"];
 let currentIdx = KEYS.indexOf("2026-06");
 if (currentIdx < 0) currentIdx = KEYS.length - 1;
 
-// พาเลตสีแบรนด์ Spotify หลากสี ตัดกันชัด (เขียวนำ) — ไม่รวมฟ้า #509bf5 ที่กันไว้ให้ Investment
-const DONUT_COLORS = ['#1ed760','#ffc862','#af2896','#ff6437','#a56eff','#f037a5','#19e68c','#2d46b9','#ff7b5c','#c3f0c8','#b3b3b3','#6e6e6e'];
-// สีล็อกเฉพาะหมวด (override พาเลตปกติ) — Spotify brand blue สำหรับ Investment
-const CAT_COLORS = { 'Investment': '#509bf5' };
+// พาเลตเขียวธีม Spotify กระจายเฉดกว้าง สลับอ่อน-เข้มให้หมวดข้างกันตัดกันชัด
+const DONUT_COLORS = ['#1ed760','#0e6e35','#7bf0a8','#15a34a','#c3f0c8','#1db954','#19e68c','#0a5c2a','#5be88f','#127a3e','#86eaa9','#178a44'];
+// สีล็อกเฉพาะหมวด (override พาเลตปกติ) — ตอนนี้ว่าง ทุกหมวดใช้พาเลตเขียวเหมือนกันหมด
+const CAT_COLORS = {};
 
 function fmtDate(d) {
   if (!d) return '';
