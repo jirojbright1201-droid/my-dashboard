@@ -276,8 +276,8 @@ const KEYS = ["2026-06"];
 let currentIdx = KEYS.indexOf("2026-06");
 if (currentIdx < 0) currentIdx = KEYS.length - 1;
 
-// พาเลตเขียวล้วนธีม Spotify ไม่มีเฉดอมฟ้า/มิ้นต์ สลับอ่อน-เข้มให้หมวดข้างกันตัดกันชัด
-const DONUT_COLORS = ['#1ed760','#0e5c2a','#8fe07a','#1aa34a','#bdeba0','#1db954','#6cd96f','#0a4a22','#a6e88f','#15863a','#4fc96a','#127a33'];
+// พาเลตเขียวล้วนธีม Spotify ไล่เฉดอ่อน→เข้ม (ใช้คู่กับเรียงยอดน้อย→มาก ให้เป็นกราเดียนต์)
+const DONUT_COLORS = ['#cdeebd','#aee59a','#8fdc7a','#6fd35f','#4ec74f','#2ebd4a','#1db954','#19a34a','#15863a','#11702f','#0d5a25','#09441b'];
 // สีล็อกเฉพาะหมวด (override พาเลตปกติ) — ตอนนี้ว่าง ทุกหมวดใช้พาเลตเขียวเหมือนกันหมด
 const CAT_COLORS = {};
 
@@ -375,13 +375,15 @@ function render() {
   barChart.data.datasets[1].data = budgetRows.map(r => spentByCat[r[0]] || 0);
   barChart.update();
 
-  // Donut chart
-  const donutCats = Object.keys(spentByCat);
-  const donutVals = Object.values(spentByCat);
-  donutChart.data.labels = donutCats.length ? donutCats : ['ไม่มีรายจ่าย'];
-  donutChart.data.datasets[0].data = donutVals.length ? donutVals : [1];
-  donutChart.data.datasets[0].backgroundColor = donutCats.length
-    ? donutCats.map((c, i) => CAT_COLORS[c] || DONUT_COLORS[i % DONUT_COLORS.length])
+  // Donut chart — เรียงยอดน้อย→มาก แล้วไล่เฉดเขียวอ่อน(น้อย)→เข้ม(มาก) เป็นกราเดียนต์
+  const donutPairs = Object.entries(spentByCat).sort((a, b) => a[1] - b[1]);
+  const donutCats = donutPairs.map(p => p[0]);
+  const donutVals = donutPairs.map(p => p[1]);
+  const dn = donutCats.length;
+  donutChart.data.labels = dn ? donutCats : ['ไม่มีรายจ่าย'];
+  donutChart.data.datasets[0].data = dn ? donutVals : [1];
+  donutChart.data.datasets[0].backgroundColor = dn
+    ? donutCats.map((c, i) => CAT_COLORS[c] || DONUT_COLORS[Math.round(i / Math.max(dn - 1, 1) * (DONUT_COLORS.length - 1))])
     : [DONUT_COLORS[0]];
   donutChart.update();
 
