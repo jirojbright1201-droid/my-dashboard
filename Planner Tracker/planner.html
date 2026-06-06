@@ -491,7 +491,7 @@ function renderTodoItem(t){
   const catLbl=CAT_TODO[t.category]||t.category||'';
   const estChip=t.est?`<span class="chip chip-cat">⏱ ${esc(t.est)}</span>`:'';
   const prioLbl={high:'High',medium:'Medium',low:'Low'}[t.priority]||'';
-  const prioChip=prioLbl?`<span class="chip" style="background:${pc}22;color:${pc}">${prioLbl}</span>`:'';
+  const prioChip=prioLbl?`<span class="chip" style="background:${pc}44;color:${pc}">${prioLbl}</span>`:'';
   return `<div class="todo-item">
     <div class="todo-bar" style="background:${pc}"></div>
     <div class="todo-content">
