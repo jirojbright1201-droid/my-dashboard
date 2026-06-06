@@ -426,7 +426,7 @@ function renderAgenda(){
     : dayEvents.map(e=>`
         <div class="event-item">
           <div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div>
-          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?'⏱ '+esc(e.est):''}</div></div>
+          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div>
         </div>`).join('');
 
   // todos: all incomplete tasks across all months
@@ -618,7 +618,7 @@ function openModal(ds){
   let html='';
   if(evs.length){
     html+=`<div class="modal-sec-title">Events</div>`;
-    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?'⏱ '+esc(e.est):''}</div></div></div>`).join('');
+    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div></div>`).join('');
   }
   if(tds.length){
     html+=`<div class="modal-sec-title" style="margin-top:${evs.length?'14':'0'}px">Tasks</div>`;
