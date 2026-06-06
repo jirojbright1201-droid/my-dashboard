@@ -16,7 +16,8 @@
   --red: #f3727f; --orange: #ffa42b; --green: #1ed760; --blue: #60a5fa;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+html { overflow-x: hidden; }
+body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
 /* ── Topbar ── */
 .topbar {
@@ -166,7 +167,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 
 /* ── HABITS TAB ── */
 #habitTracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-@media (max-width: 600px) { #habitTracks { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { #habitTracks { grid-template-columns: 1fr; } }
 .habit-track-card { background: var(--surface); border-radius: 10px; padding: 16px 18px; }
 .habit-track-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 6px; }
 .habit-track-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
