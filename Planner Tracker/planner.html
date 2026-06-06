@@ -443,9 +443,9 @@ function renderAgenda(){
     : display.map(renderTodoItem).join('');
 
   // habits
-  const habitLog = allData.flatMap(m=>m.habits||[]).find(h=>h.date===selDay);
+  const habitLog = (getHabitLog(monthOf(selDay))[selDay]) || null;
   document.getElementById('agendaHabits').innerHTML = HABITS.map(h=>{
-    const state = !habitLog ? 'no-log' : (habitLog[h] ? 'done' : 'not-done');
+    const state = !habitLog ? 'no-log' : (habitLog[h] === true ? 'done' : habitLog[h] === false ? 'not-done' : 'no-log');
     return `<div class="habit-today-item"><div class="habit-dot ${state}"></div><span class="habit-name">${HABIT_LABELS[h]}</span></div>`;
   }).join('');
 }
