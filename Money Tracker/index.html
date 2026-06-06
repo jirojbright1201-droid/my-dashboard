@@ -277,6 +277,8 @@ let currentIdx = KEYS.indexOf("2026-06");
 if (currentIdx < 0) currentIdx = KEYS.length - 1;
 
 const DONUT_COLORS = ['#1ed760','#1db954','#3be477','#5be88f','#86eaa9','#1a9c46','#cbcbcb','#b3b3b3','#8c8c8c','#6e6e6e','#565656','#414141'];
+// สีล็อกเฉพาะหมวด (override พาเลตปกติ) — Spotify brand blue สำหรับ Investment
+const CAT_COLORS = { 'Investment': '#509bf5' };
 
 function fmtDate(d) {
   if (!d) return '';
@@ -377,7 +379,9 @@ function render() {
   const donutVals = Object.values(spentByCat);
   donutChart.data.labels = donutCats.length ? donutCats : ['ไม่มีรายจ่าย'];
   donutChart.data.datasets[0].data = donutVals.length ? donutVals : [1];
-  donutChart.data.datasets[0].backgroundColor = DONUT_COLORS.slice(0, Math.max(donutCats.length, 1));
+  donutChart.data.datasets[0].backgroundColor = donutCats.length
+    ? donutCats.map((c, i) => CAT_COLORS[c] || DONUT_COLORS[i % DONUT_COLORS.length])
+    : [DONUT_COLORS[0]];
   donutChart.update();
 
   // Expense table
