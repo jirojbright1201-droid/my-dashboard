@@ -429,17 +429,21 @@ function renderAgenda(){
           <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${CAT_EV[e.category]||esc(e.category)||''}</div></div>
         </div>`).join('');
 
-  // todos: due today, overdue, then active (limit 7 total)
+  // todos: all incomplete tasks across all months
   const allTodos = allData.flatMap(m=>m.todos||[]);
-  const dueToday = allTodos.filter(t=>t.due===selDay);
-  const overdue  = allTodos.filter(t=>t.status!=='done'&&t.due&&t.due<selDay);
-  const active   = allTodos.filter(t=>t.status!=='done'&&!t.due&&t.date===selDay);
-  const seen=new Set(); const display=[];
-  [...dueToday,...overdue,...active].forEach(t=>{ const k=t.title+t.date; if(!seen.has(k)&&display.length<7){seen.add(k);display.push(t);} });
+  const po={high:0,medium:1,low:2};
+  const display = allTodos
+    .filter(t=>t.status!=='done')
+    .sort((a,b)=>{
+      const over_a=a.due&&a.due<selDay, over_b=b.due&&b.due<selDay;
+      if(over_a&&!over_b) return -1; if(!over_a&&over_b) return 1;
+      const d=(po[a.priority]??2)-(po[b.priority]??2); if(d!==0) return d;
+      return (a.due||'9999').localeCompare(b.due||'9999');
+    });
 
   const tdEl = document.getElementById('agendaTodos');
   tdEl.innerHTML = display.length===0
-    ? '<div class="empty">ไม่มี task วันนี้</div>'
+    ? '<div class="empty">ไม่มี task ค้างอยู่</div>'
     : display.map(renderTodoItem).join('');
 
   // habits
@@ -507,7 +511,7 @@ function renderCalendar(){
 
   const byDate={};
   events.forEach(e=>{ byDate[e.date]??={ev:[],td:[]}; byDate[e.date].ev.push(e); });
-  todos.forEach(t=>{ const dk=t.due||t.date; if(dk){ byDate[dk]??={ev:[],td:[]}; byDate[dk].td.push(t); } });
+  todos.forEach(t=>{ if(t.status==='done') return; const dk=t.due||t.date||td; byDate[dk]??={ev:[],td:[]}; byDate[dk].td.push(t); });
 
   const heads=TH_DAYS_SHORT.map(d=>`<div class="cal-head">${d}</div>`).join('');
   let cells='';
