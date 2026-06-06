@@ -511,7 +511,7 @@ function renderCalendar(){
 
   const byDate={};
   events.forEach(e=>{ byDate[e.date]??={ev:[],td:[]}; byDate[e.date].ev.push(e); });
-  todos.forEach(t=>{ if(t.status==='done') return; const dk=t.due||t.date||td; byDate[dk]??={ev:[],td:[]}; byDate[dk].td.push(t); });
+  todos.forEach(t=>{ const dk=t.due||t.date; if(dk){ byDate[dk]??={ev:[],td:[]}; byDate[dk].td.push(t); } });
 
   const heads=TH_DAYS_SHORT.map(d=>`<div class="cal-head">${d}</div>`).join('');
   let cells='';
