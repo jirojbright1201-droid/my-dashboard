@@ -426,7 +426,7 @@ function renderAgenda(){
     : dayEvents.map(e=>`
         <div class="event-item">
           <div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div>
-          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div>
+          <div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${e.time?`<span class="chip chip-cat">${esc(e.time)}${e.end_time?' – '+esc(e.end_time):''}</span>`:''} ${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div>
         </div>`).join('');
 
   // todos: all incomplete tasks across all months
@@ -490,12 +490,15 @@ function renderTodoItem(t){
   const dueChip=t.due?`<span class="chip chip-due${over?' overdue':''}">${over?'เกิน ':''} ${t.due}</span>`:'';
   const catLbl=CAT_TODO[t.category]||t.category||'';
   const estChip=t.est?`<span class="chip chip-cat">⏱ ${esc(t.est)}</span>`:'';
+  const prioLbl={high:'High',medium:'Medium',low:'Low'}[t.priority]||'';
+  const prioChip=prioLbl?`<span class="chip" style="background:${pc}22;color:${pc}">${prioLbl}</span>`:'';
   return `<div class="todo-item">
     <div class="todo-bar" style="background:${pc}"></div>
     <div class="todo-content">
       <div class="todo-title${isDone?' done':''}">${esc(t.title)}</div>
       <div class="todo-meta">
         <span class="chip ${sc}">${sl}</span>
+        ${prioChip}
         ${dueChip}
         ${catLbl?`<span class="chip chip-cat">${catLbl}</span>`:''}
         ${estChip}
@@ -618,7 +621,7 @@ function openModal(ds){
   let html='';
   if(evs.length){
     html+=`<div class="modal-sec-title">Events</div>`;
-    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div></div>`).join('');
+    html+=evs.map(e=>`<div class="event-item"><div class="event-time">${esc(e.time||'—')}${e.end_time?' – '+esc(e.end_time):''}</div><div><div class="event-title">${esc(e.title)}</div><div class="event-cat">${e.time?`<span class="chip chip-cat">${esc(e.time)}${e.end_time?' – '+esc(e.end_time):''}</span>`:''} ${(CAT_EV[e.category]||e.category)?`<span class="chip chip-cat">${esc(CAT_EV[e.category]||e.category)}</span>`:''} ${e.est?`<span class="chip chip-cat">⏱ ${esc(e.est)}</span>`:''}</div></div></div>`).join('');
   }
   if(tds.length){
     html+=`<div class="modal-sec-title" style="margin-top:${evs.length?'14':'0'}px">Tasks</div>`;
