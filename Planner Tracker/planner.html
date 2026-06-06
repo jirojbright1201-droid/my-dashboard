@@ -181,15 +181,12 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
   text-transform: uppercase; letter-spacing: 0.5px;
 }
 .habit-cal-day {
-  aspect-ratio: 1; border-radius: 6px; cursor: pointer;
+  aspect-ratio: 1; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.35);
-  transition: opacity 0.1s, transform 0.1s; user-select: none;
+  user-select: none;
 }
-.habit-cal-day:hover:not(.empty):not(.future) { transform: scale(1.1); opacity: 0.85; }
-.habit-cal-day.empty { cursor: default; }
 .habit-cal-day.done { background: rgba(30,215,96,0.55); color: rgba(30,215,96,0.9); }
-.habit-cal-day.fail { background: rgba(243,114,127,0.15); color: rgba(243,114,127,0.6); }
 .habit-cal-day.nodata { background: var(--surface-2); }
 .habit-cal-day.future { background: transparent; color: rgba(255,255,255,0.1); cursor: default; }
 .habit-cal-day.today-day { outline: 1.5px solid var(--accent); outline-offset: -1.5px; color: var(--accent); }
@@ -302,7 +299,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 
 <script>
 // ── DATA (agent manages these) ──────────────────────────────────────────
-const ALL_DATA = {"2026-06":{"todos":[{"date":"2026-06-06","title":"ทำ Agent Workflow Youtube","status":"todo","notes":"","est":"2h"},{"date":"2026-06-07","title":"ทำความสะอาดห้อง","status":"todo","notes":"","est":"15m"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""}],"habits":[]}};
+const ALL_DATA = {"2026-06":{"todos":[{"date":"2026-06-06","title":"ทำ Agent Workflow Youtube","status":"todo","notes":"","est":"2h"},{"date":"2026-06-07","title":"ทำความสะอาดห้อง","status":"todo","notes":"","est":"15m"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""}],"habits":[{"habit":"exercise","done_dates":[]},{"habit":"read","done_dates":[]},{"habit":"water","done_dates":[]},{"habit":"sleep_early","done_dates":[]}]}};
 const KEYS = ["2026-06"];
 
 const HABITS = ['exercise','read','water','sleep_early'];
@@ -431,9 +428,9 @@ function renderAgenda(){
     : display.map(renderTodoItem).join('');
 
   // habits
-  const habitLog = (getHabitLog(monthOf(selDay))[selDay]) || null;
+  const doneMap = habitDoneMap();
   document.getElementById('agendaHabits').innerHTML = HABITS.map(h=>{
-    const state = !habitLog ? 'no-log' : (habitLog[h] === true ? 'done' : habitLog[h] === false ? 'not-done' : 'no-log');
+    const state = doneMap[h].has(selDay) ? 'done' : 'no-log';
     return `<div class="habit-today-item"><div class="habit-dot ${state}"></div><span class="habit-name">${HABIT_LABELS[h]}</span></div>`;
   }).join('');
 }
@@ -522,38 +519,31 @@ function renderCalendar(){
   document.getElementById('calWrap').innerHTML=`<div class="cal-wrap"><div class="cal-grid">${heads}${cells}</div></div>`;
 }
 
-// ── HABIT STORAGE (localStorage) ─────────────────────────────────────────
-function getHabitLog(monthKey){
-  try{ return JSON.parse(localStorage.getItem('hlog_'+monthKey))||{}; }
-  catch(e){ return {}; }
-}
-function saveHabitLog(monthKey,log){
-  localStorage.setItem('hlog_'+monthKey, JSON.stringify(log));
-}
-function cycleHabit(monthKey, dateStr, habit){
-  const log=getHabitLog(monthKey);
-  if(!log[dateStr]) log[dateStr]={};
-  const cur=log[dateStr][habit];
-  if(cur===undefined||cur===null) log[dateStr][habit]=true;
-  else if(cur===true) log[dateStr][habit]=false;
-  else delete log[dateStr][habit];
-  saveHabitLog(monthKey,log);
-  renderHabits();
+// ── HABIT DATA (from vault via ALL_DATA) ─────────────────────────────────
+// returns { habitKey: Set("YYYY-MM-DD") } aggregated across all loaded months
+function habitDoneMap(){
+  const map={}; HABITS.forEach(h=>map[h]=new Set());
+  KEYS.forEach(k=>{
+    (getMonthData(k).habits||[]).forEach(rec=>{
+      const set=map[rec.habit]; if(!set) return;
+      (rec.done_dates||[]).forEach(d=>set.add(d));
+    });
+  });
+  return map;
 }
 
 // ── HABITS ───────────────────────────────────────────────────────────────
 function renderHabits(){
   const [y,m]=curMonth.split('-').map(Number);
   const days=new Date(y,m,0).getDate(), td=today();
-  const log=getHabitLog(curMonth);
+  const done=habitDoneMap();
 
-  // Streaks: count consecutive days from today backwards
+  // Streaks: consecutive days done counting back from today
   const streaks={};
   HABITS.forEach(h=>{
     let s=0, d=new Date(td+'T00:00:00');
     for(let i=0;i<366;i++){
-      const ds=fmtDate(d), mk=monthOf(ds);
-      if((getHabitLog(mk)[ds]||{})[h]===true){ s++; d.setDate(d.getDate()-1); }
+      if(done[h].has(fmtDate(d))){ s++; d.setDate(d.getDate()-1); }
       else break;
     }
     streaks[h]=s;
@@ -563,30 +553,28 @@ function renderHabits(){
   const dayHeaders=TH_DAYS_SHORT.map(d=>`<div class="habit-cal-head">${d}</div>`).join('');
 
   const html=HABITS.map(h=>{
-    let doneCount=0, totalLogged=0;
+    let doneCount=0, elapsed=0;
     let cells='';
     for(let i=0;i<startDow;i++) cells+=`<div class="habit-cal-day empty"></div>`;
     for(let d=1;d<=days;d++){
       const ds=`${y}-${p2(m)}-${p2(d)}`;
-      const val=(log[ds]||{})[h];
+      const isDone=done[h].has(ds);
       const isFuture=ds>td, isToday=ds===td;
       let cls;
       if(isFuture) cls='future';
-      else if(val===true){ cls='done'; doneCount++; totalLogged++; }
-      else if(val===false){ cls='fail'; totalLogged++; }
-      else cls='nodata';
+      else if(isDone){ cls='done'; doneCount++; elapsed++; }
+      else { cls='nodata'; elapsed++; }
       const todayCls=isToday?' today-day':'';
-      const onclick=!isFuture?`onclick="cycleHabit('${curMonth}','${ds}','${h}')"`:'' ;
-      cells+=`<div class="habit-cal-day ${cls}${todayCls}" ${onclick}>${d}</div>`;
+      cells+=`<div class="habit-cal-day ${cls}${todayCls}">${d}</div>`;
     }
-    const pct=totalLogged>0?Math.round(doneCount/totalLogged*100):0;
+    const pct=elapsed>0?Math.round(doneCount/elapsed*100):0;
     const streak=streaks[h];
     return `<div class="habit-track-card">
       <div class="habit-track-header">
         <span class="habit-track-name">${HABIT_LABELS[h]}</span>
         <div class="habit-track-meta">
           ${streak>0?`<span class="habit-streak">🔥 ${streak} วัน</span>`:''}
-          <span class="habit-pct">${pct}%</span>
+          <span class="habit-pct">${doneCount} วัน · ${pct}%</span>
         </div>
       </div>
       <div class="habit-cal-grid">${dayHeaders}${cells}</div>
