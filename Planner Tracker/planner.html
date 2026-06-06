@@ -145,7 +145,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 
 /* ── CALENDAR ── */
 .cal-wrap { background: var(--surface); border-radius: 8px; padding: 20px 22px; }
-.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 3px; }
 .cal-head { text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 1px; padding: 6px 0 10px; }
 .cal-day {
   background: var(--surface-2); border-radius: 6px; min-height: 80px;
@@ -174,7 +174,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .habit-track-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .habit-streak { font-size: 0.8125rem; font-weight: 700; color: var(--accent); }
 .habit-pct { font-size: 0.6875rem; font-weight: 700; color: var(--silver); background: var(--surface-2); padding: 2px 9px; border-radius: 9999px; }
-.habit-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+.habit-cal-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 4px; }
 .habit-cal-head {
   text-align: center; font-size: 0.5625rem; font-weight: 700;
   color: var(--silver); padding: 4px 0 6px;
