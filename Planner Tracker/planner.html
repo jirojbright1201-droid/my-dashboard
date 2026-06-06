@@ -514,21 +514,26 @@ function renderTodoItem(t){
 function renderCalendar(){
   const [y,m]=curMonth.split('-').map(Number);
   const data=getMonthData(curMonth);
-  const events=data.events||[], todos=data.todos||[];
+  const events=data.events||[];
   const days=new Date(y,m,0).getDate(), startDow=new Date(y,m-1,1).getDay(), td=today();
 
+  // Tasks have no due date — every incomplete task is pending on every day
+  const po={high:0,medium:1,low:2};
+  const pendingTodos=allMonthsData().flatMap(mm=>mm.todos||[])
+    .filter(t=>t.status!=='done')
+    .sort((a,b)=>(po[a.priority]??2)-(po[b.priority]??2));
+
   const byDate={};
-  events.forEach(e=>{ byDate[e.date]??={ev:[],td:[]}; byDate[e.date].ev.push(e); });
-  todos.forEach(t=>{ const dk=t.due||t.date; if(dk){ byDate[dk]??={ev:[],td:[]}; byDate[dk].td.push(t); } });
+  events.forEach(e=>{ byDate[e.date]??={ev:[]}; byDate[e.date].ev.push(e); });
 
   const heads=TH_DAYS_SHORT.map(d=>`<div class="cal-head">${d}</div>`).join('');
   let cells='';
   for(let i=0;i<startDow;i++) cells+=`<div class="cal-day empty"></div>`;
   for(let day=1;day<=days;day++){
-    const ds=`${y}-${p2(m)}-${p2(day)}`, isT=ds===td, dd=byDate[ds]||{ev:[],td:[]};
+    const ds=`${y}-${p2(m)}-${p2(day)}`, isT=ds===td, dd=byDate[ds]||{ev:[]};
     const evChips=dd.ev.slice(0,2).map(e=>`<div class="cal-ev-chip">${esc(e.title)}</div>`).join('');
     const more=dd.ev.length>2?`<div class="cal-ev-chip" style="opacity:.6">+${dd.ev.length-2}</div>`:'';
-    const dots=dd.td.slice(0,6).map(t=>`<div class="cal-dot" style="background:${PCOLOR[t.priority]||'var(--silver)'}" title="${esc(t.title)}"></div>`).join('');
+    const dots=pendingTodos.slice(0,6).map(t=>`<div class="cal-dot" style="background:${PCOLOR[t.priority]||'var(--silver)'}" title="${esc(t.title)}"></div>`).join('');
     cells+=`<div class="cal-day${isT?' today-day':''}" onclick="openModal('${ds}')">
       <div class="cal-num">${day}</div>
       <div class="cal-events-list">${evChips}${more}</div>
@@ -617,8 +622,10 @@ function openModal(ds){
   const d=new Date(ds+'T00:00:00');
   const data=getMonthData(curMonth);
   const evs=(data.events||[]).filter(e=>e.date===ds);
-  const td2=today();
-  const tds=(data.todos||[]).filter(t=>t.status!=='done'&&(t.due||t.date||td2)===ds);
+  const po={high:0,medium:1,low:2};
+  const tds=allMonthsData().flatMap(mm=>mm.todos||[])
+    .filter(t=>t.status!=='done')
+    .sort((a,b)=>(po[a.priority]??2)-(po[b.priority]??2));
   document.getElementById('modalTitle').textContent=`${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
   document.getElementById('modalSub').textContent=`วัน${TH_DAYS_FULL[d.getDay()]}`;
   let html='';
