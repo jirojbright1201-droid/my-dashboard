@@ -588,7 +588,7 @@ function renderHabits(){
 function openModal(ds){
   const d=new Date(ds+'T00:00:00');
   const data=getMonthData(curMonth);
-  const evs=(data.events||[]).filter(e=>e.date===ds);
+  const evs=(data.events||[]).filter(e=>e.date===ds).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   const tds=allMonthsData().flatMap(mm=>mm.todos||[])
     .filter(t=>t.status!=='done');
   document.getElementById('modalTitle').textContent=`${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
