@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -19,7 +19,7 @@
 html { overflow-x: hidden; }
 body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-/* â”€â”€ Topbar â”€â”€ */
+/* ── Topbar ── */
 .topbar {
   background: var(--bg); padding: 0 24px; height: 60px;
   display: flex; align-items: center; gap: 16px; justify-content: space-between;
@@ -77,7 +77,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
   .habit-cal-day { font-size: 0.5625rem; }
 }
 
-/* â”€â”€ Layout â”€â”€ */
+/* ── Layout ── */
 .container { max-width: 1080px; margin: 0 auto; padding: 28px 20px 64px; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
@@ -86,7 +86,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .empty { color: var(--silver); font-size: 0.875rem; text-align: center; padding: 24px 0; }
 .divider { border: none; border-top: 1px solid var(--border-soft); margin: 0; }
 
-/* â”€â”€ AGENDA â”€â”€ */
+/* ── AGENDA ── */
 .day-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
 .day-nav button {
   background: var(--surface-2); border: none; border-radius: 9999px;
@@ -111,7 +111,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .habit-dot.no-log { background: transparent; border: 2px solid var(--border); }
 .habit-name { font-size: 0.8125rem; font-weight: 500; color: var(--near-white); }
 
-/* â”€â”€ TODO ITEMS â”€â”€ */
+/* ── TODO ITEMS ── */
 .todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
 .todo-item:last-child { border-bottom: none; }
 .todo-bar { width: 3px; min-height: 18px; border-radius: 9999px; flex-shrink: 0; margin-top: 3px; }
@@ -127,7 +127,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .chip-due.overdue { background: rgba(243,114,127,.2); color: var(--red); }
 .chip-cat { background: rgba(255,255,255,.12); color: var(--near-white); }
 
-/* â”€â”€ TODOS TAB â”€â”€ */
+/* ── TODOS TAB ── */
 .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
 .stat-card { background: var(--surface); border-radius: 8px; padding: 16px 18px; text-align: center; }
 .stat-num { font-size: 1.625rem; font-weight: 700; }
@@ -143,7 +143,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .filter-sep { width: 1px; height: 22px; background: var(--border-soft); flex-shrink: 0; }
 .todo-list-card { background: var(--surface); border-radius: 8px; padding: 4px 18px; }
 
-/* â”€â”€ CALENDAR â”€â”€ */
+/* ── CALENDAR ── */
 .cal-wrap { background: var(--surface); border-radius: 8px; padding: 20px 22px; }
 .cal-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 3px; }
 .cal-head { text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 1px; padding: 6px 0 10px; }
@@ -165,7 +165,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .cal-todo-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; }
 .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
 
-/* â”€â”€ HABITS TAB â”€â”€ */
+/* ── HABITS TAB ── */
 #habitTracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 768px) { #habitTracks { grid-template-columns: 1fr; } }
 .habit-track-card { background: var(--surface); border-radius: 10px; padding: 16px 18px; }
@@ -191,7 +191,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .habit-cal-day.future { background: transparent; color: rgba(255,255,255,0.1); cursor: default; }
 .habit-cal-day.today-day { outline: 1.5px solid var(--accent); outline-offset: -1.5px; color: var(--accent); }
 
-/* â”€â”€ MODAL â”€â”€ */
+/* ── MODAL ── */
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100; align-items: center; justify-content: center; }
 .overlay.active { display: flex; }
 .modal { background: var(--surface-3); border-radius: 8px; width: 440px; max-width: 95vw; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.5); }
@@ -223,7 +223,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
       <span class="month-label" id="monthLabel"></span>
       <button id="btnNext" onclick="changeMonth(1)">&#8594;</button>
     </div>
-    <span class="updated">à¸­à¸±à¸žà¹€à¸”à¸•: <span class="updated-ts">08/06/2026 23:47</span></span>
+    <span class="updated">อัพเดต: <span class="updated-ts">08/06/2026 23:58</span></span>
   </div>
 </div>
 
@@ -291,34 +291,34 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
   <div class="modal">
     <div class="modal-head">
       <div><div class="modal-title" id="modalTitle"></div><div class="modal-sub" id="modalSub"></div></div>
-      <button class="modal-close" onclick="closeModal()">âœ•</button>
+      <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
 <script>
-// â”€â”€ DATA (agent manages these) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const ALL_DATA = {"2026-06":{"todos":[{"title":"à¸—à¸³ Agent Workflow Youtube","status":"done","notes":"","est":"2h"},{"title":"à¸—à¸³à¸„à¸§à¸²à¸¡à¸ªà¸°à¸­à¸²à¸”à¸«à¹‰à¸­à¸‡","status":"done","notes":"","est":"1h"},{"title":"à¹à¸à¹‰ Script","status":"in-progress","notes":"","est":"1h"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""},{"date":"2026-06-07","title":"Sleep","time":"10:00","end_time":"","est":"8h","notes":""},{"date":"2026-06-07","title":"à¸­à¹ˆà¸²à¸™à¸«à¸™à¸±à¸‡à¸ªà¸·à¸­","time":"09:30","end_time":"","est":"30m","notes":""},{"date":"2026-06-07","title":"à¸—à¸³à¸„à¸§à¸²à¸¡à¸ªà¸°à¸­à¸²à¸”à¸«à¹‰à¸­à¸‡","time":"08:00","end_time":"","est":"1h","notes":""},{"date":"2026-06-07","title":"à¸—à¸³ Agent Workflow Youtube","time":"18:30","end_time":"","est":"2h","notes":""},{"date":"2026-06-07","title":"Work at McDonald's","time":"22:00","end_time":"07:00","est":"9h","notes":"à¸à¸°à¸”à¸¶à¸ à¸‚à¹‰à¸²à¸¡à¹„à¸› 8 à¸¡à¸´.à¸¢. 07:00"},{"date":"2026-06-08","title":"Sleep","time":"10:00","end_time":"18:00","est":"8h","notes":""},{"date":"2026-06-08","title":"ทำบัตรประชาชน","time":"08:00","end_time":"09:30","est":"1h30m","notes":""}],"habits":[{"habit":"exercise","done_dates":[]},{"habit":"read","done_dates":[]},{"habit":"water","done_dates":[]},{"habit":"sleep_early","done_dates":[]}]}};
+// ── DATA (agent manages these) ──────────────────────────────────────────
+const ALL_DATA = {"2026-06":{"todos":[{"title":"ทำ Agent Workflow Youtube","status":"done","notes":"","est":"2h"},{"title":"ทำความสะอาดห้อง","status":"done","notes":"","est":"1h"},{"title":"แก้ Script","status":"in-progress","notes":"","est":"1h"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""},{"date":"2026-06-07","title":"Sleep","time":"10:00","end_time":"","est":"8h","notes":""},{"date":"2026-06-07","title":"อ่านหนังสือ","time":"09:30","end_time":"","est":"30m","notes":""},{"date":"2026-06-07","title":"ทำความสะอาดห้อง","time":"08:00","end_time":"","est":"1h","notes":""},{"date":"2026-06-07","title":"ทำ Agent Workflow Youtube","time":"18:30","end_time":"","est":"2h","notes":""},{"date":"2026-06-07","title":"Work at McDonald's","time":"22:00","end_time":"07:00","est":"9h","notes":"กะดึก ข้ามไป 8 มิ.ย. 07:00"},{"date":"2026-06-08","title":"Sleep","time":"10:00","end_time":"18:00","est":"8h","notes":""},{"date":"2026-06-08","title":"ทำบัตรประชาชน","time":"08:00","end_time":"09:30","est":"1h30m","notes":""}],"habits":[{"habit":"exercise","done_dates":[]},{"habit":"read","done_dates":[]},{"habit":"water","done_dates":[]},{"habit":"sleep_early","done_dates":[]}]}};
 const KEYS = ["2026-06"];
 
 const HABITS = ['exercise','read','water','sleep_early'];
-const HABIT_LABELS = {exercise:'à¸­à¸­à¸à¸à¸³à¸¥à¸±à¸‡à¸à¸²à¸¢',read:'à¸­à¹ˆà¸²à¸™à¸«à¸™à¸±à¸‡à¸ªà¸·à¸­',water:'à¸”à¸·à¹ˆà¸¡à¸™à¹‰à¸³',sleep_early:'à¸™à¸­à¸™à¸à¹ˆà¸­à¸™à¹€à¸—à¸µà¹ˆà¸¢à¸‡'};
+const HABIT_LABELS = {exercise:'ออกกำลังกาย',read:'อ่านหนังสือ',water:'ดื่มน้ำ',sleep_early:'นอนก่อนเที่ยง'};
 
-// â”€â”€ CONSTANTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const TH_MONTHS_SHORT = ['à¸¡.à¸„.','à¸.à¸ž.','à¸¡à¸µ.à¸„.','à¹€à¸¡.à¸¢.','à¸ž.à¸„.','à¸¡à¸´.à¸¢.','à¸.à¸„.','à¸ª.à¸„.','à¸.à¸¢.','à¸•.à¸„.','à¸ž.à¸¢.','à¸˜.à¸„.'];
-const TH_MONTHS_FULL  = ['à¸¡à¸à¸£à¸²à¸„à¸¡','à¸à¸¸à¸¡à¸ à¸²à¸žà¸±à¸™à¸˜à¹Œ','à¸¡à¸µà¸™à¸²à¸„à¸¡','à¹€à¸¡à¸©à¸²à¸¢à¸™','à¸žà¸¤à¸©à¸ à¸²à¸„à¸¡','à¸¡à¸´à¸–à¸¸à¸™à¸²à¸¢à¸™','à¸à¸£à¸à¸Žà¸²à¸„à¸¡','à¸ªà¸´à¸‡à¸«à¸²à¸„à¸¡','à¸à¸±à¸™à¸¢à¸²à¸¢à¸™','à¸•à¸¸à¸¥à¸²à¸„à¸¡','à¸žà¸¤à¸¨à¸ˆà¸´à¸à¸²à¸¢à¸™','à¸˜à¸±à¸™à¸§à¸²à¸„à¸¡'];
-const TH_DAYS_SHORT   = ['à¸­à¸².','à¸ˆ.','à¸­.','à¸ž.','à¸žà¸¤.','à¸¨.','à¸ª.'];
-const TH_DAYS_FULL    = ['à¸­à¸²à¸—à¸´à¸•à¸¢à¹Œ','à¸ˆà¸±à¸™à¸—à¸£à¹Œ','à¸­à¸±à¸‡à¸„à¸²à¸£','à¸žà¸¸à¸˜','à¸žà¸¤à¸«à¸±à¸ªà¸šà¸”à¸µ','à¸¨à¸¸à¸à¸£à¹Œ','à¹€à¸ªà¸²à¸£à¹Œ'];
+// ── CONSTANTS ────────────────────────────────────────────────────────────
+const TH_MONTHS_SHORT = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const TH_MONTHS_FULL  = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const TH_DAYS_SHORT   = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+const TH_DAYS_FULL    = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
 const TODO_DOT = 'var(--silver)';
 
-// â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── STATE ────────────────────────────────────────────────────────────────
 let curMonth = '';   // "YYYY-MM"
 let selDay   = '';   // "YYYY-MM-DD"
 let activeTab = 'agenda';
 let fStatus   = 'all';
 
-// â”€â”€ UTILS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── UTILS ────────────────────────────────────────────────────────────────
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function today(){ const d=new Date(); return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; }
 function p2(n){ return String(n).padStart(2,'0'); }
@@ -327,7 +327,7 @@ function monthOf(dateStr){ return dateStr.slice(0,7); }
 function getMonthData(m){ return ALL_DATA[m] || {todos:[],events:[],habits:[]}; }
 function allMonthsData(){ return KEYS.map(k=>getMonthData(k)); }
 
-// â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── INIT ─────────────────────────────────────────────────────────────────
 function init(){
   const td = today();
   const mm = monthOf(td);
@@ -338,7 +338,7 @@ function init(){
   renderTab(activeTab);
 }
 
-// â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── NAV ──────────────────────────────────────────────────────────────────
 function switchTab(tab, btn){
   activeTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -391,7 +391,7 @@ function setFilter(type, val, btn){
   renderTodos();
 }
 
-// â”€â”€ RENDER DISPATCH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── RENDER DISPATCH ──────────────────────────────────────────────────────
 function renderTab(tab){
   if(tab==='agenda')   renderAgenda();
   else if(tab==='todos')    renderTodos();
@@ -399,14 +399,14 @@ function renderTab(tab){
   else if(tab==='habits')   renderHabits();
 }
 
-// â”€â”€ AGENDA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── AGENDA ───────────────────────────────────────────────────────────────
 function renderAgenda(){
   const d   = new Date(selDay+'T00:00:00');
   const isT = selDay===today();
   document.getElementById('agendaDateBig').textContent =
-    `à¸§à¸±à¸™${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}`;
+    `วัน${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}`;
   const sub = document.getElementById('agendaDateSub');
-  sub.textContent = isT ? 'à¸§à¸±à¸™à¸™à¸µà¹‰' : '';
+  sub.textContent = isT ? 'วันนี้' : '';
   sub.className = 'date-sub'+(isT?' today-label':'');
 
   const allData = allMonthsData();
@@ -415,7 +415,7 @@ function renderAgenda(){
 
   const evEl = document.getElementById('agendaEvents');
   evEl.innerHTML = dayEvents.length===0
-    ? '<div class="empty">à¹„à¸¡à¹ˆà¸¡à¸µ event</div>'
+    ? '<div class="empty">ไม่มี event</div>'
     : dayEvents.map(renderEventItem).join('');
 
   // todos: all incomplete tasks across all months
@@ -424,7 +424,7 @@ function renderAgenda(){
 
   const tdEl = document.getElementById('agendaTodos');
   tdEl.innerHTML = display.length===0
-    ? '<div class="empty">à¹„à¸¡à¹ˆà¸¡à¸µ task à¸„à¹‰à¸²à¸‡à¸­à¸¢à¸¹à¹ˆ</div>'
+    ? '<div class="empty">ไม่มี task ค้างอยู่</div>'
     : display.map(renderTodoItem).join('');
 
   // habits
@@ -435,7 +435,7 @@ function renderAgenda(){
   }).join('');
 }
 
-// â”€â”€ TODOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── TODOS ────────────────────────────────────────────────────────────────
 function renderTodos(){
   const data  = getMonthData(curMonth);
   const todos = data.todos||[];
@@ -456,7 +456,7 @@ function renderTodos(){
 
   const el=document.getElementById('todosList');
   el.innerHTML = list.length===0
-    ? '<div class="empty">à¹„à¸¡à¹ˆà¸¡à¸µ task</div>'
+    ? '<div class="empty">ไม่มี task</div>'
     : list.map(renderTodoItem).join('');
 }
 
@@ -465,7 +465,7 @@ function renderTodoItem(t){
   const sl={'todo':'Todo','in-progress':'In Progress','done':'Done'}[t.status]||t.status;
   const statusCls={'todo':'chip-todo','in-progress':'chip-inprogress','done':'chip-done'}[t.status]||'chip-todo';
   const chips=[`<span class="chip ${statusCls}">${esc(sl)}</span>`];
-  if(t.est) chips.push(`<span class="chip chip-cat">â± ${esc(t.est)}</span>`);
+  if(t.est) chips.push(`<span class="chip chip-cat">⏱ ${esc(t.est)}</span>`);
   return `<div class="todo-item">
     <div class="todo-bar" style="background:var(--border)"></div>
     <div class="todo-content">
@@ -477,7 +477,7 @@ function renderTodoItem(t){
 
 function renderEventItem(e){
   const time = e.time || '';
-  const tags = ['Planner', e.est?'â± '+e.est:''].filter(Boolean);
+  const tags = ['Planner', e.est?'⏱ '+e.est:''].filter(Boolean);
   return `<div class="todo-item">
     ${time?`<div class="event-time">${esc(time)}</div>`:''}
     <div class="todo-bar" style="background:var(--accent)"></div>
@@ -488,14 +488,14 @@ function renderEventItem(e){
   </div>`;
 }
 
-// â”€â”€ CALENDAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── CALENDAR ─────────────────────────────────────────────────────────────
 function renderCalendar(){
   const [y,m]=curMonth.split('-').map(Number);
   const data=getMonthData(curMonth);
   const events=data.events||[];
   const days=new Date(y,m,0).getDate(), startDow=new Date(y,m-1,1).getDay(), td=today();
 
-  // Tasks have no due date â€” every incomplete task is pending on every day
+  // Tasks have no due date — every incomplete task is pending on every day
   const pendingTodos=allMonthsData().flatMap(mm=>mm.todos||[])
     .filter(t=>t.status!=='done');
 
@@ -519,7 +519,7 @@ function renderCalendar(){
   document.getElementById('calWrap').innerHTML=`<div class="cal-wrap"><div class="cal-grid">${heads}${cells}</div></div>`;
 }
 
-// â”€â”€ HABIT DATA (from vault via ALL_DATA) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── HABIT DATA (from vault via ALL_DATA) ─────────────────────────────────
 // returns { habitKey: Set("YYYY-MM-DD") } aggregated across all loaded months
 function habitDoneMap(){
   const map={}; HABITS.forEach(h=>map[h]=new Set());
@@ -532,7 +532,7 @@ function habitDoneMap(){
   return map;
 }
 
-// â”€â”€ HABITS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── HABITS ───────────────────────────────────────────────────────────────
 function renderHabits(){
   const [y,m]=curMonth.split('-').map(Number);
   const days=new Date(y,m,0).getDate(), td=today();
@@ -573,8 +573,8 @@ function renderHabits(){
       <div class="habit-track-header">
         <span class="habit-track-name">${HABIT_LABELS[h]}</span>
         <div class="habit-track-meta">
-          ${streak>0?`<span class="habit-streak">ðŸ”¥ ${streak} à¸§à¸±à¸™</span>`:''}
-          <span class="habit-pct">${doneCount} à¸§à¸±à¸™ Â· ${pct}%</span>
+          ${streak>0?`<span class="habit-streak"><svg class="ic-flame" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2c1.2 2.8-.6 4.2-1.7 5.9C9.1 9.7 8 11 8 13a4 4 0 0 0 8 0c0-1.6-.7-2.7-1.4-3.7.1 1.1-.6 1.9-1.4 1.9-1 0-1.5-.9-1.2-2.1C11.4 6.5 12.6 4.4 12 2z"/></svg> ${streak} วัน</span>`:''}
+          <span class="habit-pct">${doneCount} วัน · ${pct}%</span>
         </div>
       </div>
       <div class="habit-cal-grid">${dayHeaders}${cells}</div>
@@ -584,7 +584,7 @@ function renderHabits(){
   document.getElementById('habitTracks').innerHTML=html;
 }
 
-// â”€â”€ MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── MODAL ────────────────────────────────────────────────────────────────
 function openModal(ds){
   const d=new Date(ds+'T00:00:00');
   const data=getMonthData(curMonth);
@@ -592,7 +592,7 @@ function openModal(ds){
   const tds=allMonthsData().flatMap(mm=>mm.todos||[])
     .filter(t=>t.status!=='done');
   document.getElementById('modalTitle').textContent=`${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
-  document.getElementById('modalSub').textContent=`à¸§à¸±à¸™${TH_DAYS_FULL[d.getDay()]}`;
+  document.getElementById('modalSub').textContent=`วัน${TH_DAYS_FULL[d.getDay()]}`;
   let html='';
   if(evs.length){
     html+=`<div class="modal-sec-title">Events</div>`;
@@ -602,13 +602,13 @@ function openModal(ds){
     html+=`<div class="modal-sec-title" style="margin-top:${evs.length?'14':'0'}px">Tasks</div>`;
     html+=tds.map(renderTodoItem).join('');
   }
-  if(!html) html=`<div class="modal-empty">à¹„à¸¡à¹ˆà¸¡à¸µà¸£à¸²à¸¢à¸à¸²à¸£</div>`;
+  if(!html) html=`<div class="modal-empty">ไม่มีรายการ</div>`;
   document.getElementById('modalBody').innerHTML=html;
   document.getElementById('overlay').classList.add('active');
 }
 function closeModal(){ document.getElementById('overlay').classList.remove('active'); }
 
-// â”€â”€ START â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── START ────────────────────────────────────────────────────────────────
 init();
 </script>
 </body>
