@@ -7,12 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', system-ui, sans-serif; background: #121212; color: #fff; height: 100vh; display: flex; overflow: hidden; }
+body { font-family: 'Inter', system-ui, sans-serif; background: #ffffff; color: #0a0b0d; height: 100vh; display: flex; overflow: hidden; }
 
 /* Sidebar */
 .sidebar {
-  width: 220px; min-width: 220px; background: #181818;
-  border-right: 1px solid #2a2a2a;
+  width: 220px; min-width: 220px; background: #ffffff;
+  border-right: 1px solid #ebecf0;
   display: flex; flex-direction: column;
   transition: width 0.2s ease, min-width 0.2s ease;
   overflow: hidden;
@@ -21,7 +21,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #121212; color: 
 
 .sidebar-header {
   height: 60px; display: flex; align-items: center; gap: 12px;
-  padding: 0 14px; border-bottom: 1px solid #2a2a2a; flex-shrink: 0;
+  padding: 0 14px; border-bottom: 1px solid #ebecf0; flex-shrink: 0;
 }
 .ham-btn {
   background: none; border: none; cursor: pointer;
@@ -29,10 +29,10 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #121212; color: 
   display: flex; flex-direction: column; justify-content: center; gap: 5px;
   padding: 4px;
 }
-.ham-btn span { display: block; width: 20px; height: 2px; background: #b3b3b3; border-radius: 2px; transition: background 0.15s; }
-.ham-btn:hover span { background: #fff; }
+.ham-btn span { display: block; width: 20px; height: 2px; background: #5b616e; border-radius: 2px; transition: background 0.15s; }
+.ham-btn:hover span { background: #0a0b0d; }
 .sidebar-title {
-  font-size: 0.9375rem; font-weight: 700; color: #fff;
+  font-size: 0.9375rem; font-weight: 700; color: #0a0b0d;
   white-space: nowrap; overflow: hidden;
   transition: opacity 0.15s;
 }
@@ -42,13 +42,13 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #121212; color: 
 .nav-item {
   display: flex; align-items: center; gap: 12px;
   padding: 10px 10px; border-radius: 8px; cursor: pointer;
-  background: none; border: none; color: #b3b3b3;
+  background: none; border: none; color: #5b616e;
   font-size: 0.875rem; font-weight: 500; text-align: left;
   width: 100%; white-space: nowrap; overflow: hidden;
   transition: background 0.15s, color 0.15s;
 }
-.nav-item:hover { background: #1f1f1f; color: #fff; }
-.nav-item.active { background: #282828; color: #fff; }
+.nav-item:hover { background: #f5f6f8; color: #0a0b0d; }
+.nav-item.active { background: rgba(0,82,255,0.08); color: #0052ff; font-weight: 600; }
 .nav-icon { font-size: 1.1rem; flex-shrink: 0; width: 20px; text-align: center; }
 .nav-label { overflow: hidden; transition: opacity 0.15s; }
 .sidebar.collapsed .nav-label { opacity: 0; pointer-events: none; }
@@ -80,8 +80,8 @@ iframe.active { display: block; }
 
   .topbar-ham {
     display: flex; align-items: center; height: 52px;
-    padding: 0 14px; background: #181818;
-    border-bottom: 1px solid #2a2a2a; flex-shrink: 0;
+    padding: 0 14px; background: #ffffff;
+    border-bottom: 1px solid #ebecf0; flex-shrink: 0;
   }
   .main { display: flex; flex-direction: column; }
   .main iframe { flex: 1; height: 0; }

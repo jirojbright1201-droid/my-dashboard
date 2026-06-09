@@ -10,11 +10,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green: #1ed760; --green-deep: #1db954;
-    --bg: #121212; --surface: #181818; --surface-2: #1f1f1f; --surface-3: #282828;
-    --text: #ffffff; --silver: #b3b3b3; --near-white: #cbcbcb;
-    --border: #4d4d4d; --border-soft: #2a2a2a;
-    --error: #f3727f; --warning: #ffa42b;
+    /* Coinbase Light — brand blue #0052FF on white */
+    --blue: #0052ff; --blue-deep: #0043d6; --blue-soft: rgba(0,82,255,0.08);
+    --green: #0052ff; --green-deep: #0043d6;          /* legacy aliases → brand blue */
+    --up: #098551; --down: #cf202f;
+    --bg: #ffffff; --surface: #ffffff; --surface-2: #f5f6f8; --surface-3: #eef0f3;
+    --text: #0a0b0d; --silver: #5b616e; --near-white: #1f2128;
+    --border: #d7dae0; --border-soft: #ebecf0;
+    --error: #cf202f; --warning: #b8860b;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -49,7 +52,7 @@
   .container { max-width: 1100px; margin: 0 auto; padding: 36px 24px 64px; }
 
   .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
-  .card { background: var(--surface); border-radius: 8px; padding: 22px 24px; }
+  .card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 22px 24px; }
   .card .label { font-size: 0.6875rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 10px; }
   .card .value { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
   .card .sub { font-size: 0.8125rem; color: var(--silver); margin-top: 8px; }
@@ -77,7 +80,7 @@
   .remaining { color: var(--silver); }
   .remaining.over { color: var(--error); font-weight: 700; }
 
-  .chart-card { background: var(--surface); border-radius: 8px; padding: 22px 24px; }
+  .chart-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 22px 24px; }
   .chart-wrap { position: relative; height: 240px; }
 
   table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
@@ -85,21 +88,21 @@
   td { padding: 12px 10px; border-bottom: 1px solid var(--border-soft); color: var(--near-white); }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: var(--surface-2); }
-  .amount-pos { color: var(--green); font-weight: 700; text-align: right; }
+  .amount-pos { color: var(--up); font-weight: 700; text-align: right; }
   .amount-neg { color: var(--error); font-weight: 700; text-align: right; }
   .cat-label { font-size: 0.75rem; color: var(--silver); }
 
   /* Modal */
   .overlay {
     display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7); z-index: 100;
+    background: rgba(10,11,13,0.45); z-index: 100;
     align-items: center; justify-content: center;
   }
   .overlay.active { display: flex; }
   .modal {
-    background: var(--surface-3); border-radius: 8px; width: 460px; max-width: 95vw;
+    background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; width: 460px; max-width: 95vw;
     max-height: 80vh; display: flex; flex-direction: column; overflow: hidden;
-    box-shadow: rgba(0,0,0,0.5) 0 8px 24px;
+    box-shadow: rgba(10,11,13,0.12) 0 12px 32px;
   }
   .modal-head {
     padding: 24px 24px 16px; border-bottom: 1px solid var(--border-soft);
@@ -281,8 +284,8 @@ const KEYS = ["2026-06"];
 let currentIdx = KEYS.indexOf("2026-06");
 if (currentIdx < 0) currentIdx = KEYS.length - 1;
 
-// พาเลตเขียวล้วนธีม Spotify ไล่เฉดอ่อน→เข้ม (ใช้คู่กับเรียงยอดน้อย→มาก ให้เป็นกราเดียนต์)
-const DONUT_COLORS = ['#cdeebd','#aee59a','#8fdc7a','#6fd35f','#4ec74f','#2ebd4a','#1db954','#19a34a','#15863a','#11702f','#0d5a25','#09441b'];
+// พาเลตน้ำเงิน Coinbase ไล่เฉดอ่อน→เข้ม (ใช้คู่กับเรียงยอดน้อย→มาก ให้เป็นกราเดียนต์)
+const DONUT_COLORS = ['#cfe0ff','#b3ccff','#97b8ff','#7aa3ff','#5e8fff','#427bff','#2667ff','#0052ff','#0047df','#003cbf','#00329f','#002880'];
 // สีล็อกเฉพาะหมวด (override พาเลตปกติ) — ตอนนี้ว่าง ทุกหมวดใช้พาเลตเขียวเหมือนกันหมด
 const CAT_COLORS = {};
 
@@ -302,25 +305,25 @@ function monthLabel(key) {
 const barChart = new Chart(document.getElementById('barChart'), {
   type: 'bar',
   data: { labels: [], datasets: [
-    { label: 'Budget', data: [], backgroundColor: '#4d4d4d', borderWidth: 0, borderRadius: 8, borderSkipped: false },
-    { label: 'Spent',  data: [], backgroundColor: '#1ed760', borderWidth: 0, borderRadius: 8, borderSkipped: false },
+    { label: 'Budget', data: [], backgroundColor: '#d7dae0', borderWidth: 0, borderRadius: 8, borderSkipped: false },
+    { label: 'Spent',  data: [], backgroundColor: '#0052ff', borderWidth: 0, borderRadius: 8, borderSkipped: false },
   ]},
   options: {
     responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: '#b3b3b3', font: { size: 11 }, usePointStyle: true, pointStyle: 'circle', boxWidth: 6, padding: 16 } } },
+    plugins: { legend: { labels: { color: '#5b616e', font: { size: 11 }, usePointStyle: true, pointStyle: 'circle', boxWidth: 6, padding: 16 } } },
     scales: {
-      x: { ticks: { color: '#b3b3b3', font: { size: 10 } }, grid: { display: false }, border: { display: false } },
-      y: { ticks: { color: '#b3b3b3' }, grid: { color: '#2a2a2a' }, border: { display: false } }
+      x: { ticks: { color: '#5b616e', font: { size: 10 } }, grid: { display: false }, border: { display: false } },
+      y: { ticks: { color: '#5b616e' }, grid: { color: '#ebecf0' }, border: { display: false } }
     }
   }
 });
 
 const donutChart = new Chart(document.getElementById('donutChart'), {
   type: 'doughnut',
-  data: { labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 3, borderColor: '#181818' }] },
+  data: { labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 3, borderColor: '#ffffff' }] },
   options: {
     responsive: true, maintainAspectRatio: false, cutout: '70%',
-    plugins: { legend: { position: 'bottom', labels: { color: '#b3b3b3', font: { size: 10 }, padding: 12, usePointStyle: true, pointStyle: 'circle', boxWidth: 6 } } }
+    plugins: { legend: { position: 'bottom', labels: { color: '#5b616e', font: { size: 10 }, padding: 12, usePointStyle: true, pointStyle: 'circle', boxWidth: 6 } } }
   }
 });
 
@@ -350,7 +353,7 @@ function render() {
   document.getElementById('subBalance').textContent = 'Budget รวม ' + fmtMoney(totalBudget);
   const bc = document.getElementById('cardBalance');
   bc.className = 'card ' + (balance >= 0 ? 'balance' : 'balance-neg');
-  document.getElementById('sumBalance').style.color = balance >= 0 ? '#ffffff' : '#f3727f';
+  document.getElementById('sumBalance').style.color = balance >= 0 ? '#0a0b0d' : '#cf202f';
 
   // Budget cards
   const spentByCat = {};
@@ -395,12 +398,12 @@ function render() {
   // Expense table
   document.getElementById('expenseRows').innerHTML = [...expenses].sort((a,b)=>b.date.localeCompare(a.date)).slice(0, 5).map(e =>
     `<tr><td>${fmtDate(e.date)}</td><td>${e.name}</td><td class="cat-label">${e.category}</td><td class="amount-neg">-฿${e.amount.toLocaleString()}</td></tr>`
-  ).join('') || '<tr><td colspan="4" style="text-align:center;color:#bbb;padding:20px">ไม่มีรายจ่าย</td></tr>';
+  ).join('') || '<tr><td colspan="4" style="text-align:center;color:#8a919e;padding:20px">ไม่มีรายจ่าย</td></tr>';
 
   // Income table
   document.getElementById('incomeRows').innerHTML = income.map(i =>
     `<tr><td>${fmtDate(i.date)}</td><td>${i.source}</td><td class="amount-pos">+฿${i.amount.toLocaleString()}</td></tr>`
-  ).join('') || '<tr><td colspan="3" style="text-align:center;color:#bbb;padding:20px">ไม่มีรายรับ</td></tr>';
+  ).join('') || '<tr><td colspan="3" style="text-align:center;color:#8a919e;padding:20px">ไม่มีรายรับ</td></tr>';
 }
 
 function changeMonth(dir) {

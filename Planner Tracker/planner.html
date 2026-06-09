@@ -9,11 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --accent: #1ed760; --accent-hover: #1db954; --accent-soft: rgba(30,215,96,0.12);
-  --bg: #121212; --surface: #181818; --surface-2: #1f1f1f; --surface-3: #282828;
-  --text: #ffffff; --silver: #b3b3b3; --near-white: #cbcbcb;
-  --border: #4d4d4d; --border-soft: #2a2a2a;
-  --red: #f3727f; --orange: #ffa42b; --green: #1ed760; --blue: #60a5fa;
+  /* Coinbase Light — brand blue #0052FF on white */
+  --accent: #0052ff; --accent-hover: #0043d6; --accent-soft: rgba(0,82,255,0.10);
+  --bg: #ffffff; --surface: #ffffff; --surface-2: #f5f6f8; --surface-3: #eef0f3;
+  --text: #0a0b0d; --silver: #5b616e; --near-white: #1f2128;
+  --border: #d7dae0; --border-soft: #ebecf0;
+  --red: #cf202f; --orange: #b8860b; --green: #098551; --blue: #0052ff;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { overflow-x: hidden; }
@@ -47,7 +48,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .month-label { font-size: 0.8125rem; font-weight: 700; min-width: 96px; text-align: center; }
 .btn-today {
   background: var(--accent); border: none; border-radius: 9999px;
-  padding: 5px 12px; font-size: 0.75rem; font-weight: 700; color: #000; cursor: pointer; transition: background .15s;
+  padding: 5px 12px; font-size: 0.75rem; font-weight: 700; color: #fff; cursor: pointer; transition: background .15s;
 }
 .btn-today:hover { background: var(--accent-hover); }
 .updated { color: var(--silver); font-size: 0.7rem; white-space: nowrap; }
@@ -81,7 +82,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .container { max-width: 1080px; margin: 0 auto; padding: 28px 20px 64px; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.card { background: var(--surface); border-radius: 8px; padding: 20px 22px; margin-bottom: 14px; }
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
 .section-title { font-size: 0.6875rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 14px; }
 .empty { color: var(--silver); font-size: 0.875rem; text-align: center; padding: 24px 0; }
 .divider { border: none; border-top: 1px solid var(--border-soft); margin: 0; }
@@ -120,16 +121,16 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .todo-title.done { text-decoration: line-through; color: var(--silver); }
 .todo-meta { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
 .chip { font-size: 0.6375rem; font-weight: 700; padding: 2px 7px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
-.chip-todo { background: rgba(139,139,139,.18); color: var(--silver); }
-.chip-inprogress { background: rgba(255,164,43,.2); color: var(--orange); }
-.chip-done { background: rgba(30,215,96,.2); color: var(--green); }
+.chip-todo { background: #eef0f3; color: var(--silver); }
+.chip-inprogress { background: rgba(184,134,11,.14); color: var(--orange); }
+.chip-done { background: rgba(9,133,81,.12); color: var(--green); }
 .chip-due { background: var(--border-soft); color: var(--silver); }
-.chip-due.overdue { background: rgba(243,114,127,.2); color: var(--red); }
-.chip-cat { background: rgba(255,255,255,.12); color: var(--near-white); }
+.chip-due.overdue { background: rgba(207,32,47,.12); color: var(--red); }
+.chip-cat { background: var(--blue-soft, rgba(0,82,255,.08)); color: var(--blue); }
 
 /* ── TODOS TAB ── */
 .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
-.stat-card { background: var(--surface); border-radius: 8px; padding: 16px 18px; text-align: center; }
+.stat-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px 18px; text-align: center; }
 .stat-num { font-size: 1.625rem; font-weight: 700; }
 .stat-lbl { font-size: 0.6375rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
 .filter-row { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
@@ -141,10 +142,10 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .filter-btn:hover { color: var(--text); }
 .filter-btn.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .filter-sep { width: 1px; height: 22px; background: var(--border-soft); flex-shrink: 0; }
-.todo-list-card { background: var(--surface); border-radius: 8px; padding: 4px 18px; }
+.todo-list-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 4px 18px; }
 
 /* ── CALENDAR ── */
-.cal-wrap { background: var(--surface); border-radius: 8px; padding: 20px 22px; }
+.cal-wrap { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 20px 22px; }
 .cal-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 3px; }
 .cal-head { text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 1px; padding: 6px 0 10px; }
 .cal-day {
@@ -159,7 +160,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .cal-events-list { display: flex; flex-direction: column; gap: 2px; }
 .cal-ev-chip {
   font-size: 0.5625rem; padding: 2px 5px; border-radius: 4px;
-  background: rgba(30,215,96,.2); color: var(--near-white);
+  background: rgba(0,82,255,.10); color: var(--blue);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .cal-todo-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; }
@@ -168,7 +169,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 /* ── HABITS TAB ── */
 #habitTracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 768px) { #habitTracks { grid-template-columns: 1fr; } }
-.habit-track-card { background: var(--surface); border-radius: 10px; padding: 16px 18px; }
+.habit-track-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px 18px; }
 .habit-track-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 6px; }
 .habit-track-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
 .habit-track-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -183,18 +184,18 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .habit-cal-day {
   aspect-ratio: 1; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.35);
+  font-size: 0.625rem; font-weight: 500; color: #9aa0ab;
   user-select: none;
 }
-.habit-cal-day.done { background: rgba(30,215,96,0.55); color: rgba(30,215,96,0.9); }
+.habit-cal-day.done { background: rgba(9,133,81,0.16); color: #098551; font-weight: 700; }
 .habit-cal-day.nodata { background: var(--surface-2); }
-.habit-cal-day.future { background: transparent; color: rgba(255,255,255,0.1); cursor: default; }
+.habit-cal-day.future { background: transparent; color: #d7dae0; cursor: default; }
 .habit-cal-day.today-day { outline: 1.5px solid var(--accent); outline-offset: -1.5px; color: var(--accent); }
 
 /* ── MODAL ── */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100; align-items: center; justify-content: center; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(10,11,13,.45); z-index: 100; align-items: center; justify-content: center; }
 .overlay.active { display: flex; }
-.modal { background: var(--surface-3); border-radius: 8px; width: 440px; max-width: 95vw; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.5); }
+.modal { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; width: 440px; max-width: 95vw; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 12px 32px rgba(10,11,13,.12); }
 .modal-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--border-soft); display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0; }
 .modal-title { font-size: 1.0625rem; font-weight: 700; }
 .modal-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
