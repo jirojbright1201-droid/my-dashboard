@@ -130,7 +130,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 .chip-cat { background: var(--blue-soft, rgba(0,82,255,.08)); color: var(--blue); }
 
 /* ── TODOS TAB ── */
-.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
 .stat-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px 18px; text-align: center; }
 .stat-num { font-size: 1.625rem; font-weight: 700; }
 .stat-lbl { font-size: 0.6375rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
@@ -261,13 +261,11 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
     <div class="stats-row">
       <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Total</div></div>
       <div class="stat-card"><div class="stat-num" style="color:var(--silver)" id="statTodo">0</div><div class="stat-lbl">Todo</div></div>
-      <div class="stat-card"><div class="stat-num" style="color:var(--orange)" id="statProgress">0</div><div class="stat-lbl">In Progress</div></div>
       <div class="stat-card"><div class="stat-num" style="color:var(--green)" id="statDone">0</div><div class="stat-lbl">Done</div></div>
     </div>
     <div class="filter-row">
       <button class="filter-btn on" onclick="setFilter('status','all',this)">All</button>
       <button class="filter-btn" onclick="setFilter('status','todo',this)">Todo</button>
-      <button class="filter-btn" onclick="setFilter('status','in-progress',this)">In Progress</button>
       <button class="filter-btn" onclick="setFilter('status','done',this)">Done</button>
     </div>
     <div class="todo-list-card" id="todosList"></div>
@@ -301,7 +299,7 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
 
 <script>
 // ── DATA (agent manages these) ──────────────────────────────────────────
-const ALL_DATA = {"2026-06":{"todos":[{"title":"ทำ Agent Workflow Youtube","status":"done","notes":"","est":"2h"},{"title":"ทำความสะอาดห้อง","status":"done","notes":"","est":"1h"},{"title":"แก้ Script","status":"in-progress","notes":"","est":"1h"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""},{"date":"2026-06-07","title":"Sleep","time":"10:00","end_time":"","est":"8h","notes":""},{"date":"2026-06-07","title":"อ่านหนังสือ","time":"09:30","end_time":"","est":"30m","notes":""},{"date":"2026-06-07","title":"ทำความสะอาดห้อง","time":"08:00","end_time":"","est":"1h","notes":""},{"date":"2026-06-07","title":"ทำ Agent Workflow Youtube","time":"18:30","end_time":"","est":"2h","notes":""},{"date":"2026-06-07","title":"Work at McDonald's","time":"22:00","end_time":"07:00","est":"9h","notes":"กะดึก ข้ามไป 8 มิ.ย. 07:00"},{"date":"2026-06-08","title":"Sleep","time":"10:00","end_time":"18:00","est":"8h","notes":""},{"date":"2026-06-08","title":"ทำบัตรประชาชน","time":"08:00","end_time":"09:30","est":"1h30m","notes":""}],"habits":[{"habit":"exercise","done_dates":[]},{"habit":"read","done_dates":[]},{"habit":"water","done_dates":[]},{"habit":"sleep_early","done_dates":[]}]}};
+const ALL_DATA = {"2026-06":{"todos":[{"title":"ทำ Agent Workflow Youtube","status":"done","notes":"","est":"2h"},{"title":"ทำความสะอาดห้อง","status":"done","notes":"","est":"1h"},{"title":"แก้ Script","status":"todo","notes":"","est":"1h"}],"events":[{"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""},{"date":"2026-06-07","title":"Sleep","time":"10:00","end_time":"","est":"8h","notes":""},{"date":"2026-06-07","title":"อ่านหนังสือ","time":"09:30","end_time":"","est":"30m","notes":""},{"date":"2026-06-07","title":"ทำความสะอาดห้อง","time":"08:00","end_time":"","est":"1h","notes":""},{"date":"2026-06-07","title":"ทำ Agent Workflow Youtube","time":"18:30","end_time":"","est":"2h","notes":""},{"date":"2026-06-07","title":"Work at McDonald's","time":"22:00","end_time":"07:00","est":"9h","notes":"กะดึก ข้ามไป 8 มิ.ย. 07:00"},{"date":"2026-06-08","title":"Sleep","time":"10:00","end_time":"18:00","est":"8h","notes":""},{"date":"2026-06-08","title":"ทำบัตรประชาชน","time":"08:00","end_time":"09:30","est":"1h30m","notes":""}],"habits":[{"habit":"exercise","done_dates":[]},{"habit":"read","done_dates":[]},{"habit":"water","done_dates":[]},{"habit":"sleep_early","done_dates":[]}]}};
 const KEYS = ["2026-06"];
 
 const HABITS = ['exercise','read','water','sleep_early'];
@@ -441,11 +439,10 @@ function renderAgenda(){
 function renderTodos(){
   const data  = getMonthData(curMonth);
   const todos = data.todos||[];
-  const cnt   = {todo:0,'in-progress':0,done:0};
+  const cnt   = {todo:0,done:0};
   todos.forEach(t=>{ if(cnt[t.status]!==undefined) cnt[t.status]++; });
   document.getElementById('statTotal').textContent   = todos.length;
   document.getElementById('statTodo').textContent    = cnt.todo;
-  document.getElementById('statProgress').textContent= cnt['in-progress'];
   document.getElementById('statDone').textContent    = cnt.done;
 
   let list = todos.slice();
@@ -464,8 +461,8 @@ function renderTodos(){
 
 function renderTodoItem(t){
   const isDone=t.status==='done';
-  const sl={'todo':'Todo','in-progress':'In Progress','done':'Done'}[t.status]||t.status;
-  const statusCls={'todo':'chip-todo','in-progress':'chip-inprogress','done':'chip-done'}[t.status]||'chip-todo';
+  const sl={'todo':'Todo','done':'Done'}[t.status]||t.status;
+  const statusCls={'todo':'chip-todo','done':'chip-done'}[t.status]||'chip-todo';
   const chips=[`<span class="chip ${statusCls}">${esc(sl)}</span>`];
   if(t.est) chips.push(`<span class="chip chip-cat">⏱ ${esc(t.est)}</span>`);
   return `<div class="todo-item">
