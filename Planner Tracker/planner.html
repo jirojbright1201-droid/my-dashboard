@@ -506,12 +506,12 @@ function renderCalendar(){
   for(let i=0;i<startDow;i++) cells+=`<div class="cal-day empty"></div>`;
   for(let day=1;day<=days;day++){
     const ds=`${y}-${p2(m)}-${p2(day)}`, isT=ds===td, dd=byDate[ds]||{ev:[]};
-    const evChips=dd.ev.slice(0,2).map(e=>`<div class="cal-ev-chip">${esc(e.title)}</div>`).join('');
-    const more=dd.ev.length>2?`<div class="cal-ev-chip" style="opacity:.6">+${dd.ev.length-2}</div>`:'';
-    const dots=pendingTodos.slice(0,6).map(t=>`<div class="cal-dot" style="background:${TODO_DOT}" title="${esc(t.title)}"></div>`).join('');
+    // Preview: show events as dots only (no title text); details appear when opening the day
+    const evDots=dd.ev.slice(0,8).map(e=>`<div class="cal-dot" style="background:var(--accent)" title="${esc(e.title)}"></div>`).join('');
+    const todoDots=pendingTodos.slice(0,6).map(t=>`<div class="cal-dot" style="background:${TODO_DOT}" title="${esc(t.title)}"></div>`).join('');
+    const dots=evDots+todoDots;
     cells+=`<div class="cal-day${isT?' today-day':''}" onclick="openModal('${ds}')">
       <div class="cal-num">${day}</div>
-      <div class="cal-events-list">${evChips}${more}</div>
       ${dots?`<div class="cal-todo-dots">${dots}</div>`:''}
     </div>`;
   }
