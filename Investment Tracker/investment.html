@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Dashboard — Mockup</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0052ff; --blue-deep:#0043d6; --blue-soft:rgba(0,82,255,.08);
+    --up:#098551; --up-soft:rgba(9,133,81,.12); --down:#cf202f; --down-soft:rgba(207,32,47,.10);
+    --bg:#ffffff; --surface:#ffffff; --surface-2:#f5f6f8; --surface-3:#eef0f3;
+    --text:#0a0b0d; --silver:#5b616e; --dim:#8a919e;
+    --border:#d7dae0; --border-soft:#ebecf0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter',system-ui,Arial,sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
+
+  .topbar{position:sticky; top:0; z-index:50; background:var(--bg); border-bottom:1px solid var(--border-soft);
+    display:flex; align-items:center; gap:16px; padding:0 22px; height:60px; flex-wrap:wrap;}
+  .topbar h1{font-size:1.25rem; font-weight:800; color:var(--blue); white-space:nowrap;}
+  .tabs{display:flex; gap:2px; flex:1; overflow-x:auto;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{background:none; border:none; cursor:pointer; padding:6px 13px; border-radius:999px;
+    font-size:.8125rem; font-weight:600; color:var(--silver); white-space:nowrap; transition:.15s;}
+  .tab-btn:hover{color:var(--text); background:var(--surface-2);}
+  .tab-btn.active{color:var(--text); background:var(--surface-3);}
+  .upd{display:flex; align-items:center; gap:9px; flex-shrink:0;}
+  .upd .ts{font-size:.7rem; color:var(--dim); white-space:nowrap;}
+  .btn-upd{background:var(--blue); color:#fff; border:none; border-radius:999px; padding:7px 14px;
+    font-size:.75rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:6px;}
+  .btn-upd:hover{background:var(--blue-deep);}
+
+  .mockban{background:#fff8e6; border-bottom:1px solid #f0d98a; color:#9a6700; font-size:.75rem; text-align:center; padding:6px 12px; font-weight:600;}
+
+  .wrap{max-width:1100px; margin:0 auto; padding:24px 18px 70px;}
+  .tab-content{display:none;} .tab-content.active{display:block;}
+  .sec-title{font-size:.6875rem; color:var(--silver); font-weight:700; text-transform:uppercase; letter-spacing:1.2px; margin:24px 0 12px;}
+  .sec-title:first-child{margin-top:0;}
+
+  .card{background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:20px 22px;}
+  .grid-sum{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:8px;}
+  .sum .lbl{font-size:.6875rem; color:var(--silver); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;}
+  .sum .val{font-size:1.55rem; font-weight:800; letter-spacing:-.5px;}
+  .sum .sub{font-size:.8rem; margin-top:6px; color:var(--silver);}
+  .pos{color:var(--up);} .neg{color:var(--down);}
+  .chip{display:inline-flex; align-items:center; gap:4px; font-size:.7rem; font-weight:700; padding:2px 8px; border-radius:999px;}
+  .chip.up{background:var(--up-soft); color:var(--up);} .chip.down{background:var(--down-soft); color:var(--down);}
+  .chip.flat{background:var(--surface-3); color:var(--silver);}
+
+  .grid2{display:grid; grid-template-columns:1.4fr 1fr; gap:14px;}
+  .chart-wrap{position:relative; height:240px;}
+
+  table{width:100%; border-collapse:collapse; font-size:.85rem;}
+  th{font-size:.65rem; text-transform:uppercase; letter-spacing:.6px; color:var(--silver); font-weight:700; text-align:right; padding:0 10px 10px; border-bottom:1px solid var(--border-soft);}
+  th:first-child{text-align:left;}
+  td{padding:11px 10px; border-bottom:1px solid var(--border-soft); text-align:right;}
+  td:first-child{text-align:left;}
+  tr:last-child td{border-bottom:none;}
+  .tk{font-weight:800;} .tk small{display:block; font-weight:500; color:var(--dim); font-size:.7rem;}
+  .num{font-variant-numeric:tabular-nums;}
+
+  /* holdings detail */
+  .hold{border:1px solid var(--border-soft); border-radius:12px; padding:16px 18px; margin-bottom:12px;}
+  .hold-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;}
+  .hold-name{font-size:1rem; font-weight:800;}
+  .hold-name small{font-weight:500; color:var(--dim); font-size:.78rem;}
+  .hold-stats{display:flex; gap:18px; flex-wrap:wrap; margin-top:6px; font-size:.8rem; color:var(--silver);}
+  .hold-stats b{color:var(--text);}
+  .trade{border-left:3px solid var(--blue); background:var(--blue-soft); border-radius:0 8px 8px 0; padding:9px 13px; margin-top:10px;}
+  .trade .t-top{font-size:.8rem; font-weight:700;}
+  .trade .t-why{font-size:.8rem; color:var(--silver); margin-top:3px;}
+
+  /* market */
+  .idx-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+  .idx{background:var(--surface-2); border-radius:12px; padding:14px 16px;}
+  .idx .n{font-size:.72rem; color:var(--silver); font-weight:700;}
+  .idx .p{font-size:1.2rem; font-weight:800; margin-top:4px;}
+  .sector{display:flex; align-items:center; gap:12px; padding:8px 0;}
+  .sector .s-name{width:130px; font-size:.82rem; font-weight:600; flex-shrink:0;}
+  .sector .s-bar{flex:1; height:8px; background:var(--surface-3); border-radius:999px; position:relative; overflow:hidden;}
+  .sector .s-fill{position:absolute; top:0; height:100%; border-radius:999px;}
+  .sector .s-val{width:58px; text-align:right; font-size:.8rem; font-weight:700; font-variant-numeric:tabular-nums;}
+  .news{border:1px solid var(--border-soft); border-radius:12px; padding:13px 16px; margin-bottom:10px;}
+  .news .n-tag{font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--blue);}
+  .news .n-head{font-size:.92rem; font-weight:700; margin:4px 0 4px;}
+  .news .n-sum{font-size:.82rem; color:var(--silver); line-height:1.5;}
+  .news .n-foot{font-size:.72rem; color:var(--dim); margin-top:7px;}
+
+  /* arena */
+  .vs-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .pf{border:1px solid var(--border-soft); border-radius:14px; padding:18px 20px;}
+  .pf.you{border-color:var(--blue); box-shadow:0 0 0 1px var(--blue) inset;}
+  .pf .pf-name{font-size:.95rem; font-weight:800; display:flex; align-items:center; gap:8px;}
+  .pf .pf-ret{font-size:1.7rem; font-weight:800; margin:8px 0 2px; letter-spacing:-.5px;}
+  .pf .pf-val{font-size:.8rem; color:var(--silver);}
+  .dot{width:10px; height:10px; border-radius:50%;}
+  .dot.b{background:var(--blue);} .dot.p{background:#7c4dff;}
+  .pf-hold{display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;}
+  .pf-hold .h{background:var(--surface-2); border:1px solid var(--border-soft); border-radius:7px; padding:4px 9px; font-size:.74rem; font-weight:700;}
+  .pf-hold .h span{font-weight:500; color:var(--silver);}
+  .jr{border-radius:10px; padding:11px 14px; margin-bottom:9px; font-size:.83rem;}
+  .jr.good{background:var(--up-soft);} .jr.bad{background:var(--down-soft);}
+  .jr .j-top{font-weight:700; display:flex; align-items:center; gap:7px;}
+  .jr .j-top .who{font-size:.66rem; padding:1px 7px; border-radius:999px; background:rgba(0,0,0,.06); color:var(--silver);}
+  .jr .j-txt{color:var(--silver); margin-top:3px; line-height:1.45;}
+  .move{border:1px solid var(--border-soft); border-radius:10px; padding:11px 14px; margin-bottom:9px;}
+  .move .m-act{font-size:.83rem; font-weight:700;}
+  .move .m-why{font-size:.8rem; color:var(--silver); margin-top:3px;}
+
+  /* thesis */
+  .th-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px;}
+  .th{border:1px solid var(--border-soft); border-radius:14px; padding:18px 20px; transition:.15s;}
+  .th:hover{border-color:#bfd0ff; box-shadow:0 6px 18px rgba(10,40,120,.07);}
+  .th .th-cat{font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.6px; color:var(--blue);}
+  .th .th-title{font-size:1.05rem; font-weight:800; margin:6px 0 8px;}
+  .th .th-sum{font-size:.84rem; color:var(--silver); line-height:1.55;}
+  .th .th-meta{font-size:.72rem; color:var(--dim); margin-top:10px;}
+
+  @media(max-width:820px){
+    .grid-sum{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}
+    .idx-grid{grid-template-columns:repeat(2,1fr);} .vs-grid{grid-template-columns:1fr;}
+    .wrap{padding:18px 12px 56px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Investment</h1>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="sw('overview',this)">Overview</button>
+    <button class="tab-btn" onclick="sw('holdings',this)">Holdings</button>
+    <button class="tab-btn" onclick="sw('market',this)">Market</button>
+    <button class="tab-btn" onclick="sw('arena',this)">Arena</button>
+    <button class="tab-btn" onclick="sw('thesis',this)">Thesis</button>
+  </div>
+  <div class="upd">
+    <span class="ts">อัพเดตล่าสุด: 9 มิ.ย. 2026 08:30</span>
+    <button class="btn-upd" onclick="alert('เดโม: ตอนใช้จริง ปุ่มนี้จะสั่งให้ Jarvis ไปดึงราคา/ตลาด/ข่าว/เดินเกม agent แล้วอัพเดต snapshot ให้')">⟳ Trigger Update</button>
+  </div>
+</div>
+<div class="mockban">ตัวอย่าง (MOCKUP) — ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อดูหน้าตา ยังไม่ใช่พอร์ตจริง</div>
+
+<div class="wrap">
+
+  <!-- ===== OVERVIEW ===== -->
+  <div id="t-overview" class="tab-content active">
+    <div class="grid-sum">
+      <div class="card sum"><div class="lbl">มูลค่าพอร์ต</div><div class="val">฿83,048</div><div class="sub">$2,275.30 · FX 36.5</div></div>
+      <div class="card sum"><div class="lbl">เงินต้น (Cost)</div><div class="val">฿65,207</div><div class="sub">$1,786.50</div></div>
+      <div class="card sum"><div class="lbl">กำไร/ขาดทุน</div><div class="val pos">+฿17,841</div><div class="sub pos">+27.4% · +$488.80</div></div>
+      <div class="card sum"><div class="lbl">เทียบ S&P500 (เกม)</div><div class="val pos">+3.8%</div><div class="sub">You vs ตลาด +2.5% → <span class="pos">นำ +1.3%</span></div></div>
+    </div>
+
+    <div class="sec-title">สัดส่วนพอร์ต & การถือครอง</div>
+    <div class="grid2">
+      <div class="card">
+        <table>
+          <thead><tr><th>หุ้น</th><th>มูลค่า</th><th>น้ำหนัก</th><th>P/L</th></tr></thead>
+          <tbody>
+            <tr><td class="tk">MU <small>Micron</small></td><td class="num">฿25,933</td><td class="num">31.2%</td><td class="num pos">+45.0%</td></tr>
+            <tr><td class="tk">VST <small>Vistra</small></td><td class="num">฿18,451</td><td class="num">22.2%</td><td class="num pos">+24.8%</td></tr>
+            <tr><td class="tk">COHR <small>Coherent</small></td><td class="num">฿14,498</td><td class="num">17.5%</td><td class="num pos">+21.1%</td></tr>
+            <tr><td class="tk">NVDA <small>Nvidia</small></td><td class="num">฿13,315</td><td class="num">16.0%</td><td class="num pos">+42.5%</td></tr>
+            <tr><td class="tk">AAPL <small>Apple</small></td><td class="num">฿10,851</td><td class="num">13.1%</td><td class="num neg">-3.3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card"><div class="chart-wrap"><canvas id="donut"></canvas></div></div>
+    </div>
+
+    <div class="sec-title">ผลตอบแทนพอร์ต vs ตลาด (ตั้งแต่เริ่มเกม)</div>
+    <div class="card"><div class="chart-wrap"><canvas id="retLine"></canvas></div></div>
+  </div>
+
+  <!-- ===== HOLDINGS ===== -->
+  <div id="t-holdings" class="tab-content">
+    <div class="sec-title">หุ้นที่ถือ + ประวัติการซื้อ + เหตุผลตอนนั้น</div>
+
+    <div class="hold">
+      <div class="hold-head">
+        <div><div class="hold-name">MU <small>Micron Technology</small></div>
+        <div class="hold-stats"><span>ถือ <b>5 หุ้น</b></span><span>ทุนเฉลี่ย <b>$98.00</b></span><span>ราคาปัจจุบัน <b>$142.10</b></span><span>มูลค่า <b>฿25,933</b></span></div></div>
+        <span class="chip up">▲ +45.0%</span>
+      </div>
+      <div class="trade"><div class="t-top">ซื้อ 5 หุ้น @ $98.00 · 14 เม.ย. 2026</div>
+        <div class="t-why">เหตุผล: ดีมานด์ HBM สำหรับ AI ตึงตัว Micron เป็น 1 ใน 3 เจ้าที่ผลิตได้ มองว่า memory cycle กำลังกลับตัวขึ้น ราคายัง laggard เทียบ semi ตัวอื่น</div></div>
+    </div>
+
+    <div class="hold">
+      <div class="hold-head">
+        <div><div class="hold-name">VST <small>Vistra (พลังงาน)</small></div>
+        <div class="hold-stats"><span>ถือ <b>3 หุ้น</b></span><span>ทุนเฉลี่ย <b>$135.00</b></span><span>ราคาปัจจุบัน <b>$168.50</b></span><span>มูลค่า <b>฿18,451</b></span></div></div>
+        <span class="chip up">▲ +24.8%</span>
+      </div>
+      <div class="trade"><div class="t-top">ซื้อ 3 หุ้น @ $135.00 · 28 เม.ย. 2026</div>
+        <div class="t-why">เหตุผล: ความต้องการไฟฟ้าจาก data center โตแรง ดีล nuclear/IPP ได้ประโยชน์ตรง มองเป็น AI play ทางอ้อมที่ตลาดยังประเมินต่ำ</div></div>
+    </div>
+
+    <div class="hold">
+      <div class="hold-head">
+        <div><div class="hold-name">COHR <small>Coherent (photonics)</small></div>
+        <div class="hold-stats"><span>ถือ <b>4 หุ้น</b></span><span>ทุนเฉลี่ย <b>$82.00</b></span><span>ราคาปัจจุบัน <b>$99.30</b></span><span>มูลค่า <b>฿14,498</b></span></div></div>
+        <span class="chip up">▲ +21.1%</span>
+      </div>
+      <div class="trade"><div class="t-top">ซื้อ 4 หุ้น @ $82.00 · 5 พ.ค. 2026</div>
+        <div class="t-why">เหตุผล: optical transceiver 800G/1.6T โตตาม AI networking, photonics เป็นคอขวดของ data center รุ่นใหม่ COHR เป็นผู้นำ component</div></div>
+    </div>
+
+    <div class="hold">
+      <div class="hold-head">
+        <div><div class="hold-name">NVDA <small>Nvidia</small></div>
+        <div class="hold-stats"><span>ถือ <b>2 หุ้น</b></span><span>ทุนเฉลี่ย <b>$128.00</b></span><span>ราคาปัจจุบัน <b>$182.40</b></span><span>มูลค่า <b>฿13,315</b></span></div></div>
+        <span class="chip up">▲ +42.5%</span>
+      </div>
+      <div class="trade"><div class="t-top">ซื้อ 3 หุ้น @ $120.00 · 2 มี.ค. 2026 · ขาย 1 หุ้น @ $150.00 · 20 พ.ค. 2026</div>
+        <div class="t-why">เหตุผลซื้อ: แกนหลักของ AI compute ครองตลาด GPU. เหตุผลขายบางส่วน: ล็อกกำไรหลัง +25% (ภายหลังมองว่าขายเร็วไป — ดู Arena/Journal)</div></div>
+    </div>
+
+    <div class="hold">
+      <div class="hold-head">
+        <div><div class="hold-name">AAPL <small>Apple</small></div>
+        <div class="hold-stats"><span>ถือ <b>1.5 หุ้น</b></span><span>ทุนเฉลี่ย <b>$205.00</b></span><span>ราคาปัจจุบัน <b>$198.20</b></span><span>มูลค่า <b>฿10,851</b></span></div></div>
+        <span class="chip down">▼ -3.3%</span>
+      </div>
+      <div class="trade"><div class="t-top">ซื้อ 1.5 หุ้น @ $205.00 · 18 พ.ค. 2026</div>
+        <div class="t-why">เหตุผล: ถือเป็น defensive/กระแสเงินสดแกร่ง รอจังหวะ AI on-device แต่ momentum ยังอ่อน — ติดลบเล็กน้อย</div></div>
+    </div>
+  </div>
+
+  <!-- ===== MARKET ===== -->
+  <div id="t-market" class="tab-content">
+    <div class="sec-title">ภาพรวมตลาด</div>
+    <div class="idx-grid">
+      <div class="idx"><div class="n">S&P 500</div><div class="p">6,182</div><span class="chip up">+0.8%</span></div>
+      <div class="idx"><div class="n">Nasdaq</div><div class="p">20,540</div><span class="chip up">+1.2%</span></div>
+      <div class="idx"><div class="n">Dow Jones</div><div class="p">44,910</div><span class="chip down">-0.2%</span></div>
+      <div class="idx"><div class="n">VIX</div><div class="p">13.4</div><span class="chip flat">ตลาดนิ่ง</span></div>
+    </div>
+
+    <div class="sec-title">Sector Movers (วันนี้)</div>
+    <div class="card">
+      <div class="sector"><div class="s-name">Semiconductors</div><div class="s-bar"><div class="s-fill" style="left:50%; width:31%; background:var(--up)"></div></div><div class="s-val pos">+3.1%</div></div>
+      <div class="sector"><div class="s-name">Energy</div><div class="s-bar"><div class="s-fill" style="left:50%; width:24%; background:var(--up)"></div></div><div class="s-val pos">+2.4%</div></div>
+      <div class="sector"><div class="s-name">Technology</div><div class="s-bar"><div class="s-fill" style="left:50%; width:18%; background:var(--up)"></div></div><div class="s-val pos">+1.8%</div></div>
+      <div class="sector"><div class="s-name">Financials</div><div class="s-bar"><div class="s-fill" style="left:50%; width:5%; background:var(--up)"></div></div><div class="s-val pos">+0.5%</div></div>
+      <div class="sector"><div class="s-name">Healthcare</div><div class="s-bar"><div class="s-fill" style="left:43%; width:7%; background:var(--down)"></div></div><div class="s-val neg">-0.7%</div></div>
+      <div class="sector"><div class="s-name">Consumer Staples</div><div class="s-bar"><div class="s-fill" style="left:38%; width:12%; background:var(--down)"></div></div><div class="s-val neg">-1.2%</div></div>
+    </div>
+
+    <div class="sec-title">ข่าวภาพรวมตลาด (Agent สรุป)</div>
+    <div class="news"><div class="n-tag">Macro</div><div class="n-head">Fed ส่งสัญญาณคงดอกเบี้ย ตลาดมองโอกาสลดดอกปลายปีเพิ่มขึ้น</div><div class="n-sum">บอนด์ยีลด์ 10 ปีลงมาที่ 4.0% หนุน growth/tech ฟื้น นักลงทุนหมุนเงินเข้ากลุ่มเทคและ semi</div><div class="n-foot">ที่มา: (mock) Reuters · 9 มิ.ย. 2026</div></div>
+    <div class="news"><div class="n-tag">AI / Semis</div><div class="n-head">ดีมานด์ HBM ยังตึง ราคาชิปหน่วยความจำขยับขึ้นต่อเนื่อง</div><div class="n-sum">ผู้ผลิตหลักขายล่วงหน้าเต็มกำลังถึงปีหน้า เป็นบวกต่อ Micron/SK Hynix และซัพพลายเชน photonics</div><div class="n-foot">ที่มา: (mock) Bloomberg · 8 มิ.ย. 2026</div></div>
+  </div>
+
+  <!-- ===== ARENA ===== -->
+  <div id="t-arena" class="tab-content">
+    <div class="sec-title">สนามแข่ง: พอร์ตคุณ vs NOVA (AI) — เริ่มเท่ากันที่ ฿80,000 เมื่อ 10 พ.ค. 2026</div>
+    <div class="vs-grid">
+      <div class="pf you">
+        <div class="pf-name"><span class="dot b"></span>พอร์ตของคุณ (You)</div>
+        <div class="pf-ret pos">+3.8%</div>
+        <div class="pf-val">฿83,048 · กำไร +฿3,048 ตั้งแต่เริ่มเกม</div>
+        <div class="pf-hold"><div class="h">MU <span>31%</span></div><div class="h">VST <span>22%</span></div><div class="h">COHR <span>18%</span></div><div class="h">NVDA <span>16%</span></div><div class="h">AAPL <span>13%</span></div></div>
+      </div>
+      <div class="pf">
+        <div class="pf-name"><span class="dot p"></span>NOVA (AI คู่แข่ง)</div>
+        <div class="pf-ret pos">+1.9%</div>
+        <div class="pf-val">฿81,520 · กำไร +฿1,520 ตั้งแต่เริ่มเกม</div>
+        <div class="pf-hold"><div class="h">NVDA <span>28%</span></div><div class="h">PLTR <span>22%</span></div><div class="h">AMD <span>20%</span></div><div class="h">GOOGL <span>18%</span></div><div class="h">เงินสด <span>12%</span></div></div>
+      </div>
+    </div>
+
+    <div class="sec-title">เส้นผลตอบแทน (You vs NOVA vs S&P500)</div>
+    <div class="card"><div class="chart-wrap"><canvas id="arenaLine"></canvas></div></div>
+
+    <div class="sec-title">การเคลื่อนไหวล่าสุดของ NOVA (เทรดตามข่าว + เรียนรู้จากพอร์ตคุณ)</div>
+    <div class="move"><div class="m-act">▲ เพิ่มน้ำหนัก NVDA +5% เมื่อ 5 มิ.ย.</div><div class="m-why">เหตุผล NOVA: เห็นว่าคุณขาย NVDA เร็วไปแล้วพลาดขาขึ้นต่อ จึงเลือกถือยาวตามโมเมนตัม + ข่าวดีมานด์ compute</div></div>
+    <div class="move"><div class="m-act">▲ เปิดสถานะ PLTR เมื่อ 2 มิ.ย.</div><div class="m-why">เหตุผล NOVA: ข่าวดีลภาครัฐ + งบโตเกินคาด เล่นสาย growth/โมเมนตัมที่พอร์ตคุณไม่มี</div></div>
+
+    <div class="sec-title">Journal — จุดเด่น & ข้อผิดพลาด (ของคุณ + NOVA)</div>
+    <div class="jr good"><div class="j-top">เข้า MU ก่อนข่าว HBM <span class="who">You</span></div><div class="j-txt">จับ memory cycle ถูกจังหวะ เข้าตอนตลาดยังไม่สนใจ +45% — จุดแข็งเรื่อง timing เชิง thesis</div></div>
+    <div class="jr bad"><div class="j-top">ขาย NVDA เร็วเกินไป <span class="who">You</span></div><div class="j-txt">ล็อกกำไรที่ +25% แต่หลังจากนั้นวิ่งต่ออีก ~22% เสีย upside ไป — ครั้งหน้าควรแบ่งขายเป็นขั้น ไม่เทขายเพราะกลัว</div></div>
+    <div class="jr good"><div class="j-top">ตัดขาดทุนไว <span class="who">NOVA</span></div><div class="j-txt">NOVA ตัด SMCI ทันทีที่มีข่าวความเสี่ยงบัญชี จำกัดขาดทุนได้ดี — วินัยการ cut loss</div></div>
+    <div class="jr bad"><div class="j-top">ไล่ราคายอดดอย <span class="who">NOVA</span></div><div class="j-txt">เข้า PLTR หลังข่าวออกแล้วราคาพุ่ง ทำให้ต้นทุนสูง ติดลบช่วงแรก -8% — ระวังการ FOMO</div></div>
+  </div>
+
+  <!-- ===== THESIS ===== -->
+  <div id="t-thesis" class="tab-content">
+    <div class="sec-title">Thesis ของคุณ — มุมมอง/ความเชื่อเบื้องหลังการลงทุน</div>
+    <div class="th-grid">
+      <div class="th"><div class="th-cat">Memory / Semis</div><div class="th-title">ทำไม Memory ถึงสำคัญ</div><div class="th-sum">AI ไม่ได้ต้องการแค่ GPU แต่ต้องการ "หน่วยความจำแบนด์วิดท์สูง" (HBM) ป้อนข้อมูลให้ทัน เมื่อโมเดลใหญ่ขึ้น memory กลายเป็นคอขวด → ผู้ผลิต 3 เจ้าได้ pricing power...</div><div class="th-meta">ร่างโดยคุณ · Jarvis ช่วยหา data ประกอบได้</div></div>
+      <div class="th"><div class="th-cat">Photonics</div><div class="th-title">Photonics คืออะไร ทำไมถึงมา</div><div class="th-sum">การส่งข้อมูลในศูนย์ข้อมูล AI ด้วย "แสง" แทนทองแดง ลดความร้อน/หน่วงเวลา เมื่อคลัสเตอร์โตระดับล้านชิป optical interconnect กลายเป็นสิ่งจำเป็น ไม่ใช่ทางเลือก...</div><div class="th-meta">ร่างโดยคุณ · ปรับปรุงล่าสุด —</div></div>
+      <div class="th"><div class="th-cat">Energy</div><div class="th-title">ทำไมหุ้นพลังงานถึงน่าสนใจ</div><div class="th-sum">data center กิน "ไฟฟ้า" มหาศาล ดีมานด์ไฟโตเร็วสุดในรอบหลายสิบปี ผู้ผลิตไฟ/nuclear/IPP กลายเป็น AI play ทางอ้อมที่ตลาดเพิ่งเริ่มมอง...</div><div class="th-meta">ร่างโดยคุณ · ปรับปรุงล่าสุด —</div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function sw(name, btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('t-'+name).classList.add('active');
+}
+
+const BLUES = ['#0052ff','#3b78ff','#6a9bff','#9cbcff','#c9dcff'];
+new Chart(document.getElementById('donut'),{
+  type:'doughnut',
+  data:{labels:['MU','VST','COHR','NVDA','AAPL'],
+    datasets:[{data:[25933,18451,14498,13315,10851], backgroundColor:BLUES, borderWidth:3, borderColor:'#fff'}]},
+  options:{responsive:true, maintainAspectRatio:false, cutout:'68%',
+    plugins:{legend:{position:'bottom', labels:{color:'#5b616e', font:{size:11}, padding:12, usePointStyle:true, pointStyle:'circle', boxWidth:7}}}}
+});
+
+const lineOpts = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:'#5b616e', font:{size:11}, usePointStyle:true, pointStyle:'circle', boxWidth:7, padding:14}}},
+  scales:{x:{ticks:{color:'#8a919e', font:{size:10}}, grid:{display:false}, border:{display:false}},
+    y:{ticks:{color:'#8a919e', callback:v=>v+'%'}, grid:{color:'#ebecf0'}, border:{display:false}}}
+};
+const wk = ['10 พ.ค.','17','24','31','7 มิ.ย.'];
+new Chart(document.getElementById('retLine'),{
+  type:'line',
+  data:{labels:wk, datasets:[
+    {label:'พอร์ตคุณ', data:[0,1.1,2.0,2.9,3.8], borderColor:'#0052ff', backgroundColor:'rgba(0,82,255,.08)', fill:true, tension:.35, pointRadius:3},
+    {label:'S&P500', data:[0,0.6,1.2,1.9,2.5], borderColor:'#8a919e', borderDash:[5,4], fill:false, tension:.35, pointRadius:0}
+  ]},
+  options: lineOpts
+});
+new Chart(document.getElementById('arenaLine'),{
+  type:'line',
+  data:{labels:wk, datasets:[
+    {label:'พอร์ตคุณ', data:[0,1.1,2.0,2.9,3.8], borderColor:'#0052ff', backgroundColor:'rgba(0,82,255,.06)', fill:true, tension:.35, pointRadius:3},
+    {label:'NOVA (AI)', data:[0,0.8,1.0,1.6,1.9], borderColor:'#7c4dff', fill:false, tension:.35, pointRadius:3},
+    {label:'S&P500', data:[0,0.6,1.2,1.9,2.5], borderColor:'#8a919e', borderDash:[5,4], fill:false, tension:.35, pointRadius:0}
+  ]},
+  options: lineOpts
+});
+</script>
+</body>
+</html>
