@@ -264,8 +264,8 @@ body { font-family: 'Inter',-apple-system,system-ui,Arial,sans-serif; background
       <div class="stat-card"><div class="stat-num" style="color:var(--blue)" id="statDone">0</div><div class="stat-lbl">Done</div></div>
     </div>
     <div class="filter-row">
-      <button class="filter-btn on" onclick="setFilter('status','all',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('status','todo',this)">Todo</button>
+      <button class="filter-btn" onclick="setFilter('status','all',this)">All</button>
+      <button class="filter-btn on" onclick="setFilter('status','todo',this)">Todo</button>
       <button class="filter-btn" onclick="setFilter('status','done',this)">Done</button>
     </div>
     <div class="todo-list-card" id="todosList"></div>
@@ -316,7 +316,7 @@ const TODO_DOT = 'var(--silver)';
 let curMonth = '';   // "YYYY-MM"
 let selDay   = '';   // "YYYY-MM-DD"
 let activeTab = 'agenda';
-let fStatus   = 'all';
+let fStatus   = 'todo';
 
 // ── UTILS ────────────────────────────────────────────────────────────────
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
