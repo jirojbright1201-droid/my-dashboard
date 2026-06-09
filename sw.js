@@ -1,5 +1,7 @@
-// Dashboard PWA service worker — offline-capable, cache-first
-const CACHE = 'dash-v1';
+// Dashboard PWA service worker
+// Pages: network-first (always fresh when online, cached copy when offline)
+// Static assets: cache-first with runtime caching
+const CACHE = 'dash-v2';
 const CORE = [
   './',
   './index.html',
@@ -29,6 +31,23 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
+
+  // Pages (HTML / navigations) → network-first so an online open always shows latest
+  const isPage = req.mode === 'navigate' || req.destination === 'document';
+  if (isPage) {
+    e.respondWith(
+      fetch(req)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => { try { c.put(req, copy); } catch (_) {} });
+          return res;
+        })
+        .catch(() => caches.match(req).then(hit => hit || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Other assets (icons, fonts, chart.js, ...) → cache-first for speed/offline
   e.respondWith(
     caches.match(req).then(hit => {
       if (hit) return hit;
@@ -36,7 +55,7 @@ self.addEventListener('fetch', e => {
         const copy = res.clone();
         caches.open(CACHE).then(c => { try { c.put(req, copy); } catch (_) {} });
         return res;
-      }).catch(() => caches.match('./index.html'));
+      });
     })
   );
 });
