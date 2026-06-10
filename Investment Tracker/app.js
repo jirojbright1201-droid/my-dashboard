@@ -105,10 +105,10 @@ let sortKey='weight', sortDir=-1; // ใช้โดย tableHtml (Overview) เ
 const THAI_M={'ม.ค.':0,'ก.พ.':1,'มี.ค.':2,'เม.ย.':3,'พ.ค.':4,'มิ.ย.':5,'ก.ค.':6,'ส.ค.':7,'ก.ย.':8,'ต.ค.':9,'พ.ย.':10,'ธ.ค.':11};
 function thaiTs(s){ const p=String(s).trim().split(/\s+/); const d=+p[0]||1, m=THAI_M[p[1]]??0, y=+p[2]||2026; return new Date(y,m,d).getTime(); }
 /* ---------- LOG state & helpers (module-level) ---------- */
-let logF={type:'all',period:'all',you:5,nova:5};
+let logF={type:'all',period:'all',lim:3};
 
 function _lTrade(t){const buy=t.t.includes('ซื้อ');
-  return `<div class="cb-row"><div class="cb-row-ic ${buy?'buy':'sell'}">${buy?'↑':'↓'}</div><div class="cb-row-body"><div class="cb-row-top"><span class="cb-tk">${t.tk}</span><span class="cb-chip ${buy?'buy':'sell'}">${esc(t.t)}</span><span class="cb-dt">${esc(t.date)}</span></div><div class="cb-row-why">${esc(t.why)}</div></div></div>`;}
+  return `<div class="cb-row"><div class="cb-row-ic ${buy?'buy':'sell'}">${buy?'↑':'↓'}</div><div class="cb-row-body"><div class="cb-row-top"><span class="cb-tk">${t.tk}</span><span class="cb-chip ${buy?'buy':'sell'}">${esc(t.t.replace('ซื้อ','Buy').replace('ขาย','Sell'))}</span><span class="cb-dt">${esc(t.date)}</span></div><div class="cb-row-why">${esc(t.why)}</div></div></div>`;}
 function _lMove(m){const buy=m.act.includes('▲');
   return `<div class="cb-row"><div class="cb-row-ic ${buy?'buy':'sell'}">${buy?'↑':'↓'}</div><div class="cb-row-body"><div class="cb-row-top"><span class="cb-chip ${buy?'buy':'sell'}">${esc(m.act)}</span><span class="cb-dt">${esc(m.date)}</span></div><div class="cb-row-why">${esc(m.why)}</div></div></div>`;}
 
@@ -138,80 +138,87 @@ function renderLogFeeds(){
   const novaAll=[...DATA.arena.moves].sort((a,b)=>thaiTs(b.date)-thaiTs(a.date));
   const yF=_lFilter(youAll,false), nF=_lFilter(novaAll,true);
 
-  // build per-column item arrays (empty-state array when no items)
-  const yItems=yF.length===0?['<div class="cb-empty">ไม่มีรายการ</div>']:yF.slice(0,logF.you).map(_lTrade);
-  const nItems=nF.length===0?['<div class="cb-empty">ไม่มีรายการ</div>']:nF.slice(0,logF.nova).map(_lMove);
-  const maxRows=Math.max(yItems.length,nItems.length);
+  // limit ร่วมตัวเดียว: กดทีเดียวขยายพร้อมกันทั้งสองฝั่ง
+  const yShown=yF.slice(0,logF.lim), nShown=nF.slice(0,logF.lim);
+  const R=Math.max(yShown.length,nShown.length,1);
+  const footBtn=items=>{
+    if(items.length>logF.lim) return `<button class="cb-more-btn" onclick="loadMoreLog()">Show more</button>`;
+    return items.length>3?`<button class="cb-more-btn collapse" onclick="collapseLog()">Show less</button>`:'';
+  };
 
-  const yBtn=(()=>{const s=Math.min(logF.you,yF.length);if(s<yF.length)return`<button class="cb-more-btn" onclick="loadMoreLog('you')">แสดงเพิ่ม · เหลืออีก ${yF.length-s} รายการ</button>`;if(yF.length>3)return`<button class="cb-more-btn collapse" onclick="collapseLog('you')">ซ่อน</button>`;return'';})();
-  const nBtn=(()=>{const s=Math.min(logF.nova,nF.length);if(s<nF.length)return`<button class="cb-more-btn" onclick="loadMoreLog('nova')">แสดงเพิ่ม · เหลืออีก ${nF.length-s} รายการ</button>`;if(nF.length>3)return`<button class="cb-more-btn collapse" onclick="collapseLog('nova')">ซ่อน</button>`;return'';})();
+  const cell=(item,renderFn,shownLen,key,i)=>{
+    if(item) return `<div class="lfg-cell ${key}-c">${renderFn(item)}</div>`;
+    if(i===0&&shownLen===0) return `<div class="lfg-cell ${key}-c"><div class="lf-empty">No items</div></div>`;
+    return `<div class="lfg-cell ${key}-c lfg-empty"></div>`;
+  };
 
-  const yLast=yItems.length-1, nLast=nItems.length-1;
-  let cells='';
-  for(let i=0;i<maxRows;i++){
-    const first=i===0;
-    const yC=yItems[i]??'', nC=nItems[i]??'';
-    const yEmpty=yC==='', nEmpty=nC==='';
-    const lastY=i===yLast&&!yBtn, lastN=i===nLast&&!nBtn;
-    cells+=`<div class="lpair-cell you-c${first?' lp-first':''}${lastY?' lp-last':''}${yEmpty?' lp-empty':''}">${yC}</div>`;
-    cells+=`<div class="lpair-cell nova-c${first?' lp-first':''}${lastN?' lp-last':''}${nEmpty?' lp-empty':''}">${nC}</div>`;
+  let rows='';
+  for(let i=0;i<R;i++){
+    rows+=cell(yShown[i],_lTrade,yShown.length,'you',i)+cell(nShown[i],_lMove,nShown.length,'nova',i);
   }
-  const btnRow=(yBtn||nBtn)?`<div class="lpair-btn you-c${!yBtn?' lp-empty':''}">${yBtn}</div><div class="lpair-btn nova-c${!nBtn?' lp-empty':''}">${nBtn}</div>`:'';
-  document.getElementById('log-feeds-wrapper').innerHTML=`<div class="log-feed-paired">${cells}${btnRow}</div>`;
+
+  document.getElementById('log-feeds-wrapper').innerHTML=
+    `<div class="log-feed-grid">`+
+      `<div class="lfg-hd you-c"><span class="lf-name">You</span><span class="lf-cnt">${yF.length} trades</span></div>`+
+      `<div class="lfg-hd nova-c"><span class="lf-name">NOVA</span><span class="lf-cnt">${nF.length} moves</span></div>`+
+      rows+
+      `<div class="lfg-foot you-c">${footBtn(yF)}</div>`+
+      `<div class="lfg-foot nova-c">${footBtn(nF)}</div>`+
+    `</div>`;
   document.querySelectorAll('.log-type-btn').forEach(b=>b.classList.toggle('on',b.dataset.v===logF.type));
   document.querySelectorAll('.log-period-btn').forEach(b=>b.classList.toggle('on',b.dataset.v===logF.period));
 }
-function setLogType(v){logF.type=v;logF.you=3;logF.nova=3;renderLogFeeds();}
-function setLogPeriod(v){logF.period=v;logF.you=3;logF.nova=3;renderLogFeeds();}
-function loadMoreLog(col){logF[col]=Infinity;renderLogFeeds();}
-function collapseLog(col){logF[col]=3;renderLogFeeds();}
+function setLogType(v){logF.type=v;logF.lim=3;renderLogFeeds();}
+function setLogPeriod(v){logF.period=v;logF.lim=3;renderLogFeeds();}
+function loadMoreLog(){logF.lim=Infinity;renderLogFeeds();}
+function collapseLog(){logF.lim=3;renderLogFeeds();}
 
-let logJr={you:false,nova:false};
+let logJr=false;
 const _jrHtml=j=>`<div class="cb-jr"><div class="cb-jr-ic ${j.good?'good':'bad'}">${j.good?'✓':'✕'}</div><div class="cb-jr-body"><div class="cb-jr-t">${esc(j.t)}</div><div class="cb-jr-x">${esc(j.x)}</div></div></div>`;
 
 function renderJrSection(col){
   const who=col==='you'?'You':'NOVA';
   const jList=DATA.arena.journal.filter(j=>j.who===who);
-  const expanded=logJr[col];
+  const expanded=logJr;
   const lim=expanded?Infinity:1;
   const good=jList.filter(j=>j.good), bad=jList.filter(j=>!j.good);
   const hidden=(good.length-Math.min(good.length,lim))+(bad.length-Math.min(bad.length,lim));
   const jrCol=(list,lbl,cls)=>`<div><div class="cb-sub-lbl ${cls}">${lbl}</div>${list.slice(0,lim).length?list.slice(0,lim).map(_jrHtml).join(''):'<div class="cb-empty">—</div>'}</div>`;
   const colBtn=expanded&&(good.length+bad.length>2)
-    ?`<button class="cb-more-btn collapse" onclick="collapseJr('${col}')">ซ่อน</button>`:'';
+    ?`<button class="cb-more-btn collapse" onclick="collapseJr()">Show less</button>`:'';
   document.getElementById(`jr-${col}`).innerHTML=
-    `<div class="log-jr-grid">${jrCol(good,'จุดเด่น','good')}${jrCol(bad,'จุดด้อย','bad')}</div>`+
-    (hidden>0?`<button class="cb-more-btn" onclick="expandJr('${col}')">ดูทั้งหมด · เหลืออีก ${hidden} รายการ</button>`:colBtn);
+    `<div class="log-jr-grid">${jrCol(good,'Pros','good')}${jrCol(bad,'Cons','bad')}</div>`+
+    (hidden>0?`<button class="cb-more-btn" onclick="expandJr()">Show all</button>`:colBtn);
 }
-function expandJr(col){logJr[col]=true;renderJrSection(col);}
-function collapseJr(col){logJr[col]=false;renderJrSection(col);}
+function expandJr(){logJr=true;renderJrSection('you');renderJrSection('nova');}
+function collapseJr(){logJr=false;renderJrSection('you');renderJrSection('nova');}
 
 function renderLog(){
   const colTop=(name,cls,av,ret,val)=>`
     <div class="log-col ${cls}">
       <div class="cb-head"><div class="cb-av ${cls}">${av}</div><div class="cb-col-meta"><div class="cb-col-name">${name}</div><div class="cb-col-perf">${ret} · ${val}</div></div></div>
-      <div id="jr-${cls}"></div>
+      <div id="jr-${cls}" class="jr-wrap"></div>
     </div>`;
 
-  logF={type:'all',period:'all',you:3,nova:3};
-  logJr={you:false,nova:false};
+  logF={type:'all',period:'all',lim:3};
+  logJr=false;
   document.getElementById('t-log').innerHTML=`
-    <div class="log-sub" style="margin-top:0">จุดเด่น &amp; จุดด้อย</div>
+    <div class="log-sub" style="margin-top:0">Pros &amp; Cons</div>
     <div class="log-vs-grid">
-      ${colTop('คุณ','you','คุ','+3.8%','$83,048')}
+      ${colTop('You','you','YOU','+3.8%','$83,048')}
       ${colTop('NOVA (AI)','nova','AI','+1.9%','$81,520')}
     </div>
     <div class="log-tl-section">
       <div class="log-tl-bar">
-        <span class="log-sub" style="margin:0">ไทม์ไลน์การเทรด</span>
+        <span class="log-sub" style="margin:0">Trade Timeline</span>
         <div class="log-filter-bar">
           <div class="seg">
-            <button class="log-type-btn on" data-v="all" onclick="setLogType('all')">ทั้งหมด</button>
-            <button class="log-type-btn" data-v="buy" onclick="setLogType('buy')">ซื้อ / ▲</button>
-            <button class="log-type-btn" data-v="sell" onclick="setLogType('sell')">ขาย / ▼</button>
+            <button class="log-type-btn on" data-v="all" onclick="setLogType('all')">All</button>
+            <button class="log-type-btn" data-v="buy" onclick="setLogType('buy')">Buy / ▲</button>
+            <button class="log-type-btn" data-v="sell" onclick="setLogType('sell')">Sell / ▼</button>
           </div>
           <div class="seg">
-            <button class="log-period-btn on" data-v="all" onclick="setLogPeriod('all')">ทั้งหมด</button>
+            <button class="log-period-btn on" data-v="all" onclick="setLogPeriod('all')">All</button>
             <button class="log-period-btn" data-v="1m" onclick="setLogPeriod('1m')">1M</button>
             <button class="log-period-btn" data-v="3m" onclick="setLogPeriod('3m')">3M</button>
             <button class="log-period-btn" data-v="ytd" onclick="setLogPeriod('ytd')">YTD</button>
@@ -228,20 +235,75 @@ function renderLog(){
 }
 
 /* ---------- MARKET ---------- */
+// sparkline แบบ inline SVG (เบา ไม่พึ่ง Chart.js): เส้น + พื้นไล่เฉดจาง
+function sparkSvg(arr, up){
+  const w=120,h=34,mn=Math.min(...arr),mx=Math.max(...arr),r=(mx-mn)||1;
+  const xy=arr.map((v,i)=>[(i/(arr.length-1))*w, h-2-((v-mn)/r)*(h-4)]);
+  const line=xy.map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+  const area=`0,${h} ${line} ${w},${h}`;
+  const col=up?'var(--up)':'var(--down)';
+  const id='sg'+Math.random().toString(36).slice(2,7);
+  return `<svg class="mk-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${col}" stop-opacity=".20"/><stop offset="1" stop-color="${col}" stop-opacity="0"/>
+    </linearGradient></defs>
+    <polygon points="${area}" fill="url(#${id})"/>
+    <polyline points="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>`;
+}
 function renderMarket(){
   const m=DATA.market;
-  const idx=m.indices.map(i=>`<div class="idx"><div class="n">${i.n}</div><div class="p">${i.p}</div>${i.flat?`<span class="chip flat">${i.flat}</span>`:`<span class="chip ${cls(i.c)}">${pct(i.c)}</span>`}<div style="font-size:.62rem;color:var(--dim);margin-top:7px">ตั้งแต่ 10 พ.ค. <span class="${cls(i.ret)}" style="font-weight:800">${pct(i.ret)}</span></div></div>`).join('');
+  // index ticker cards + sparkline
+  const idx=m.indices.map(i=>{
+    const up=(i.c||0)>=0;
+    const chip=i.flat?`<span class="chip flat">${esc(i.flat)}</span>`:`<span class="chip ${cls(i.c)}">${i.c>=0?'▲':'▼'} ${pct(i.c)}</span>`;
+    const spark=i.spark?sparkSvg(i.spark, i.flat?(i.ret>=0):up):'';
+    return `<div class="mk-idx ${i.flat?'flat':up?'up':'dn'}">
+      <div class="mk-idx-top"><span class="mk-idx-n">${esc(i.n)}</span>${chip}</div>
+      <div class="mk-idx-p">${esc(i.p)}</div>
+      ${spark}
+      <div class="mk-idx-since">ตั้งแต่ 10 พ.ค. <b class="${cls(i.ret)}">${pct(i.ret)}</b></div>
+    </div>`;
+  }).join('');
+
   const maxAbs=Math.max(...m.sectors.map(s=>Math.abs(s.v)));
-  const sect=m.sectors.map(s=>{ const w=Math.abs(s.v)/maxAbs*48; const left=s.v>=0?50:50-w;
-    return `<div class="sector"><div class="s-name">${s.n}</div><div class="s-bar"><div class="s-fill" style="left:${left}%;width:${w}%;background:var(--${s.v>=0?'up':'down'})"></div></div><div class="s-val ${cls(s.v)}">${pct(s.v)}</div></div>`; }).join('');
-  const news=m.news.map(n=>`<div class="news"><div class="n-tag">${esc(n.tag)}</div><div class="n-head">${esc(n.head)}</div><div class="n-sum">${esc(n.sum)}</div><div class="n-foot">ที่มา: (mock) ${esc(n.src)} · ${esc(n.date)}</div></div>`).join('');
+  // แต่ละแถว: พื้นหลัง gradient ไล่สีตามขนาด gainers จากซ้าย / losers จากขวา
+  const secCard=s=>{
+    const dir=s.v>=0?'up':'dn';
+    const chip=`<span class="chip ${cls(s.v)}">${s.v>=0?'▲':'▼'} ${pct(s.v)}</span>`;
+    const sp=s.spark?sparkSvg(s.spark,s.v>=0):'';
+    return `<div class="mk-idx ${dir}">
+      <div class="mk-idx-top"><span class="mk-idx-n">${esc(s.n)}</span>${chip}</div>
+      <div class="mk-idx-p ${cls(s.v)}">${pct(s.v)}</div>
+      ${sp}
+    </div>`;
+  };
+  const sorted=[...m.sectors].sort((a,b)=>b.v-a.v);
+  const sect=sorted.length?sorted.map(secCard).join(''):`<div class="mk-empty">ไม่มีกลุ่มในหมวดนี้</div>`;
+
+  // news — ชิ้นแรกเด่นเต็มแถว ที่เหลือ grid 2 คอลัมน์
+  const tagCls=t=>{const k=String(t).toLowerCase();
+    if(k.includes('ai')||k.includes('semi'))return 'ai';
+    if(k.includes('energy'))return 'energy';
+    if(k.includes('earn'))return 'earn';
+    return 'macro';};
+  const newsCard=(n,feat)=>`<div class="mk-news${feat?' feat':''}">
+    <span class="mk-news-tag ${tagCls(n.tag)}">${esc(n.tag)}</span>
+    <div class="mk-news-head">${esc(n.head)}</div>
+    <div class="mk-news-sum">${esc(n.sum)}</div>
+    <div class="mk-news-foot"><span class="mk-news-src">${esc(n.src)}</span><span class="mk-dot">·</span>${esc(n.date)}<span class="mk-news-mock">mock</span></div>
+  </div>`;
+  const news=newsCard(m.news[0],true)+`<div class="mk-news-grid">${m.news.slice(1).map(n=>newsCard(n,false)).join('')}</div>`;
+
   document.getElementById('t-market').innerHTML = `
-    <div class="sec-title">ภาพรวมตลาด</div>
-    <div class="idx-grid">${idx}</div>
-    <div class="sec-title">Sector Movers (วันนี้)</div>
-    <div class="card">${sect}</div>
-    <div class="sec-title">ข่าวตลาด (Agent สรุป)</div>
-    <div class="feed">${news}</div>`;
+    <div class="sec-title">Market Overview</div>
+    <div class="mk-idx-grid">${idx}</div>
+
+    <div class="sec-title">Sector Performance</div>
+    <div class="mk-idx-grid mk-sec-grid">${sect}</div>
+
+    <div class="sec-title">Market News</div>
+    ${news}`;
 }
 
 /* ---------- ARENA ---------- */

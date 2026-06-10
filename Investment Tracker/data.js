@@ -27,8 +27,22 @@ const DATA = {
       news:[{date:'9 มิ.ย.', head:'ความคืบหน้า AI บนอุปกรณ์ยังช้ากว่าคู่แข่ง', src:'The Verge'}]}
   ],
   market:{
-    indices:[{n:'S&P 500',p:'6,182',c:0.8,ret:2.5},{n:'Nasdaq',p:'20,540',c:1.2,ret:3.4},{n:'Dow Jones',p:'44,910',c:-0.2,ret:1.4},{n:'VIX',p:'13.4',c:0,flat:'ตลาดนิ่ง',ret:-8.2}],
-    sectors:[{n:'Semiconductors',v:3.1},{n:'Energy',v:2.4},{n:'Technology',v:1.8},{n:'Utilities',v:1.5},{n:'Financials',v:0.5},{n:'Industrials',v:0.3},{n:'Healthcare',v:-0.7},{n:'Consumer Staples',v:-1.2}],
+    indices:[
+      {n:'S&P 500',p:'6,182',c:0.8,ret:2.5,spark:[6035,6050,6042,6080,6110,6098,6150,6182]},
+      {n:'Nasdaq',p:'20,540',c:1.2,ret:3.4,spark:[19850,19900,19880,20050,20180,20240,20410,20540]},
+      {n:'Dow Jones',p:'44,910',c:-0.2,ret:1.4,spark:[44700,44820,44950,45010,44980,45050,44980,44910]},
+      {n:'VIX',p:'13.4',c:0,flat:'ตลาดนิ่ง',ret:-8.2,spark:[14.6,14.2,14.0,13.8,13.6,13.5,13.3,13.4]}
+    ],
+    sectors:[
+      {n:'Semiconductors',  v:3.1, spark:[1.2,1.5,2.0,1.8,2.4,2.9,3.1]},
+      {n:'Energy',          v:2.4, spark:[0.6,1.1,1.4,1.8,2.0,2.2,2.4]},
+      {n:'Technology',      v:1.8, spark:[0.3,0.7,1.2,1.0,1.4,1.7,1.8]},
+      {n:'Utilities',       v:1.5, spark:[0.2,0.5,0.9,1.1,1.0,1.3,1.5]},
+      {n:'Financials',      v:0.5, spark:[0.8,0.4,0.6,0.3,0.5,0.4,0.5]},
+      {n:'Industrials',     v:0.3, spark:[0.5,0.2,0.4,0.1,0.3,0.2,0.3]},
+      {n:'Healthcare',      v:-0.7,spark:[0.1,-0.1,-0.3,-0.5,-0.4,-0.6,-0.7]},
+      {n:'Consumer Staples',v:-1.2,spark:[-0.2,-0.4,-0.6,-0.8,-0.9,-1.1,-1.2]}
+    ],
     news:[
       {tag:'Macro', head:'Fed ส่งสัญญาณคงดอกเบี้ย ตลาดมองโอกาสลดดอกปลายปีเพิ่ม', sum:'บอนด์ยีลด์ 10 ปีลงมา 4.0% หนุน growth/tech หมุนเงินเข้าเทค/เซมิ', src:'Reuters', date:'9 มิ.ย.'},
       {tag:'AI / Semis', head:'ดีมานด์ HBM ตึง ราคาชิปหน่วยความจำขึ้นต่อ', sum:'ผู้ผลิตหลักขายล่วงหน้าเต็มถึงปีหน้า บวกต่อ Micron/SK Hynix และซัพพลายเชน photonics', src:'Bloomberg', date:'8 มิ.ย.'},
