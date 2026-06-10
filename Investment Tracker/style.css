@@ -8,7 +8,7 @@
 *{box-sizing:border-box; margin:0; padding:0;}
 body{font-family:'Inter',system-ui,Arial,sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
 .num{font-variant-numeric:tabular-nums;}
-.pos{color:var(--up);} .neg{color:var(--down);}
+.pos{color:var(--up);} .neg{color:var(--down); font-weight:800;}
 
 .topbar{position:sticky; top:0; z-index:40; background:var(--bg); border-bottom:1px solid var(--border-soft);
   display:flex; align-items:center; gap:14px; padding:0 22px; height:58px;}
