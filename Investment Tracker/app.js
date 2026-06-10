@@ -80,8 +80,8 @@ function renderOverview(){
       </div>
       <span class="seg pf-seg">
         <button class="${benchSel===null?'on':''}" onclick="setBench(null)">พอร์ต</button>
-        <button class="${benchSel==='spx'?'on':''}" onclick="setBench('spx')">vs S&P 500</button>
-        <button class="${benchSel==='nasdaq'?'on':''}" onclick="setBench('nasdaq')">vs Nasdaq</button>
+        <button class="${benchSel==='spx'?'on':''}" onclick="setBench('spx')">S&P 500</button>
+        <button class="${benchSel==='nasdaq'?'on':''}" onclick="setBench('nasdaq')">Nasdaq</button>
       </span>
       ${pfLeg}
       <div class="pf-grid"><canvas id="portfolioLine"></canvas></div>
