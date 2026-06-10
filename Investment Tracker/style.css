@@ -181,7 +181,7 @@ tbody tr:hover{background:var(--surface-2);}
 .pf-stats{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px 18px; font-size:.78rem; color:var(--silver); margin:15px 0 4px;}
 .pf-stats b{font-weight:800; font-variant-numeric:tabular-nums;}
 .pf-stat-right{display:flex; gap:18px; flex-wrap:wrap;}
-.pf-hi{color:var(--blue);} .pf-lo{color:var(--blue);}
+.pf-hi{color:var(--up);} .pf-lo{color:var(--down);}
 .pf-seg{margin:6px 0 12px;}
 .pf-leg{display:flex; gap:18px; align-items:center; justify-content:center; margin:0 0 12px; font-size:.77rem; color:var(--silver); font-weight:600;}
 .pf-leg .it{display:inline-flex; align-items:center; gap:8px;}
