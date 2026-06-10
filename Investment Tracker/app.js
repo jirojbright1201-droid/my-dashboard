@@ -76,7 +76,6 @@ function renderOverview(){
         <div class="pf-stat-right">
           <span>สูงสุด <b class="pf-hi">$${hi.toLocaleString()}</b></span>
           <span>ต่ำสุด <b class="pf-lo">$${lo.toLocaleString()}</b></span>
-          <span>เปลี่ยน <b class="${cls(chgPct)}">${pct(chgPct)}</b></span>
         </div>
       </div>
       <span class="seg pf-seg">
