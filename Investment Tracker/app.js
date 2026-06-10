@@ -276,8 +276,17 @@ const allocSorted=[...H].sort((a,b)=>b.val-a.val);
 const allocColors=blueScale(allocSorted.length);
 function drawDonut(){
   new Chart(document.getElementById('donut'),{type:'doughnut',
+    plugins:[ChartDataLabels],
     data:{labels:allocSorted.map(h=>h.tk), datasets:[{data:allocSorted.map(h=>h.val), backgroundColor:allocColors, borderWidth:3, borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'66%',layout:{padding:{bottom:6}},plugins:{legend:{display:true,position:'bottom',labels:{color:'#5b616e',font:{size:10},padding:22,usePointStyle:true,pointStyle:'circle',boxWidth:7}}}}});
+    options:{responsive:true,maintainAspectRatio:false,cutout:'66%',layout:{padding:{bottom:6}},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:'#5b616e',font:{size:10},padding:22,usePointStyle:true,pointStyle:'circle',boxWidth:7}},
+        datalabels:{color:'#fff',font:{weight:'800',size:10},
+          formatter:(v,ctx)=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);const p=v/t*100;return p>=5?p.toFixed(1)+'%':'';}
+        }
+      }
+    }
+  });
 }
 let allocChart=null;
 function openAlloc(){
