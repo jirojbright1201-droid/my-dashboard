@@ -79,7 +79,7 @@ function renderOverview(){
         </div>
       </div>
       <span class="seg pf-seg">
-        <button class="${benchSel===null?'on':''}" onclick="setBench(null)">พอร์ต</button>
+        <button class="${benchSel===null?'on':''}" onclick="setBench(null)">Portfolio</button>
         <button class="${benchSel==='spx'?'on':''}" onclick="setBench('spx')">S&P 500</button>
         <button class="${benchSel==='nasdaq'?'on':''}" onclick="setBench('nasdaq')">Nasdaq</button>
       </span>
