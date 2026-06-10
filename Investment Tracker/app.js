@@ -45,7 +45,7 @@ function renderOverview(){
   const totals=d.map(x=>x.total), hi=Math.max(...totals), lo=Math.min(...totals);
   const today=d[d.length-1].change, todayPct=today/(cur-today)*100;
   const benchName = benchSel==='spx'?'S&P 500':benchSel==='nasdaq'?'Nasdaq':'';
-  const pfLeg = benchSel ? `<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#0052ff"></span>พอร์ตคุณ</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>` : '';
+  const pfLeg = benchSel ? `<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#0052ff"></span>Your Portfolio</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>` : '';
   document.getElementById('t-overview').innerHTML = `
     <div class="kpis">
       <div class="card kpi"><div class="lbl">มูลค่าพอร์ต</div><div class="val">$${Math.round(TOTAL_VAL).toLocaleString()}</div><div class="sub">${thb(TOTAL_VAL)}</div></div>
@@ -217,7 +217,7 @@ function drawPortfolio(){
   const hi=Math.max(...totals), lo=Math.min(...totals);
   // จุดโชว์เฉพาะ จุดล่าสุด + จุดสูงสุด/ต่ำสุด
   const dotR=c=>{const i=c.dataIndex,v=totals[i]; return (i===totals.length-1||v===hi||v===lo)?5:0;};
-  const ds=[{label:'พอร์ตคุณ',data:totals,
+  const ds=[{label:'Your Portfolio',data:totals,
       borderColor:'#0052ff',borderWidth:2.5,fill:false,tension:.4,
       pointRadius:dotR,pointHoverRadius:6,
       pointBackgroundColor:'#0052ff',pointBorderColor:'#fff',pointBorderWidth:2}];
@@ -290,7 +290,7 @@ function drawArena(){
   const a=DATA.arena;
   new Chart(document.getElementById('arenaLine'),{type:'line',
     data:{labels:a.labels,datasets:[
-      {label:'พอร์ตคุณ',data:a.you_s,borderColor:'#0052ff',backgroundColor:'rgba(0,82,255,.06)',fill:true,tension:.35,pointRadius:3},
+      {label:'Your Portfolio',data:a.you_s,borderColor:'#0052ff',backgroundColor:'rgba(0,82,255,.06)',fill:true,tension:.35,pointRadius:3},
       {label:'NOVA',data:a.nova_s,borderColor:'#7c4dff',fill:false,tension:.35,pointRadius:3},
       {label:'S&P500',data:a.spx_s,borderColor:'#8a919e',borderDash:[5,4],fill:false,tension:.35,pointRadius:0}]},
     options:lineOpts});
