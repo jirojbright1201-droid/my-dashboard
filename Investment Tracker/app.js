@@ -28,13 +28,24 @@ function rowHtml(h, showLog){
   </tr>`;
 }
 function tableHtml(list, withSort, showLog){
-  const cols=[['tk','หุ้น'],['price','ราคา'],['day','วันนี้'],['val','มูลค่า'],['weight','น้ำหนัก'],['plpct','P/L'],['','']];
+  const cols=[['tk','Asset'],['price','Price'],['day','Day'],['val','Value'],['weight','Weight'],['plpct','P/L'],['','']];
   const head=cols.map(([k,l])=>{
     if(!l) return '<th></th>';
     const ar = withSort && sortKey===k ? (sortDir>0?' ▲':' ▼') : (withSort?' <span class="ar">⇅</span>':'');
     return `<th ${withSort?`onclick="setSort('${k}')"`:''}>${l}${ar}</th>`;
   }).join('');
   return `<div class="tbl-card"><table><thead><tr>${head}</tr></thead><tbody>${list.map(h=>rowHtml(h,showLog)).join('')}</tbody></table></div>`;
+}
+
+/* ---------- ASSET LIST (Coinbase style) ---------- */
+function assetListHtml(list){
+  return list.map(h=>`
+    <div class="asset-row" onclick="openHolding('${h.tk}',false)">
+      <div class="asset-icon">${h.tk.slice(0,2)}</div>
+      <div class="asset-info"><div class="a-tk">${esc(h.tk)}</div><div class="a-nm">${esc(h.name)}</div></div>
+      <div class="asset-mid"><div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div></div>
+      <div class="asset-end"><div class="a-val">$${Math.round(h.val).toLocaleString()}</div><div class="a-w ${cls(h.pl)}">${pct(h.plpct)}</div></div>
+    </div>`).join('');
 }
 
 /* ---------- OVERVIEW ---------- */
@@ -48,16 +59,16 @@ function renderOverview(){
   const pfLeg = benchSel ? `<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#0052ff"></span>Your Portfolio</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>` : '';
   document.getElementById('t-overview').innerHTML = `
     <div class="kpis">
-      <div class="card kpi"><div class="lbl">มูลค่าพอร์ต</div><div class="val">$${Math.round(TOTAL_VAL).toLocaleString()}</div><div class="sub">${thb(TOTAL_VAL)}</div></div>
-      <div class="card kpi"><div class="lbl">เงินต้น</div><div class="val">$${Math.round(TOTAL_COST).toLocaleString()}</div><div class="sub">${thb(TOTAL_COST)}</div></div>
-      <div class="card kpi"><div class="lbl">กำไร/ขาดทุน</div><div class="val ${cls(TOTAL_PL)}">${TOTAL_PL>=0?'+$':'-$'}${Math.abs(Math.round(TOTAL_PL)).toLocaleString()}</div><div class="sub ${cls(TOTAL_PL)}">${pct(TOTAL_PLPCT)}</div></div>
+      <div class="card kpi"><div class="lbl">Portfolio Value</div><div class="val">$${Math.round(TOTAL_VAL).toLocaleString()}</div><div class="sub">${thb(TOTAL_VAL)}</div></div>
+      <div class="card kpi"><div class="lbl">Cost Basis</div><div class="val">$${Math.round(TOTAL_COST).toLocaleString()}</div><div class="sub">${thb(TOTAL_COST)}</div></div>
+      <div class="card kpi"><div class="lbl">Total P/L</div><div class="val ${cls(TOTAL_PL)}">${TOTAL_PL>=0?'+$':'-$'}${Math.abs(Math.round(TOTAL_PL)).toLocaleString()}</div><div class="sub ${cls(TOTAL_PL)}">${pct(TOTAL_PLPCT)}</div></div>
     </div>
 
-    <div class="sec-title">สัดส่วน & ถือครองหลัก</div>
+    <div class="sec-title">Holdings</div>
     <div class="grid2">
-      ${tableHtml(top,false)}
+      <div class="card" style="padding:0;overflow:hidden">${assetListHtml(top)}</div>
       <div class="card chart-card">
-        <div class="ch-head"><span class="ttl">สัดส่วนพอร์ต</span></div>
+        <div class="ch-head"><span class="ttl">Allocation</span></div>
         <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding-top:34px">
           <div style="position:relative;width:100%;height:280px"><canvas id="donut"></canvas></div>
         </div>
@@ -65,17 +76,17 @@ function renderOverview(){
     </div>
 
     <div class="card pf-card">
-      <div class="pf-lbl">มูลค่าพอร์ต</div>
+      <div class="pf-lbl">Portfolio Value</div>
       <div class="pf-balrow">
         <span class="pf-bal">$${cur.toLocaleString()}</span>
-        <span class="pf-chg ${cls(chgPct)}">${chgPct>=0?'▲':'▼'} ${pct(chgPct)}<span class="pf-chg-sub">ตั้งแต่เริ่ม</span></span>
+        <span class="pf-chg ${cls(chgPct)}">${chgPct>=0?'▲':'▼'} ${pct(chgPct)}<span class="pf-chg-sub">since start</span></span>
       </div>
-      <div class="pf-sub2">เริ่มที่ $${start.toLocaleString()} → ตอนนี้ $${cur.toLocaleString()}</div>
+      <div class="pf-sub2">Started at $${start.toLocaleString()} → Now $${cur.toLocaleString()}</div>
       <div class="pf-stats">
-        <div class="pf-stat">วันนี้ <b class="${cls(today)}">${today>=0?'+':''}$${Math.abs(today).toLocaleString()}</b> <span class="${cls(today)}">(${pct(todayPct)})</span></div>
+        <div class="pf-stat">Today <b class="${cls(today)}">${today>=0?'+':''}$${Math.abs(today).toLocaleString()}</b> <span class="${cls(today)}">(${pct(todayPct)})</span></div>
         <div class="pf-stat-right">
-          <span>สูงสุด <b class="pf-hi">$${hi.toLocaleString()}</b></span>
-          <span>ต่ำสุด <b class="pf-lo">$${lo.toLocaleString()}</b></span>
+          <span>High <b class="pf-hi">$${hi.toLocaleString()}</b></span>
+          <span>Low <b class="pf-lo">$${lo.toLocaleString()}</b></span>
         </div>
       </div>
       <span class="seg pf-seg">

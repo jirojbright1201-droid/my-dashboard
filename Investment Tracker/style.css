@@ -34,7 +34,7 @@ body{font-family:'Inter',system-ui,Arial,sans-serif; background:var(--bg); color
 .link{color:var(--blue); font-size:.74rem; font-weight:700; cursor:pointer; text-transform:none; letter-spacing:0;}
 .link:hover{text-decoration:underline;}
 
-.card{background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:18px 20px;}
+.card{background:var(--surface); border-radius:14px; padding:18px 20px; box-shadow:0 1px 4px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);}
 
 /* KPI */
 .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
@@ -48,7 +48,22 @@ body{font-family:'Inter',system-ui,Arial,sans-serif; background:var(--bg); color
 .chart-wrap{position:relative; height:230px;}
 
 /* table */
-.tbl-card{background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; overflow:hidden;}
+.tbl-card{background:var(--surface); border-radius:14px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);}
+
+/* asset list (Coinbase style) */
+.asset-row{display:flex; align-items:center; gap:13px; padding:12px 18px; border-bottom:1px solid var(--border-soft); cursor:pointer; transition:background .12s;}
+.asset-row:last-child{border-bottom:none;}
+.asset-row:hover{background:var(--surface-2);}
+.asset-icon{width:36px; height:36px; border-radius:50%; background:var(--blue-soft); color:var(--blue); font-size:.62rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; letter-spacing:-.3px;}
+.asset-info{flex:1; min-width:0;}
+.asset-info .a-tk{font-weight:800; font-size:.88rem;}
+.asset-info .a-nm{font-size:.7rem; color:var(--dim); margin-top:1px;}
+.asset-mid{text-align:right; min-width:72px;}
+.asset-mid .a-price{font-weight:700; font-size:.85rem; font-variant-numeric:tabular-nums;}
+.asset-mid .a-day{font-size:.72rem; font-weight:700; margin-top:2px;}
+.asset-end{text-align:right; min-width:68px;}
+.asset-end .a-val{font-weight:700; font-size:.85rem; font-variant-numeric:tabular-nums;}
+.asset-end .a-w{font-size:.72rem; margin-top:2px;}
 table{width:100%; border-collapse:collapse; font-size:.85rem;}
 thead th{font-size:.64rem; text-transform:uppercase; letter-spacing:.5px; color:var(--silver); font-weight:700;
   text-align:right; padding:12px 14px; background:var(--surface-2); white-space:nowrap; cursor:pointer; user-select:none;}
