@@ -256,7 +256,7 @@ function drawPortfolio(){
           titleFont:{size:11,weight:'500'},bodyFont:{size:14,weight:'700'},footerFont:{size:11,weight:'700'},
           callbacks:{label:it=>`${it.dataset.label}  $${Math.round(it.raw).toLocaleString()}`,
             footer:its=>{if(benchSel)return'';const r=d[its[0].dataIndex];const s=r.change>=0?'+':'';
-              return `${s}$${Math.round(r.change).toLocaleString()} วันนั้น`;}}}},
+              return `${s}$${Math.round(r.change).toLocaleString()} that day`;}}}},
       scales:{
         x:{ticks:{color:'#5b616e',font:{size:11}},grid:{display:false},border:{display:false}},
         y:{min:Math.floor((mn-pd)/100)*100,max:Math.ceil((mx+pd)/100)*100,
