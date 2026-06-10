@@ -74,8 +74,8 @@ function renderOverview(){
       <div class="pf-stats">
         <div class="pf-stat">วันนี้ <b class="${cls(today)}">${today>=0?'+':''}$${Math.abs(today).toLocaleString()}</b> <span class="${cls(today)}">(${pct(todayPct)})</span></div>
         <div class="pf-stat-right">
-          <span>สูงสุด <b class="pf-hi">$${hi.toLocaleString()}</b></span>
-          <span>ต่ำสุด <b class="pf-lo">$${lo.toLocaleString()}</b></span>
+          <span>สูงสุด <b class="pf-hi pos">$${hi.toLocaleString()}</b></span>
+          <span>ต่ำสุด <b class="pf-lo neg">$${lo.toLocaleString()}</b></span>
         </div>
       </div>
       <span class="seg pf-seg">
