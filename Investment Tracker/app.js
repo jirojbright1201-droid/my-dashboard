@@ -274,17 +274,26 @@ function blueScale(n){
 }
 const allocSorted=[...H].sort((a,b)=>b.val-a.val);
 const allocColors=blueScale(allocSorted.length);
+const _donutCenter={id:'donutCenter',afterDraw(chart){
+  const act=chart.getActiveElements(); if(!act.length) return;
+  const {ctx,chartArea:{left,top,width,height}}=chart;
+  const idx=act[0].index;
+  const label=chart.data.labels[idx];
+  const val=chart.data.datasets[0].data[idx];
+  const total=chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+  const p=(val/total*100).toFixed(1)+'%';
+  const cx=left+width/2, cy=top+height/2;
+  ctx.save(); ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.font='800 22px Inter'; ctx.fillStyle='#0a0b0d'; ctx.fillText(p,cx,cy-9);
+  ctx.font='600 12px Inter'; ctx.fillStyle='#8a919e'; ctx.fillText(label,cx,cy+13);
+  ctx.restore();
+}};
 function drawDonut(){
   new Chart(document.getElementById('donut'),{type:'doughnut',
-    plugins:[ChartDataLabels],
+    plugins:[_donutCenter],
     data:{labels:allocSorted.map(h=>h.tk), datasets:[{data:allocSorted.map(h=>h.val), backgroundColor:allocColors, borderWidth:3, borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'66%',layout:{padding:{bottom:6}},
-      plugins:{
-        legend:{display:true,position:'bottom',labels:{color:'#5b616e',font:{size:10},padding:22,usePointStyle:true,pointStyle:'circle',boxWidth:7}},
-        datalabels:{color:'#fff',font:{weight:'800',size:10},
-          formatter:(v,ctx)=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);const p=v/t*100;return p>=5?p.toFixed(1)+'%':'';}
-        }
-      }
+      plugins:{legend:{display:true,position:'bottom',labels:{color:'#5b616e',font:{size:10},padding:22,usePointStyle:true,pointStyle:'circle',boxWidth:7}}}
     }
   });
 }
