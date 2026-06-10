@@ -38,7 +38,7 @@ body{font-family:'Inter',system-ui,Arial,sans-serif; background:var(--bg); color
 
 /* KPI */
 .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-.kpi .lbl{font-size:.65rem; color:var(--silver); font-weight:700; text-transform:uppercase; letter-spacing:.9px; margin-bottom:7px;}
+.kpi .lbl{font-size:.65rem; color:var(--blue); font-weight:700; text-transform:uppercase; letter-spacing:.9px; margin-bottom:7px;}
 .kpi .val{font-size:1.45rem; font-weight:800; letter-spacing:-.5px;}
 .kpi .sub{font-size:.76rem; margin-top:5px; color:var(--silver);}
 .chip{display:inline-flex; align-items:center; gap:3px; font-size:.7rem; font-weight:700; padding:2px 8px; border-radius:999px;}
