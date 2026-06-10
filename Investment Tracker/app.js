@@ -104,23 +104,127 @@ function renderOverview(){
 let sortKey='weight', sortDir=-1; // ใช้โดย tableHtml (Overview) เท่านั้น
 const THAI_M={'ม.ค.':0,'ก.พ.':1,'มี.ค.':2,'เม.ย.':3,'พ.ค.':4,'มิ.ย.':5,'ก.ค.':6,'ส.ค.':7,'ก.ย.':8,'ต.ค.':9,'พ.ย.':10,'ธ.ค.':11};
 function thaiTs(s){ const p=String(s).trim().split(/\s+/); const d=+p[0]||1, m=THAI_M[p[1]]??0, y=+p[2]||2026; return new Date(y,m,d).getTime(); }
+/* ---------- LOG state & helpers (module-level) ---------- */
+let logF={type:'all',period:'all',you:5,nova:5};
+
+function _lTrade(t){const buy=t.t.includes('ซื้อ');
+  return `<div class="cb-row"><div class="cb-row-ic ${buy?'buy':'sell'}">${buy?'↑':'↓'}</div><div class="cb-row-body"><div class="cb-row-top"><span class="cb-tk">${t.tk}</span><span class="cb-chip ${buy?'buy':'sell'}">${esc(t.t)}</span><span class="cb-dt">${esc(t.date)}</span></div><div class="cb-row-why">${esc(t.why)}</div></div></div>`;}
+function _lMove(m){const buy=m.act.includes('▲');
+  return `<div class="cb-row"><div class="cb-row-ic ${buy?'buy':'sell'}">${buy?'↑':'↓'}</div><div class="cb-row-body"><div class="cb-row-top"><span class="cb-chip ${buy?'buy':'sell'}">${esc(m.act)}</span><span class="cb-dt">${esc(m.date)}</span></div><div class="cb-row-why">${esc(m.why)}</div></div></div>`;}
+
+function _lFilter(list,isMoves){
+  const allTs=H.flatMap(h=>h.trades).map(t=>thaiTs(t.date)).concat(DATA.arena.moves.map(m=>thaiTs(m.date)));
+  const maxTs=Math.max(...allTs);
+  const maxDate=new Date(maxTs);
+  const cutoffMap={
+    'all':-Infinity,
+    '1m':maxTs-30*86400000,
+    '3m':maxTs-90*86400000,
+    'ytd':new Date(maxDate.getFullYear(),0,1).getTime(),
+    '1y':maxTs-365*86400000,
+    '5y':maxTs-5*365*86400000
+  };
+  const cutoff=cutoffMap[logF.period]??-Infinity;
+  return list.filter(t=>{
+    if(thaiTs(t.date)<cutoff)return false;
+    if(logF.type==='all')return true;
+    const buy=isMoves?t.act.includes('▲'):t.t.includes('ซื้อ');
+    return logF.type==='buy'?buy:!buy;
+  });
+}
+
+function renderLogFeeds(){
+  const youAll=H.flatMap(h=>h.trades.map(t=>({...t,tk:h.tk}))).sort((a,b)=>thaiTs(b.date)-thaiTs(a.date));
+  const novaAll=[...DATA.arena.moves].sort((a,b)=>thaiTs(b.date)-thaiTs(a.date));
+  const yF=_lFilter(youAll,false), nF=_lFilter(novaAll,true);
+
+  // build per-column item arrays (empty-state array when no items)
+  const yItems=yF.length===0?['<div class="cb-empty">ไม่มีรายการ</div>']:yF.slice(0,logF.you).map(_lTrade);
+  const nItems=nF.length===0?['<div class="cb-empty">ไม่มีรายการ</div>']:nF.slice(0,logF.nova).map(_lMove);
+  const maxRows=Math.max(yItems.length,nItems.length);
+
+  const yBtn=(()=>{const s=Math.min(logF.you,yF.length);if(s<yF.length)return`<button class="cb-more-btn" onclick="loadMoreLog('you')">แสดงเพิ่ม · เหลืออีก ${yF.length-s} รายการ</button>`;if(yF.length>3)return`<button class="cb-more-btn collapse" onclick="collapseLog('you')">ซ่อน</button>`;return'';})();
+  const nBtn=(()=>{const s=Math.min(logF.nova,nF.length);if(s<nF.length)return`<button class="cb-more-btn" onclick="loadMoreLog('nova')">แสดงเพิ่ม · เหลืออีก ${nF.length-s} รายการ</button>`;if(nF.length>3)return`<button class="cb-more-btn collapse" onclick="collapseLog('nova')">ซ่อน</button>`;return'';})();
+
+  const yLast=yItems.length-1, nLast=nItems.length-1;
+  let cells='';
+  for(let i=0;i<maxRows;i++){
+    const first=i===0;
+    const yC=yItems[i]??'', nC=nItems[i]??'';
+    const yEmpty=yC==='', nEmpty=nC==='';
+    const lastY=i===yLast&&!yBtn, lastN=i===nLast&&!nBtn;
+    cells+=`<div class="lpair-cell you-c${first?' lp-first':''}${lastY?' lp-last':''}${yEmpty?' lp-empty':''}">${yC}</div>`;
+    cells+=`<div class="lpair-cell nova-c${first?' lp-first':''}${lastN?' lp-last':''}${nEmpty?' lp-empty':''}">${nC}</div>`;
+  }
+  const btnRow=(yBtn||nBtn)?`<div class="lpair-btn you-c${!yBtn?' lp-empty':''}">${yBtn}</div><div class="lpair-btn nova-c${!nBtn?' lp-empty':''}">${nBtn}</div>`:'';
+  document.getElementById('log-feeds-wrapper').innerHTML=`<div class="log-feed-paired">${cells}${btnRow}</div>`;
+  document.querySelectorAll('.log-type-btn').forEach(b=>b.classList.toggle('on',b.dataset.v===logF.type));
+  document.querySelectorAll('.log-period-btn').forEach(b=>b.classList.toggle('on',b.dataset.v===logF.period));
+}
+function setLogType(v){logF.type=v;logF.you=3;logF.nova=3;renderLogFeeds();}
+function setLogPeriod(v){logF.period=v;logF.you=3;logF.nova=3;renderLogFeeds();}
+function loadMoreLog(col){logF[col]=Infinity;renderLogFeeds();}
+function collapseLog(col){logF[col]=3;renderLogFeeds();}
+
+let logJr={you:false,nova:false};
+const _jrHtml=j=>`<div class="cb-jr"><div class="cb-jr-ic ${j.good?'good':'bad'}">${j.good?'✓':'✕'}</div><div class="cb-jr-body"><div class="cb-jr-t">${esc(j.t)}</div><div class="cb-jr-x">${esc(j.x)}</div></div></div>`;
+
+function renderJrSection(col){
+  const who=col==='you'?'You':'NOVA';
+  const jList=DATA.arena.journal.filter(j=>j.who===who);
+  const expanded=logJr[col];
+  const lim=expanded?Infinity:1;
+  const good=jList.filter(j=>j.good), bad=jList.filter(j=>!j.good);
+  const hidden=(good.length-Math.min(good.length,lim))+(bad.length-Math.min(bad.length,lim));
+  const jrCol=(list,lbl,cls)=>`<div><div class="cb-sub-lbl ${cls}">${lbl}</div>${list.slice(0,lim).length?list.slice(0,lim).map(_jrHtml).join(''):'<div class="cb-empty">—</div>'}</div>`;
+  const colBtn=expanded&&(good.length+bad.length>2)
+    ?`<button class="cb-more-btn collapse" onclick="collapseJr('${col}')">ซ่อน</button>`:'';
+  document.getElementById(`jr-${col}`).innerHTML=
+    `<div class="log-jr-grid">${jrCol(good,'จุดเด่น','good')}${jrCol(bad,'จุดด้อย','bad')}</div>`+
+    (hidden>0?`<button class="cb-more-btn" onclick="expandJr('${col}')">ดูทั้งหมด · เหลืออีก ${hidden} รายการ</button>`:colBtn);
+}
+function expandJr(col){logJr[col]=true;renderJrSection(col);}
+function collapseJr(col){logJr[col]=false;renderJrSection(col);}
+
 function renderLog(){
-  const trades=H.flatMap(h=>h.trades.map(t=>({tk:h.tk,name:h.name,...t}))).sort((a,b)=>thaiTs(b.date)-thaiTs(a.date));
-  const tl=trades.map(t=>{ const buy=t.t.includes('ซื้อ');
-    return `<div class="log-item">
-      <div class="log-date">${esc(t.date)}</div>
-      <div class="log-main">
-        <div class="log-top"><span class="log-tk">${t.tk}</span><span class="log-act ${buy?'buy':'sell'}">${esc(t.t)}</span></div>
-        <div class="log-why">${esc(t.why)}</div>
+  const colTop=(name,cls,av,ret,val)=>`
+    <div class="log-col ${cls}">
+      <div class="cb-head"><div class="cb-av ${cls}">${av}</div><div class="cb-col-meta"><div class="cb-col-name">${name}</div><div class="cb-col-perf">${ret} · ${val}</div></div></div>
+      <div id="jr-${cls}"></div>
+    </div>`;
+
+  logF={type:'all',period:'all',you:3,nova:3};
+  logJr={you:false,nova:false};
+  document.getElementById('t-log').innerHTML=`
+    <div class="log-sub" style="margin-top:0">จุดเด่น &amp; จุดด้อย</div>
+    <div class="log-vs-grid">
+      ${colTop('คุณ','you','คุ','+3.8%','$83,048')}
+      ${colTop('NOVA (AI)','nova','AI','+1.9%','$81,520')}
+    </div>
+    <div class="log-tl-section">
+      <div class="log-tl-bar">
+        <span class="log-sub" style="margin:0">ไทม์ไลน์การเทรด</span>
+        <div class="log-filter-bar">
+          <div class="seg">
+            <button class="log-type-btn on" data-v="all" onclick="setLogType('all')">ทั้งหมด</button>
+            <button class="log-type-btn" data-v="buy" onclick="setLogType('buy')">ซื้อ / ▲</button>
+            <button class="log-type-btn" data-v="sell" onclick="setLogType('sell')">ขาย / ▼</button>
+          </div>
+          <div class="seg">
+            <button class="log-period-btn on" data-v="all" onclick="setLogPeriod('all')">ทั้งหมด</button>
+            <button class="log-period-btn" data-v="1m" onclick="setLogPeriod('1m')">1M</button>
+            <button class="log-period-btn" data-v="3m" onclick="setLogPeriod('3m')">3M</button>
+            <button class="log-period-btn" data-v="ytd" onclick="setLogPeriod('ytd')">YTD</button>
+            <button class="log-period-btn" data-v="1y" onclick="setLogPeriod('1y')">1Y</button>
+            <button class="log-period-btn" data-v="5y" onclick="setLogPeriod('5y')">5Y</button>
+          </div>
+        </div>
       </div>
-    </div>`; }).join('');
-  const lessons=DATA.arena.journal.filter(j=>j.who==='You').map(j=>
-    `<div class="jr ${j.good?'good':'bad'}"><div class="j-top">${esc(j.t)} <span class="who">${j.good?'บทเรียน':'จุดพลาด'}</span></div><div class="j-txt">${esc(j.x)}</div></div>`).join('');
-  document.getElementById('t-log').innerHTML = `
-    <div class="sec-title">ไทม์ไลน์การเทรด <span class="ts" style="text-transform:none;letter-spacing:0">${trades.length} รายการ</span></div>
-    <div class="card" style="padding:4px 18px">${tl}</div>
-    <div class="sec-title">จุดพลาด & บทเรียน</div>
-    <div class="feed">${lessons}</div>`;
+      <div id="log-feeds-wrapper"></div>
+    </div>`;
+  renderJrSection('you');
+  renderJrSection('nova');
+  renderLogFeeds();
 }
 
 /* ---------- MARKET ---------- */
