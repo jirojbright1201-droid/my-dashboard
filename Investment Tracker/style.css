@@ -174,7 +174,7 @@ tbody tr:hover{background:var(--surface-2);}
 .pf-card{padding:20px 22px; margin-top:22px;}
 .pf-lbl{font-size:.82rem; color:var(--silver); font-weight:600; margin-bottom:5px;}
 .pf-balrow{display:flex; align-items:baseline; gap:13px; flex-wrap:wrap;}
-.pf-bal{font-size:2.1rem; font-weight:800; letter-spacing:-1px; font-variant-numeric:tabular-nums;}
+.pf-bal{font-size:2.1rem; font-weight:800; letter-spacing:-1px; font-variant-numeric:tabular-nums; color:var(--blue);}
 .pf-chg{display:inline-flex; align-items:center; gap:7px; font-size:.85rem; font-weight:700;}
 .pf-chg-sub{color:var(--silver); font-weight:500;}
 .pf-sub2{font-size:.74rem; color:var(--dim); margin-top:4px;}
