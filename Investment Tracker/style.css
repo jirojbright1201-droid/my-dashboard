@@ -58,7 +58,7 @@ tbody td{padding:12px 14px; border-top:1px solid var(--border-soft); text-align:
 tbody td:first-child{text-align:left;}
 tbody tr{cursor:pointer; transition:background .12s;}
 tbody tr:hover{background:var(--surface-2);}
-.tk{font-weight:800; color:var(--blue);} .tk small{display:block; font-weight:500; color:var(--dim); font-size:.7rem; margin-top:1px;}
+.tk{font-weight:800;} .tk small{display:block; font-weight:500; color:var(--dim); font-size:.7rem; margin-top:1px;}
 .go{color:var(--dim); font-weight:700;}
 
 /* toolbar */
