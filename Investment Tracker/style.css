@@ -101,7 +101,7 @@ tbody tr:hover{background:var(--surface-2);}
 .pf-hold .h span{font-weight:500; color:var(--silver);}
 .seg{display:inline-flex; background:var(--surface-2); border-radius:999px; padding:3px; gap:2px;}
 .seg button{border:none; background:none; padding:5px 14px; border-radius:999px; font-size:.76rem; font-weight:700; color:var(--silver); cursor:pointer;}
-.seg button.on{background:#fff; color:var(--text); box-shadow:0 1px 3px rgba(0,0,0,.08);}
+.seg button.on{background:var(--blue); color:#fff; box-shadow:0 1px 4px rgba(0,82,255,.3);}
 .move{border:1px solid var(--border-soft); border-radius:10px; padding:10px 13px; margin-bottom:8px;}
 .move .m-act{font-size:.82rem; font-weight:700;}
 .move .m-why{font-size:.78rem; color:var(--silver); margin-top:3px;}
