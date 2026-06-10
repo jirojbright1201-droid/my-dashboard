@@ -1,6 +1,6 @@
 :root{
   --blue:#0052ff; --blue-deep:#0043d6; --blue-soft:rgba(0,82,255,.08);
-  --up:#05b169; --up-soft:rgba(5,177,105,.12); --down:#df5f44; --down-soft:rgba(223,95,68,.10);
+  --up:#05b169; --up-soft:rgba(5,177,105,.12); --down:#e03131; --down-soft:rgba(224,49,49,.10);
   --bg:#ffffff; --surface:#ffffff; --surface-2:#f5f6f8; --surface-3:#eef0f3;
   --text:#0a0b0d; --silver:#5b616e; --dim:#8a919e;
   --border:#d7dae0; --border-soft:#ebecf0;
