@@ -378,7 +378,7 @@ function openHnNews(i){
       <button class="dr-close" onclick="closeAlloc()" style="margin-left:14px;flex-shrink:0">✕</button>
     </div>
     ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}
-    ${n.move?`<div style="margin-top:12px;display:flex;align-items:center;gap:8px"><span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span><span style="font-size:.78rem;color:var(--silver)">ใน ${n.move.period}ถัดจากข่าวออก</span></div>`:''}`;
+    ${n.move?`<div style="margin-top:14px;display:flex;justify-content:flex-end"><span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span></div>`:''}`;
   document.getElementById('mov').classList.add('open');
 }
 
