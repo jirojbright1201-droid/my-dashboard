@@ -323,9 +323,27 @@ tbody tr:hover{background:var(--surface-2);}
 .alloc-list .a-w{margin-left:auto; font-weight:800; width:54px; text-align:right;}
 .alloc-list .a-v{color:var(--silver); width:96px; text-align:right; font-variant-numeric:tabular-nums;}
 
+/* holdings news */
+.hn-filter-bar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px; justify-content:space-between;}
+.hn-empty{grid-column:1/-1; text-align:center; color:var(--dim); font-size:.82rem; padding:20px 0;}
+.hn-cnt{background:var(--surface-3); color:var(--silver); border-radius:999px; padding:1px 7px; font-size:.6rem; font-weight:700; margin-left:3px;}
+.hn-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+.hn-card{border:1px solid var(--border-soft); border-radius:12px; padding:13px 16px; background:var(--surface); transition:border-color .14s, box-shadow .14s; cursor:pointer;}
+.hn-card:hover{border-color:#bfd0ff; box-shadow:0 3px 12px rgba(0,0,0,.06);}
+.hn-top{display:flex; align-items:center; gap:7px; margin-bottom:7px; flex-wrap:wrap;}
+.hn-tk{font-size:.7rem; font-weight:800; background:var(--surface-3); border:1px solid var(--border); padding:2px 8px; border-radius:6px; letter-spacing:.3px;}
+.hn-who{font-size:.6rem; font-weight:800; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:.4px;}
+.hn-who.you{background:var(--blue-soft); color:var(--blue);}
+.hn-who.nova{background:rgba(124,77,255,.1); color:#7c4dff;}
+.hn-who.both{background:var(--blue-soft); color:var(--blue);}
+.hn-src{font-size:.68rem; color:var(--silver); font-weight:700; margin-left:auto;}
+.hn-dt{font-size:.68rem; color:var(--dim);}
+.hn-head{font-size:.86rem; font-weight:700; line-height:1.4;}
+
 @media(max-width:820px){
   .kpis{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}
   .mk-idx-grid, .mk-sec-grid{grid-template-columns:repeat(2,1fr);} .vs-grid{grid-template-columns:1fr;}
   .mk-news-grid{grid-template-columns:1fr;}
+  .hn-grid{grid-template-columns:repeat(2,1fr);}
   .drawer{width:100%; max-width:100%;}
 }

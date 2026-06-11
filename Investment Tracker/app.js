@@ -234,6 +234,56 @@ function renderLog(){
   renderLogFeeds();
 }
 
+/* ---------- HOLDINGS NEWS ---------- */
+let hnFilter='all', hnPeriod='all', hnLim=4;
+function setHnFilter(v){hnFilter=v;hnLim=4;renderHoldingsNews();}
+function setHnPeriod(v){hnPeriod=v;hnLim=4;renderHoldingsNews();}
+function loadMoreHn(){hnLim=Infinity;renderHoldingsNews();}
+function collapseHn(){hnLim=4;renderHoldingsNews();}
+function renderHoldingsNews(){
+  const novaSet=new Set(DATA.arena.nova.hold.map(([tk])=>tk));
+  const youSet=new Set(H.map(h=>h.tk));
+  const all=[...H.flatMap(h=>h.news.map(n=>({...n,tk:h.tk}))),...DATA.market.holdings_news];
+  all.forEach((n,i)=>n._i=i);
+
+  // period cutoff (reuse thaiTs)
+  const allTs=all.map(n=>thaiTs(n.date));
+  const maxTs=Math.max(...allTs);
+  const maxDate=new Date(maxTs);
+  const cutoffMap={'all':-Infinity,'1m':maxTs-30*86400000,'3m':maxTs-90*86400000,
+    'ytd':new Date(maxDate.getFullYear(),0,1).getTime(),'1y':maxTs-365*86400000,'5y':maxTs-5*365*86400000};
+  const cutoff=cutoffMap[hnPeriod]??-Infinity;
+
+  const byOwner=hnFilter==='you'?all.filter(n=>youSet.has(n.tk)):hnFilter==='nova'?all.filter(n=>novaSet.has(n.tk)):all;
+  const filtered=byOwner.filter(n=>thaiTs(n.date)>=cutoff);
+  const shown=filtered.slice(0,hnLim);
+
+  const badge=tk=>{const y=youSet.has(tk),n=novaSet.has(tk);
+    return y&&n?`<span class="hn-who both">You &amp; NOVA</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">NOVA</span>`;};
+  const cnt=v=>{const arr=(v==='you'?all.filter(n=>youSet.has(n.tk)):v==='nova'?all.filter(n=>novaSet.has(n.tk)):all).filter(n=>thaiTs(n.date)>=cutoff);
+    return `<span class="hn-cnt">${arr.length}</span>`;};
+  const cards=shown.length
+    ?shown.map(n=>`<div class="hn-card" onclick="openHnNews(${n._i})"><div class="hn-top"><span class="hn-tk">${esc(n.tk)}</span>${badge(n.tk)}<span class="hn-src">${esc(n.src)}</span><span class="mk-dot">·</span><span class="hn-dt">${esc(n.date)}</span></div><div class="hn-head">${esc(n.head)}</div></div>`).join('')
+    :`<div class="hn-empty">ไม่มีข่าวในช่วงนี้</div>`;
+  const hasMore=filtered.length>hnLim;
+  const footBtn=hasMore
+    ?`<button class="cb-more-btn" onclick="loadMoreHn()">ดูทั้งหมด (${filtered.length})</button>`
+    :filtered.length>4?`<button class="cb-more-btn collapse" onclick="collapseHn()">ซ่อน</button>`:'';
+
+  const periods=['all','1m','3m','ytd','1y','5y'];
+  const pLabels={all:'All','1m':'1M','3m':'3M',ytd:'YTD','1y':'1Y','5y':'5Y'};
+  document.getElementById('hn-section').innerHTML=
+    `<div class="hn-filter-bar">`+
+    `<div class="seg">`+
+    `<button class="${hnFilter==='all'?'on':''}" onclick="setHnFilter('all')">All ${cnt('all')}</button>`+
+    `<button class="${hnFilter==='you'?'on':''}" onclick="setHnFilter('you')">You ${cnt('you')}</button>`+
+    `<button class="${hnFilter==='nova'?'on':''}" onclick="setHnFilter('nova')">NOVA ${cnt('nova')}</button>`+
+    `</div><div class="seg">`+
+    periods.map(v=>`<button class="${hnPeriod===v?'on':''}" onclick="setHnPeriod('${v}')">${pLabels[v]}</button>`).join('')+
+    `</div></div>`+
+    `<div class="hn-grid">${cards}</div>${footBtn}`;
+}
+
 /* ---------- MARKET ---------- */
 // sparkline แบบ inline SVG (เบา ไม่พึ่ง Chart.js): เส้น + พื้นไล่เฉดจาง
 function sparkSvg(arr, up){
@@ -302,8 +352,35 @@ function renderMarket(){
     <div class="sec-title">Sector Performance</div>
     <div class="mk-idx-grid mk-sec-grid">${sect}</div>
 
+    <div class="sec-title">Holdings News</div>
+    <div id="hn-section"></div>
+
     <div class="sec-title">Market News</div>
     ${news}`;
+  renderHoldingsNews();
+}
+
+/* ---------- HN NEWS MODAL ---------- */
+function openHnNews(i){
+  const all=[...H.flatMap(h=>h.news.map(n=>({...n,tk:h.tk}))),...DATA.market.holdings_news];
+  const n=all[i]; if(!n) return;
+  const novaSet=new Set(DATA.arena.nova.hold.map(([tk])=>tk));
+  const youSet=new Set(H.map(h=>h.tk));
+  const y=youSet.has(n.tk), nv=novaSet.has(n.tk);
+  const badge=y&&nv?`<span class="hn-who both">You &amp; NOVA</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">NOVA</span>`;
+  document.getElementById('mbox').innerHTML=`
+    <div class="mbox-head">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span class="hn-tk">${esc(n.tk)}</span>${badge}
+          <span style="font-size:.7rem;color:var(--dim);margin-left:auto">${esc(n.src)} · ${esc(n.date)}</span>
+        </div>
+        <div style="font-size:1.05rem;font-weight:800;line-height:1.45;color:var(--text)">${esc(n.head)}</div>
+      </div>
+      <button class="dr-close" onclick="closeAlloc()" style="margin-left:14px;flex-shrink:0">✕</button>
+    </div>
+    ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}`;
+  document.getElementById('mov').classList.add('open');
 }
 
 /* ---------- ARENA ---------- */

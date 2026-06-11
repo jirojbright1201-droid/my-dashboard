@@ -3,28 +3,28 @@ const DATA = {
   holdings: [
     {tk:'MU', name:'Micron', sector:'Semiconductors', shares:5, avg:98, price:142.10, prev:139.0,
       trades:[{date:'14 เม.ย. 2026', t:'ซื้อ 5 @ $98.00', why:'ดีมานด์ HBM สำหรับ AI ตึงตัว Micron เป็น 1 ใน 3 เจ้าที่ผลิตได้ มอง memory cycle กำลังกลับตัว ราคายัง laggard'}],
-      news:[{date:'8 มิ.ย.', head:'ราคา HBM ขยับขึ้นต่อ ผู้ผลิตขายล่วงหน้าเต็มถึงปีหน้า', src:'Bloomberg'}]},
+      news:[{date:'8 มิ.ย.', head:'ราคา HBM ขยับขึ้นต่อ ผู้ผลิตขายล่วงหน้าเต็มถึงปีหน้า', src:'Bloomberg', sum:'ผู้ผลิต HBM รายใหญ่ทั้งหมดขายสินค้าล่วงหน้าเต็มถึงปี 2027 แล้ว ดีมานด์จาก AI cluster รุ่นใหม่ยังพุ่งต่อเนื่อง ราคาต่อ GB คาดปรับขึ้น 15-20% ในไตรมาส Q3 ซึ่งส่งผลดีต่อมาร์จิ้น Micron โดยตรง นักวิเคราะห์ส่วนใหญ่ปรับ PT ขึ้นหลังข่าวนี้'}]},
     {tk:'NVDA', name:'Nvidia', sector:'Semiconductors', shares:2, avg:128, price:182.40, prev:180.1,
       trades:[{date:'2 มี.ค. 2026', t:'ซื้อ 3 @ $120.00', why:'แกนหลัก AI compute ครองตลาด GPU'},{date:'20 พ.ค. 2026', t:'ขาย 1 @ $150.00', why:'ล็อกกำไร +25% — ภายหลังมองว่าขายเร็วไป (ดู Arena/Journal)'}],
-      news:[{date:'9 มิ.ย.', head:'ดีมานด์ compute ยังแข็งแกร่ง คาดการณ์รายได้ศูนย์ข้อมูลโตต่อ', src:'CNBC'}]},
+      news:[{date:'9 มิ.ย.', head:'ดีมานด์ compute ยังแข็งแกร่ง คาดการณ์รายได้ศูนย์ข้อมูลโตต่อ', src:'CNBC', sum:'ยอดสั่งซื้อ Blackwell เกินกำลังการผลิตปัจจุบัน hyperscaler หลายรายเพิ่ม AI capex ต่อเนื่อง รายได้ Data Center ไตรมาสหน้าคาดแตะ $45B นักวิเคราะห์มองว่า valuation ยังสมเหตุสมผลเมื่อเทียบกับ growth rate ที่ยังสูง'}]},
     {tk:'VST', name:'Vistra', sector:'Energy', shares:3, avg:135, price:168.50, prev:164.2,
       trades:[{date:'28 เม.ย. 2026', t:'ซื้อ 3 @ $135.00', why:'ดีมานด์ไฟฟ้าจาก data center โตแรง ดีล nuclear/IPP ได้ประโยชน์ตรง AI play ทางอ้อมที่ตลาดยังประเมินต่ำ'}],
-      news:[{date:'7 มิ.ย.', head:'สัญญาจ่ายไฟให้ศูนย์ข้อมูลเพิ่ม หนุนรายได้ระยะยาว', src:'Reuters'}]},
+      news:[{date:'7 มิ.ย.', head:'สัญญาจ่ายไฟให้ศูนย์ข้อมูลเพิ่ม หนุนรายได้ระยะยาว', src:'Reuters', sum:'Vistra เซ็นสัญญา PPA ใหม่กับศูนย์ข้อมูล 3 แห่ง ระยะเวลา 10-15 ปี รายได้ที่ล็อกไว้ล่วงหน้าช่วยลดความผันผวนของราคาไฟฟ้า โครงการ nuclear restart กำลังรอใบอนุญาตขั้นสุดท้าย หากผ่านจะเพิ่ม capacity อีก 1.2 GW'}]},
     {tk:'COHR', name:'Coherent', sector:'Photonics', shares:4, avg:82, price:99.30, prev:97.8,
       trades:[{date:'5 พ.ค. 2026', t:'ซื้อ 4 @ $82.00', why:'optical transceiver 800G/1.6T โตตาม AI networking — photonics เป็นคอขวดของ data center รุ่นใหม่'}],
-      news:[{date:'6 มิ.ย.', head:'คำสั่งซื้อ optical สำหรับ AI cluster พุ่ง', src:'SeekingAlpha'}]},
+      news:[{date:'6 มิ.ย.', head:'คำสั่งซื้อ optical สำหรับ AI cluster พุ่ง', src:'SeekingAlpha', sum:'ยอดสั่งซื้อ 800G transceiver เพิ่มขึ้น 40% QoQ ลูกค้าหลักเป็น hyperscaler ที่กำลัง upgrade network ใน AI cluster รุ่นใหม่ margin โปรดักต์ใหม่สูงกว่ารุ่นเก่าอย่างมีนัยสำคัญ Coherent คาดรายได้ปีนี้โตเกิน 30%'}]},
     {tk:'CEG', name:'Constellation', sector:'Energy', shares:2, avg:220, price:255.00, prev:251.0,
       trades:[{date:'12 พ.ค. 2026', t:'ซื้อ 2 @ $220.00', why:'nuclear baseload สำหรับ AI — สัญญาระยะยาวกับ hyperscaler'}],
-      news:[{date:'5 มิ.ย.', head:'ดีล PPA นิวเคลียร์ใหม่กับบริษัทเทค', src:'WSJ'}]},
+      news:[{date:'5 มิ.ย.', head:'ดีล PPA นิวเคลียร์ใหม่กับบริษัทเทค', src:'WSJ', sum:'Constellation Energy ลงนาม PPA 20 ปีกับ hyperscaler รายใหญ่ ราคาที่ตกลงสูงกว่าราคาตลาดปัจจุบัน ทำให้ revenue visibility ยาวนานขึ้นมาก โรงไฟฟ้านิวเคลียร์ให้ baseload ที่เสถียรและ carbon-free ตอบโจทย์ความต้องการของบริษัทเทคที่มีเป้า net-zero'}]},
     {tk:'TSM', name:'TSMC', sector:'Semiconductors', shares:2, avg:175, price:205.60, prev:202.0,
       trades:[{date:'3 พ.ค. 2026', t:'ซื้อ 2 @ $175.00', why:'ผู้ผลิตชิปขั้นสูงเบอร์ 1 ได้ประโยชน์ทุก AI chip กำลังการผลิตเต็ม'}],
-      news:[{date:'4 มิ.ย.', head:'ยอดผลิต 2nm จองเต็ม ราคาขายปรับขึ้น', src:'DigiTimes'}]},
+      news:[{date:'4 มิ.ย.', head:'ยอดผลิต 2nm จองเต็ม ราคาขายปรับขึ้น', src:'DigiTimes', sum:'กำลังการผลิต 2nm ของ TSMC ถูกจองเต็มแล้วตลอดปี 2026 ลูกค้าหลัก Apple, NVIDIA, AMD ยอมรับราคาใหม่ที่สูงขึ้น 5-7% ยืนยัน pricing power ที่แข็งแกร่ง TSMC วางแผนขยายกำลังการผลิตเพิ่มแต่จะพร้อมเร็วสุดปลายปี 2027'}]},
     {tk:'AMD', name:'AMD', sector:'Semiconductors', shares:3, avg:150, price:141.20, prev:143.0,
       trades:[{date:'15 พ.ค. 2026', t:'ซื้อ 3 @ $150.00', why:'ผู้ท้าชิง GPU/AI accelerator ราคาถูกกว่า NVDA — เก็งส่วนแบ่งตลาดเพิ่ม'}],
-      news:[{date:'8 มิ.ย.', head:'การแข่งขัน AI chip กดดันมาร์จิ้นระยะสั้น', src:'Barrons'}]},
+      news:[{date:'8 มิ.ย.', head:'การแข่งขัน AI chip กดดันมาร์จิ้นระยะสั้น', src:'Barrons', sum:'NVIDIA ยังครองส่วนแบ่ง GPU ตลาดหลัก AMD MI300X ได้ลูกค้าเพิ่มแต่ต้องลดราคาแข่ง ทำให้ gross margin ถูกกดดัน นักวิเคราะห์บางรายปรับลด PT ลง แต่มองว่าถ้า MI400 ออกมาแข่งขันได้จริงปลายปีนี้ภาพจะเปลี่ยน'}]},
     {tk:'AAPL', name:'Apple', sector:'Technology', shares:1.5, avg:205, price:198.20, prev:199.5,
       trades:[{date:'18 พ.ค. 2026', t:'ซื้อ 1.5 @ $205.00', why:'defensive/กระแสเงินสดแกร่ง รอ AI on-device — momentum ยังอ่อน'}],
-      news:[{date:'9 มิ.ย.', head:'ความคืบหน้า AI บนอุปกรณ์ยังช้ากว่าคู่แข่ง', src:'The Verge'}]}
+      news:[{date:'9 มิ.ย.', head:'ความคืบหน้า AI บนอุปกรณ์ยังช้ากว่าคู่แข่ง', src:'The Verge', sum:'Apple Intelligence ยังตามหลัง Google Gemini และ Microsoft Copilot ในด้าน on-device AI capability ผู้ใช้บางส่วนบ่นว่าฟีเจอร์ที่โฆษณาไว้ยังไม่มาครบ อย่างไรก็ตามกระแสเงินสดและโปรแกรม buyback ยังแข็งแกร่ง นักวิเคราะห์มองเป็น short-term headwind ไม่ใช่ structural problem'}]}
   ],
   market:{
     indices:[
@@ -49,6 +49,10 @@ const DATA = {
       {tag:'Energy', head:'ดีมานด์ไฟฟ้าจาก data center ดันหุ้นโรงไฟฟ้า/นิวเคลียร์', sum:'IPP และ nuclear ทำสัญญายาวกับ hyperscaler รายได้คาดการณ์ได้', src:'WSJ', date:'7 มิ.ย.'},
       {tag:'Earnings', head:'ฤดูงบไตรมาส เทคใหญ่กำไรเกินคาดส่วนมาก', sum:'การลงทุน capex AI ยังเพิ่ม ตลาดให้พรีเมียมกลุ่มโครงสร้างพื้นฐาน', src:'CNBC', date:'6 มิ.ย.'},
       {tag:'Macro', head:'เงินเฟ้อสหรัฐชะลอตามคาด หนุน sentiment', sum:'core PCE ใกล้เป้า ตลาดหุ้นปรับขึ้นทั้งกระดาน', src:'Bloomberg', date:'5 มิ.ย.'}
+    ],
+    holdings_news:[
+      {tk:'PLTR', head:'Palantir คว้าสัญญา DoD ใหม่มูลค่า $480M', src:'Reuters', date:'9 มิ.ย.', sum:'สัญญากับกระทรวงกลาโหมสหรัฐใช้แพลตฟอร์ม AIP สำหรับวิเคราะห์ข่าวกรองแบบ real-time รายได้ภาครัฐกลับมาเติบโตหลังชะลอช่วงปลายปีที่แล้ว ตอกย้ำ moat ในตลาด government analytics ที่คู่แข่งเข้าได้ยาก'},
+      {tk:'GOOGL', head:'Gemini 2.5 Pro outperform คู่แข่ง YouTube Ads โต 12% YoY', src:'Bloomberg', date:'8 มิ.ย.', sum:'Gemini 2.5 Pro แสดงผลดีกว่าคาดในหลาย benchmark ทั้ง coding, reasoning และ multimodal รายได้โฆษณา YouTube โต 12% YoY จากการ integrate AI ใน Search ช่วยเพิ่ม CTR นักวิเคราะห์ส่วนใหญ่ปรับ price target ขึ้นหลังตัวเลขออก'}
     ]
   },
   arena:{
