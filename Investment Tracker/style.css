@@ -339,7 +339,7 @@ tbody tr:hover{background:var(--surface-2);}
 .hn-src{font-size:.68rem; color:var(--silver); font-weight:700;}
 .hn-dt{font-size:.68rem; color:var(--dim);}
 .hn-head{font-size:.86rem; font-weight:700; line-height:1.4;}
-.hn-move-chip{margin-left:auto;}
+.hn-top .hn-who{margin-left:auto; background:none; padding:0; font-size:.58rem; letter-spacing:.3px;}
 .hn-foot{display:flex; align-items:center; gap:7px; margin-top:auto; padding-top:10px;}
 
 /* company */
