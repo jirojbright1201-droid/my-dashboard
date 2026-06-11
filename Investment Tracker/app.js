@@ -246,12 +246,9 @@ function renderHoldingsNews(){
   const all=[...H.flatMap(h=>h.news.map(n=>({...n,tk:h.tk}))),...DATA.market.holdings_news];
   all.forEach((n,i)=>n._i=i);
 
-  // period cutoff (reuse thaiTs)
-  const allTs=all.map(n=>thaiTs(n.date));
-  const maxTs=Math.max(...allTs);
-  const maxDate=new Date(maxTs);
-  const cutoffMap={'all':-Infinity,'1m':maxTs-30*86400000,'3m':maxTs-90*86400000,
-    'ytd':new Date(maxDate.getFullYear(),0,1).getTime(),'1y':maxTs-365*86400000,'5y':maxTs-5*365*86400000};
+  const nowTs=Date.now();
+  const cutoffMap={'all':-Infinity,'1m':nowTs-30*86400000,'3m':nowTs-90*86400000,
+    'ytd':new Date(new Date().getFullYear(),0,1).getTime(),'1y':nowTs-365*86400000,'5y':nowTs-5*365*86400000};
   const cutoff=cutoffMap[hnPeriod]??-Infinity;
 
   const byOwner=hnFilter==='you'?all.filter(n=>youSet.has(n.tk)):hnFilter==='nova'?all.filter(n=>novaSet.has(n.tk)):all;
