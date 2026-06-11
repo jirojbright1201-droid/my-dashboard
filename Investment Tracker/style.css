@@ -339,6 +339,7 @@ tbody tr:hover{background:var(--surface-2);}
 .hn-src{font-size:.68rem; color:var(--silver); font-weight:700; margin-left:auto;}
 .hn-dt{font-size:.68rem; color:var(--dim);}
 .hn-head{font-size:.86rem; font-weight:700; line-height:1.4;}
+.hn-move{margin-top:8px;}
 
 @media(max-width:820px){
   .kpis{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}

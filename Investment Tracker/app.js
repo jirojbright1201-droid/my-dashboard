@@ -259,8 +259,9 @@ function renderHoldingsNews(){
     return y&&n?`<span class="hn-who both">You &amp; NOVA</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">NOVA</span>`;};
   const cnt=v=>{const arr=(v==='you'?all.filter(n=>youSet.has(n.tk)):v==='nova'?all.filter(n=>novaSet.has(n.tk)):all).filter(n=>thaiTs(n.date)>=cutoff);
     return `<span class="hn-cnt">${arr.length}</span>`;};
+  const moveChip=n=>n.move?`<div class="hn-move"><span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}% · ${n.move.period}</span></div>`:''
   const cards=shown.length
-    ?shown.map(n=>`<div class="hn-card" onclick="openHnNews(${n._i})"><div class="hn-top"><span class="hn-tk">${esc(n.tk)}</span>${badge(n.tk)}<span class="hn-src">${esc(n.src)}</span><span class="mk-dot">·</span><span class="hn-dt">${esc(n.date)}</span></div><div class="hn-head">${esc(n.head)}</div></div>`).join('')
+    ?shown.map(n=>`<div class="hn-card" onclick="openHnNews(${n._i})"><div class="hn-top"><span class="hn-tk">${esc(n.tk)}</span>${badge(n.tk)}<span class="hn-src">${esc(n.src)}</span><span class="mk-dot">·</span><span class="hn-dt">${esc(n.date)}</span></div><div class="hn-head">${esc(n.head)}</div>${moveChip(n)}</div>`).join('')
     :`<div class="hn-empty">ไม่มีข่าวในช่วงนี้</div>`;
   const hasMore=filtered.length>hnLim;
   const footBtn=hasMore
@@ -376,7 +377,8 @@ function openHnNews(i){
       </div>
       <button class="dr-close" onclick="closeAlloc()" style="margin-left:14px;flex-shrink:0">✕</button>
     </div>
-    ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}`;
+    ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}
+    ${n.move?`<div style="margin-top:12px;display:flex;align-items:center;gap:8px"><span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span><span style="font-size:.78rem;color:var(--silver)">ราคา${n.move.pct>=0?'ปรับขึ้น':'ปรับลง'} ${n.move.period}ถัดจากวันที่ข่าวออก</span></div>`:''}`;
   document.getElementById('mov').classList.add('open');
 }
 
