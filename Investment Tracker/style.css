@@ -370,6 +370,7 @@ tbody tr:hover{background:var(--surface-2);}
 .cb-news{padding:13px 2px; border-bottom:1px solid var(--border-soft);}
 .cb-news:last-child{border-bottom:none;}
 .cb-news .n-head{font-size:.86rem; font-weight:700; line-height:1.42;}
+.cb-news .n-sum{font-size:.8rem; color:var(--silver); line-height:1.55; margin-top:4px;}
 .cb-news .n-foot{font-size:.7rem; color:var(--dim); margin-top:6px; display:flex; align-items:center; flex-wrap:wrap;}
 .cb-trade{padding:13px 2px; border-bottom:1px solid var(--border-soft);}
 .cb-list .cb-trade:last-child{border-bottom:none;}

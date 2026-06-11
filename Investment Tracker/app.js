@@ -464,11 +464,11 @@ function openCompany(tk){
   const c=R.list.find(x=>x.tk===tk); if(!c) return;
   const trades=R.tradesByTk[tk]||[], news=R.newsByTk[tk]||[];
   const tradesHtml=trades.length
-    ?trades.map(t=>`<div class="trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('')
-    :'<div class="co-empty">ยังไม่มีประวัติเทรด</div>';
+    ?`<div class="cb-list">${trades.map(t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('')}</div>`
+    :'<div class="co-empty">No trades yet</div>';
   const newsHtml=news.length
-    ?news.map(n=>`<div class="news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">ที่มา: (mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
-    :'<div class="co-empty">ยังไม่มีข่าว</div>';
+    ?news.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
+    :'<div class="co-empty">No news yet</div>';
   document.getElementById('drawer').innerHTML=`
     <div class="dr-head">
       <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
@@ -476,12 +476,12 @@ function openCompany(tk){
       <button class="dr-close" onclick="closeDrawer()">✕</button>
     </div>
     <div class="dr-body">
-      <div class="dr-sec">เกี่ยวกับบริษัท</div>
+      <div class="dr-sec">About</div>
       <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
       ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
-      <div class="dr-sec">ประวัติเทรด + เหตุผล <span class="acc-count">${trades.length}</span></div>
+      <div class="dr-sec">Trade History</div>
       ${tradesHtml}
-      <div class="dr-sec">ประวัติข่าว <span class="acc-count">${news.length}</span></div>
+      <div class="dr-sec">News</div>
       ${newsHtml}
     </div>`;
   document.getElementById('dov').classList.add('open');
