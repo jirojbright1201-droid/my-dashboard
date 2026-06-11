@@ -459,16 +459,26 @@ function renderCompany(){
     `<div class="sec-title">Company — ทุกบริษัทที่เคยเกี่ยวข้อง <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} บริษัท</span></div>
      <div class="co-grid">${cards}</div>`;
 }
-function openCompany(tk){
+let _coTk=null, _coTrLim=3, _coNwLim=3;
+function openCompany(tk){ _coTk=tk; _coTrLim=3; _coNwLim=3; _renderCompanyDrawer(); }
+function coTrMore(){ _coTrLim=Infinity; _renderCompanyDrawer(); }
+function coTrLess(){ _coTrLim=3; _renderCompanyDrawer(); }
+function coNwMore(){ _coNwLim=Infinity; _renderCompanyDrawer(); }
+function coNwLess(){ _coNwLim=3; _renderCompanyDrawer(); }
+function _renderCompanyDrawer(){
   const R=_coReg||companyRegistry();
-  const c=R.list.find(x=>x.tk===tk); if(!c) return;
-  const trades=R.tradesByTk[tk]||[], news=R.newsByTk[tk]||[];
-  const tradesHtml=trades.length
-    ?`<div class="cb-list">${trades.map(t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('')}</div>`
+  const c=R.list.find(x=>x.tk===_coTk); if(!c) return;
+  const allTr=R.tradesByTk[_coTk]||[], allNw=R.newsByTk[_coTk]||[];
+  const tradesHtml=allTr.length
+    ?`<div class="cb-list">${allTr.slice(0,_coTrLim).map(t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('')}</div>`
     :'<div class="co-empty">No trades yet</div>';
-  const newsHtml=news.length
-    ?news.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
+  const trBtn=allTr.length>3?(_coTrLim===Infinity?`<button class="cb-more-btn collapse" onclick="coTrLess()">Show less</button>`:`<button class="cb-more-btn" onclick="coTrMore()">Show more</button>`):'';
+  const trCap=(allTr.length>3&&_coTrLim!==Infinity)?'Latest 3':'All trades';
+  const newsHtml=allNw.length
+    ?allNw.slice(0,_coNwLim).map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
     :'<div class="co-empty">No news yet</div>';
+  const nwBtn=allNw.length>3?(_coNwLim===Infinity?`<button class="cb-more-btn collapse" onclick="coNwLess()">Show less</button>`:`<button class="cb-more-btn" onclick="coNwMore()">Show more</button>`):'';
+  const nwCap=(allNw.length>3&&_coNwLim!==Infinity)?'Latest 3':'All news';
   document.getElementById('drawer').innerHTML=`
     <div class="dr-head">
       <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
@@ -479,10 +489,10 @@ function openCompany(tk){
       <div class="dr-sec">About</div>
       <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
       ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
-      <div class="dr-sec">Trade History</div>
-      ${tradesHtml}
-      <div class="dr-sec">News</div>
-      ${newsHtml}
+      <div class="dr-sec">Trade History <span class="dr-sub">${trCap}</span></div>
+      ${tradesHtml}${trBtn}
+      <div class="dr-sec">News <span class="dr-sub">${nwCap}</span></div>
+      ${newsHtml}${nwBtn}
     </div>`;
   document.getElementById('dov').classList.add('open');
 }
