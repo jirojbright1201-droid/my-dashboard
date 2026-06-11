@@ -106,7 +106,7 @@ tbody tr:hover{background:var(--surface-2);}
 .mk-empty{text-align:center; color:var(--dim); font-size:.82rem; padding:20px 0;}
 
 /* market news */
-.mk-news{border:1px solid var(--border-soft); border-radius:13px; padding:15px 17px; background:var(--surface); transition:border-color .14s, box-shadow .14s;}
+.mk-news{border:1px solid var(--border-soft); border-radius:13px; padding:15px 17px; background:var(--surface); transition:border-color .14s, box-shadow .14s; cursor:pointer;}
 .mk-news:hover{border-color:#bfd0ff; box-shadow:0 4px 14px rgba(0,0,0,.06);}
 .mk-news.feat{border-left:3px solid var(--blue); margin-bottom:12px;}
 .mk-news.feat .mk-news-head{font-size:1.05rem;}
@@ -164,6 +164,9 @@ tbody tr:hover{background:var(--surface-2);}
 .th-row .th-t{font-weight:700; font-size:.9rem;}
 .th-row .th-m{font-size:.72rem; color:var(--dim); margin-top:2px;}
 .th-row .go{margin-left:auto;}
+.th-tks{display:flex; flex-wrap:wrap; gap:6px; margin-top:7px;}
+.th-tk{font-size:.62rem; font-weight:800; letter-spacing:.3px; color:var(--blue); background:var(--blue-soft); padding:2px 8px; border-radius:6px; cursor:pointer; transition:.12s;}
+.th-tk:hover{background:var(--blue); color:#fff;}
 
 /* drawer */
 .dov{position:fixed; inset:0; background:rgba(10,11,13,.42); z-index:100; opacity:0; pointer-events:none; transition:opacity .2s;}
@@ -355,6 +358,7 @@ tbody tr:hover{background:var(--surface-2);}
 .co-badge{font-size:.6rem; font-weight:800; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:.4px;}
 .co-badge.you{background:var(--up-soft); color:var(--up);}
 .co-badge.nova{background:rgba(124,77,255,.1); color:#7c4dff;}
+.co-badge.watch{background:var(--blue-soft); color:var(--blue);}
 .co-badge.sold{background:var(--surface-3); color:var(--silver);}
 .co-about{font-size:.8rem; color:var(--silver); line-height:1.55; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
 .co-foot{display:flex; align-items:center; gap:7px; font-size:.72rem; color:var(--dim); font-weight:600; margin-top:auto; padding-top:4px;}

@@ -329,20 +329,6 @@ function renderMarket(){
   const sorted=[...m.sectors].sort((a,b)=>b.v-a.v);
   const sect=sorted.length?sorted.map(secCard).join(''):`<div class="mk-empty">ไม่มีกลุ่มในหมวดนี้</div>`;
 
-  // news — ชิ้นแรกเด่นเต็มแถว ที่เหลือ grid 2 คอลัมน์
-  const tagCls=t=>{const k=String(t).toLowerCase();
-    if(k.includes('ai')||k.includes('semi'))return 'ai';
-    if(k.includes('energy'))return 'energy';
-    if(k.includes('earn'))return 'earn';
-    return 'macro';};
-  const newsCard=(n,feat)=>`<div class="mk-news${feat?' feat':''}">
-    <span class="mk-news-tag ${tagCls(n.tag)}">${esc(n.tag)}</span>
-    <div class="mk-news-head">${esc(n.head)}</div>
-    <div class="mk-news-sum">${esc(n.sum)}</div>
-    <div class="mk-news-foot"><span class="mk-news-src">${esc(n.src)}</span><span class="mk-dot">·</span>${esc(n.date)}<span class="mk-news-mock">mock</span></div>
-  </div>`;
-  const news=newsCard(m.news[0],true)+`<div class="mk-news-grid">${m.news.slice(1).map(n=>newsCard(n,false)).join('')}</div>`;
-
   document.getElementById('t-market').innerHTML = `
     <div class="sec-title">Market Overview</div>
     <div class="mk-idx-grid">${idx}</div>
@@ -354,8 +340,72 @@ function renderMarket(){
     <div id="hn-section"></div>
 
     <div class="sec-title">Market News</div>
-    ${news}`;
+    <div id="mk-news-section"></div>`;
   renderHoldingsNews();
+  renderMarketNews();
+}
+
+/* ---------- MARKET NEWS ---------- */
+const mkTagCls=t=>{const k=String(t).toLowerCase();
+  if(k.includes('ai')||k.includes('semi'))return 'ai';
+  if(k.includes('energy'))return 'energy';
+  if(k.includes('earn'))return 'earn';
+  return 'macro';};
+let mkPeriod='all', mkLim=7;
+function setMkPeriod(v){mkPeriod=v;mkLim=7;renderMarketNews();}
+function loadMoreMk(){mkLim=Infinity;renderMarketNews();}
+function collapseMk(){mkLim=7;renderMarketNews();}
+function mkNewsFiltered(){
+  const nowTs=Date.now();
+  const cutoffMap={'all':-Infinity,'1m':nowTs-30*86400000,'3m':nowTs-90*86400000,
+    'ytd':new Date(new Date().getFullYear(),0,1).getTime(),'1y':nowTs-365*86400000,'5y':nowTs-5*365*86400000};
+  const cutoff=cutoffMap[mkPeriod]??-Infinity;
+  return DATA.market.news.map((n,i)=>({...n,_i:i}))
+    .filter(n=>thaiTs(n.date)>=cutoff);
+}
+function renderMarketNews(){
+  const newsCard=(n,feat)=>`<div class="mk-news${feat?' feat':''}" onclick="openMkNews(${n._i})">
+    <span class="mk-news-tag ${mkTagCls(n.tag)}">${esc(n.tag)}</span>
+    <div class="mk-news-head">${esc(n.head)}</div>
+    <div class="mk-news-sum">${esc(n.sum)}</div>
+    <div class="mk-news-foot"><span class="mk-news-src">${esc(n.src)}</span><span class="mk-dot">·</span>${esc(n.date)}<span class="mk-news-mock">mock</span></div>
+  </div>`;
+  const f=mkNewsFiltered();
+  // ข่าวเด่น = ตัวที่ AI ติดธง feat (ผ่าน data) ถ้าตัวนั้นถูกกรองออกค่อย fallback เป็นชิ้นแรก
+  const hero=f.find(n=>n.feat)||f[0];
+  const ordered=hero?[hero,...f.filter(n=>n!==hero)]:f;
+  const periods=['all','1m','3m','ytd','1y','5y'];
+  const pLabels={all:'All','1m':'1M','3m':'3M',ytd:'YTD','1y':'1Y','5y':'5Y'};
+  const shown=ordered.slice(0,mkLim);
+  const news=shown.length
+    ?newsCard(shown[0],true)+(shown.length>1?`<div class="mk-news-grid">${shown.slice(1).map(n=>newsCard(n,false)).join('')}</div>`:'')
+    :`<div class="hn-empty">ไม่มีข่าวในเงื่อนไขนี้</div>`;
+  const footBtn=f.length>mkLim
+    ?`<button class="cb-more-btn" onclick="loadMoreMk()">ดูทั้งหมด</button>`
+    :f.length>7?`<button class="cb-more-btn collapse" onclick="collapseMk()">ซ่อน</button>`:'';
+  document.getElementById('mk-news-section').innerHTML=
+    `<div class="hn-filter-bar">`+
+    `<div class="seg">`+
+    periods.map(v=>`<button class="${mkPeriod===v?'on':''}" onclick="setMkPeriod('${v}')">${pLabels[v]}</button>`).join('')+
+    `</div></div>`+
+    news+footBtn;
+}
+function openMkNews(i){
+  const n=DATA.market.news[i]; if(!n) return;
+  const bodyHtml=n.body
+    ?n.body.split(/\n\n+/).map(p=>`<p style="margin:0 0 12px">${esc(p)}</p>`).join('')
+    :(n.sum?`<p style="margin:0">${esc(n.sum)}</p>`:'');
+  document.getElementById('mbox').innerHTML=`
+    <div class="mbox-head">
+      <div style="flex:1;min-width:0">
+        <div style="margin-bottom:10px"><span class="mk-news-tag ${mkTagCls(n.tag)}">${esc(n.tag)}</span></div>
+        <div style="font-size:1.1rem;font-weight:800;line-height:1.45;color:var(--text)">${esc(n.head)}</div>
+      </div>
+      <button class="dr-close" onclick="closeAlloc()" style="margin-left:14px;flex-shrink:0">✕</button>
+    </div>
+    <div style="font-size:.88rem;color:var(--silver);line-height:1.8;padding-top:4px">${bodyHtml}</div>
+    <div style="margin-top:14px;text-align:right;font-size:.7rem;color:var(--dim)">${esc(n.src)} · ${esc(n.date)} · ข่าวจำลอง</div>`;
+  document.getElementById('mov').classList.add('open');
 }
 
 /* ---------- HN NEWS MODAL ---------- */
@@ -408,7 +458,18 @@ function setSeg(s){ arenaSeg=s; renderArena(); }
 function renderThesis(){
   document.getElementById('t-thesis').innerHTML = `
     <div class="sec-title">Thesis ของคุณ — มุมมองเบื้องหลังการลงทุน</div>
-    ${DATA.thesis.map((t,i)=>`<div class="th-row" onclick="openThesis(${i})"><span class="th-cat">${esc(t.cat)}</span><div><div class="th-t">${esc(t.t)}</div><div class="th-m">${esc(t.sum)}</div></div><span class="go">›</span></div>`).join('')}`;
+    ${DATA.thesis.map((t,i)=>{
+      const tks=thesisTickers(t.cat);
+      const chips=tks.length?`<div class="th-tks">${tks.map(tk=>`<span class="th-tk" onclick="event.stopPropagation();openCompany('${tk}')">${esc(tk)}</span>`).join('')}</div>`:'';
+      return `<div class="th-row" onclick="openThesis(${i})"><span class="th-cat">${esc(t.cat)}</span><div><div class="th-t">${esc(t.t)}</div><div class="th-m">${esc(t.sum)}</div>${chips}</div><span class="go">›</span></div>`;
+    }).join('')}`;
+}
+// ticker ที่ผูก thesisRef กับ thesis cat นี้ (holdings + companies) — ใช้ทำ link กลับจากหน้า Thesis ไปการ์ดบริษัท
+function thesisTickers(cat){
+  const out=[];
+  H.forEach(h=>{ if(h.thesisRef===cat) out.push(h.tk); });
+  (DATA.companies||[]).forEach(c=>{ if(c.thesisRef===cat && !out.includes(c.tk)) out.push(c.tk); });
+  return out;
 }
 
 /* ---------- COMPANY ---------- */
@@ -431,16 +492,18 @@ function companyRegistry(){
   Object.values(tradesByTk).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date)));
   // รายชื่อบริษัท: ถืออยู่ก่อน แล้วตามด้วย companies
   const list=[];
-  H.forEach(h=>list.push({tk:h.tk,name:h.name,sector:h.sector,about:h.about}));
-  extra.forEach(c=>list.push({tk:c.tk,name:c.name,sector:c.sector,about:c.about,soldNote:c.soldNote}));
+  H.forEach(h=>list.push({tk:h.tk,name:h.name,sector:h.sector,about:h.about,thesisRef:h.thesisRef}));
+  extra.forEach(c=>list.push({tk:c.tk,name:c.name,sector:c.sector,about:c.about,soldNote:c.soldNote,thesisRef:c.thesisRef}));
   const soldSet=new Set(extra.filter(c=>c.status==='sold').map(c=>c.tk));
-  return {list,newsByTk,tradesByTk,novaSet,youSet,soldSet};
+  const watchSet=new Set(extra.filter(c=>c.status==='watch').map(c=>c.tk));
+  return {list,newsByTk,tradesByTk,novaSet,youSet,soldSet,watchSet};
 }
 let _coReg=null;
 function coBadges(tk,R){
   const b=[];
   if(R.youSet.has(tk)) b.push('<span class="co-badge you">ถืออยู่</span>');
   if(R.novaSet.has(tk)) b.push('<span class="co-badge nova">NOVA</span>');
+  if(R.watchSet.has(tk)) b.push('<span class="co-badge watch">กำลังดู</span>');
   if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">ขายแล้ว</span>');
   return b.join('');
 }
@@ -456,7 +519,7 @@ function renderCompany(){
     </div>`;
   }).join('');
   document.getElementById('t-company').innerHTML=
-    `<div class="sec-title">Company — ทุกบริษัทที่เคยเกี่ยวข้อง <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} บริษัท</span></div>
+    `<div class="sec-title">Company — ทุกบริษัทในเรดาร์ ถือ ขาย และกำลังดู <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} บริษัท</span></div>
      <div class="co-grid">${cards}</div>`;
 }
 let _coTk=null, _coTrLim=3, _coNwLim=3;
@@ -479,6 +542,11 @@ function _renderCompanyDrawer(){
     :'<div class="co-empty">No news yet</div>';
   const nwBtn=allNw.length>3?(_coNwLim===Infinity?`<button class="cb-more-btn collapse" onclick="coNwLess()">Show less</button>`:`<button class="cb-more-btn" onclick="coNwMore()">Show more</button>`):'';
   const nwCap=(allNw.length>3&&_coNwLim!==Infinity)?'Latest 3':'All news';
+  const thIdx=c.thesisRef?DATA.thesis.findIndex(t=>t.cat===c.thesisRef):-1;
+  const thesisHtml=thIdx>=0
+    ?`<div class="dr-sec">Thesis ที่เกี่ยวข้อง</div>
+      <div class="th-row" onclick="openThesis(${thIdx})"><span class="th-cat">${esc(DATA.thesis[thIdx].cat)}</span><div><div class="th-t">${esc(DATA.thesis[thIdx].t)}</div><div class="th-m">${esc(DATA.thesis[thIdx].sum)}</div></div><span class="go">›</span></div>`
+    :'';
   document.getElementById('drawer').innerHTML=`
     <div class="dr-head">
       <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
@@ -489,6 +557,7 @@ function _renderCompanyDrawer(){
       <div class="dr-sec">About</div>
       <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
       ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
+      ${thesisHtml}
       <div class="dr-sec">Trade History <span class="dr-sub">${trCap}</span></div>
       ${tradesHtml}${trBtn}
       <div class="dr-sec">News <span class="dr-sub">${nwCap}</span></div>
