@@ -360,6 +360,17 @@ tbody tr:hover{background:var(--surface-2);}
 .co-empty{font-size:.8rem; color:var(--dim); padding:4px 0 8px;}
 .co-soldnote{margin-top:11px; font-size:.78rem; color:var(--down); background:var(--down-soft); border-radius:8px; padding:9px 12px; line-height:1.5;}
 
+/* coinbase-style holding modal */
+.cb-stats{margin:2px 0 4px;}
+.cb-stat-row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 2px; border-bottom:1px solid var(--border-soft);}
+.cb-stat-row:last-child{border-bottom:none;}
+.cb-stat-row .k{font-size:.8rem; color:var(--silver); font-weight:500;}
+.cb-stat-row .v{font-size:.88rem; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.2px;}
+.cb-news{padding:13px 2px; border-bottom:1px solid var(--border-soft);}
+.cb-news:last-child{border-bottom:none;}
+.cb-news .n-head{font-size:.86rem; font-weight:700; line-height:1.42;}
+.cb-news .n-foot{font-size:.7rem; color:var(--dim); margin-top:6px; display:flex; align-items:center; flex-wrap:wrap;}
+
 @media(max-width:820px){
   .kpis{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}
   .mk-idx-grid, .mk-sec-grid{grid-template-columns:repeat(2,1fr);} .vs-grid{grid-template-columns:1fr;}

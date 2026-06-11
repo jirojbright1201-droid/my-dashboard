@@ -490,31 +490,31 @@ function openCompany(tk){
 /* ---------- DRAWER ---------- */
 function openHolding(tk, showLog){
   const h=H.find(x=>x.tk===tk);
-  const news=h.news.map(n=>`<div class="news"><div class="n-head">${esc(n.head)}</div><div class="n-foot">ที่มา: (mock) ${esc(n.src)} · ${esc(n.date)}</div></div>`).join('');
+  // ข่าวเฉพาะ 7 วันล่าสุด (ประวัติเต็มดูที่หน้า Company)
+  const wk=Date.now()-7*86400000;
+  const recent=h.news.filter(n=>thaiTs(n.date)>=wk);
+  const news=recent.length
+    ?recent.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div><div class="n-foot">ที่มา: (mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
+    :'<div class="co-empty">ไม่มีข่าวใน 7 วันล่าสุด</div>';
   const trades=h.trades.map(t=>`<div class="trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('');
-  const logAcc = showLog ? `<details class="acc" open>
-      <summary>ประวัติเทรด + เหตุผล <span class="acc-count">${h.trades.length}</span><span class="acc-chev">›</span></summary>
-      <div class="acc-body">${trades}</div>
-    </details>` : '';
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head">
       <div><div style="font-size:1.25rem;font-weight:800">${h.tk} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(h.name)}</span></div>
         <div style="margin-top:6px"><span class="chip ${cls(h.pl)}">${h.pl>=0?'▲':'▼'} ${pct(h.plpct)}</span> <span class="chip flat">${esc(h.sector)}</span></div></div>
       <button class="dr-close" onclick="closeAlloc()">✕</button>
     </div>
-    <div class="stat-grid">
-      <div class="stat"><div class="k">จำนวน</div><div class="v">${h.shares} หุ้น</div></div>
-      <div class="stat"><div class="k">น้ำหนักพอร์ต</div><div class="v">${h.weight.toFixed(1)}%</div></div>
-      <div class="stat"><div class="k">ทุนเฉลี่ย</div><div class="v">$${h.avg.toFixed(2)}</div></div>
-      <div class="stat"><div class="k">ราคาปัจจุบัน</div><div class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.7rem">${pct(h.day)}</span></div></div>
-      <div class="stat"><div class="k">มูลค่า</div><div class="v">$${h.val.toFixed(2)}</div></div>
-      <div class="stat"><div class="k">กำไร/ขาดทุน</div><div class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)}</div></div>
+    <div class="cb-stats">
+      <div class="cb-stat-row"><span class="k">ราคาปัจจุบัน</span><span class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.72rem;margin-left:4px">${pct(h.day)}</span></span></div>
+      <div class="cb-stat-row"><span class="k">มูลค่าถือครอง</span><span class="v">$${h.val.toFixed(2)}</span></div>
+      <div class="cb-stat-row"><span class="k">จำนวน</span><span class="v">${h.shares} หุ้น</span></div>
+      <div class="cb-stat-row"><span class="k">ทุนเฉลี่ย</span><span class="v">$${h.avg.toFixed(2)}</span></div>
+      <div class="cb-stat-row"><span class="k">น้ำหนักพอร์ต</span><span class="v">${h.weight.toFixed(1)}%</span></div>
+      <div class="cb-stat-row"><span class="k">กำไร / ขาดทุน</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
     </div>
-    ${logAcc}
-    <details class="acc" ${showLog?'':'open'}>
-      <summary>ข่าวล่าสุดของตัวนี้ <span class="acc-count">${h.news.length}</span><span class="acc-chev">›</span></summary>
-      <div class="acc-body">${news}</div>
-    </details>`;
+    <div class="dr-sec">ประวัติเทรด + เหตุผล <span class="acc-count">${h.trades.length}</span></div>
+    ${trades}
+    <div class="dr-sec">ข่าวล่าสุด <span class="acc-count">7 วัน</span></div>
+    ${news}`;
   document.getElementById('mov').classList.add('open');
 }
 function openThesis(i){
