@@ -409,6 +409,82 @@ function renderThesis(){
     ${DATA.thesis.map((t,i)=>`<div class="th-row" onclick="openThesis(${i})"><span class="th-cat">${esc(t.cat)}</span><div><div class="th-t">${esc(t.t)}</div><div class="th-m">${esc(t.sum)}</div></div><span class="go">›</span></div>`).join('')}`;
 }
 
+/* ---------- COMPANY ---------- */
+// รวมข้อมูลทุกบริษัทจาก 3 แหล่ง: holdings (ถืออยู่), market.holdings_news (ข่าว NOVA-only), companies (ขายแล้ว/NOVA)
+function companyRegistry(){
+  const novaSet=new Set(DATA.arena.nova.hold.map(([tk])=>tk));
+  const youSet=new Set(H.map(h=>h.tk));
+  const extra=DATA.companies||[];
+  // ข่าวต่อ ticker — รวมทุกแหล่ง ไม่ซ้ำซ้อน
+  const newsByTk={};
+  const pushNews=(tk,arr)=>{ if(arr&&arr.length){(newsByTk[tk]=newsByTk[tk]||[]).push(...arr);} };
+  H.forEach(h=>pushNews(h.tk,h.news));
+  DATA.market.holdings_news.forEach(n=>pushNews(n.tk,[n]));
+  extra.forEach(c=>pushNews(c.tk,c.news));
+  Object.values(newsByTk).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date)));
+  // เทรดต่อ ticker
+  const tradesByTk={};
+  H.forEach(h=>{ tradesByTk[h.tk]=[...(h.trades||[])]; });
+  extra.forEach(c=>{ if(c.trades&&c.trades.length) tradesByTk[c.tk]=[...(tradesByTk[c.tk]||[]),...c.trades]; });
+  Object.values(tradesByTk).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date)));
+  // รายชื่อบริษัท: ถืออยู่ก่อน แล้วตามด้วย companies
+  const list=[];
+  H.forEach(h=>list.push({tk:h.tk,name:h.name,sector:h.sector,about:h.about}));
+  extra.forEach(c=>list.push({tk:c.tk,name:c.name,sector:c.sector,about:c.about,soldNote:c.soldNote}));
+  const soldSet=new Set(extra.filter(c=>c.status==='sold').map(c=>c.tk));
+  return {list,newsByTk,tradesByTk,novaSet,youSet,soldSet};
+}
+let _coReg=null;
+function coBadges(tk,R){
+  const b=[];
+  if(R.youSet.has(tk)) b.push('<span class="co-badge you">ถืออยู่</span>');
+  if(R.novaSet.has(tk)) b.push('<span class="co-badge nova">NOVA</span>');
+  if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">ขายแล้ว</span>');
+  return b.join('');
+}
+function renderCompany(){
+  const R=_coReg=companyRegistry();
+  const cards=R.list.map(c=>{
+    const nT=(R.tradesByTk[c.tk]||[]).length, nN=(R.newsByTk[c.tk]||[]).length;
+    return `<div class="co-card" onclick="openCompany('${c.tk}')">
+      <div class="co-top"><span class="co-tk">${esc(c.tk)}</span><span class="co-name">${esc(c.name)}</span></div>
+      <div class="co-badges"><span class="chip flat">${esc(c.sector)}</span>${coBadges(c.tk,R)}</div>
+      <div class="co-about">${esc(c.about||'')}</div>
+      <div class="co-foot"><span>${nT} เทรด</span><span class="mk-dot">·</span><span>${nN} ข่าว</span><span class="co-go">›</span></div>
+    </div>`;
+  }).join('');
+  document.getElementById('t-company').innerHTML=
+    `<div class="sec-title">Company — ทุกบริษัทที่เคยเกี่ยวข้อง <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} บริษัท</span></div>
+     <div class="co-grid">${cards}</div>`;
+}
+function openCompany(tk){
+  const R=_coReg||companyRegistry();
+  const c=R.list.find(x=>x.tk===tk); if(!c) return;
+  const trades=R.tradesByTk[tk]||[], news=R.newsByTk[tk]||[];
+  const tradesHtml=trades.length
+    ?trades.map(t=>`<div class="trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('')
+    :'<div class="co-empty">ยังไม่มีประวัติเทรด</div>';
+  const newsHtml=news.length
+    ?news.map(n=>`<div class="news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">ที่มา: (mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
+    :'<div class="co-empty">ยังไม่มีข่าว</div>';
+  document.getElementById('drawer').innerHTML=`
+    <div class="dr-head">
+      <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
+      <div class="co-badges" style="margin-top:7px"><span class="chip flat">${esc(c.sector)}</span>${coBadges(c.tk,R)}</div></div>
+      <button class="dr-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="dr-body">
+      <div class="dr-sec">เกี่ยวกับบริษัท</div>
+      <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
+      ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
+      <div class="dr-sec">ประวัติเทรด + เหตุผล <span class="acc-count">${trades.length}</span></div>
+      ${tradesHtml}
+      <div class="dr-sec">ประวัติข่าว <span class="acc-count">${news.length}</span></div>
+      ${newsHtml}
+    </div>`;
+  document.getElementById('dov').classList.add('open');
+}
+
 /* ---------- DRAWER ---------- */
 function openHolding(tk, showLog){
   const h=H.find(x=>x.tk===tk);
@@ -568,7 +644,7 @@ function drawArena(){
 }
 
 /* ---------- tabs ---------- */
-const RENDER={overview:renderOverview,log:renderLog,market:renderMarket,arena:renderArena,thesis:renderThesis};
+const RENDER={overview:renderOverview,company:renderCompany,log:renderLog,market:renderMarket,arena:renderArena,thesis:renderThesis};
 function sw(name,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
