@@ -180,7 +180,7 @@ tbody tr:hover{background:var(--surface-2);}
 .stat{background:var(--surface-2); border:1px solid var(--border-soft); border-radius:12px; padding:11px 14px;}
 .stat .k{font-size:.7rem; color:var(--silver); font-weight:600; margin-bottom:5px;}
 .stat .v{font-size:1.08rem; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-.2px;}
-.dr-sec{font-size:.64rem; color:var(--silver); font-weight:700; text-transform:uppercase; letter-spacing:.8px; margin:18px 0 9px;}
+.dr-sec{font-size:.95rem; color:var(--text); font-weight:800; letter-spacing:-.1px; margin:22px 0 11px; display:flex; align-items:center; gap:8px;}
 .trade{border-left:3px solid var(--blue); background:var(--blue-soft); border-radius:0 8px 8px 0; padding:9px 12px; margin-bottom:9px;}
 .trade .t-top{font-size:.78rem; font-weight:700;}
 .trade .t-why{font-size:.78rem; color:var(--silver); margin-top:3px; line-height:1.45;}
