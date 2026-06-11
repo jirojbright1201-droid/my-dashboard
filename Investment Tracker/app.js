@@ -590,7 +590,7 @@ function drawPortfolio(){
       layout:{padding:{top:10}},
       interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},
-        tooltip:{backgroundColor:'#fff',titleColor:'#8a919e',bodyColor:'#0a0b0d',footerColor:'#0a8a5a',
+        tooltip:{backgroundColor:'#fff',titleColor:'#8a919e',bodyColor:'#0a0b0d',footerColor:'#5b616e',
           borderColor:'#d7dae0',borderWidth:1,
           padding:{top:9,right:13,bottom:9,left:13},cornerRadius:11,displayColors:false,
           titleFont:{size:11,weight:'500'},bodyFont:{size:14,weight:'700'},footerFont:{size:11,weight:'700'},
