@@ -366,18 +366,20 @@ function openHnNews(i){
   const youSet=new Set(H.map(h=>h.tk));
   const y=youSet.has(n.tk), nv=novaSet.has(n.tk);
   const badge=y&&nv?`<span class="hn-who both">You &amp; NOVA</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">NOVA</span>`;
+  const moveChip=n.move?`<span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:'';
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
       <div style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <span class="hn-tk">${esc(n.tk)}</span>${badge}
-          <span style="font-size:.7rem;color:var(--dim);margin-left:auto">${esc(n.src)} · ${esc(n.date)}</span>
+          <span class="hn-tk">${esc(n.tk)}</span>${moveChip}
+          <span style="margin-left:auto">${badge}</span>
         </div>
         <div style="font-size:1.05rem;font-weight:800;line-height:1.45;color:var(--text)">${esc(n.head)}</div>
       </div>
       <button class="dr-close" onclick="closeAlloc()" style="margin-left:14px;flex-shrink:0">✕</button>
     </div>
-    ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}`;
+    ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}
+    <div style="margin-top:14px;text-align:right;font-size:.7rem;color:var(--dim)">${esc(n.src)} · ${esc(n.date)}</div>`;
   document.getElementById('mov').classList.add('open');
 }
 
