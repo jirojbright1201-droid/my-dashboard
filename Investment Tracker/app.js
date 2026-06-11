@@ -488,15 +488,24 @@ function openCompany(tk){
 }
 
 /* ---------- DRAWER ---------- */
-function openHolding(tk, showLog){
-  const h=H.find(x=>x.tk===tk);
+let _holdTk=null, _holdLim=3;
+function openHolding(tk, showLog){ _holdTk=tk; _holdLim=3; _renderHolding(); }
+function holdMore(){ _holdLim=Infinity; _renderHolding(); }
+function holdLess(){ _holdLim=3; _renderHolding(); }
+function _renderHolding(){
+  const h=H.find(x=>x.tk===_holdTk);
   // ข่าวเฉพาะ 7 วันล่าสุด (ประวัติเต็มดูที่หน้า Company)
   const wk=Date.now()-7*86400000;
   const recent=h.news.filter(n=>thaiTs(n.date)>=wk);
   const news=recent.length
     ?recent.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div><div class="n-foot">ที่มา: (mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
     :'<div class="co-empty">ไม่มีข่าวใน 7 วันล่าสุด</div>';
-  const trades=h.trades.map(t=>`<div class="trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('');
+  // ประวัติเทรดโชว์ 3 ก่อน เกินนั้นกดขยาย
+  const shownTr=h.trades.slice(0,_holdLim);
+  const trades=shownTr.map(t=>`<div class="trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('');
+  const trBtn=h.trades.length>3
+    ?(_holdLim===Infinity?`<button class="cb-more-btn collapse" onclick="holdLess()">ซ่อน</button>`:`<button class="cb-more-btn" onclick="holdMore()">ดูทั้งหมด</button>`)
+    :'';
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head">
       <div><div style="font-size:1.25rem;font-weight:800">${h.tk} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(h.name)}</span></div>
@@ -512,7 +521,7 @@ function openHolding(tk, showLog){
       <div class="cb-stat-row"><span class="k">กำไร / ขาดทุน</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
     </div>
     <div class="dr-sec">ประวัติเทรด + เหตุผล <span class="acc-count">${h.trades.length}</span></div>
-    ${trades}
+    ${trades}${trBtn}
     <div class="dr-sec">ข่าวล่าสุด <span class="acc-count">7 วัน</span></div>
     ${news}`;
   document.getElementById('mov').classList.add('open');
