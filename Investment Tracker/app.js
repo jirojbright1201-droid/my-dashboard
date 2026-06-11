@@ -261,7 +261,7 @@ function renderHoldingsNews(){
     return `<span class="hn-cnt">${arr.length}</span>`;};
   const moveChip=n=>n.move?`<span class="chip ${n.move.pct>=0?'up':'down'} hn-move-chip">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''
   const cards=shown.length
-    ?shown.map(n=>`<div class="hn-card" onclick="openHnNews(${n._i})"><div class="hn-top"><span class="hn-tk">${esc(n.tk)}</span>${badge(n.tk)}${moveChip(n)}</div><div class="hn-head">${esc(n.head)}</div><div class="hn-foot"><span class="hn-src">${esc(n.src)}</span><span class="mk-dot">·</span><span class="hn-dt">${esc(n.date)}</span></div></div>`).join('')
+    ?shown.map(n=>`<div class="hn-card" onclick="openHnNews(${n._i})"><div class="hn-top"><span class="hn-tk">${esc(n.tk)}</span>${badge(n.tk)}</div><div class="hn-head">${esc(n.head)}</div><div class="hn-foot"><span class="hn-src">${esc(n.src)}</span><span class="mk-dot">·</span><span class="hn-dt">${esc(n.date)}</span>${moveChip(n)}</div></div>`).join('')
     :`<div class="hn-empty">ไม่มีข่าวในช่วงนี้</div>`;
   const hasMore=filtered.length>hnLim;
   const footBtn=hasMore
@@ -377,8 +377,7 @@ function openHnNews(i){
       </div>
       <button class="dr-close" onclick="closeAlloc()" style="margin-left:14px;flex-shrink:0">✕</button>
     </div>
-    ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}
-    ${n.move?`<div style="margin-top:14px;display:flex;justify-content:flex-end"><span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span></div>`:''}`;
+    ${n.sum?`<div style="font-size:.88rem;color:var(--silver);line-height:1.75;padding-top:2px">${esc(n.sum)}</div>`:''}`;
   document.getElementById('mov').classList.add('open');
 }
 
