@@ -503,8 +503,10 @@ function _renderHolding(){
   // trade history: 3 first, expand on demand
   const shownTr=h.trades.slice(0,_holdLim);
   const trades=shownTr.map(t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('');
+  const capped=h.trades.length>3 && _holdLim!==Infinity;
+  const trCap=capped?'Latest 3':'All trades';
   const trBtn=h.trades.length>3
-    ?(_holdLim===Infinity?`<button class="cb-more-btn collapse" onclick="holdLess()">Hide</button>`:`<button class="cb-more-btn" onclick="holdMore()">Show all</button>`)
+    ?(_holdLim===Infinity?`<button class="cb-more-btn collapse" onclick="holdLess()">Show less</button>`:`<button class="cb-more-btn" onclick="holdMore()">Show more</button>`)
     :'';
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head">
@@ -520,9 +522,9 @@ function _renderHolding(){
       <div class="cb-stat-row"><span class="k">Allocation</span><span class="v">${h.weight.toFixed(1)}%</span></div>
       <div class="cb-stat-row"><span class="k">Total Return</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
     </div>
-    <div class="dr-sec">Trade History</div>
+    <div class="dr-sec">Trade History <span class="dr-sub">${trCap}</span></div>
     <div class="cb-list">${trades}</div>${trBtn}
-    <div class="dr-sec">Recent News</div>
+    <div class="dr-sec">Recent News <span class="dr-sub">Last 7 days</span></div>
     ${news}`;
   document.getElementById('mov').classList.add('open');
 }
