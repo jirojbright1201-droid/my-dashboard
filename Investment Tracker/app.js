@@ -259,7 +259,7 @@ function renderHoldingsNews(){
     return y&&n?`<span class="hn-who both">You &amp; NOVA</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">NOVA</span>`;};
   const cnt=v=>{const arr=(v==='you'?all.filter(n=>youSet.has(n.tk)):v==='nova'?all.filter(n=>novaSet.has(n.tk)):all).filter(n=>thaiTs(n.date)>=cutoff);
     return `<span class="hn-cnt">${arr.length}</span>`;};
-  const moveChip=n=>n.move?`<span class="chip ${n.move.pct>=0?'up':'down'} hn-move-chip">${n.move.pct>=0?'+':''}${n.move.pct}% · ${n.move.period}</span>`:''
+  const moveChip=n=>n.move?`<span class="chip ${n.move.pct>=0?'up':'down'} hn-move-chip">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''
   const cards=shown.length
     ?shown.map(n=>`<div class="hn-card" onclick="openHnNews(${n._i})"><div class="hn-top"><span class="hn-tk">${esc(n.tk)}</span>${badge(n.tk)}${moveChip(n)}</div><div class="hn-head">${esc(n.head)}</div><div class="hn-foot"><span class="hn-src">${esc(n.src)}</span><span class="mk-dot">·</span><span class="hn-dt">${esc(n.date)}</span></div></div>`).join('')
     :`<div class="hn-empty">ไม่มีข่าวในช่วงนี้</div>`;
