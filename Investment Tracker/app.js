@@ -494,17 +494,17 @@ function holdMore(){ _holdLim=Infinity; _renderHolding(); }
 function holdLess(){ _holdLim=3; _renderHolding(); }
 function _renderHolding(){
   const h=H.find(x=>x.tk===_holdTk);
-  // ข่าวเฉพาะ 7 วันล่าสุด (ประวัติเต็มดูที่หน้า Company)
+  // news: last 7 days only (full history lives on the Company page)
   const wk=Date.now()-7*86400000;
   const recent=h.news.filter(n=>thaiTs(n.date)>=wk);
   const news=recent.length
-    ?recent.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div><div class="n-foot">ที่มา: (mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
-    :'<div class="co-empty">ไม่มีข่าวใน 7 วันล่าสุด</div>';
-  // ประวัติเทรดโชว์ 3 ก่อน เกินนั้นกดขยาย
+    ?recent.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div><div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
+    :'<div class="co-empty">No news in the last 7 days</div>';
+  // trade history: 3 first, expand on demand
   const shownTr=h.trades.slice(0,_holdLim);
-  const trades=shownTr.map(t=>`<div class="trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('');
+  const trades=shownTr.map(t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('');
   const trBtn=h.trades.length>3
-    ?(_holdLim===Infinity?`<button class="cb-more-btn collapse" onclick="holdLess()">ซ่อน</button>`:`<button class="cb-more-btn" onclick="holdMore()">ดูทั้งหมด</button>`)
+    ?(_holdLim===Infinity?`<button class="cb-more-btn collapse" onclick="holdLess()">Hide</button>`:`<button class="cb-more-btn" onclick="holdMore()">Show all</button>`)
     :'';
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head">
@@ -513,16 +513,16 @@ function _renderHolding(){
       <button class="dr-close" onclick="closeAlloc()">✕</button>
     </div>
     <div class="cb-stats">
-      <div class="cb-stat-row"><span class="k">ราคาปัจจุบัน</span><span class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.72rem;margin-left:4px">${pct(h.day)}</span></span></div>
-      <div class="cb-stat-row"><span class="k">มูลค่าถือครอง</span><span class="v">$${h.val.toFixed(2)}</span></div>
-      <div class="cb-stat-row"><span class="k">จำนวน</span><span class="v">${h.shares} หุ้น</span></div>
-      <div class="cb-stat-row"><span class="k">ทุนเฉลี่ย</span><span class="v">$${h.avg.toFixed(2)}</span></div>
-      <div class="cb-stat-row"><span class="k">น้ำหนักพอร์ต</span><span class="v">${h.weight.toFixed(1)}%</span></div>
-      <div class="cb-stat-row"><span class="k">กำไร / ขาดทุน</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
+      <div class="cb-stat-row"><span class="k">Price</span><span class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.72rem;margin-left:4px">${pct(h.day)}</span></span></div>
+      <div class="cb-stat-row"><span class="k">Market Value</span><span class="v">$${h.val.toFixed(2)}</span></div>
+      <div class="cb-stat-row"><span class="k">Shares</span><span class="v">${h.shares}</span></div>
+      <div class="cb-stat-row"><span class="k">Avg Cost</span><span class="v">$${h.avg.toFixed(2)}</span></div>
+      <div class="cb-stat-row"><span class="k">Allocation</span><span class="v">${h.weight.toFixed(1)}%</span></div>
+      <div class="cb-stat-row"><span class="k">Total Return</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
     </div>
-    <div class="dr-sec">ประวัติเทรด + เหตุผล <span class="acc-count">${h.trades.length}</span></div>
-    ${trades}${trBtn}
-    <div class="dr-sec">ข่าวล่าสุด <span class="acc-count">7 วัน</span></div>
+    <div class="dr-sec">Trade History</div>
+    <div class="cb-list">${trades}</div>${trBtn}
+    <div class="dr-sec">Recent News</div>
     ${news}`;
   document.getElementById('mov').classList.add('open');
 }

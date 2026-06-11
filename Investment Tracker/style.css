@@ -371,6 +371,10 @@ tbody tr:hover{background:var(--surface-2);}
 .cb-news:last-child{border-bottom:none;}
 .cb-news .n-head{font-size:.86rem; font-weight:700; line-height:1.42;}
 .cb-news .n-foot{font-size:.7rem; color:var(--dim); margin-top:6px; display:flex; align-items:center; flex-wrap:wrap;}
+.cb-trade{padding:13px 2px; border-bottom:1px solid var(--border-soft);}
+.cb-list .cb-trade:last-child{border-bottom:none;}
+.cb-trade .t-top{font-size:.84rem; font-weight:700;}
+.cb-trade .t-why{font-size:.78rem; color:var(--silver); margin-top:4px; line-height:1.5;}
 
 @media(max-width:820px){
   .kpis{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}
