@@ -581,8 +581,9 @@ function novaStat(tk, price){
   const ret=(avg!=null&&price)?(price-avg)/avg*100:null;
   return {w, avg, mv, shares, ret};
 }
-let _coTk=null, _coTrLim=3, _coNwLim=3;
-function openCompany(tk){ _coTk=tk; _coTrLim=3; _coNwLim=3; _renderCompanyDrawer(); }
+let _coTk=null, _coTrLim=3, _coNwLim=3, _coTab='overview';
+function openCompany(tk){ _coTk=tk; _coTrLim=3; _coNwLim=3; _coTab='overview'; _renderCompanyDrawer(); }
+function coTab(t){ _coTab=t; _renderCompanyDrawer(); }
 function coTrMore(){ _coTrLim=Infinity; _renderCompanyDrawer(); }
 function coTrLess(){ _coTrLim=3; _renderCompanyDrawer(); }
 function coNwMore(){ _coNwLim=Infinity; _renderCompanyDrawer(); }
@@ -633,13 +634,11 @@ function _renderCompanyDrawer(){
       cells+= youTr[i]?trCard(youTr[i]):'<div class="tcmp-empty"></div>';
       cells+= novaTr[i]?trCard(novaTr[i]):'<div class="tcmp-empty"></div>';
     }
-    tradesBlock=`<div class="dr-sec">Trade History <span class="dr-sub">คุณ vs NOVA</span></div>
-      <div class="tcmp"><div class="tcmp-h cmp-you">คุณ</div><div class="tcmp-h cmp-nova">NOVA</div>${cells}</div>${trMoreBtn(maxLen)}`;
+    tradesBlock=`<div class="tcmp"><div class="tcmp-h cmp-you">คุณ</div><div class="tcmp-h cmp-nova">NOVA</div>${cells}</div>${trMoreBtn(maxLen)}`;
   } else {
     const arr=youTr.length?youTr:novaTr, isNova=!youTr.length && novaTr.length;
-    const cap=(arr.length>3&&_coTrLim!==Infinity)?'Latest 3':'All trades';
-    const list=arr.length?`<div class="cb-list">${arr.slice(0,_coTrLim).map(trCard).join('')}</div>`:'<div class="co-empty">No trades yet</div>';
-    tradesBlock=`<div class="dr-sec">Trade History <span class="dr-sub">${isNova?'NOVA · ':''}${cap}</span></div>${list}${trMoreBtn(arr.length)}`;
+    const list=arr.length?`<div class="cb-list">${arr.slice(0,_coTrLim).map(trCard).join('')}</div>`:'<div class="co-empty">ยังไม่มีการเทรด</div>';
+    tradesBlock=`${isNova?'<div class="tr-cap">การเทรดของ NOVA</div>':''}${list}${trMoreBtn(arr.length)}`;
   }
   const allNw=R.newsByTk[_coTk]||[];
   const newsHtml=allNw.length
@@ -652,20 +651,33 @@ function _renderCompanyDrawer(){
     ?`<div class="dr-sec">Thesis ที่เกี่ยวข้อง</div>
       <div class="th-row" onclick="openThesis(${thIdx})"><span class="th-cat">${esc(DATA.thesis[thIdx].cat)}</span><div><div class="th-t">${esc(DATA.thesis[thIdx].t)}</div><div class="th-m">${esc(DATA.thesis[thIdx].sum)}</div></div><span class="go">›</span></div>`
     :'';
+  // price line ใต้หัว (เฉพาะตัวที่ถือ)
+  const priceLine = h
+    ? `<div class="co-priceline">$${h.price.toFixed(2)} <span class="${cls(h.day)}">${pct(h.day)} วันนี้</span></div>`
+    : '';
+  // เนื้อหาแต่ละแท็บ
+  const overviewBody = `${statsHtml}
+    <div class="dr-sec">About</div>
+    <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
+    ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
+    ${thesisHtml}`;
+  const newsBody = `${newsHtml}${nwBtn}`;
+  const body = _coTab==='trades'?tradesBlock : _coTab==='news'?newsBody : overviewBody;
+  const trCount = youTr.length+novaTr.length;
+  const tab=(k,label,n)=>`<button class="mtab ${_coTab===k?'on':''}" onclick="coTab('${k}')">${label}${n?`<span class="mtab-c">${n}</span>`:''}</button>`;
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
       <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
       <div class="co-badges" style="margin-top:7px"><span class="chip flat">${esc(c.sector)}</span>${coBadges(c.tk,R)}</div></div>
       <button class="dr-close" onclick="closeAlloc()">✕</button>
     </div>
-    ${statsHtml}
-    <div class="dr-sec">About</div>
-    <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
-    ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
-    ${thesisHtml}
-    ${tradesBlock}
-    <div class="dr-sec">News <span class="dr-sub">${nwCap}</span></div>
-    ${newsHtml}${nwBtn}`;
+    ${priceLine}
+    <div class="mtabs">
+      ${tab('overview','ภาพรวม',0)}
+      ${tab('trades','เทรด',trCount)}
+      ${tab('news','ข่าว',allNw.length)}
+    </div>
+    <div class="mtab-body">${body}</div>`;
   document.getElementById('mov').classList.add('open');
 }
 
