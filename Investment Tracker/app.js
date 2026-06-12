@@ -577,6 +577,25 @@ function coNwLess(){ _coNwLim=3; _renderCompanyDrawer(); }
 function _renderCompanyDrawer(){
   const R=_coReg||companyRegistry();
   const c=R.list.find(x=>x.tk===_coTk); if(!c) return;
+  const h=H.find(x=>x.tk===_coTk);
+  const novaW=(DATA.arena.nova.hold.find(([t])=>t===_coTk)||[])[1];
+  let statsHtml='';
+  if(h){
+    statsHtml=`<div class="cb-stats">
+      <div class="cb-stat-row"><span class="k">Price</span><span class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.72rem;margin-left:4px">${pct(h.day)}</span></span></div>
+      <div class="cb-stat-row"><span class="k">Market Value</span><span class="v">$${h.val.toFixed(2)}</span></div>
+      <div class="cb-stat-row"><span class="k">Shares</span><span class="v">${h.shares}</span></div>
+      <div class="cb-stat-row"><span class="k">Avg Cost</span><span class="v">$${h.avg.toFixed(2)}</span></div>
+      <div class="cb-stat-row"><span class="k">Allocation (คุณ)</span><span class="v">${h.weight.toFixed(1)}%</span></div>
+      <div class="cb-stat-row"><span class="k">Total Return</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
+      ${novaW?`<div class="cb-stat-row"><span class="k">NOVA ถือ</span><span class="v">${novaW}% ของพอร์ต NOVA</span></div>`:''}
+    </div>`;
+  } else if(novaW){
+    statsHtml=`<div class="cb-stats">
+      <div class="cb-stat-row"><span class="k">NOVA ถือ</span><span class="v">${novaW}% ของพอร์ต NOVA</span></div>
+      <div class="cb-stat-row"><span class="k">สถานะของคุณ</span><span class="v" style="color:var(--dim)">ไม่ได้ถือ — ติดตามผ่าน NOVA</span></div>
+    </div>`;
+  }
   const allTr=R.tradesByTk[_coTk]||[], allNw=R.newsByTk[_coTk]||[];
   const tradesHtml=allTr.length
     ?`<div class="cb-list">${allTr.slice(0,_coTrLim).map(t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('')}</div>`
@@ -599,6 +618,7 @@ function _renderCompanyDrawer(){
       <div class="co-badges" style="margin-top:7px"><span class="chip flat">${esc(c.sector)}</span>${coBadges(c.tk,R)}</div></div>
       <button class="dr-close" onclick="closeAlloc()">✕</button>
     </div>
+    ${statsHtml}
     <div class="dr-sec">About</div>
     <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
     ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
