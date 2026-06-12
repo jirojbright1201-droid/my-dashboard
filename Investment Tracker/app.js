@@ -506,8 +506,8 @@ function coBadges(tk,R){
   const b=[];
   if(R.youSet.has(tk)) b.push('<span class="co-badge you">YOU</span>');
   if(R.novaSet.has(tk)) b.push('<span class="co-badge nova">NOVA</span>');
-  if(R.watchSet.has(tk)) b.push('<span class="co-badge watch">กำลังดู</span>');
-  if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">ขายแล้ว</span>');
+  if(R.watchSet.has(tk)) b.push('<span class="co-badge watch">WATCHING</span>');
+  if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">SOLD</span>');
   return b.join('');
 }
 let _coFilter='all', _coSearch='';
@@ -521,17 +521,17 @@ function coAvClass(tk,R){
 }
 function renderCompany(){
   const R=_coReg=companyRegistry();
-  const onAll=_coFilter==='all'?'on':'';
   document.getElementById('t-company').innerHTML=
-    `<div class="sec-title">Company — ทุกบริษัทในเรดาร์ ถือ ขาย และกำลังดู <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} บริษัท</span></div>
+    `<div class="sec-title">Company — All companies on your radar <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} companies</span></div>
      <div class="toolbar">
-       <input class="search" id="coSearch" placeholder="ค้นหา ticker หรือชื่อบริษัท" oninput="coSearch(this.value)" value="${esc(_coSearch)}">
+       <input class="search" id="coSearch" placeholder="Search ticker or company name" oninput="coSearch(this.value)" value="${esc(_coSearch)}">
        <div class="co-pills" id="coPills">
-         <button class="fchip ${_coFilter==='all'?'on':''}" data-k="all" onclick="coPill('all')">ทั้งหมด</button>
-         <button class="fchip ${_coFilter==='you'?'on':''}" data-k="you" onclick="coPill('you')">YOU</button>
-         <button class="fchip ${_coFilter==='watch'?'on':''}" data-k="watch" onclick="coPill('watch')">กำลังดู</button>
-         <button class="fchip ${_coFilter==='nova'?'on':''}" data-k="nova" onclick="coPill('nova')">NOVA</button>
-         <button class="fchip ${_coFilter==='sold'?'on':''}" data-k="sold" onclick="coPill('sold')">ขายแล้ว</button>
+         <button class="fchip ${_coFilter==='all'?'on':''}" data-k="all" onclick="coPill('all')">All</button>
+         <button class="fchip ${_coFilter==='you'?'on':''}" data-k="you" onclick="coPill('you')">You Only</button>
+         <button class="fchip ${_coFilter==='both'?'on':''}" data-k="both" onclick="coPill('both')">Both · You + NOVA</button>
+         <button class="fchip ${_coFilter==='nova'?'on':''}" data-k="nova" onclick="coPill('nova')">NOVA Only</button>
+         <button class="fchip ${_coFilter==='watch'?'on':''}" data-k="watch" onclick="coPill('watch')">Watching</button>
+         <button class="fchip ${_coFilter==='sold'?'on':''}" data-k="sold" onclick="coPill('sold')">Sold</button>
        </div>
      </div>
      <div id="coList"></div>`;
@@ -541,11 +541,7 @@ function coPill(k){ _coFilter=k; document.querySelectorAll('#coPills .fchip').fo
 function coSearch(v){ _coSearch=v; _renderCoList(); }
 function _coMatchStatus(tk,R){
   if(_coFilter==='all') return true;
-  if(_coFilter==='you') return R.youSet.has(tk);
-  if(_coFilter==='watch') return R.watchSet.has(tk);
-  if(_coFilter==='nova') return R.novaSet.has(tk);
-  if(_coFilter==='sold') return R.soldSet.has(tk);
-  return true;
+  return coGroupOf(tk,R)===_coFilter;
 }
 function coRowHtml(c,R){
   const h=H.find(x=>x.tk===c.tk);
@@ -579,7 +575,7 @@ function _renderCoList(){
   let html;
   if(_coFilter==='all'){
     // จัดกลุ่มตามสถานะ
-    const meta={you:'เฉพาะคุณถือ', both:'ถือทั้งคู่ · คุณ + NOVA', nova:'เฉพาะ NOVA ถือ', watch:'กำลังดู', sold:'ขายแล้ว', other:'อื่นๆ'};
+    const meta={you:'You Only', both:'Both · You + NOVA', nova:'NOVA Only', watch:'Watching', sold:'Sold', other:'Other'};
     const order=['you','both','nova','watch','sold','other'];
     const groups={};
     filtered.forEach(c=>{ const g=coGroupOf(c.tk,R); (groups[g]=groups[g]||[]).push(c); });
@@ -591,7 +587,7 @@ function _renderCoList(){
     // กด pill เฉพาะสถานะ → ลิสต์เรียบไม่มีหัวกลุ่ม
     html=filtered.length?`<div class="co-listcard">${filtered.map(c=>coRowHtml(c,R)).join('')}</div>`:'';
   }
-  document.getElementById('coList').innerHTML = html || '<div class="co-empty" style="padding:26px;text-align:center">ไม่พบบริษัทที่ตรงกับตัวกรอง</div>';
+  document.getElementById('coList').innerHTML = html || '<div class="co-empty" style="padding:26px;text-align:center">No companies match this filter</div>';
 }
 // สถิติฝั่ง NOVA ของ ticker — derive จาก น้ำหนัก×มูลค่าพอร์ต NOVA; ต้นทุน(avg) มาจาก hold[2] ถ้ามี (เฉพาะตัวที่มีราคาจริง)
 function novaStat(tk, price){
@@ -620,7 +616,7 @@ function _renderCompanyDrawer(){
     // ถือทั้งคู่ — เทียบ คุณ vs NOVA แบบ 2 คอลัมน์ ข้อมูลชุดเดียวกัน
     const row=(k,you,nova,yCls='',nCls='')=>`<div class="cmp-row"><span class="cmp-k">${k}</span><span class="${yCls}">${you}</span><span class="${nCls}">${nova}</span></div>`;
     statsHtml=`<div class="cmp">
-      <div class="cmp-head"><span></span><span class="cmp-you">คุณ</span><span class="cmp-nova">NOVA</span></div>
+      <div class="cmp-head"><span></span><span class="cmp-you">You</span><span class="cmp-nova">NOVA</span></div>
       ${row('Price', `$${h.price.toFixed(2)}`, `$${h.price.toFixed(2)}`)}
       ${row('Market Value', `$${Math.round(h.val).toLocaleString()}`, `$${Math.round(ns.mv).toLocaleString()}`)}
       ${row('Shares', `${h.shares}`, `~${Math.round(ns.shares)}`)}
@@ -628,20 +624,20 @@ function _renderCompanyDrawer(){
       ${row('Allocation', `${h.weight.toFixed(1)}%`, `${ns.w}%`)}
       ${row('Total Return', pct(h.plpct), pct(ns.ret), cls(h.pl), cls(ns.ret))}
     </div>
-    <div class="cmp-note">ต้นทุน/ผลตอบแทนฝั่ง NOVA เป็นค่าจำลอง (NOVA เทรดคนละจังหวะ) — ราคาตลาดใช้ร่วมกัน</div>`;
+    <div class="cmp-note">NOVA cost and return figures are simulated because NOVA trades at different times. Both portfolios use the same market price.</div>`;
   } else if(h){
     statsHtml=`<div class="cb-stats">
       <div class="cb-stat-row"><span class="k">Price</span><span class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.72rem;margin-left:4px">${pct(h.day)}</span></span></div>
       <div class="cb-stat-row"><span class="k">Market Value</span><span class="v">$${h.val.toFixed(2)}</span></div>
       <div class="cb-stat-row"><span class="k">Shares</span><span class="v">${h.shares}</span></div>
       <div class="cb-stat-row"><span class="k">Avg Cost</span><span class="v">$${h.avg.toFixed(2)}</span></div>
-      <div class="cb-stat-row"><span class="k">Allocation (คุณ)</span><span class="v">${h.weight.toFixed(1)}%</span></div>
+      <div class="cb-stat-row"><span class="k">Allocation (You)</span><span class="v">${h.weight.toFixed(1)}%</span></div>
       <div class="cb-stat-row"><span class="k">Total Return</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
     </div>`;
   } else if(ns){
     statsHtml=`<div class="cb-stats">
-      <div class="cb-stat-row"><span class="k">NOVA ถือ</span><span class="v">${ns.w}% ของพอร์ต NOVA</span></div>
-      <div class="cb-stat-row"><span class="k">สถานะของคุณ</span><span class="v" style="color:var(--dim)">ไม่ได้ถือ — ติดตามผ่าน NOVA</span></div>
+      <div class="cb-stat-row"><span class="k">NOVA Holding</span><span class="v">${ns.w}% of NOVA portfolio</span></div>
+      <div class="cb-stat-row"><span class="k">Your Position</span><span class="v" style="color:var(--dim)">Not held · Tracked through NOVA</span></div>
     </div>`;
   }
   // ---- Trade History: คุณ vs NOVA ----
@@ -656,11 +652,11 @@ function _renderCompanyDrawer(){
       cells+= youTr[i]?trCard(youTr[i]):'<div class="tcmp-empty"></div>';
       cells+= novaTr[i]?trCard(novaTr[i]):'<div class="tcmp-empty"></div>';
     }
-    tradesBlock=`<div class="tcmp"><div class="tcmp-h cmp-you">คุณ</div><div class="tcmp-h cmp-nova">NOVA</div>${cells}</div>${trMoreBtn(maxLen)}`;
+    tradesBlock=`<div class="tcmp"><div class="tcmp-h cmp-you">You</div><div class="tcmp-h cmp-nova">NOVA</div>${cells}</div>${trMoreBtn(maxLen)}`;
   } else {
     const arr=youTr.length?youTr:novaTr, isNova=!youTr.length && novaTr.length;
-    const list=arr.length?`<div class="cb-list">${arr.slice(0,_coTrLim).map(trCard).join('')}</div>`:'<div class="co-empty">ยังไม่มีการเทรด</div>';
-    tradesBlock=`${isNova?'<div class="tr-cap">การเทรดของ NOVA</div>':''}${list}${trMoreBtn(arr.length)}`;
+    const list=arr.length?`<div class="cb-list">${arr.slice(0,_coTrLim).map(trCard).join('')}</div>`:'<div class="co-empty">No trades yet</div>';
+    tradesBlock=`${isNova?'<div class="tr-cap">NOVA Trades</div>':''}${list}${trMoreBtn(arr.length)}`;
   }
   const allNw=R.newsByTk[_coTk]||[];
   const newsHtml=allNw.length
@@ -670,12 +666,12 @@ function _renderCompanyDrawer(){
   const nwCap=(allNw.length>3&&_coNwLim!==Infinity)?'Latest 3':'All news';
   const thIdx=c.thesisRef?DATA.thesis.findIndex(t=>t.cat===c.thesisRef):-1;
   const thesisHtml=thIdx>=0
-    ?`<div class="dr-sec">Thesis ที่เกี่ยวข้อง</div>
+    ?`<div class="dr-sec">Related Thesis</div>
       <div class="th-row" onclick="openThesis(${thIdx})"><span class="th-cat">${esc(DATA.thesis[thIdx].cat)}</span><div><div class="th-t">${esc(DATA.thesis[thIdx].t)}</div><div class="th-m">${esc(DATA.thesis[thIdx].sum)}</div></div><span class="go">›</span></div>`
     :'';
   // price line ใต้หัว (เฉพาะตัวที่ถือ)
   const priceLine = h
-    ? `<div class="co-priceline">$${h.price.toFixed(2)} <span class="${cls(h.day)}">${pct(h.day)} วันนี้</span></div>`
+    ? `<div class="co-priceline">$${h.price.toFixed(2)} <span class="${cls(h.day)}">${pct(h.day)} today</span></div>`
     : '';
   // เนื้อหาแต่ละแท็บ
   const overviewBody = `${statsHtml}
@@ -695,9 +691,9 @@ function _renderCompanyDrawer(){
     </div>
     ${priceLine}
     <div class="mtabs">
-      ${tab('overview','ภาพรวม',0)}
-      ${tab('trades','เทรด',trCount)}
-      ${tab('news','ข่าว',allNw.length)}
+      ${tab('overview','Overview',0)}
+      ${tab('trades','Trades',trCount)}
+      ${tab('news','News',allNw.length)}
     </div>
     <div class="mtab-body">${body}</div>`;
   document.getElementById('mov').classList.add('open');
