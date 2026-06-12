@@ -568,6 +568,16 @@ function _renderCoList(){
   }).join('');
   document.getElementById('coList').innerHTML = rows || '<div class="co-empty" style="padding:26px;text-align:center">ไม่พบบริษัทที่ตรงกับตัวกรอง</div>';
 }
+// สถิติฝั่ง NOVA ของ ticker — derive จาก น้ำหนัก×มูลค่าพอร์ต NOVA; ต้นทุน(avg) มาจาก hold[2] ถ้ามี (เฉพาะตัวที่มีราคาจริง)
+function novaStat(tk, price){
+  const e=DATA.arena.nova.hold.find(([t])=>t===tk);
+  if(!e) return null;
+  const w=e[1], avg=(e[2]!=null?e[2]:null);
+  const mv=DATA.arena.nova.val*w/100;
+  const shares=price?mv/price:null;
+  const ret=(avg!=null&&price)?(price-avg)/avg*100:null;
+  return {w, avg, mv, shares, ret};
+}
 let _coTk=null, _coTrLim=3, _coNwLim=3;
 function openCompany(tk){ _coTk=tk; _coTrLim=3; _coNwLim=3; _renderCompanyDrawer(); }
 function coTrMore(){ _coTrLim=Infinity; _renderCompanyDrawer(); }
@@ -578,9 +588,22 @@ function _renderCompanyDrawer(){
   const R=_coReg||companyRegistry();
   const c=R.list.find(x=>x.tk===_coTk); if(!c) return;
   const h=H.find(x=>x.tk===_coTk);
-  const novaW=(DATA.arena.nova.hold.find(([t])=>t===_coTk)||[])[1];
+  const ns=novaStat(_coTk, h?h.price:null);
   let statsHtml='';
-  if(h){
+  if(h && ns && ns.avg!=null){
+    // ถือทั้งคู่ — เทียบ คุณ vs NOVA แบบ 2 คอลัมน์ ข้อมูลชุดเดียวกัน
+    const row=(k,you,nova,yCls='',nCls='')=>`<div class="cmp-row"><span class="cmp-k">${k}</span><span class="${yCls}">${you}</span><span class="${nCls}">${nova}</span></div>`;
+    statsHtml=`<div class="cmp">
+      <div class="cmp-head"><span></span><span class="cmp-you">คุณ</span><span class="cmp-nova">NOVA</span></div>
+      ${row('Price', `$${h.price.toFixed(2)}`, `$${h.price.toFixed(2)}`)}
+      ${row('Market Value', `$${Math.round(h.val).toLocaleString()}`, `$${Math.round(ns.mv).toLocaleString()}`)}
+      ${row('Shares', `${h.shares}`, `~${Math.round(ns.shares)}`)}
+      ${row('Avg Cost', `$${h.avg.toFixed(2)}`, `$${ns.avg.toFixed(2)}`)}
+      ${row('Allocation', `${h.weight.toFixed(1)}%`, `${ns.w}%`)}
+      ${row('Total Return', pct(h.plpct), pct(ns.ret), cls(h.pl), cls(ns.ret))}
+    </div>
+    <div class="cmp-note">ต้นทุน/ผลตอบแทนฝั่ง NOVA เป็นค่าจำลอง (NOVA เทรดคนละจังหวะ) — ราคาตลาดใช้ร่วมกัน</div>`;
+  } else if(h){
     statsHtml=`<div class="cb-stats">
       <div class="cb-stat-row"><span class="k">Price</span><span class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.72rem;margin-left:4px">${pct(h.day)}</span></span></div>
       <div class="cb-stat-row"><span class="k">Market Value</span><span class="v">$${h.val.toFixed(2)}</span></div>
@@ -588,11 +611,10 @@ function _renderCompanyDrawer(){
       <div class="cb-stat-row"><span class="k">Avg Cost</span><span class="v">$${h.avg.toFixed(2)}</span></div>
       <div class="cb-stat-row"><span class="k">Allocation (คุณ)</span><span class="v">${h.weight.toFixed(1)}%</span></div>
       <div class="cb-stat-row"><span class="k">Total Return</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
-      ${novaW?`<div class="cb-stat-row"><span class="k">NOVA ถือ</span><span class="v">${novaW}% ของพอร์ต NOVA</span></div>`:''}
     </div>`;
-  } else if(novaW){
+  } else if(ns){
     statsHtml=`<div class="cb-stats">
-      <div class="cb-stat-row"><span class="k">NOVA ถือ</span><span class="v">${novaW}% ของพอร์ต NOVA</span></div>
+      <div class="cb-stat-row"><span class="k">NOVA ถือ</span><span class="v">${ns.w}% ของพอร์ต NOVA</span></div>
       <div class="cb-stat-row"><span class="k">สถานะของคุณ</span><span class="v" style="color:var(--dim)">ไม่ได้ถือ — ติดตามผ่าน NOVA</span></div>
     </div>`;
   }
