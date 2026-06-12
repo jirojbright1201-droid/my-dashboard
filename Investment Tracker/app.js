@@ -549,8 +549,8 @@ function _coMatchStatus(tk,R){
 }
 function coRowHtml(c,R){
   const h=H.find(x=>x.tk===c.tk);
-  // ถือทั้งคู่: ไอคอนเขียว=คุณถืออยู่แล้ว โชว์เฉพาะ chip NOVA ที่เพิ่มมา
-  const alsoNova = h && R.novaSet.has(c.tk);
+  // ถือทั้งคู่: ในมุมมองจัดกลุ่ม (ทั้งหมด) มีกลุ่ม "ถือทั้งคู่" อยู่แล้ว ไม่ต้องมี chip ซ้ำ — โชว์ chip เฉพาะตอนกรอง pill (ลิสต์เรียบ)
+  const alsoNova = h && R.novaSet.has(c.tk) && _coFilter!=='all';
   const mid=h
     ?`<div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div>`
     :`<div class="co-rstat">${coBadges(c.tk,R)}</div>`;
@@ -564,7 +564,10 @@ function coRowHtml(c,R){
     <div class="cr-go">›</div>
   </div>`;
 }
-function coGroupOf(tk,R){ return R.youSet.has(tk)?'you' : R.novaSet.has(tk)?'nova' : R.watchSet.has(tk)?'watch' : R.soldSet.has(tk)?'sold' : 'other'; }
+function coGroupOf(tk,R){
+  const y=R.youSet.has(tk), n=R.novaSet.has(tk);
+  return (y&&n)?'both' : y?'you' : n?'nova' : R.watchSet.has(tk)?'watch' : R.soldSet.has(tk)?'sold' : 'other';
+}
 function _renderCoList(){
   const R=_coReg||companyRegistry();
   const q=_coSearch.trim().toLowerCase();
@@ -576,8 +579,8 @@ function _renderCoList(){
   let html;
   if(_coFilter==='all'){
     // จัดกลุ่มตามสถานะ
-    const meta={you:'ของคุณ', nova:'NOVA ถือ', watch:'กำลังดู', sold:'ขายแล้ว', other:'อื่นๆ'};
-    const order=['you','nova','watch','sold','other'];
+    const meta={you:'เฉพาะคุณถือ', both:'ถือทั้งคู่ · คุณ + NOVA', nova:'เฉพาะ NOVA ถือ', watch:'กำลังดู', sold:'ขายแล้ว', other:'อื่นๆ'};
+    const order=['you','both','nova','watch','sold','other'];
     const groups={};
     filtered.forEach(c=>{ const g=coGroupOf(c.tk,R); (groups[g]=groups[g]||[]).push(c); });
     html=order.filter(g=>groups[g]&&groups[g].length).map(g=>
