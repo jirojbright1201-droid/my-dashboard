@@ -534,8 +534,7 @@ function renderCompany(){
          <button class="fchip ${_coFilter==='sold'?'on':''}" data-k="sold" onclick="coPill('sold')">ขายแล้ว</button>
        </div>
      </div>
-     <div class="co-legend"><span><i class="dot dyou"></i>คุณถือ</span><span><i class="dot dnova"></i>NOVA</span><span><i class="dot dwatch"></i>กำลังดู</span><span><i class="dot dsold"></i>ขายแล้ว</span></div>
-     <div class="co-listcard" id="coList"></div>`;
+     <div id="coList"></div>`;
   _renderCoList();
 }
 function coPill(k){ _coFilter=k; document.querySelectorAll('#coPills .fchip').forEach(b=>b.classList.toggle('on', b.dataset.k===k)); _renderCoList(); }
@@ -548,31 +547,48 @@ function _coMatchStatus(tk,R){
   if(_coFilter==='sold') return R.soldSet.has(tk);
   return true;
 }
+function coRowHtml(c,R){
+  const h=H.find(x=>x.tk===c.tk);
+  // ถือทั้งคู่: ไอคอนเขียว=คุณถืออยู่แล้ว โชว์เฉพาะ chip NOVA ที่เพิ่มมา
+  const alsoNova = h && R.novaSet.has(c.tk);
+  const mid=h
+    ?`<div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div>`
+    :`<div class="co-rstat">${coBadges(c.tk,R)}</div>`;
+  return `<div class="asset-row co-arow" onclick="openCompany('${c.tk}')">
+    <div class="asset-icon ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,4))}</div>
+    <div class="asset-info">
+      <div class="a-tk">${esc(c.tk)} <span class="co-rn">${esc(c.name)}</span></div>
+      <div class="a-nm">${esc(c.sector)}${alsoNova?` <span class="co-badge nova">NOVA</span>`:''}</div>
+    </div>
+    <div class="asset-mid">${mid}</div>
+    <div class="cr-go">›</div>
+  </div>`;
+}
+function coGroupOf(tk,R){ return R.youSet.has(tk)?'you' : R.novaSet.has(tk)?'nova' : R.watchSet.has(tk)?'watch' : R.soldSet.has(tk)?'sold' : 'other'; }
 function _renderCoList(){
   const R=_coReg||companyRegistry();
   const q=_coSearch.trim().toLowerCase();
-  const rows=R.list.filter(c=>{
+  const filtered=R.list.filter(c=>{
     if(!_coMatchStatus(c.tk,R)) return false;
     if(q && !(c.tk.toLowerCase().includes(q) || String(c.name||'').toLowerCase().includes(q))) return false;
     return true;
-  }).map(c=>{
-    const h=H.find(x=>x.tk===c.tk);
-    // ถือทั้งคู่: ไอคอนเขียว=คุณถืออยู่แล้ว โชว์เฉพาะ chip NOVA ที่เพิ่มมา
-    const alsoNova = h && R.novaSet.has(c.tk);
-    const mid=h
-      ?`<div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div>`
-      :`<div class="co-rstat">${coBadges(c.tk,R)}</div>`;
-    return `<div class="asset-row co-arow" onclick="openCompany('${c.tk}')">
-      <div class="asset-icon ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,4))}</div>
-      <div class="asset-info">
-        <div class="a-tk">${esc(c.tk)} <span class="co-rn">${esc(c.name)}</span></div>
-        <div class="a-nm">${esc(c.sector)}${alsoNova?` <span class="co-badge nova">NOVA</span>`:''}</div>
-      </div>
-      <div class="asset-mid">${mid}</div>
-      <div class="cr-go">›</div>
-    </div>`;
-  }).join('');
-  document.getElementById('coList').innerHTML = rows || '<div class="co-empty" style="padding:26px;text-align:center">ไม่พบบริษัทที่ตรงกับตัวกรอง</div>';
+  });
+  let html;
+  if(_coFilter==='all'){
+    // จัดกลุ่มตามสถานะ
+    const meta={you:'ของคุณ', nova:'NOVA ถือ', watch:'กำลังดู', sold:'ขายแล้ว', other:'อื่นๆ'};
+    const order=['you','nova','watch','sold','other'];
+    const groups={};
+    filtered.forEach(c=>{ const g=coGroupOf(c.tk,R); (groups[g]=groups[g]||[]).push(c); });
+    html=order.filter(g=>groups[g]&&groups[g].length).map(g=>
+      `<div class="co-group"><div class="co-grouphd"><span>${meta[g]}</span><span class="co-groupct">${groups[g].length}</span></div>`+
+      `<div class="co-listcard">${groups[g].map(c=>coRowHtml(c,R)).join('')}</div></div>`
+    ).join('');
+  } else {
+    // กด pill เฉพาะสถานะ → ลิสต์เรียบไม่มีหัวกลุ่ม
+    html=filtered.length?`<div class="co-listcard">${filtered.map(c=>coRowHtml(c,R)).join('')}</div>`:'';
+  }
+  document.getElementById('coList').innerHTML = html || '<div class="co-empty" style="padding:26px;text-align:center">ไม่พบบริษัทที่ตรงกับตัวกรอง</div>';
 }
 // สถิติฝั่ง NOVA ของ ticker — derive จาก น้ำหนัก×มูลค่าพอร์ต NOVA; ต้นทุน(avg) มาจาก hold[2] ถ้ามี (เฉพาะตัวที่มีราคาจริง)
 function novaStat(tk, price){
