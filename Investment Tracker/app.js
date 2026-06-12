@@ -523,7 +523,7 @@ function renderCompany(){
   const R=_coReg=companyRegistry();
   document.getElementById('t-company').innerHTML=
     `<div class="sec-title">Company — All companies on your radar <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} companies</span></div>
-     <div class="toolbar">
+     <div class="toolbar co-toolbar">
        <input class="search" id="coSearch" placeholder="Search ticker or company name" oninput="coSearch(this.value)" value="${esc(_coSearch)}">
        <div class="co-pills" id="coPills">
          <button class="fchip ${_coFilter==='all'?'on':''}" data-k="all" onclick="coPill('all')">All</button>
