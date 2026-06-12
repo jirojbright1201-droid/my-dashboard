@@ -557,6 +557,8 @@ function _renderCoList(){
     return true;
   }).map(c=>{
     const h=H.find(x=>x.tk===c.tk);
+    // ถือทั้งคู่: ไอคอนเขียว=คุณถืออยู่แล้ว โชว์เฉพาะ chip NOVA ที่เพิ่มมา
+    const alsoNova = h && R.novaSet.has(c.tk);
     const mid=h
       ?`<div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div>`
       :`<div class="co-rstat">${coBadges(c.tk,R)}</div>`;
@@ -564,7 +566,7 @@ function _renderCoList(){
       <div class="asset-icon ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,4))}</div>
       <div class="asset-info">
         <div class="a-tk">${esc(c.tk)} <span class="co-rn">${esc(c.name)}</span></div>
-        <div class="a-nm">${esc(c.sector)}</div>
+        <div class="a-nm">${esc(c.sector)}${alsoNova?` <span class="co-badge nova">NOVA</span>`:''}</div>
       </div>
       <div class="asset-mid">${mid}</div>
       <div class="cr-go">›</div>
