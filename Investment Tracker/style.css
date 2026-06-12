@@ -381,6 +381,11 @@ tbody tr:hover{background:var(--surface-2);}
 
 /* company — Coinbase list */
 .co-listcard{border:1px solid var(--border-soft); border-radius:14px; overflow:hidden; background:var(--surface);}
+.co-rstat{display:flex; justify-content:flex-end;}
+.co-legend{display:flex; gap:15px; flex-wrap:wrap; margin:0 2px 11px; font-size:.68rem; color:var(--dim); font-weight:600;}
+.co-legend span{display:flex; align-items:center; gap:5px;}
+.co-legend .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+.dot.dyou{background:var(--up);} .dot.dnova{background:#7c4dff;} .dot.dwatch{background:var(--blue);} .dot.dsold{background:var(--silver);}
 .co-arow .asset-info{min-width:0;}
 .co-arow .a-tk{display:flex; align-items:baseline; gap:7px;}
 .co-rn{font-weight:500; color:var(--dim); font-size:.72rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}

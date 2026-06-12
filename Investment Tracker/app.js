@@ -534,6 +534,7 @@ function renderCompany(){
          <button class="fchip ${_coFilter==='sold'?'on':''}" data-k="sold" onclick="coPill('sold')">ขายแล้ว</button>
        </div>
      </div>
+     <div class="co-legend"><span><i class="dot dyou"></i>คุณถือ</span><span><i class="dot dnova"></i>NOVA</span><span><i class="dot dwatch"></i>กำลังดู</span><span><i class="dot dsold"></i>ขายแล้ว</span></div>
      <div class="co-listcard" id="coList"></div>`;
   _renderCoList();
 }
@@ -558,12 +559,12 @@ function _renderCoList(){
     const h=H.find(x=>x.tk===c.tk);
     const mid=h
       ?`<div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div>`
-      :`<div class="a-price dim2">—</div>`;
+      :`<div class="co-rstat">${coBadges(c.tk,R)}</div>`;
     return `<div class="asset-row co-arow" onclick="openCompany('${c.tk}')">
       <div class="asset-icon ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,4))}</div>
       <div class="asset-info">
         <div class="a-tk">${esc(c.tk)} <span class="co-rn">${esc(c.name)}</span></div>
-        <div class="a-nm">${esc(c.sector)} ${coBadges(c.tk,R)}</div>
+        <div class="a-nm">${esc(c.sector)}</div>
       </div>
       <div class="asset-mid">${mid}</div>
       <div class="cr-go">›</div>
