@@ -504,7 +504,7 @@ function companyRegistry(){
 let _coReg=null;
 function coBadges(tk,R){
   const b=[];
-  if(R.youSet.has(tk)) b.push('<span class="co-badge you">ถืออยู่</span>');
+  if(R.youSet.has(tk)) b.push('<span class="co-badge you">YOU</span>');
   if(R.novaSet.has(tk)) b.push('<span class="co-badge nova">NOVA</span>');
   if(R.watchSet.has(tk)) b.push('<span class="co-badge watch">กำลังดู</span>');
   if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">ขายแล้ว</span>');
@@ -528,7 +528,7 @@ function renderCompany(){
        <input class="search" id="coSearch" placeholder="ค้นหา ticker หรือชื่อบริษัท" oninput="coSearch(this.value)" value="${esc(_coSearch)}">
        <div class="co-pills" id="coPills">
          <button class="fchip ${_coFilter==='all'?'on':''}" data-k="all" onclick="coPill('all')">ทั้งหมด</button>
-         <button class="fchip ${_coFilter==='you'?'on':''}" data-k="you" onclick="coPill('you')">ถืออยู่</button>
+         <button class="fchip ${_coFilter==='you'?'on':''}" data-k="you" onclick="coPill('you')">YOU</button>
          <button class="fchip ${_coFilter==='watch'?'on':''}" data-k="watch" onclick="coPill('watch')">กำลังดู</button>
          <button class="fchip ${_coFilter==='nova'?'on':''}" data-k="nova" onclick="coPill('nova')">NOVA</button>
          <button class="fchip ${_coFilter==='sold'?'on':''}" data-k="sold" onclick="coPill('sold')">ขายแล้ว</button>

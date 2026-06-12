@@ -387,7 +387,7 @@ tbody tr:hover{background:var(--surface-2);}
 .co-name{font-size:.76rem; color:var(--dim); font-weight:500;}
 .co-badges{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
 .co-badge{font-size:.6rem; font-weight:800; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:.4px;}
-.co-badge.you{background:var(--up-soft); color:var(--up);}
+.co-badge.you{background:var(--blue); color:#fff;}
 .co-badge.nova{background:rgba(124,77,255,.1); color:#7c4dff;}
 .co-badge.watch{background:var(--blue-soft); color:var(--blue);}
 .co-badge.sold{background:var(--surface-3); color:var(--silver);}
