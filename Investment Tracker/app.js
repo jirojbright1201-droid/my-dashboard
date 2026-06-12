@@ -485,18 +485,21 @@ function companyRegistry(){
   DATA.market.holdings_news.forEach(n=>pushNews(n.tk,[n]));
   extra.forEach(c=>pushNews(c.tk,c.news));
   Object.values(newsByTk).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date)));
-  // เทรดต่อ ticker
-  const tradesByTk={};
-  H.forEach(h=>{ tradesByTk[h.tk]=[...(h.trades||[])]; });
-  extra.forEach(c=>{ if(c.trades&&c.trades.length) tradesByTk[c.tk]=[...(tradesByTk[c.tk]||[]),...c.trades]; });
-  Object.values(tradesByTk).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date)));
+  // เทรดของคุณ — จาก holdings เท่านั้น
+  const youTradesByTk={};
+  H.forEach(h=>{ youTradesByTk[h.tk]=[...(h.trades||[])]; });
+  // เทรดของ NOVA — หลักจาก arena.moves (tag tk), fallback companies.trades สำหรับ nova/sold ที่ไม่มีใน moves
+  const novaTradesByTk={};
+  DATA.arena.moves.forEach(m=>{ if(m.tk){ (novaTradesByTk[m.tk]=novaTradesByTk[m.tk]||[]).push({date:m.date, t:m.act, why:m.why}); } });
+  extra.forEach(c=>{ if((c.status==='nova'||c.status==='sold') && c.trades && c.trades.length && !novaTradesByTk[c.tk]) novaTradesByTk[c.tk]=[...c.trades]; });
+  [youTradesByTk, novaTradesByTk].forEach(map=>Object.values(map).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date))));
   // รายชื่อบริษัท: ถืออยู่ก่อน แล้วตามด้วย companies
   const list=[];
   H.forEach(h=>list.push({tk:h.tk,name:h.name,sector:h.sector,about:h.about,thesisRef:h.thesisRef}));
   extra.forEach(c=>list.push({tk:c.tk,name:c.name,sector:c.sector,about:c.about,soldNote:c.soldNote,thesisRef:c.thesisRef}));
   const soldSet=new Set(extra.filter(c=>c.status==='sold').map(c=>c.tk));
   const watchSet=new Set(extra.filter(c=>c.status==='watch').map(c=>c.tk));
-  return {list,newsByTk,tradesByTk,novaSet,youSet,soldSet,watchSet};
+  return {list,newsByTk,youTradesByTk,novaTradesByTk,novaSet,youSet,soldSet,watchSet};
 }
 let _coReg=null;
 function coBadges(tk,R){
@@ -618,12 +621,27 @@ function _renderCompanyDrawer(){
       <div class="cb-stat-row"><span class="k">สถานะของคุณ</span><span class="v" style="color:var(--dim)">ไม่ได้ถือ — ติดตามผ่าน NOVA</span></div>
     </div>`;
   }
-  const allTr=R.tradesByTk[_coTk]||[], allNw=R.newsByTk[_coTk]||[];
-  const tradesHtml=allTr.length
-    ?`<div class="cb-list">${allTr.slice(0,_coTrLim).map(t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`).join('')}</div>`
-    :'<div class="co-empty">No trades yet</div>';
-  const trBtn=allTr.length>3?(_coTrLim===Infinity?`<button class="cb-more-btn collapse" onclick="coTrLess()">Show less</button>`:`<button class="cb-more-btn" onclick="coTrMore()">Show more</button>`):'';
-  const trCap=(allTr.length>3&&_coTrLim!==Infinity)?'Latest 3':'All trades';
+  // ---- Trade History: คุณ vs NOVA ----
+  const youTr=R.youTradesByTk[_coTk]||[], novaTr=R.novaTradesByTk[_coTk]||[];
+  const trCard=t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div>${t.why?`<div class="t-why">${esc(t.why)}</div>`:''}</div>`;
+  const trMoreBtn=n=>n>3?(_coTrLim===Infinity?`<button class="cb-more-btn collapse" onclick="coTrLess()">Show less</button>`:`<button class="cb-more-btn" onclick="coTrMore()">Show more</button>`):'';
+  let tradesBlock;
+  if(youTr.length && novaTr.length){
+    const maxLen=Math.max(youTr.length,novaTr.length), shown=Math.min(_coTrLim,maxLen);
+    let cells='';
+    for(let i=0;i<shown;i++){
+      cells+= youTr[i]?trCard(youTr[i]):'<div class="tcmp-empty"></div>';
+      cells+= novaTr[i]?trCard(novaTr[i]):'<div class="tcmp-empty"></div>';
+    }
+    tradesBlock=`<div class="dr-sec">Trade History <span class="dr-sub">คุณ vs NOVA</span></div>
+      <div class="tcmp"><div class="tcmp-h cmp-you">คุณ</div><div class="tcmp-h cmp-nova">NOVA</div>${cells}</div>${trMoreBtn(maxLen)}`;
+  } else {
+    const arr=youTr.length?youTr:novaTr, isNova=!youTr.length && novaTr.length;
+    const cap=(arr.length>3&&_coTrLim!==Infinity)?'Latest 3':'All trades';
+    const list=arr.length?`<div class="cb-list">${arr.slice(0,_coTrLim).map(trCard).join('')}</div>`:'<div class="co-empty">No trades yet</div>';
+    tradesBlock=`<div class="dr-sec">Trade History <span class="dr-sub">${isNova?'NOVA · ':''}${cap}</span></div>${list}${trMoreBtn(arr.length)}`;
+  }
+  const allNw=R.newsByTk[_coTk]||[];
   const newsHtml=allNw.length
     ?allNw.slice(0,_coNwLim).map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
     :'<div class="co-empty">No news yet</div>';
@@ -645,8 +663,7 @@ function _renderCompanyDrawer(){
     <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
     ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
     ${thesisHtml}
-    <div class="dr-sec">Trade History <span class="dr-sub">${trCap}</span></div>
-    ${tradesHtml}${trBtn}
+    ${tradesBlock}
     <div class="dr-sec">News <span class="dr-sub">${nwCap}</span></div>
     ${newsHtml}${nwBtn}`;
   document.getElementById('mov').classList.add('open');

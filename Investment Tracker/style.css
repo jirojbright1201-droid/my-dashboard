@@ -358,6 +358,13 @@ tbody tr:hover{background:var(--surface-2);}
 .cmp-row span{text-align:right; font-weight:800; font-variant-numeric:tabular-nums;}
 .cmp-row .cmp-k{text-align:left; color:var(--silver); font-weight:600; font-size:.76rem;}
 .cmp-note{font-size:.68rem; color:var(--dim); margin:7px 2px 0; line-height:1.5;}
+/* trade history — คุณ vs NOVA (จับคู่แถว สูงเท่ากัน) */
+.tcmp{display:grid; grid-template-columns:1fr 1fr; gap:8px; align-items:stretch;}
+.tcmp-h{font-size:.6rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; padding:0 2px 3px;}
+.tcmp-h.cmp-you{color:var(--blue);}
+.tcmp-h.cmp-nova{color:#7c4dff;}
+.tcmp .cb-trade{border:1px solid var(--border-soft); border-radius:9px; padding:9px 11px; height:100%; box-sizing:border-box;}
+.tcmp-empty{border:1px dashed var(--border-soft); border-radius:9px; opacity:.4;}
 
 /* company — Coinbase list */
 .co-listcard{border:1px solid var(--border-soft); border-radius:14px; overflow:hidden; background:var(--surface);}
