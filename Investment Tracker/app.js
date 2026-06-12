@@ -507,20 +507,66 @@ function coBadges(tk,R){
   if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">ขายแล้ว</span>');
   return b.join('');
 }
+let _coFilter='all', _coSearch='';
+// สถานะหลักของแต่ละบริษัท ใช้กำหนดสีไอคอน (avatar) — ลำดับ: ถืออยู่ > NOVA > กำลังดู > ขายแล้ว
+function coAvClass(tk,R){
+  if(R.youSet.has(tk)) return 'co-av-you';
+  if(R.novaSet.has(tk)) return 'co-av-nova';
+  if(R.watchSet.has(tk)) return 'co-av-watch';
+  if(R.soldSet.has(tk)) return 'co-av-sold';
+  return 'co-av-none';
+}
 function renderCompany(){
   const R=_coReg=companyRegistry();
-  const cards=R.list.map(c=>{
-    const nT=(R.tradesByTk[c.tk]||[]).length, nN=(R.newsByTk[c.tk]||[]).length;
-    return `<div class="co-card" onclick="openCompany('${c.tk}')">
-      <div class="co-top"><span class="co-tk">${esc(c.tk)}</span><span class="co-name">${esc(c.name)}</span></div>
-      <div class="co-badges"><span class="chip flat">${esc(c.sector)}</span>${coBadges(c.tk,R)}</div>
-      <div class="co-about">${esc(c.about||'')}</div>
-      <div class="co-foot"><span>${nT} เทรด</span><span class="mk-dot">·</span><span>${nN} ข่าว</span><span class="co-go">›</span></div>
-    </div>`;
-  }).join('');
+  const onAll=_coFilter==='all'?'on':'';
   document.getElementById('t-company').innerHTML=
     `<div class="sec-title">Company — ทุกบริษัทในเรดาร์ ถือ ขาย และกำลังดู <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} บริษัท</span></div>
-     <div class="co-grid">${cards}</div>`;
+     <div class="toolbar">
+       <input class="search" id="coSearch" placeholder="ค้นหา ticker หรือชื่อบริษัท" oninput="coSearch(this.value)" value="${esc(_coSearch)}">
+       <div class="co-pills" id="coPills">
+         <button class="fchip ${_coFilter==='all'?'on':''}" data-k="all" onclick="coPill('all')">ทั้งหมด</button>
+         <button class="fchip ${_coFilter==='you'?'on':''}" data-k="you" onclick="coPill('you')">ถืออยู่</button>
+         <button class="fchip ${_coFilter==='watch'?'on':''}" data-k="watch" onclick="coPill('watch')">กำลังดู</button>
+         <button class="fchip ${_coFilter==='nova'?'on':''}" data-k="nova" onclick="coPill('nova')">NOVA</button>
+         <button class="fchip ${_coFilter==='sold'?'on':''}" data-k="sold" onclick="coPill('sold')">ขายแล้ว</button>
+       </div>
+     </div>
+     <div class="co-listcard" id="coList"></div>`;
+  _renderCoList();
+}
+function coPill(k){ _coFilter=k; document.querySelectorAll('#coPills .fchip').forEach(b=>b.classList.toggle('on', b.dataset.k===k)); _renderCoList(); }
+function coSearch(v){ _coSearch=v; _renderCoList(); }
+function _coMatchStatus(tk,R){
+  if(_coFilter==='all') return true;
+  if(_coFilter==='you') return R.youSet.has(tk);
+  if(_coFilter==='watch') return R.watchSet.has(tk);
+  if(_coFilter==='nova') return R.novaSet.has(tk);
+  if(_coFilter==='sold') return R.soldSet.has(tk);
+  return true;
+}
+function _renderCoList(){
+  const R=_coReg||companyRegistry();
+  const q=_coSearch.trim().toLowerCase();
+  const rows=R.list.filter(c=>{
+    if(!_coMatchStatus(c.tk,R)) return false;
+    if(q && !(c.tk.toLowerCase().includes(q) || String(c.name||'').toLowerCase().includes(q))) return false;
+    return true;
+  }).map(c=>{
+    const h=H.find(x=>x.tk===c.tk);
+    const mid=h
+      ?`<div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div>`
+      :`<div class="a-price dim2">—</div>`;
+    return `<div class="asset-row co-arow" onclick="openCompany('${c.tk}')">
+      <div class="asset-icon ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,4))}</div>
+      <div class="asset-info">
+        <div class="a-tk">${esc(c.tk)} <span class="co-rn">${esc(c.name)}</span></div>
+        <div class="a-nm">${esc(c.sector)} ${coBadges(c.tk,R)}</div>
+      </div>
+      <div class="asset-mid">${mid}</div>
+      <div class="cr-go">›</div>
+    </div>`;
+  }).join('');
+  document.getElementById('coList').innerHTML = rows || '<div class="co-empty" style="padding:26px;text-align:center">ไม่พบบริษัทที่ตรงกับตัวกรอง</div>';
 }
 let _coTk=null, _coTrLim=3, _coNwLim=3;
 function openCompany(tk){ _coTk=tk; _coTrLim=3; _coNwLim=3; _renderCompanyDrawer(); }
@@ -547,23 +593,21 @@ function _renderCompanyDrawer(){
     ?`<div class="dr-sec">Thesis ที่เกี่ยวข้อง</div>
       <div class="th-row" onclick="openThesis(${thIdx})"><span class="th-cat">${esc(DATA.thesis[thIdx].cat)}</span><div><div class="th-t">${esc(DATA.thesis[thIdx].t)}</div><div class="th-m">${esc(DATA.thesis[thIdx].sum)}</div></div><span class="go">›</span></div>`
     :'';
-  document.getElementById('drawer').innerHTML=`
-    <div class="dr-head">
+  document.getElementById('mbox').innerHTML=`
+    <div class="mbox-head">
       <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
       <div class="co-badges" style="margin-top:7px"><span class="chip flat">${esc(c.sector)}</span>${coBadges(c.tk,R)}</div></div>
-      <button class="dr-close" onclick="closeDrawer()">✕</button>
+      <button class="dr-close" onclick="closeAlloc()">✕</button>
     </div>
-    <div class="dr-body">
-      <div class="dr-sec">About</div>
-      <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
-      ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
-      ${thesisHtml}
-      <div class="dr-sec">Trade History <span class="dr-sub">${trCap}</span></div>
-      ${tradesHtml}${trBtn}
-      <div class="dr-sec">News <span class="dr-sub">${nwCap}</span></div>
-      ${newsHtml}${nwBtn}
-    </div>`;
-  document.getElementById('dov').classList.add('open');
+    <div class="dr-sec">About</div>
+    <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
+    ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
+    ${thesisHtml}
+    <div class="dr-sec">Trade History <span class="dr-sub">${trCap}</span></div>
+    ${tradesHtml}${trBtn}
+    <div class="dr-sec">News <span class="dr-sub">${nwCap}</span></div>
+    ${newsHtml}${nwBtn}`;
+  document.getElementById('mov').classList.add('open');
 }
 
 /* ---------- DRAWER ---------- */
@@ -609,10 +653,10 @@ function _renderHolding(){
 }
 function openThesis(i){
   const t=DATA.thesis[i];
-  document.getElementById('drawer').innerHTML = `
-    <div class="dr-head"><div><span class="th-cat">${esc(t.cat)}</span><div style="font-size:1.15rem;font-weight:800;margin-top:7px">${esc(t.t)}</div><div class="th-m" style="font-size:.72rem;color:var(--dim);margin-top:3px">อัปเดต ${esc(t.updated)}</div></div><button class="dr-close" onclick="closeDrawer()">✕</button></div>
-    <div class="dr-body" style="font-size:.9rem;line-height:1.7;color:var(--text)">${nl2br(t.full)}</div>`;
-  document.getElementById('dov').classList.add('open');
+  document.getElementById('mbox').innerHTML = `
+    <div class="mbox-head"><div><span class="th-cat">${esc(t.cat)}</span><div style="font-size:1.15rem;font-weight:800;margin-top:7px">${esc(t.t)}</div><div class="th-m" style="font-size:.72rem;color:var(--dim);margin-top:3px">อัปเดต ${esc(t.updated)}</div></div><button class="dr-close" onclick="closeAlloc()">✕</button></div>
+    <div style="font-size:.9rem;line-height:1.7;color:var(--text)">${nl2br(t.full)}</div>`;
+  document.getElementById('mov').classList.add('open');
 }
 function closeDrawer(){ document.getElementById('dov').classList.remove('open'); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeDrawer(); closeAlloc(); } });
