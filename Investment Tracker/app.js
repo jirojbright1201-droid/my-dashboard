@@ -778,9 +778,14 @@ function drawArena(){
     {label:'S&P500',data:a.spx_s,borderColor:'#8a919e',borderDash:[5,4],borderWidth:2,fill:false,tension:.4,pointRadius:0,pointHoverRadius:5}];
   const vals=[...a.you_s,...a.nova_s,...a.spx_s];
   const mn=Math.min(...vals), mx=Math.max(...vals), pd=Math.max((mx-mn)*0.28,0.5);
+  // เรืองแสงทั้งคู่ที่ดวลกัน: น้ำเงิน(คุณ)=0, ม่วง(NOVA)=1
+  const arenaGlow={id:'arenaGlow',
+    beforeDatasetDraw(c,a){ const g={0:'rgba(0,82,255,.40)',1:'rgba(124,77,255,.42)'}[a.index]; if(!g)return;
+      const x=c.ctx; x.save(); x.shadowColor=g; x.shadowBlur=16; x.shadowOffsetX=0; x.shadowOffsetY=6; },
+    afterDatasetDraw(c,a){ if(a.index<=1) c.ctx.restore(); }};
   new Chart(document.getElementById('arenaLine'),{type:'line',
     data:{labels:a.labels,datasets},
-    plugins:[_pfGlow,_pfCursor],
+    plugins:[arenaGlow,_pfCursor],
     options:{responsive:true,maintainAspectRatio:false,
       layout:{padding:{top:10}},
       interaction:{mode:'index',intersect:false},
