@@ -495,8 +495,9 @@ function companyRegistry(){
   [youTradesByTk, novaTradesByTk].forEach(map=>Object.values(map).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date))));
   // รายชื่อบริษัท: ถืออยู่ก่อน แล้วตามด้วย companies
   const list=[];
-  H.forEach(h=>list.push({tk:h.tk,name:h.name,sector:h.sector,about:h.about,thesisRef:h.thesisRef}));
-  extra.forEach(c=>list.push({tk:c.tk,name:c.name,sector:c.sector,about:c.about,soldNote:c.soldNote,thesisRef:c.thesisRef}));
+  const meta=o=>({exchange:o.exchange,country:o.country,founded:o.founded,web:o.web});
+  H.forEach(h=>list.push({tk:h.tk,name:h.name,sector:h.sector,about:h.about,thesisRef:h.thesisRef,...meta(h)}));
+  extra.forEach(c=>list.push({tk:c.tk,name:c.name,sector:c.sector,about:c.about,soldNote:c.soldNote,thesisRef:c.thesisRef,...meta(c)}));
   const soldSet=new Set(extra.filter(c=>c.status==='sold').map(c=>c.tk));
   const watchSet=new Set(extra.filter(c=>c.status==='watch').map(c=>c.tk));
   return {list,newsByTk,youTradesByTk,novaTradesByTk,novaSet,youSet,soldSet,watchSet};
@@ -510,8 +511,20 @@ function coBadges(tk,R){
   if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">SOLD</span>');
   return b.join('');
 }
-let _coFilter='all', _coSearch='';
-// สถานะหลักของแต่ละบริษัท ใช้กำหนดสีไอคอน (avatar) — ลำดับ: ถืออยู่ > NOVA > กำลังดู > ขายแล้ว
+let _coSearch='';
+function renderCompany(){
+  const R=_coReg=companyRegistry();
+  document.getElementById('t-company').innerHTML=
+    `<div class="sec-title">All Company <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} companies</span></div>
+     <div class="co-search">
+       <svg class="co-search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="20" y1="20" x2="16.65" y2="16.65"></line></svg>
+       <input class="co-searchin" id="coSearch" placeholder="Search ticker or company name" oninput="coSearch(this.value)" value="${esc(_coSearch)}">
+     </div>
+     <div id="coList"></div>`;
+  _renderCoList();
+}
+function coSearch(v){ _coSearch=v; _renderCoList(); }
+// สีไอคอนกลม (avatar) ไล่ตามสถานะถือ: ถืออยู่ > NOVA > กำลังดู > ขายแล้ว
 function coAvClass(tk,R){
   if(R.youSet.has(tk)) return 'co-av-you';
   if(R.novaSet.has(tk)) return 'co-av-nova';
@@ -519,75 +532,25 @@ function coAvClass(tk,R){
   if(R.soldSet.has(tk)) return 'co-av-sold';
   return 'co-av-none';
 }
-function renderCompany(){
-  const R=_coReg=companyRegistry();
-  document.getElementById('t-company').innerHTML=
-    `<div class="sec-title">Company — All companies on your radar <span style="text-transform:none;font-weight:600;color:var(--dim)">${R.list.length} companies</span></div>
-     <div class="toolbar co-toolbar">
-       <input class="search" id="coSearch" placeholder="Search ticker or company name" oninput="coSearch(this.value)" value="${esc(_coSearch)}">
-       <div class="co-pills" id="coPills">
-         <button class="fchip ${_coFilter==='all'?'on':''}" data-k="all" onclick="coPill('all')">All</button>
-         <button class="fchip ${_coFilter==='you'?'on':''}" data-k="you" onclick="coPill('you')">You Only</button>
-         <button class="fchip ${_coFilter==='both'?'on':''}" data-k="both" onclick="coPill('both')">Both · You + NOVA</button>
-         <button class="fchip ${_coFilter==='nova'?'on':''}" data-k="nova" onclick="coPill('nova')">NOVA Only</button>
-         <button class="fchip ${_coFilter==='watch'?'on':''}" data-k="watch" onclick="coPill('watch')">Watching</button>
-         <button class="fchip ${_coFilter==='sold'?'on':''}" data-k="sold" onclick="coPill('sold')">Sold</button>
-       </div>
-     </div>
-     <div id="coList"></div>`;
-  _renderCoList();
-}
-function coPill(k){ _coFilter=k; document.querySelectorAll('#coPills .fchip').forEach(b=>b.classList.toggle('on', b.dataset.k===k)); _renderCoList(); }
-function coSearch(v){ _coSearch=v; _renderCoList(); }
-function _coMatchStatus(tk,R){
-  if(_coFilter==='all') return true;
-  return coGroupOf(tk,R)===_coFilter;
-}
-function coRowHtml(c,R){
-  const h=H.find(x=>x.tk===c.tk);
-  // ถือทั้งคู่: ในมุมมองจัดกลุ่ม (ทั้งหมด) มีกลุ่ม "ถือทั้งคู่" อยู่แล้ว ไม่ต้องมี chip ซ้ำ — โชว์ chip เฉพาะตอนกรอง pill (ลิสต์เรียบ)
-  const alsoNova = h && R.novaSet.has(c.tk) && _coFilter!=='all';
-  const mid=h
-    ?`<div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div>`
-    :`<div class="co-rstat">${coBadges(c.tk,R)}</div>`;
-  return `<div class="asset-row co-arow" onclick="openCompany('${c.tk}')">
-    <div class="asset-icon ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,4))}</div>
-    <div class="asset-info">
-      <div class="a-tk">${esc(c.tk)} <span class="co-rn">${esc(c.name)}</span></div>
-      <div class="a-nm">${esc(c.sector)}${alsoNova?` <span class="co-badge nova">NOVA</span>`:''}</div>
+// การ์ดบริษัทในกริด แนว Coinbase: ไอคอนกลม + ticker/ชื่อ + คำอธิบายสั้น (3 บรรทัด) + sector ด้านล่าง
+function coCardHtml(c,R){
+  return `<div class="co-card" onclick="openCompany('${c.tk}')">
+    <div class="co-top">
+      <div class="co-av ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,2))}</div>
+      <div class="co-head"><span class="co-tk">${esc(c.tk)}</span><span class="co-name">${esc(c.name)}</span></div>
     </div>
-    <div class="asset-mid">${mid}</div>
-    <div class="cr-go">›</div>
+    <div class="co-about">${esc(c.about||'—')}</div>
+    <div class="co-foot">${esc(c.sector||'')}<span class="co-go">›</span></div>
   </div>`;
-}
-function coGroupOf(tk,R){
-  const y=R.youSet.has(tk), n=R.novaSet.has(tk);
-  return (y&&n)?'both' : y?'you' : n?'nova' : R.watchSet.has(tk)?'watch' : R.soldSet.has(tk)?'sold' : 'other';
 }
 function _renderCoList(){
   const R=_coReg||companyRegistry();
   const q=_coSearch.trim().toLowerCase();
-  const filtered=R.list.filter(c=>{
-    if(!_coMatchStatus(c.tk,R)) return false;
-    if(q && !(c.tk.toLowerCase().includes(q) || String(c.name||'').toLowerCase().includes(q))) return false;
-    return true;
-  });
-  let html;
-  if(_coFilter==='all'){
-    // จัดกลุ่มตามสถานะ
-    const meta={you:'You Only', both:'Both · You + NOVA', nova:'NOVA Only', watch:'Watching', sold:'Sold', other:'Other'};
-    const order=['you','both','nova','watch','sold','other'];
-    const groups={};
-    filtered.forEach(c=>{ const g=coGroupOf(c.tk,R); (groups[g]=groups[g]||[]).push(c); });
-    html=order.filter(g=>groups[g]&&groups[g].length).map(g=>
-      `<div class="co-group"><div class="co-grouphd"><span>${meta[g]}</span><span class="co-groupct">${groups[g].length}</span></div>`+
-      `<div class="co-listcard">${groups[g].map(c=>coRowHtml(c,R)).join('')}</div></div>`
-    ).join('');
-  } else {
-    // กด pill เฉพาะสถานะ → ลิสต์เรียบไม่มีหัวกลุ่ม
-    html=filtered.length?`<div class="co-listcard">${filtered.map(c=>coRowHtml(c,R)).join('')}</div>`:'';
-  }
-  document.getElementById('coList').innerHTML = html || '<div class="co-empty" style="padding:26px;text-align:center">No companies match this filter</div>';
+  const filtered=R.list.filter(c=>
+    !q || c.tk.toLowerCase().includes(q) || String(c.name||'').toLowerCase().includes(q)
+  );
+  const html=filtered.length?`<div class="co-grid">${filtered.map(c=>coCardHtml(c,R)).join('')}</div>`:'';
+  document.getElementById('coList').innerHTML = html || '<div class="co-empty" style="padding:26px;text-align:center">No companies match your search</div>';
 }
 // สถิติฝั่ง NOVA ของ ticker — derive จาก น้ำหนัก×มูลค่าพอร์ต NOVA; ต้นทุน(avg) มาจาก hold[2] ถ้ามี (เฉพาะตัวที่มีราคาจริง)
 function novaStat(tk, price){
@@ -599,65 +562,14 @@ function novaStat(tk, price){
   const ret=(avg!=null&&price)?(price-avg)/avg*100:null;
   return {w, avg, mv, shares, ret};
 }
-let _coTk=null, _coTrLim=3, _coNwLim=3, _coTab='overview';
-function openCompany(tk){ _coTk=tk; _coTrLim=3; _coNwLim=3; _coTab='overview'; _renderCompanyDrawer(); }
+let _coTk=null, _coNwLim=3, _coTab='overview';
+function openCompany(tk){ _coTk=tk; _coNwLim=3; _coTab='overview'; _renderCompanyDrawer(); }
 function coTab(t){ _coTab=t; _renderCompanyDrawer(); }
-function coTrMore(){ _coTrLim=Infinity; _renderCompanyDrawer(); }
-function coTrLess(){ _coTrLim=3; _renderCompanyDrawer(); }
 function coNwMore(){ _coNwLim=Infinity; _renderCompanyDrawer(); }
 function coNwLess(){ _coNwLim=3; _renderCompanyDrawer(); }
 function _renderCompanyDrawer(){
   const R=_coReg||companyRegistry();
   const c=R.list.find(x=>x.tk===_coTk); if(!c) return;
-  const h=H.find(x=>x.tk===_coTk);
-  const ns=novaStat(_coTk, h?h.price:null);
-  let statsHtml='';
-  if(h && ns && ns.avg!=null){
-    // ถือทั้งคู่ — เทียบ คุณ vs NOVA แบบ 2 คอลัมน์ ข้อมูลชุดเดียวกัน
-    const row=(k,you,nova,yCls='',nCls='')=>`<div class="cmp-row"><span class="cmp-k">${k}</span><span class="${yCls}">${you}</span><span class="${nCls}">${nova}</span></div>`;
-    statsHtml=`<div class="cmp">
-      <div class="cmp-head"><span></span><span class="cmp-you">You</span><span class="cmp-nova">NOVA</span></div>
-      ${row('Price', `$${h.price.toFixed(2)}`, `$${h.price.toFixed(2)}`)}
-      ${row('Market Value', `$${Math.round(h.val).toLocaleString()}`, `$${Math.round(ns.mv).toLocaleString()}`)}
-      ${row('Shares', `${h.shares}`, `~${Math.round(ns.shares)}`)}
-      ${row('Avg Cost', `$${h.avg.toFixed(2)}`, `$${ns.avg.toFixed(2)}`)}
-      ${row('Allocation', `${h.weight.toFixed(1)}%`, `${ns.w}%`)}
-      ${row('Total Return', pct(h.plpct), pct(ns.ret), cls(h.pl), cls(ns.ret))}
-    </div>
-    <div class="cmp-note">NOVA cost and return figures are simulated because NOVA trades at different times. Both portfolios use the same market price.</div>`;
-  } else if(h){
-    statsHtml=`<div class="cb-stats">
-      <div class="cb-stat-row"><span class="k">Price</span><span class="v">$${h.price.toFixed(2)} <span class="${cls(h.day)}" style="font-size:.72rem;margin-left:4px">${pct(h.day)}</span></span></div>
-      <div class="cb-stat-row"><span class="k">Market Value</span><span class="v">$${h.val.toFixed(2)}</span></div>
-      <div class="cb-stat-row"><span class="k">Shares</span><span class="v">${h.shares}</span></div>
-      <div class="cb-stat-row"><span class="k">Avg Cost</span><span class="v">$${h.avg.toFixed(2)}</span></div>
-      <div class="cb-stat-row"><span class="k">Allocation (You)</span><span class="v">${h.weight.toFixed(1)}%</span></div>
-      <div class="cb-stat-row"><span class="k">Total Return</span><span class="v ${cls(h.pl)}">${h.pl>=0?'+$':'-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</span></div>
-    </div>`;
-  } else if(ns){
-    statsHtml=`<div class="cb-stats">
-      <div class="cb-stat-row"><span class="k">NOVA Holding</span><span class="v">${ns.w}% of NOVA portfolio</span></div>
-      <div class="cb-stat-row"><span class="k">Your Position</span><span class="v" style="color:var(--dim)">Not held · Tracked through NOVA</span></div>
-    </div>`;
-  }
-  // ---- Trade History: คุณ vs NOVA ----
-  const youTr=R.youTradesByTk[_coTk]||[], novaTr=R.novaTradesByTk[_coTk]||[];
-  const trCard=t=>`<div class="cb-trade"><div class="t-top">${esc(t.t)} · ${esc(t.date)}</div>${t.why?`<div class="t-why">${esc(t.why)}</div>`:''}</div>`;
-  const trMoreBtn=n=>n>3?(_coTrLim===Infinity?`<button class="cb-more-btn collapse" onclick="coTrLess()">Show less</button>`:`<button class="cb-more-btn" onclick="coTrMore()">Show more</button>`):'';
-  let tradesBlock;
-  if(youTr.length && novaTr.length){
-    const maxLen=Math.max(youTr.length,novaTr.length), shown=Math.min(_coTrLim,maxLen);
-    let cells='';
-    for(let i=0;i<shown;i++){
-      cells+= youTr[i]?trCard(youTr[i]):'<div class="tcmp-empty"></div>';
-      cells+= novaTr[i]?trCard(novaTr[i]):'<div class="tcmp-empty"></div>';
-    }
-    tradesBlock=`<div class="tcmp"><div class="tcmp-h cmp-you">You</div><div class="tcmp-h cmp-nova">NOVA</div>${cells}</div>${trMoreBtn(maxLen)}`;
-  } else {
-    const arr=youTr.length?youTr:novaTr, isNova=!youTr.length && novaTr.length;
-    const list=arr.length?`<div class="cb-list">${arr.slice(0,_coTrLim).map(trCard).join('')}</div>`:'<div class="co-empty">No trades yet</div>';
-    tradesBlock=`${isNova?'<div class="tr-cap">NOVA Trades</div>':''}${list}${trMoreBtn(arr.length)}`;
-  }
   const allNw=R.newsByTk[_coTk]||[];
   const newsHtml=allNw.length
     ?allNw.slice(0,_coNwLim).map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
@@ -669,30 +581,31 @@ function _renderCompanyDrawer(){
     ?`<div class="dr-sec">Related Thesis</div>
       <div class="th-row" onclick="openThesis(${thIdx})"><span class="th-cat">${esc(DATA.thesis[thIdx].cat)}</span><div><div class="th-t">${esc(DATA.thesis[thIdx].t)}</div><div class="th-m">${esc(DATA.thesis[thIdx].sum)}</div></div><span class="go">›</span></div>`
     :'';
-  // price line ใต้หัว (เฉพาะตัวที่ถือ)
-  const priceLine = h
-    ? `<div class="co-priceline">$${h.price.toFixed(2)} <span class="${cls(h.day)}">${pct(h.day)} today</span></div>`
-    : '';
+  // แถบข้อมูลบริษัท — โชว์เฉพาะ field ที่มี (sector อยู่บน chip หัวแล้ว ไม่ซ้ำ)
+  const fact=(k,v)=>v?`<div class="co-fact"><span class="cf-k">${k}</span><span class="cf-v">${esc(String(v))}</span></div>`:'';
+  const webFact=c.web?`<div class="co-fact"><span class="cf-k">Website</span><a class="cf-v cf-link" href="https://${esc(c.web)}" target="_blank" rel="noopener">${esc(c.web)}</a></div>`:'';
+  const factsArr=[fact('Exchange',c.exchange),fact('Country',c.country),fact('Founded',c.founded),webFact].filter(Boolean);
+  const factsHtml=factsArr.length?`<div class="co-facts">${factsArr.join('')}</div>`:'';
   // เนื้อหาแต่ละแท็บ
-  const overviewBody = `${statsHtml}
+  const overviewBody = `${factsHtml}
     <div class="dr-sec">About</div>
-    <div style="font-size:.88rem;line-height:1.7;color:var(--text)">${esc(c.about||'—')}</div>
+    <div class="co-about-full">${esc(c.about||'—')}</div>
     ${c.soldNote?`<div class="co-soldnote">${esc(c.soldNote)}</div>`:''}
     ${thesisHtml}`;
   const newsBody = `${newsHtml}${nwBtn}`;
-  const body = _coTab==='trades'?tradesBlock : _coTab==='news'?newsBody : overviewBody;
-  const trCount = youTr.length+novaTr.length;
+  const body = _coTab==='news'?newsBody : overviewBody;
   const tab=(k,label,n)=>`<button class="mtab ${_coTab===k?'on':''}" onclick="coTab('${k}')">${label}${n?`<span class="mtab-c">${n}</span>`:''}</button>`;
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
-      <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
-      <div class="co-badges" style="margin-top:7px"><span class="chip flat">${esc(c.sector)}</span>${coBadges(c.tk,R)}</div></div>
+      <div class="co-mhead">
+        <div class="co-av co-av-lg ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,2))}</div>
+        <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
+        <div class="co-badges" style="margin-top:7px"><span class="chip flat">${esc(c.sector)}</span></div></div>
+      </div>
       <button class="dr-close" onclick="closeAlloc()">✕</button>
     </div>
-    ${priceLine}
     <div class="mtabs">
       ${tab('overview','Overview',0)}
-      ${tab('trades','Trades',trCount)}
       ${tab('news','News',allNw.length)}
     </div>
     <div class="mtab-body">${body}</div>`;
@@ -854,18 +767,36 @@ function openAlloc(){
       plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed.toLocaleString(undefined,{maximumFractionDigits:0})} USD`}}}}});
 }
 function closeAlloc(){ document.getElementById('mov').classList.remove('open'); }
-const lineOpts={responsive:true,maintainAspectRatio:false,
-  plugins:{legend:{labels:{color:'#5b616e',font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,padding:14}}},
-  scales:{x:{ticks:{color:'#8a919e',font:{size:10}},grid:{display:false},border:{display:false}},
-    y:{ticks:{color:'#8a919e',callback:v=>v+'%'},grid:{color:'#ebecf0'},border:{display:false}}}};
 function drawArena(){
   const a=DATA.arena;
+  const lastDot=col=>(c=>c.dataIndex===c.dataset.data.length-1?5:0);
+  const datasets=[
+    {label:'Your Portfolio',data:a.you_s,borderColor:'#0052ff',borderWidth:2.5,fill:false,tension:.4,
+      pointRadius:lastDot(),pointHoverRadius:6,pointBackgroundColor:'#0052ff',pointBorderColor:'#fff',pointBorderWidth:2},
+    {label:'NOVA',data:a.nova_s,borderColor:'#7c4dff',borderWidth:2.5,fill:false,tension:.4,
+      pointRadius:lastDot(),pointHoverRadius:6,pointBackgroundColor:'#7c4dff',pointBorderColor:'#fff',pointBorderWidth:2},
+    {label:'S&P500',data:a.spx_s,borderColor:'#8a919e',borderDash:[5,4],borderWidth:2,fill:false,tension:.4,pointRadius:0,pointHoverRadius:5}];
+  const vals=[...a.you_s,...a.nova_s,...a.spx_s];
+  const mn=Math.min(...vals), mx=Math.max(...vals), pd=Math.max((mx-mn)*0.28,0.5);
   new Chart(document.getElementById('arenaLine'),{type:'line',
-    data:{labels:a.labels,datasets:[
-      {label:'Your Portfolio',data:a.you_s,borderColor:'#0052ff',backgroundColor:'rgba(0,82,255,.06)',fill:true,tension:.35,pointRadius:3},
-      {label:'NOVA',data:a.nova_s,borderColor:'#7c4dff',fill:false,tension:.35,pointRadius:3},
-      {label:'S&P500',data:a.spx_s,borderColor:'#8a919e',borderDash:[5,4],fill:false,tension:.35,pointRadius:0}]},
-    options:lineOpts});
+    data:{labels:a.labels,datasets},
+    plugins:[_pfGlow,_pfCursor],
+    options:{responsive:true,maintainAspectRatio:false,
+      layout:{padding:{top:10}},
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true,position:'top',align:'end',
+          labels:{color:'#5b616e',font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,padding:14}},
+        tooltip:{backgroundColor:'#fff',titleColor:'#8a919e',bodyColor:'#0a0b0d',
+          borderColor:'#d7dae0',borderWidth:1,
+          padding:{top:9,right:13,bottom:9,left:13},cornerRadius:11,displayColors:false,
+          titleFont:{size:11,weight:'500'},bodyFont:{size:14,weight:'700'},
+          callbacks:{label:it=>`${it.dataset.label}  ${it.raw>=0?'+':''}${it.raw.toFixed(1)}%`,
+            labelTextColor:it=>it.dataset.borderColor}}},
+      scales:{
+        x:{ticks:{color:'#5b616e',font:{size:11}},grid:{display:false},border:{display:false}},
+        y:{min:mn-pd,max:mx+pd,
+          ticks:{color:'#8a919e',font:{size:10},maxTicksLimit:5,callback:v=>v.toFixed(1)+'%'},
+          grid:{display:false},border:{display:false}}}}});
 }
 
 /* ---------- tabs ---------- */
