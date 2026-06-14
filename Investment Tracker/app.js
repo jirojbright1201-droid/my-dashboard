@@ -160,7 +160,7 @@ function renderLogFeeds(){
   document.getElementById('log-feeds-wrapper').innerHTML=
     `<div class="log-feed-grid">`+
       `<div class="lfg-hd you-c"><span class="lf-name">You</span><span class="lf-cnt">${yF.length} trades</span></div>`+
-      `<div class="lfg-hd nova-c"><span class="lf-name">NOVA</span><span class="lf-cnt">${nF.length} moves</span></div>`+
+      `<div class="lfg-hd nova-c"><span class="lf-name">AI Port</span><span class="lf-cnt">${nF.length} moves</span></div>`+
       rows+
       `<div class="lfg-foot you-c">${footBtn(yF)}</div>`+
       `<div class="lfg-foot nova-c">${footBtn(nF)}</div>`+
@@ -206,7 +206,7 @@ function renderLog(){
     <div class="log-sub" style="margin-top:0">Pros &amp; Cons</div>
     <div class="log-vs-grid">
       ${colTop('You','you','YOU','+3.8%','$83,048')}
-      ${colTop('NOVA (AI)','nova','AI','+1.9%','$81,520')}
+      ${colTop('AI Port','nova','AI','+1.9%','$81,520')}
     </div>
     <div class="log-tl-section">
       <div class="log-tl-bar">
@@ -256,7 +256,7 @@ function renderHoldingsNews(){
   const shown=filtered.slice(0,hnLim);
 
   const badge=tk=>{const y=youSet.has(tk),n=novaSet.has(tk);
-    return y&&n?`<span class="hn-who both">You &amp; NOVA</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">NOVA</span>`;};
+    return y&&n?`<span class="hn-who both">You &amp; AI Port</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">AI Port</span>`;};
   const cnt=v=>{const arr=(v==='you'?all.filter(n=>youSet.has(n.tk)):v==='nova'?all.filter(n=>novaSet.has(n.tk)):all).filter(n=>thaiTs(n.date)>=cutoff);
     return `<span class="hn-cnt">${arr.length}</span>`;};
   const moveChip=n=>n.move?`<span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''
@@ -275,7 +275,7 @@ function renderHoldingsNews(){
     `<div class="seg">`+
     `<button class="${hnFilter==='all'?'on':''}" onclick="setHnFilter('all')">All ${cnt('all')}</button>`+
     `<button class="${hnFilter==='you'?'on':''}" onclick="setHnFilter('you')">You ${cnt('you')}</button>`+
-    `<button class="${hnFilter==='nova'?'on':''}" onclick="setHnFilter('nova')">NOVA ${cnt('nova')}</button>`+
+    `<button class="${hnFilter==='nova'?'on':''}" onclick="setHnFilter('nova')">AI Port ${cnt('nova')}</button>`+
     `</div><div class="seg">`+
     periods.map(v=>`<button class="${hnPeriod===v?'on':''}" onclick="setHnPeriod('${v}')">${pLabels[v]}</button>`).join('')+
     `</div></div>`+
@@ -415,7 +415,7 @@ function openHnNews(i){
   const novaSet=new Set(DATA.arena.nova.hold.map(([tk])=>tk));
   const youSet=new Set(H.map(h=>h.tk));
   const y=youSet.has(n.tk), nv=novaSet.has(n.tk);
-  const badge=y&&nv?`<span class="hn-who both">You &amp; NOVA</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">NOVA</span>`;
+  const badge=y&&nv?`<span class="hn-who both">You &amp; AI Port</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">AI Port</span>`;
   const moveChip=n.move?`<span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:'';
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
@@ -475,7 +475,7 @@ function renderNova(){
   const totals=N_TL.map(x=>x.total), hi=Math.max(...totals), lo=Math.min(...totals);
   const today=N_TL[N_TL.length-1].change, todayPct=today/(cur-today)*100;
   const benchName=novaBench==='spx'?'S&P 500':novaBench==='nasdaq'?'Nasdaq':'';
-  const pfLeg=novaBench?`<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#7c4dff"></span>NOVA</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>`:'';
+  const pfLeg=novaBench?`<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#7c4dff"></span>AI Port</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>`:'';
   const pfCard=`<div class="card pf-card nova-pf">
     <div class="pf-lbl">Portfolio Value</div>
     <div class="pf-balrow"><span class="pf-bal">$${cur.toLocaleString()}</span>
@@ -489,7 +489,7 @@ function renderNova(){
       </div>
     </div>
     <span class="seg pf-seg">
-      <button class="${novaBench===null?'on':''}" onclick="setNovaBench(null)">NOVA</button>
+      <button class="${novaBench===null?'on':''}" onclick="setNovaBench(null)">AI Port</button>
       <button class="${novaBench==='spx'?'on':''}" onclick="setNovaBench('spx')">S&P 500</button>
       <button class="${novaBench==='nasdaq'?'on':''}" onclick="setNovaBench('nasdaq')">Nasdaq</button>
     </span>
@@ -541,7 +541,7 @@ function renderNova(){
 
     ${pfCard}
 
-    <div class="sec-title">Latest Activity <span style="text-transform:none;font-weight:600;color:var(--dim)">NOVA's recent moves</span></div>
+    <div class="sec-title">Latest Activity <span style="text-transform:none;font-weight:600;color:var(--dim)">AI Port's recent moves</span></div>
     <div class="card nv-act-list">${actFeed}</div>
 
     <div class="sec-title">Almost Bought — Not Yet <span style="text-transform:none;font-weight:600;color:var(--dim)">${n.nearMiss.length} on radar</span></div>
@@ -677,7 +677,7 @@ let _coReg=null;
 function coBadges(tk,R){
   const b=[];
   if(R.youSet.has(tk)) b.push('<span class="co-badge you">YOU</span>');
-  if(R.novaSet.has(tk)) b.push('<span class="co-badge nova">NOVA</span>');
+  if(R.novaSet.has(tk)) b.push('<span class="co-badge nova">AI Port</span>');
   if(R.watchSet.has(tk)) b.push('<span class="co-badge watch">WATCHING</span>');
   if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">SOLD</span>');
   return b.join('');
@@ -952,7 +952,7 @@ function drawNovaPortfolio(){
   const d=N_TL, start=d[0].total, totals=d.map(x=>x.total);
   const hi=Math.max(...totals), lo=Math.min(...totals);
   const dotR=c=>{const i=c.dataIndex,v=totals[i]; return (i===totals.length-1||v===hi||v===lo)?5:0;};
-  const ds=[{label:'NOVA',data:totals,
+  const ds=[{label:'AI Port',data:totals,
       borderColor:'#7c4dff',borderWidth:2.5,fill:false,tension:.4,
       pointRadius:dotR,pointHoverRadius:6,
       pointBackgroundColor:'#7c4dff',pointBorderColor:'#fff',pointBorderWidth:2}];

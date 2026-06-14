@@ -30,12 +30,12 @@ const DATA = {
   // ข่าวของ NOVA-only ดึงจาก market.holdings_news อัตโนมัติ. ใส่ thesisRef:'<cat>' เพื่อ link การ์ดบริษัทกับ Thesis ที่เกี่ยว (cat ต้องตรงกับ DATA.thesis)
   companies:[
     {tk:'PLTR', name:'Palantir', sector:'Software', exchange:'NASDAQ', country:'United States', founded:2003, web:'palantir.com', status:'nova', about:'บริษัทซอฟต์แวร์ data analytics และ AI ให้ภาครัฐและองค์กร แพลตฟอร์ม AIP เด่นด้าน operational AI มี moat สูงในตลาด government analytics ที่คู่แข่งเข้ายาก',
-      trades:[{date:'2 มิ.ย. 2026', t:'เปิดสถานะ (NOVA)', why:'NOVA เห็นข่าวดีลภาครัฐ + งบโตเกินคาด เล่นสาย growth ที่พอร์ตคุณไม่มี'}]},
+      trades:[{date:'2 มิ.ย. 2026', t:'เปิดสถานะ (AI Port)', why:'AI Port เห็นข่าวดีลภาครัฐ + งบโตเกินคาด เล่นสาย growth ที่พอร์ตคุณไม่มี'}]},
     {tk:'GOOGL', name:'Alphabet', sector:'Technology', exchange:'NASDAQ', country:'United States', founded:1998, web:'abc.xyz', status:'nova', about:'บริษัทแม่ของ Google ครองตลาด search และโฆษณาออนไลน์ มี Google Cloud และโมเดล AI Gemini เป็นเครื่องยนต์เติบโตใหม่ที่กำลังไล่บี้คู่แข่ง',
       trades:[]},
     {tk:'SMCI', name:'Super Micro', sector:'Servers', exchange:'NASDAQ', country:'United States', founded:1993, web:'supermicro.com', status:'sold', about:'ผู้ผลิตเซิร์ฟเวอร์และระบบ liquid cooling สำหรับ AI/data center เคยมาแรงตามกระแส AI แต่มีประเด็นความเสี่ยงด้านการตรวจสอบบัญชี',
-      soldNote:'NOVA ตัดทิ้งทั้งหมด 28 พ.ค. 2026 — cut loss ทันทีหลังข่าวความเสี่ยงด้านบัญชี',
-      trades:[{date:'28 พ.ค. 2026', t:'ขายทิ้งทั้งหมด (NOVA)', why:'ข่าวความเสี่ยงด้านบัญชีโผล่ ตัดขาดทุนทันทีตามวินัย ไม่รอความชัดเจน'}],
+      soldNote:'AI Port ตัดทิ้งทั้งหมด 28 พ.ค. 2026 — cut loss ทันทีหลังข่าวความเสี่ยงด้านบัญชี',
+      trades:[{date:'28 พ.ค. 2026', t:'ขายทิ้งทั้งหมด (AI Port)', why:'ข่าวความเสี่ยงด้านบัญชีโผล่ ตัดขาดทุนทันทีตามวินัย ไม่รอความชัดเจน'}],
       news:[{date:'27 พ.ค. 2026', head:'SMCI เผชิญคำถามด้านการตรวจสอบบัญชี หุ้นร่วงแรง', src:'WSJ', sum:'มีรายงานความกังวลเรื่องการรับรู้รายได้และความล่าช้าในการยื่นงบ ทำให้นักลงทุนเทขาย นักวิเคราะห์หลายรายระงับคำแนะนำชั่วคราวรอความชัดเจน', move:{pct:-9.5, period:'1 วัน'}}]},
     {tk:'LITE', name:'Lumentum', sector:'Photonics', exchange:'NASDAQ', country:'United States', founded:2015, web:'lumentum.com', status:'watch', thesisRef:'Photonics', about:'ผู้ผลิต optical component และเลเซอร์ คู่ขนานกับ Coherent ป้อน transceiver/optical module ให้ data center อยู่ในธีม photonics เดียวกับ COHR ที่ถืออยู่ — กำลังดูเทียบ valuation ก่อนตัดสินใจเข้า',
       trades:[],
@@ -97,7 +97,7 @@ const DATA = {
   // ===== NOVA — พอร์ต AI แยกเป็นพอร์ตจริง 1 พอร์ต (holdings/near-miss/closed/thesis) =====
   // weight ของ holdings คำนวณสดจาก shares*price ใน app.js (ไม่ hardcode) cash เก็บเป็น USD
   nova:{
-    name:'NOVA', start:'10 พ.ค. 2026', startVal:80000, val:81520, ret:1.9, cash:11410,
+    name:'AI Port', start:'10 พ.ค. 2026', startVal:80000, val:81520, ret:1.9, cash:11410,
     labels:['10 พ.ค.','17','24','31','7 มิ.ย.'],
     series:[0,0.8,1.0,1.6,1.9],   // ผลตอบแทน NOVA %
     spx:[0,0.6,1.2,1.9,2.5],      // เทียบ S&P500
