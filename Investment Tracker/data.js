@@ -26,12 +26,12 @@ const DATA = {
       trades:[{date:'18 พ.ค. 2026', t:'ซื้อ 1.5 @ $205.00', why:'defensive/กระแสเงินสดแกร่ง รอ AI on-device — momentum ยังอ่อน'}],
       news:[{date:'9 มิ.ย.', head:'ความคืบหน้า AI บนอุปกรณ์ยังช้ากว่าคู่แข่ง', src:'The Verge', sum:'Apple Intelligence ยังตามหลัง Google Gemini และ Microsoft Copilot ในด้าน on-device AI capability ผู้ใช้บางส่วนบ่นว่าฟีเจอร์ที่โฆษณาไว้ยังไม่มาครบ อย่างไรก็ตามกระแสเงินสดและโปรแกรม buyback ยังแข็งแกร่ง นักวิเคราะห์มองเป็น short-term headwind ไม่ใช่ structural problem', move:{pct:-0.9, period:'1 วัน'}},{date:'10 ต.ค. 2025', head:'iPhone 17 launch แข็งแกร่ง ยอดสั่งซื้อล่วงหน้าทุบสถิติ', src:'Bloomberg', sum:'Apple รายงานยอดสั่งซื้อ iPhone 17 ล่วงหน้าสูงสุดในประวัติศาสตร์ Apple Intelligence กระตุ้นการอัปเกรดจากผู้ใช้ iPhone 13-14 ผู้วิเคราะห์ปรับ revenue estimate Q4 2025 ขึ้น 8-12%', move:{pct:4.4, period:'1 วัน'}},{date:'5 มิ.ย. 2025', head:'WWDC 2025 เปิดตัว Apple Intelligence 1.0 — AI on-device ครั้งแรก', src:'The Verge', sum:'Apple ประกาศ Apple Intelligence บน iOS 19 ฟีเจอร์ AI on-device แบบ privacy-first ตลาดตอบรับดี หุ้นขึ้น 4% ผู้วิเคราะห์มองเป็นจุดเริ่ม iPhone supercycle รุ่นถัดไป', move:{pct:4.0, period:'1 วัน'}}]}
   ],
-  // บริษัทที่ไม่ได้ถือเองตอนนี้ — status: 'nova' (NOVA ถือ), 'sold' (เคยถือแล้วขายทิ้ง), 'watch' (กำลังรีเสิจ/ดูอยู่ ยังไม่เข้า)
-  // ข่าวของ NOVA-only ดึงจาก market.holdings_news อัตโนมัติ. ใส่ thesisRef:'<cat>' เพื่อ link การ์ดบริษัทกับ Thesis ที่เกี่ยว (cat ต้องตรงกับ DATA.thesis)
+  // บริษัทที่ไม่ได้ถือเองตอนนี้ — status: 'vega' (Vega ถือ), 'sold' (เคยถือแล้วขายทิ้ง), 'watch' (กำลังรีเสิจ/ดูอยู่ ยังไม่เข้า)
+  // ข่าวของ Vega-only ดึงจาก market.holdings_news อัตโนมัติ. ใส่ thesisRef:'<cat>' เพื่อ link การ์ดบริษัทกับ Thesis ที่เกี่ยว (cat ต้องตรงกับ DATA.thesis)
   companies:[
-    {tk:'PLTR', name:'Palantir', sector:'Software', exchange:'NASDAQ', country:'United States', founded:2003, web:'palantir.com', status:'nova', about:'บริษัทซอฟต์แวร์ data analytics และ AI ให้ภาครัฐและองค์กร แพลตฟอร์ม AIP เด่นด้าน operational AI มี moat สูงในตลาด government analytics ที่คู่แข่งเข้ายาก',
+    {tk:'PLTR', name:'Palantir', sector:'Software', exchange:'NASDAQ', country:'United States', founded:2003, web:'palantir.com', status:'vega', about:'บริษัทซอฟต์แวร์ data analytics และ AI ให้ภาครัฐและองค์กร แพลตฟอร์ม AIP เด่นด้าน operational AI มี moat สูงในตลาด government analytics ที่คู่แข่งเข้ายาก',
       trades:[{date:'2 มิ.ย. 2026', t:'เปิดสถานะ (AI Port)', why:'AI Port เห็นข่าวดีลภาครัฐ + งบโตเกินคาด เล่นสาย growth ที่พอร์ตคุณไม่มี'}]},
-    {tk:'GOOGL', name:'Alphabet', sector:'Technology', exchange:'NASDAQ', country:'United States', founded:1998, web:'abc.xyz', status:'nova', about:'บริษัทแม่ของ Google ครองตลาด search และโฆษณาออนไลน์ มี Google Cloud และโมเดล AI Gemini เป็นเครื่องยนต์เติบโตใหม่ที่กำลังไล่บี้คู่แข่ง',
+    {tk:'GOOGL', name:'Alphabet', sector:'Technology', exchange:'NASDAQ', country:'United States', founded:1998, web:'abc.xyz', status:'vega', about:'บริษัทแม่ของ Google ครองตลาด search และโฆษณาออนไลน์ มี Google Cloud และโมเดล AI Gemini เป็นเครื่องยนต์เติบโตใหม่ที่กำลังไล่บี้คู่แข่ง',
       trades:[]},
     {tk:'SMCI', name:'Super Micro', sector:'Servers', exchange:'NASDAQ', country:'United States', founded:1993, web:'supermicro.com', status:'sold', about:'ผู้ผลิตเซิร์ฟเวอร์และระบบ liquid cooling สำหรับ AI/data center เคยมาแรงตามกระแส AI แต่มีประเด็นความเสี่ยงด้านการตรวจสอบบัญชี',
       soldNote:'AI Port ตัดทิ้งทั้งหมด 28 พ.ค. 2026 — cut loss ทันทีหลังข่าวความเสี่ยงด้านบัญชี',
@@ -75,10 +75,10 @@ const DATA = {
   arena:{
     start:'10 พ.ค. 2026', startVal:80000,
     you:{ret:3.8, val:83048, hold:[['MU',31],['VST',22],['COHR',18],['NVDA',16],['AAPL',13]]},
-    // hold: [ticker, น้ำหนัก%, ต้นทุนเฉลี่ย NOVA (จำลอง — NOVA เทรดคนละจังหวะกับคุณ)] — ต้นทุนใส่เฉพาะตัวที่มีราคาจริง (อยู่ใน holdings ของคุณด้วย)
-    nova:{ret:1.9, val:81520, hold:[['NVDA',28,150],['PLTR',22],['AMD',20,132],['GOOGL',18],['เงินสด',12]]},
+    // hold: [ticker, น้ำหนัก%, ต้นทุนเฉลี่ย Vega (จำลอง — Vega เทรดคนละจังหวะกับคุณ)] — ต้นทุนใส่เฉพาะตัวที่มีราคาจริง (อยู่ใน holdings ของคุณด้วย)
+    vega:{ret:1.9, val:81520, hold:[['NVDA',28,150],['PLTR',22],['AMD',20,132],['GOOGL',18],['เงินสด',12]]},
     labels:['10 พ.ค.','17','24','31','7 มิ.ย.'],
-    you_s:[0,1.1,2.0,2.9,3.8], nova_s:[0,0.8,1.0,1.6,1.9], spx_s:[0,0.6,1.2,1.9,2.5],
+    you_s:[0,1.1,2.0,2.9,3.8], vega_s:[0,0.8,1.0,1.6,1.9], spx_s:[0,0.6,1.2,1.9,2.5],
     moves:[
       {date:'5 มิ.ย.', tk:'NVDA', act:'▲ เพิ่มน้ำหนัก NVDA +5%', why:'เห็นว่าคุณขาย NVDA เร็วไปแล้วพลาดขาขึ้น จึงถือยาวตามโมเมนตัม + ข่าวดีมานด์ compute'},
       {date:'2 มิ.ย.', tk:'PLTR', act:'▲ เปิดสถานะ PLTR', why:'ข่าวดีลภาครัฐ + งบโตเกินคาด เล่นสาย growth ที่พอร์ตคุณไม่มี'},
@@ -88,18 +88,18 @@ const DATA = {
     journal:[
       {who:'You', good:true, t:'เข้า MU ก่อนข่าว HBM', x:'จับ memory cycle ถูกจังหวะ เข้าตอนตลาดยังไม่สนใจ +45% — จุดแข็งเรื่อง timing เชิง thesis'},
       {who:'You', good:false, t:'ขาย NVDA เร็วเกินไป', x:'ล็อกกำไร +25% แต่หลังจากนั้นวิ่งต่ออีก ~22% เสีย upside — ครั้งหน้าควรแบ่งขายเป็นขั้น'},
-      {who:'NOVA', good:true, t:'ตัดขาดทุนไว', x:'ตัด SMCI ทันทีที่มีข่าวเสี่ยงบัญชี จำกัดขาดทุนได้ดี — วินัย cut loss'},
-      {who:'NOVA', good:false, t:'ไล่ราคายอดดอย', x:'เข้า PLTR หลังข่าวออกแล้วราคาพุ่ง ต้นทุนสูง ติดลบช่วงแรก -8% — ระวัง FOMO'},
+      {who:'Vega', good:true, t:'ตัดขาดทุนไว', x:'ตัด SMCI ทันทีที่มีข่าวเสี่ยงบัญชี จำกัดขาดทุนได้ดี — วินัย cut loss'},
+      {who:'Vega', good:false, t:'ไล่ราคายอดดอย', x:'เข้า PLTR หลังข่าวออกแล้วราคาพุ่ง ต้นทุนสูง ติดลบช่วงแรก -8% — ระวัง FOMO'},
       {who:'You', good:true, t:'กระจายไป photonics/พลังงาน', x:'ไม่กระจุกแค่ชิป จับธีม AI ทางอ้อม (COHR/VST/CEG) ลดความเสี่ยงเฉพาะตัว'},
-      {who:'NOVA', good:false, t:'ถือเงินสดมากไป', x:'มีเงินสด 12% ตอนตลาดขาขึ้น ทำให้ตามหลังพอร์ตที่ลงเต็ม'}
+      {who:'Vega', good:false, t:'ถือเงินสดมากไป', x:'มีเงินสด 12% ตอนตลาดขาขึ้น ทำให้ตามหลังพอร์ตที่ลงเต็ม'}
     ]
   },
-  // ===== NOVA — พอร์ต AI แยกเป็นพอร์ตจริง 1 พอร์ต (holdings/near-miss/closed/thesis) =====
+  // ===== Vega — พอร์ต AI แยกเป็นพอร์ตจริง 1 พอร์ต (holdings/near-miss/closed/thesis) =====
   // weight ของ holdings คำนวณสดจาก shares*price ใน app.js (ไม่ hardcode) cash เก็บเป็น USD
-  nova:{
+  vega:{
     name:'AI Port', start:'10 พ.ค. 2026', startVal:80000, val:81520, ret:1.9, cash:11410,
     labels:['10 พ.ค.','17','24','31','7 มิ.ย.'],
-    series:[0,0.8,1.0,1.6,1.9],   // ผลตอบแทน NOVA %
+    series:[0,0.8,1.0,1.6,1.9],   // ผลตอบแทน Vega %
     spx:[0,0.6,1.2,1.9,2.5],      // เทียบ S&P500
     holdings:[
       {tk:'NVDA', name:'Nvidia', sector:'Semiconductors', shares:120, avg:150, price:182.40, prev:180.1, opened:'2 มี.ค. 2026',

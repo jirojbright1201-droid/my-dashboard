@@ -156,7 +156,7 @@ tbody tr:hover{background:var(--surface-2);}
 .jr .j-top .who{font-size:.64rem; padding:1px 7px; border-radius:999px; background:rgba(0,0,0,.06); color:var(--silver);}
 .jr .j-txt{color:var(--silver); margin-top:3px; line-height:1.45;}
 
-/* ===== NOVA page (พอร์ต AI เดี่ยว) ===== */
+/* ===== Vega page (พอร์ต AI เดี่ยว) ===== */
 /* แถวเงินสดในตารางถือครอง — ทำให้จาง */
 .nv-cash td{color:var(--dim);}
 .nv-cash .tk{font-weight:700; color:var(--silver);}
@@ -192,7 +192,7 @@ tbody tr:hover{background:var(--surface-2);}
 .tb-k{font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--dim);}
 .tb-v{font-size:.88rem; color:var(--text); line-height:1.55; margin-top:4px; font-weight:600;}
 
-/* Latest Activity feed (NOVA เพิ่งทำอะไรล่าสุด) */
+/* Latest Activity feed (Vega เพิ่งทำอะไรล่าสุด) */
 .nv-act-list{padding:2px 18px;}
 .nv-act-list .cb-row{border-bottom:1px solid var(--border-soft);}
 .nv-act-list .cb-row:last-child{border-bottom:none;}
@@ -257,7 +257,7 @@ tbody tr:hover{background:var(--surface-2);}
 .cb-head{display:flex; align-items:center; gap:12px; padding-bottom:16px; margin-bottom:6px; border-bottom:1px solid var(--border-soft);}
 .cb-av{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.64rem; font-weight:800; flex-shrink:0; letter-spacing:.3px;}
 .cb-av.you{background:var(--blue); color:#fff;}
-.cb-av.nova{background:var(--blue-soft); color:var(--blue);}
+.cb-av.vega{background:var(--blue-soft); color:var(--blue);}
 .cb-col-name{font-size:1rem; font-weight:800; letter-spacing:-.3px;}
 .cb-col-perf{font-size:.74rem; color:var(--up); font-weight:700; margin-top:3px; font-variant-numeric:tabular-nums;}
 
@@ -325,9 +325,9 @@ tbody tr:hover{background:var(--surface-2);}
   .log-jr-grid{grid-template-columns:1fr;}
   .log-feed-grid{grid-template-columns:1fr;}
   .log-feed-grid .you-c{order:1;}
-  .log-feed-grid .nova-c{order:2;}
+  .log-feed-grid .vega-c{order:2;}
   .log-feed-grid .lfg-empty{display:none;}
-  .log-feed-grid .lfg-hd.nova-c{margin-top:16px;}
+  .log-feed-grid .lfg-hd.vega-c{margin-top:16px;}
   .log-tl-bar{flex-direction:column; align-items:flex-start;}
 }
 
@@ -383,7 +383,7 @@ tbody tr:hover{background:var(--surface-2);}
 .hn-tk{font-size:.7rem; font-weight:800; background:var(--surface-3); border:1px solid var(--border); padding:2px 8px; border-radius:6px; letter-spacing:.3px;}
 .hn-who{font-size:.6rem; font-weight:800; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:.4px;}
 .hn-who.you{background:var(--blue-soft); color:var(--blue);}
-.hn-who.nova{background:rgba(124,77,255,.1); color:#7c4dff;}
+.hn-who.vega{background:rgba(124,77,255,.1); color:#7c4dff;}
 .hn-who.both{background:var(--blue-soft); color:var(--blue);}
 .hn-src{font-size:.68rem; color:var(--silver); font-weight:700;}
 .hn-dt{font-size:.68rem; color:var(--dim);}
@@ -404,22 +404,22 @@ tbody tr:hover{background:var(--surface-2);}
 .mtab-body > .dr-sec:first-child{margin-top:16px;}
 .tr-cap{font-size:.66rem; font-weight:800; color:#7c4dff; text-transform:uppercase; letter-spacing:.5px; margin:2px 0 9px;}
 
-/* company — คุณ vs NOVA comparison */
+/* company — คุณ vs Vega comparison */
 .cmp{border:1px solid var(--border-soft); border-radius:12px; overflow:hidden;}
 .cmp-head,.cmp-row{display:grid; grid-template-columns:1.05fr 1fr 1fr; align-items:center; gap:8px; padding:9px 14px;}
 .cmp-head{background:var(--surface-2);}
 .cmp-head span{font-size:.6rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; text-align:right;}
 .cmp-head .cmp-you{color:var(--blue);}
-.cmp-head .cmp-nova{color:#7c4dff;}
+.cmp-head .cmp-vega{color:#7c4dff;}
 .cmp-row{border-top:1px solid var(--border-soft); font-size:.84rem;}
 .cmp-row span{text-align:right; font-weight:800; font-variant-numeric:tabular-nums;}
 .cmp-row .cmp-k{text-align:left; color:var(--silver); font-weight:600; font-size:.76rem;}
 .cmp-note{font-size:.68rem; color:var(--dim); margin:7px 2px 0; line-height:1.5;}
-/* trade history — คุณ vs NOVA (จับคู่แถว สูงเท่ากัน) */
+/* trade history — คุณ vs Vega (จับคู่แถว สูงเท่ากัน) */
 .tcmp{display:grid; grid-template-columns:1fr 1fr; gap:8px; align-items:stretch;}
 .tcmp-h{font-size:.6rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; padding:0 2px 3px;}
 .tcmp-h.cmp-you{color:var(--blue);}
-.tcmp-h.cmp-nova{color:#7c4dff;}
+.tcmp-h.cmp-vega{color:#7c4dff;}
 .tcmp .cb-trade{border:1px solid var(--border-soft); border-radius:9px; padding:9px 11px; height:100%; box-sizing:border-box;}
 .tcmp-empty{border:1px dashed var(--border-soft); border-radius:9px; opacity:.4;}
 
@@ -439,7 +439,7 @@ tbody tr:hover{background:var(--surface-2);}
 .co-legend{display:flex; gap:15px; flex-wrap:wrap; margin:0 2px 11px; font-size:.68rem; color:var(--dim); font-weight:600;}
 .co-legend span{display:flex; align-items:center; gap:5px;}
 .co-legend .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
-.dot.dyou{background:var(--up);} .dot.dnova{background:#7c4dff;} .dot.dwatch{background:var(--blue);} .dot.dsold{background:var(--silver);}
+.dot.dyou{background:var(--up);} .dot.dvega{background:#7c4dff;} .dot.dwatch{background:var(--blue);} .dot.dsold{background:var(--silver);}
 .co-arow .asset-info{min-width:0;}
 .co-arow{min-width:0; padding:13px 14px; border:1px solid var(--border-soft); border-radius:12px; background:var(--surface); box-shadow:0 1px 2px rgba(10,11,13,.03);}
 .co-arow:last-child{border-bottom:1px solid var(--border-soft);}
@@ -450,7 +450,7 @@ tbody tr:hover{background:var(--surface-2);}
 .a-price.dim2{color:var(--dim); font-weight:700;}
 .cr-go{color:var(--dim); font-weight:700; font-size:1.05rem; flex-shrink:0; margin-left:2px;}
 .co-av-you{background:var(--up-soft); color:var(--up);}
-.co-av-nova{background:rgba(124,77,255,.12); color:#7c4dff;}
+.co-av-vega{background:rgba(124,77,255,.12); color:#7c4dff;}
 .co-av-watch{background:var(--blue-soft); color:var(--blue);}
 .co-av-sold{background:var(--surface-3); color:var(--silver);}
 .co-av-none{background:var(--surface-2); color:var(--silver);}
@@ -474,7 +474,7 @@ tbody tr:hover{background:var(--surface-2);}
 .co-badges{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
 .co-badge{font-size:.6rem; font-weight:800; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:.4px;}
 .co-badge.you{background:var(--blue-soft); color:var(--blue);}
-.co-badge.nova{background:rgba(124,77,255,.1); color:#7c4dff;}
+.co-badge.vega{background:rgba(124,77,255,.1); color:#7c4dff;}
 .co-badge.watch{background:var(--blue-soft); color:var(--blue);}
 .co-badge.sold{background:var(--surface-3); color:var(--silver);}
 .co-about{font-size:.8rem; color:var(--silver); line-height:1.55; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}

@@ -135,8 +135,8 @@ function _lFilter(list,isMoves){
 
 function renderLogFeeds(){
   const youAll=H.flatMap(h=>h.trades.map(t=>({...t,tk:h.tk}))).sort((a,b)=>thaiTs(b.date)-thaiTs(a.date));
-  const novaAll=[...DATA.arena.moves].sort((a,b)=>thaiTs(b.date)-thaiTs(a.date));
-  const yF=_lFilter(youAll,false), nF=_lFilter(novaAll,true);
+  const vegaAll=[...DATA.arena.moves].sort((a,b)=>thaiTs(b.date)-thaiTs(a.date));
+  const yF=_lFilter(youAll,false), nF=_lFilter(vegaAll,true);
 
   // limit ร่วมตัวเดียว: กดทีเดียวขยายพร้อมกันทั้งสองฝั่ง
   const yShown=yF.slice(0,logF.lim), nShown=nF.slice(0,logF.lim);
@@ -154,16 +154,16 @@ function renderLogFeeds(){
 
   let rows='';
   for(let i=0;i<R;i++){
-    rows+=cell(yShown[i],_lTrade,yShown.length,'you',i)+cell(nShown[i],_lMove,nShown.length,'nova',i);
+    rows+=cell(yShown[i],_lTrade,yShown.length,'you',i)+cell(nShown[i],_lMove,nShown.length,'vega',i);
   }
 
   document.getElementById('log-feeds-wrapper').innerHTML=
     `<div class="log-feed-grid">`+
       `<div class="lfg-hd you-c"><span class="lf-name">You</span><span class="lf-cnt">${yF.length} trades</span></div>`+
-      `<div class="lfg-hd nova-c"><span class="lf-name">AI Port</span><span class="lf-cnt">${nF.length} moves</span></div>`+
+      `<div class="lfg-hd vega-c"><span class="lf-name">AI Port</span><span class="lf-cnt">${nF.length} moves</span></div>`+
       rows+
       `<div class="lfg-foot you-c">${footBtn(yF)}</div>`+
-      `<div class="lfg-foot nova-c">${footBtn(nF)}</div>`+
+      `<div class="lfg-foot vega-c">${footBtn(nF)}</div>`+
     `</div>`;
   document.querySelectorAll('.log-type-btn').forEach(b=>b.classList.toggle('on',b.dataset.v===logF.type));
   document.querySelectorAll('.log-period-btn').forEach(b=>b.classList.toggle('on',b.dataset.v===logF.period));
@@ -177,7 +177,7 @@ let logJr=false;
 const _jrHtml=j=>`<div class="cb-jr"><div class="cb-jr-ic ${j.good?'good':'bad'}">${j.good?'✓':'✕'}</div><div class="cb-jr-body"><div class="cb-jr-t">${esc(j.t)}</div><div class="cb-jr-x">${esc(j.x)}</div></div></div>`;
 
 function renderJrSection(col){
-  const who=col==='you'?'You':'NOVA';
+  const who=col==='you'?'You':'Vega';
   const jList=DATA.arena.journal.filter(j=>j.who===who);
   const expanded=logJr;
   const lim=expanded?Infinity:1;
@@ -190,8 +190,8 @@ function renderJrSection(col){
     `<div class="log-jr-grid">${jrCol(good,'Pros','good')}${jrCol(bad,'Cons','bad')}</div>`+
     (hidden>0?`<button class="cb-more-btn" onclick="expandJr()">Show all</button>`:colBtn);
 }
-function expandJr(){logJr=true;renderJrSection('you');renderJrSection('nova');}
-function collapseJr(){logJr=false;renderJrSection('you');renderJrSection('nova');}
+function expandJr(){logJr=true;renderJrSection('you');renderJrSection('vega');}
+function collapseJr(){logJr=false;renderJrSection('you');renderJrSection('vega');}
 
 function renderLog(){
   const colTop=(name,cls,av,ret,val)=>`
@@ -206,7 +206,7 @@ function renderLog(){
     <div class="log-sub" style="margin-top:0">Pros &amp; Cons</div>
     <div class="log-vs-grid">
       ${colTop('You','you','YOU','+3.8%','$83,048')}
-      ${colTop('AI Port','nova','AI','+1.9%','$81,520')}
+      ${colTop('AI Port','vega','AI','+1.9%','$81,520')}
     </div>
     <div class="log-tl-section">
       <div class="log-tl-bar">
@@ -230,7 +230,7 @@ function renderLog(){
       <div id="log-feeds-wrapper"></div>
     </div>`;
   renderJrSection('you');
-  renderJrSection('nova');
+  renderJrSection('vega');
   renderLogFeeds();
 }
 
@@ -241,7 +241,7 @@ function setHnPeriod(v){hnPeriod=v;hnLim=4;renderHoldingsNews();}
 function loadMoreHn(){hnLim=Infinity;renderHoldingsNews();}
 function collapseHn(){hnLim=4;renderHoldingsNews();}
 function renderHoldingsNews(){
-  const novaSet=new Set(DATA.arena.nova.hold.map(([tk])=>tk));
+  const vegaSet=new Set(DATA.arena.vega.hold.map(([tk])=>tk));
   const youSet=new Set(H.map(h=>h.tk));
   const all=[...H.flatMap(h=>h.news.map(n=>({...n,tk:h.tk}))),...DATA.market.holdings_news];
   all.forEach((n,i)=>n._i=i);
@@ -251,13 +251,13 @@ function renderHoldingsNews(){
     'ytd':new Date(new Date().getFullYear(),0,1).getTime(),'1y':nowTs-365*86400000,'5y':nowTs-5*365*86400000};
   const cutoff=cutoffMap[hnPeriod]??-Infinity;
 
-  const byOwner=hnFilter==='you'?all.filter(n=>youSet.has(n.tk)):hnFilter==='nova'?all.filter(n=>novaSet.has(n.tk)):all;
+  const byOwner=hnFilter==='you'?all.filter(n=>youSet.has(n.tk)):hnFilter==='vega'?all.filter(n=>vegaSet.has(n.tk)):all;
   const filtered=byOwner.filter(n=>thaiTs(n.date)>=cutoff);
   const shown=filtered.slice(0,hnLim);
 
-  const badge=tk=>{const y=youSet.has(tk),n=novaSet.has(tk);
-    return y&&n?`<span class="hn-who both">You &amp; AI Port</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">AI Port</span>`;};
-  const cnt=v=>{const arr=(v==='you'?all.filter(n=>youSet.has(n.tk)):v==='nova'?all.filter(n=>novaSet.has(n.tk)):all).filter(n=>thaiTs(n.date)>=cutoff);
+  const badge=tk=>{const y=youSet.has(tk),n=vegaSet.has(tk);
+    return y&&n?`<span class="hn-who both">You &amp; AI Port</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who vega">AI Port</span>`;};
+  const cnt=v=>{const arr=(v==='you'?all.filter(n=>youSet.has(n.tk)):v==='vega'?all.filter(n=>vegaSet.has(n.tk)):all).filter(n=>thaiTs(n.date)>=cutoff);
     return `<span class="hn-cnt">${arr.length}</span>`;};
   const moveChip=n=>n.move?`<span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''
   const cards=shown.length
@@ -275,7 +275,7 @@ function renderHoldingsNews(){
     `<div class="seg">`+
     `<button class="${hnFilter==='all'?'on':''}" onclick="setHnFilter('all')">All ${cnt('all')}</button>`+
     `<button class="${hnFilter==='you'?'on':''}" onclick="setHnFilter('you')">You ${cnt('you')}</button>`+
-    `<button class="${hnFilter==='nova'?'on':''}" onclick="setHnFilter('nova')">AI Port ${cnt('nova')}</button>`+
+    `<button class="${hnFilter==='vega'?'on':''}" onclick="setHnFilter('vega')">AI Port ${cnt('vega')}</button>`+
     `</div><div class="seg">`+
     periods.map(v=>`<button class="${hnPeriod===v?'on':''}" onclick="setHnPeriod('${v}')">${pLabels[v]}</button>`).join('')+
     `</div></div>`+
@@ -412,10 +412,10 @@ function openMkNews(i){
 function openHnNews(i){
   const all=[...H.flatMap(h=>h.news.map(n=>({...n,tk:h.tk}))),...DATA.market.holdings_news];
   const n=all[i]; if(!n) return;
-  const novaSet=new Set(DATA.arena.nova.hold.map(([tk])=>tk));
+  const vegaSet=new Set(DATA.arena.vega.hold.map(([tk])=>tk));
   const youSet=new Set(H.map(h=>h.tk));
-  const y=youSet.has(n.tk), nv=novaSet.has(n.tk);
-  const badge=y&&nv?`<span class="hn-who both">You &amp; AI Port</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who nova">AI Port</span>`;
+  const y=youSet.has(n.tk), nv=vegaSet.has(n.tk);
+  const badge=y&&nv?`<span class="hn-who both">You &amp; AI Port</span>`:y?`<span class="hn-who you">You</span>`:`<span class="hn-who vega">AI Port</span>`;
   const moveChip=n.move?`<span class="chip ${n.move.pct>=0?'up':'down'}">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:'';
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
@@ -433,19 +433,19 @@ function openHnNews(i){
   document.getElementById('mov').classList.add('open');
 }
 
-/* ---------- NOVA (พอร์ต AI เดี่ยว) ---------- */
-// derive: holdings ของ NOVA — weight คำนวณสดจาก shares*price (รวมเงินสด)
-const NH = DATA.nova.holdings.map(h=>{
+/* ---------- Vega (พอร์ต AI เดี่ยว) ---------- */
+// derive: holdings ของ Vega — weight คำนวณสดจาก shares*price (รวมเงินสด)
+const NH = DATA.vega.holdings.map(h=>{
   const cost=h.shares*h.avg, val=h.shares*h.price, pl=val-cost, plpct=pl/cost*100, day=(h.price-h.prev)/h.prev*100;
   return {...h, cost, val, pl, plpct, day};
 });
 const N_EQUITY = NH.reduce((s,h)=>s+h.val,0);
-const N_TOTAL = N_EQUITY + DATA.nova.cash;
+const N_TOTAL = N_EQUITY + DATA.vega.cash;
 NH.forEach(h=>h.weight=h.val/N_TOTAL*100);
 const N_PL = NH.reduce((s,h)=>s+h.pl,0), N_COST = NH.reduce((s,h)=>s+h.cost,0);
 const N_PLPCT = N_COST? N_PL/N_COST*100 : 0;
 // timeline absolute (สำหรับการ์ด Portfolio Value แบบ Overview) จาก series %
-const N_TL = DATA.nova.series.map((s,i)=>({date:DATA.nova.labels[i], total:Math.round(DATA.nova.startVal*(1+s/100))}));
+const N_TL = DATA.vega.series.map((s,i)=>({date:DATA.vega.labels[i], total:Math.round(DATA.vega.startVal*(1+s/100))}));
 N_TL.forEach((x,i)=>{ x.change=i===0?0:x.total-N_TL[i-1].total; });
 // donut allocation: holdings (ม่วงไล่เฉดตามมูลค่า) + เงินสด (เทา)
 const N_HSORT=[...NH].sort((a,b)=>b.val-a.val);
@@ -454,13 +454,13 @@ const purpleScale=n=>{ const a=[221,210,255], b=[108,58,230];
     const c=a.map((v,k)=>Math.round(v+(b[k]-v)*t)); return `rgb(${c[0]},${c[1]},${c[2]})`; }); };
 const N_HCOLORS=purpleScale(N_HSORT.length);
 const N_DONUT_LABELS=[...N_HSORT.map(h=>h.tk),'Cash'];
-const N_DONUT_VALS=[...N_HSORT.map(h=>h.val), DATA.nova.cash];
+const N_DONUT_VALS=[...N_HSORT.map(h=>h.val), DATA.vega.cash];
 const N_DONUT_COLORS=[...N_HCOLORS,'#c7ccd6'];
-let novaBench=null;
+let vegaBench=null;
 // asset list สไตล์ Coinbase (ฝั่งซ้าย Holdings) — ราคาทุนอยู่ใต้ชื่อหุ้น คลิกเปิด drawer
-function novaAssetListHtml(list){
+function vegaAssetListHtml(list){
   return list.map(h=>`
-    <div class="asset-row" onclick="openNovaHolding('${h.tk}')">
+    <div class="asset-row" onclick="openVegaHolding('${h.tk}')">
       <div class="asset-icon" style="background:rgba(124,77,255,.1);color:#7c4dff">${h.tk.slice(0,2)}</div>
       <div class="asset-info"><div class="a-tk">${esc(h.tk)}</div><div class="a-nm">${esc(h.name)} · Cost $${h.avg.toFixed(2)}</div></div>
       <div class="asset-mid"><div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div></div>
@@ -468,15 +468,15 @@ function novaAssetListHtml(list){
     </div>`).join('');
 }
 
-function renderNova(){
-  const n=DATA.nova;
+function renderVega(){
+  const n=DATA.vega;
   // การ์ด Portfolio Value ใหญ่ (สไตล์หน้า Overview) — balance + Today/High/Low + toggle benchmark
   const cur=N_TL[N_TL.length-1].total, start=N_TL[0].total, chgPct=(cur-start)/start*100;
   const totals=N_TL.map(x=>x.total), hi=Math.max(...totals), lo=Math.min(...totals);
   const today=N_TL[N_TL.length-1].change, todayPct=today/(cur-today)*100;
-  const benchName=novaBench==='spx'?'S&P 500':novaBench==='nasdaq'?'Nasdaq':'';
-  const pfLeg=novaBench?`<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#7c4dff"></span>AI Port</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>`:'';
-  const pfCard=`<div class="card pf-card nova-pf">
+  const benchName=vegaBench==='spx'?'S&P 500':vegaBench==='nasdaq'?'Nasdaq':'';
+  const pfLeg=vegaBench?`<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#7c4dff"></span>AI Port</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>`:'';
+  const pfCard=`<div class="card pf-card vega-pf">
     <div class="pf-lbl">Portfolio Value</div>
     <div class="pf-balrow"><span class="pf-bal">$${cur.toLocaleString()}</span>
       <span class="pf-chg ${cls(chgPct)}">${chgPct>=0?'▲':'▼'} ${pct(chgPct)}<span class="pf-chg-sub">since start</span></span></div>
@@ -489,16 +489,16 @@ function renderNova(){
       </div>
     </div>
     <span class="seg pf-seg">
-      <button class="${novaBench===null?'on':''}" onclick="setNovaBench(null)">AI Port</button>
-      <button class="${novaBench==='spx'?'on':''}" onclick="setNovaBench('spx')">S&P 500</button>
-      <button class="${novaBench==='nasdaq'?'on':''}" onclick="setNovaBench('nasdaq')">Nasdaq</button>
+      <button class="${vegaBench===null?'on':''}" onclick="setVegaBench(null)">AI Port</button>
+      <button class="${vegaBench==='spx'?'on':''}" onclick="setVegaBench('spx')">S&P 500</button>
+      <button class="${vegaBench==='nasdaq'?'on':''}" onclick="setVegaBench('nasdaq')">Nasdaq</button>
     </span>
     ${pfLeg}
-    <div class="pf-grid"><canvas id="novaPortfolioLine"></canvas></div>
+    <div class="pf-grid"><canvas id="vegaPortfolioLine"></canvas></div>
   </div>`;
 
   // เกือบซื้อ
-  const miss=n.nearMiss.map(m=>`<div class="nm-card" onclick="openNovaMiss('${m.tk}')">
+  const miss=n.nearMiss.map(m=>`<div class="nm-card" onclick="openVegaMiss('${m.tk}')">
     <div class="nm-top">
       <div class="nm-av">${esc(m.tk.slice(0,2))}</div>
       <div class="nm-hd"><span class="nm-tk2">${esc(m.tk)}</span><span class="nm-nm">${esc(m.name)}</span></div>
@@ -508,12 +508,12 @@ function renderNova(){
 
   // ปิดสถานะแล้ว
   const closed=n.closed.map(c=>{ const pl=(c.exit-c.avg)/c.avg*100;
-    return `<div class="nv-closed" onclick="openNovaClosed('${c.tk}')">
+    return `<div class="nv-closed" onclick="openVegaClosed('${c.tk}')">
       <div class="nvc-l"><div class="nvc-tk">${c.tk} <span>${esc(c.name)}</span></div>
         <div class="nvc-px">Buy $${c.avg.toFixed(2)} → Sell $${c.exit.toFixed(2)} · ${esc(c.opened)}–${esc(c.closed)}</div></div>
       <div class="nvc-r"><span class="chip ${cls(pl)}">${pct(pl)}</span><span class="go">›</span></div></div>`; }).join('');
 
-  // Latest Activity — รวมเทรดทั้งหมด (holdings + closed) เรียงใหม่→เก่า โชว์ 5 ล่าสุด ว่า NOVA เพิ่งทำอะไร
+  // Latest Activity — รวมเทรดทั้งหมด (holdings + closed) เรียงใหม่→เก่า โชว์ 5 ล่าสุด ว่า Vega เพิ่งทำอะไร
   const activity=[...NH.flatMap(h=>h.trades.map(t=>({...t,tk:h.tk}))), ...n.closed.flatMap(c=>c.trades.map(t=>({...t,tk:c.tk})))]
     .sort((a,b)=>thaiTs(b.date)-thaiTs(a.date)).slice(0,5);
   const actFeed=activity.map(t=>{ const buy=t.t.includes('ซื้อ');
@@ -521,7 +521,7 @@ function renderNova(){
       <div class="cb-row-body"><div class="cb-row-top"><span class="cb-tk">${t.tk}</span><span class="cb-chip ${buy?'buy':'sell'}">${buy?'Buy':'Sell'}</span><span class="cb-dt">${esc(t.date)}</span></div>
       <div class="cb-row-why">${esc(t.t)} — ${esc(t.why)}</div></div></div>`; }).join('');
 
-  document.getElementById('t-nova').innerHTML = `
+  document.getElementById('t-vega').innerHTML = `
     <div class="kpis">
       <div class="card kpi"><div class="lbl">Portfolio Value</div><div class="val">$${Math.round(N_TOTAL).toLocaleString()}</div><div class="sub">${thb(N_TOTAL)}</div></div>
       <div class="card kpi"><div class="lbl">Cost Basis</div><div class="val">$${Math.round(N_COST).toLocaleString()}</div><div class="sub">${thb(N_COST)}</div></div>
@@ -530,11 +530,11 @@ function renderNova(){
 
     <div class="sec-title">Holdings <span style="text-transform:none;font-weight:600;color:var(--dim)">${NH.length} positions + cash · tap for reason + thesis</span></div>
     <div class="grid2">
-      <div class="card" style="padding:0;overflow:hidden">${novaAssetListHtml(N_HSORT)}</div>
+      <div class="card" style="padding:0;overflow:hidden">${vegaAssetListHtml(N_HSORT)}</div>
       <div class="card chart-card">
         <div class="ch-head"><span class="ttl">Allocation</span></div>
         <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding-top:34px">
-          <div style="position:relative;width:100%;height:280px"><canvas id="novaDonut"></canvas></div>
+          <div style="position:relative;width:100%;height:280px"><canvas id="vegaDonut"></canvas></div>
         </div>
       </div>
     </div>
@@ -549,12 +549,12 @@ function renderNova(){
 
     <div class="sec-title">Closed Positions</div>
     <div class="nv-closed-list">${closed||'<div class="co-empty">No closed positions</div>'}</div>`;
-  drawNovaDonut(); drawNovaPortfolio();
+  drawVegaDonut(); drawVegaPortfolio();
 }
-function setNovaBench(b){ novaBench=b; renderNova(); }
+function setVegaBench(b){ vegaBench=b; renderVega(); }
 
 // drawer: หุ้นที่ถืออยู่ — stat + เหตุผลซื้อ/ขาย + thesis break รายตัว
-function openNovaHolding(tk){
+function openVegaHolding(tk){
   const h=NH.find(x=>x.tk===tk); if(!h) return;
   const k=h.kill;
   const trades=h.trades.slice().sort((a,b)=>thaiTs(b.date)-thaiTs(a.date))
@@ -581,8 +581,8 @@ function openNovaHolding(tk){
   document.getElementById('mov').classList.add('open');
 }
 
-function openNovaClosed(tk){
-  const c=DATA.nova.closed.find(x=>x.tk===tk); if(!c) return;
+function openVegaClosed(tk){
+  const c=DATA.vega.closed.find(x=>x.tk===tk); if(!c) return;
   const pl=(c.exit-c.avg)/c.avg*100, plAbs=(c.exit-c.avg)*c.shares;
   const trades=c.trades.slice().sort((a,b)=>thaiTs(b.date)-thaiTs(a.date))
     .map(t=>{const buy=t.t.includes('ซื้อ');return `<div class="cb-trade"><div class="t-top"><span class="cb-chip ${buy?'buy':'sell'}" style="margin-right:7px">${buy?'Buy':'Sell'}</span>${esc(t.t)} · ${esc(t.date)}</div><div class="t-why">${esc(t.why)}</div></div>`;}).join('');
@@ -604,8 +604,8 @@ function openNovaClosed(tk){
   document.getElementById('mov').classList.add('open');
 }
 
-function openNovaMiss(tk){
-  const m=DATA.nova.nearMiss.find(x=>x.tk===tk); if(!m) return;
+function openVegaMiss(tk){
+  const m=DATA.vega.nearMiss.find(x=>x.tk===tk); if(!m) return;
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
       <div class="co-mhead">
@@ -644,9 +644,9 @@ function thesisTickers(cat){
 }
 
 /* ---------- COMPANY ---------- */
-// รวมข้อมูลทุกบริษัทจาก 3 แหล่ง: holdings (ถืออยู่), market.holdings_news (ข่าว NOVA-only), companies (ขายแล้ว/NOVA)
+// รวมข้อมูลทุกบริษัทจาก 3 แหล่ง: holdings (ถืออยู่), market.holdings_news (ข่าว Vega-only), companies (ขายแล้ว/Vega)
 function companyRegistry(){
-  const novaSet=new Set(DATA.arena.nova.hold.map(([tk])=>tk));
+  const vegaSet=new Set(DATA.arena.vega.hold.map(([tk])=>tk));
   const youSet=new Set(H.map(h=>h.tk));
   const extra=DATA.companies||[];
   // ข่าวต่อ ticker — รวมทุกแหล่ง ไม่ซ้ำซ้อน
@@ -659,11 +659,11 @@ function companyRegistry(){
   // เทรดของคุณ — จาก holdings เท่านั้น
   const youTradesByTk={};
   H.forEach(h=>{ youTradesByTk[h.tk]=[...(h.trades||[])]; });
-  // เทรดของ NOVA — หลักจาก arena.moves (tag tk), fallback companies.trades สำหรับ nova/sold ที่ไม่มีใน moves
-  const novaTradesByTk={};
-  DATA.arena.moves.forEach(m=>{ if(m.tk){ (novaTradesByTk[m.tk]=novaTradesByTk[m.tk]||[]).push({date:m.date, t:m.act, why:m.why}); } });
-  extra.forEach(c=>{ if((c.status==='nova'||c.status==='sold') && c.trades && c.trades.length && !novaTradesByTk[c.tk]) novaTradesByTk[c.tk]=[...c.trades]; });
-  [youTradesByTk, novaTradesByTk].forEach(map=>Object.values(map).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date))));
+  // เทรดของ Vega — หลักจาก arena.moves (tag tk), fallback companies.trades สำหรับ vega/sold ที่ไม่มีใน moves
+  const vegaTradesByTk={};
+  DATA.arena.moves.forEach(m=>{ if(m.tk){ (vegaTradesByTk[m.tk]=vegaTradesByTk[m.tk]||[]).push({date:m.date, t:m.act, why:m.why}); } });
+  extra.forEach(c=>{ if((c.status==='vega'||c.status==='sold') && c.trades && c.trades.length && !vegaTradesByTk[c.tk]) vegaTradesByTk[c.tk]=[...c.trades]; });
+  [youTradesByTk, vegaTradesByTk].forEach(map=>Object.values(map).forEach(a=>a.sort((x,y)=>thaiTs(y.date)-thaiTs(x.date))));
   // รายชื่อบริษัท: ถืออยู่ก่อน แล้วตามด้วย companies
   const list=[];
   const meta=o=>({exchange:o.exchange,country:o.country,founded:o.founded,web:o.web});
@@ -671,13 +671,13 @@ function companyRegistry(){
   extra.forEach(c=>list.push({tk:c.tk,name:c.name,sector:c.sector,about:c.about,soldNote:c.soldNote,thesisRef:c.thesisRef,...meta(c)}));
   const soldSet=new Set(extra.filter(c=>c.status==='sold').map(c=>c.tk));
   const watchSet=new Set(extra.filter(c=>c.status==='watch').map(c=>c.tk));
-  return {list,newsByTk,youTradesByTk,novaTradesByTk,novaSet,youSet,soldSet,watchSet};
+  return {list,newsByTk,youTradesByTk,vegaTradesByTk,vegaSet,youSet,soldSet,watchSet};
 }
 let _coReg=null;
 function coBadges(tk,R){
   const b=[];
   if(R.youSet.has(tk)) b.push('<span class="co-badge you">YOU</span>');
-  if(R.novaSet.has(tk)) b.push('<span class="co-badge nova">AI Port</span>');
+  if(R.vegaSet.has(tk)) b.push('<span class="co-badge vega">AI Port</span>');
   if(R.watchSet.has(tk)) b.push('<span class="co-badge watch">WATCHING</span>');
   if(R.soldSet.has(tk)) b.push('<span class="co-badge sold">SOLD</span>');
   return b.join('');
@@ -695,10 +695,10 @@ function renderCompany(){
   _renderCoList();
 }
 function coSearch(v){ _coSearch=v; _renderCoList(); }
-// สีไอคอนกลม (avatar) ไล่ตามสถานะถือ: ถืออยู่ > NOVA > กำลังดู > ขายแล้ว
+// สีไอคอนกลม (avatar) ไล่ตามสถานะถือ: ถืออยู่ > Vega > กำลังดู > ขายแล้ว
 function coAvClass(tk,R){
   if(R.youSet.has(tk)) return 'co-av-you';
-  if(R.novaSet.has(tk)) return 'co-av-nova';
+  if(R.vegaSet.has(tk)) return 'co-av-vega';
   if(R.watchSet.has(tk)) return 'co-av-watch';
   if(R.soldSet.has(tk)) return 'co-av-sold';
   return 'co-av-none';
@@ -723,12 +723,12 @@ function _renderCoList(){
   const html=filtered.length?`<div class="co-grid">${filtered.map(c=>coCardHtml(c,R)).join('')}</div>`:'';
   document.getElementById('coList').innerHTML = html || '<div class="co-empty" style="padding:26px;text-align:center">No companies match your search</div>';
 }
-// สถิติฝั่ง NOVA ของ ticker — derive จาก น้ำหนัก×มูลค่าพอร์ต NOVA; ต้นทุน(avg) มาจาก hold[2] ถ้ามี (เฉพาะตัวที่มีราคาจริง)
-function novaStat(tk, price){
-  const e=DATA.arena.nova.hold.find(([t])=>t===tk);
+// สถิติฝั่ง Vega ของ ticker — derive จาก น้ำหนัก×มูลค่าพอร์ต Vega; ต้นทุน(avg) มาจาก hold[2] ถ้ามี (เฉพาะตัวที่มีราคาจริง)
+function vegaStat(tk, price){
+  const e=DATA.arena.vega.hold.find(([t])=>t===tk);
   if(!e) return null;
   const w=e[1], avg=(e[2]!=null?e[2]:null);
-  const mv=DATA.arena.nova.val*w/100;
+  const mv=DATA.arena.vega.val*w/100;
   const shares=price?mv/price:null;
   const ret=(avg!=null&&price)?(price-avg)/avg*100:null;
   return {w, avg, mv, shares, ret};
@@ -938,17 +938,17 @@ function openAlloc(){
       plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed.toLocaleString(undefined,{maximumFractionDigits:0})} USD`}}}}});
 }
 function closeAlloc(){ document.getElementById('mov').classList.remove('open'); }
-// donut สัดส่วนพอร์ต NOVA (holdings ม่วง + เงินสดเทา) — ใช้ center label ร่วมกับ Overview
-function drawNovaDonut(){
-  new Chart(document.getElementById('novaDonut'),{type:'doughnut',
+// donut สัดส่วนพอร์ต Vega (holdings ม่วง + เงินสดเทา) — ใช้ center label ร่วมกับ Overview
+function drawVegaDonut(){
+  new Chart(document.getElementById('vegaDonut'),{type:'doughnut',
     plugins:[_donutCenter],
     data:{labels:N_DONUT_LABELS, datasets:[{data:N_DONUT_VALS, backgroundColor:N_DONUT_COLORS, borderWidth:3, borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'66%',layout:{padding:{bottom:6}},
       plugins:{legend:{display:true,position:'bottom',labels:{color:'#5b616e',font:{size:10},padding:22,usePointStyle:true,pointStyle:'circle',boxWidth:7}}}
     }});
 }
-// การ์ด Portfolio Value ใหญ่ของ NOVA (เลียนแบบ drawPortfolio ของ Overview แต่เส้นม่วง)
-function drawNovaPortfolio(){
+// การ์ด Portfolio Value ใหญ่ของ Vega (เลียนแบบ drawPortfolio ของ Overview แต่เส้นม่วง)
+function drawVegaPortfolio(){
   const d=N_TL, start=d[0].total, totals=d.map(x=>x.total);
   const hi=Math.max(...totals), lo=Math.min(...totals);
   const dotR=c=>{const i=c.dataIndex,v=totals[i]; return (i===totals.length-1||v===hi||v===lo)?5:0;};
@@ -957,21 +957,21 @@ function drawNovaPortfolio(){
       pointRadius:dotR,pointHoverRadius:6,
       pointBackgroundColor:'#7c4dff',pointBorderColor:'#fff',pointBorderWidth:2}];
   const vals=[...totals];
-  if(novaBench){
-    const series=novaBench==='spx'?DATA.nova.spx:DATA.bench.nasdaq;
-    const name=novaBench==='spx'?'S&P 500':'Nasdaq';
+  if(vegaBench){
+    const series=vegaBench==='spx'?DATA.vega.spx:DATA.bench.nasdaq;
+    const name=vegaBench==='spx'?'S&P 500':'Nasdaq';
     const bdata=series.map(p=>Math.round(start*(1+p/100)));
     vals.push(...bdata);
     ds.push({label:name,data:bdata,borderColor:'#8a919e',borderDash:[5,4],fill:false,tension:.4,pointRadius:0,borderWidth:2});
   }
   const mn=Math.min(...vals), mx=Math.max(...vals), pd=Math.max((mx-mn)*0.28,300);
-  const novaPfGlow={id:'novaPfGlow',
+  const vegaPfGlow={id:'vegaPfGlow',
     beforeDatasetDraw(c,a){ if(a.index!==0)return; const x=c.ctx; x.save();
       x.shadowColor='rgba(124,77,255,.40)'; x.shadowBlur=16; x.shadowOffsetX=0; x.shadowOffsetY=6; },
     afterDatasetDraw(c,a){ if(a.index!==0)return; c.ctx.restore(); }};
-  new Chart(document.getElementById('novaPortfolioLine'),{type:'line',
+  new Chart(document.getElementById('vegaPortfolioLine'),{type:'line',
     data:{labels:d.map(x=>x.date),datasets:ds},
-    plugins:[novaPfGlow,_pfCursor],
+    plugins:[vegaPfGlow,_pfCursor],
     options:{responsive:true,maintainAspectRatio:false,
       layout:{padding:{top:10}},
       interaction:{mode:'index',intersect:false},
@@ -982,7 +982,7 @@ function drawNovaPortfolio(){
           titleFont:{size:11,weight:'500'},bodyFont:{size:14,weight:'700'},footerFont:{size:11,weight:'700'},
           callbacks:{label:it=>`${it.dataset.label}  $${Math.round(it.raw).toLocaleString()}`,
             labelTextColor:it=>it.dataset.borderColor,
-            footer:its=>{if(novaBench)return'';const r=d[its[0].dataIndex];const s=r.change>=0?'+':'';
+            footer:its=>{if(vegaBench)return'';const r=d[its[0].dataIndex];const s=r.change>=0?'+':'';
               return `${s}$${Math.round(r.change).toLocaleString()} that day`;}}}},
       scales:{
         x:{ticks:{color:'#5b616e',font:{size:11}},grid:{display:false},border:{display:false}},
@@ -993,7 +993,7 @@ function drawNovaPortfolio(){
 }
 
 /* ---------- tabs ---------- */
-const RENDER={overview:renderOverview,company:renderCompany,log:renderLog,market:renderMarket,nova:renderNova,thesis:renderThesis};
+const RENDER={overview:renderOverview,company:renderCompany,log:renderLog,market:renderMarket,vega:renderVega,thesis:renderThesis};
 function sw(name,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
