@@ -94,7 +94,7 @@ const DATA = {
       {who:'NOVA', good:false, t:'ถือเงินสดมากไป', x:'มีเงินสด 12% ตอนตลาดขาขึ้น ทำให้ตามหลังพอร์ตที่ลงเต็ม'}
     ]
   },
-  // ===== NOVA — พอร์ต AI แยกเป็นพอร์ตจริง 1 พอร์ต (holdings/near-miss/closed/kill condition) =====
+  // ===== NOVA — พอร์ต AI แยกเป็นพอร์ตจริง 1 พอร์ต (holdings/near-miss/closed/thesis) =====
   // weight ของ holdings คำนวณสดจาก shares*price ใน app.js (ไม่ hardcode) cash เก็บเป็น USD
   nova:{
     name:'NOVA', start:'10 พ.ค. 2026', startVal:80000, val:81520, ret:1.9, cash:11410,
@@ -107,23 +107,23 @@ const DATA = {
           {date:'2 มี.ค. 2026', t:'ซื้อ 80 @ $150.00', why:'แกนหลัก AI compute ครองตลาด GPU เปิดสถานะหลักของพอร์ต'},
           {date:'5 มิ.ย. 2026', t:'ซื้อเพิ่ม 40 @ $176.00', why:'เห็นว่าฝั่งคุณขาย NVDA เร็วไปแล้วพลาดขาขึ้น จึงเพิ่มน้ำหนักถือยาวตามโมเมนตัม + ข่าวดีมานด์ compute'}
         ],
-        kill:{stop:{p:'$120',d:'-20%'}, target:{p:'$270',d:'+50%'}, thesis:'hyperscaler ลด AI capex guidance ติดกัน 2 ไตรมาส', status:'ok'}},
+        kill:{thesis:'hyperscaler ลด AI capex guidance ติดกัน 2 ไตรมาส'}},
       {tk:'PLTR', name:'Palantir', sector:'Software', shares:700, avg:28.50, price:27.20, prev:26.8, opened:'2 มิ.ย. 2026',
         trades:[
           {date:'2 มิ.ย. 2026', t:'ซื้อ 700 @ $28.50', why:'ข่าวดีลภาครัฐ + งบโตเกินคาด เล่นสาย growth ที่พอร์ตคุณไม่มี — เข้าหลังข่าวออกแล้วราคาพุ่ง ต้นทุนสูงไปนิด ติดลบช่วงแรก'}
         ],
-        kill:{stop:{p:'$24.20',d:'-15%'}, target:{p:'$40',d:'+40%'}, thesis:'รายได้ภาครัฐหยุดโตติดกัน 2 ไตรมาส / เสีย AIP momentum', status:'watch'}},
+        kill:{thesis:'รายได้ภาครัฐหยุดโตติดกัน 2 ไตรมาส / เสีย AIP momentum'}},
       {tk:'AMD', name:'AMD', sector:'Semiconductors', shares:110, avg:132, price:141.20, prev:143.0, opened:'15 พ.ค. 2026',
         trades:[
           {date:'15 พ.ค. 2026', t:'ซื้อ 80 @ $132.00', why:'เก็งส่วนแบ่ง AI accelerator ราคาถูกกว่า NVDA'},
           {date:'20 พ.ค. 2026', t:'ซื้อเพิ่ม 30 @ $135.00', why:'เพิ่มน้ำหนักหลัง MI350 ได้ลูกค้าองค์กรเพิ่มต่อเนื่อง'}
         ],
-        kill:{stop:{p:'$108',d:'-18%'}, target:{p:'$190',d:'+45%'}, thesis:'MI400 เลื่อนกำหนด / เสียส่วนแบ่งคืนให้ NVDA', status:'ok'}},
+        kill:{thesis:'MI400 เลื่อนกำหนด / เสียส่วนแบ่งคืนให้ NVDA'}},
       {tk:'GOOGL', name:'Alphabet', sector:'Technology', shares:75, avg:175, price:182.00, prev:179.5, opened:'21 พ.ค. 2026',
         trades:[
           {date:'21 พ.ค. 2026', t:'ซื้อ 75 @ $175.00', why:'Gemini ไล่บี้คู่แข่ง + Google Cloud โตแรง valuation ยังถูกกว่ากลุ่ม mega-cap'}
         ],
-        kill:{stop:{p:'$149',d:'-15%'}, target:{p:'$236',d:'+35%'}, thesis:'คดี antitrust บังคับแยกบริษัท / search share โดน AI กิน', status:'ok'}}
+        kill:{thesis:'คดี antitrust บังคับแยกบริษัท / search share โดน AI กิน'}}
     ],
     // ปิดสถานะแล้ว — เก็บราคาซื้อ(avg) และราคาขาย(exit) ไว้ดูผลจริง
     closed:[
