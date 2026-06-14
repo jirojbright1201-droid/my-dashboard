@@ -1,12 +1,13 @@
 // Dashboard PWA service worker
 // Pages: network-first (always fresh when online, cached copy when offline)
 // Static assets: cache-first with runtime caching
-const CACHE = 'dash-v2';
+const CACHE = 'dash-v3';
 const CORE = [
   './',
   './index.html',
   './Money%20Tracker/index.html',
   './Planner%20Tracker/planner.html',
+  './Investment%20Tracker/investment.html',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png'
@@ -34,7 +35,13 @@ self.addEventListener('fetch', e => {
 
   // Pages (HTML / navigations) → network-first so an online open always shows latest
   const isPage = req.mode === 'navigate' || req.destination === 'document';
-  if (isPage) {
+  // Our own code/data (.js/.css same-origin, ไม่นับ sw.js) → network-first ด้วย
+  // กัน data.js/app.js ค้าง cache หลัง Felix อัปแล้ว push (สดเมื่อออนไลน์ ใช้ cache เฉพาะออฟไลน์)
+  const url = new URL(req.url);
+  const isLocalCode = url.origin === self.location.origin
+    && /\.(js|css)$/.test(url.pathname)
+    && !url.pathname.endsWith('/sw.js');
+  if (isPage || isLocalCode) {
     e.respondWith(
       fetch(req)
         .then(res => {
@@ -42,7 +49,7 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE).then(c => { try { c.put(req, copy); } catch (_) {} });
           return res;
         })
-        .catch(() => caches.match(req).then(hit => hit || caches.match('./index.html')))
+        .catch(() => caches.match(req).then(hit => hit || (isPage ? caches.match('./index.html') : undefined)))
     );
     return;
   }
