@@ -5,8 +5,10 @@ const H = DATA.holdings.map(h=>{
 });
 const TOTAL_VAL = H.reduce((s,h)=>s+h.val,0);
 const TOTAL_COST = H.reduce((s,h)=>s+h.cost,0);
-H.forEach(h=>h.weight=h.val/TOTAL_VAL*100);
-const TOTAL_PL = TOTAL_VAL-TOTAL_COST, TOTAL_PLPCT = TOTAL_PL/TOTAL_COST*100;
+const YOUR_CASH = DATA.cash||0;            // เงินสดรอลงทุน ฝั่งคุณ
+const PF_VALUE = TOTAL_VAL + YOUR_CASH;    // มูลค่าพอร์ตรวมเงินสด
+H.forEach(h=>h.weight = PF_VALUE? h.val/PF_VALUE*100 : 0);
+const TOTAL_PL = TOTAL_VAL-TOTAL_COST, TOTAL_PLPCT = TOTAL_COST? TOTAL_PL/TOTAL_COST*100 : 0;
 
 /* ---------- helpers ---------- */
 const thb = usd => '฿ '+Math.round(usd*FX).toLocaleString();
@@ -15,32 +17,10 @@ const cls = v => v>=0?'pos':'neg';
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const nl2br = s => esc(s).replace(/\n/g,'<br>');
 
-/* ---------- table ---------- */
-function rowHtml(h, showLog){
-  return `<tr onclick="openHolding('${h.tk}',${!!showLog})">
-    <td class="tk">${h.tk}<small>${esc(h.name)}</small></td>
-    <td class="num">$${h.price.toFixed(2)}</td>
-    <td class="num ${cls(h.day)}">${pct(h.day)}</td>
-    <td class="num">$${Math.round(h.val).toLocaleString()}</td>
-    <td class="num">${h.weight.toFixed(1)}%</td>
-    <td class="num ${cls(h.pl)}">${pct(h.plpct)}</td>
-    <td class="go">›</td>
-  </tr>`;
-}
-function tableHtml(list, withSort, showLog){
-  const cols=[['tk','Asset'],['price','Price'],['day','Day'],['val','Value'],['weight','Weight'],['plpct','P/L'],['','']];
-  const head=cols.map(([k,l])=>{
-    if(!l) return '<th></th>';
-    const ar = withSort && sortKey===k ? (sortDir>0?' ▲':' ▼') : (withSort?' <span class="ar">⇅</span>':'');
-    return `<th ${withSort?`onclick="setSort('${k}')"`:''}>${l}${ar}</th>`;
-  }).join('');
-  return `<div class="tbl-card"><table><thead><tr>${head}</tr></thead><tbody>${list.map(h=>rowHtml(h,showLog)).join('')}</tbody></table></div>`;
-}
-
 /* ---------- ASSET LIST (Coinbase style) ---------- */
 function assetListHtml(list){
   return list.map(h=>`
-    <div class="asset-row" onclick="openHolding('${h.tk}',false)">
+    <div class="asset-row" onclick="openHolding('${h.tk}')">
       <div class="asset-icon">${h.tk.slice(0,2)}</div>
       <div class="asset-info"><div class="a-tk">${esc(h.tk)}</div><div class="a-nm">${esc(h.name)}</div></div>
       <div class="asset-mid"><div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div></div>
@@ -59,14 +39,14 @@ function renderOverview(){
   const pfLeg = benchSel ? `<div class="pf-leg"><span class="it"><span class="sw" style="border-color:#0052ff"></span>Your Portfolio</span><span class="it"><span class="sw dash" style="border-color:#8a919e"></span>${benchName}</span></div>` : '';
   document.getElementById('t-overview').innerHTML = `
     <div class="kpis">
-      <div class="card kpi"><div class="lbl">Portfolio Value</div><div class="val">$${Math.round(TOTAL_VAL).toLocaleString()}</div><div class="sub">${thb(TOTAL_VAL)}</div></div>
+      <div class="card kpi"><div class="lbl">Portfolio Value</div><div class="val">$${PF_VALUE.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="sub">${thb(PF_VALUE)} · เงินสด $${YOUR_CASH.toFixed(2)}</div></div>
       <div class="card kpi"><div class="lbl">Cost Basis</div><div class="val">$${Math.round(TOTAL_COST).toLocaleString()}</div><div class="sub">${thb(TOTAL_COST)}</div></div>
       <div class="card kpi"><div class="lbl">Total P/L</div><div class="val ${cls(TOTAL_PL)}">${TOTAL_PL>=0?'+$':'-$'}${Math.abs(Math.round(TOTAL_PL)).toLocaleString()}</div><div class="sub ${cls(TOTAL_PL)}">${pct(TOTAL_PLPCT)}</div></div>
     </div>
 
     <div class="sec-title">Holdings</div>
     <div class="grid2">
-      <div class="card" style="padding:0;overflow:hidden">${assetListHtml(top)}</div>
+      <div class="card" style="padding:0;overflow:hidden">${top.length?assetListHtml(top):'<div class="co-empty" style="padding:30px 18px;text-align:center;line-height:1.7">ยังไม่มีสถานะ — เงินสดรอลงไม้แรก<br><span style="font-size:.78rem;color:var(--dim)">ลงทุนแบบมีวินัย: มี thesis ก่อนซื้อทุกครั้ง</span></div>'}</div>
       <div class="card chart-card">
         <div class="ch-head"><span class="ttl">Allocation</span></div>
         <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding-top:34px">
@@ -101,7 +81,6 @@ function renderOverview(){
 }
 
 /* ---------- LOG ---------- */
-let sortKey='weight', sortDir=-1; // ใช้โดย tableHtml (Overview) เท่านั้น
 const THAI_M={'ม.ค.':0,'ก.พ.':1,'มี.ค.':2,'เม.ย.':3,'พ.ค.':4,'มิ.ย.':5,'ก.ค.':6,'ส.ค.':7,'ก.ย.':8,'ต.ค.':9,'พ.ย.':10,'ธ.ค.':11};
 function thaiTs(s){ const p=String(s).trim().split(/\s+/); const d=+p[0]||1, m=THAI_M[p[1]]??0, y=+p[2]||2026; return new Date(y,m,d).getTime(); }
 /* ---------- LOG state & helpers (module-level) ---------- */
@@ -114,7 +93,7 @@ function _lMove(m){const buy=m.act.includes('▲');
 
 function _lFilter(list,isMoves){
   const allTs=H.flatMap(h=>h.trades).map(t=>thaiTs(t.date)).concat(DATA.arena.moves.map(m=>thaiTs(m.date)));
-  const maxTs=Math.max(...allTs);
+  const maxTs=allTs.length?Math.max(...allTs):Date.now();
   const maxDate=new Date(maxTs);
   const cutoffMap={
     'all':-Infinity,
@@ -205,8 +184,8 @@ function renderLog(){
   document.getElementById('t-log').innerHTML=`
     <div class="log-sub" style="margin-top:0">Pros &amp; Cons</div>
     <div class="log-vs-grid">
-      ${colTop('You','you','YOU','+3.8%','$83,048')}
-      ${colTop('AI Port','vega','AI','+1.9%','$81,520')}
+      ${colTop('You','you','YOU',pct(DATA.arena.you.ret),'$'+DATA.arena.you.val.toLocaleString())}
+      ${colTop('AI Port','vega','AI',pct(DATA.arena.vega.ret),'$'+DATA.arena.vega.val.toLocaleString())}
     </div>
     <div class="log-tl-section">
       <div class="log-tl-bar">
@@ -314,7 +293,6 @@ function renderMarket(){
     </div>`;
   }).join('');
 
-  const maxAbs=Math.max(...m.sectors.map(s=>Math.abs(s.v)));
   // แต่ละแถว: พื้นหลัง gradient ไล่สีตามขนาด gainers จากซ้าย / losers จากขวา
   const secCard=s=>{
     const dir=s.v>=0?'up':'dn';
@@ -368,7 +346,7 @@ function renderMarketNews(){
     <span class="mk-news-tag ${mkTagCls(n.tag)}">${esc(n.tag)}</span>
     <div class="mk-news-head">${esc(n.head)}</div>
     <div class="mk-news-sum">${esc(n.sum)}</div>
-    <div class="mk-news-foot"><span class="mk-news-src">${esc(n.src)}</span><span class="mk-dot">·</span>${esc(n.date)}<span class="mk-news-mock">mock</span></div>
+    <div class="mk-news-foot"><span class="mk-news-src">${esc(n.src)}</span><span class="mk-dot">·</span>${esc(n.date)}</div>
   </div>`;
   const f=mkNewsFiltered();
   // ข่าวเด่น = ตัวที่ AI ติดธง feat (ผ่าน data) ถ้าตัวนั้นถูกกรองออกค่อย fallback เป็นชิ้นแรก
@@ -404,7 +382,7 @@ function openMkNews(i){
       <button class="dr-close" onclick="closeAlloc()" style="margin-left:14px;flex-shrink:0">✕</button>
     </div>
     <div style="font-size:.88rem;color:var(--silver);line-height:1.8;padding-top:4px">${bodyHtml}</div>
-    <div style="margin-top:14px;text-align:right;font-size:.7rem;color:var(--dim)">${esc(n.src)} · ${esc(n.date)} · ข่าวจำลอง</div>`;
+    <div style="margin-top:14px;text-align:right;font-size:.7rem;color:var(--dim)">${esc(n.src)} · ${esc(n.date)}</div>`;
   document.getElementById('mov').classList.add('open');
 }
 
@@ -530,7 +508,7 @@ function renderVega(){
 
     <div class="sec-title">Holdings <span style="text-transform:none;font-weight:600;color:var(--dim)">${NH.length} positions + cash · tap for reason + thesis</span></div>
     <div class="grid2">
-      <div class="card" style="padding:0;overflow:hidden">${vegaAssetListHtml(N_HSORT)}</div>
+      <div class="card" style="padding:0;overflow:hidden">${N_HSORT.length?vegaAssetListHtml(N_HSORT):'<div class="co-empty" style="padding:30px 18px;text-align:center;line-height:1.7">ยังไม่เปิดสถานะ — เงินสดล้วน<br><span style="font-size:.78rem;color:var(--dim)">Vega จะสร้างพอร์ตเองด้วย research</span></div>'}</div>
       <div class="card chart-card">
         <div class="ch-head"><span class="ttl">Allocation</span></div>
         <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding-top:34px">
@@ -743,7 +721,7 @@ function _renderCompanyDrawer(){
   const c=R.list.find(x=>x.tk===_coTk); if(!c) return;
   const allNw=R.newsByTk[_coTk]||[];
   const newsHtml=allNw.length
-    ?allNw.slice(0,_coNwLim).map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
+    ?allNw.slice(0,_coNwLim).map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div>${n.sum?`<div class="n-sum">${esc(n.sum)}</div>`:''}<div class="n-foot">${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
     :'<div class="co-empty">No news yet</div>';
   const nwBtn=allNw.length>3?(_coNwLim===Infinity?`<button class="cb-more-btn collapse" onclick="coNwLess()">Show less</button>`:`<button class="cb-more-btn" onclick="coNwMore()">Show more</button>`):'';
   const nwCap=(allNw.length>3&&_coNwLim!==Infinity)?'Latest 3':'All news';
@@ -785,7 +763,7 @@ function _renderCompanyDrawer(){
 
 /* ---------- DRAWER ---------- */
 let _holdTk=null, _holdLim=3;
-function openHolding(tk, showLog){ _holdTk=tk; _holdLim=3; _renderHolding(); }
+function openHolding(tk){ _holdTk=tk; _holdLim=3; _renderHolding(); }
 function holdMore(){ _holdLim=Infinity; _renderHolding(); }
 function holdLess(){ _holdLim=3; _renderHolding(); }
 function _renderHolding(){
@@ -794,7 +772,7 @@ function _renderHolding(){
   const wk=Date.now()-7*86400000;
   const recent=h.news.filter(n=>thaiTs(n.date)>=wk);
   const news=recent.length
-    ?recent.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div><div class="n-foot">(mock) ${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
+    ?recent.map(n=>`<div class="cb-news"><div class="n-head">${esc(n.head)}</div><div class="n-foot">${esc(n.src)} · ${esc(n.date)}${n.move?` <span class="chip ${n.move.pct>=0?'up':'down'}" style="margin-left:6px">${n.move.pct>=0?'+':''}${n.move.pct}%</span>`:''}</div></div>`).join('')
     :'<div class="co-empty">No news in the last 7 days</div>';
   // trade history: 3 first, expand on demand
   const shownTr=h.trades.slice(0,_holdLim);
@@ -888,7 +866,7 @@ function drawPortfolio(){
         x:{ticks:{color:'#5b616e',font:{size:11}},grid:{display:false},border:{display:false}},
         y:{min:Math.floor((mn-pd)/100)*100,max:Math.ceil((mx+pd)/100)*100,
           ticks:{color:'#8a919e',font:{size:10},maxTicksLimit:5,
-            callback:v=>'$'+(v/1000).toFixed(1)+'k'},
+            callback:v=>Math.abs(v)>=1000?'$'+(v/1000).toFixed(1)+'k':'$'+Math.round(v)},
           grid:{display:false},border:{display:false}}}}});
 }
 
@@ -900,6 +878,10 @@ function blueScale(n){
 }
 const allocSorted=[...H].sort((a,b)=>b.val-a.val);
 const allocColors=blueScale(allocSorted.length);
+// โดนัทฝั่งคุณ = holdings (ฟ้าไล่เฉด) + เงินสด (เทา) — เหมือนฝั่ง Vega
+const Y_DONUT_LABELS=[...allocSorted.map(h=>h.tk),'Cash'];
+const Y_DONUT_VALS=[...allocSorted.map(h=>h.val), YOUR_CASH];
+const Y_DONUT_COLORS=[...allocColors,'#c7ccd6'];
 const _donutCenter={id:'donutCenter',afterDraw(chart){
   const act=chart.getActiveElements(); if(!act.length) return;
   const {ctx,chartArea:{left,top,width,height}}=chart;
@@ -917,7 +899,7 @@ const _donutCenter={id:'donutCenter',afterDraw(chart){
 function drawDonut(){
   new Chart(document.getElementById('donut'),{type:'doughnut',
     plugins:[_donutCenter],
-    data:{labels:allocSorted.map(h=>h.tk), datasets:[{data:allocSorted.map(h=>h.val), backgroundColor:allocColors, borderWidth:3, borderColor:'#fff'}]},
+    data:{labels:Y_DONUT_LABELS, datasets:[{data:Y_DONUT_VALS, backgroundColor:Y_DONUT_COLORS, borderWidth:3, borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'66%',layout:{padding:{bottom:6}},
       plugins:{legend:{display:true,position:'bottom',labels:{color:'#5b616e',font:{size:10},padding:22,usePointStyle:true,pointStyle:'circle',boxWidth:7}}}
     }
@@ -925,15 +907,17 @@ function drawDonut(){
 }
 let allocChart=null;
 function openAlloc(){
-  const legend=allocSorted.map((h,i)=>`<div class="a-row"><span class="sw" style="background:${allocColors[i]}"></span><span class="a-tk">${h.tk}</span><span class="a-nm">${esc(h.name)}</span><span class="a-w">${h.weight.toFixed(1)}%</span><span class="a-v">$${Math.round(h.val).toLocaleString()}</span></div>`).join('');
+  const cashW=PF_VALUE?YOUR_CASH/PF_VALUE*100:0;
+  const legend=allocSorted.map((h,i)=>`<div class="a-row"><span class="sw" style="background:${allocColors[i]}"></span><span class="a-tk">${h.tk}</span><span class="a-nm">${esc(h.name)}</span><span class="a-w">${h.weight.toFixed(1)}%</span><span class="a-v">$${Math.round(h.val).toLocaleString()}</span></div>`).join('')
+    +`<div class="a-row"><span class="sw" style="background:#c7ccd6"></span><span class="a-tk">Cash</span><span class="a-nm">เงินสดรอลงทุน</span><span class="a-w">${cashW.toFixed(1)}%</span><span class="a-v">$${YOUR_CASH.toFixed(2)}</span></div>`;
   document.getElementById('mbox').innerHTML=`
-    <div class="mbox-head"><span class="t">สัดส่วนพอร์ต · ${allocSorted.length} ตัว</span><button class="dr-close" onclick="closeAlloc()">✕</button></div>
+    <div class="mbox-head"><span class="t">สัดส่วนพอร์ต · ${allocSorted.length} ตัว + เงินสด</span><button class="dr-close" onclick="closeAlloc()">✕</button></div>
     <div class="alloc-chart"><canvas id="allocCanvas"></canvas></div>
     <div class="alloc-list">${legend}</div>`;
   document.getElementById('mov').classList.add('open');
   if(allocChart) allocChart.destroy();
   allocChart=new Chart(document.getElementById('allocCanvas'),{type:'doughnut',
-    data:{labels:allocSorted.map(h=>h.tk), datasets:[{data:allocSorted.map(h=>h.val), backgroundColor:allocColors, borderWidth:3, borderColor:'#fff'}]},
+    data:{labels:Y_DONUT_LABELS, datasets:[{data:Y_DONUT_VALS, backgroundColor:Y_DONUT_COLORS, borderWidth:3, borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
       plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed.toLocaleString(undefined,{maximumFractionDigits:0})} USD`}}}}});
 }
@@ -988,7 +972,7 @@ function drawVegaPortfolio(){
         x:{ticks:{color:'#5b616e',font:{size:11}},grid:{display:false},border:{display:false}},
         y:{min:Math.floor((mn-pd)/100)*100,max:Math.ceil((mx+pd)/100)*100,
           ticks:{color:'#8a919e',font:{size:10},maxTicksLimit:5,
-            callback:v=>'$'+(v/1000).toFixed(1)+'k'},
+            callback:v=>Math.abs(v)>=1000?'$'+(v/1000).toFixed(1)+'k':'$'+Math.round(v)},
           grid:{display:false},border:{display:false}}}}});
 }
 
