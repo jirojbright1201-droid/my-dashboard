@@ -94,6 +94,65 @@ const DATA = {
       {who:'NOVA', good:false, t:'ถือเงินสดมากไป', x:'มีเงินสด 12% ตอนตลาดขาขึ้น ทำให้ตามหลังพอร์ตที่ลงเต็ม'}
     ]
   },
+  // ===== NOVA — พอร์ต AI แยกเป็นพอร์ตจริง 1 พอร์ต (holdings/near-miss/closed/kill condition) =====
+  // weight ของ holdings คำนวณสดจาก shares*price ใน app.js (ไม่ hardcode) cash เก็บเป็น USD
+  nova:{
+    name:'NOVA', start:'10 พ.ค. 2026', startVal:80000, val:81520, ret:1.9, cash:11410,
+    labels:['10 พ.ค.','17','24','31','7 มิ.ย.'],
+    series:[0,0.8,1.0,1.6,1.9],   // ผลตอบแทน NOVA %
+    spx:[0,0.6,1.2,1.9,2.5],      // เทียบ S&P500
+    holdings:[
+      {tk:'NVDA', name:'Nvidia', sector:'Semiconductors', shares:120, avg:150, price:182.40, prev:180.1, opened:'2 มี.ค. 2026',
+        trades:[
+          {date:'2 มี.ค. 2026', t:'ซื้อ 80 @ $150.00', why:'แกนหลัก AI compute ครองตลาด GPU เปิดสถานะหลักของพอร์ต'},
+          {date:'5 มิ.ย. 2026', t:'ซื้อเพิ่ม 40 @ $176.00', why:'เห็นว่าฝั่งคุณขาย NVDA เร็วไปแล้วพลาดขาขึ้น จึงเพิ่มน้ำหนักถือยาวตามโมเมนตัม + ข่าวดีมานด์ compute'}
+        ],
+        kill:{stop:{p:'$120',d:'-20%'}, target:{p:'$270',d:'+50%'}, thesis:'hyperscaler ลด AI capex guidance ติดกัน 2 ไตรมาส', status:'ok'}},
+      {tk:'PLTR', name:'Palantir', sector:'Software', shares:700, avg:28.50, price:27.20, prev:26.8, opened:'2 มิ.ย. 2026',
+        trades:[
+          {date:'2 มิ.ย. 2026', t:'ซื้อ 700 @ $28.50', why:'ข่าวดีลภาครัฐ + งบโตเกินคาด เล่นสาย growth ที่พอร์ตคุณไม่มี — เข้าหลังข่าวออกแล้วราคาพุ่ง ต้นทุนสูงไปนิด ติดลบช่วงแรก'}
+        ],
+        kill:{stop:{p:'$24.20',d:'-15%'}, target:{p:'$40',d:'+40%'}, thesis:'รายได้ภาครัฐหยุดโตติดกัน 2 ไตรมาส / เสีย AIP momentum', status:'watch'}},
+      {tk:'AMD', name:'AMD', sector:'Semiconductors', shares:110, avg:132, price:141.20, prev:143.0, opened:'15 พ.ค. 2026',
+        trades:[
+          {date:'15 พ.ค. 2026', t:'ซื้อ 80 @ $132.00', why:'เก็งส่วนแบ่ง AI accelerator ราคาถูกกว่า NVDA'},
+          {date:'20 พ.ค. 2026', t:'ซื้อเพิ่ม 30 @ $135.00', why:'เพิ่มน้ำหนักหลัง MI350 ได้ลูกค้าองค์กรเพิ่มต่อเนื่อง'}
+        ],
+        kill:{stop:{p:'$108',d:'-18%'}, target:{p:'$190',d:'+45%'}, thesis:'MI400 เลื่อนกำหนด / เสียส่วนแบ่งคืนให้ NVDA', status:'ok'}},
+      {tk:'GOOGL', name:'Alphabet', sector:'Technology', shares:75, avg:175, price:182.00, prev:179.5, opened:'21 พ.ค. 2026',
+        trades:[
+          {date:'21 พ.ค. 2026', t:'ซื้อ 75 @ $175.00', why:'Gemini ไล่บี้คู่แข่ง + Google Cloud โตแรง valuation ยังถูกกว่ากลุ่ม mega-cap'}
+        ],
+        kill:{stop:{p:'$149',d:'-15%'}, target:{p:'$236',d:'+35%'}, thesis:'คดี antitrust บังคับแยกบริษัท / search share โดน AI กิน', status:'ok'}}
+    ],
+    // ปิดสถานะแล้ว — เก็บราคาซื้อ(avg) และราคาขาย(exit) ไว้ดูผลจริง
+    closed:[
+      {tk:'SMCI', name:'Super Micro', sector:'Servers', shares:300, avg:48.00, exit:40.20, opened:'15 พ.ค. 2026', closed:'28 พ.ค. 2026',
+        trades:[
+          {date:'15 พ.ค. 2026', t:'ซื้อ 300 @ $48.00', why:'เล่นกระแส AI server + liquid cooling ดีมานด์ data center'},
+          {date:'28 พ.ค. 2026', t:'ขายทิ้งทั้งหมด 300 @ $40.20', why:'ข่าวความเสี่ยงด้านบัญชีโผล่ ตัดขาดทุนทันทีตามวินัย ไม่รอความชัดเจน — เข้าเงื่อนไข kill: thesis พัง'}
+        ]}
+    ],
+    // เกือบซื้อแต่ยังไม่เข้า — why(สนใจเพราะ) / blocker(ติดอะไร) / trigger(อะไรจะทำให้เข้า)
+    nearMiss:[
+      {tk:'AVGO', name:'Broadcom', sector:'Semiconductors', date:'6 มิ.ย. 2026', refPrice:'$1,320',
+        why:'custom AI silicon (ASIC) + networking ดีมานด์โตตาม hyperscaler เป็นชิ้นส่วนที่พอร์ตยังไม่มี',
+        blocker:'valuation ตึง เข้าตอนนี้ risk/reward ไม่คุ้ม',
+        trigger:'ราคาย่อมาที่ $1,200 หรือ guidance AI revenue เกินคาดชัดเจน'},
+      {tk:'ANET', name:'Arista Networks', sector:'Networking', date:'4 มิ.ย. 2026', refPrice:'$412',
+        why:'AI networking switch (Ethernet) ตัวหลัก ได้ดีมานด์จาก back-end AI cluster โดยตรง',
+        blocker:'เพิ่งวิ่งแรง อยากได้จุดเข้าที่ดีกว่านี้',
+        trigger:'ย่อ -10% จากจุดสูงสุด หรือ guidance Q3 ยืนยัน AI orders'},
+      {tk:'OKLO', name:'Oklo', sector:'Energy', date:'30 พ.ค. 2026', refPrice:'$62',
+        why:'SMR นิวเคลียร์ ธีมพลังงาน AI เดียวกับ VST/CEG แต่ upside สูงกว่า',
+        blocker:'pre-revenue เก็งล้วน ความเสี่ยงสูงเกินกรอบพอร์ตตอนนี้',
+        trigger:'เซ็น PPA เชิงพาณิชย์ดีลแรก หรือ NRC อนุมัติ design'},
+      {tk:'ASML', name:'ASML', sector:'Semiconductors', date:'28 พ.ค. 2026', refPrice:'$980',
+        why:'ผูกขาด EUV ขายเครื่องให้ทุก foundry ขั้นสูง คอขวดจริงของ AI chip',
+        blocker:'ความไม่แน่นอนเรื่อง export control จีนยังกดดัน',
+        trigger:'กฎ export ชัดเจนขึ้น หรือ order book ฟื้นจาก TSMC/Intel'}
+    ]
+  },
   thesis:[
     {cat:'Memory', t:'ทำไม Memory ถึงสำคัญ', updated:'2 มิ.ย. 2026', sum:'AI ไม่ได้ต้องการแค่ GPU แต่ต้องการหน่วยความจำแบนด์วิดท์สูง (HBM) ป้อนข้อมูลให้ทัน',
       full:'AI ไม่ได้ต้องการแค่ GPU แต่ต้องการ "หน่วยความจำแบนด์วิดท์สูง" (HBM) ป้อนข้อมูลให้ทัน เมื่อโมเดลใหญ่ขึ้น การคำนวณติดคอขวดที่การส่งข้อมูลเข้า-ออกหน่วยความจำ ไม่ใช่ตัวประมวลผล\n\nผู้ผลิต HBM มีแค่ 3 เจ้าหลัก (Micron, SK Hynix, Samsung) ทำให้มี pricing power สูง และดีมานด์ถูกจองล่วงหน้าหลายไตรมาส\n\nสรุป: ลงทุนใน memory = เล่นกับคอขวดจริงของ AI ไม่ใช่แค่กระแส'},

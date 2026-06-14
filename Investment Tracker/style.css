@@ -156,6 +156,51 @@ tbody tr:hover{background:var(--surface-2);}
 .jr .j-top .who{font-size:.64rem; padding:1px 7px; border-radius:999px; background:rgba(0,0,0,.06); color:var(--silver);}
 .jr .j-txt{color:var(--silver); margin-top:3px; line-height:1.45;}
 
+/* ===== NOVA page (พอร์ต AI เดี่ยว) ===== */
+/* แถวเงินสดในตารางถือครอง — ทำให้จาง */
+.nv-cash td{color:var(--dim);}
+.nv-cash .tk{font-weight:700; color:var(--silver);}
+.nv-cash:hover{background:var(--surface-2);}
+
+/* near-miss cards */
+.nm-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+.nm-card{border:1px solid var(--border-soft); border-radius:16px; padding:16px 17px; background:var(--surface); cursor:pointer; transition:border-color .15s, box-shadow .15s, transform .15s; box-shadow:0 1px 3px rgba(0,0,0,.04); display:flex; flex-direction:column;}
+.nm-card:hover{border-color:#cdbcff; box-shadow:0 8px 24px rgba(124,77,255,.10); transform:translateY(-3px);}
+.nm-top{display:flex; align-items:center; gap:11px; margin-bottom:11px;}
+.nm-av{width:36px; height:36px; border-radius:50%; background:rgba(124,77,255,.1); color:#7c4dff; font-size:.7rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; letter-spacing:-.3px;}
+.nm-hd{display:flex; flex-direction:column; min-width:0;}
+.nm-tk2{font-size:.92rem; font-weight:800; line-height:1.2;}
+.nm-nm{font-size:.72rem; color:var(--dim); font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.nm-px{margin-left:auto; align-self:flex-start; font-size:.82rem; font-weight:800; color:var(--silver); font-variant-numeric:tabular-nums;}
+.nm-why{font-size:.8rem; color:var(--silver); line-height:1.55; flex:1;}
+
+/* closed positions */
+.nv-closed-list{display:flex; flex-direction:column; gap:9px;}
+.nv-closed{display:flex; align-items:center; gap:12px; border:1px solid var(--border-soft); border-radius:12px; padding:13px 16px; background:var(--surface); cursor:pointer; transition:.14s;}
+.nv-closed:hover{border-color:#bfd0ff; background:var(--surface-2);}
+.nvc-tk{font-size:.9rem; font-weight:800;}
+.nvc-tk span{font-weight:500; color:var(--dim); font-size:.74rem; margin-left:5px;}
+.nvc-px{font-size:.72rem; color:var(--silver); margin-top:4px; font-variant-numeric:tabular-nums;}
+.nvc-r{margin-left:auto; display:flex; align-items:center; gap:10px;}
+
+/* near-miss note (ใน modal หุ้นเกือบซื้อ) */
+.ks-note{font-size:.74rem; color:var(--dim); line-height:1.6; margin-top:11px; padding:0 2px;}
+
+/* thesis break — การ์ด Coinbase-style (ใน modal หุ้น) */
+.tb-card{display:flex; gap:12px; align-items:flex-start; background:var(--surface-2); border:1px solid var(--border-soft); border-radius:13px; padding:14px 16px;}
+.tb-ic{width:22px; height:22px; border-radius:50%; background:var(--down-soft); color:var(--down); font-size:.82rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;}
+.tb-k{font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--dim);}
+.tb-v{font-size:.88rem; color:var(--text); line-height:1.55; margin-top:4px; font-weight:600;}
+
+/* Latest Activity feed (NOVA เพิ่งทำอะไรล่าสุด) */
+.nv-act-list{padding:2px 18px;}
+.nv-act-list .cb-row{border-bottom:1px solid var(--border-soft);}
+.nv-act-list .cb-row:last-child{border-bottom:none;}
+
+@media(max-width:820px){
+  .nm-grid{grid-template-columns:1fr;}
+}
+
 /* thesis list */
 .th-row{display:flex; align-items:center; gap:12px; padding:13px 16px; border:1px solid var(--border-soft); border-radius:12px; margin-bottom:9px; cursor:pointer; transition:.12s;}
 .th-row:hover{border-color:#bfd0ff; background:var(--surface-2);}
