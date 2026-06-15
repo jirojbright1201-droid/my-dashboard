@@ -117,6 +117,25 @@ tbody tr:hover{background:var(--surface-2);}
 .mk-dot{color:var(--border);}
 .mk-news-grid{display:grid; grid-template-columns:1fr 1fr; gap:11px;}
 
+/* morning brief header + day groups */
+.mk-brief{display:flex; align-items:center; gap:12px; padding:14px 16px; margin-bottom:14px;
+  border:1px solid var(--border-soft); border-radius:14px;
+  background:linear-gradient(135deg,var(--blue-soft),transparent);}
+.mk-brief-sun{font-size:1.6rem; line-height:1;}
+.mk-brief-title{font-size:1.02rem; font-weight:800; color:var(--text);}
+.mk-brief-date{font-size:.78rem; color:var(--silver); margin-top:2px;}
+.mk-day{border-top:1px solid var(--border-soft);}
+.mk-day:first-of-type{border-top:none;}
+.mk-day-head{width:100%; display:flex; align-items:center; gap:9px; padding:13px 2px;
+  background:none; border:none; cursor:pointer; text-align:left;}
+.mk-day-dot{color:var(--blue); font-size:.7rem; width:14px; flex-shrink:0; text-align:center;}
+.mk-day-label{font-size:.92rem; font-weight:700; color:var(--text); flex:1;}
+.mk-day.open .mk-day-label{color:var(--blue);}
+.mk-day-caret{font-size:.73rem; font-weight:700; color:var(--silver);}
+.mk-day-head:hover .mk-day-caret{color:var(--text);}
+.mk-day-body{padding:2px 0 14px;}
+.mk-day-body .mk-news-grid{margin-top:11px;}
+
 .feed{max-height:420px; overflow-y:auto; padding-right:4px;}
 .feed::-webkit-scrollbar{width:6px;} .feed::-webkit-scrollbar-thumb{background:var(--border-soft); border-radius:3px;}
 .news{border:1px solid var(--border-soft); border-radius:11px; padding:12px 15px; margin-bottom:9px;}

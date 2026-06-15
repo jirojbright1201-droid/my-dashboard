@@ -313,10 +313,11 @@ const mkTagCls=t=>{const k=String(t).toLowerCase();
   if(k.includes('energy'))return 'energy';
   if(k.includes('earn'))return 'earn';
   return 'macro';};
-let mkPeriod='all', mkLim=7;
-function setMkPeriod(v){mkPeriod=v;mkLim=7;renderMarketNews();}
-function loadMoreMk(){mkLim=Infinity;renderMarketNews();}
-function collapseMk(){mkLim=7;renderMarketNews();}
+let mkPeriod='all', mkOpenDays=null;
+const THAI_DOW=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const THAI_M_ABBR=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+function setMkPeriod(v){mkPeriod=v;mkOpenDays=null;renderMarketNews();}
+function toggleMkDay(k){mkOpenDays=mkOpenDays||new Set();if(mkOpenDays.has(k))mkOpenDays.delete(k);else mkOpenDays.add(k);renderMarketNews();}
 function mkNewsFiltered(){
   const nowTs=Date.now();
   const cutoffMap={'all':-Infinity,'1m':nowTs-30*86400000,'3m':nowTs-90*86400000,
@@ -333,24 +334,42 @@ function renderMarketNews(){
     <div class="mk-news-foot"><span class="mk-news-src">${esc(n.src)}</span><span class="mk-dot">·</span>${esc(n.date)}</div>
   </div>`;
   const f=mkNewsFiltered();
-  // ข่าวเด่น = ตัวที่ AI ติดธง feat (ผ่าน data) ถ้าตัวนั้นถูกกรองออกค่อย fallback เป็นชิ้นแรก
-  const hero=f.find(n=>n.feat)||f[0];
-  const ordered=hero?[hero,...f.filter(n=>n!==hero)]:f;
   const periods=['all','1m','3m','ytd','1y','5y'];
   const pLabels={all:'All','1m':'1M','3m':'3M',ytd:'YTD','1y':'1Y','5y':'5Y'};
-  const shown=ordered.slice(0,mkLim);
-  const news=shown.length
-    ?newsCard(shown[0],true)+(shown.length>1?`<div class="mk-news-grid">${shown.slice(1).map(n=>newsCard(n,false)).join('')}</div>`:'')
-    :`<div class="hn-empty">ไม่มีข่าวในเงื่อนไขนี้</div>`;
-  const footBtn=f.length>mkLim
-    ?`<button class="cb-more-btn" onclick="loadMoreMk()">ดูทั้งหมด</button>`
-    :f.length>7?`<button class="cb-more-btn collapse" onclick="collapseMk()">ซ่อน</button>`:'';
+  // จัดข่าวเป็นกลุ่มตามวัน เรียงวันล่าสุดอยู่บน
+  const groups={};
+  f.forEach(n=>{(groups[n.date]=groups[n.date]||[]).push(n);});
+  const dayKeys=Object.keys(groups).sort((a,b)=>thaiTs(b)-thaiTs(a));
+  if(mkOpenDays===null) mkOpenDays=new Set(dayKeys.slice(0,1)); // วันล่าสุดกางไว้ ที่เหลือพับ
+  const td=new Date();
+  const todayStr=`${td.getDate()} ${THAI_M_ABBR[td.getMonth()]}`;
+  const brief=`<div class="mk-brief"><span class="mk-brief-sun">☀</span>
+    <div><div class="mk-brief-title">Morning Brief</div>
+    <div class="mk-brief-date">${THAI_DOW[td.getDay()]} ${todayStr}</div></div></div>`;
+  const daysHtml=dayKeys.map(key=>{
+    const items=groups[key];
+    const open=mkOpenDays.has(key);
+    const label=key===todayStr?'วันนี้':key;
+    let body='';
+    if(open){
+      const hero=items.find(n=>n.feat);
+      const ord=hero?[hero,...items.filter(n=>n!==hero)]:items;
+      body=`<div class="mk-day-body">`+newsCard(ord[0],!!hero)+
+        (ord.length>1?`<div class="mk-news-grid">${ord.slice(1).map(n=>newsCard(n,false)).join('')}</div>`:'')+`</div>`;
+    }
+    return `<div class="mk-day${open?' open':''}">
+      <button class="mk-day-head" onclick="toggleMkDay('${key}')">
+        <span class="mk-day-dot">${open?'●':'▸'}</span>
+        <span class="mk-day-label">${esc(label)}</span>
+        <span class="mk-day-caret">${open?'ซ่อน':'ดู'}</span>
+      </button>${body}</div>`;
+  }).join('');
   document.getElementById('mk-news-section').innerHTML=
-    `<div class="hn-filter-bar">`+
-    `<div class="seg">`+
+    brief+
+    `<div class="hn-filter-bar"><div class="seg">`+
     periods.map(v=>`<button class="${mkPeriod===v?'on':''}" onclick="setMkPeriod('${v}')">${pLabels[v]}</button>`).join('')+
     `</div></div>`+
-    news+footBtn;
+    (dayKeys.length?daysHtml:`<div class="hn-empty">ไม่มีข่าวในเงื่อนไขนี้</div>`);
 }
 function openMkNews(i){
   const n=DATA.market.news[i]; if(!n) return;
