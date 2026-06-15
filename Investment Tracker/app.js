@@ -293,26 +293,10 @@ function renderMarket(){
     </div>`;
   }).join('');
 
-  // แต่ละแถว: พื้นหลัง gradient ไล่สีตามขนาด gainers จากซ้าย / losers จากขวา
-  const secCard=s=>{
-    const dir=s.v>=0?'up':'dn';
-    const chip=`<span class="chip ${cls(s.v)}">${s.v>=0?'▲':'▼'} ${pct(s.v)}</span>`;
-    const sp=s.spark?sparkSvg(s.spark,s.v>=0):'';
-    return `<div class="mk-idx ${dir}">
-      <div class="mk-idx-top"><span class="mk-idx-n">${esc(s.n)}</span>${chip}</div>
-      <div class="mk-idx-p ${cls(s.v)}">${pct(s.v)}</div>
-      ${sp}
-    </div>`;
-  };
-  const sorted=[...m.sectors].sort((a,b)=>b.v-a.v);
-  const sect=sorted.length?sorted.map(secCard).join(''):`<div class="mk-empty">ไม่มีกลุ่มในหมวดนี้</div>`;
 
   document.getElementById('t-market').innerHTML = `
     <div class="sec-title">Market Overview</div>
     <div class="mk-idx-grid">${idx}</div>
-
-    <div class="sec-title">Sector Performance</div>
-    <div class="mk-idx-grid mk-sec-grid">${sect}</div>
 
     <div class="sec-title">Holdings News</div>
     <div id="hn-section"></div>

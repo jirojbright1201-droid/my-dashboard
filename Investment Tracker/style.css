@@ -97,10 +97,6 @@ tbody tr:hover{background:var(--surface-2);}
 .mk-idx-since b{font-weight:800;}
 
 
-/* sector grid — 3 col แถวละ 3 */
-.mk-sec-grid{grid-template-columns:repeat(3,1fr);}
-.mk-sec-grid .mk-idx-p{font-size:1.18rem;}
-
 .mk-empty{text-align:center; color:var(--dim); font-size:.82rem; padding:20px 0;}
 
 /* market news */
@@ -503,7 +499,7 @@ tbody tr:hover{background:var(--surface-2);}
 
 @media(max-width:820px){
   .kpis{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}
-  .mk-idx-grid, .mk-sec-grid{grid-template-columns:repeat(2,1fr);} .vs-grid{grid-template-columns:1fr;}
+  .mk-idx-grid{grid-template-columns:repeat(2,1fr);} .vs-grid{grid-template-columns:1fr;}
   .mk-news-grid{grid-template-columns:1fr;}
   .hn-grid{grid-template-columns:repeat(2,1fr);}
   .co-grid, .co-listcard{grid-template-columns:1fr;}
