@@ -97,8 +97,8 @@ tbody tr:hover{background:var(--surface-2);}
 .mk-idx-since b{font-weight:800;}
 
 
-/* sector grid — 4 col เหมือน index แต่ใหญ่กว่าเล็กน้อย */
-.mk-sec-grid{grid-template-columns:repeat(4,1fr);}
+/* sector grid — 3 col แถวละ 3 */
+.mk-sec-grid{grid-template-columns:repeat(3,1fr);}
 .mk-sec-grid .mk-idx-p{font-size:1.18rem;}
 
 .mk-empty{text-align:center; color:var(--dim); font-size:.82rem; padding:20px 0;}
