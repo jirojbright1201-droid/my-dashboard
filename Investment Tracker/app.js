@@ -289,7 +289,7 @@ function renderMarket(){
       <div class="mk-idx-top"><span class="mk-idx-n">${esc(i.n)}</span>${chip}</div>
       <div class="mk-idx-p">${esc(i.p)}</div>
       ${spark}
-      <div class="mk-idx-since">ตั้งแต่ 10 พ.ค. <b class="${cls(i.ret)}">${pct(i.ret)}</b></div>
+      ${typeof i.ret==='number'?`<div class="mk-idx-since">ตั้งแต่เริ่ม <b class="${cls(i.ret)}">${pct(i.ret)}</b></div>`:''}
     </div>`;
   }).join('');
 
