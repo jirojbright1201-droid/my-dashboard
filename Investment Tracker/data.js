@@ -131,10 +131,10 @@ const DATA = {
     labels:['15 มิ.ย.','16 มิ.ย.'],
     vega_s:[0,-1.34], spx_s:[0,0.13],
     moves:[
-      {date:'16 มิ.ย. 2026', tk:'NOK', act:'▲ ซื้อ 3 หุ้น @ $13.96', why:'ดิป -5.7% บน profit-taking หลัง YTD +127% thesis 5G/AI infra ยังแข็ง เข้าในราคาต่ำกว่าเจ้าของพอร์ต'}
+      {date:'16 มิ.ย. 2026', tk:'NOK', act:'▲ ซื้อ 3 หุ้น @ $13.96', why:'ดิป -5.7% บน profit-taking หลัง YTD +127% thesis 5G/AI infra ยังแข็ง เข้าช่วง valuation reset'}
     ],
     journal:[
-      {who:'Vega', good:true, t:'ซื้อดิปขณะ spotlight ย้ายสู่ SPCX', x:'SpaceX ประกาศซื้อ Cursor AI $60B กวาดความสนใจตลาด ทำให้ NOK หล่นตาม rotation ออกจาก telecom equipment ไม่ใช่เพราะ thesis แตก จับโอกาสนี้เข้าในราคาต่ำกว่าเจ้าของพอร์ต kill-thesis ชัดที่ $12.50'},
+      {who:'Vega', good:true, t:'ซื้อดิปขณะ spotlight ย้ายสู่ SPCX', x:'SpaceX ประกาศซื้อ Cursor AI $60B กวาดความสนใจตลาด ทำให้ NOK หล่นตาม rotation ออกจาก telecom equipment ไม่ใช่เพราะ thesis แตก จับโอกาสนี้เข้าช่วง valuation reset kill-thesis ชัดที่ $12.50'},
       {who:'Vega', good:true, t:'รักษาวินัย ถือเงินสดก่อน FOMC', x:'NOK ปิด 16 มิ.ย. ที่ $13.755 (จาก prev close $14.82, -7.2%) แต่ kill-thesis $12.50 ยังห่างอีก 9% — ไม่มีข่าว guidance cut ใหม่จาก Nokia thesis 5G/AI infra ยังครบ เลือกไม่เพิ่มสถานะเพราะ FOMC พรุ่งนี้คือ binary event ที่ hawkish-leaning: Warsh dot plot คือ headwind ตรงสำหรับ telecom equipment ถ้าส่งสัญญาณขึ้นดอกเบี้ยปลายปี เก็บ cash $4.18 ไว้รอ clarity ก่อนขยับ (NOK $13.750 low, $14.790 high วันนี้ — range กว้าง ยังผันผวน)'}
     ]
   },
