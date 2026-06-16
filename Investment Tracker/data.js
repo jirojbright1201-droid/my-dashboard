@@ -127,38 +127,18 @@ const DATA = {
   },
   arena:{
     start:'15 มิ.ย. 2026', startVal:46.06,
-    vega:{ret:-1.34, val:45.45, hold:[['NOK',3]]},
+    vega:{ret:0, val:46.06, hold:[]},
     labels:['15 มิ.ย.','16 มิ.ย.'],
-    vega_s:[0,-1.34], spx_s:[0,0.13],
-    moves:[
-      {date:'16 มิ.ย. 2026', tk:'NOK', act:'▲ ซื้อ 3 หุ้น @ $13.96', why:'ดิป -5.7% บน profit-taking หลัง YTD +127% thesis 5G/AI infra ยังแข็ง เข้าช่วง valuation reset'}
-    ],
-    journal:[
-      {who:'Vega', good:true, t:'ซื้อดิปขณะ spotlight ย้ายสู่ SPCX', x:'SpaceX ประกาศซื้อ Cursor AI $60B กวาดความสนใจตลาด ทำให้ NOK หล่นตาม rotation ออกจาก telecom equipment ไม่ใช่เพราะ thesis แตก จับโอกาสนี้เข้าช่วง valuation reset kill-thesis ชัดที่ $12.50'},
-      {who:'Vega', good:true, t:'รักษาวินัย ถือเงินสดก่อน FOMC', x:'NOK ปิด 16 มิ.ย. ที่ $13.755 (จาก prev close $14.82, -7.2%) แต่ kill-thesis $12.50 ยังห่างอีก 9% — ไม่มีข่าว guidance cut ใหม่จาก Nokia thesis 5G/AI infra ยังครบ เลือกไม่เพิ่มสถานะเพราะ FOMC พรุ่งนี้คือ binary event ที่ hawkish-leaning: Warsh dot plot คือ headwind ตรงสำหรับ telecom equipment ถ้าส่งสัญญาณขึ้นดอกเบี้ยปลายปี เก็บ cash $4.18 ไว้รอ clarity ก่อนขยับ (NOK $13.750 low, $14.790 high วันนี้ — range กว้าง ยังผันผวน)'}
-    ]
+    vega_s:[0,0], spx_s:[0,0.13],
+    moves:[],
+    journal:[]
   },
   // ===== Vega — พอร์ต AI (เริ่มวันเดียวกับคุณ ทุนเท่ากัน สร้างพอร์ตเองด้วย research) =====
   vega:{
-    name:'AI Port', start:'15 มิ.ย. 2026', startVal:46.06, val:45.45, ret:-1.34, cash:4.18,
+    name:'AI Port', start:'15 มิ.ย. 2026', startVal:46.06, val:46.06, ret:0, cash:46.06,
     labels:['15 มิ.ย.','16 มิ.ย.'],
-    series:[0,-1.34], spx:[0,0.13],
-    holdings:[
-      {tk:'NOK', name:'Nokia Oyj', sector:'Telecom Equipment', exchange:'NYSE', country:'Finland', founded:'1865', web:'nokia.com',
-       shares:3, avg:13.96, price:13.755, prev:14.82,
-       about:'บริษัทเทคโนโลยีโทรคมนาคมสัญชาติฟินแลนด์ ผู้ผลิตอุปกรณ์เครือข่าย 5G/IP/optical และโครงสร้างพื้นฐานสำหรับ data center กำลังขยายฐานการผลิต R&D ในสหรัฐฯ มูลค่ารวม $4B รวมถึงโรงงานเซมิคอนดักเตอร์ที่ Pennsylvania',
-       trades:[
-         {date:'16 มิ.ย. 2026', t:'ซื้อ NOK 3 @ $13.96', why:'ดิป -5.7% เป็น profit-taking หลัง YTD +127% ไม่ใช่เปลี่ยน fundamental — Nokia semiconductor US expansion ยังดำเนินต่อ thesis 5G/AI infra ยังแข็ง เข้าซื้อที่ valuation reset ก่อน FOMC ที่คาดคง rate 97%'}
-       ],
-       news:[],
-       kill:{thesis:'NOK หลุด $12.50 (อีก -10% จากที่ซื้อ = fundamental ไม่ใช่ technical) หรือ Nokia ปรับลด guidance อีกรอบ หรือ Warsh hawkish เกินคาดจน telco equipment ร่วงทั้งกลุ่ม'}}
-    ],
-    closed:[], nearMiss:[
-      {tk:'SPCX', name:'SpaceX', sector:'Aerospace / AI', date:'16 มิ.ย. 2026', refPrice:206.19,
-       why:'SpaceX IPO 12 มิ.ย. ที่ $135 ตอนนี้ $206.19 (+52.7% จาก IPO) ประกาศซื้อ Anysphere (Cursor AI) $60B + รวม xAI อยู่แล้ว ธีม AI+Space+Coding แข็งที่สุดในตลาดวันนี้',
-       blocker:'รอ FOMC 17 มิ.ย. — Warsh hawkish คือ headwind ตรงสำหรับ high-beta AI/Space growth ก่อน clarity ไม่เสี่ยง',
-       trigger:'หลัง Warsh แถลง 17 มิ.ย. ถ้าโทน dovish/neutral → เข้า fractional ~0.02 shares ด้วยเงินสดที่เหลือ'}
-    ]
+    series:[0,0], spx:[0,0.13],
+    holdings:[], closed:[], nearMiss:[]
   },
   bench:{ spx:[0], nasdaq:[0] }
 };
