@@ -601,7 +601,7 @@ function openVegaMiss(tk){
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
       <div class="co-mhead">
-        <div class="co-av co-av-lg" style="background:rgba(124,77,255,.1);color:#7c4dff">${esc(m.tk.slice(0,2))}</div>
+        <div class="co-av co-av-lg" style="background:rgba(124,77,255,.1);color:#7c4dff"><img class="co-logo" src="assets/logos/${esc(String(m.tk).toLowerCase())}.png" alt="" onload="this.parentNode.classList.add('has-logo')" onerror="this.remove()"><span class="co-ini">${esc(m.tk.slice(0,2))}</span></div>
         <div><div style="font-size:1.25rem;font-weight:800">${esc(m.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(m.name)}</span></div>
         <div style="margin-top:7px"><span class="chip flat">${esc(m.sector)}</span> <span class="chip flat">Not Yet · ${esc(m.refPrice)}</span></div></div>
       </div>
@@ -695,11 +695,17 @@ function coAvClass(tk,R){
   if(R.soldSet.has(tk)) return 'co-av-sold';
   return 'co-av-none';
 }
+// ไอคอนบริษัท: ลองโหลดโลโก้จริง assets/logos/<ticker>.png ถ้าไม่มีไฟล์ fallback เป็นตัวอักษรย่อ (สีตามสถานะถือ)
+function coAvHtml(tk,R,lg){
+  const cls=coAvClass(tk,R)+(lg?' co-av-lg':'');
+  const f=String(tk||'').toLowerCase();
+  return `<div class="co-av ${cls}"><img class="co-logo" src="assets/logos/${esc(f)}.png" alt="" onload="this.parentNode.classList.add('has-logo')" onerror="this.remove()"><span class="co-ini">${esc(String(tk).slice(0,2))}</span></div>`;
+}
 // การ์ดบริษัทในกริด แนว Coinbase: ไอคอนกลม + ticker/ชื่อ + คำอธิบายสั้น (3 บรรทัด) + sector ด้านล่าง
 function coCardHtml(c,R){
   return `<div class="co-card" onclick="openCompany('${c.tk}')">
     <div class="co-top">
-      <div class="co-av ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,2))}</div>
+      ${coAvHtml(c.tk,R,false)}
       <div class="co-head"><span class="co-tk">${esc(c.tk)}</span><span class="co-name">${esc(c.name)}</span></div>
     </div>
     <div class="co-about">${esc(c.about||'—')}</div>
@@ -761,7 +767,7 @@ function _renderCompanyDrawer(){
   document.getElementById('mbox').innerHTML=`
     <div class="mbox-head">
       <div class="co-mhead">
-        <div class="co-av co-av-lg ${coAvClass(c.tk,R)}">${esc(c.tk.slice(0,2))}</div>
+        ${coAvHtml(c.tk,R,true)}
         <div><div style="font-size:1.25rem;font-weight:800">${esc(c.tk)} <span style="font-weight:500;color:var(--dim);font-size:.8rem">${esc(c.name)}</span></div>
         <div class="co-badges" style="margin-top:7px"><span class="chip flat">${esc(c.sector)}</span></div></div>
       </div>

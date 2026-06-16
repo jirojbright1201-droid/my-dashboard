@@ -502,7 +502,11 @@ a.bf-src:hover{color:var(--blue); text-decoration:underline;}
 .co-card{border:1px solid var(--border-soft); border-radius:16px; padding:18px; background:var(--surface); cursor:pointer; transition:border-color .15s, box-shadow .15s, transform .15s; display:flex; flex-direction:column; gap:12px; box-shadow:0 1px 3px rgba(0,0,0,.04);}
 .co-card:hover{border-color:#bfd0ff; box-shadow:0 8px 24px rgba(0,82,255,.10); transform:translateY(-3px);}
 .co-top{display:flex; align-items:center; gap:12px;}
-.co-av{width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.82rem; font-weight:800; letter-spacing:-.3px; flex-shrink:0;}
+.co-av{width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.82rem; font-weight:800; letter-spacing:-.3px; flex-shrink:0; position:relative; overflow:hidden;}
+.co-av .co-logo{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:6px; box-sizing:border-box; display:none;}
+.co-av.has-logo{background:#fff !important;}
+.co-av.has-logo .co-logo{display:block;}
+.co-av.has-logo .co-ini{display:none;}
 .co-mhead{display:flex; align-items:center; gap:13px; min-width:0;}
 .co-av-lg{width:48px; height:48px; font-size:.92rem;}
 .co-facts{display:grid; grid-template-columns:repeat(2,1fr); gap:11px 16px; padding:15px 17px; background:var(--surface-2); border:1px solid var(--border-soft); border-radius:12px; margin-bottom:6px;}
