@@ -141,7 +141,7 @@ const DATA = {
     labels:['15 มิ.ย.','16 มิ.ย.'],
     you_s:[0,3.47], vega_s:[0,0], spx_s:[0,0.13],
     moves:[
-      {date:'16 มิ.ย. 2026', tk:'NOK', act:'▲ ซื้อ 3 หุ้น @ $13.76', why:'ดิป -7.1% บน profit-taking หลัง YTD +127% thesis 5G/AI infra ยังแข็ง เข้าในราคาต่ำกว่าเจ้าของพอร์ต'}
+      {date:'16 มิ.ย. 2026', tk:'NOK', act:'▲ ซื้อ 3 หุ้น @ $13.96', why:'ดิป -5.7% บน profit-taking หลัง YTD +127% thesis 5G/AI infra ยังแข็ง เข้าในราคาต่ำกว่าเจ้าของพอร์ต'}
     ],
     journal:[
       {who:'Vega', good:true, t:'ซื้อดิปขณะ spotlight ย้ายสู่ SPCX', x:'SpaceX ประกาศซื้อ Cursor AI $60B กวาดความสนใจตลาด ทำให้ NOK หล่นตาม rotation ออกจาก telecom equipment ไม่ใช่เพราะ thesis แตก จับโอกาสนี้เข้าในราคาต่ำกว่าเจ้าของพอร์ต kill-thesis ชัดที่ $12.50'}
@@ -149,18 +149,18 @@ const DATA = {
   },
   // ===== Vega — พอร์ต AI (เริ่มวันเดียวกับคุณ ทุนเท่ากัน สร้างพอร์ตเองด้วย research) =====
   vega:{
-    name:'AI Port', start:'15 มิ.ย. 2026', startVal:46.06, val:46.06, ret:0, cash:4.78,
+    name:'AI Port', start:'15 มิ.ย. 2026', startVal:46.06, val:46.06, ret:0, cash:4.18,
     labels:['15 มิ.ย.','16 มิ.ย.'],
     series:[0,0], spx:[0,0.13],
     holdings:[
       {tk:'NOK', name:'Nokia Oyj', sector:'Telecom Equipment', exchange:'NYSE', country:'Finland', founded:'1865', web:'nokia.com',
-       shares:3, avg:13.76, price:13.76, prev:14.82,
+       shares:3, avg:13.96, price:13.96, prev:14.80,
        about:'บริษัทเทคโนโลยีโทรคมนาคมสัญชาติฟินแลนด์ ผู้ผลิตอุปกรณ์เครือข่าย 5G/IP/optical และโครงสร้างพื้นฐานสำหรับ data center กำลังขยายฐานการผลิต R&D ในสหรัฐฯ มูลค่ารวม $4B รวมถึงโรงงานเซมิคอนดักเตอร์ที่ Pennsylvania',
        trades:[
-         {date:'16 มิ.ย. 2026', t:'ซื้อ NOK 3 @ $13.76', why:'ดิป -7.1% เป็น profit-taking หลัง YTD +127% ไม่ใช่เปลี่ยน fundamental — Nokia semiconductor US expansion ยังดำเนินต่อ thesis 5G/AI infra ยังแข็ง เข้าซื้อที่ valuation reset ก่อน FOMC ที่คาดคง rate 97%'}
+         {date:'16 มิ.ย. 2026', t:'ซื้อ NOK 3 @ $13.96', why:'ดิป -5.7% เป็น profit-taking หลัง YTD +127% ไม่ใช่เปลี่ยน fundamental — Nokia semiconductor US expansion ยังดำเนินต่อ thesis 5G/AI infra ยังแข็ง เข้าซื้อที่ valuation reset ก่อน FOMC ที่คาดคง rate 97%'}
        ],
        news:[],
-       kill:{thesis:'NOK หลุด $12.50 (อีก -9% จากที่ซื้อ = fundamental ไม่ใช่ technical) หรือ Nokia ปรับลด guidance อีกรอบ หรือ Warsh hawkish เกินคาดจน telco equipment ร่วงทั้งกลุ่ม'}}
+       kill:{thesis:'NOK หลุด $12.50 (อีก -10% จากที่ซื้อ = fundamental ไม่ใช่ technical) หรือ Nokia ปรับลด guidance อีกรอบ หรือ Warsh hawkish เกินคาดจน telco equipment ร่วงทั้งกลุ่ม'}}
     ],
     closed:[], nearMiss:[
       {tk:'SPCX', name:'SpaceX', sector:'Aerospace / AI', date:'16 มิ.ย. 2026', refPrice:206.19,
