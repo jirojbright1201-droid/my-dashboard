@@ -3,7 +3,7 @@
 // source of truth = ไฟล์นี้ที่เดียว. ราคา/ข่าว/ดัชนี ของจริง Newwy เป็นคนดึงมาเติมทีหลัง
 const FX = 33; // บาท/USD โดยประมาณ — Newwy อัปเดตของจริงทีหลัง
 const DATA = {
-  cash: 17.60,            // เงินสดรอลงทุน (USD) — ฝั่งคุณ
+  cash: 18.06,            // เงินสดรอลงทุน (USD) — ฝั่งคุณ
   holdings: [
     {tk:'NOK', name:'Nokia Oyj', sector:'Telecom Equipment', exchange:'NYSE', country:'Finland', founded:'1865', web:'nokia.com',
      shares:2, avg:14.00, price:14.80, prev:14.80,
@@ -135,25 +135,25 @@ const DATA = {
     }
   },
   arena:{
-    start:'15 มิ.ย. 2026', startVal:45.60,
-    you:{ret:3.51, val:47.20, hold:[['NOK',1]]},
-    vega:{ret:0, val:45.60, hold:[]},
+    start:'15 มิ.ย. 2026', startVal:46.06,
+    you:{ret:3.47, val:47.66, hold:[['NOK',1]]},
+    vega:{ret:0, val:46.06, hold:[]},
     labels:['15 มิ.ย.','16 มิ.ย.'],
-    you_s:[0,3.51], vega_s:[0,0], spx_s:[0,0.13],
+    you_s:[0,3.47], vega_s:[0,0], spx_s:[0,0.13],
     moves:[],
     journal:[]
   },
   // ===== Vega — พอร์ต AI (เริ่มวันเดียวกับคุณ ทุนเท่ากัน สร้างพอร์ตเองด้วย research) =====
   vega:{
-    name:'AI Port', start:'15 มิ.ย. 2026', startVal:45.60, val:45.60, ret:0, cash:45.60,
+    name:'AI Port', start:'15 มิ.ย. 2026', startVal:46.06, val:46.06, ret:0, cash:46.06,
     labels:['15 มิ.ย.'],
     series:[0], spx:[0],
     holdings:[], closed:[], nearMiss:[]
   },
   thesis:[],              // มุมมอง/ธีมการลงทุนของคุณ — ยังไม่มี เพิ่มก่อนลงไม้แรก
   timeline:[
-    {date:'15 มิ.ย.', total:45.60, change:0},
-    {date:'16 มิ.ย.', total:47.20, change:1.60}
+    {date:'15 มิ.ย.', total:46.06, change:0},
+    {date:'16 มิ.ย.', total:47.66, change:1.60}
   ],
   bench:{ spx:[0], nasdaq:[0] }
 };
