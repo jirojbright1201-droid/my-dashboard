@@ -127,18 +127,33 @@ const DATA = {
   },
   arena:{
     start:'15 มิ.ย. 2026', startVal:46.06,
-    vega:{ret:0, val:46.06, hold:[]},
+    vega:{ret:0, val:46.06, hold:[['NVDA',0.108]]},
     labels:['15 มิ.ย.','16 มิ.ย.'],
     vega_s:[0,0], spx_s:[0,0.13],
-    moves:[],
-    journal:[]
+    moves:[
+      {date:'16 มิ.ย. 2026',tk:'NVDA',act:'▲ ซื้อ 0.108 หุ้น @$212.44',why:'เปิด AI thesis 50% port ก่อน FOMC — AI capex multi-year ยาวกว่า 1 Fed meeting'}
+    ],
+    journal:[
+      {who:'Vega',good:true,t:'เปิด NVDA 50% รอ Fed ก่อนเพิ่ม',x:'Nasdaq +0.02% ขณะ Dow ทำ ATH บ่งชี้ rotation ชั่วคราวเข้า value ก่อน FOMC Vega เลือก 50/50 cash-NVDA แทนถือเงินสดล้วน เพราะ AI infrastructure thesis ยาวกว่า 1 Fed meeting MU extended เกินไปหลังพุ่ง 2 วันติดก่อนงบ 24 มิ.ย. ไม่เข้า ถือ cash ครึ่งพอร์ตรอสัญญาณ Warsh พรุ่งนี้'}
+    ]
   },
   // ===== Vega — พอร์ต AI (เริ่มวันเดียวกับคุณ ทุนเท่ากัน สร้างพอร์ตเองด้วย research) =====
   vega:{
-    name:'AI Port', start:'15 มิ.ย. 2026', startVal:46.06, val:46.06, ret:0, cash:46.06,
+    name:'AI Port', start:'15 มิ.ย. 2026', startVal:46.06, val:46.06, ret:0, cash:23.12,
     labels:['15 มิ.ย.','16 มิ.ย.'],
     series:[0,0], spx:[0,0.13],
-    holdings:[], closed:[], nearMiss:[]
+    holdings:[
+      {tk:'NVDA',name:'NVIDIA Corporation',sector:'Technology',exchange:'NASDAQ',country:'USA',founded:1993,web:'nvidia.com',
+       shares:0.108,avg:212.44,price:212.44,prev:212.44,
+       about:'ผู้นำตลาดชิป GPU/AI compute ครองระบบนิเวศ CUDA ครบวงจร ลูกค้าหลักคือ hyperscalers ทั่วโลก',
+       trades:[{date:'16 มิ.ย. 2026',t:'ซื้อ',why:'เปิดสถานะ 50% port — AI infrastructure secular trend, June 15 bond offering $25B ยืนยัน hyperscaler capex แข็งแกร่ง, Nasdaq flat ก่อน FOMC = entry ไม่ extend. Range: L $208.42 H $212.44 C $212.44 (16 มิ.ย. 2026)'}],
+       news:[],
+       kill:{thesis:'Fed ขึ้นดอกเบี้ยหลายรอบ + hyperscaler ลด AI capex หรือ GPU market share หลุดอย่างมีนัย — cut ทันทีถ้าหลุด $186.95 (-12% จาก avg)'}}
+    ],
+    closed:[],
+    nearMiss:[
+      {tk:'MU',name:'Micron Technology',sector:'Semiconductors',date:'16 มิ.ย. 2026',refPrice:1087.99,why:'HBM/AI memory thesis น่าสนใจ งบ 24 มิ.ย. คือ catalyst ใหญ่',blocker:'Extended มาก: ขึ้น ~8% (15 มิ.ย.) + ~10.8% (16 มิ.ย.) สองวันติด pre-earnings risk/reward ไม่คุ้ม',trigger:'Post-FOMC dip หรือ post-earnings pullback โซน $950-1000 ค่อยพิจารณาใหม่'}
+    ]
   },
   bench:{ spx:[0], nasdaq:[0] }
 };
