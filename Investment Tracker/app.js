@@ -340,7 +340,7 @@ function renderMarketNews(){
   const groups={};
   f.forEach(n=>{(groups[n.date]=groups[n.date]||[]).push(n);});
   const dayKeys=Object.keys(groups).sort((a,b)=>thaiTs(b)-thaiTs(a));
-  if(mkOpenDays===null) mkOpenDays=new Set(dayKeys.slice(0,1)); // วันล่าสุดกางไว้ ที่เหลือพับ
+  if(mkOpenDays===null) mkOpenDays=new Set(dayKeys); // ข่าวใน window กางให้เห็นหมดตอนเช้า กดยุบเองได้
   const td=new Date();
   const todayStr=`${td.getDate()} ${THAI_M_ABBR[td.getMonth()]}`;
   const brief=`<div class="mk-brief"><span class="mk-brief-sun">☀</span>
