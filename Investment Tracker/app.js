@@ -1,3 +1,11 @@
+/* ---------- stitch พอร์ตคุณ (data-you.js) เข้า DATA ก่อนคำนวณ — แยกไฟล์เพื่อกัน Vega เห็นพอร์ตคุณ ---------- */
+DATA.cash = YOU.cash;
+DATA.holdings = YOU.holdings;
+DATA.timeline = YOU.timeline;
+DATA.thesis = YOU.thesis;
+DATA.arena.you = YOU.you;
+DATA.arena.you_s = YOU.you_s;
+
 /* ---------- compute derived ---------- */
 const H = DATA.holdings.map(h=>{
   const cost=h.shares*h.avg, val=h.shares*h.price, pl=val-cost, plpct=pl/cost*100, day=(h.price-h.prev)/h.prev*100;

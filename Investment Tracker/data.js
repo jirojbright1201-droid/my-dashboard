@@ -3,16 +3,7 @@
 // source of truth = ไฟล์นี้ที่เดียว. ราคา/ข่าว/ดัชนี ของจริง Newwy เป็นคนดึงมาเติมทีหลัง
 const FX = 33; // บาท/USD โดยประมาณ — Newwy อัปเดตของจริงทีหลัง
 const DATA = {
-  cash: 18.06,            // เงินสดรอลงทุน (USD) — ฝั่งคุณ
-  holdings: [
-    {tk:'NOK', name:'Nokia Oyj', sector:'Telecom Equipment', exchange:'NYSE', country:'Finland', founded:'1865', web:'nokia.com',
-     shares:2, avg:14.00, price:14.80, prev:14.80,
-     about:'บริษัทเทคโนโลยีโทรคมนาคมสัญชาติฟินแลนด์ ผู้ผลิตอุปกรณ์เครือข่าย 5G/IP/optical และโครงสร้างพื้นฐานสำหรับ data center กำลังขยายฐานการผลิต R&D ในสหรัฐฯ มูลค่ารวม $4B รวมถึงโรงงานเซมิคอนดักเตอร์ที่ Pennsylvania',
-     trades:[
-       {date:'16 มิ.ย. 2026', t:'ซื้อ NOK 2 @ $14.00', why:'Nokia ขยายลงทุนเซมิคอนดักเตอร์ที่ Pennsylvania + โมเมนตัม AI/5G แรง (+127% YTD) ราคา ~$14.80 ต่ำกว่า 52wk high $17.45 analyst avg "Buy" target ~$14.89'}
-     ],
-     news:[]}
-  ],
+  // ฝั่งคุณ (cash/holdings/timeline/thesis/arena.you/you_s) ย้ายไป data-you.js แล้ว — Vega ไม่เห็น (app.js stitch เข้า DATA ตอนโหลด)
   // บริษัทที่ดู/watchlist — status: 'vega' (Vega ถือ), 'sold' (เคยถือแล้วขาย), 'watch' (กำลังดู)
   companies: [],
   market:{
@@ -136,10 +127,9 @@ const DATA = {
   },
   arena:{
     start:'15 มิ.ย. 2026', startVal:46.06,
-    you:{ret:3.47, val:47.66, hold:[['NOK',1]]},
     vega:{ret:0, val:46.06, hold:[['NOK',3]]},
     labels:['15 มิ.ย.','16 มิ.ย.'],
-    you_s:[0,3.47], vega_s:[0,0], spx_s:[0,0.13],
+    vega_s:[0,0], spx_s:[0,0.13],
     moves:[
       {date:'16 มิ.ย. 2026', tk:'NOK', act:'▲ ซื้อ 3 หุ้น @ $13.96', why:'ดิป -5.7% บน profit-taking หลัง YTD +127% thesis 5G/AI infra ยังแข็ง เข้าในราคาต่ำกว่าเจ้าของพอร์ต'}
     ],
@@ -169,10 +159,5 @@ const DATA = {
        trigger:'ทุนพอร์ตเติบโตพอซื้อ SPCX ได้อย่างน้อย 1 หุ้น'}
     ]
   },
-  thesis:[],              // มุมมอง/ธีมการลงทุนของคุณ — ยังไม่มี เพิ่มก่อนลงไม้แรก
-  timeline:[
-    {date:'15 มิ.ย.', total:46.06, change:0},
-    {date:'16 มิ.ย.', total:47.66, change:1.60}
-  ],
   bench:{ spx:[0], nasdaq:[0] }
 };
