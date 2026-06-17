@@ -491,9 +491,14 @@ function openThesis(i){
     ?t.sections.map(s=>`<div class="th-sec"><div class="th-sec-h">${esc(s.h)}</div><div class="th-sec-b">${paraHtml(s.b)}</div></div>`).join(''):'';
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head"><div><span class="th-cat">${esc(t.cat)}</span><div style="font-size:1.15rem;font-weight:800;margin-top:7px">${esc(t.t)}</div><div class="th-m" style="font-size:.72rem;color:var(--dim);margin-top:3px">อัปเดต ${esc(t.updated)}</div></div><button class="dr-close" onclick="closeAlloc()">✕</button></div>
-    <div class="th-full">${paraHtml(t.full)}</div>
-    ${statBox}${secs}`;
+    <div class="th-sum">${esc(t.sum)}</div>
+    <button class="th-toggle" onclick="toggleThesisSecs(this)">ดูเต็ม</button>
+    <div class="th-detail collapsed"><div class="th-full">${paraHtml(t.full)}</div>${statBox}${secs}</div>`;
   document.getElementById('mov').classList.add('open');
+}
+function toggleThesisSecs(btn){
+  const collapsed=btn.nextElementSibling.classList.toggle('collapsed');
+  btn.textContent = collapsed ? 'ดูเต็ม' : 'ย่อ';
 }
 function closeDrawer(){ document.getElementById('dov').classList.remove('open'); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeDrawer(); closeAlloc(); } });

@@ -256,6 +256,11 @@ a.bf-src:hover{color:var(--blue); text-decoration:underline;}
 .th-tk{font-size:.62rem; font-weight:800; letter-spacing:.3px; color:var(--blue); background:var(--blue-soft); padding:2px 8px; border-radius:6px; cursor:pointer; transition:.12s;}
 .th-tk:hover{background:var(--blue); color:#fff;}
 /* thesis modal — เรื่องเล่า + แถบตัวเลข + หัวข้อย่อย */
+.th-sum{font-size:.92rem; line-height:1.8; color:var(--text); font-weight:600;}
+.th-toggle{display:block; width:100%; margin-top:16px; padding:10px; font-size:.78rem; font-weight:700; color:var(--blue); background:var(--blue-soft); border:1px solid var(--border-soft); border-radius:10px; cursor:pointer; transition:.12s;}
+.th-toggle:hover{background:var(--surface-2);}
+.th-detail{margin-top:14px;}
+.th-detail.collapsed{display:none;}
 .th-full{font-size:.9rem; line-height:1.85; color:var(--text);}
 .th-full p{margin:0 0 .85em;}
 .th-full p:last-child{margin-bottom:0;}
