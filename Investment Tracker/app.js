@@ -483,9 +483,14 @@ function _renderHolding(){
 }
 function openThesis(i){
   const t=DATA.thesis[i];
+  const statBox=(t.stats&&t.stats.length)
+    ?`<div class="th-stats">${t.stats.map(s=>`<div class="th-stat"><span class="k">${esc(s.k)}</span><span class="v">${esc(s.v)}</span></div>`).join('')}</div>`:'';
+  const secs=(t.sections&&t.sections.length)
+    ?t.sections.map(s=>`<div class="th-sec"><div class="th-sec-h">${esc(s.h)}</div><div class="th-sec-b">${nl2br(s.b)}</div></div>`).join(''):'';
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head"><div><span class="th-cat">${esc(t.cat)}</span><div style="font-size:1.15rem;font-weight:800;margin-top:7px">${esc(t.t)}</div><div class="th-m" style="font-size:.72rem;color:var(--dim);margin-top:3px">อัปเดต ${esc(t.updated)}</div></div><button class="dr-close" onclick="closeAlloc()">✕</button></div>
-    <div style="font-size:.9rem;line-height:1.7;color:var(--text)">${nl2br(t.full)}</div>`;
+    <div class="th-full">${nl2br(t.full)}</div>
+    ${statBox}${secs}`;
   document.getElementById('mov').classList.add('open');
 }
 function closeDrawer(){ document.getElementById('dov').classList.remove('open'); }
