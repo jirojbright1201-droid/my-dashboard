@@ -7,6 +7,7 @@ const DATA = {
   cash: 18.06,            // เงินสดรอลงทุน (USD)
   holdings: [
     {tk:'NOK', name:'Nokia Oyj', sector:'Telecom Equipment', exchange:'NYSE', country:'Finland', founded:'1865', web:'nokia.com',
+     thesisRef:'AI Networking',
      shares:2, avg:14.00, price:13.98, prev:13.98,
      about:'บริษัทเทคโนโลยีโทรคมนาคมสัญชาติฟินแลนด์ ผู้ผลิตอุปกรณ์เครือข่าย 5G/IP/optical และโครงสร้างพื้นฐานสำหรับ data center กำลังขยายฐานการผลิต R&D ในสหรัฐฯ มูลค่ารวม $4B รวมถึงโรงงานเซมิคอนดักเตอร์ที่ Pennsylvania',
      trades:[
@@ -14,7 +15,11 @@ const DATA = {
      ],
      news:[]}
   ],
-  thesis:[],              // มุมมอง/ธีมการลงทุนของคุณ — ยังไม่มี เพิ่มก่อนลงไม้แรก
+  thesis:[
+    {cat:'AI Networking', t:'NOK — pivot สู่ AI/optical: ของจริงหรือเล่าก่อนพิสูจน์', updated:'17 มิ.ย. 2026',
+     sum:'Nokia เปลี่ยนจาก telco legacy → เครือข่าย AI/data center ราคาวิ่ง +127% YTD แต่ valuation price-in การ turnaround ไว้เยอะ ธุรกิจหลัก RAN ยังหด',
+     full:'ราคา ~$13.98 | mkt cap ~$78B | P/E TTM ~85x | fwd P/E ~34x | EV/EBITDA ~24–32x (แพงกว่า Ericsson ~19x)\n\n[ภาพรวม] Nokia กำลัง pivot จากผู้ขายอุปกรณ์โทรคม legacy → เครือข่าย AI/data center (optical หลังรวม Infinera) ราคา +~127% YTD จากเรื่องเล่า AI + CEO ใหม่สาย AI (Justin Hotard อดีต Intel) แต่ valuation price-in การ turnaround ไว้เยอะแล้ว\n\n[Bull] AI & Cloud net sales +49% YoY (Q1 2026), order ใหม่ €1B, ปรับ guidance Network Infra ขึ้น +12–14%, งบดุล net cash €3.4B, เป้า operating profit €2.7–3.2B ปี 2028, JPMorgan target $21\n\n[Bear] Mobile/RAN ยังหด −4% YoY เสียดีล VMO2 ให้ Ericsson, กำไรสุทธิ IFRS 2025 ร่วงเหลือ €638M, AI & Cloud ยังแค่ ~8% ของยอด = ฐานเล็กเกินพยุงทั้งบริษัทเร็วๆ, downside ไม่สมมาตรถ้าโมเมนตัมสะดุด\n\n[จับตา] (1) AI & Cloud growth >20% YoY ต่อเนื่อง + สัดส่วน % ขยับ (2) Network Infra ทำตาม guidance +12–14% (3) comparable op profit เดินเข้าหา €2.7–3.2B (4) order intake จาก hyperscaler (5) หยุดเสีย RAN share ตะวันตก\n\n[สถานะพอร์ต] ทุนเฉลี่ย $14.00 ราคาตอนนี้ ~$13.98 = เกือบเสมอตัว\n\nรายงานเต็ม 7 หมวด: Obsidian/Investment Research/NOK 2026-06-17.md (as-of 17 มิ.ย. 2026)'}
+  ],
   timeline:[
     {date:'15 มิ.ย.', total:46.06, change:0},
     {date:'16 มิ.ย.', total:47.66, change:1.60}
