@@ -292,7 +292,7 @@ a.bf-src:hover{color:var(--blue); text-decoration:underline;}
 .acc-body .trade:last-child, .acc-body .news:last-child{margin-bottom:0;}
 
 /* log — Coinbase style */
-.log-vs-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:stretch;}
+.log-vs-grid{display:grid; grid-template-columns:1fr; gap:20px; align-items:stretch;}
 .log-col{border:1px solid var(--border-soft); border-radius:14px; padding:20px; background:var(--surface); box-shadow:0 1px 3px rgba(0,0,0,.04); display:flex; flex-direction:column;}
 .jr-wrap{flex:1; display:flex; flex-direction:column;}
 .jr-wrap .cb-more-btn{margin-top:auto;}
@@ -349,7 +349,7 @@ a.bf-src:hover{color:var(--blue); text-decoration:underline;}
 .cb-more-btn.collapse:hover{background:var(--surface-2); color:var(--text);}
 
 /* paired-row grid: each row-pair shares height, footers line up */
-.log-feed-grid{display:grid; grid-template-columns:1fr 1fr; column-gap:20px;}
+.log-feed-grid{display:grid; grid-template-columns:1fr; column-gap:20px;}
 /* shared column edges */
 .lfg-hd, .lfg-cell, .lfg-foot{border-left:1px solid var(--border-soft); border-right:1px solid var(--border-soft); padding-left:18px; padding-right:18px;}
 /* header (เทาอ่อนแบบ table header Coinbase) */
