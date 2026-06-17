@@ -13,7 +13,13 @@ const DATA = {
      trades:[
        {date:'16 มิ.ย. 2026', t:'ซื้อ NOK 2 @ $14.00', why:'Nokia ขยายลงทุนเซมิคอนดักเตอร์ที่ Pennsylvania + โมเมนตัม AI/5G แรง (+127% YTD) ราคา ~$14.80 ต่ำกว่า 52wk high $17.45 analyst avg "Buy" target ~$14.89'}
      ],
-     news:[]}
+     news:[
+       {date:'16 มิ.ย. 2026', head:'Nokia ขยายโรงงานเซมิคอนดักเตอร์ที่ Allentown, Pennsylvania', src:'GlobeNewswire', sum:'เพิ่มกำลังผลิต advanced test/packaging สูงสุด 10 เท่า รองรับชิป optical สำหรับ AI เริ่มเชิงพาณิชย์ปลาย Q3 จ้างเพิ่มแตะ 500+ ตำแหน่ง ผลกระทบเศรษฐกิจ >$500M ใน 5 ปี — ตอกย้ำการลงทุนในสหรัฐฯ', move:{pct:1.5, period:'1d'}},
+       {date:'13 มิ.ย. 2026', head:'NVIDIA ลงทุน $1 พันล้านใน Nokia เร่ง AI-RAN และเปลี่ยนผ่าน 5G→6G', src:'Reuters', sum:'ดีลพันธมิตรเชิงกลยุทธ์ดัน Nokia เข้าสู่เกม AI-native network โดยตรง เสริมความเชื่อมั่นธีม AI infrastructure', move:{pct:8.0, period:'5d'}},
+       {date:'12 มิ.ย. 2026', head:'Nokia คว้าดีล Indosat Ooredoo Hutchison วาง 5G/AI-ready network ในอินโดนีเซีย', src:'Nokia', sum:'สัญญายกระดับโครงข่ายในตลาดเอเชียตะวันออกเฉียงใต้ เพิ่ม backlog ฝั่ง Mobile Networks'},
+       {date:'11 มิ.ย. 2026', head:'Nokia เปิดตัว Deepfield Genome Shield และ agentic AI framework ใน Network Services Platform', src:'Nokia', sum:'โซลูชัน cybersecurity เครือข่าย AI + กรอบ agentic AI เริ่มเชิงพาณิชย์ปลายปี 2026 ขยายพอร์ตซอฟต์แวร์/บริการ'},
+       {date:'10 มิ.ย. 2026', head:'นักวิเคราะห์ไล่ขึ้นเป้าราคา — MS EUR 14, JPMorgan $21, CFRA $22', src:'Morgan Stanley / JPMorgan / CFRA', sum:'Morgan Stanley ปรับ EUR 11→14 (Overweight), JPMorgan $14→$21, CFRA $22 แต่ราคาวิ่งเร็วจน swing แรง (5 มิ.ย. ร่วง 15% แล้วเด้งกลับ 11–12 มิ.ย.)', move:{pct:-15.0, period:'จาก 5 มิ.ย.'}}
+     ]}
   ],
   thesis:[
     {cat:'AI Networking', t:'NOK — เดิมพันการพลิกโฉมของยักษ์โทรคมฟินแลนด์สู่ยุค AI', updated:'17 มิ.ย. 2026',
