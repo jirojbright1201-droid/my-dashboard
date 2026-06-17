@@ -16,6 +16,8 @@ const pct = (v,d=1)=>`${v>=0?'+':''}${v.toFixed(d)}%`;
 const cls = v => v>=0?'pos':'neg';
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const nl2br = s => esc(s).replace(/\n/g,'<br>');
+// แตกข้อความเป็นย่อหน้าจริง: ขึ้นบรรทัดใหม่ = ย่อหน้าใหม่ มีระยะห่าง อ่านง่ายกว่า <br> ติดกัน
+const paraHtml = s => String(s).split(/\n+/).map(p=>p.trim()).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join('');
 
 /* ---------- ASSET LIST (Coinbase style) ---------- */
 function assetListHtml(list){
@@ -486,10 +488,10 @@ function openThesis(i){
   const statBox=(t.stats&&t.stats.length)
     ?`<div class="th-stats">${t.stats.map(s=>`<div class="th-stat"><span class="k">${esc(s.k)}</span><span class="v">${esc(s.v)}</span></div>`).join('')}</div>`:'';
   const secs=(t.sections&&t.sections.length)
-    ?t.sections.map(s=>`<div class="th-sec"><div class="th-sec-h">${esc(s.h)}</div><div class="th-sec-b">${nl2br(s.b)}</div></div>`).join(''):'';
+    ?t.sections.map(s=>`<div class="th-sec"><div class="th-sec-h">${esc(s.h)}</div><div class="th-sec-b">${paraHtml(s.b)}</div></div>`).join(''):'';
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head"><div><span class="th-cat">${esc(t.cat)}</span><div style="font-size:1.15rem;font-weight:800;margin-top:7px">${esc(t.t)}</div><div class="th-m" style="font-size:.72rem;color:var(--dim);margin-top:3px">อัปเดต ${esc(t.updated)}</div></div><button class="dr-close" onclick="closeAlloc()">✕</button></div>
-    <div class="th-full">${nl2br(t.full)}</div>
+    <div class="th-full">${paraHtml(t.full)}</div>
     ${statBox}${secs}`;
   document.getElementById('mov').classList.add('open');
 }

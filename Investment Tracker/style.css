@@ -256,14 +256,18 @@ a.bf-src:hover{color:var(--blue); text-decoration:underline;}
 .th-tk{font-size:.62rem; font-weight:800; letter-spacing:.3px; color:var(--blue); background:var(--blue-soft); padding:2px 8px; border-radius:6px; cursor:pointer; transition:.12s;}
 .th-tk:hover{background:var(--blue); color:#fff;}
 /* thesis modal — เรื่องเล่า + แถบตัวเลข + หัวข้อย่อย */
-.th-full{font-size:.9rem; line-height:1.75; color:var(--text);}
+.th-full{font-size:.9rem; line-height:1.85; color:var(--text);}
+.th-full p{margin:0 0 .85em;}
+.th-full p:last-child{margin-bottom:0;}
 .th-stats{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin:16px 0 4px;}
 .th-stat{display:flex; justify-content:space-between; align-items:center; gap:8px; background:var(--surface-2); border:1px solid var(--border-soft); border-radius:10px; padding:9px 12px;}
 .th-stat .k{font-size:.72rem; color:var(--dim);}
 .th-stat .v{font-size:.82rem; font-weight:800; text-align:right;}
-.th-sec{margin-top:15px; padding-top:13px; border-top:1px solid var(--border-soft);}
-.th-sec-h{font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--blue); margin-bottom:6px;}
-.th-sec-b{font-size:.85rem; line-height:1.65; color:var(--text);}
+.th-sec{margin-top:20px; padding-top:17px; border-top:1px solid var(--border-soft);}
+.th-sec-h{font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--blue); margin-bottom:9px;}
+.th-sec-b{font-size:.85rem; line-height:1.78; color:var(--text);}
+.th-sec-b p{margin:0 0 .7em;}
+.th-sec-b p:last-child{margin-bottom:0;}
 @media(max-width:520px){ .th-stats{grid-template-columns:1fr;} }
 
 /* drawer */
