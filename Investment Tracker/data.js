@@ -7,7 +7,7 @@ const DATA = {
   cash: 18.06,            // เงินสดรอลงทุน (USD)
   holdings: [
     {tk:'NOK', name:'Nokia Oyj', sector:'Telecom Equipment', exchange:'NYSE', country:'Finland', founded:'1865', web:'nokia.com',
-     shares:2, avg:14.00, price:14.80, prev:14.80,
+     shares:2, avg:14.00, price:13.98, prev:13.98,
      about:'บริษัทเทคโนโลยีโทรคมนาคมสัญชาติฟินแลนด์ ผู้ผลิตอุปกรณ์เครือข่าย 5G/IP/optical และโครงสร้างพื้นฐานสำหรับ data center กำลังขยายฐานการผลิต R&D ในสหรัฐฯ มูลค่ารวม $4B รวมถึงโรงงานเซมิคอนดักเตอร์ที่ Pennsylvania',
      trades:[
        {date:'16 มิ.ย. 2026', t:'ซื้อ NOK 2 @ $14.00', why:'Nokia ขยายลงทุนเซมิคอนดักเตอร์ที่ Pennsylvania + โมเมนตัม AI/5G แรง (+127% YTD) ราคา ~$14.80 ต่ำกว่า 52wk high $17.45 analyst avg "Buy" target ~$14.89'}
