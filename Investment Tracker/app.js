@@ -268,106 +268,10 @@ function renderMarket(){
     <div class="mk-idx-grid">${idx}</div>
 
     <div class="sec-title">Holdings News</div>
-    <div id="hn-section"></div>
-
-    <div id="mk-news-section"></div>`;
+    <div id="hn-section"></div>`;
   renderHoldingsNews();
-  renderBrief();
 }
 
-/* ---------- MORNING BRIEF (7 หัวข้อ) ---------- */
-const THAI_DOW=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
-const THAI_M_ABBR=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-const stanceCls=s=>{const k=String(s||'').toLowerCase();
-  if(k.includes('on'))return 'on'; if(k.includes('off'))return 'off'; return 'neu';};
-const briefSec=(no,title,inner)=>`<div class="bf-sec">
-  <div class="bf-sec-head"><span class="bf-no">${no}</span><span class="bf-sec-title">${title}</span></div>
-  ${inner}</div>`;
-function renderBrief(){
-  const b=DATA.market.brief;
-  const host=document.getElementById('mk-news-section');
-  if(!b){host.innerHTML=`<div class="hn-empty">ยังไม่มี Morning Brief — Newwy เขียนทุกเช้า 08:00</div>`;return;}
-
-  // header
-  let h=`<div class="bf-hero"><span class="bf-sun">☀</span>
-    <div><div class="bf-hero-title">Morning Brief</div>
-    <div class="bf-hero-date">${esc(b.date||'')}</div></div></div>`;
-
-  // 1) Market Recap
-  if(b.recap){
-    let inner=`<ul class="bf-bullets">${(b.recap.bullets||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
-    if(b.recap.theme) inner+=`<div class="bf-arrow"><b>ธีม →</b> ${esc(b.recap.theme)}</div>`;
-    h+=briefSec(1,'ตลาดเมื่อคืน',inner);
-  }
-
-  // 2) Top 3
-  if(b.top3&&b.top3.length){
-    const cards=b.top3.map((t,i)=>`<div class="bf-card">
-      <div class="bf-card-no">#${i+1}</div>
-      <div class="bf-what">${esc(t.what)}</div>
-      ${t.interpret?`<div class="bf-row"><span class="bf-k">ตลาดตีความ</span><span class="bf-v">${esc(t.interpret)}</span></div>`:''}
-      ${t.winners?`<div class="bf-row"><span class="bf-k bf-win">ได้</span><span class="bf-v">${esc(t.winners)}</span></div>`:''}
-      ${t.losers?`<div class="bf-row"><span class="bf-k bf-lose">เสีย</span><span class="bf-v">${esc(t.losers)}</span></div>`:''}
-      ${t.watch?`<div class="bf-row"><span class="bf-k">ต้องดู</span><span class="bf-v">${esc(t.watch)}</span></div>`:''}
-      ${t.takeaway?`<div class="bf-take">→ ${esc(t.takeaway)}</div>`:''}
-    </div>`).join('');
-    h+=briefSec(2,'เรื่องที่ต้องรู้วันนี้',`<div class="bf-grid">${cards}</div>`);
-  }
-
-  // 3) Earnings Radar
-  if(b.earnings&&b.earnings.length){
-    const cards=b.earnings.map(e=>`<div class="bf-card">
-      <div class="bf-what">${esc(e.co)}</div>
-      ${e.expect?`<div class="bf-row"><span class="bf-k">ตลาดคาด</span><span class="bf-v">${esc(e.expect)}</span></div>`:''}
-      ${e.watch?`<div class="bf-row"><span class="bf-k">ต้องดู</span><span class="bf-v">${esc(e.watch)}</span></div>`:''}
-      ${e.beat?`<div class="bf-row"><span class="bf-k bf-win">ดีกว่าคาด</span><span class="bf-v">${esc(e.beat)}</span></div>`:''}
-      ${e.miss?`<div class="bf-row"><span class="bf-k bf-lose">แย่กว่าคาด</span><span class="bf-v">${esc(e.miss)}</span></div>`:''}
-    </div>`).join('');
-    h+=briefSec(3,'Earnings Radar',`<div class="bf-grid">${cards}</div>`);
-  }
-
-  // 4) Macro Dashboard
-  if(b.macro){
-    const m=b.macro;
-    const rows=[['Fed',m.fed],['Bond Yield',m.yield],['USD',m.usd],['ตัวเลขวันนี้',m.today],['Event เสี่ยง',m.events]]
-      .filter(r=>r[1]).map(r=>`<div class="bf-mrow"><span class="bf-mk">${r[0]}</span><span class="bf-mv">${esc(r[1])}</span></div>`).join('');
-    const stance=m.stance?`<div class="bf-stance ${stanceCls(m.stance)}">วันนี้: ${esc(m.stance)}</div>`:'';
-    h+=briefSec(4,'Macro Dashboard',`<div class="bf-macro">${rows}</div>${stance}`);
-  }
-
-  // 5) Watchlist
-  if(b.watchlist&&b.watchlist.length){
-    const cards=b.watchlist.map(w=>`<div class="bf-card bf-watch">
-      <div class="bf-wtk">${esc(w.tk)}</div>
-      ${w.thesis?`<div class="bf-wthesis">${esc(w.thesis)}</div>`:''}
-      ${w.catalyst?`<div class="bf-row"><span class="bf-k">Catalyst</span><span class="bf-v">${esc(w.catalyst)}</span></div>`:''}
-      ${w.intraday?`<div class="bf-row"><span class="bf-k">ระหว่างวัน</span><span class="bf-v">${esc(w.intraday)}</span></div>`:''}
-    </div>`).join('');
-    h+=briefSec(5,'Watchlist วันนี้',`<div class="bf-grid">${cards}</div>`);
-  }
-
-  // 6) One Insight
-  if(b.insight){
-    h+=briefSec(6,'One Insight',`<div class="bf-insight">${esc(b.insight)}</div>`);
-  }
-
-  // 7) Action Summary
-  if(b.action){
-    const vc=stanceCls(b.action.verdict==='ไม่ต้องทำอะไร'?'neutral':(b.action.verdict==='อ่านเพิ่ม'?'on':'neu'));
-    h+=briefSec(7,'Action Summary',
-      `<div class="bf-action"><span class="bf-verdict ${vc}">${esc(b.action.verdict||'')}</span>
-       ${b.action.reason?`<div class="bf-areason">${esc(b.action.reason)}</div>`:''}</div>`);
-  }
-
-  // sources
-  if(b.sources&&b.sources.length){
-    h+=`<div class="bf-sources"><span class="bf-src-h">แหล่งข้อมูล</span>${
-      b.sources.map(s=>s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener" class="bf-src">${esc(s.name)}${s.date?` · ${esc(s.date)}`:''}</a>`
-        :`<span class="bf-src">${esc(s.name)}${s.date?` · ${esc(s.date)}`:''}</span>`).join('')}</div>`;
-  }
-
-  host.innerHTML=h;
-}
 
 /* ---------- HN NEWS MODAL ---------- */
 function openHnNews(i){
