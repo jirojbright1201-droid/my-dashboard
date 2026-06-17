@@ -7,11 +7,11 @@ const DATA = {
   // บริษัทที่ดู/watchlist — status: 'vega' (Vega ถือ), 'sold' (เคยถือแล้วขาย), 'watch' (กำลังดู)
   companies: [],
   market:{
-    indices:[             // S&P/Nasdaq/Dow/VIX — Newwy ดึงของจริง (as of 16 มิ.ย. 2026)
-      {n:'S&P 500', p:'7,564.11', c:0.13, spark:[7350,7301,7372,7431,7554,7564]},
-      {n:'Nasdaq Composite', p:'26,689.28', c:0.02, spark:[25600,25450,25810,25888,26684,26689]},
-      {n:'Dow Jones', p:'52,073.54', c:0.78, spark:[50400,50250,50900,51202,51671,52074]},
-      {n:'VIX', p:'16.20', c:-8.37, spark:[24.0,23.2,22.8,19.4,17.68,16.20]}
+    indices:[             // S&P/Nasdaq/Dow/VIX — Newwy ดึงของจริง (as of 16 มิ.ย. 2026 | ปรับแก้ 17 มิ.ย.)
+      {n:'S&P 500', p:'7,548.60', c:-0.08, spark:[7350,7301,7372,7431,7554,7549]},
+      {n:'Nasdaq Composite', p:'26,376.34', c:-1.15, spark:[25600,25450,25810,25888,26684,26376]},
+      {n:'Dow Jones', p:'51,999', c:0.64, spark:[50400,50250,50900,51202,51671,51999]},
+      {n:'VIX', p:'16.20', c:0.00, spark:[24.0,23.2,22.8,19.4,17.68,16.20]}
     ],
     news:[               // ข่าวตลาด morning brief — ลงวันที่จริง กระจายรายวัน (+ ธง feat สำหรับข่าวเด่นวันล่าสุด) — Newwy, verify by Jarvis 16 มิ.ย.
       {tag:'Macro', feat:true,
@@ -45,83 +45,92 @@ const DATA = {
         src:'CNBC', date:'15 มิ.ย.'}
     ],
     holdings_news:[],     // ข่าวรายตัวของหุ้นที่ถือ/Vega ถือ — Newwy
-    // ===== Morning Brief (7 หัวข้อ) — Newwy เขียนทุกเช้า 08:00 / seed จากข่าว 16 มิ.ย. =====
+    // ===== Morning Brief (7 หัวข้อ) — Newwy เขียนทุกเช้า 08:00 / 17 มิ.ย. 2026 =====
     brief:{
-      date:'16 มิ.ย. 2026',
+      date:'17 มิ.ย. 2026',
       recap:{
         bullets:[
-          'ตลาดหุ้นสหรัฐปิดบวกเล็กน้อยทุกดัชนีวันอังคาร (16 มิ.ย.) โดย Dow ทำสถิติสูงสุดใหม่ที่ ~52,074 จุด (+0.78%), S&P 500 บวก 0.13% สู่ 7,564 จุด ส่วน Nasdaq แทบนิ่ง +0.02%',
-          'บรรยากาศตลาดอยู่ในโหมดระมัดระวังตลอดทั้งวัน นักลงทุนชะลอตัดสินใจเพื่อรอผล FOMC ที่จะประกาศบ่ายพรุ่งนี้ (17 มิ.ย.)',
-          'ราคาน้ำมัน WTI ลดลงต่อเนื่องสู่ ~$80.47/บาร์เรล (-0.35%) ต่อจากที่ดิ่ง 4.8% เมื่อวาน รวม 2 วันลงมากกว่า 5%',
-          'ตลาด futures เริ่ม price-in โอกาส 80% ว่า Fed จะขึ้นดอกเบี้ยภายในปลายปีนี้ เงินเฟ้อ 4.2% และตลาดแรงงานแข็งคือตัวแปรสำคัญ',
-          'ความแตกต่างระหว่าง Dow record กับ Nasdaq ที่แทบไม่ขยับ บ่งชี้ว่าเงินหมุนจาก growth ไป value ในวันนี้'
+          'วันอังคาร (16 มิ.ย.) Dow ทำ ATH (สถิติสูงสุดตลอดกาล) ที่ ~52,000 จุด (+0.64%; ยืนยันไม่ได้ตัวเลขแน่ชัด แหล่ง: TheStreet / Honolulu Star-Advertiser) ขณะ S&P 500 ลง -0.08% ที่ 7,548.60 และ Nasdaq ร่วงหนัก -1.15% ที่ 26,376.34',
+          'WTI (น้ำมันดิบสหรัฐ) ร่วง -4.3% สู่ ~$77.31/บาร์เรล หลุดแนวรับสำคัญ $78 ที่พูดถึงใน brief วาน รวม 2 วันน้ำมันหายไปเกือบ 9% จาก ~$84.5 เหตุดีลสหรัฐ-อิหร่านเปิด Strait of Hormuz',
+          'SpaceX (SPCX) ยังพุ่งต่อเนื่อง ณ วันอังคาร: $201.80 (prev close $192.50) จาก IPO ที่ $135 เมื่อ 12 มิ.ย. = +49% ใน 3 วันทำการ',
+          'วันนี้ (17 มิ.ย.) คือวัน D: FOMC ประกาศดอกเบี้ย 2:00 PM ET + Warsh แถลงข่าวครั้งแรก 2:30 PM ET + May Retail Sales รายงานแล้วเช้านี้ที่ +0.1% MoM (อ่อนกว่า consensus ~0.5% มาก)'
         ],
-        theme:'ตลาดหยุดพักในโหมด "รอ Fed" — Dow ทำสถิติใหม่ด้วยแรงหนุนภูมิรัฐศาสตร์ที่คลาย แต่ทิศทางแท้จริงของครึ่งปีหลังจะถูกกำหนดด้วยน้ำเสียง Warsh ในการแถลงครั้งแรกพรุ่งนี้'
+        theme:'Dow ATH กับ Nasdaq -1.15% ในวันเดียวกัน — Rotation ชัดที่สุดในรอบนี้ ก่อน Warsh แถลงชี้ขาดทิศทางครึ่งปีหลัง'
       },
       top3:[
-        {what:'FOMC Day 2 — ผลประชุมและแถลงข่าวครั้งแรกของ Warsh พรุ่งนี้ (17 มิ.ย. 2:00 PM ET)',
-         interpret:'ตลาดมั่นใจ 97.4% ว่าคงดอกเบี้ยที่ 3.50-3.75% สิ่งที่ตลาดต้องการจริงคือ dot plot ชุดใหม่และน้ำเสียงของ Warsh เงินเฟ้อ 4.2% ทำให้ตลาด futures price-in โอกาส 80% ที่จะมีการขึ้นดอกเบี้ยภายในปลายปี',
-         winners:'หากโทนของ Warsh เป็นกลางหรือผ่อนคลายกว่าคาด: หุ้นเติบโต กลุ่มชิป Nasdaq วิ่งขึ้นอีก',
-         losers:'หากยืนยันท่าทีแข็งกร้าวหรือส่งสัญญาณขึ้นดอกเบี้ย: หุ้น growth ราคาแพง พันธบัตรระยะยาว',
-         watch:'dot plot ปลายปี 2026 และคำว่า neutral vs restrictive ในแถลงการณ์ เป็นเส้นแบ่งทิศตลาด',
-         takeaway:'รอผลบ่ายพรุ่งนี้ก่อนตัดสินใจใดๆ ทั้ง upside และ downside ขึ้นกับน้ำเสียง Warsh เท่ากัน'},
-        {what:'Dow ทำสถิติสูงสุดใหม่วันที่ 2 ติดกัน ท่ามกลางตลาดที่ระมัดระวัง',
-         interpret:'Dow +0.78% นำโดย blue-chip และ value stocks ขณะที่ Nasdaq +0.02% บ่งชี้ว่า growth เริ่มหยุดพักหลังวิ่งแรงวันจันทร์ ความแตกต่างนี้คือสัญญาณ rotation ที่ต้องจับตา',
-         winners:'กลุ่ม Dow components: industrials, financials, healthcare ที่ได้ประโยชน์จากต้นทุนพลังงานต่ำ',
-         losers:'หุ้น growth/tech ราคาแพงใน Nasdaq ที่เริ่มชะลอหลังวิ่งขึ้นมาแล้ว',
-         watch:'Dow-Nasdaq divergence ถ้า Nasdaq เริ่มตามทัน Dow หลัง Fed แถลง คือสัญญาณตลาดบวกกว้าง',
-         takeaway:'Dow record ไม่ใช่ all-clear ทั้งตลาด ดู breadth ว่ากว้างพอหรือไม่ก่อนเพิ่มสถานะ'},
-        {what:'น้ำมัน WTI ลดลงต่อเนื่องสู่ ~$80.47 ทดสอบแนวรับสำคัญ',
-         interpret:'หลังดิ่ง 4.8% เมื่อวาน การลงต่อเนื่อง 0.35% วันนี้บ่งชี้ว่าแรงขายยังมีอยู่ ตลาดเริ่มถกเถียงว่าน้ำมันถูกเพราะซัพพลายเพิ่ม (ดีต่อเศรษฐกิจ) หรือเพราะความต้องการชะลอ (น่าเป็นห่วง)',
-         winners:'สายการบิน โลจิสติกส์ ค้าปลีก ต้นทุนลดลงหนุนมาร์จิ้น',
-         losers:'XOM CVX และกลุ่มสำรวจ-ผลิตน้ำมันทั้งหมดยังถูกกดต่อเนื่อง',
-         watch:'แนวรับ WTI ที่ $78-80 หากหลุดต่ำกว่า $78 จะเปลี่ยน narrative จากเงินเฟ้อผ่อนคลายเป็นเศรษฐกิจชะลอ',
-         takeaway:'ยังอยู่ในโซนดีสำหรับตลาด แต่ระดับ $78 คือเส้นแบ่งความหมายที่ต้องจับตา'}
+        {what:'FOMC Decision Day — ประกาศ 2:00 PM ET + Warsh แถลงครั้งแรก 2:30 PM ET',
+         interpret:'Rate hold 3.50-3.75% แน่นอน (97%+) แต่ตลาดซื้อขาย dot plot (ประมาณการดอกเบี้ยรายบุคคลของกรรมการ Fed) ซึ่งอาจแสดงการขึ้นดอกเบี้ยปลายปี CME FedWatch price-in โอกาสขึ้นดอกเบี้ยสิ้นปี 70% Warsh ส่งสัญญาณ hawkish และอาจยกเลิก dot plot ในอนาคต',
+         winners:'ถ้า Warsh โทน neutral: กลุ่มชิป AI (NVDA, AMD) Nasdaq ฟื้นตัว บอนด์ยีลด์ลด',
+         losers:'ถ้า Warsh hawkish ชัด / dot plot ชี้ขึ้นดอกเบี้ย: mega-cap tech valuation สูง พันธบัตรระยะยาว Nasdaq กด',
+         watch:'คำว่า neutral vs restrictive ในแถลงการณ์ และ dot plot median สิ้นปี 2026 เป็นเส้นแบ่งทิศทาง',
+         takeaway:'อย่าตัดสินใจ buy/sell ก่อน 3:00 PM ET วันนี้ — Warsh คือผู้กำหนดทิศทาง ไม่ใช่ rate decision'},
+        {what:'WTI หลุด $78 — รวม 2 วันร่วง ~9% เปลี่ยน narrative จากเงินเฟ้อ เป็น growth scare',
+         interpret:'$77.31 บนแนวรับถัดไปที่ $75 การหลุด $78 เปลี่ยนการตีความ: ราคาน้ำมันต่ำเพราะซัพพลายเพิ่มจากอิหร่าน (ดีต่อเงินเฟ้อ) หรือเพราะ demand collapse (บ่งชี้เศรษฐกิจชะลอ) May Retail Sales +0.1% อ่อนมากชี้ว่า demand ส่วนหนึ่งกำลังนิ่ม',
+         winners:'สายการบิน โลจิสติกส์ ค้าปลีก ปิโตรเคมี ต้นทุนพลังงานลด',
+         losers:'XOM CVX กลุ่ม E&P ทั้งหมด ยังถูกกดต่อเนื่อง',
+         watch:'$75 คือแนวรับถัดไปของ WTI หลุดแล้วเสี่ยง demand narrative แย่ลง',
+         takeaway:'ระดับ ~$77 ยังดีต่อ cost structure บริษัท แต่ momentum ขาลงยังแรง ยังไม่ใช่เวลาเข้า energy stocks'},
+        {what:'Dow ATH vs Nasdaq -1.15% — Divergence ใหญ่สุดในรอบนี้ บ่งชี้ Rotation หรือ Distribution',
+         interpret:'Dow ทำ ATH ครั้งที่ 2 ติดกัน นำโดย blue-chip/value ขณะ Nasdaq ร่วงหนักสุดในรอบนี้ pattern นี้คือ classic pre-Fed rotation แต่ถ้าต่อเนื่องหลัง Warsh แถลง คือ regime shift จาก growth-led เป็น value-led ที่กินเวลาหลายเดือน',
+         winners:'Dow components: industrials, financials, healthcare — Boeing JPMorgan UnitedHealth',
+         losers:'Mega-cap tech AI-play ใน Nasdaq: NVDA AMD MSFT META ที่มี high-multiple valuation',
+         watch:'หลัง 2:30 PM ET ดูว่า Nasdaq ฟื้นตาม Dow (rotation ชั่วคราว) หรือยังไม่ฟื้น (regime shift)',
+         takeaway:'SpaceX SPCX +49% จาก IPO หนุน Dow ผ่าน aerospace/tech หมวดอื่น — ไม่ใช่ broad market signal'}
       ],
       earnings:[
-        {co:'FedEx (FDX) — ประกาศงบ 23 มิ.ย.',
-         expect:'ตลาดรอดูตัวเลขปริมาณขนส่งและมาร์จิ้น เพื่อสะท้อนสุขภาพเศรษฐกิจจริงหลัง Q2',
-         watch:'Guidance ปีงบประมาณใหม่ และผลกระทบจากต้นทุนน้ำมันที่ลดลงต่อมาร์จิ้น',
-         beat:'หนุนกลุ่ม logistics และ economic-sensitive stocks เป็นสัญญาณ soft landing',
-         miss:'สัญญาณเตือนว่า global trade อ่อนแรง กระทบความเชื่อมั่นภาพรวมเศรษฐกิจ'},
-        {co:'Micron (MU) — ประกาศงบ 24 มิ.ย.',
-         expect:'ตลาดรอสัญญาณวงจร HBM memory ฟื้นตัว หลังราคาหุ้นวิ่งขึ้นมาก่อนงบ',
-         watch:'Guidance HBM และ DRAM pricing เป็นตัวชี้วัดความต้องการ AI infrastructure',
-         beat:'หนุนทั้งกลุ่มชิปและ AI memory ecosystem รวมถึง NVDA และ AMD',
-         miss:'เสี่ยงขายทำกำไรกลุ่มชิปที่ราคาวิ่งมาแล้ว และอาจสะท้อน AI capex ชะลอ'}
+        {co:'Jabil (JBL) — รายงานวันนี้ (17 มิ.ย.) ก่อนตลาดเปิด',
+         expect:'นักวิเคราะห์คาด EPS $3.10 บน revenue $8.55-8.61 พันล้าน บริษัท guidance GAAP EPS $2.36-2.76 (range กว้าง บ่งชี้ความไม่แน่นอน) ผลจริงยืนยันไม่ได้ ณ ตอนนี้',
+         watch:'AI infrastructure order book และ margin trend — Jabil เป็น EMS ผู้ผลิตชิ้นส่วนให้ hyperscalers',
+         beat:'สัญญาณว่า AI hardware demand ยัง robust กว่าที่ตลาดกังวล หนุน supply chain tech',
+         miss:'เพิ่มความกังวล AI capex slowdown บน backdrop FOMC hawkish วันเดียวกัน'},
+        {co:'FedEx (FDX) — 23 มิ.ย.',
+         expect:'ตลาดรอดูปริมาณขนส่งและมาร์จิ้นสะท้อนสุขภาพ global trade หลัง Q2',
+         watch:'Guidance ปีงบใหม่ + ผลกระทบ WTI $77 ที่ลดลงต่อ cost side',
+         beat:'สัญญาณ global trade ยัง resilient ยืนยัน soft landing narrative',
+         miss:'บ่งชี้ global trade ชะลอ กระทบ macro sentiment ภาพรวม'},
+        {co:'Micron (MU) — 24 มิ.ย.',
+         expect:'ตลาดรอ HBM/DRAM demand signal — หุ้นวิ่งขึ้น ~19% ใน 2 วัน (15-16 มิ.ย.) ก่อนงบ = bar สูงมาก',
+         watch:'HBM + DRAM pricing guidance เป็น proxy ความต้องการ AI infrastructure',
+         beat:'หนุนทั้งกลุ่มชิปและ AI ecosystem: NVDA, AMD, LRCX, AMAT',
+         miss:'เสี่ยงขายทำกำไรหนักในกลุ่มชิปที่วิ่งขึ้นมามากก่อนงบ'}
       ],
       macro:{
-        fed:'FOMC Day 2 วันนี้ ประกาศผล 17 มิ.ย. 2:00 PM ET คาดคงดอกเบี้ยที่ 3.50-3.75% (97.4%) dot plot ใหม่อาจยืนยันโอกาสขึ้นดอกเบี้ยปลายปี',
-        yield:'พันธบัตร 10 ปีทรงตัวราว 4.45-4.47% ส่วน 2 ปีที่ ~4.06% รอทิศทางจาก Fed พรุ่งนี้',
-        usd:'ดอลลาร์ทรงตัวก่อน Fed ตลาด FX รอน้ำเสียง Warsh ก่อนปรับทิศทาง',
-        today:'ไม่มีข้อมูลเศรษฐกิจสำคัญออกวันนี้ ทุกสายตาพุ่งไปที่ผลประชุม FOMC พรุ่งนี้',
-        events:'FOMC Day 2 (ไม่มีแถลง) | ประมูลพันธบัตร 20 ปี | พรุ่งนี้: Fed ประกาศ + Warsh Press Conference 2:30 PM ET',
-        stance:'Hawkish-leaning'
+        fed:'FOMC ประกาศวันนี้ 2:00 PM ET คาดคงดอกเบี้ยที่ 3.50-3.75% (97%+) dot plot ชุดใหม่และน้ำเสียง Warsh คือ wildcard ที่แท้จริง',
+        yield:'10Y Treasury ~4.47% ทรงตัวรอ Fed | 2Y ~4.06% | ยีลด์ curve ยังกลับหัว (2Y > 10Y บ่งชี้ตลาดกังวล recession)',
+        usd:'ดอลลาร์ทรงตัวก่อน Fed | hawkish = USD แข็ง กดสินค้าโภคภัณฑ์ กด EM | neutral = USD อ่อนเล็กน้อย',
+        today:'May Retail Sales รายงานแล้ว: +0.1% MoM +2.3% YoY — อ่อนกว่า consensus ~0.5% มาก บ่งชี้ผู้บริโภคชะลอ',
+        events:'Jabil Q3 earnings ก่อนตลาดเปิด | May Retail Sales +0.1% MoM (8:30 AM ET แล้ว) | FOMC 2:00 PM ET | Warsh 2:30 PM ET',
+        stance:'Hawkish-leaning — รอยืนยันจาก Warsh วันนี้'
       },
       watchlist:[
-        {tk:'NVDA', thesis:'ผู้นำชิป AI ทรงตัวหลังวิ่งแรงวาน รอผล Fed ก่อนเพิ่มสถานะ',
-         catalyst:'ผลประชุม FOMC พรุ่งนี้และโมเมนตัมกลุ่มชิปหลังแถลง',
-         intraday:'ดู options flow และ volume วันพรุ่งนี้ก่อนตลาดเปิด เพื่อสะท้อนความคาดหวัง Fed'},
-        {tk:'MU', thesis:'Play วงจรชิป memory ฟื้น + HBM demand งบ 24 มิ.ย. คือจุดชี้ขาด',
-         catalyst:'Pre-earnings momentum + ผล FOMC พรุ่งนี้ที่จะส่งผลต่อ rate-sensitive tech',
-         intraday:'ความผันผวนสูงช่วงก่อน/หลัง Fed แถลง ระวังเล่นหน้างบ'},
-        {tk:'XOM', thesis:'ตัวแทนกลุ่มพลังงานที่ถูกกดจากน้ำมันร่วง รอจุดหาฐาน',
-         catalyst:'WTI หาฐาน $78-80 บวก Fed แถลง ถ้า hawkish ดอลลาร์แข็ง น้ำมันอาจร่วงต่อ',
-         intraday:'เคลื่อนไหวล้อ WTI ดูว่าแรงขายหยุดหรือยังก่อนพิจารณาเข้า'}
+        {tk:'NVDA',
+         thesis:'AI chip leader — ราคาปัจจุบันยืนยันไม่ได้ รอ Warsh แถลงก่อนประเมิน risk/reward',
+         catalyst:'ผล FOMC วันนี้ + Micron earnings 24 มิ.ย. คือ double catalyst กลุ่มชิป AI',
+         intraday:'หลัง 2:30 PM ET ดู volume + options flow ทันที: Warsh neutral → NVDA ฟื้น | Warsh hawkish → เตรียม hedge หรือถือ cash'},
+        {tk:'MU',
+         thesis:'HBM/DRAM cycle recovery play — งบ 24 มิ.ย. เป็น near-term catalyst ที่ชัดเจน',
+         catalyst:'ราคาวิ่ง ~19% ใน 2 วันก่อนงบ = high bar, risk/reward สูงทั้ง 2 ทาง',
+         intraday:'ถ้า FOMC hawkish + MU pullback → โซน $950-1000 อาจเป็น pre-earnings entry ที่คุ้มกว่า'},
+        {tk:'SPCX',
+         thesis:'SpaceX IPO พุ่ง +49% ใน 3 วัน ($135 IPO → $201.80 วาน) — window หายแล้ว รอ consolidation',
+         catalyst:'Index inclusion อนาคตและ lock-up expiry คือ longer-term driver | ระยะสั้น extended มาก',
+         intraday:'ไม่แนะนำเข้าใหม่ที่ระดับนี้ รอ pullback สู่ $160-175 ก่อนพิจารณา'}
       ],
-      insight:'ถ้าอ่านได้เพียงเรื่องเดียวคืนนี้ ขอให้เลือกเรื่อง dot plot ของ Fed ที่จะออกพรุ่งนี้ เพราะเงินเฟ้อ 4.2% กับตลาดแรงงานแข็งคือสูตรที่บังคับให้ Warsh ต้องส่งสัญญาณ hawkish กว่า Powell ถ้า dot plot ยืนยันโอกาสขึ้นดอกเบี้ยปลายปี กลุ่มหุ้นเติบโตที่วิ่งขึ้นมาทั้งสัปดาห์จะเผชิญแรงขายทันที และ Nasdaq ที่ +0.02% วันนี้อาจเป็นสัญญาณเตือนล่วงหน้า',
+      insight:'ภาพวันนี้คือ stagflation lite: เงินเฟ้อ 4.2% ยังสูง + May Retail Sales +0.1% อ่อนมาก + น้ำมัน -9% ใน 2 วัน นี่คือ environment ที่ยากที่สุดสำหรับ Fed Warsh ต้องเลือกระหว่างสู้เงินเฟ้อ (hawkish กด growth) กับพยุงเศรษฐกิจ (neutral/dovish กด credibility) Nasdaq -1.15% วานอาจเป็นตลาด pricing in ล่วงหน้าแล้วว่า Warsh จะออก hawkish — ถ้าเป็นเช่นนั้น downside อาจน้อยกว่าที่กลัว แต่ถ้า Warsh เซอร์ไพรส์ neutral upside ชัดมาก',
       action:{
         verdict:'เฝ้าดู',
-        reason:'พรุ่งนี้คือวันชี้ขาดสำหรับทิศตลาดครึ่งปีหลัง ก่อน Warsh แถลง ไม่มีข้อมูลเพิ่มที่จะช่วยตัดสินใจ การถือเงินสดเต็มพอร์ตคือตำแหน่งที่ยืดหยุ่นที่สุด: ถ้าผล Fed เป็นบวก ยังมีเวลาเข้าซื้อ ถ้าเป็นลบก็รอดได้อย่างสบายใจ'
+        reason:'ถือ cash เต็มพอร์ตจนกว่า Warsh แถลงจบ (~3:00 PM ET) ถ้า tone neutral/dovish: เริ่ม scale-in NVDA ทีละ 25% ถ้า hawkish dot plot ชี้ขึ้นดอกเบี้ย: รออีก 1-2 วันให้ตลาด digest ก่อน'
       },
       sources:[
         {name:'TheStreet — Stock Market Today June 16 2026', url:'https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-june-16-2026', date:'16 มิ.ย.'},
+        {name:'Honolulu Star-Advertiser — Dow hits record high oil falls SpaceX surges', url:'https://www.staradvertiser.com/2026/06/16/breaking-news/dow-hits-record-high-as-oil-prices-fall-and-spacex-surges/', date:'16 มิ.ย.'},
+        {name:'CNBC — SpaceX IPO SPCX closes $161 first day', url:'https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html', date:'12 มิ.ย.'},
         {name:'IndexBox — Fed Rate Decision June 2026 (เงินเฟ้อ 4.2%)', url:'https://www.indexbox.io/blog/fed-holds-rates-as-inflation-hits-42-warshs-first-fomc-press-conference-in-focus/', date:'16 มิ.ย.'},
-        {name:'FXStreet — Kevin Warsh First Fed Meeting', url:'https://www.fxstreet.com/analysis/kevin-warsh-opens-first-fed-meeting-june-16-with-rate-hold-expected-202606151326', date:'16 มิ.ย.'},
-        {name:'Kiplinger — June Fed Meeting Live Updates', url:'https://www.kiplinger.com/news/live/fed-meeting-updates-and-commentary-june-2026', date:'16 มิ.ย.'},
-        {name:'Chase — Kevin Warsh FOMC Preview', url:'https://www.chase.com/personal/investments/learning-and-insights/article/kevin-warsh-first-federal-reserve-meeting-as-chair-june-2026', date:'16 มิ.ย.'},
-        {name:'IndMoney — Fed FOMC Impact June 2026', url:'https://www.indmoney.com/blog/us-stocks/fed-interest-rate-fomc-meet-market-impact-kevin-warsh', date:'16 มิ.ย.'},
-        {name:'TradingEconomics — WTI Crude Oil June 16', url:'https://tradingeconomics.com/commodity/crude-oil', date:'16 มิ.ย.'}
+        {name:'Mezha — Warsh signals hawkish shift may drop dot plot', url:'https://mezha.net/eng/bukvy/24014cdb_warsh_signals_hawkish/', date:'16 มิ.ย.'},
+        {name:'FXDailyReport — WTI Crude Oil June 16 2026 ~$77.31', url:'https://fxdailyreport.com/wti-crude-oil-price-analysis-for-june-16-2026/', date:'16 มิ.ย.'},
+        {name:'NRF / Census — May 2026 Retail Sales +0.1% MoM', url:'https://nrf.com/media-center/press-releases/census-retail-sales-data-may-shows-reasonably-healthy-consumer', date:'17 มิ.ย.'},
+        {name:'Alphastreet — Jabil Q3 2026 Earnings Preview $3.10 EPS', url:'https://news.alphastreet.com/jabil-q3-2026-earnings-preview-june-17-street-expects-3-10-eps/', date:'17 มิ.ย.'},
+        {name:'FinanceCalendar — FOMC Rate Decision June 17 2026', url:'https://www.financecalendar.com/event/fomc-rate-decision-june-2026/', date:'17 มิ.ย.'}
       ]
     }
   },
