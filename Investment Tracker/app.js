@@ -492,13 +492,8 @@ function openThesis(i){
   document.getElementById('mbox').innerHTML = `
     <div class="mbox-head"><div><span class="th-cat">${esc(t.cat)}</span><div style="font-size:1.15rem;font-weight:800;margin-top:7px">${esc(t.t)}</div><div class="th-m" style="font-size:.72rem;color:var(--dim);margin-top:3px">อัปเดต ${esc(t.updated)}</div></div><button class="dr-close" onclick="closeAlloc()">✕</button></div>
     <div class="th-sum">${esc(t.sum)}</div>
-    <button class="th-toggle" onclick="toggleThesisSecs(this)">ดูเต็ม</button>
-    <div class="th-detail collapsed"><div class="th-full">${paraHtml(t.full)}</div>${statBox}${secs}</div>`;
+    <div class="th-detail"><div class="th-full">${paraHtml(t.full)}</div>${statBox}${secs}</div>`;
   document.getElementById('mov').classList.add('open');
-}
-function toggleThesisSecs(btn){
-  btn.nextElementSibling.classList.remove('collapsed');
-  btn.style.display='none';
 }
 function closeDrawer(){ document.getElementById('dov').classList.remove('open'); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeDrawer(); closeAlloc(); } });
