@@ -20,10 +20,16 @@ const nl2br = s => esc(s).replace(/\n/g,'<br>');
 const paraHtml = s => String(s).split(/\n+/).map(p=>p.trim()).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join('');
 
 /* ---------- ASSET LIST (Coinbase style) ---------- */
+// ไอคอนหุ้น: โลโก้จริงจาก domain ในฟิลด์ web, ถ้าโหลดไม่ได้ fallback เป็นตัวย่อ 2 ตัว
+function tkIcon(h){
+  const init = esc(h.tk.slice(0,2));
+  if(h.web) return `<div class="asset-icon"><img src="https://www.google.com/s2/favicons?domain=${esc(h.web)}&sz=64" alt="${esc(h.tk)}" onerror="this.parentNode.classList.add('txt');this.remove();" loading="lazy"><span>${init}</span></div>`;
+  return `<div class="asset-icon txt"><span>${init}</span></div>`;
+}
 function assetListHtml(list){
   return list.map(h=>`
     <div class="asset-row" onclick="openHolding('${h.tk}')">
-      <div class="asset-icon">${h.tk.slice(0,2)}</div>
+      ${tkIcon(h)}
       <div class="asset-info"><div class="a-tk">${esc(h.tk)}</div><div class="a-nm">${esc(h.name)}</div></div>
       <div class="asset-mid"><div class="a-price">$${h.price.toFixed(2)}</div><div class="a-day ${cls(h.day)}">${pct(h.day)}</div></div>
       <div class="asset-end"><div class="a-val">$${Math.round(h.val).toLocaleString()}</div><div class="a-w ${cls(h.pl)}">${pct(h.plpct)}</div></div>
