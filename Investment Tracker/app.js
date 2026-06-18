@@ -497,8 +497,8 @@ function openThesis(i){
   document.getElementById('mov').classList.add('open');
 }
 function toggleThesisSecs(btn){
-  const collapsed=btn.nextElementSibling.classList.toggle('collapsed');
-  btn.textContent = collapsed ? 'ดูเต็ม' : 'ย่อ';
+  btn.nextElementSibling.classList.remove('collapsed');
+  btn.style.display='none';
 }
 function closeDrawer(){ document.getElementById('dov').classList.remove('open'); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeDrawer(); closeAlloc(); } });
