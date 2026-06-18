@@ -22,10 +22,9 @@ const paraHtml = s => String(s).split(/\n+/).map(p=>p.trim()).filter(Boolean).ma
 /* ---------- ASSET LIST (Coinbase style) ---------- */
 // ไอคอนหุ้น: โลโก้จริงจาก domain ในฟิลด์ web, ถ้าโหลดไม่ได้ fallback เป็นตัวย่อ 2 ตัว
 function tkIcon(h){
-  const init = esc(h.tk.slice(0,2)), d = esc(h.web||'');
-  // โลโก้จริง: Clearbit ก่อน -> ถ้าพลาด DuckDuckGo -> ถ้ายังพลาด fallback ตัวย่อ
-  if(d) return `<div class="asset-icon"><img src="https://logo.clearbit.com/${d}" alt="${esc(h.tk)}" onerror="if(this.dataset.f){this.parentNode.classList.add('txt');this.remove();}else{this.dataset.f=1;this.src='https://icons.duckduckgo.com/ip3/${d}.ico';}" loading="lazy"><span>${init}</span></div>`;
-  return `<div class="asset-icon txt"><span>${init}</span></div>`;
+  const init = esc(h.tk.slice(0,2)), tk = esc(h.tk);
+  // โลโก้บริษัทจริงจาก ticker (EODHD) -> ถ้าไม่มี fallback ตัวย่อ
+  return `<div class="asset-icon"><img src="https://eodhd.com/img/logos/US/${tk}.png" alt="${tk}" onerror="this.parentNode.classList.add('txt');this.remove();" loading="lazy"><span>${init}</span></div>`;
 }
 function assetListHtml(list){
   return list.map(h=>`
@@ -522,25 +521,25 @@ const _pfCursor={id:'pfCursor',
     ctx.beginPath(); ctx.moveTo(x,chartArea.top); ctx.lineTo(x,chartArea.bottom); ctx.stroke();
     ctx.restore(); }};
 function drawPortfolio(){
-  const d=DATA.timeline, start=d[0].total, totals=d.map(x=>x.total);
-  const hi=Math.max(...totals), lo=Math.min(...totals);
+  const d=DATA.timeline, start=d[0].total;
+  const pf=d.map(x=>(x.total/start-1)*100);   // % ผลตอบแทนเทียบจุดเริ่ม
+  const hi=Math.max(...pf), lo=Math.min(...pf);
+  const fmtPct=v=>`${v>=0?'+':''}${v.toFixed(1)}%`;
   // จุดโชว์เฉพาะ จุดล่าสุด + จุดสูงสุด/ต่ำสุด
-  const dotR=c=>{const i=c.dataIndex,v=totals[i]; return (i===totals.length-1||v===hi||v===lo)?5:0;};
-  const ds=[{label:'Your Portfolio',data:totals,
+  const dotR=c=>{const i=c.dataIndex,v=pf[i]; return (i===pf.length-1||v===hi||v===lo)?5:0;};
+  const ds=[{label:'Your Portfolio',data:pf,
       borderColor:'#0052ff',borderWidth:2.5,fill:false,tension:.4,
       pointRadius:dotR,pointHoverRadius:6,
       pointBackgroundColor:'#0052ff',pointBorderColor:'#fff',pointBorderWidth:2}];
-  const vals=[...totals];
+  const vals=[...pf,0];
   if(benchSel){
-    const series=DATA.bench[benchSel];
+    const series=DATA.bench[benchSel];   // เป็น % เทียบจุดเริ่มอยู่แล้ว
     const name=benchSel==='spx'?'S&P 500':'Nasdaq';
-    const col='#8a919e';
-    const bdata=series.map(p=>Math.round(start*(1+p/100)));
-    vals.push(...bdata);
-    ds.push({label:name,data:bdata,
-      borderColor:col,borderDash:[5,4],fill:false,tension:.4,pointRadius:0,borderWidth:2});
+    vals.push(...series);
+    ds.push({label:name,data:series,
+      borderColor:'#8a919e',borderDash:[5,4],fill:false,tension:.4,pointRadius:0,borderWidth:2});
   }
-  const mn=Math.min(...vals), mx=Math.max(...vals), pd=Math.max((mx-mn)*0.28,300);
+  const mn=Math.min(...vals), mx=Math.max(...vals), pd=Math.max((mx-mn)*0.35,1.5);
   new Chart(document.getElementById('portfolioLine'),{type:'line',
     data:{labels:d.map(x=>x.date),datasets:ds},
     plugins:[_pfGlow,_pfCursor],
@@ -552,15 +551,15 @@ function drawPortfolio(){
           borderColor:'#d7dae0',borderWidth:1,
           padding:{top:9,right:13,bottom:9,left:13},cornerRadius:11,displayColors:false,
           titleFont:{size:11,weight:'500'},bodyFont:{size:14,weight:'700'},footerFont:{size:11,weight:'700'},
-          callbacks:{label:it=>`${it.dataset.label}  $${Math.round(it.raw).toLocaleString()}`,
+          callbacks:{label:it=>`${it.dataset.label}  ${fmtPct(it.raw)}`,
             labelTextColor:it=>it.dataset.borderColor,
             footer:its=>{if(benchSel)return'';const r=d[its[0].dataIndex];const s=r.change>=0?'+':'';
               return `${s}$${Math.round(r.change).toLocaleString()} that day`;}}}},
       scales:{
         x:{ticks:{color:'#5b616e',font:{size:11}},grid:{display:false},border:{display:false}},
-        y:{min:Math.floor((mn-pd)/100)*100,max:Math.ceil((mx+pd)/100)*100,
+        y:{min:Math.floor(mn-pd),max:Math.ceil(mx+pd),
           ticks:{color:'#8a919e',font:{size:10},maxTicksLimit:5,
-            callback:v=>Math.abs(v)>=1000?'$'+(v/1000).toFixed(1)+'k':'$'+Math.round(v)},
+            callback:v=>fmtPct(v)},
           grid:{display:false},border:{display:false}}}}});
 }
 
