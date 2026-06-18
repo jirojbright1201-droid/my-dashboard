@@ -22,8 +22,9 @@ const paraHtml = s => String(s).split(/\n+/).map(p=>p.trim()).filter(Boolean).ma
 /* ---------- ASSET LIST (Coinbase style) ---------- */
 // ไอคอนหุ้น: โลโก้จริงจาก domain ในฟิลด์ web, ถ้าโหลดไม่ได้ fallback เป็นตัวย่อ 2 ตัว
 function tkIcon(h){
-  const init = esc(h.tk.slice(0,2));
-  if(h.web) return `<div class="asset-icon"><img src="https://www.google.com/s2/favicons?domain=${esc(h.web)}&sz=64" alt="${esc(h.tk)}" onerror="this.parentNode.classList.add('txt');this.remove();" loading="lazy"><span>${init}</span></div>`;
+  const init = esc(h.tk.slice(0,2)), d = esc(h.web||'');
+  // โลโก้จริง: Clearbit ก่อน -> ถ้าพลาด DuckDuckGo -> ถ้ายังพลาด fallback ตัวย่อ
+  if(d) return `<div class="asset-icon"><img src="https://logo.clearbit.com/${d}" alt="${esc(h.tk)}" onerror="if(this.dataset.f){this.parentNode.classList.add('txt');this.remove();}else{this.dataset.f=1;this.src='https://icons.duckduckgo.com/ip3/${d}.ico';}" loading="lazy"><span>${init}</span></div>`;
   return `<div class="asset-icon txt"><span>${init}</span></div>`;
 }
 function assetListHtml(list){
