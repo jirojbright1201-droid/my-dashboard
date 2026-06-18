@@ -4,7 +4,7 @@
 const FX = 33; // บาท/USD โดยประมาณ — Newwy อัปเดตของจริงทีหลัง
 const DATA = {
   // ===== พอร์ตของคุณ =====
-  cash: 18.06,            // เงินสดรอลงทุน (USD)
+  cash: 18.08,            // เงินสดรอลงทุน (USD)
   holdings: [
     {tk:'NOK', name:'Nokia Oyj', sector:'Telecom Equipment', exchange:'NYSE', country:'Finland', founded:'1865', web:'nokia.com',
      thesisRef:'AI Networking',
@@ -35,7 +35,7 @@ const DATA = {
   timeline:[
     {date:'15 มิ.ย.', total:46.06, change:0},
     {date:'16 มิ.ย.', total:47.66, change:1.60},
-    {date:'18 มิ.ย.', total:45.72, change:-1.94}
+    {date:'18 มิ.ย.', total:45.74, change:-1.92}
   ],
   // บริษัทที่ดู/watchlist — status: 'sold' (เคยถือแล้วขาย), 'watch' (กำลังดู)
   companies: [],
@@ -79,11 +79,6 @@ const DATA = {
     ],
     holdings_news:[],     // ข่าวรายตัวของหุ้นที่ถือ/Vega ถือ — Newwy
   },
-  arena:{
-    start:'15 มิ.ย. 2026', startVal:46.06,
-    you:{ret:3.47, val:47.66, hold:[['NOK',1]]},   // สรุปฝั่งคุณบนหัวข้อ Log
-    you_s:[0,3.47],
-    journal:[]                                       // pros/cons ของคุณ — เพิ่มได้ภายหลัง
-  },
+  journal:[],   // pros/cons ฝั่งคุณบนแท็บ Log — เพิ่มได้ภายหลัง
   bench:{ spx:[0], nasdaq:[0] }
 };

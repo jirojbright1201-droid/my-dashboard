@@ -148,7 +148,7 @@ let logJr=false;
 const _jrHtml=j=>`<div class="cb-jr"><div class="cb-jr-ic ${j.good?'good':'bad'}">${j.good?'✓':'✕'}</div><div class="cb-jr-body"><div class="cb-jr-t">${esc(j.t)}</div><div class="cb-jr-x">${esc(j.x)}</div></div></div>`;
 
 function renderJrSection(col){
-  const jList=DATA.arena.journal.filter(j=>j.who==='You');
+  const jList=DATA.journal.filter(j=>j.who==='You');
   const expanded=logJr;
   const lim=expanded?Infinity:1;
   const good=jList.filter(j=>j.good), bad=jList.filter(j=>!j.good);
@@ -172,10 +172,11 @@ function renderLog(){
 
   logF={type:'all',period:'all',lim:3};
   logJr=false;
+  const _tl=DATA.timeline, _start=_tl[0].total, _ret=_start?(PF_VALUE-_start)/_start*100:0;
   document.getElementById('t-log').innerHTML=`
     <div class="log-sub" style="margin-top:0">Pros &amp; Cons</div>
     <div class="log-vs-grid">
-      ${colTop('You','you','YOU',pct(DATA.arena.you.ret),'$'+DATA.arena.you.val.toLocaleString())}
+      ${colTop('You','you','YOU',pct(_ret),'$'+PF_VALUE.toLocaleString())}
     </div>
     <div class="log-tl-section">
       <div class="log-tl-bar">
