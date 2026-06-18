@@ -22,9 +22,9 @@ const paraHtml = s => String(s).split(/\n+/).map(p=>p.trim()).filter(Boolean).ma
 /* ---------- ASSET LIST (Coinbase style) ---------- */
 // ไอคอนหุ้น: โลโก้จริงจาก domain ในฟิลด์ web, ถ้าโหลดไม่ได้ fallback เป็นตัวย่อ 2 ตัว
 function tkIcon(h){
-  const init = esc(h.tk.slice(0,2)), tk = esc(h.tk);
-  // โลโก้บริษัทจริงจาก ticker (EODHD) -> ถ้าไม่มี fallback ตัวย่อ
-  return `<div class="asset-icon"><img src="https://eodhd.com/img/logos/US/${tk}.png" alt="${tk}" onerror="this.parentNode.classList.add('txt');this.remove();" loading="lazy"><span>${init}</span></div>`;
+  const init = esc(h.tk.slice(0,2)), f = esc(String(h.tk).toLowerCase());
+  // โลโก้แบบเดียวกับหน้า Log/Company: ไฟล์ในเครื่อง assets/logos/<ticker>.png พื้นขาว -> fallback ตัวย่อ
+  return `<div class="asset-icon"><img class="asset-logo" src="assets/logos/${f}.png" alt="" onload="this.parentNode.classList.add('has-logo')" onerror="this.remove()"><span>${init}</span></div>`;
 }
 function assetListHtml(list){
   return list.map(h=>`
