@@ -48,7 +48,15 @@ const DATA = {
     {date:'18 มิ.ย.', total:45.74, change:-1.92}
   ],
   // บริษัทที่ดู/watchlist — status: 'sold' (เคยถือแล้วขาย), 'watch' (กำลังดู)
-  companies: [],
+  companies: [
+    {tk:'GRAB', name:'Grab Holdings', sector:'Super-App / Mobility', status:'watch',
+     exchange:'NASDAQ', country:'Singapore', founded:'2012', web:'grab.com',
+     thesisRef:'SE Asia Super-App',
+     about:'ซูเปอร์แอปอาเซียน 8 ประเทศ รวมเรียกรถ/ส่งอาหาร/การเงินไว้ในแอปเดียว หักค่าหัวคิวทุกดีล โมเดล asset-light (ไม่ต้องเป็นเจ้าของรถ/ร้าน) ปี 2025 ทำกำไรสุทธิปีแรก'},
+    {tk:'TE', name:'T1 Energy', sector:'Solar Manufacturing', status:'watch',
+     exchange:'NYSE', country:'USA', founded:'2018', web:'t1energy.com',
+     about:'ผู้ผลิตแผงโซลาร์สหรัฐ (เดิม Freyr Battery rebrand ปี 2025) เดิมพันบนเครดิตภาษีการผลิต 45X + กฎ domestic content สำนักงานใหญ่ Austin, Texas'}
+  ],
   market:{
     indices:[             // S&P/Nasdaq/Dow/VIX — Newwy ดึงของจริง (as of 16 มิ.ย. 2026 | ปรับแก้ 17 มิ.ย.)
       {n:'S&P 500', p:'7,548.60', c:-0.08, spark:[7350,7301,7372,7431,7554,7549]},
