@@ -381,13 +381,14 @@ function coAvHtml(tk,R,lg){
 }
 // การ์ดบริษัทในกริด แนว Coinbase: ไอคอนกลม + ticker/ชื่อ + คำอธิบายสั้น (3 บรรทัด) + sector ด้านล่าง
 function coCardHtml(c,R){
+  const hasRep=(DATA.reports||[]).some(r=>r.ticker===c.tk);
   return `<div class="co-card" onclick="openCompany('${c.tk}')">
     <div class="co-top">
       ${coAvHtml(c.tk,R,false)}
       <div class="co-head"><span class="co-tk">${esc(c.tk)}</span><span class="co-name">${esc(c.name)}</span></div>
     </div>
     <div class="co-about">${esc(c.about||'—')}</div>
-    <div class="co-foot">${esc(c.sector||'')}<span class="co-go">›</span></div>
+    <div class="co-foot">${esc(c.sector||'')}${hasRep?'<span class="co-rep-badge">รายงาน ↗</span>':''}<span class="co-go">›</span></div>
   </div>`;
 }
 function _renderCoList(){
@@ -400,7 +401,11 @@ function _renderCoList(){
   document.getElementById('coList').innerHTML = html || '<div class="co-empty" style="padding:26px;text-align:center">No companies match your search</div>';
 }
 let _coTk=null, _coNwLim=3, _coTab='overview';
-function openCompany(tk){ _coTk=tk; _coNwLim=3; _coTab='overview'; _renderCompanyDrawer(); }
+function openCompany(tk){
+  const rep=(DATA.reports||[]).slice().reverse().find(r=>r.ticker===tk);
+  if(rep){ window.open('reports/'+rep.file,'_blank'); return; }
+  _coTk=tk; _coNwLim=3; _coTab='overview'; _renderCompanyDrawer();
+}
 function coTab(t){ _coTab=t; _renderCompanyDrawer(); }
 function coNwMore(){ _coNwLim=Infinity; _renderCompanyDrawer(); }
 function coNwLess(){ _coNwLim=3; _renderCompanyDrawer(); }

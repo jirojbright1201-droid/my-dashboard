@@ -90,5 +90,6 @@ const DATA = {
     holdings_news:[],     // ข่าวรายตัวของหุ้นที่ถือ/Vega ถือ — Newwy
   },
   journal:[],   // pros/cons ฝั่งคุณบนแท็บ Log — เพิ่มได้ภายหลัง
-  bench:{ spx:[0], nasdaq:[0] }
+  bench:{ spx:[0], nasdaq:[0] },
+  reports:[]    // {ticker, date, file} — Neon HTML reports ใน dashboard/reports/
 };

@@ -552,6 +552,7 @@ a.bf-src:hover{color:var(--blue); text-decoration:underline;}
 .co-about{font-size:.8rem; color:var(--silver); line-height:1.55; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
 .co-foot{display:flex; align-items:center; gap:7px; font-size:.72rem; color:var(--dim); font-weight:600; margin-top:auto; padding-top:4px;}
 .co-go{margin-left:auto; font-weight:800; color:var(--dim);}
+.co-rep-badge{font-size:.65rem; font-weight:700; padding:2px 8px; border-radius:999px; background:var(--blue-soft); color:var(--blue); flex-shrink:0;}
 .co-empty{font-size:.8rem; color:var(--dim); padding:4px 0 8px;}
 .co-soldnote{margin-top:11px; font-size:.78rem; color:var(--down); background:var(--down-soft); border-radius:8px; padding:9px 12px; line-height:1.5;}
 
