@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grab Holdings (GRAB) — รายงานเชิงลึก</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#ff6d00;
+  --accent-active:#e05d00;
+  --ink:#0a0b0d;
+  --body:#5b616e;
+  --muted:#7c828a;
+  --canvas:#ffffff;
+  --surface-soft:#f7f7f7;
+  --surface-strong:#eef0f3;
+  --surface-dark:#0a0b0d;
+  --surface-dark-el:#16181c;
+  --hairline:#dee1e6;
+  --on-dark:#ffffff;
+  --on-dark-soft:#a8acb3;
+  --up:#05b169;
+  --down:#cf202f;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.06);
+  --shadow-hover:0 8px 24px rgba(0,0,0,0.1);
+  --r-card:24px;
+  --r-pill:100px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:'Sarabun','Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+.nav-logo{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--body);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:var(--r-pill);letter-spacing:0.3px}
+
+#hero{min-height:100vh;background:var(--surface-dark);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
+.hero-left{z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--on-dark-soft);letter-spacing:0.5px;margin-bottom:32px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
+.hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero-title{font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,72px);font-weight:400;line-height:1.05;letter-spacing:-2px;color:var(--on-dark);margin-bottom:24px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
+.hero-title strong{font-weight:400;color:var(--accent)}
+.hero-desc{font-size:18px;color:var(--on-dark-soft);line-height:1.7;max-width:520px;margin-bottom:48px;opacity:0;animation:fadeUp 0.7s 0.4s ease forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-size:15px;font-weight:600;padding:14px 28px;border-radius:var(--r-pill);opacity:0;animation:fadeUp 0.7s 0.55s ease forwards;cursor:default}
+
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 0.8s 0.7s ease forwards}
+.hero-card-stack{position:relative;width:320px;height:390px}
+.hero-card{position:absolute;background:var(--surface-dark-el);border-radius:var(--r-card);padding:28px;border:1px solid rgba(255,255,255,0.08)}
+.hero-card-main{width:300px;top:40px;left:0;box-shadow:0 24px 48px rgba(0,0,0,0.4)}
+.hero-card-back{width:280px;top:0;left:20px;opacity:0.5;transform:scale(0.97);z-index:-1}
+.hero-card-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--on-dark-soft);text-transform:uppercase;margin-bottom:16px}
+.hero-card-val{font-family:'JetBrains Mono','Courier New',monospace;font-size:28px;font-weight:500;color:var(--on-dark);margin-bottom:4px}
+.hero-card-sub{font-size:13px;color:var(--on-dark-soft);margin-bottom:20px}
+.hero-card-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:13px}
+.hero-card-row-label{color:var(--on-dark-soft)}
+.hero-card-row-val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--on-dark)}
+.hero-card-row-up{color:var(--up)}
+
+#hero::before{content:'';position:absolute;top:-200px;right:-100px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(255,109,0,0.10) 0%,transparent 70%);pointer-events:none}
+#hero::after{content:'';position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,109,0,0.05) 0%,transparent 70%);pointer-events:none}
+
+.section-white{background:var(--canvas);padding:96px 0}
+.section-gray{background:var(--surface-soft);padding:96px 0}
+.section-dark{background:var(--surface-dark);padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+
+.sec-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;margin-bottom:16px;background:rgba(255,109,0,0.07);padding:4px 14px;border-radius:var(--r-pill)}
+.sec-eyebrow-dark{color:var(--on-dark-soft);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1)}
+.sec-title{font-family:'Inter',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:400;letter-spacing:-1px;color:var(--ink);line-height:1.1;margin-bottom:16px}
+.sec-title-dark{color:var(--on-dark)}
+.sec-sub{font-size:17px;color:var(--body);max-width:640px;line-height:1.7;margin-bottom:56px}
+.sec-sub-dark{color:var(--on-dark-soft)}
+
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.card-dark{background:var(--surface-dark-el);border-color:rgba(255,255,255,0.08)}
+.card-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.card-title-dark{color:var(--on-dark)}
+.card-body{font-size:14px;color:var(--body);line-height:1.7}
+.card-body-dark{color:var(--on-dark-soft)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+.metric-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px 24px;text-align:center;transition:all 0.2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.metric-card-dark{background:var(--surface-dark-el);border-color:rgba(255,255,255,0.08)}
+.metric-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.metric-val-accent{color:var(--accent)}
+.metric-val-dark{color:var(--on-dark)}
+.metric-label{font-size:13px;color:var(--muted);font-weight:500;line-height:1.4}
+.metric-label-dark{color:var(--on-dark-soft)}
+
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:1px;background:var(--hairline)}
+.timeline-item{position:relative;margin-bottom:32px}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline-date{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.5px;margin-bottom:4px;text-transform:uppercase}
+.timeline-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--body);line-height:1.6}
+
+.timeline-dark .timeline::before{background:rgba(255,255,255,0.1)}
+.timeline-dark .timeline-date{color:var(--accent)}
+.timeline-dark .timeline-title{color:var(--on-dark)}
+.timeline-dark .timeline-desc{color:var(--on-dark-soft)}
+
+.risk-card{border-radius:16px;padding:24px 28px;border:1px solid;margin-bottom:16px}
+.risk-high{background:#fff8f8;border-color:#fcd4d4}
+.risk-med{background:#fffcf0;border-color:#fde9a2}
+.risk-low{background:#f0fdf6;border-color:#b3f0d0}
+.risk-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:var(--r-pill);margin-bottom:12px;text-transform:uppercase}
+.risk-high .risk-badge{background:#fcd4d4;color:#c0392b}
+.risk-med .risk-badge{background:#fde9a2;color:#8a6d00}
+.risk-low .risk-badge{background:#b3f0d0;color:#1a7a4a}
+.risk-high .risk-title{color:#c0392b}
+.risk-med .risk-title{color:#8a6d00}
+.risk-low .risk-title{color:#1a7a4a}
+.risk-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.risk-body{font-size:14px;color:var(--body);line-height:1.7}
+
+.comp-table{width:100%;border-collapse:collapse}
+.comp-table th{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);padding:12px 20px;text-align:left;border-bottom:1px solid var(--hairline);text-transform:uppercase}
+.comp-table td{padding:16px 20px;font-size:14px;color:var(--body);border-bottom:1px solid var(--surface-soft)}
+.comp-table td:first-child{font-weight:600;color:var(--ink)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr.hl td:first-child{color:var(--accent)}
+.comp-table tr.hl{background:rgba(255,109,0,0.03)}
+
+.analyst-bar-wrap{margin:16px 0}
+.analyst-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500}
+.analyst-bar-track{height:6px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.analyst-bar-fill{height:100%;border-radius:var(--r-pill)}
+
+.person-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:28px 24px;transition:all 0.2s}
+.person-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.person-avatar{width:48px;height:48px;border-radius:50%;background:var(--surface-strong);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--accent);margin-bottom:16px;border:1px solid var(--hairline)}
+.person-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.person-title{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.person-bio{font-size:13px;color:var(--body);line-height:1.7}
+
+.partner-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.partner-badge{font-size:13px;font-weight:600;padding:8px 18px;border-radius:var(--r-pill);border:1px solid var(--hairline);color:var(--body);background:var(--canvas);transition:all 0.15s}
+.partner-badge:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,109,0,0.04)}
+
+.tech-flow{display:flex;align-items:stretch;margin:48px 0;flex-wrap:wrap;gap:0;justify-content:center}
+.tech-node{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:28px 20px;text-align:center;min-width:150px;flex:1;transition:all 0.2s;box-shadow:var(--shadow-card)}
+.tech-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.tech-node-icon{font-size:26px;margin-bottom:12px}
+.tech-node-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tech-node-val{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4}
+.tech-arrow{font-size:18px;color:var(--hairline);padding:0 8px;display:flex;align-items:center}
+
+.big-stat-row{display:flex;gap:0;border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;margin:48px 0}
+.big-stat{flex:1;padding:32px 24px;border-right:1px solid var(--hairline)}
+.big-stat:last-child{border-right:none}
+.big-stat-num{font-family:'JetBrains Mono',monospace;font-size:clamp(26px,3vw,40px);font-weight:500;color:var(--ink);line-height:1;margin-bottom:8px}
+.big-stat-num-accent{color:var(--accent)}
+.big-stat-desc{font-size:13px;color:var(--body)}
+
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:5px 14px;border-radius:var(--r-pill);margin:3px;letter-spacing:0.2px}
+.pill-accent{background:rgba(255,109,0,0.08);color:var(--accent);border:1px solid rgba(255,109,0,0.15)}
+.pill-neutral{background:var(--surface-strong);color:var(--body)}
+.pill-up{background:rgba(5,177,105,0.08);color:var(--up)}
+.pill-down{background:rgba(207,32,47,0.08);color:var(--down)}
+.pill-dark{background:rgba(255,255,255,0.1);color:var(--on-dark)}
+
+.callout{border-left:3px solid var(--accent);background:rgba(255,109,0,0.04);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;font-size:14px;color:var(--body)}
+.callout strong{color:var(--accent)}
+
+.fin-chart{display:flex;align-items:flex-end;gap:10px;height:200px;margin:32px 0;padding:0 8px}
+.fin-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.fin-bar-track{width:100%;display:flex;flex-direction:column-reverse;height:150px}
+.fin-bar{width:100%;border-radius:6px 6px 0 0;background:var(--accent);opacity:0.85;min-height:4px;transition:opacity 0.2s}
+.fin-bar:hover{opacity:1}
+.fin-bar.projected{background:transparent;border:2px dashed var(--accent);opacity:0.7}
+.fin-bar-year{font-size:11px;color:var(--muted);font-weight:500;margin-top:4px}
+.fin-bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);font-weight:500}
+
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline)}
+.data-row:last-child{border-bottom:none}
+.data-key{font-size:14px;color:var(--body)}
+.data-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink)}
+.data-val-up{color:var(--up)}
+.data-val-accent{color:var(--accent)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.08s}
+.reveal-delay-2{transition-delay:0.16s}
+.reveal-delay-3{transition-delay:0.24s}
+.reveal-delay-4{transition-delay:0.32s}
+
+.divider{height:1px;background:var(--hairline)}
+
+.superapp-diagram{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;margin:48px 0}
+.superapp-center{background:var(--accent);border-radius:50%;width:120px;height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;text-align:center;box-shadow:0 0 0 16px rgba(255,109,0,0.1),0 0 0 32px rgba(255,109,0,0.05);flex-shrink:0}
+.superapp-center-icon{font-size:28px;margin-bottom:4px}
+.superapp-services{display:flex;flex-direction:column;gap:12px}
+.superapp-svc{background:var(--canvas);border:1px solid var(--hairline);border-radius:14px;padding:14px 18px;font-size:13px;font-weight:600;color:var(--ink);transition:all 0.15s}
+.superapp-svc:hover{border-color:var(--accent);color:var(--accent)}
+.superapp-svc-sub{font-size:11px;font-weight:400;color:var(--body);margin-top:2px}
+
+.geo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+.geo-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:16px;padding:20px;text-align:center;transition:all 0.2s}
+.geo-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.geo-flag{font-size:28px;margin-bottom:8px}
+.geo-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.geo-stat{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:500}
+
+footer{background:var(--surface-soft);padding:64px 48px;border-top:1px solid var(--hairline)}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-legal{font-size:12px;color:var(--muted);line-height:1.8;margin-top:20px}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:100px 24px 64px}
+  .hero-right{display:none}
+  .grid-2,.grid-3,.grid-4,.geo-grid{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section-white,.section-gray,.section-dark{padding:64px 0}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .big-stat-row{flex-direction:column}
+  .big-stat{border-right:none;border-bottom:1px solid var(--hairline)}
+  .big-stat:last-child{border-bottom:none}
+  .superapp-diagram{grid-template-columns:1fr;text-align:center}
+  .superapp-center{margin:0 auto}
+  .tech-flow{flex-direction:column}
+  .tech-arrow{transform:rotate(90deg)}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface-soft)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Grab <span>·</span> GRAB</div>
+  <ul class="nav-links">
+    <li><a href="#overview">ภาพรวม</a></li>
+    <li><a href="#technology">สินค้า</a></li>
+    <li><a href="#market">ตลาด</a></li>
+    <li><a href="#financials">การเงิน</a></li>
+    <li><a href="#competition">คู่แข่ง</a></li>
+    <li><a href="#leadership">ผู้บริหาร</a></li>
+    <li><a href="#catalysts">ตัวเร่ง</a></li>
+    <li><a href="#risks">ความเสี่ยง</a></li>
+    <li><a href="#analysts">นักวิเคราะห์</a></li>
+  </ul>
+  <span class="nav-badge">NASDAQ: GRAB</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="hero-ticker-dot"></span>
+      รายงานเชิงลึก &nbsp;·&nbsp; 21 มิถุนายน 2569
+    </div>
+    <h1 class="hero-title">
+      Grab Holdings<br>
+      <strong>ซูเปอร์แอป</strong><br>อาเซียน
+    </h1>
+    <p class="hero-desc">
+      แพลตฟอร์มที่ครอบคลุมชีวิตประจำวันของคน 8 ประเทศในเอเชียตะวันออกเฉียงใต้ — เรียกรถ สั่งอาหาร จ่ายเงิน กู้ยืม ผ่านแอปเดียว ปี 2568 ทำกำไรสุทธิเต็มปีครั้งแรกในประวัติศาสตร์
+    </p>
+    <div class="hero-cta">อ่านรายงาน <span style="font-size:18px">↓</span></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="hero-card-label">ตัวเลขสำคัญ — ปี 2568</div>
+        <div class="hero-card-val">$3.37B</div>
+        <div class="hero-card-sub">รายได้รวมทั้งปี (+21% YoY)</div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">กำไรสุทธิ</span>
+          <span class="hero-card-row-val hero-card-row-up">$268M</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">Market Cap</span>
+          <span class="hero-card-row-val">~$14.1B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">MTU (ผู้ใช้งานต่อเดือน)</span>
+          <span class="hero-card-row-val hero-card-row-up">&gt;50M</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S1: OVERVIEW -->
+<div class="section-white" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow reveal">01 — ภาพรวมบริษัท</div>
+    <h2 class="sec-title reveal">ซูเปอร์แอปที่ใหญ่ที่สุดในอาเซียน</h2>
+    <p class="sec-sub reveal">
+      Grab Holdings Limited (NASDAQ: GRAB) ก่อตั้งปี 2555 โดย Anthony Tan และ Tan Hooi Ling ในมาเลเซีย เริ่มต้นจากแอปเรียกแท็กซี่ ก่อนขยายเป็นแพลตฟอร์มครอบจักรวาลที่ครอบคลุมการเดินทาง การส่งอาหาร-พัสดุ และบริการการเงินดิจิทัล ปัจจุบันให้บริการใน 8 ประเทศ กว่า 900 เมือง
+    </p>
+
+    <!-- Big stats -->
+    <div class="big-stat-row reveal">
+      <div class="big-stat">
+        <div class="big-stat-num big-stat-num-accent">8</div>
+        <div class="big-stat-desc">ประเทศในอาเซียน<br>กัมพูชา อินโดนีเซีย มาเลเซีย เมียนมา ฟิลิปปินส์ สิงคโปร์ ไทย เวียดนาม</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">900+</div>
+        <div class="big-stat-desc">เมืองที่ให้บริการ<br>ครอบคลุมพื้นที่ประชากร ~680 ล้านคน</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">50M+</div>
+        <div class="big-stat-desc">MTU (Monthly Transacting Users)<br>ผู้ใช้งานที่ทำธุรกรรมต่อเดือน ปี 2568</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num big-stat-num-accent">2568</div>
+        <div class="big-stat-desc">ปีที่ทำกำไรสุทธิเต็มปีครั้งแรก<br>กำไร $268 ล้าน หลังขาดทุนมา 13 ปี</div>
+      </div>
+    </div>
+
+    <!-- Superapp diagram -->
+    <div class="callout reveal">
+      <strong>โมเดล Superapp คืออะไร?</strong> — ซูเปอร์แอป (Superapp) คือแอปเดียวที่รวมบริการหลายอย่างไว้ในที่เดียว ผู้ใช้ไม่ต้องสลับแอป Grab เป็นตัวอย่างที่ชัดที่สุดในอาเซียน: เรียกรถ สั่งอาหาร จ่ายบิล โอนเงิน กู้สินเชื่อ ซื้อประกัน — ทำได้ทั้งหมดใน Grab
+    </div>
+
+    <div class="superapp-diagram reveal">
+      <div class="superapp-services">
+        <div class="superapp-svc">
+          <div>เรียกรถ (GrabCar/GrabBike)</div>
+          <div class="superapp-svc-sub">ส่วนแบ่งตลาดเรียกรถ ~80-85% ในอาเซียน</div>
+        </div>
+        <div class="superapp-svc">
+          <div>ส่งอาหาร (GrabFood)</div>
+          <div class="superapp-svc-sub">ส่วนแบ่งการส่งอาหาร 55% ในอาเซียน ปี 2568</div>
+        </div>
+        <div class="superapp-svc">
+          <div>ส่งพัสดุ (GrabExpress)</div>
+          <div class="superapp-svc-sub">ส่งสินค้าและพัสดุภายในวัน</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+        <div class="superapp-center">
+          <div class="superapp-center-icon">G</div>
+          <div>Grab App</div>
+        </div>
+        <div style="font-size:12px;color:var(--on-dark-soft);background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 12px;color:var(--muted)">
+          แอปเดียว ทุกบริการ
+        </div>
+      </div>
+      <div class="superapp-services">
+        <div class="superapp-svc">
+          <div>กระเป๋าเงินดิจิทัล (GrabPay)</div>
+          <div class="superapp-svc-sub">จ่ายเงิน โอนเงิน Top-up ในแอป</div>
+        </div>
+        <div class="superapp-svc">
+          <div>สินเชื่อและออมทรัพย์</div>
+          <div class="superapp-svc-sub">ผ่าน GXS Bank (สิงคโปร์) / GX Bank (มาเลเซีย)</div>
+        </div>
+        <div class="superapp-svc">
+          <div>ประกันภัย + Ads</div>
+          <div class="superapp-svc-sub">ประกันรายวัน + โฆษณาบนแพลตฟอร์ม</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>วิธีหารายได้:</strong> Grab เก็บ take rate (ค่าหัวคิวที่หักจากมูลค่าธุรกรรม) จากคนขับและร้านอาหาร, ค่า delivery, ดอกเบี้ยจากสินเชื่อ, เบี้ยประกัน, และค่าโฆษณา โมเดลนี้ทำให้ Grab ไม่ต้องเป็นเจ้าของรถหรือสินทรัพย์ — คล้าย asset-light (ไม่ต้องลงทุนในสินทรัพย์ก้อนใหญ่)
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S2: TECHNOLOGY / PRODUCTS -->
+<div class="section-gray" id="technology">
+  <div class="container">
+    <div class="sec-eyebrow reveal">02 — สินค้าและเทคโนโลยี</div>
+    <h2 class="sec-title reveal">3 เสา + 1 เครื่องยนต์อนาคต</h2>
+    <p class="sec-sub reveal">
+      Grab แบ่งธุรกิจเป็น 3 segment (กลุ่มธุรกิจ) หลัก บวกกับการลงทุนด้าน Autonomous Vehicles (ยานยนต์ขับเคลื่อนอัตโนมัติ) ที่กำลังเริ่มเป็นรูปเป็นร่างในปี 2569
+    </p>
+
+    <!-- Tech flow -->
+    <div class="tech-flow reveal">
+      <div class="tech-node">
+        <div class="tech-node-icon">🚗</div>
+        <div class="tech-node-label">Mobility</div>
+        <div class="tech-node-val">เรียกรถ-จักรยานยนต์<br><span style="color:var(--accent);font-size:12px">~$1.4B รายได้ปี 2568*</span></div>
+      </div>
+      <div class="tech-arrow">+</div>
+      <div class="tech-node">
+        <div class="tech-node-icon">🍔</div>
+        <div class="tech-node-label">Deliveries</div>
+        <div class="tech-node-val">อาหาร ของชำ พัสดุ<br><span style="color:var(--accent);font-size:12px">~$1.6B รายได้ปี 2568*</span></div>
+      </div>
+      <div class="tech-arrow">+</div>
+      <div class="tech-node">
+        <div class="tech-node-icon">💳</div>
+        <div class="tech-node-label">Financial Services</div>
+        <div class="tech-node-val">GrabPay, สินเชื่อ, ประกัน<br><span style="color:var(--accent);font-size:12px">$347M รายได้ปี 2568</span></div>
+      </div>
+      <div class="tech-arrow">+</div>
+      <div class="tech-node" style="border-color:var(--accent);background:rgba(255,109,0,0.03)">
+        <div class="tech-node-icon">🤖</div>
+        <div class="tech-node-label">AV / Robotaxi</div>
+        <div class="tech-node-val">WeRide ร่วมมือ<br><span style="color:var(--accent);font-size:12px">เปิดให้บริการเม.ย. 2569</span></div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:-24px;margin-bottom:48px">*ตัวเลข Mobility/Deliveries เป็นการประมาณการจากสัดส่วนที่เปิดเผยบางส่วน ไม่ใช่ตัวเลขยืนยันทางการแยก segment ปี 2568</p>
+
+    <!-- GFin deep dive -->
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">GrabFin — เครื่องยนต์การเงินดิจิทัล</div>
+        <div class="card-body">
+          <p style="margin-bottom:16px">บริการการเงินของ Grab เติบโต 37% YoY (ปีต่อปี) ในปี 2568 เร็วที่สุดในบรรดา 3 segment ประกอบด้วย:</p>
+          <div class="data-row" style="padding:10px 0">
+            <span class="data-key">GXS Bank (สิงคโปร์)</span>
+            <span class="data-val data-val-accent">ธนาคารดิจิทัลมีใบอนุญาต</span>
+          </div>
+          <div class="data-row" style="padding:10px 0">
+            <span class="data-key">GX Bank (มาเลเซีย)</span>
+            <span class="data-val data-val-accent">ธนาคารดิจิทัลมีใบอนุญาต</span>
+          </div>
+          <div class="data-row" style="padding:10px 0">
+            <span class="data-key">Superbank (อินโดนีเซีย)</span>
+            <span class="data-val data-val-accent">เงินฝากโต +20% QoQ</span>
+          </div>
+          <div class="data-row" style="padding:10px 0">
+            <span class="data-key">เงินฝากรวม (ธ.ค. 2568)</span>
+            <span class="data-val">$1.6B</span>
+          </div>
+          <div class="data-row" style="padding:10px 0">
+            <span class="data-key">พอร์ตสินเชื่อสุทธิ</span>
+            <span class="data-val data-val-up">$1.18B (+120% YoY)</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Robotaxi — เทคโนโลยีอนาคต</div>
+        <div class="card-body">
+          <p style="margin-bottom:16px">Grab ลงทุนเชิงกลยุทธ์ใน WeRide (บริษัทเทคโนโลยีขับเคลื่อนอัตโนมัติ Level 4) เพื่อขยายโรโบแท็กซี่ในอาเซียน:</p>
+          <div class="timeline" style="margin-top:16px">
+            <div class="timeline-item">
+              <div class="timeline-date">ต.ค. 2568</div>
+              <div class="timeline-title">ประกาศพาร์ทเนอร์ WeRide + May Mobility</div>
+              <div class="timeline-desc">ลงทุนเชิงกลยุทธ์ ตั้งเป้า deploy Level 4 ในอาเซียน</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">ก.พ. 2569</div>
+              <div class="timeline-title">Hesai — ผู้จำหน่าย Lidar แต่ผู้เดียวในอาเซียน</div>
+              <div class="timeline-desc">Grab เป็น exclusive distributor (ผู้จัดจำหน่ายแต่เพียงผู้เดียว) ของ Hesai lidar ในอาเซียน</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">เม.ย. 2569</div>
+              <div class="timeline-title">เปิดตัว Ai.R Service ที่ Punggol สิงคโปร์</div>
+              <div class="timeline-desc">บริการโรโบแท็กซี่สาธารณะแห่งแรกในอาเซียน ฟลีต 11 คัน WeRide GXR shuttle ฟรีถึงกลางปี 2569</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline วิวัฒนาการ -->
+    <h3 class="sec-title reveal" style="font-size:28px;margin-top:64px;margin-bottom:32px">วิวัฒนาการจากแท็กซี่แอปสู่ซูเปอร์แอป</h3>
+    <div class="grid-2 reveal">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2555 (2012)</div>
+          <div class="timeline-title">เปิดตัว MyTeksi ในมาเลเซีย</div>
+          <div class="timeline-desc">แอปเรียกแท็กซี่แบบ Uber แห่งแรกในเอเชียตะวันออกเฉียงใต้ ก่อตั้งโดย Anthony Tan และ Tan Hooi Ling</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2558 (2015)</div>
+          <div class="timeline-title">ขยายสู่ 6 ประเทศ + เพิ่ม GrabPay</div>
+          <div class="timeline-desc">เริ่มเป็น superapp จริงๆ โดยเพิ่มบริการชำระเงินดิจิทัล</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2561 (2018)</div>
+          <div class="timeline-title">เข้าซื้อกิจการ Uber SEA</div>
+          <div class="timeline-desc">Uber ถอนออกจากอาเซียน ขายธุรกิจให้ Grab แลกหุ้น 27.5% ทำให้ Grab กลายเป็นผู้นำตลาดชัดเจน</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2563 (2020)</div>
+          <div class="timeline-title">ได้รับใบอนุญาตธนาคารดิจิทัลในสิงคโปร์</div>
+          <div class="timeline-desc">MAS (หน่วยงานการเงินสิงคโปร์) ออกใบอนุญาต digital full bank ให้ Grab-Singtel consortium</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2564 (2021)</div>
+          <div class="timeline-title">เข้า NASDAQ ผ่าน SPAC มูลค่า $4.5B</div>
+          <div class="timeline-desc">IPO ใหญ่ที่สุดของบริษัทอาเซียนในตลาดสหรัฐฯ ณ ขณะนั้น</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2568 (2025)</div>
+          <div class="timeline-title">ทำกำไรสุทธิเต็มปีครั้งแรก</div>
+          <div class="timeline-desc">กำไรสุทธิ $268M รายได้ $3.37B milestone สำคัญที่สุดในประวัติบริษัท</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S3: MARKET -->
+<div class="section-white" id="market">
+  <div class="container">
+    <div class="sec-eyebrow reveal">03 — โอกาสทางตลาด</div>
+    <h2 class="sec-title reveal">TAM อาเซียนกำลังบูม</h2>
+    <p class="sec-sub reveal">
+      TAM (Total Addressable Market — ขนาดตลาดรวมที่สามารถเข้าถึงได้) ของ Grab ครอบคลุม 3 ตลาดหลักที่กำลังเติบโตพร้อมกัน ในภูมิภาคที่มีประชากร 680 ล้านคน คลาส middle class กำลังขยายตัว และ smartphone penetration (การเข้าถึงสมาร์ทโฟน) สูงขึ้นทุกปี
+    </p>
+
+    <div class="grid-3 reveal">
+      <div class="metric-card">
+        <div class="metric-val metric-val-accent">$22B</div>
+        <div class="metric-label">GMV (มูลค่ารวมที่ไหลผ่านแพลตฟอร์ม ≠ รายได้) ส่งอาหารในอาเซียน ปี 2568 (+14% YoY)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val metric-val-accent">$11.1B</div>
+        <div class="metric-label">GMV บริการการเดินทางในอาเซียน ปี 2568 (+16% YoY)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val metric-val-accent">$300B+</div>
+        <div class="metric-label">GDP เศรษฐกิจดิจิทัลรวมอาเซียน ปี 2568 เติบโต 15% YoY</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>เศรษฐกิจดิจิทัลอาเซียน</strong> คาดเติบโต 9% CAGR (อัตราการเติบโตทบต้นต่อปี) จนถึงปี 2573 ประชากรอาเซียนกว่า 70% ยังเข้าถึงบริการธนาคารได้น้อยหรือไม่มีบัญชีธนาคารเลย (underbanked) — นี่คือโอกาสหลักของฝั่ง GrabFin
+    </div>
+
+    <!-- Geography -->
+    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;margin-top:48px" class="reveal">ตลาดที่สำคัญ — รายได้แยกประเทศ ปี 2568</h3>
+    <p style="font-size:14px;color:var(--body);margin-bottom:0" class="reveal">มาเลเซียเป็นตลาดใหญ่สุดปีที่ 4 ติดต่อกัน</p>
+    <div class="geo-grid reveal">
+      <div class="geo-card">
+        <div class="geo-flag">🇲🇾</div>
+        <div class="geo-name">มาเลเซีย</div>
+        <div class="geo-stat">$1.04B — ตลาด #1</div>
+      </div>
+      <div class="geo-card">
+        <div class="geo-flag">🇸🇬</div>
+        <div class="geo-name">สิงคโปร์</div>
+        <div class="geo-stat">$727M — ตลาด #2</div>
+      </div>
+      <div class="geo-card">
+        <div class="geo-flag">🇮🇩</div>
+        <div class="geo-name">อินโดนีเซีย</div>
+        <div class="geo-stat">$715M — ตลาด #3</div>
+      </div>
+      <div class="geo-card">
+        <div class="geo-flag">🇵🇭🇹🇭🇻🇳🇰🇭</div>
+        <div class="geo-name">ประเทศอื่น</div>
+        <div class="geo-stat">รวม ~$884M</div>
+      </div>
+    </div>
+
+    <!-- Partners -->
+    <h3 style="font-size:20px;font-weight:600;margin-top:56px;margin-bottom:8px" class="reveal">พาร์ทเนอร์เชิงกลยุทธ์</h3>
+    <p style="font-size:14px;color:var(--body)" class="reveal">พาร์ทเนอร์ที่ช่วยขยายโครงข่ายและเทคโนโลยี</p>
+    <div class="partner-grid reveal">
+      <div class="partner-badge">Singtel — ร่วม GXS Bank</div>
+      <div class="partner-badge">WeRide — Autonomous Vehicle</div>
+      <div class="partner-badge">May Mobility — AV Shuttle</div>
+      <div class="partner-badge">Hesai — Lidar Technology</div>
+      <div class="partner-badge">Vay Technology — Remote Driving</div>
+      <div class="partner-badge">Delivery Hero — Taiwan foodpanda</div>
+      <div class="partner-badge">Stash Financial — US Fintech Acquisition</div>
+      <div class="partner-badge">SoftBank Vision Fund</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px">* การซื้อ Stash Financial $425M และ foodpanda Taiwan $600M ยังอยู่ระหว่างดำเนินการ (คาดปิดดีล Q3 2569 และ H2 2569 ตามลำดับ)</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S4: FINANCIALS -->
+<div class="section-dark" id="financials">
+  <div class="container">
+    <div class="sec-eyebrow sec-eyebrow-dark reveal">04 — การเงิน</div>
+    <h2 class="sec-title sec-title-dark reveal">Inflection Point — หักมุมสู่กำไร</h2>
+    <p class="sec-sub sec-sub-dark reveal">
+      ปี 2568 คือจุดพลิก (inflection point) ที่นักลงทุนรอมานาน Grab เปลี่ยนจาก "เผาเงินโต" เป็น "โตแบบมีกำไร" ทั้งระดับ net income (กำไรสุทธิ) และ Adjusted EBITDA (กำไรก่อนหักดอกเบี้ย ภาษี ค่าเสื่อมราคา และค่าตัดจำหน่าย ปรับปรุงแล้ว)
+    </p>
+
+    <!-- Revenue chart -->
+    <div style="background:var(--surface-dark-el);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-card);padding:40px;margin-bottom:32px" class="reveal">
+      <div style="font-size:13px;font-weight:600;color:var(--on-dark-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:24px">รายได้รวม (USD ล้าน) — ปี 2565-2569E</div>
+      <div class="fin-chart">
+        <div class="fin-bar-group">
+          <div class="fin-bar-val">$1,431</div>
+          <div class="fin-bar-track">
+            <div class="fin-bar" style="height:42%"></div>
+          </div>
+          <div class="fin-bar-year">2565</div>
+        </div>
+        <div class="fin-bar-group">
+          <div class="fin-bar-val">$2,362</div>
+          <div class="fin-bar-track">
+            <div class="fin-bar" style="height:70%"></div>
+          </div>
+          <div class="fin-bar-year">2566</div>
+        </div>
+        <div class="fin-bar-group">
+          <div class="fin-bar-val">$2,781</div>
+          <div class="fin-bar-track">
+            <div class="fin-bar" style="height:82%"></div>
+          </div>
+          <div class="fin-bar-year">2567</div>
+        </div>
+        <div class="fin-bar-group">
+          <div class="fin-bar-val">$3,370</div>
+          <div class="fin-bar-track">
+            <div class="fin-bar" style="height:100%"></div>
+          </div>
+          <div class="fin-bar-year">2568</div>
+        </div>
+        <div class="fin-bar-group">
+          <div class="fin-bar-val">~$3.9B*</div>
+          <div class="fin-bar-track">
+            <div class="fin-bar projected" style="height:115%"></div>
+          </div>
+          <div class="fin-bar-year">2569E</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--on-dark-soft);margin-top:8px">*2569E = ประมาณการนักวิเคราะห์ ไม่ใช่ guidance ทางการของ Grab</p>
+    </div>
+
+    <!-- Key metrics grid -->
+    <div class="grid-4 reveal">
+      <div class="metric-card metric-card-dark">
+        <div class="metric-val metric-val-dark">$3.37B</div>
+        <div class="metric-label metric-label-dark">รายได้ปี 2568 (+21% YoY)</div>
+      </div>
+      <div class="metric-card metric-card-dark">
+        <div class="metric-val" style="color:var(--up)">$268M</div>
+        <div class="metric-label metric-label-dark">กำไรสุทธิปี 2568 (ครั้งแรก)</div>
+      </div>
+      <div class="metric-card metric-card-dark">
+        <div class="metric-val metric-val-dark">$451M</div>
+        <div class="metric-label metric-label-dark">Adj. EBITDA ปี 2568</div>
+      </div>
+      <div class="metric-card metric-card-dark">
+        <div class="metric-val" style="color:var(--up)">$290M</div>
+        <div class="metric-label metric-label-dark">Adjusted Free Cash Flow ปี 2568</div>
+      </div>
+    </div>
+
+    <!-- Quarterly breakdown -->
+    <div style="background:var(--surface-dark-el);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-card);padding:40px;margin-top:24px" class="reveal">
+      <div style="font-size:13px;font-weight:600;color:var(--on-dark-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:24px">รายได้รายไตรมาส ปี 2568</div>
+      <div class="grid-4">
+        <div>
+          <div class="data-row">
+            <span class="data-key" style="color:var(--on-dark-soft)">Q1 2568</span>
+            <span class="data-val" style="color:var(--on-dark)">$773M</span>
+          </div>
+          <div style="font-size:12px;color:var(--up)">+18% YoY</div>
+        </div>
+        <div>
+          <div class="data-row">
+            <span class="data-key" style="color:var(--on-dark-soft)">Q2 2568</span>
+            <span class="data-val" style="color:var(--on-dark)">$819M</span>
+          </div>
+          <div style="font-size:12px;color:var(--up)">+23% YoY</div>
+        </div>
+        <div>
+          <div class="data-row">
+            <span class="data-key" style="color:var(--on-dark-soft)">Q3 2568</span>
+            <span class="data-val" style="color:var(--on-dark)">$873M</span>
+          </div>
+          <div style="font-size:12px;color:var(--up)">+22% YoY</div>
+        </div>
+        <div>
+          <div class="data-row">
+            <span class="data-key" style="color:var(--on-dark-soft)">Q4 2568</span>
+            <span class="data-val" style="color:var(--on-dark)">$906M</span>
+          </div>
+          <div style="font-size:12px;color:var(--up)">+19% YoY</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Balance sheet snapshot -->
+    <div class="grid-2 reveal" style="margin-top:24px">
+      <div class="card-dark card" style="border-radius:var(--r-card)">
+        <div class="card-title-dark card-title">ข้อมูลสำคัญ — งบดุล</div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">Market Cap (มิ.ย. 2569)</span>
+          <span class="data-val" style="color:var(--on-dark)">~$14.1B</span>
+        </div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">ราคาหุ้น (1 มิ.ย. 2569)</span>
+          <span class="data-val" style="color:var(--on-dark)">~$3.54</span>
+        </div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">52-Week Range</span>
+          <span class="data-val" style="color:var(--on-dark)">$3.39 – $6.62</span>
+        </div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">Share Buyback ประกาศ</span>
+          <span class="data-val data-val-accent">$500M</span>
+        </div>
+      </div>
+      <div class="card-dark card" style="border-radius:var(--r-card)">
+        <div class="card-title-dark card-title">GrabFin — ตัวเลขสำคัญ</div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">รายได้ GrabFin ปี 2568</span>
+          <span class="data-val data-val-up">$347M (+37%)</span>
+        </div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">พอร์ตสินเชื่อสุทธิ</span>
+          <span class="data-val data-val-up">$1.18B (+120%)</span>
+        </div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">เงินฝากรวม (ธ.ค. 2568)</span>
+          <span class="data-val" style="color:var(--on-dark)">$1.6B</span>
+        </div>
+        <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+          <span class="data-key" style="color:var(--on-dark-soft)">เป้า GFin profitable</span>
+          <span class="data-val data-val-accent">H2 2569</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S5: COMPETITION -->
+<div class="section-white" id="competition">
+  <div class="container">
+    <div class="sec-eyebrow reveal">05 — คู่แข่ง</div>
+    <h2 class="sec-title reveal">ครองตลาด แต่ยังมีแรงกดดัน</h2>
+    <p class="sec-sub reveal">
+      Grab เป็นผู้นำตลาดชัดเจนในหลายมิติ แต่ทุกตลาดมีคู่แข่งท้องถิ่นที่แข็งแกร่ง โดยเฉพาะอินโดนีเซีย (Gojek) และเวียดนาม (Xanh SM, inDrive)
+    </p>
+
+    <div style="overflow-x:auto" class="reveal">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>บริษัท</th>
+            <th>จุดแข็ง</th>
+            <th>ตลาดหลัก</th>
+            <th>เรียกรถ</th>
+            <th>ส่งอาหาร</th>
+            <th>Fintech</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hl">
+            <td>Grab (GRAB)</td>
+            <td>ครบที่สุด, ใบอนุญาตธนาคาร, AV</td>
+            <td>อาเซียน 8 ประเทศ</td>
+            <td><span class="pill pill-up">~80-85%</span></td>
+            <td><span class="pill pill-up">55%</span></td>
+            <td><span class="pill pill-accent">GXS/GX Bank</span></td>
+          </tr>
+          <tr>
+            <td>Gojek (GoTo)</td>
+            <td>แข็งแกร่งในอินโดนีเซีย</td>
+            <td>อินโดนีเซียเป็นหลัก</td>
+            <td><span class="pill pill-neutral">แข็งแกร่ง ID</span></td>
+            <td><span class="pill pill-neutral">GoFood</span></td>
+            <td><span class="pill pill-neutral">GoPay</span></td>
+          </tr>
+          <tr>
+            <td>ShopeeFood (Sea Ltd.)</td>
+            <td>พ่วงกับ Shopee e-commerce</td>
+            <td>หลายประเทศอาเซียน</td>
+            <td><span class="pill pill-neutral">ไม่มี</span></td>
+            <td><span class="pill pill-neutral">กำลังเติบโต</span></td>
+            <td><span class="pill pill-neutral">SPayLater</span></td>
+          </tr>
+          <tr>
+            <td>Xanh SM</td>
+            <td>ราคาต่ำ, รถไฟฟ้า</td>
+            <td>เวียดนาม</td>
+            <td><span class="pill pill-neutral">~37% เวียดนาม</span></td>
+            <td><span class="pill pill-neutral">ไม่มี</span></td>
+            <td><span class="pill pill-neutral">ไม่มี</span></td>
+          </tr>
+          <tr>
+            <td>inDrive</td>
+            <td>ต่อราคาได้ (bid-based), ขยายเร็ว</td>
+            <td>หลายประเทศ, เน้นชนบท</td>
+            <td><span class="pill pill-neutral">โต 8x ปี 2568</span></td>
+            <td><span class="pill pill-neutral">ไม่มี</span></td>
+            <td><span class="pill pill-neutral">ไม่มี</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Moat -->
+    <h3 class="sec-title reveal" style="font-size:26px;margin-top:64px;margin-bottom:24px">Moat — ความได้เปรียบที่ป้องกันคู่แข่งได้</h3>
+    <div class="grid-3 reveal">
+      <div class="card">
+        <div class="card-title">Network Effects (เครือข่ายผลกระทบ)</div>
+        <div class="card-body">คนขับมากขึ้น → รอสั้นลง → ลูกค้ามากขึ้น → คนขับมากขึ้น วงจรนี้ยากมากที่คู่แข่งหน้าใหม่จะทลายได้ โดยเฉพาะในตลาดที่ Grab มีส่วนแบ่งสูงกว่า 80%</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Data Flywheel (ล้อข้อมูล)</div>
+        <div class="card-body">ทุกธุรกรรมผ่าน Grab สร้างข้อมูลผู้ใช้ ข้อมูลนี้ทำให้ GrabFin ประเมินความเสี่ยงสินเชื่อได้แม่นยำกว่าธนาคารดั้งเดิม เพราะเห็นพฤติกรรมการใช้จ่าย การเดินทาง และประวัติการชำระเงินจริง</div>
+      </div>
+      <div class="card">
+        <div class="card-title">ใบอนุญาตธนาคารดิจิทัล</div>
+        <div class="card-body">ใบอนุญาต digital full bank ในสิงคโปร์และมาเลเซียยากมากที่จะได้รับ (MAS ออกให้น้อยมาก) เป็นกำแพงเข้า (barrier to entry) สูงมากสำหรับคู่แข่งใหม่ในด้าน fintech</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S6: LEADERSHIP -->
+<div class="section-gray" id="leadership">
+  <div class="container">
+    <div class="sec-eyebrow reveal">06 — ผู้บริหารและนักลงทุน</div>
+    <h2 class="sec-title reveal">ทีมผู้ก่อตั้งยังคุมเอง</h2>
+    <p class="sec-sub reveal">
+      Anthony Tan ยังเป็นทั้ง CEO และประธานกรรมการ หลังก่อตั้งบริษัทมา 14 ปี ถือหุ้นส่วนตัว 1.87% คิดเป็นมูลค่า ~$277 ล้าน ทีมผู้บริหารมีอายุงานเฉลี่ย 3.3 ปี
+    </p>
+
+    <div class="grid-3 reveal">
+      <div class="person-card">
+        <div class="person-avatar">AT</div>
+        <div class="person-name">Anthony Tan</div>
+        <div class="person-title">Group CEO & Co-Founder</div>
+        <div class="person-bio">ก่อตั้งบริษัทปี 2555 ขณะเรียน Harvard Business School ดูแล Grab มาตลอด 14 ปี นำบริษัทผ่านการขยายจาก 1 ประเทศสู่ 8 ประเทศ และเข้า NASDAQ ปี 2564</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">THL</div>
+        <div class="person-name">Tan Hooi Ling</div>
+        <div class="person-title">Co-Founder</div>
+        <div class="person-bio">ร่วมก่อตั้ง MyTeksi กับ Anthony Tan ที่ Harvard ดูแลด้าน operations และ culture ในช่วงแรก เป็น Harvard Business School graduate เช่นกัน</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">MM</div>
+        <div class="person-name">Ming Maa</div>
+        <div class="person-title">President</div>
+        <div class="person-bio">ดูแลด้านกลยุทธ์และการเติบโต เป็นหนึ่งในทีมผู้บริหารระดับสูงที่มีบทบาทในการผลักดัน Grab สู่ตลาดสาธารณะ และดูแลความสัมพันธ์นักลงทุน</div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:48px">
+      <strong>นักลงทุนสำคัญ:</strong> SoftBank Vision Fund (หนึ่งในผู้ถือหุ้นใหญ่ตั้งแต่ยุค startup), Uber (ได้หุ้น 27.5% จากดีลปี 2561 แต่ลดสัดส่วนลงเรื่อยๆ), Microsoft, Hyundai Motor, Didi Chuxing — บริษัทได้รับเงินลงทุน SPAC รวม $4.5 พันล้านเมื่อ IPO ปี 2564
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S7: CATALYSTS -->
+<div class="section-white" id="catalysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">07 — ตัวเร่งและข่าว</div>
+    <h2 class="sec-title reveal">ปี 2569 เต็มไปด้วยตัวเร่ง</h2>
+    <p class="sec-sub reveal">
+      Grab มีการเคลื่อนไหวสำคัญหลายอย่างพร้อมกันในปี 2569 ทั้งการซื้อกิจการ ความร่วมมือ AV และการขยายสู่ตลาดใหม่
+    </p>
+
+    <div class="grid-2 reveal">
+      <div>
+        <h3 style="font-size:16px;font-weight:600;color:var(--up);margin-bottom:24px">ปัจจัยบวก</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">ก.พ. 2569</div>
+            <div class="timeline-title">ประกาศ Share Buyback $500M</div>
+            <div class="timeline-desc">ซื้อคืนหุ้นตัวเองมูลค่าสูงสุด $500 ล้าน สัญญาณว่าผู้บริหารมองว่าหุ้น undervalued (ราคาต่ำกว่ามูลค่าที่แท้จริง)</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">เม.ย. 2569</div>
+            <div class="timeline-title">เปิดตัว Ai.R Robotaxi สิงคโปร์</div>
+            <div class="timeline-desc">บริการ Level 4 โรโบแท็กซี่แรกของอาเซียน เปิดให้สาธารณะจอง ที่ Punggol residential estate</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">H2 2569 (คาด)</div>
+            <div class="timeline-title">ปิดดีล foodpanda Taiwan $600M</div>
+            <div class="timeline-desc">ขยายออกนอกอาเซียนครั้งแรก ไต้หวันเป็นตลาดที่ 9 ของ Grab</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">Q3 2569 (คาด)</div>
+            <div class="timeline-title">ปิดดีล Stash Financial $425M</div>
+            <div class="timeline-desc">เสริมฐาน fintech ด้วยเทคโนโลยีและทีมจากสหรัฐฯ</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">H2 2569 (เป้า)</div>
+            <div class="timeline-title">GFin Profitable</div>
+            <div class="timeline-desc">management guided ว่า segment การเงินจะถึงจุดทำกำไรระดับ segment ภายในครึ่งปีหลัง 2569</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:16px;font-weight:600;color:var(--down);margin-bottom:24px">ปัจจัยลบ / สิ่งที่ต้องจับตา</h3>
+        <div class="timeline" style="--accent:var(--down)">
+          <div class="timeline-item" style="--accent:#cf202f">
+            <div class="timeline-date" style="color:var(--down)">มิ.ย. 2569</div>
+            <div class="timeline-title">หุ้นลง -22% ใน 3 เดือน</div>
+            <div class="timeline-desc">ราคาหุ้นร่วงจาก 52-week high $6.62 มาอยู่ที่ ~$3.54 สะท้อนความกังวลเรื่อง valuation และ macro ภูมิภาค</div>
+          </div>
+          <div class="timeline-item" style="--accent:#cf202f">
+            <div class="timeline-date" style="color:var(--down)">ต่อเนื่อง</div>
+            <div class="timeline-title">inDrive ขยายตัวเร็ว</div>
+            <div class="timeline-desc">บริการ bid-based (ผู้โดยสารต่อราคาได้) โตแบบก้าวกระโดด 8 เท่าในปี 2568 กดดัน Grab ในตลาดที่ price-sensitive</div>
+          </div>
+          <div class="timeline-item" style="--accent:#cf202f">
+            <div class="timeline-date" style="color:var(--down)">ริสก์</div>
+            <div class="timeline-title">ดีลใหญ่ 2 ดีลยังไม่ปิด</div>
+            <div class="timeline-desc">foodpanda Taiwan + Stash Financial รวม ~$1B อาจมีความซับซ้อนด้านกฎระเบียบหรือดีล condition ที่เปลี่ยนแปลง</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S8: RISKS -->
+<div class="section-gray" id="risks">
+  <div class="container">
+    <div class="sec-eyebrow reveal">08 — ความเสี่ยง</div>
+    <h2 class="sec-title reveal">ความเสี่ยงที่ต้องรู้</h2>
+    <p class="sec-sub reveal">ทั้งความเสี่ยงระดับบริษัทและระดับมหภาค</p>
+
+    <div class="grid-2 reveal">
+      <div>
+        <div class="risk-card risk-high">
+          <div class="risk-badge">สูง</div>
+          <div class="risk-title">การแข่งขันในอินโดนีเซียและเวียดนาม</div>
+          <div class="risk-body">อินโดนีเซียคือตลาดใหญ่ที่สุดของอาเซียนโดยประชากร แต่ Gojek มีฐานแน่นมาก ส่วนเวียดนาม Xanh SM แซง Grab เป็น #1 ใน Q4/2567 ทั้งสองตลาดเป็นจุดที่ Grab อาจสูญเสียส่วนแบ่งหากไม่ลงทุนเพิ่ม</div>
+        </div>
+        <div class="risk-card risk-high">
+          <div class="risk-badge">สูง</div>
+          <div class="risk-title">SBC (Stock-Based Compensation) สูง</div>
+          <div class="risk-body">SBC (ค่าตอบแทนพนักงานที่จ่ายเป็นหุ้น) เป็นค่าใช้จ่ายหลักที่ทำให้ GAAP net income (กำไรตามมาตรฐานบัญชีสากล) ดูต่ำกว่า Adjusted EBITDA มาก ผู้ลงทุนบางส่วนมองว่าตัวเลข "กำไร" ที่ประกาศอาจ adjusted มากเกินไป</div>
+        </div>
+        <div class="risk-card risk-med">
+          <div class="risk-badge">กลาง</div>
+          <div class="risk-title">ความเสี่ยงดีลใหญ่ ($1B+)</div>
+          <div class="risk-body">การซื้อ foodpanda Taiwan ($600M) และ Stash Financial ($425M) พร้อมกัน ทำให้ capital allocation (การจัดสรรเงินทุน) ต้องแม่นยำ หากการ integrate ล่าช้าหรือดีลมีปัญหา จะกระทบ cash flow</div>
+        </div>
+      </div>
+      <div>
+        <div class="risk-card risk-med">
+          <div class="risk-badge">กลาง</div>
+          <div class="risk-title">กฎระเบียบ — อาเซียนหลายประเทศ</div>
+          <div class="risk-body">Grab ดำเนินใน 8 ประเทศที่มีกฎระเบียบต่างกัน การเปลี่ยนนโยบายแรงงาน gig worker (คนขับอิสระ), ใบอนุญาตธนาคาร, หรือข้อกำหนด data localization ในแต่ละประเทศสามารถกระทบได้พร้อมกัน</div>
+        </div>
+        <div class="risk-card risk-med">
+          <div class="risk-badge">กลาง</div>
+          <div class="risk-title">NPL ในพอร์ตสินเชื่อที่โตเร็ว</div>
+          <div class="risk-body">พอร์ตสินเชื่อโต 120% YoY ใน 1 ปี เป็นตัวเลขที่น่าประทับใจ แต่ NPL (Non-Performing Loan — หนี้ที่ไม่ก่อให้เกิดรายได้) อาจตามมาในระยะ 12-24 เดือนข้างหน้า หากกลุ่มลูกค้า underbanked มีความสามารถชำระหนี้ต่ำกว่าคาด</div>
+        </div>
+        <div class="risk-card risk-low">
+          <div class="risk-badge">ต่ำ</div>
+          <div class="risk-title">ความเสี่ยง AV เชิงเทคโนโลยี</div>
+          <div class="risk-body">Robotaxi ยังอยู่ในช่วงทดสอบ-commercial pilot เป็นส่วนเล็กมากของธุรกิจ ความเสี่ยงนี้จึงต่ำในระยะสั้น แต่ถ้า scale ไม่ได้ตามแผน จะกระทบ thesis ระยะยาวของ Mobility segment</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S9: ANALYSTS -->
+<div class="section-dark" id="analysts">
+  <div class="container">
+    <div class="sec-eyebrow sec-eyebrow-dark reveal">09 — นักวิเคราะห์</div>
+    <h2 class="sec-title sec-title-dark reveal">Consensus: Buy — แต่ราคาหุ้นยังกดดัน</h2>
+    <p class="sec-sub sec-sub-dark reveal">
+      นักวิเคราะห์ Wall Street เป็น Buy consensus แต่ราคาหุ้น ณ มิ.ย. 2569 (~$3.54) ต่ำกว่าเป้าเฉลี่ยมาก สะท้อน gap ระหว่าง fundamental กับ sentiment ตลาด
+    </p>
+
+    <div class="grid-2 reveal">
+      <div style="background:var(--surface-dark-el);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-card);padding:40px">
+        <div style="font-size:13px;font-weight:600;color:var(--on-dark-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px">Rating Consensus (จาก ~6 นักวิเคราะห์)</div>
+
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label">
+            <span style="color:var(--on-dark)">Strong Buy</span>
+            <span style="color:var(--up);font-family:'JetBrains Mono',monospace">50%</span>
+          </div>
+          <div class="analyst-bar-track">
+            <div class="analyst-bar-fill" style="width:50%;background:var(--up)"></div>
+          </div>
+        </div>
+
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label">
+            <span style="color:var(--on-dark)">Buy</span>
+            <span style="color:var(--up);font-family:'JetBrains Mono',monospace">50%</span>
+          </div>
+          <div class="analyst-bar-track">
+            <div class="analyst-bar-fill" style="width:50%;background:rgba(5,177,105,0.6)"></div>
+          </div>
+        </div>
+
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label">
+            <span style="color:var(--on-dark)">Hold</span>
+            <span style="color:var(--muted);font-family:'JetBrains Mono',monospace">0%</span>
+          </div>
+          <div class="analyst-bar-track">
+            <div class="analyst-bar-fill" style="width:0%;background:var(--muted)"></div>
+          </div>
+        </div>
+
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label">
+            <span style="color:var(--on-dark)">Sell / Strong Sell</span>
+            <span style="color:var(--muted);font-family:'JetBrains Mono',monospace">0%</span>
+          </div>
+          <div class="analyst-bar-track">
+            <div class="analyst-bar-fill" style="width:0%;background:var(--down)"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06)">
+          <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+            <span style="color:var(--on-dark-soft);font-size:14px">ราคาเป้าเฉลี่ย</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:500">$5.97 – $6.17</span>
+          </div>
+          <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+            <span style="color:var(--on-dark-soft);font-size:14px">ราคาเป้าต่ำสุด</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--on-dark);font-weight:500">$4.10 – $4.14</span>
+          </div>
+          <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+            <span style="color:var(--on-dark-soft);font-size:14px">ราคาเป้าสูงสุด</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--on-dark);font-weight:500">$8.00 – $8.40</span>
+          </div>
+          <div class="data-row" style="border-color:rgba(255,255,255,0.06)">
+            <span style="color:var(--on-dark-soft);font-size:14px">EPS forecast ปี 2569</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--on-dark);font-weight:500">~$0.10</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="card-dark card" style="border-radius:20px">
+          <div class="card-title-dark card-title" style="color:var(--up);margin-bottom:12px">Bull Case — สิ่งที่คนมองบวกคิด</div>
+          <div class="card-body-dark card-body">
+            <p style="margin-bottom:10px">Grab เป็น "ประตู" เดียวสู่ชนชั้นกลางอาเซียน 680 ล้านคนที่กำลังดิจิทัลไลซ์ GrabFin ยังอยู่ในช่วงต้น — ถ้า penetrate (เข้าถึง) กลุ่ม underbanked ได้สำเร็จ TAM จริงใหญ่กว่าที่ตลาดคิดมาก</p>
+            <p>Robotaxi ถ้า scale ได้ จะลด driver cost ลงได้มหาศาล กำไรจะพุ่งโดยไม่ต้องโต revenue</p>
+          </div>
+        </div>
+        <div class="card-dark card" style="border-radius:20px">
+          <div class="card-title-dark card-title" style="color:var(--down);margin-bottom:12px">Bear Case — สิ่งที่คนมองลบคิด</div>
+          <div class="card-body-dark card-body">
+            <p style="margin-bottom:10px">Grab ใช้เวลา 13 ปีกว่าจะทำกำไร quality ของกำไรยังน่าตั้งคำถาม (SBC สูง, adjusted EBITDA ≠ GAAP). การแข่งขันในอินโดนีเซียและเวียดนามรุนแรงขึ้น ขณะที่ดีลใหม่ 2 ดีลใช้เงินสดก้อนใหญ่</p>
+            <p>ราคาหุ้น down -22% ใน 3 เดือนแม้ fundamental ดีขึ้น แสดงว่าตลาดยังไม่เชื่อใน sustainability ของกำไร</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- S10: SUMMARY -->
+<div class="section-white" id="summary">
+  <div class="container">
+    <div class="sec-eyebrow reveal">10 — สรุป</div>
+    <h2 class="sec-title reveal">สิ่งที่ควรจำไว้ 3 ข้อ</h2>
+    <p class="sec-sub reveal">
+      ถ้าจำจากรายงานนี้ได้แค่สามอย่าง
+    </p>
+
+    <div class="grid-3 reveal">
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:var(--accent);margin-bottom:8px">01</div>
+        <div class="card-title">กำไรครั้งแรกในรอบ 13 ปี</div>
+        <div class="card-body">ปี 2568 คือ inflection point จริง — $268M net income, $3.37B revenue, +21% YoY บริษัทเปลี่ยนโมดจาก "เผาเงินโต" เป็น "profitable growth" แล้ว</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:var(--accent);margin-bottom:8px">02</div>
+        <div class="card-title">GrabFin คือ growth engine อนาคต</div>
+        <div class="card-body">รายได้ fintech โต 37% — เร็วกว่าทุก segment พอร์ตสินเชื่อโต 120% เงินฝาก $1.6B ถ้า GFin profitable ได้ใน H2/2569 จะเปิดบทใหม่ให้หุ้น</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:var(--accent);margin-bottom:8px">03</div>
+        <div class="card-title">Moat แน่น แต่สงครามยังไม่จบ</div>
+        <div class="card-body">80-85% ride-hailing, 55% food delivery ในอาเซียน ใบอนุญาตธนาคารที่หายาก — แต่อินโดนีเซียและเวียดนามยังเป็นสนามรบที่ต้องจับตาอย่างใกล้ชิด</div>
+      </div>
+    </div>
+
+    <!-- What to watch -->
+    <div style="background:var(--surface-soft);border-radius:var(--r-card);padding:40px;margin-top:48px" class="reveal">
+      <h3 style="font-size:20px;font-weight:600;margin-bottom:24px">สิ่งที่ต้องจับตา (Watchlist)</h3>
+      <div class="grid-2">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px">ระยะสั้น — 6 เดือน</div>
+          <div class="data-row"><span class="data-key">GFin segment profit</span><span class="data-val data-val-accent">H2 2569 เป้า</span></div>
+          <div class="data-row"><span class="data-key">ปิดดีล Stash Financial</span><span class="data-val">Q3 2569 คาด</span></div>
+          <div class="data-row"><span class="data-key">ปิดดีล foodpanda Taiwan</span><span class="data-val">H2 2569 คาด</span></div>
+          <div class="data-row"><span class="data-key">Share Buyback execution</span><span class="data-val">ติดตาม pace</span></div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px">ระยะยาว — 1-3 ปี</div>
+          <div class="data-row"><span class="data-key">Robotaxi commercial scale</span><span class="data-val">WeRide + May Mobility</span></div>
+          <div class="data-row"><span class="data-key">GFin loan quality (NPL)</span><span class="data-val">จับตาใกล้ชิด</span></div>
+          <div class="data-row"><span class="data-key">ส่วนแบ่งตลาด ID + VN</span><span class="data-val">vs Gojek / Xanh SM</span></div>
+          <div class="data-row"><span class="data-key">Taiwan expansion ROI</span><span class="data-val">ตลาดนอกอาเซียนแรก</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- One-paragraph summary -->
+    <div class="callout reveal" style="margin-top:48px;font-size:16px;line-height:1.8">
+      <strong>สรุปในหนึ่งย่อหน้า:</strong> Grab Holdings เป็นซูเปอร์แอปที่ใหญ่ที่สุดในเอเชียตะวันออกเฉียงใต้ ให้บริการครบวงจร — เรียกรถ ส่งอาหาร และบริการการเงินดิจิทัล — ใน 8 ประเทศ ปี 2568 ถือเป็นจุดพลิกสำคัญที่บริษัทโพสต์กำไรสุทธิเต็มปีครั้งแรกหลังขาดทุนมา 13 ปี ด้วยรายได้ $3.37 พันล้านดอลลาร์ (+21%) segment การเงินดิจิทัลที่โต 37% คือเครื่องยนต์ที่น่าจับตาที่สุดในระยะข้างหน้า ขณะที่การลงทุนในโรโบแท็กซี่กับ WeRide ซึ่งเริ่มให้บริการจริงในสิงคโปร์แล้วตั้งแต่เมษายน 2569 อาจเปลี่ยนโครงสร้างต้นทุนของธุรกิจ Mobility ในระยะยาว — รวมถึงการซื้อกิจการครั้งใหม่ในไต้หวันและสหรัฐฯ ที่กำลังจะปิดในปี 2569 บ่งบอกว่า Grab กำลังก้าวจาก "ผู้นำอาเซียน" ไปสู่ "บริษัทเทคโนโลยีระดับโลก" อย่างจริงจัง
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-size:16px;font-weight:600;color:var(--ink)">Grab Holdings (GRAB)</div>
+        <div style="font-size:13px;color:var(--muted)">รายงานเชิงลึก — จัดทำโดย Neon · 21 มิถุนายน 2569</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="pill pill-neutral">NASDAQ: GRAB</span>
+        <span class="pill pill-accent">Superapp</span>
+        <span class="pill pill-accent">Consumer Tech</span>
+        <span class="pill pill-accent">SEA Fintech</span>
+      </div>
+    </div>
+    <div class="footer-legal">
+      รายงานนี้จัดทำขึ้นเพื่อการศึกษาและความเข้าใจธุรกิจเท่านั้น ไม่ใช่คำแนะนำทางการลงทุน ไม่ควรนำไปใช้เป็นพื้นฐานในการตัดสินใจซื้อหรือขายหลักทรัพย์ใดๆ ตัวเลขทางการเงินและข้อมูลต่างๆ อ้างอิงจากรายงานทางการของ Grab Holdings, SEC filings, และแหล่งข่าวสาธารณะ ณ วันที่จัดทำรายงาน ผู้อ่านควรตรวจสอบข้อมูลล่าสุดก่อนตัดสินใจใดๆ
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+    });
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+(function(){
+  var links=document.querySelectorAll('.nav-links a');
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('active');});
+        var l=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');
+        if(l)l.classList.add('active');
+      }
+    });
+  },{threshold:0.35});
+  document.querySelectorAll('[id]').forEach(function(s){
+    if(s.tagName!=='NAV')io.observe(s);
+  });
+})();
+</script>
+</body>
+</html>

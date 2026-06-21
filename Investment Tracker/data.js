@@ -91,5 +91,7 @@ const DATA = {
   },
   journal:[],   // pros/cons ฝั่งคุณบนแท็บ Log — เพิ่มได้ภายหลัง
   bench:{ spx:[0], nasdaq:[0] },
-  reports:[]    // {ticker, date, file} — Neon HTML reports ใน dashboard/reports/
+  reports:[
+    {ticker:"GRAB", date:"21 มิ.ย. 2026", file:"GRAB_2026-06-21.html"}
+  ]    // {ticker, date, file} — Neon HTML reports ใน dashboard/reports/
 };
