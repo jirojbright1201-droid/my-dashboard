@@ -403,7 +403,7 @@ function _renderCoList(){
 let _coTk=null, _coNwLim=3, _coTab='overview';
 function openCompany(tk){
   const rep=(DATA.reports||[]).slice().reverse().find(r=>r.ticker===tk);
-  if(rep){ window.open('reports/'+rep.file,'_blank'); return; }
+  if(rep){ window.open('../reports/'+rep.file,'_blank'); return; }
   _coTk=tk; _coNwLim=3; _coTab='overview'; _renderCompanyDrawer();
 }
 function coTab(t){ _coTab=t; _renderCompanyDrawer(); }
