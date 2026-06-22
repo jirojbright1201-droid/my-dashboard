@@ -94,7 +94,7 @@
   .tile {
     width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    background: #eef0f3; font-size: 22px; line-height: 1;
+    background: #e8eeff; font-size: 22px; line-height: 1;
     font-family: 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji', sans-serif;
   }
   .row-title { font-size: 0.9375rem; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -319,14 +319,9 @@ const CAT_EMOJI = {
   Investment:'📈', Shopping:'🛍️', Books:'📚', Transport:'🚗',
   Beauty:'💄', Entertainment:'🎬', Study:'🎓', Emergency:'🚨'
 };
-const CAT_BG = {
-  Restaurant:'#FFE8D6', Family:'#E7E0FF', Subscriptions:'#DCEBFF', Rent:'#D9F2E6',
-  Investment:'#D6F0E2', Shopping:'#FFE1EC', Books:'#E6E9FF', Transport:'#D9ECFF',
-  Beauty:'#FFE0EE', Entertainment:'#EAE2FF', Study:'#FFF1CC', Emergency:'#FFE0E0'
-};
-function tile(emoji, bg) { return `<div class="tile" style="background:${bg || '#eef0f3'}">${emoji}</div>`; }
-function catTile(cat) { return tile(CAT_EMOJI[cat] || '🧾', CAT_BG[cat]); }
-function srcTile(src) { return src === 'Salary' ? tile('💼', '#D9F2E6') : tile('🎁', '#FFE1EC'); }
+function tile(emoji) { return `<div class="tile">${emoji}</div>`; }
+function catTile(cat) { return tile(CAT_EMOJI[cat] || '🧾'); }
+function srcTile(src) { return tile(src === 'Salary' ? '💼' : '🎁'); }
 
 const barChart = new Chart(document.getElementById('barChart'), {
   type: 'bar',
