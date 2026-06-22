@@ -2,220 +2,197 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Money Dashboard</title>
 <link rel="icon" type="image/png" href="../icons/icon-192.png">
 <link rel="apple-touch-icon" href="../icons/icon-192.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Coinbase Light — brand blue #0052FF on white */
-    --blue: #0052ff; --blue-deep: #0043d6; --blue-soft: rgba(0,82,255,0.08);
-    --green: #0052ff; --green-deep: #0043d6;          /* legacy aliases → brand blue */
+    --bg: #f2f2f7;            /* iOS system grouped background */
+    --card: #ffffff;
+    --sep: #e3e3e8;           /* hairline separator */
+    --label: #8a8a8e;         /* secondary label gray */
+    --label-2: #aeaeb2;
+    --text: #0a0b0d;
+    --tint: #0052ff;          /* brand blue accent */
+    --tint-deep: #0043d6;
     --up: #098551; --down: #cf202f;
-    --bg: #ffffff; --surface: #ffffff; --surface-2: #f5f6f8; --surface-3: #eef0f3;
-    --text: #0a0b0d; --silver: #5b616e; --near-white: #1f2128;
-    --border: #d7dae0; --border-soft: #ebecf0;
-    --error: #cf202f; --warning: #b8860b;
+    --track: #e5e5ea;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { overscroll-behavior-y: contain; }
   body {
-    font-family: 'Inter', 'Helvetica Neue', -apple-system, system-ui, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, system-ui, 'Helvetica Neue', Arial, sans-serif;
     background: var(--bg); color: var(--text);
     min-height: 100vh; -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none; user-select: none;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .topbar {
-    background: var(--bg); color: var(--text);
-    padding: 0 24px; height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 50;
-    border-bottom: 1px solid var(--border-soft);
-  }
-  .topbar h1 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; color: var(--green); }
-  .topbar-right { display: flex; align-items: center; gap: 20px; }
-  .updated { color: var(--silver); font-size: 0.75rem; }
+  .container { max-width: 640px; margin: 0 auto; padding: 0 16px calc(40px + env(safe-area-inset-bottom)); }
 
-  .month-picker { display: flex; align-items: center; gap: 8px; }
-  .month-picker button {
-    background: var(--surface-2); border: none; border-radius: 9999px;
-    width: 38px; height: 38px; cursor: pointer; font-size: 0.95rem;
+  /* ── Sticky month header ── */
+  .mhead {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    height: 52px; margin: 0 -16px 6px; padding: 0 16px;
+    background: rgba(242,242,247,0.82);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .month-label { font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.02em; min-width: 150px; text-align: center; }
+  .chev {
+    background: none; border: none; cursor: pointer;
+    width: 40px; height: 40px; border-radius: 50%;
+    font-size: 1.5rem; line-height: 1; color: var(--tint);
     display: flex; align-items: center; justify-content: center;
-    color: var(--text); transition: background .15s, transform .1s;
+    transition: background .15s;
   }
-  .month-picker button:hover { background: var(--surface-3); }
-  .month-picker button:active { transform: scale(0.94); }
-  .month-picker button:disabled { opacity: 0.3; cursor: default; }
-  .month-label { font-size: 0.9375rem; font-weight: 700; min-width: 120px; text-align: center; color: var(--text); }
+  .chev:active { background: rgba(0,0,0,0.06); }
+  .chev:disabled { color: var(--label-2); cursor: default; }
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 36px 24px 64px; }
-
-  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
-  .card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 22px 24px; }
-  .card .label { font-size: 0.6875rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 10px; }
-  .card .value { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
-  .card .sub { font-size: 0.8125rem; color: var(--silver); margin-top: 8px; }
-
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
-  .grid2-wide { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 28px; }
-
-  .section-title { font-size: 1.125rem; font-weight: 700; color: var(--text); margin-bottom: 16px; }
-
-  .budget-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-  .budget-card {
-    background: var(--surface-2); border-radius: 8px; padding: 16px 18px;
-    cursor: pointer; transition: background .2s;
+  /* ── Section header (grouped-list style) ── */
+  .group-title {
+    font-size: 0.75rem; font-weight: 600; color: var(--label);
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 22px 16px 7px;
   }
-  .budget-card:hover { background: var(--surface-3); }
-  .budget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .cat-name { font-size: 0.9375rem; font-weight: 700; color: var(--text); }
-  .budget-amounts { color: var(--silver); font-size: 0.75rem; }
-  .progress-bar { height: 5px; background: var(--border); border-radius: 9999px; overflow: hidden; margin-bottom: 9px; }
-  .progress-fill { height: 100%; background: var(--green); border-radius: 9999px; transition: width .3s ease; }
-  .progress-fill.over { background: var(--error); }
-  .budget-footer { display: flex; justify-content: space-between; font-size: 0.75rem; }
-  .pct { color: var(--near-white); font-weight: 700; }
-  .pct.over { color: var(--error); }
-  .remaining { color: var(--silver); }
-  .remaining.over { color: var(--error); font-weight: 700; }
 
-  .chart-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 22px 24px; }
-  .chart-wrap { position: relative; height: 240px; }
+  /* ── Hero summary ── */
+  .hero {
+    background: var(--card); border-radius: 14px; padding: 20px 20px 6px;
+    margin-top: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .hero-label { font-size: 0.8125rem; color: var(--label); font-weight: 500; }
+  .hero-bal { font-size: 2.375rem; font-weight: 800; letter-spacing: -0.03em; margin-top: 2px; line-height: 1.1; }
+  .hero-sub { font-size: 0.8125rem; color: var(--label); margin-top: 4px; }
+  .hero-split { display: flex; margin-top: 16px; border-top: 1px solid var(--sep); }
+  .hs { flex: 1; padding: 14px 4px 16px; }
+  .hs + .hs { border-left: 1px solid var(--sep); padding-left: 18px; }
+  .hs-lab { font-size: 0.75rem; color: var(--label); font-weight: 500; }
+  .hs-val { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+  .hs-val.up { color: var(--up); }
+  .hs-val.down { color: var(--down); }
+  .hs-cnt { font-size: 0.6875rem; color: var(--label-2); margin-top: 3px; }
 
-  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-  th { color: var(--silver); font-weight: 700; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 1px; padding: 0 10px 12px; text-align: left; border-bottom: 1px solid var(--border-soft); }
-  td { padding: 12px 10px; border-bottom: 1px solid var(--border-soft); color: var(--near-white); }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: var(--surface-2); }
-  .amount-pos { color: var(--blue); font-weight: 700; text-align: right; }
-  .amount-neg { color: var(--down); font-weight: 700; text-align: right; }
-  .cat-label { font-size: 0.75rem; color: var(--silver); }
+  /* ── Grouped list card ── */
+  .list { background: var(--card); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
 
-  /* Modal */
-  .overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(10,11,13,0.45); z-index: 100;
-    align-items: center; justify-content: center;
-  }
-  .overlay.active { display: flex; }
-  .modal {
-    background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; width: 460px; max-width: 95vw;
-    max-height: 80vh; display: flex; flex-direction: column; overflow: hidden;
-    box-shadow: rgba(10,11,13,0.12) 0 12px 32px;
-  }
-  .modal-head {
-    padding: 24px 24px 16px; border-bottom: 1px solid var(--border-soft);
-    display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0;
-  }
-  .modal-title { font-size: 1.25rem; font-weight: 700; color: var(--text); }
-  .modal-sub { font-size: 0.875rem; color: var(--silver); margin-top: 4px; }
-  .modal-close {
-    background: var(--surface-2); border: none; cursor: pointer; border-radius: 9999px;
-    width: 36px; height: 36px; font-size: 0.95rem; color: var(--text); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center; transition: background .15s, transform .1s;
-  }
-  .modal-close:hover { background: var(--border); }
-  .modal-close:active { transform: scale(0.94); }
-  .modal-body { overflow-y: auto; }
-  .modal-empty { padding: 36px; text-align: center; color: var(--silver); font-size: 0.875rem; }
-  .modal table { font-size: 0.875rem; }
-  .modal th { padding: 16px 24px 10px; }
-  .modal td { padding: 12px 24px; }
+  .row { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 16px; min-height: 52px; }
+  .row:not(:last-child)::after { content: ''; position: absolute; left: 16px; right: 0; bottom: 0; height: 1px; background: var(--sep); }
+  .tappable { cursor: pointer; transition: background .12s; }
+  .tappable:active { background: #ededf2; }
+  .row-lead { min-width: 0; }
+  .row-title { font-size: 0.9375rem; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-sub { font-size: 0.75rem; color: var(--label); margin-top: 2px; }
+  .row-amt { font-size: 0.9375rem; font-weight: 700; flex-shrink: 0; }
+  .row-amt.neg { color: var(--down); }
+  .row-amt.pos { color: var(--up); }
+  .chev-r::after { content: '›'; color: var(--label-2); font-size: 1.15rem; font-weight: 600; margin-left: 2px; }
 
-  @media (max-width: 768px) {
-    body { overflow-x: hidden; }
-    .summary-grid, .grid2, .grid2-wide { grid-template-columns: 1fr; }
-    .topbar { flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px; }
-    .container { padding: 20px 12px 48px; }
-    .budget-grid { grid-template-columns: 1fr 1fr; }
-    .budget-header { flex-direction: column; align-items: flex-start; gap: 2px; }
-    .cat-name { font-size: 0.875rem; }
-    .budget-amounts { font-size: 0.6875rem; }
+  /* ── Budget row (stacked) ── */
+  .brow { position: relative; padding: 14px 16px; cursor: pointer; transition: background .12s; }
+  .brow:not(:last-child)::after { content: ''; position: absolute; left: 16px; right: 0; bottom: 0; height: 1px; background: var(--sep); }
+  .brow:active { background: #ededf2; }
+  .brow-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 9px; }
+  .brow-name { font-size: 0.9375rem; font-weight: 600; }
+  .brow-amt { font-size: 0.75rem; color: var(--label); white-space: nowrap; }
+  .prog { height: 6px; background: var(--track); border-radius: 99px; overflow: hidden; }
+  .prog-fill { height: 100%; background: var(--tint); border-radius: 99px; transition: width .3s ease; }
+  .prog-fill.over { background: var(--down); }
+  .brow-foot { display: flex; justify-content: space-between; font-size: 0.75rem; margin-top: 7px; }
+  .pct { font-weight: 700; color: var(--text); }
+  .pct.over { color: var(--down); }
+  .rem { color: var(--label); }
+  .rem.over { color: var(--down); font-weight: 600; }
+
+  .chart-wrap { position: relative; height: 200px; }
+
+  .empty { text-align: center; color: var(--label); font-size: 0.875rem; padding: 26px 0; }
+
+  /* ── Bottom sheet ── */
+  .sheet-ov {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100;
+    opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  .sheet-ov.active { opacity: 1; pointer-events: auto; }
+  .sheet {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 101;
+    background: var(--bg); border-radius: 16px 16px 0 0;
+    transform: translateY(100%); transition: transform .32s cubic-bezier(.32,.72,0,1);
+    max-height: 86vh; display: flex; flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .sheet.active { transform: translateY(0); }
+  .sheet-grab { width: 38px; height: 5px; background: #c7c7cc; border-radius: 99px; margin: 8px auto 4px; flex-shrink: 0; }
+  .sheet-head { padding: 8px 20px 14px; flex-shrink: 0; }
+  .sheet-title { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; }
+  .sheet-sub { font-size: 0.8125rem; color: var(--label); margin-top: 3px; }
+  .sheet-body { overflow-y: auto; padding: 0 16px 20px; -webkit-overflow-scrolling: touch; }
+
+  @media (min-width: 700px) {
+    .chart-wrap { height: 240px; }
   }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <h1>Money Dashboard</h1>
-  <div class="topbar-right">
-    <div class="month-picker">
-      <button id="btnPrev" onclick="changeMonth(-1)">&#8592;</button>
-      <span class="month-label" id="monthLabel"></span>
-      <button id="btnNext" onclick="changeMonth(1)">&#8594;</button>
-    </div>
-    <span class="updated">อัปเดต <span class="updated">15/06/2026 14:33</span></span>
-  </div>
-</div>
-
 <div class="container">
-  <div class="summary-grid">
-    <div class="card income">
-      <div class="label">รายรับ</div>
-      <div class="value" id="sumIncome">—</div>
-      <div class="sub" id="subIncome"></div>
-    </div>
-    <div class="card expense">
-      <div class="label">รายจ่าย</div>
-      <div class="value" id="sumExpense">—</div>
-      <div class="sub" id="subExpense"></div>
-    </div>
-    <div class="card balance" id="cardBalance">
-      <div class="label">คงเหลือ</div>
-      <div class="value" id="sumBalance">—</div>
-      <div class="sub" id="subBalance"></div>
-    </div>
-  </div>
+  <header class="mhead">
+    <button class="chev" id="btnPrev" onclick="changeMonth(-1)">&#8249;</button>
+    <span class="month-label" id="monthLabel"></span>
+    <button class="chev" id="btnNext" onclick="changeMonth(1)">&#8250;</button>
+  </header>
 
-  <div class="grid2-wide">
-    <div class="chart-card">
-      <div class="section-title">Budget vs Spent</div>
-      <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+  <section class="hero">
+    <div class="hero-label">คงเหลือเดือนนี้</div>
+    <div class="hero-bal" id="sumBalance">—</div>
+    <div class="hero-sub" id="subBalance"></div>
+    <div class="hero-split">
+      <div class="hs">
+        <div class="hs-lab">รายรับ</div>
+        <div class="hs-val up" id="sumIncome">—</div>
+        <div class="hs-cnt" id="subIncome"></div>
+      </div>
+      <div class="hs">
+        <div class="hs-lab">รายจ่าย</div>
+        <div class="hs-val down" id="sumExpense">—</div>
+        <div class="hs-cnt" id="subExpense"></div>
+      </div>
     </div>
-    <div class="chart-card">
-      <div class="section-title">สัดส่วนรายจ่าย</div>
-      <div class="chart-wrap"><canvas id="donutChart"></canvas></div>
-    </div>
-  </div>
+  </section>
 
-  <div class="card" style="margin-bottom:24px">
-    <div class="section-title">Budget — คลิกเพื่อดู history</div>
-    <div class="budget-grid" id="budgetGrid"></div>
-  </div>
+  <div class="group-title">Budget · แตะดูประวัติ</div>
+  <section class="list" id="budgetList"></section>
 
-  <div class="grid2">
-    <div class="card">
-      <div class="section-title">รายจ่ายล่าสุด</div>
-      <table>
-        <thead><tr><th>วันที่</th><th>รายการ</th><th>หมวด</th><th>จำนวน</th></tr></thead>
-        <tbody id="expenseRows"></tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="section-title">รายรับล่าสุด</div>
-      <table>
-        <thead><tr><th>วันที่</th><th>แหล่งที่มา</th><th>จำนวน</th></tr></thead>
-        <tbody id="incomeRows"></tbody>
-      </table>
-    </div>
-  </div>
+  <div class="group-title">Budget vs จ่ายจริง</div>
+  <section class="card"><div class="chart-wrap"><canvas id="barChart"></canvas></div></section>
+
+  <div class="group-title">สัดส่วนรายจ่าย</div>
+  <section class="card"><div class="chart-wrap"><canvas id="donutChart"></canvas></div></section>
+
+  <div class="group-title">รายจ่ายล่าสุด</div>
+  <section class="list" id="expenseList"></section>
+
+  <div class="group-title">รายรับ</div>
+  <section class="list" id="incomeList"></section>
 </div>
 
-<!-- Modal -->
-<div class="overlay" id="overlay" onclick="closeModal(event)">
-  <div class="modal">
-    <div class="modal-head">
-      <div>
-        <div class="modal-title" id="modalTitle"></div>
-        <div class="modal-sub" id="modalSub"></div>
-      </div>
-      <button class="modal-close" onclick="closeOverlay()">&#x2715;</button>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
+<!-- Bottom sheet: category history -->
+<div class="sheet-ov" id="sheetOv" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-grab"></div>
+  <div class="sheet-head">
+    <div class="sheet-title" id="sheetTitle"></div>
+    <div class="sheet-sub" id="sheetSub"></div>
   </div>
+  <div class="sheet-body" id="sheetBody"></div>
 </div>
 
 <script>
@@ -311,13 +288,12 @@ if (currentIdx < 0) currentIdx = KEYS.length - 1;
 
 // พาเลตน้ำเงิน Coinbase ไล่เฉดอ่อน→เข้ม (ใช้คู่กับเรียงยอดน้อย→มาก ให้เป็นกราเดียนต์)
 const DONUT_COLORS = ['#cfe0ff','#b3ccff','#97b8ff','#7aa3ff','#5e8fff','#427bff','#2667ff','#0052ff','#0047df','#003cbf','#00329f','#002880'];
-// สีล็อกเฉพาะหมวด (override พาเลตปกติ) — ตอนนี้ว่าง ทุกหมวดใช้พาเลตเขียวเหมือนกันหมด
 const CAT_COLORS = {};
 
 function fmtDate(d) {
   if (!d) return '';
   const [y, m, day] = d.split('-');
-  return `${day}/${m}/${y}`;
+  return `${day}/${m}`;
 }
 function fmtMoney(n) { return '฿' + n.toLocaleString(); }
 function monthLabel(key) {
@@ -326,19 +302,18 @@ function monthLabel(key) {
   return d.toLocaleDateString('th-TH', { month: 'long', year: 'numeric' });
 }
 
-// Init charts (empty, will be filled on render)
 const barChart = new Chart(document.getElementById('barChart'), {
   type: 'bar',
   data: { labels: [], datasets: [
-    { label: 'Budget', data: [], backgroundColor: '#d7dae0', borderWidth: 0, borderRadius: 8, borderSkipped: false },
-    { label: 'Spent',  data: [], backgroundColor: '#0052ff', borderWidth: 0, borderRadius: 8, borderSkipped: false },
+    { label: 'Budget', data: [], backgroundColor: '#d7dae0', borderWidth: 0, borderRadius: 6, borderSkipped: false },
+    { label: 'จ่ายจริง',  data: [], backgroundColor: '#0052ff', borderWidth: 0, borderRadius: 6, borderSkipped: false },
   ]},
   options: {
     responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: '#5b616e', font: { size: 11 }, usePointStyle: true, pointStyle: 'circle', boxWidth: 6, padding: 16 } } },
+    plugins: { legend: { labels: { color: '#5b616e', font: { size: 11 }, usePointStyle: true, pointStyle: 'circle', boxWidth: 6, padding: 14 } } },
     scales: {
-      x: { ticks: { color: '#5b616e', font: { size: 10 } }, grid: { display: false }, border: { display: false } },
-      y: { ticks: { color: '#5b616e' }, grid: { color: '#ebecf0' }, border: { display: false } }
+      x: { ticks: { color: '#8a8a8e', font: { size: 9 } }, grid: { display: false }, border: { display: false } },
+      y: { ticks: { color: '#8a8a8e', font: { size: 10 } }, grid: { color: '#ededf2' }, border: { display: false } }
     }
   }
 });
@@ -347,8 +322,8 @@ const donutChart = new Chart(document.getElementById('donutChart'), {
   type: 'doughnut',
   data: { labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 3, borderColor: '#ffffff' }] },
   options: {
-    responsive: true, maintainAspectRatio: false, cutout: '70%',
-    plugins: { legend: { position: 'bottom', labels: { color: '#5b616e', font: { size: 10 }, padding: 12, usePointStyle: true, pointStyle: 'circle', boxWidth: 6 } } }
+    responsive: true, maintainAspectRatio: false, cutout: '68%',
+    plugins: { legend: { position: 'bottom', labels: { color: '#5b616e', font: { size: 10 }, padding: 11, usePointStyle: true, pointStyle: 'circle', boxWidth: 6 } } }
   }
 });
 
@@ -359,45 +334,41 @@ function render() {
   const income = data.income || [];
   const expenses = data.expenses || [];
 
-  // Month label + nav
   document.getElementById('monthLabel').textContent = monthLabel(key);
   document.getElementById('btnPrev').disabled = currentIdx <= 0;
   document.getElementById('btnNext').disabled = currentIdx >= KEYS.length - 1;
 
-  // Summary
   const totalIncome  = income.reduce((s, i) => s + i.amount, 0);
   const totalExpense = expenses.reduce((s, e) => s + e.amount, 0);
   const balance = totalIncome - totalExpense;
   const totalBudget = Object.values(budget).reduce((s, v) => s + v, 0);
 
+  document.getElementById('sumBalance').textContent = fmtMoney(balance);
+  document.getElementById('sumBalance').style.color = balance >= 0 ? 'var(--text)' : 'var(--down)';
+  document.getElementById('subBalance').textContent = 'Budget รวม ' + fmtMoney(totalBudget);
   document.getElementById('sumIncome').textContent  = fmtMoney(totalIncome);
   document.getElementById('subIncome').textContent  = income.length + ' รายการ';
   document.getElementById('sumExpense').textContent = fmtMoney(totalExpense);
   document.getElementById('subExpense').textContent = expenses.length + ' รายการ';
-  document.getElementById('sumBalance').textContent = fmtMoney(balance);
-  document.getElementById('subBalance').textContent = 'Budget รวม ' + fmtMoney(totalBudget);
-  const bc = document.getElementById('cardBalance');
-  bc.className = 'card ' + (balance >= 0 ? 'balance' : 'balance-neg');
-  document.getElementById('sumBalance').style.color = balance >= 0 ? '#0a0b0d' : '#cf202f';
 
-  // Budget cards
+  // Budget rows
   const spentByCat = {};
   expenses.forEach(e => { spentByCat[e.category] = (spentByCat[e.category] || 0) + e.amount; });
   const budgetRows = Object.entries(budget).sort((a,b) => b[1]-a[1]);
 
-  document.getElementById('budgetGrid').innerHTML = budgetRows.map(([cat, alloc]) => {
+  document.getElementById('budgetList').innerHTML = budgetRows.map(([cat, alloc]) => {
     const spent = spentByCat[cat] || 0;
     const pct = alloc > 0 ? Math.min(100, Math.round(spent / alloc * 100)) : 0;
     const over = spent > alloc;
-    return `<div class="budget-card ${over ? 'over' : ''}" onclick="showHistory('${cat}')">
-      <div class="budget-header">
-        <span class="cat-name">${cat}</span>
-        <span class="budget-amounts">฿${spent.toLocaleString()} / ฿${alloc.toLocaleString()}</span>
+    return `<div class="brow" onclick="openSheet('${cat}')">
+      <div class="brow-head">
+        <span class="brow-name">${cat}</span>
+        <span class="brow-amt">฿${spent.toLocaleString()} / ฿${alloc.toLocaleString()}</span>
       </div>
-      <div class="progress-bar"><div class="progress-fill ${over ? 'over' : ''}" style="width:${pct}%"></div></div>
-      <div class="budget-footer">
+      <div class="prog"><div class="prog-fill ${over ? 'over' : ''}" style="width:${pct}%"></div></div>
+      <div class="brow-foot">
         <span class="pct ${over ? 'over' : ''}">${pct}%</span>
-        <span class="remaining ${over ? 'over' : ''}">${over ? 'เกิน ฿'+(spent-alloc).toLocaleString() : 'เหลือ ฿'+(alloc-spent).toLocaleString()}</span>
+        <span class="rem ${over ? 'over' : ''}">${over ? 'เกิน ฿'+(spent-alloc).toLocaleString() : 'เหลือ ฿'+(alloc-spent).toLocaleString()}</span>
       </div>
     </div>`;
   }).join('');
@@ -408,7 +379,7 @@ function render() {
   barChart.data.datasets[1].data = budgetRows.map(r => spentByCat[r[0]] || 0);
   barChart.update();
 
-  // Donut chart — เรียงยอดน้อย→มาก แล้วไล่เฉดเขียวอ่อน(น้อย)→เข้ม(มาก) เป็นกราเดียนต์
+  // Donut chart — เรียงยอดน้อย→มาก ไล่เฉดน้ำเงินอ่อน→เข้ม
   const donutPairs = Object.entries(spentByCat).sort((a, b) => a[1] - b[1]);
   const donutCats = donutPairs.map(p => p[0]);
   const donutVals = donutPairs.map(p => p[1]);
@@ -420,15 +391,15 @@ function render() {
     : [DONUT_COLORS[0]];
   donutChart.update();
 
-  // Expense table
-  document.getElementById('expenseRows').innerHTML = [...expenses].sort((a,b)=>b.date.localeCompare(a.date)).slice(0, 5).map(e =>
-    `<tr><td>${fmtDate(e.date)}</td><td>${e.name}</td><td class="cat-label">${e.category}</td><td class="amount-neg">-฿${e.amount.toLocaleString()}</td></tr>`
-  ).join('') || '<tr><td colspan="4" style="text-align:center;color:#8a919e;padding:20px">ไม่มีรายจ่าย</td></tr>';
+  // Latest expenses
+  document.getElementById('expenseList').innerHTML = [...expenses].sort((a,b)=>b.date.localeCompare(a.date)).slice(0, 6).map(e =>
+    `<div class="row"><div class="row-lead"><div class="row-title">${e.name}</div><div class="row-sub">${e.category} · ${fmtDate(e.date)}</div></div><div class="row-amt neg">-฿${e.amount.toLocaleString()}</div></div>`
+  ).join('') || '<div class="empty">ไม่มีรายจ่าย</div>';
 
-  // Income table
-  document.getElementById('incomeRows').innerHTML = income.map(i =>
-    `<tr><td>${fmtDate(i.date)}</td><td>${i.source}</td><td class="amount-pos">+฿${i.amount.toLocaleString()}</td></tr>`
-  ).join('') || '<tr><td colspan="3" style="text-align:center;color:#8a919e;padding:20px">ไม่มีรายรับ</td></tr>';
+  // Income
+  document.getElementById('incomeList').innerHTML = income.map(i =>
+    `<div class="row"><div class="row-lead"><div class="row-title">${i.name || i.source}</div><div class="row-sub">${i.source} · ${fmtDate(i.date)}</div></div><div class="row-amt pos">+฿${i.amount.toLocaleString()}</div></div>`
+  ).join('') || '<div class="empty">ไม่มีรายรับ</div>';
 }
 
 function changeMonth(dir) {
@@ -436,26 +407,26 @@ function changeMonth(dir) {
   render();
 }
 
-function showHistory(cat) {
+function openSheet(cat) {
   const data = ALL_DATA[KEYS[currentIdx]];
-  const items = (data.expenses || []).filter(e => e.category === cat);
+  const items = (data.expenses || []).filter(e => e.category === cat).sort((a,b)=>b.date.localeCompare(a.date));
   const total = items.reduce((s, e) => s + e.amount, 0);
-  document.getElementById('modalTitle').textContent = cat;
-  document.getElementById('modalSub').textContent = items.length
+  document.getElementById('sheetTitle').textContent = cat;
+  document.getElementById('sheetSub').textContent = items.length
     ? items.length + ' รายการ · รวม ฿' + total.toLocaleString()
-    : 'ไม่มีรายการ';
-  document.getElementById('modalBody').innerHTML = items.length
-    ? `<table>
-        <thead><tr><th>วันที่</th><th>รายการ</th><th style="text-align:right">จำนวน</th></tr></thead>
-        <tbody>${items.map(e => `<tr><td>${fmtDate(e.date)}</td><td>${e.name}</td><td class="amount-neg" style="text-align:right">-฿${e.amount.toLocaleString()}</td></tr>`).join('')}</tbody>
-      </table>`
-    : '<div class="modal-empty">ยังไม่มีรายจ่ายในหมวดนี้</div>';
-  document.getElementById('overlay').classList.add('active');
+    : 'ยังไม่มีรายการ';
+  document.getElementById('sheetBody').innerHTML = items.length
+    ? `<div class="list">${items.map(e => `<div class="row"><div class="row-lead"><div class="row-title">${e.name}</div><div class="row-sub">${fmtDate(e.date)}${e.notes ? ' · '+e.notes : ''}</div></div><div class="row-amt neg">-฿${e.amount.toLocaleString()}</div></div>`).join('')}</div>`
+    : '<div class="empty">ยังไม่มีรายจ่ายในหมวดนี้</div>';
+  document.getElementById('sheetOv').classList.add('active');
+  document.getElementById('sheet').classList.add('active');
 }
 
-function closeOverlay() { document.getElementById('overlay').classList.remove('active'); }
-function closeModal(e) { if (e.target.id === 'overlay') closeOverlay(); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
+function closeSheet() {
+  document.getElementById('sheetOv').classList.remove('active');
+  document.getElementById('sheet').classList.remove('active');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 
 render();
 </script>
