@@ -12,7 +12,7 @@ window.PlannerView = (function () {
 
   // ── state ──
   let root, curMonth = '', selDay = '', activeTab = 'agenda';
-  let fStatus = 'todo', searchQ = '', calMode = 'month', calAnchor = '';
+  let calMode = 'month', calAnchor = '';
 
   // ── utils ──
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -37,39 +37,24 @@ window.PlannerView = (function () {
   <div class="container">
     <div class="pl-tabs">
       <button class="pl-tab active" data-tab="agenda">Agenda</button>
-      <button class="pl-tab" data-tab="todos">Todos</button>
       <button class="pl-tab" data-tab="calendar">Calendar</button>
       <button class="pl-tab" data-tab="habits">Habits</button>
     </div>
 
     <div id="pl-agenda" class="pl-pane active">
       <div class="tsum" id="todaySum"></div>
-      <div class="day-nav">
-        <button data-day="-1">&#8592;</button>
-        <div class="day-heading"><div class="date-big" id="agDateBig"></div><div class="date-sub" id="agDateSub"></div></div>
-        <button data-day="1">&#8594;</button>
+      <div class="wk-head">
+        <span class="wk-month" id="wkMonth"></span>
+        <div class="pl-ctl">
+          <button data-wk="-1">&#8592;</button>
+          <button class="btn-today" id="wkToday">วันนี้</button>
+          <button data-wk="1">&#8594;</button>
+        </div>
       </div>
-      <div class="card"><div class="section-title">Events</div><div id="agEvents"></div></div>
-      <div class="card"><div class="section-title">Tasks ค้างอยู่</div><div id="agTodos"></div></div>
+      <div class="wk" id="wkStrip"></div>
+      <div class="ag-dayhead" id="agDayHead"></div>
+      <div class="card"><div class="section-title">Timeline</div><div id="agTimeline"></div></div>
       <div class="card"><div class="section-title">Habits วันนี้</div><div class="habits-today" id="agHabits"></div></div>
-    </div>
-
-    <div id="pl-todos" class="pl-pane">
-      <div class="stats-row">
-        <div class="stat-card"><div class="stat-num" id="stTotal">0</div><div class="stat-lbl">Total</div></div>
-        <div class="stat-card"><div class="stat-num" style="color:var(--silver)" id="stTodo">0</div><div class="stat-lbl">Todo</div></div>
-        <div class="stat-card"><div class="stat-num" style="color:var(--blue)" id="stDone">0</div><div class="stat-lbl">Done</div></div>
-      </div>
-      <div class="search-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="todoSearch" type="text" placeholder="ค้นหา task..." autocomplete="off">
-      </div>
-      <div class="filter-row">
-        <button class="filter-btn" data-fstatus="all">All</button>
-        <button class="filter-btn on" data-fstatus="todo">Todo</button>
-        <button class="filter-btn" data-fstatus="done">Done</button>
-      </div>
-      <div class="todo-list-card" id="todosList"></div>
     </div>
 
     <div id="pl-calendar" class="pl-pane">
@@ -109,16 +94,6 @@ window.PlannerView = (function () {
   </div>`;
 
   // ── render: shared item builders ──
-  function renderTodoItem(t) {
-    const isDone = t.status === 'done';
-    const sl = { todo: 'Todo', done: 'Done' }[t.status] || t.status;
-    const cls = { todo: 'chip-todo', done: 'chip-done' }[t.status] || 'chip-todo';
-    const chips = [`<span class="chip ${cls}">${esc(sl)}</span>`];
-    if (t.est) chips.push(`<span class="chip chip-cat">⏱ ${esc(t.est)}</span>`);
-    return `<div class="todo-item"><div class="todo-bar" style="background:var(--border)"></div>
-      <div class="todo-content"><div class="todo-title${isDone ? ' done' : ''}">${esc(t.title)}</div>
-      <div class="todo-meta">${chips.join('')}</div></div></div>`;
-  }
   function renderEventItem(e) {
     const time = e.time || '';
     const tags = ['Planner', e.est ? '⏱ ' + e.est : ''].filter(Boolean);
@@ -130,16 +105,30 @@ window.PlannerView = (function () {
 
   // ── agenda ──
   function renderAgenda() {
-    const d = new Date(selDay + 'T00:00:00'), isT = selDay === today();
-    $('agDateBig').textContent = `วัน${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}`;
-    const sub = $('agDateSub'); sub.textContent = isT ? 'วันนี้' : ''; sub.className = 'date-sub' + (isT ? ' today-label' : '');
+    const d = new Date(selDay + 'T00:00:00'), td = today(), isT = selDay === td;
 
+    // week strip — 7 วันของสัปดาห์ที่ selDay อยู่
+    const ws = startOfWeek(selDay);
+    $('wkMonth').textContent = `${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}`;
+    let strip = '';
+    for (let i = 0; i < 7; i++) {
+      const wd = new Date(ws); wd.setDate(wd.getDate() + i); const ds = fmtDate(wd);
+      const cls = (ds === selDay ? ' sel' : '') + (ds === td ? ' today' : '');
+      strip += `<div class="wk-day${cls}" data-selday="${ds}">
+        <span class="wk-dow">${TH_DAYS_SHORT[wd.getDay()]}</span>
+        <span class="wk-num">${wd.getDate()}</span>
+        ${ds === td ? '<span class="wk-dot"></span>' : '<span class="wk-dot" style="background:transparent"></span>'}
+      </div>`;
+    }
+    $('wkStrip').innerHTML = strip;
+
+    $('agDayHead').innerHTML = `วัน${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}${isT ? '<span class="td">วันนี้</span>' : ''}`;
+
+    // timeline — event ของวันนั้น เรียงตามเวลา
     const dayEvents = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === selDay)
       .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-    $('agEvents').innerHTML = dayEvents.length ? dayEvents.map(renderEventItem).join('') : '<div class="empty">ไม่มี event</div>';
-
-    const pending = allMonthsData().flatMap(m => m.todos || []).filter(t => t.status !== 'done');
-    $('agTodos').innerHTML = pending.length ? pending.map(renderTodoItem).join('') : '<div class="empty">ไม่มี task ค้างอยู่</div>';
+    $('agTimeline').innerHTML = dayEvents.length ? `<div class="tl">${dayEvents.map(renderTimelineItem).join('')}</div>`
+      : '<div class="empty">ไม่มี event วันนี้</div>';
 
     const doneMap = habitDoneMap();
     $('agHabits').innerHTML = HABITS.map(h => {
@@ -150,34 +139,29 @@ window.PlannerView = (function () {
     renderTodaySummary();
   }
 
+  function renderTimelineItem(e) {
+    const sub = [e.est ? `<span class="est">⏱ ${esc(e.est)}</span>` : '', e.end_time ? `ถึง ${esc(e.end_time)}` : '', esc(e.notes || '')].filter(Boolean);
+    return `<div class="tl-item">
+      <div class="tl-time">${esc(e.time || '–')}</div>
+      <div class="tl-node"></div>
+      <div class="tl-card">
+        <div class="tl-title">${esc(e.title)}</div>
+        ${sub.length ? `<div class="tl-sub">${sub.join('<span class="dot-sep">·</span>')}</div>` : ''}
+      </div>
+    </div>`;
+  }
+
   function renderTodaySummary() {
     const td = today(), d = new Date(td + 'T00:00:00');
     const evToday = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === td).length;
-    const pending = allMonthsData().flatMap(m => m.todos || []).filter(t => t.status !== 'done').length;
     const doneMap = habitDoneMap();
     const hDone = HABITS.filter(h => doneMap[h].has(td)).length;
     $('todaySum').innerHTML = `
       <div class="tsum-date">วันนี้ · <b>${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}</b></div>
-      <div class="tsum-row">
+      <div class="tsum-row tsum-row-2">
         <div class="tsum-cell"><div class="tsum-num" style="color:var(--accent)">${evToday}</div><div class="tsum-lbl">Event วันนี้</div></div>
-        <div class="tsum-cell"><div class="tsum-num">${pending}</div><div class="tsum-lbl">Task ค้าง</div></div>
         <div class="tsum-cell"><div class="tsum-num" style="color:var(--green)">${hDone}/${HABITS.length}</div><div class="tsum-lbl">Habit วันนี้</div></div>
       </div>`;
-  }
-
-  // ── todos ──
-  function renderTodos() {
-    const todos = getMonthData(curMonth).todos || [];
-    const cnt = { todo: 0, done: 0 };
-    todos.forEach(t => { if (cnt[t.status] !== undefined) cnt[t.status]++; });
-    $('stTotal').textContent = todos.length; $('stTodo').textContent = cnt.todo; $('stDone').textContent = cnt.done;
-
-    let list = todos.slice();
-    if (fStatus !== 'all') list = list.filter(t => t.status === fStatus);
-    if (searchQ) list = list.filter(t => (t.title || '').toLowerCase().includes(searchQ));
-    list.sort((a, b) => (a.status === 'done') - (b.status === 'done'));
-    $('todosList').innerHTML = list.length ? list.map(renderTodoItem).join('')
-      : `<div class="empty">${searchQ ? 'ไม่พบ task ที่ค้นหา' : 'ไม่มี task'}</div>`;
   }
 
   // ── calendar ──
@@ -185,7 +169,6 @@ window.PlannerView = (function () {
 
   function renderCalendar() {
     const td = today();
-    const pending = allMonthsData().flatMap(m => m.todos || []).filter(t => t.status !== 'done');
     if (calMode === 'week') {
       const ws = startOfWeek(calAnchor), we = new Date(ws); we.setDate(we.getDate() + 6);
       $('calLabel').textContent = `${ws.getDate()} ${TH_MONTHS_FULL[ws.getMonth()].slice(0,3)} – ${we.getDate()} ${TH_MONTHS_FULL[we.getMonth()].slice(0,3)}`;
@@ -210,9 +193,7 @@ window.PlannerView = (function () {
       for (let i = 0; i < startDow; i++) cells += `<div class="cal-day empty"></div>`;
       for (let day = 1; day <= days; day++) {
         const ds = `${y}-${p2(m)}-${p2(day)}`, isT = ds === td, ev = evByDate[ds] || [];
-        const evDots = ev.slice(0, 8).map(e => `<div class="cal-dot" style="background:var(--accent)" title="${esc(e.title)}"></div>`).join('');
-        const todoDots = pending.slice(0, 6).map(t => `<div class="cal-dot" style="background:var(--silver)" title="${esc(t.title)}"></div>`).join('');
-        const dots = evDots + todoDots;
+        const dots = ev.slice(0, 8).map(e => `<div class="cal-dot" style="background:var(--accent)" title="${esc(e.title)}"></div>`).join('');
         cells += `<div class="cal-day${isT ? ' today-day' : ''}" data-open="${ds}"><div class="cal-num">${day}</div>${dots ? `<div class="cal-todo-dots">${dots}</div>` : ''}</div>`;
       }
       $('calWrap').innerHTML = `<div class="cal-wrap"><div class="cal-grid">${heads}${cells}</div></div>`;
@@ -268,13 +249,11 @@ window.PlannerView = (function () {
   function openModal(ds) {
     const d = new Date(ds + 'T00:00:00');
     const evs = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === ds).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-    const tds = allMonthsData().flatMap(m => m.todos || []).filter(t => t.status !== 'done');
     $('mTitle').textContent = `${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
     $('mSub').textContent = `วัน${TH_DAYS_FULL[d.getDay()]}`;
     let html = '';
     if (evs.length) html += `<div class="modal-sec-title">Events</div>` + evs.map(renderEventItem).join('');
-    if (tds.length) html += `<div class="modal-sec-title" style="margin-top:${evs.length ? 14 : 0}px">Tasks ค้างอยู่</div>` + tds.map(renderTodoItem).join('');
-    $('mBody').innerHTML = html || `<div class="modal-empty">ไม่มีรายการ</div>`;
+    $('mBody').innerHTML = html || `<div class="modal-empty">ไม่มี event</div>`;
     $('plOverlay').classList.add('active');
   }
   const closeModal = () => $('plOverlay').classList.remove('active');
@@ -288,7 +267,6 @@ window.PlannerView = (function () {
   }
   function renderTab(tab) {
     if (tab === 'agenda') renderAgenda();
-    else if (tab === 'todos') renderTodos();
     else if (tab === 'calendar') renderCalendar();
     else if (tab === 'habits') renderHabits();
   }
@@ -296,16 +274,11 @@ window.PlannerView = (function () {
   // ── events wiring ──
   function wire() {
     root.querySelectorAll('.pl-tab').forEach(b => b.onclick = () => switchTab(b.dataset.tab));
-    root.querySelectorAll('[data-day]').forEach(b => b.onclick = () => {
-      const d = new Date(selDay + 'T00:00:00'); d.setDate(d.getDate() + Number(b.dataset.day));
+    root.querySelectorAll('[data-wk]').forEach(b => b.onclick = () => {
+      const d = new Date(selDay + 'T00:00:00'); d.setDate(d.getDate() + Number(b.dataset.wk) * 7);
       selDay = fmtDate(d); renderAgenda();
     });
-    root.querySelectorAll('[data-fstatus]').forEach(b => b.onclick = () => {
-      fStatus = b.dataset.fstatus;
-      root.querySelectorAll('[data-fstatus]').forEach(x => x.classList.toggle('on', x === b));
-      renderTodos();
-    });
-    $('todoSearch').oninput = e => { searchQ = e.target.value.trim().toLowerCase(); renderTodos(); };
+    $('wkToday').onclick = () => { selDay = today(); renderAgenda(); };
     root.querySelectorAll('[data-cnav]').forEach(b => b.onclick = () => {
       const dir = Number(b.dataset.cnav);
       if (calMode === 'week') { const d = new Date(calAnchor + 'T00:00:00'); d.setDate(d.getDate() + dir * 7); calAnchor = fmtDate(d); }
@@ -322,6 +295,8 @@ window.PlannerView = (function () {
       curMonth = `${d.getFullYear()}-${p2(d.getMonth() + 1)}`; renderHabits();
     });
     root.addEventListener('click', e => {
+      const sd = e.target.closest('[data-selday]');
+      if (sd) { selDay = sd.dataset.selday; renderAgenda(); return; }
       const o = e.target.closest('[data-open]'); if (o) openModal(o.dataset.open);
     });
     $('mClose').onclick = closeModal;
