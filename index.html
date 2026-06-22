@@ -3,159 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Finance</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230052FF'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23ffffff'/%3E%3Crect x='12.4' y='12.4' width='7.2' height='7.2' rx='1.6' fill='%230052FF'/%3E%3C/svg%3E">
+<title>Dashboard</title>
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
 <meta name="theme-color" content="#ffffff">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Finance">
+<meta name="apple-mobile-web-app-title" content="Dashboard">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    /* Coinbase Light — brand blue #0052FF on white canvas */
-    --bg: #ffffff; --card: #ffffff; --sep: #ebecf0; --border: #d7dae0;
-    --label: #5b616e; --label-2: #8a909e; --text: #0a0b0d;
-    --tint: #0052ff; --tint-soft: rgba(0,82,255,0.08); --tint-deep: #0043d6;
-    --up: #098551; --down: #cf202f; --track: #eef0f3;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { overscroll-behavior-y: none; }
-  body {
-    font-family: 'Inter', -apple-system, system-ui, 'Helvetica Neue', Arial, sans-serif;
-    background: var(--bg); color: var(--text); min-height: 100vh; min-height: 100dvh;
-    -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none;
-  }
-
-  .scroll { height: 100vh; height: 100dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
-  .view { display: none; } .view.active { display: block; }
-  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
-
-  .head { position: sticky; top: 0; z-index: 20; padding-top: calc(10px + env(safe-area-inset-top));
-    background: rgba(255,255,255,0.85); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid var(--sep); }
-  .head-in { max-width: 640px; margin: 0 auto; padding: 6px 16px 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
-  .head-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
-  .head-sub { font-size: 0.8125rem; color: var(--label); margin-top: 1px; }
-  .head-pill { font-size: 0.8125rem; font-weight: 600; color: var(--tint); background: var(--tint-soft); padding: 6px 12px; border-radius: 99px; }
-
-  .card { background: var(--card); border: 1px solid var(--sep); border-radius: 14px; }
-  .nw { padding: 20px; margin-top: 14px; }
-  .nw-label { font-size: 0.8125rem; color: var(--label); font-weight: 500; }
-  .nw-bal { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-top: 2px; }
-  .nw-sub { font-size: 0.8125rem; color: var(--label); margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--sep); }
-
-  .placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; color: var(--label); padding: 0 24px; }
-  .placeholder svg { width: 46px; height: 46px; color: var(--label-2); margin-bottom: 14px; }
-  .placeholder .t { font-size: 1.0625rem; font-weight: 700; color: var(--text); }
-  .placeholder .s { font-size: 0.875rem; margin-top: 6px; }
-
-  .ver { text-align: center; font-size: 0.6875rem; color: var(--label-2); padding: 20px 8px 8px; }
-  .ver b { color: var(--tint); }
-
-  .bnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
-    display: flex; align-items: stretch; height: calc(60px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom);
-    background: rgba(255,255,255,0.92); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
-    border-top: 1px solid var(--sep); }
-  .bn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: none; border: none; cursor: pointer; color: var(--label-2); font-family: inherit; transition: color .15s; }
-  .bn svg { width: 24px; height: 24px; }
-  .bn-lab { font-size: 0.625rem; font-weight: 600; }
-  .bn.active { color: var(--tint); }
-  .bn:active { opacity: .55; }
-  .fab-slot { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
-  .fab { position: absolute; top: -16px; width: 56px; height: 56px; border-radius: 50%; background: var(--tint); border: none; cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,82,255,0.4); display: flex; align-items: center; justify-content: center; color: #fff; }
-  .fab:active { transform: scale(0.92); }
-  .fab svg { width: 26px; height: 26px; }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./app.css">
+<link rel="stylesheet" href="./views/planner.css">
 </head>
 <body>
 
 <div class="scroll">
-  <div class="head">
-    <div class="head-in">
-      <div>
-        <div class="head-title" id="headTitle">ภาพรวม</div>
-        <div class="head-sub" id="headSub"></div>
+  <div class="app-head">
+    <div class="app-head-in">
+      <div class="app-title">
+        <svg class="spike" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></svg>
+        <span id="appTitle">Planner</span>
       </div>
-      <div class="head-pill" id="headPill">มิ.ย. 2026</div>
+      <div class="app-head-slot" id="appHeadSlot"></div>
     </div>
   </div>
 
-  <div class="view active" id="v-home"><div class="wrap">
-    <div class="card nw">
-      <div class="nw-label">เงินสด + บัญชี (บาท)</div>
-      <div class="nw-bal">฿0</div>
-      <div class="nw-sub">ยังไม่ได้ใส่บัญชี — เดี๋ยวเพิ่มใน step ถัดๆ ไป</div>
-    </div>
-    <div class="ver">เวอร์ชัน: <b>Step 1 — โครงหลัก (ธีม Coinbase ขาว)</b> · 22 มิ.ย. 2026</div>
-  </div></div>
+  <div class="view active" id="view-planner"></div>
 
-  <div class="view" id="v-tx"><div class="wrap"><div class="placeholder">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
-    <div class="t">รายการ</div><div class="s">Step 2 — เดี๋ยวมาทำต่อ</div>
+  <div class="view" id="view-money"><div class="container"><div class="placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3zM3 11h18"/><circle cx="8" cy="14" r="1"/></svg>
+    <div class="t">Money</div><div class="s">เดี๋ยว migrate เข้ามาในขั้นถัดไป</div>
   </div></div></div>
 
-  <div class="view" id="v-savings"><div class="wrap"><div class="placeholder">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8M9 6h6v12a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V6z"/><path d="M9 13h6"/></svg>
-    <div class="t">เก็บเงิน</div><div class="s">Step 4 — โหลหยอดเหรียญ</div>
-  </div></div></div>
-
-  <div class="view" id="v-more"><div class="wrap"><div class="placeholder">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
-    <div class="t">เพิ่มเติม</div><div class="s">Step 5 — บิล / บัญชี / พอร์ต</div>
+  <div class="view" id="view-investment"><div class="container"><div class="placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg>
+    <div class="t">Investment</div><div class="s">เดี๋ยว migrate เข้ามาในขั้นถัดไป</div>
   </div></div></div>
 </div>
 
 <nav class="bnav">
-  <button class="bn active" data-view="home" onclick="showView('home',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6 8 6"/><path d="M6 10v9h12v-9"/></svg>
-    <span class="bn-lab">หน้าหลัก</span>
+  <button class="bn active" data-view="planner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+    <span class="bn-lab">Planner</span>
   </button>
-  <button class="bn" data-view="tx" onclick="showView('tx',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
-    <span class="bn-lab">รายการ</span>
+  <button class="bn" data-view="money">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3zM3 11h18"/><circle cx="8" cy="14" r="1"/></svg>
+    <span class="bn-lab">Money</span>
   </button>
-  <div class="fab-slot">
-    <button class="fab" onclick="alert('ปุ่มเพิ่มรายการ — ทำใน Step 2')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-    </button>
-  </div>
-  <button class="bn" data-view="savings" onclick="showView('savings',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8M9 6h6v12a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V6z"/><path d="M9 13h6"/></svg>
-    <span class="bn-lab">เก็บเงิน</span>
-  </button>
-  <button class="bn" data-view="more" onclick="showView('more',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
-    <span class="bn-lab">เพิ่มเติม</span>
+  <button class="bn" data-view="investment">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg>
+    <span class="bn-lab">Invest</span>
   </button>
 </nav>
 
-<script>
-const TITLES = { home:['ภาพรวม',true], tx:['รายการ',false], savings:['เก็บเงิน',false], more:['เพิ่มเติม',false] };
-function showView(name, btn){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('v-'+name).classList.add('active');
-  document.querySelectorAll('.bn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
-  document.querySelector('.scroll').scrollTop = 0;
-  document.getElementById('headTitle').textContent = TITLES[name][0];
-  document.getElementById('headPill').style.display = TITLES[name][1] ? '' : 'none';
-  const sub = document.getElementById('headSub');
-  if (name==='home'){ const hr=new Date().getHours(); sub.textContent = (hr<12?'สวัสดีตอนเช้า':hr<17?'สวัสดีตอนบ่าย':'สวัสดีตอนเย็น'); }
-  else sub.textContent='';
-}
-showView('home');
+<script src="./data/planner.data.js"></script>
+<script src="./views/planner.js"></script>
+<script src="./app.js"></script>
 
-// ระหว่างสร้าง: ปิด PWA cache + ลบ service worker เก่าทิ้ง เพื่อให้เห็นของใหม่ทุกครั้งที่รีโหลด
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
-}
-if (window.caches && caches.keys) {
-  caches.keys().then(ks => ks.forEach(k => caches.delete(k)));
-}
+<script>
+// ระหว่างสร้าง: ปิด PWA cache + ลบ service worker เก่า เพื่อให้เห็นของใหม่ทุกครั้งที่รีโหลด
+if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
+if (window.caches && caches.keys) caches.keys().then(ks => ks.forEach(k => caches.delete(k)));
 </script>
 </body>
 </html>
