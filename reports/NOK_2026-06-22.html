@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nokia (NOK) — รายงานเชิงลึก</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#0052ff;
+  --accent-active:#003ecc;
+  --ink:#0a0b0d;
+  --body:#5b616e;
+  --muted:#7c828a;
+  --canvas:#ffffff;
+  --surface-soft:#f7f7f7;
+  --surface-strong:#eef0f3;
+  --surface-dark:#0a0b0d;
+  --surface-dark-el:#16181c;
+  --hairline:#dee1e6;
+  --on-dark:#ffffff;
+  --on-dark-soft:#a8acb3;
+  --up:#05b169;
+  --down:#cf202f;
+  --shadow-sm:0 4px 12px rgba(0,0,0,0.04);
+  --r-card:24px;
+  --r-pill:100px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:'Sarabun','Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+.nav-logo{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--body);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:var(--r-pill);margin-left:8px;letter-spacing:0.3px}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--surface-dark);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
+.hero-left{z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--on-dark-soft);letter-spacing:0.5px;margin-bottom:32px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
+.hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero-title{font-family:'Inter',sans-serif;font-size:clamp(44px,5.5vw,80px);font-weight:400;line-height:1.0;letter-spacing:-2px;color:var(--on-dark);margin-bottom:24px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
+.hero-title strong{font-weight:400;color:var(--accent)}
+.hero-desc{font-size:18px;color:var(--on-dark-soft);line-height:1.7;max-width:520px;margin-bottom:48px;opacity:0;animation:fadeUp 0.7s 0.4s ease forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;padding:16px 32px;height:56px;border-radius:var(--r-pill);opacity:0;animation:fadeUp 0.7s 0.55s ease forwards;cursor:default}
+.hero-cta-arrow{font-size:18px}
+
+/* Hero right floating cards */
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 0.8s 0.7s ease forwards}
+.hero-card-stack{position:relative;width:320px;height:400px}
+.hero-card{position:absolute;background:var(--surface-dark-el);border-radius:var(--r-card);padding:28px;border:1px solid rgba(255,255,255,0.08)}
+.hero-card-main{width:300px;top:40px;left:0;box-shadow:0 24px 48px rgba(0,0,0,0.4)}
+.hero-card-back{width:280px;top:0;left:20px;opacity:0.6;transform:scale(0.97);z-index:-1}
+.hero-card-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--on-dark-soft);text-transform:uppercase;margin-bottom:16px}
+.hero-card-val{font-family:'JetBrains Mono','Courier New',monospace;font-size:28px;font-weight:500;color:var(--on-dark);margin-bottom:4px}
+.hero-card-sub{font-size:13px;color:var(--on-dark-soft);margin-bottom:20px}
+.hero-card-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:13px}
+.hero-card-row-label{color:var(--on-dark-soft)}
+.hero-card-row-val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--on-dark)}
+
+/* Hero glow */
+#hero::before{content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,82,255,0.12) 0%,transparent 70%);pointer-events:none}
+#hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,82,255,0.06) 0%,transparent 70%);pointer-events:none}
+
+/* SECTIONS */
+.section-white{background:var(--canvas);padding:96px 0}
+.section-gray{background:var(--surface-soft);padding:96px 0}
+.section-dark{background:var(--surface-dark);padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.sec-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--ink);text-transform:uppercase;margin-bottom:16px;background:var(--surface-strong);padding:4px 14px;border-radius:var(--r-pill)}
+.sec-eyebrow-dark{color:var(--on-dark-soft);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1)}
+.sec-title{font-family:'Inter',sans-serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;letter-spacing:-1px;color:var(--ink);line-height:1.1;margin-bottom:16px}
+.sec-title-dark{color:var(--on-dark)}
+.sec-sub{font-size:17px;color:var(--body);max-width:640px;line-height:1.7;margin-bottom:64px}
+.sec-sub-dark{color:var(--on-dark-soft)}
+
+/* CARDS */
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.card-dark{background:var(--surface-dark-el);border-color:rgba(255,255,255,0.08)}
+.card-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.card-title-dark{color:var(--on-dark)}
+.card-body{font-size:14px;color:var(--body);line-height:1.7}
+.card-body-dark{color:var(--on-dark-soft)}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* METRIC CARDS */
+.metric-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px 24px;text-align:center;transition:all 0.2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.metric-card-dark{background:var(--surface-dark-el);border-color:rgba(255,255,255,0.08)}
+.metric-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.metric-val-dark{color:var(--on-dark)}
+.metric-label{font-size:13px;color:var(--muted);font-weight:500}
+.metric-label-dark{color:var(--on-dark-soft)}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:1px;background:var(--hairline)}
+.timeline-item{position:relative;margin-bottom:32px}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline-date{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.5px;margin-bottom:4px;text-transform:uppercase}
+.timeline-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--body);line-height:1.6}
+.timeline-item-neg::before{background:var(--down)}
+.timeline-item-neg .timeline-date{color:var(--down)}
+
+/* RISK CARDS */
+.risk-card{border-radius:16px;padding:24px 28px;border:1px solid}
+.risk-high{background:#fff8f8;border-color:#fcd4d4}
+.risk-med{background:#fffcf0;border-color:#fde9a2}
+.risk-low{background:#f0fdf6;border-color:#b3f0d0}
+.risk-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:var(--r-pill);margin-bottom:12px;text-transform:uppercase}
+.risk-high .risk-badge{background:#fcd4d4;color:#c0392b}
+.risk-med  .risk-badge{background:#fde9a2;color:#8a6d00}
+.risk-low  .risk-badge{background:#b3f0d0;color:#1a7a4a}
+.risk-high .risk-title{color:#c0392b}
+.risk-med  .risk-title{color:#8a6d00}
+.risk-low  .risk-title{color:#1a7a4a}
+.risk-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.risk-body{font-size:14px;color:var(--body);line-height:1.7}
+
+/* COMP TABLE */
+.comp-table{width:100%;border-collapse:collapse}
+.comp-table th{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);padding:12px 20px;text-align:left;border-bottom:1px solid var(--hairline);text-transform:uppercase}
+.comp-table td{padding:16px 20px;font-size:14px;color:var(--body);border-bottom:1px solid var(--surface-soft)}
+.comp-table td:first-child{font-weight:600;color:var(--ink)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr.highlight-row{background:rgba(0,82,255,0.03)}
+.comp-table tr.highlight-row td:first-child{color:var(--accent)}
+
+/* ANALYST BARS */
+.analyst-bar-wrap{margin:20px 0}
+.analyst-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500}
+.analyst-bar-track{height:6px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.analyst-bar-fill{height:100%;border-radius:var(--r-pill)}
+
+/* PERSON CARDS */
+.person-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:28px 24px;transition:all 0.2s}
+.person-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.person-avatar{width:48px;height:48px;border-radius:50%;background:var(--surface-strong);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--accent);margin-bottom:16px;border:1px solid var(--hairline)}
+.person-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.person-title{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.person-bio{font-size:13px;color:var(--body);line-height:1.7}
+
+/* PARTNER BADGES */
+.partner-grid{display:flex;flex-wrap:wrap;gap:10px}
+.partner-badge{font-size:13px;font-weight:600;padding:8px 18px;border-radius:var(--r-pill);border:1px solid var(--hairline);color:var(--body);background:var(--canvas);transition:all 0.15s}
+.partner-badge:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,82,255,0.04)}
+
+/* TECH FLOW */
+.tech-flow{display:flex;align-items:center;margin:48px 0;flex-wrap:wrap;gap:0;justify-content:center}
+.tech-node{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:28px 20px;text-align:center;min-width:150px;flex:1;transition:all 0.2s}
+.tech-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.tech-node-icon{font-size:28px;margin-bottom:12px}
+.tech-node-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tech-node-val{font-size:13px;font-weight:600;color:var(--ink)}
+.tech-arrow{font-size:20px;color:var(--hairline);padding:0 12px}
+
+/* BIG STATS */
+.big-stat-row{display:flex;gap:0;border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;margin:48px 0}
+.big-stat{flex:1;padding:32px 24px;border-right:1px solid var(--hairline)}
+.big-stat:last-child{border-right:none}
+.big-stat-num{font-family:'JetBrains Mono',monospace;font-size:clamp(24px,3vw,40px);font-weight:500;color:var(--ink);line-height:1;margin-bottom:8px}
+.big-stat-desc{font-size:13px;color:var(--body)}
+
+/* PILLS */
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:5px 14px;border-radius:var(--r-pill);margin:3px;letter-spacing:0.2px}
+.pill-neutral{background:var(--surface-strong);color:var(--body)}
+.pill-blue{background:rgba(0,82,255,0.08);color:var(--accent);border:1px solid rgba(0,82,255,0.15)}
+.pill-up{background:rgba(5,177,105,0.08);color:var(--up)}
+.pill-down{background:rgba(207,32,47,0.08);color:var(--down)}
+.pill-dark{background:rgba(255,255,255,0.1);color:var(--on-dark)}
+
+/* CALLOUT */
+.callout{border-left:3px solid var(--accent);background:rgba(0,82,255,0.04);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;font-size:14px;color:var(--body)}
+.callout strong{color:var(--accent)}
+
+/* REVENUE CHART */
+.fin-chart{display:flex;align-items:flex-end;gap:12px;height:200px;margin:32px 0}
+.fin-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.fin-bar-track{width:100%;display:flex;flex-direction:column-reverse;height:150px}
+.fin-bar{width:100%;border-radius:6px 6px 0 0;background:var(--accent);opacity:0.85;min-height:4px}
+.fin-bar.projected{background:var(--surface-strong);border:2px dashed var(--accent);opacity:1}
+.fin-bar-year{font-size:11px;color:var(--muted);font-weight:500}
+.fin-bar-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:500}
+
+/* DATA TABLE */
+.data-table{width:100%}
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline)}
+.data-row:last-child{border-bottom:none}
+.data-key{font-size:14px;color:var(--body)}
+.data-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink)}
+.data-val-up{color:var(--up)}
+.data-val-down{color:var(--down)}
+.data-val-accent{color:var(--accent)}
+
+/* MARKET SEGMENT */
+.segment-bar{margin:16px 0}
+.segment-label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;font-weight:500;color:var(--ink)}
+.segment-track{height:8px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.segment-fill{height:100%;border-radius:var(--r-pill);background:var(--accent)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.08s}
+.reveal-delay-2{transition-delay:0.16s}
+.reveal-delay-3{transition-delay:0.24s}
+.reveal-delay-4{transition-delay:0.32s}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--hairline);margin:0}
+
+/* FOOTER */
+footer{background:var(--canvas);padding:64px 48px;border-top:1px solid var(--hairline)}
+.footer-legal{font-size:12px;color:var(--muted);line-height:1.7;margin-top:24px;max-width:800px}
+
+/* SECTION ORBIT LABEL */
+.orbit-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--on-dark-soft);text-transform:uppercase;border:1px solid rgba(255,255,255,0.15);border-radius:var(--r-pill);padding:5px 16px;margin-bottom:12px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:100px 24px 64px}
+  .hero-right{display:none}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section-white,.section-gray,.section-dark{padding:64px 0}
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  .big-stat-row{flex-direction:column}
+  .big-stat{border-right:none;border-bottom:1px solid var(--hairline)}
+  .big-stat:last-child{border-bottom:none}
+  .tech-flow{flex-direction:column}
+  .tech-arrow{transform:rotate(90deg)}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface-soft)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Nokia <span>·</span> NOK</div>
+  <ul class="nav-links">
+    <li><a href="#overview">ภาพรวม</a></li>
+    <li><a href="#technology">เทคโนโลยี</a></li>
+    <li><a href="#market">ตลาด</a></li>
+    <li><a href="#financials">การเงิน</a></li>
+    <li><a href="#competition">คู่แข่ง</a></li>
+    <li><a href="#leadership">ผู้บริหาร</a></li>
+    <li><a href="#catalysts">ตัวเร่ง</a></li>
+    <li><a href="#risks">ความเสี่ยง</a></li>
+    <li><a href="#analysts">นักวิเคราะห์</a></li>
+    <li><a href="#summary">สรุป</a></li>
+  </ul>
+  <span class="nav-badge">NYSE: NOK</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="hero-ticker-dot"></span>
+      รายงานเชิงลึก &nbsp;·&nbsp; 22 มิถุนายน 2569
+    </div>
+    <h1 class="hero-title">Nokia<br><strong>Corporation</strong></h1>
+    <p class="hero-desc">ผู้นำโครงสร้างพื้นฐานเครือข่ายระดับโลก ที่กำลังเปลี่ยนตัวเองจากบริษัทโทรคมนาคมธรรมดา สู่แกนกลางของเครือข่าย AI ยุค 5G และ 6G — ด้วยการจับมือ NVIDIA และเข้าซื้อ Infinera</p>
+    <div class="hero-cta">อ่านรายงาน <span class="hero-cta-arrow">&#8595;</span></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="hero-card-label">ตัวเลขสำคัญ 2025</div>
+        <div class="hero-card-val">19.9B EUR</div>
+        <div class="hero-card-sub">รายได้รวมทั้งปี 2025</div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">Market Cap</span>
+          <span class="hero-card-row-val">~$13B USD</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">Free Cash Flow 2025</span>
+          <span class="hero-card-row-val">1.5B EUR</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">NVIDIA Investment</span>
+          <span class="hero-card-row-val">~$1B USD</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">Contracted Revenue 2030</span>
+          <span class="hero-card-row-val">800M+ EUR/yr</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: ภาพรวมบริษัท -->
+<div class="section-white" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow reveal">01 — ภาพรวมบริษัท</div>
+    <h2 class="sec-title reveal">จากโทรศัพท์มือถือ<br>สู่กระดูกสันหลังของอินเทอร์เน็ต</h2>
+    <p class="sec-sub reveal">Nokia ก่อตั้งปี พ.ศ. 2408 ในฟินแลนด์ เป็นที่รู้จักในฐานะผู้ผลิตโทรศัพท์มือถือรายใหญ่ของโลกในยุค 2000 แต่หลังจากพ่ายแพ้ให้ smartphone แล้วขายธุรกิจมือถือให้ Microsoft ปี 2557 Nokia ได้เปลี่ยนตัวเองมาโฟกัสที่โครงสร้างพื้นฐานเครือข่ายอย่างเต็มตัว — วันนี้ Nokia คือบริษัทที่สร้างและขายอุปกรณ์ สอฟต์แวร์ และบริการที่ทำให้เครือข่าย 5G และอินเทอร์เน็ตโลกทำงานได้</p>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">ปัญหาที่แก้</div>
+        <div class="card-body">ผู้ให้บริการโทรคมนาคม (Operator) ทั่วโลกต้องการโครงสร้างพื้นฐานที่รับมือกับข้อมูลที่เพิ่มขึ้นจาก AI, Cloud, และ 5G — Nokia เป็นซัพพลายเออร์หลักของฮาร์ดแวร์ สอฟต์แวร์ และเทคโนโลยีที่ทำให้เครือข่ายเหล่านั้นทำงานได้</div>
+      </div>
+      <div class="card">
+        <div class="card-title">โมเดลธุรกิจ</div>
+        <div class="card-body">B2B (ขายให้ธุรกิจ) 100% — ลูกค้าคือ Operator มือถือ, ผู้ให้บริการอินเทอร์เน็ต, รัฐบาล, และ Hyperscaler (ผู้ให้บริการคลาวด์ขนาดใหญ่ เช่น AWS, Google, Microsoft) รายได้มาจากทั้งฮาร์ดแวร์, ใบอนุญาตสิทธิบัตร (Patent Licensing), สอฟต์แวร์, และค่าบริการ</div>
+      </div>
+    </div>
+
+    <div class="big-stat-row reveal">
+      <div class="big-stat">
+        <div class="big-stat-num">19.9B EUR</div>
+        <div class="big-stat-desc">รายได้ปี 2025 (+3% YoY)</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">15/20</div>
+        <div class="big-stat-desc">เครือข่าย 5G ที่เร็วที่สุดในโลกใช้ Nokia RAN (วิทยุ)</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">9/10</div>
+        <div class="big-stat-desc">Hyperscaler ชั้นนำของโลกใช้ Nokia Optical Networks</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">~20,000</div>
+        <div class="big-stat-desc">สิทธิบัตรที่ถืออยู่ — แหล่งรายได้ที่ไม่ต้องลงทุนเพิ่ม</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>จุดเปลี่ยนสำคัญ 2025–2026:</strong> Nokia ปรับโครงสร้างองค์กรใหม่ตั้งแต่ต้นปี 2569 เหลือ 2 กลุ่มธุรกิจหลัก — Network Infrastructure (เครือข่ายออปติคัลและ IP) และ Mobile Infrastructure (วิทยุ 5G และ Core Networks) — เพื่อตอบรับยุค AI ที่ต้องการแบนด์วิดท์มหาศาล
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 2: เทคโนโลยี/สินค้า -->
+<div class="section-gray" id="technology">
+  <div class="container">
+    <div class="sec-eyebrow reveal">02 — เทคโนโลยีและสินค้า</div>
+    <h2 class="sec-title reveal">4 เสาหลักที่ขับเคลื่อน Nokia</h2>
+    <p class="sec-sub reveal">Nokia แบ่งธุรกิจออกเป็น 2 กลุ่มหลัก และ 4 สายผลิตภัณฑ์ที่ครอบคลุมทุกชั้นของโครงสร้างพื้นฐานเครือข่าย</p>
+
+    <div class="tech-flow reveal">
+      <div class="tech-node">
+        <div class="tech-node-icon">📡</div>
+        <div class="tech-node-label">Radio Networks</div>
+        <div class="tech-node-val">เสาสัญญาณ 5G / AirScale</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon">☁️</div>
+        <div class="tech-node-label">Core Networks</div>
+        <div class="tech-node-val">Cloud-native Core / Packet Core</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon">🔷</div>
+        <div class="tech-node-label">Optical Networks</div>
+        <div class="tech-node-val">Fiber / DWDM / PSE-6s</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon">🌐</div>
+        <div class="tech-node-label">IP Networks</div>
+        <div class="tech-node-val">Router 7750 SR / FP5 Silicon</div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">Mobile Infrastructure — กลุ่มที่ 1</div>
+        <div class="card-body">
+          <p style="margin-bottom:12px"><strong>Radio Networks (RAN):</strong> อุปกรณ์เสาสัญญาณ 5G ตระกูล AirScale ที่ใช้เทคโนโลยี Massive MIMO (ระบบเสาอากาศขนาดใหญ่ส่งสัญญาณพร้อมกันได้หลายช่องทาง) และ phased-array (ควบคุมลำคลื่นสัญญาณด้วยอิเล็กทรอนิกส์) — Nokia อยู่อันดับ 2-3 ของโลกในตลาดนี้</p>
+          <p><strong>Core Networks:</strong> ซอฟต์แวร์ Cloud-native ที่ทำงานบนเซิร์ฟเวอร์ทั่วไปแทนฮาร์ดแวร์เฉพาะ — ลดต้นทุน Operator ลงได้มาก Nokia เป็นผู้นำในมาตรฐาน OpenRAN (เปิดให้อุปกรณ์ต่างยี่ห้อทำงานร่วมกันได้)</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Network Infrastructure — กลุ่มที่ 2</div>
+        <div class="card-body">
+          <p style="margin-bottom:12px"><strong>Optical Networks:</strong> ระบบเส้นใยแก้ว (Fiber) ที่ส่งข้อมูลด้วยแสง DWDM (Dense Wavelength Division Multiplexing — ส่งข้อมูลหลายช่องพร้อมกันในเส้นใยเดียว) — หลังซื้อ Infinera กลุ่มนี้ใหญ่ขึ้นมาก และมีลูกค้า Hyperscaler เพิ่ม</p>
+          <p><strong>IP Networks:</strong> เราเตอร์ (Router — อุปกรณ์กระจายข้อมูลในเครือข่าย) ระดับ Carrier ตระกูล 7750 SR ใช้ชิป FP5 ที่ Nokia ออกแบบเอง ลูกค้าคือผู้ให้บริการอินเทอร์เน็ตรายใหญ่และ Data Center</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px">
+      <h3 class="reveal" style="font-family:'Inter',sans-serif;font-weight:400;font-size:22px;letter-spacing:-0.5px;margin-bottom:32px">เส้นทางวิวัฒนาการเทคโนโลยี</h3>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-date">2020–2022</div>
+          <div class="timeline-title">ฟื้นฟูความเป็นผู้นำ 5G RAN</div>
+          <div class="timeline-desc">ภายใต้ Pekka Lundmark Nokia กลับมาแข่งขันได้ในตลาด 5G Radio หลังล้าหลังคู่แข่งในช่วง 2018–2019 เปิดตัว ReefShark SoC (ชิปที่ออกแบบเอง) ลดพลังงานได้ 60%</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2024–2025</div>
+          <div class="timeline-title">เข้าซื้อ Infinera เสริมแกร่ง Optical</div>
+          <div class="timeline-desc">ซื้อ Infinera เสร็จ ก.พ. 2568 ด้วยมูลค่าที่ไม่เปิดเผยอย่างเป็นทางการ เป้าหมายคือ Synergy (ประโยชน์จากการรวมกัน) มากกว่า 200 ล้านยูโร/ปี ภายในปี 2570 และเพิ่มส่วนแบ่งใน Data Center</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">ต.ค. 2025</div>
+          <div class="timeline-title">จับมือ NVIDIA สร้าง AI-RAN และ 6G</div>
+          <div class="timeline-desc">NVIDIA ลงทุน ~$1 พันล้านดอลลาร์ซื้อหุ้น Nokia ที่ราคา $6.01/หุ้น ตกลงร่วมพัฒนา AI-RAN (สถานีส่งสัญญาณที่มี AI ฝังอยู่) และแพลตฟอร์ม 6G โดย T-Mobile US เป็นลูกค้าทดสอบรายแรก</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026–2027</div>
+          <div class="timeline-title">เปิดตัวผลิตภัณฑ์ AI-RAN เชิงพาณิชย์</div>
+          <div class="timeline-desc">Nokia วางแผนเริ่มทดลอง AI-RAN ปี 2569 และรวม NVIDIA GPU เข้าสายผลิตภัณฑ์ RAN อย่างเป็นทางการปี 2570 — เป็นก้าวสู่ยุค 6G ที่เครือข่ายทำงานด้วย AI แบบ Native (ฝังในระดับสถาปัตยกรรม)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>Bell Labs:</strong> Nokia เป็นเจ้าของ Bell Labs — ห้องวิจัยที่คิดค้น Transistor, Laser, Unix, C Language และผลงาน Nobel Prize ถึง 9 รางวัล ปัจจุบันโฟกัสวิจัย 6G, Quantum Networking และ AI ให้เครือข่าย
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 3: โอกาสทางตลาด -->
+<div class="section-white" id="market">
+  <div class="container">
+    <div class="sec-eyebrow reveal">03 — โอกาสทางตลาด</div>
+    <h2 class="sec-title reveal">AI ต้องการแบนด์วิดท์มหาศาล<br>Nokia อยู่ตรงกลาง</h2>
+    <p class="sec-sub reveal">การเติบโตของ AI ทำให้ Data Center และเครือข่ายต้องขยายอย่างรวดเร็ว Nokia ได้ประโยชน์จากทั้ง Operator ที่อัปเกรด 5G และ Hyperscaler ที่ต้องการ Optical และ IP ระดับสูงขึ้น</p>
+
+    <div class="grid-3 reveal">
+      <div class="metric-card">
+        <div class="metric-val" style="font-size:24px">5G RAN</div>
+        <div class="metric-label" style="margin-top:8px">ตลาดทั่วโลก ~$25B USD/ปี (2025 est.) — Nokia ถือ ~15–16% ไม่รวมจีน</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="font-size:24px">Optical</div>
+        <div class="metric-label" style="margin-top:8px">ตลาด Optical Networking ขยายตัวจากความต้องการ AI Data Center — Nokia+Infinera อยู่ Top 3 โลก</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="font-size:24px">IP Router</div>
+        <div class="metric-label" style="margin-top:8px">ตลาด Service Provider Router ขับเคลื่อนโดย Hyperscaler — Nokia 7750 SR เป็น flagship ระดับ Tier-1</div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px" class="reveal">
+      <h3 style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;letter-spacing:-0.5px;margin-bottom:24px">สัดส่วนรายได้ตามกลุ่มธุรกิจ (2025 ประมาณการ)</h3>
+      <div class="segment-bar">
+        <div class="segment-label"><span>Mobile Infrastructure (5G Radio + Core)</span><span>~45%</span></div>
+        <div class="segment-track"><div class="segment-fill" style="width:45%"></div></div>
+      </div>
+      <div class="segment-bar">
+        <div class="segment-label"><span>Network Infrastructure (Optical + IP)</span><span>~40%</span></div>
+        <div class="segment-track"><div class="segment-fill" style="width:40%;opacity:0.75"></div></div>
+      </div>
+      <div class="segment-bar">
+        <div class="segment-label"><span>Nokia Technologies (สิทธิบัตร / Patent Licensing)</span><span>~8%</span></div>
+        <div class="segment-track"><div class="segment-fill" style="width:8%;opacity:0.55"></div></div>
+      </div>
+      <div class="segment-bar">
+        <div class="segment-label"><span>อื่นๆ / Cloud and Network Services</span><span>~7%</span></div>
+        <div class="segment-track"><div class="segment-fill" style="width:7%;opacity:0.4"></div></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:12px">หมายเหตุ: สัดส่วนเป็นการประมาณจากโครงสร้างธุรกิจที่เปิดเผยต่อสาธารณะ ตัวเลขเจาะจงอาจแตกต่างตาม breakdown ใน Annual Report</p>
+    </div>
+
+    <div style="margin-top:64px">
+      <h3 class="reveal" style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;letter-spacing:-0.5px;margin-bottom:24px">พาร์ทเนอร์และลูกค้าสำคัญ</h3>
+      <div class="partner-grid reveal">
+        <span class="partner-badge">NVIDIA (ถือหุ้น + ร่วมวิจัย)</span>
+        <span class="partner-badge">T-Mobile US</span>
+        <span class="partner-badge">AT&T</span>
+        <span class="partner-badge">Verizon</span>
+        <span class="partner-badge">Deutsche Telekom</span>
+        <span class="partner-badge">Reliance Jio (อินเดีย)</span>
+        <span class="partner-badge">AWS / Hyperscalers 9/10</span>
+        <span class="partner-badge">Dell Technologies</span>
+        <span class="partner-badge">Intel</span>
+        <span class="partner-badge">กระทรวงกลาโหม US</span>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:48px">
+      <strong>Contracted Revenue:</strong> Nokia มีรายได้ประจำที่ทำสัญญาแล้วมากกว่า 800 ล้านยูโร/ปีถึงปี 2573 (Contracted Recurring Revenue) — เป็นฐานรายได้ที่มั่นคง และมียอดขายตามสัญญา (Contracted Net Sales Run-rate) ที่ 1.4 พันล้านยูโร
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 4: การเงิน -->
+<div class="section-gray" id="financials">
+  <div class="container">
+    <div class="sec-eyebrow reveal">04 — การเงิน</div>
+    <h2 class="sec-title reveal">รายได้โต กำไรดำเนินงานกดดัน<br>Free Cash Flow แข็งแกร่ง</h2>
+    <p class="sec-sub reveal">ปี 2568 Nokia เห็นรายได้โตขึ้น 3% แต่ Operating Margin (อัตรากำไรจากการดำเนินงาน) ลดลงจากการรวม Infinera และการลงทุน R&D หนัก ปี 2569 เป้าหมาย Comparable Operating Profit กลับมาอยู่ที่ 2–2.5 พันล้านยูโร</p>
+
+    <div class="grid-2 reveal">
+      <div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:500;font-size:17px;margin-bottom:24px;color:var(--ink)">รายได้รายปี (EUR พันล้าน)</h3>
+        <div class="fin-chart">
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar" style="height:73%"></div></div>
+            <div class="fin-bar-year">2022</div>
+            <div class="fin-bar-val">24.9B</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar" style="height:68%"></div></div>
+            <div class="fin-bar-year">2023</div>
+            <div class="fin-bar-val">22.3B</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar" style="height:57%"></div></div>
+            <div class="fin-bar-year">2024</div>
+            <div class="fin-bar-val">19.2B</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar" style="height:60%"></div></div>
+            <div class="fin-bar-year">2025</div>
+            <div class="fin-bar-val">19.9B</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar projected" style="height:68%"></div></div>
+            <div class="fin-bar-year">2026E</div>
+            <div class="fin-bar-val">~21-22B*</div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted)">*2026E = ประมาณการตาม guidance ไม่ใช่ตัวเลขทางการ</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:500;font-size:17px;margin-bottom:24px;color:var(--ink)">ตัวชี้วัดทางการเงินหลัก</h3>
+        <div class="data-table">
+          <div class="data-row">
+            <span class="data-key">รายได้รวม 2025</span>
+            <span class="data-val">19.9B EUR</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">Gross Margin 2025</span>
+            <span class="data-val data-val-down">43.5% (ลดจาก 46.1%)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">Comparable Operating Profit 2025</span>
+            <span class="data-val">~2.0B EUR</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">Free Cash Flow 2025</span>
+            <span class="data-val data-val-up">1.5B EUR</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">Comparable EPS 2025</span>
+            <span class="data-val">EUR 0.29</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">เป้า Oper. Profit 2026</span>
+            <span class="data-val data-val-accent">2.0–2.5B EUR</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">เงินปันผล (Dividend) ที่เสนอ</span>
+            <span class="data-val">EUR 0.14/หุ้น</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:48px">
+      <strong>บริบทสำคัญ:</strong> รายได้ลดจากปีก 24.9 พันล้านยูโร (2565) เหลือ 19.2 พันล้านยูโร (2567) เพราะ Operator ทั่วโลกชะลอการสั่ง 5G หลังลงทุนหนักในช่วงเปิดตัว — ปี 2568 เริ่มฟื้นตัว +3% และ Nokia คาดว่าการลงทุนใน AI Data Center จะเป็นเครื่องยนต์ใหม่ที่ทดแทน
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 5: คู่แข่ง -->
+<div class="section-white" id="competition">
+  <div class="container">
+    <div class="sec-eyebrow reveal">05 — คู่แข่งและตำแหน่ง</div>
+    <h2 class="sec-title reveal">สามยักษ์ตลาดโครงสร้างเครือข่าย</h2>
+    <p class="sec-sub reveal">ตลาด Telecom Infrastructure เป็นตลาดผู้ขายน้อยราย (Oligopoly) ที่มีผู้เล่นหลักเพียง 3–4 ราย ซึ่งต้องใช้เงินลงทุน R&D สูงมากเป็นกำแพงกั้นคู่แข่งหน้าใหม่</p>
+
+    <div class="card reveal" style="overflow-x:auto">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>บริษัท</th>
+            <th>ส่วนแบ่งตลาดรวม (H1 2025)</th>
+            <th>จุดแข็ง</th>
+            <th>จุดอ่อน</th>
+            <th>ที่ตั้ง</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Huawei</td>
+            <td>31% (ผู้นำ)</td>
+            <td>ราคาต่ำ, ครอบคลุมครบ, ครองตลาดจีนและตลาดเกิดใหม่</td>
+            <td>ถูกแบนในสหรัฐฯ/EU เรื่องความมั่นคง</td>
+            <td>จีน</td>
+          </tr>
+          <tr class="highlight-row">
+            <td>Nokia (NOK)</td>
+            <td>13% รวม / ~15-20% ไม่รวมจีน</td>
+            <td>Bell Labs, Optical แกร่ง, NVIDIA Partner, OpenRAN, ถูกกฎหมายใน Western</td>
+            <td>Margin ต่ำกว่า Ericsson, ยังฟื้น</td>
+            <td>ฟินแลนด์</td>
+          </tr>
+          <tr>
+            <td>Ericsson (ERIC)</td>
+            <td>12% รวม / ~24% ใน 5G RAN</td>
+            <td>ส่วนแบ่ง 5G RAN สูงสุดในตลาดเสรี, Margin ดีกว่า</td>
+            <td>Optical อ่อนแอกว่า Nokia, ไม่มีพันธมิตร NVIDIA</td>
+            <td>สวีเดน</td>
+          </tr>
+          <tr>
+            <td>ZTE</td>
+            <td>10%</td>
+            <td>ราคาต่ำ, แข็งในจีน</td>
+            <td>ถูกจำกัดในตลาดตะวันตก</td>
+            <td>จีน</td>
+          </tr>
+          <tr>
+            <td>Samsung Networks</td>
+            <td>&lt;5%</td>
+            <td>แข็งในเกาหลีและ US mmWave</td>
+            <td>ส่วนแบ่งโลกน้อย, ไม่ครบ portfolio</td>
+            <td>เกาหลีใต้</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:48px" class="reveal">
+      <h3 style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;letter-spacing:-0.5px;margin-bottom:24px">Moat (ความได้เปรียบที่ป้องกันคู่แข่งได้) ของ Nokia</h3>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">สิทธิบัตร SEP</div>
+          <div class="card-body">Nokia ถือ Standard-Essential Patent (สิทธิบัตรที่จำเป็นสำหรับมาตรฐาน) ใน 5G/4G จำนวนมาก ทุกอุปกรณ์ที่ใช้มาตรฐาน 5G ต้องจ่ายค่า License ให้ Nokia — เป็นรายได้ที่ margin สูงมาก (Nokia Technologies segment)</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Bell Labs R&D</div>
+          <div class="card-body">ห้องวิจัย Bell Labs เป็นแหล่งนวัตกรรมที่ผู้แข่งขันไม่สามารถลอกเลียนได้ง่าย เป็นองค์กรที่สะสม IP (ทรัพย์สินทางปัญญา) มาตั้งแต่ปี 2468 และยังคงแอคทีฟในงานวิจัยฐาน</div>
+        </div>
+        <div class="card">
+          <div class="card-title">ความไว้วางใจ Western</div>
+          <div class="card-body">ในยุคที่ Huawei และ ZTE ถูกแบนในสหรัฐฯ, EU, อินเดีย Nokia เป็นตัวเลือกที่ "ปลอดภัย" สำหรับโครงสร้างพื้นฐานสำคัญ — เป็น Moat ทางภูมิรัฐศาสตร์ที่ทุ่มเงินซื้อไม่ได้</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 6: ผู้บริหาร -->
+<div class="section-dark" id="leadership">
+  <div class="container">
+    <div class="sec-eyebrow sec-eyebrow-dark reveal">06 — ผู้บริหารและนักลงทุนเชิงกลยุทธ์</div>
+    <h2 class="sec-title sec-title-dark reveal">ทีมงานใหม่ที่นำพา Nokia<br>สู่ยุค AI</h2>
+    <p class="sec-sub sec-sub-dark reveal">CEO ใหม่ Justin Hotard เข้ารับตำแหน่งเมษายน 2568 มาพร้อมพื้นฐาน AI และ Data Center ที่ Nokia ต้องการอย่างยิ่งในช่วงเปลี่ยนผ่านนี้</p>
+
+    <div class="grid-3 reveal">
+      <div class="person-card">
+        <div class="person-avatar">JH</div>
+        <div class="person-name">Justin Hotard</div>
+        <div class="person-title">President & CEO (เม.ย. 2568 – ปัจจุบัน)</div>
+        <div class="person-bio">มาจากแวดวง AI, High-Performance Computing และ Data Center — พื้นฐานตรงกับทิศทางที่ Nokia กำลังมุ่ง ก่อนหน้านี้ดำรงตำแหน่งสำคัญในบริษัทเทคโนโลยีชั้นนำในสหรัฐฯ</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">MW</div>
+        <div class="person-name">Marco Wiren</div>
+        <div class="person-title">Chief Financial Officer</div>
+        <div class="person-bio">CFO ที่ดูแลการเงินในช่วงการซื้อ Infinera และการปรับโครงสร้าง — เป็นแกนหลักในการควบคุม Cost และปรับ Margin ให้กลับมา</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">NB</div>
+        <div class="person-name">Nishant Batra</div>
+        <div class="person-title">Chief Strategy & Technology Officer</div>
+        <div class="person-bio">กำหนดทิศทางเทคโนโลยีของ Nokia รวมถึงการลงทุน R&D ใน 6G และ AI Network ร่วมกับ Bell Labs และพาร์ทเนอร์เชิงกลยุทธ์</div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px" class="reveal">
+      <h3 style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;letter-spacing:-0.5px;margin-bottom:24px;color:var(--on-dark)">นักลงทุนเชิงกลยุทธ์</h3>
+      <div class="grid-2">
+        <div class="card card-dark">
+          <div class="card-title card-title-dark">NVIDIA Corporation</div>
+          <div class="card-body card-body-dark">ลงทุน ~$1 พันล้านดอลลาร์สหรัฐ ซื้อหุ้น Nokia ใหม่ที่ราคา $6.01/หุ้น ในไตรมาส 4 ปี 2568 เป็นทั้งผู้ถือหุ้นและพาร์ทเนอร์เชิงเทคโนโลยีในการพัฒนา AI-RAN และ 6G — สัญญาณว่า NVIDIA มองว่าเครือข่ายโทรคมนาคมคืออนาคตของ AI Computing</div>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title card-title-dark">Finnish State + Institutional</div>
+          <div class="card-body card-body-dark">Nokia เป็นบริษัทสำคัญเชิงยุทธศาสตร์ของฟินแลนด์ นักลงทุนสถาบันรายใหญ่ระดับโลกเป็นผู้ถือหุ้นหลัก รายชื่อผู้ถือหุ้นรายใหญ่อื่นๆ: ไม่พบข้อมูลยืนยันระดับละเอียด</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 7: ตัวเร่ง -->
+<div class="section-white" id="catalysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">07 — ตัวเร่งและเหตุการณ์สำคัญ</div>
+    <h2 class="sec-title reveal">ปัจจัยที่กำลังเปลี่ยนเกม</h2>
+    <p class="sec-sub reveal">ทั้งโอกาสและความท้าทายที่เกิดขึ้นในช่วง 2567–2569</p>
+
+    <div class="grid-2 reveal">
+      <div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:500;font-size:16px;margin-bottom:24px;color:var(--up)">ปัจจัยบวก</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">มิ.ย. 2567</div>
+            <div class="timeline-title">ประกาศซื้อ Infinera</div>
+            <div class="timeline-desc">ขยายธุรกิจ Optical อย่างมีนัย เพิ่มลูกค้า Hyperscaler และส่วนแบ่งตลาดในสหรัฐอเมริกา</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">ต.ค. 2568</div>
+            <div class="timeline-title">NVIDIA ลงทุน $1B + จับมือ 6G</div>
+            <div class="timeline-desc">NVIDIA ซื้อหุ้น Nokia ~$1 พันล้านดอลลาร์ ร่วมพัฒนา AI-RAN และ 6G Platform กับ T-Mobile US เป็นลูกค้าทดสอบ</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">เม.ย. 2568</div>
+            <div class="timeline-title">Justin Hotard เข้ารับตำแหน่ง CEO</div>
+            <div class="timeline-desc">CEO ใหม่ที่มี Background ด้าน AI/HPC เข้ามา ส่งสัญญาณว่า Nokia จริงจังกับการ pivot สู่ AI</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">ต้นปี 2569</div>
+            <div class="timeline-title">ปรับโครงสร้างเป็น 2 กลุ่มธุรกิจ</div>
+            <div class="timeline-desc">Network Infrastructure + Mobile Infrastructure — ทำให้โฟกัสชัดเจนและวัดผลได้ดีขึ้น</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">มิ.ย. 2569</div>
+            <div class="timeline-title">JPMorgan ปรับ Target ราคาขึ้น $21</div>
+            <div class="timeline-desc">จาก $14 เป็น $21 — แสดงความเชื่อมั่นในทิศทาง AI Network ที่ Nokia เดิน</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:500;font-size:16px;margin-bottom:24px;color:var(--down)">ปัจจัยลบ / ความท้าทาย</h3>
+        <div class="timeline">
+          <div class="timeline-item timeline-item-neg">
+            <div class="timeline-date">2567</div>
+            <div class="timeline-title">รายได้ลดแรง -14%</div>
+            <div class="timeline-desc">Operator ชะลอสั่งซื้ออุปกรณ์ 5G หลัง capex cycle ใหญ่ รายได้ลดจาก 22.3B → 19.2B EUR</div>
+          </div>
+          <div class="timeline-item timeline-item-neg">
+            <div class="timeline-date">2568</div>
+            <div class="timeline-title">Gross Margin ลด 2.6pp</div>
+            <div class="timeline-desc">การรวม Infinera (ซึ่งยังไม่เห็น synergy เต็มๆ) และ product mix ทำให้ gross margin ลดจาก 46.1% → 43.5%</div>
+          </div>
+          <div class="timeline-item timeline-item-neg">
+            <div class="timeline-date">2568</div>
+            <div class="timeline-title">Operating Profit ลด 55%</div>
+            <div class="timeline-desc">Operating profit GAAP ลดจาก 1.97B → 0.88B EUR เพราะค่าใช้จ่ายพิเศษจาก Infinera และ restructuring</div>
+          </div>
+          <div class="timeline-item timeline-item-neg">
+            <div class="timeline-date">ต่อเนื่อง</div>
+            <div class="timeline-title">Huawei กลับมาแข็งแกร่ง</div>
+            <div class="timeline-desc">Huawei เพิ่มส่วนแบ่งตลาด H1 2568 (Dell'Oro รายงาน) แม้ถูกแบนในตะวันตก ยังครองตลาดเกิดใหม่</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 8: ความเสี่ยง -->
+<div class="section-gray" id="risks">
+  <div class="container">
+    <div class="sec-eyebrow reveal">08 — ความเสี่ยง</div>
+    <h2 class="sec-title reveal">ความเสี่ยงที่ต้องติดตาม</h2>
+    <p class="sec-sub reveal">Nokia เผชิญทั้งความเสี่ยงเชิงอุตสาหกรรม ภูมิรัฐศาสตร์ และการแข่งขันที่ต้องเฝ้าระวัง</p>
+
+    <div class="grid-2 reveal">
+      <div class="risk-card risk-high">
+        <div class="risk-badge">ความเสี่ยงสูง</div>
+        <div class="risk-title">วัฏจักรการลงทุน Operator</div>
+        <div class="risk-body">รายได้ Nokia ผันผวนมากตาม capex cycle (รอบการลงทุนโครงสร้างพื้นฐาน) ของ Operator ทั่วโลก เมื่อ Operator ชะลอสั่งซื้อ รายได้ Nokia ลดแรงมาก เห็นได้จากปี 2566–2567 ที่ลดกว่า 14%</div>
+      </div>
+      <div class="risk-card risk-high">
+        <div class="risk-badge">ความเสี่ยงสูง</div>
+        <div class="risk-title">การแข่งขันราคากับ Ericsson และ Huawei</div>
+        <div class="risk-body">ตลาด Telecom Equipment แข่งขันด้วยราคาอย่างรุนแรง Huawei เสนอราคาต่ำมาก Ericsson แข่งใน 5G RAN โดยตรง — กดดัน Margin ของ Nokia อย่างต่อเนื่อง</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-badge">ความเสี่ยงกลาง</div>
+        <div class="risk-title">การรวม Infinera ช้ากว่าคาด</div>
+        <div class="risk-body">การรวมธุรกิจขนาดใหญ่มักใช้เวลาและค่าใช้จ่ายสูงกว่าประมาณ Nokia ตั้งเป้า synergy 200 ล้านยูโร/ปีภายใน 2570 แต่ถ้าล่าช้าจะกระทบ Margin</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-badge">ความเสี่ยงกลาง</div>
+        <div class="risk-title">ความเสี่ยงภูมิรัฐศาสตร์</div>
+        <div class="risk-body">แม้ Nokia ได้ประโยชน์จากการแบน Huawei แต่ถ้าการเมืองโลกเปลี่ยน หรือประเทศเกิดใหม่เลือก Huawei แทน Nokia ก็จะสูญเสียตลาดที่สำคัญ</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-badge">ความเสี่ยงกลาง</div>
+        <div class="risk-title">AI-RAN ยังไม่พิสูจน์เชิงพาณิชย์</div>
+        <div class="risk-body">พันธมิตรกับ NVIDIA น่าตื่นเต้น แต่ AI-RAN ผลิตภัณฑ์ยังไม่มีในตลาดจนถึงปี 2570 — ROI (ผลตอบแทนจากการลงทุน) จริงยังไม่ยืนยัน</div>
+      </div>
+      <div class="risk-card risk-low">
+        <div class="risk-badge">ความเสี่ยงต่ำ</div>
+        <div class="risk-title">การสูญเสียสิทธิบัตรสำคัญ</div>
+        <div class="risk-body">Nokia เคยแพ้คดีสิทธิบัตรกับบริษัทต่างๆ แต่ portfolio สิทธิบัตรมีขนาดใหญ่มาก โอกาสที่จะกระทบธุรกิจ Patent Licensing อย่างมีนัยสำคัญยังค่อนข้างต่ำ</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 9: นักวิเคราะห์ -->
+<div class="section-white" id="analysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">09 — มุมมองนักวิเคราะห์</div>
+    <h2 class="sec-title reveal">Wall Street มองอย่างไร</h2>
+    <p class="sec-sub reveal">ข้อมูล ณ มิถุนายน 2569 จากแหล่งสาธารณะ — ไม่ใช่คำแนะนำลงทุน</p>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">สรุป Rating จากนักวิเคราะห์</div>
+        <div class="card-body" style="margin-bottom:24px">จากนักวิเคราะห์ที่ติดตาม Nokia ทั้งหมด 11 ราย (ข้อมูลสาธารณะ มิ.ย. 2569)</div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>Buy</span><span>8 ราย</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:73%;background:var(--up)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>Hold</span><span>2 ราย</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:18%;background:#f4b000"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>Sell</span><span>1 ราย</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:9%;background:var(--down)"></div></div>
+        </div>
+        <div style="margin-top:24px">
+          <div class="data-row">
+            <span class="data-key">Price Target เฉลี่ย (แหล่ง 1)</span>
+            <span class="data-val">$14.67 USD</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">Price Target เฉลี่ย (แหล่ง 2)</span>
+            <span class="data-val">$14.95 USD</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">JPMorgan Target (มิ.ย. 2569)</span>
+            <span class="data-val data-val-up">$21 (ปรับขึ้นจาก $14)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-key">BofA Target (มิ.ย. 2569)</span>
+            <span class="data-val data-val-up">EUR 14.40 (ปรับขึ้นจาก EUR 11)</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:24px">
+          <div class="card-title" style="color:var(--up)">Bull Case — สิ่งที่ฝ่ายมองบวกเชื่อ</div>
+          <div class="card-body">
+            <ul style="padding-left:20px;display:flex;flex-direction:column;gap:10px">
+              <li>AI Data Center ต้องการ Optical Network เพิ่มมหาศาล — Nokia+Infinera อยู่ในตำแหน่งดีมาก</li>
+              <li>พันธมิตร NVIDIA เป็นตัวเร่งที่ Ericsson ไม่มี — ถ้า AI-RAN ออกตลาดได้จะเปลี่ยนเกม</li>
+              <li>Contracted Revenue 800M EUR/ปีถึง 2573 ทำให้ downside จำกัด</li>
+              <li>Margin ควรฟื้นตัวหลัง Infinera Synergy เริ่มชัดขึ้นปี 2569–2570</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--down)">Bear Case — สิ่งที่ฝ่ายมองลบกังวล</div>
+          <div class="card-body">
+            <ul style="padding-left:20px;display:flex;flex-direction:column;gap:10px">
+              <li>Gross Margin ยังกดดัน — 43.5% ต่ำกว่า Ericsson ที่ ~38-40% ในสภาวะดี</li>
+              <li>AI-RAN ยังเป็น concept — รายได้จริงอาจอีกหลายปี</li>
+              <li>ถ้า Operator ชะลอ capex อีกรอบ Nokia จะโดนหนัก</li>
+              <li>Huawei ยังแข็งในตลาดเกิดใหม่ขนาดใหญ่</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 10: สรุป -->
+<div class="section-dark" id="summary">
+  <div class="container">
+    <div class="sec-eyebrow sec-eyebrow-dark reveal">10 — สรุปภาพรวม</div>
+    <h2 class="sec-title sec-title-dark reveal">Nokia ในสามประโยค</h2>
+    <p class="sec-sub sec-sub-dark reveal">สิ่งที่ต้องรู้ก่อนจะพูดถึง Nokia กับใครก็ตาม</p>
+
+    <div class="grid-2 reveal">
+      <div class="card card-dark">
+        <div class="card-title card-title-dark">สิ่งที่ต้องรู้ (What to Know)</div>
+        <div class="card-body card-body-dark">
+          <ul style="padding-left:20px;display:flex;flex-direction:column;gap:12px">
+            <li>Nokia ไม่ใช่บริษัทโทรศัพท์มือถืออีกแล้ว — เป็นผู้สร้างโครงสร้างพื้นฐานของอินเทอร์เน็ตและ 5G ระดับโลก</li>
+            <li>ได้ประโยชน์จากการแบน Huawei ในตะวันตก — เป็น Moat ทางภูมิรัฐศาสตร์ที่หายาก</li>
+            <li>NVIDIA ลงทุน $1B เป็นสัญญาณว่าเครือข่ายโทรคมนาคมกำลังกลายเป็น AI Computing Infrastructure</li>
+            <li>Bell Labs ทำให้ Nokia มี R&D engine ที่ลึกกว่าที่ผู้คนมักนึกถึง</li>
+            <li>Patent Licensing (Nokia Technologies) เป็นรายได้ที่ margin สูงมาก และมั่นคงกว่าฮาร์ดแวร์</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card card-dark">
+        <div class="card-title card-title-dark">สิ่งที่ต้องติดตาม (What to Watch)</div>
+        <div class="card-body card-body-dark">
+          <ul style="padding-left:20px;display:flex;flex-direction:column;gap:12px">
+            <li>Gross Margin — ถ้าฟื้นกลับเหนือ 46% จะเป็นสัญญาณว่า Infinera integration สำเร็จ</li>
+            <li>AI-RAN Trial Results กับ T-Mobile US — ความสำเร็จของผลิตภัณฑ์นี้คือ thesis ใหญ่ของ Nokia</li>
+            <li>Operator Capex Guidance ทั่วโลก — ถ้า AT&T, Verizon, Deutsche Telekom เพิ่มงบ Nokia ได้โดยตรง</li>
+            <li>Comparable Operating Profit 2026 — Nokia ตั้งเป้า 2–2.5B EUR ทำได้ไหม</li>
+            <li>Infinera Synergy Schedule — เป้า 200M EUR/ปีภายใน 2570</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:48px;background:rgba(0,82,255,0.08);border-color:rgba(0,82,255,0.4)">
+      <strong style="font-size:15px">ภาพรวมในหนึ่งย่อหน้า:</strong><br><br>
+      Nokia คือบริษัทโครงสร้างพื้นฐานเครือข่ายชั้นนำของยุโรปที่กำลังเปลี่ยนเกมจากผู้ขายอุปกรณ์ 5G ทั่วไป สู่แกนกลางของเครือข่ายยุค AI — ด้วยการจับมือ NVIDIA พัฒนา AI-RAN และ 6G, การเข้าซื้อ Infinera เพื่อขยายธุรกิจ Optical ที่รับใช้ Data Center ของ Hyperscaler, และการถือสิทธิบัตร 5G ที่ทุกอุปกรณ์ในโลกต้องจ่ายค่า License ให้ Nokia เป็นบริษัทที่อยู่ใน "กระแสหลัก AI Supercycle" แต่ผ่านช่องทางที่คนทั่วไปมักมองข้าม — ไม่ใช่ชิป ไม่ใช่โมเดล AI แต่คือท่อส่งข้อมูลที่ AI ทุกตัวต้องใช้
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-logo" style="font-size:16px">Nokia <span style="color:var(--accent)">·</span> NOK</div>
+  <div class="footer-legal">
+    รายงานนี้จัดทำเพื่อการศึกษาและทำความเข้าใจธุรกิจเท่านั้น ไม่ใช่คำแนะนำการลงทุน ไม่ใช่การชักชวนซื้อหรือขายหลักทรัพย์ใดๆ ข้อมูลทางการเงินและการวิเคราะห์ในรายงานนี้มาจากแหล่งสาธารณะ ได้แก่ SEC Filings, Nokia Investor Relations, Dell'Oro Group, MarketBeat, StockAnalysis, NVIDIA Newsroom, และข่าวสารสาธารณะ ณ วันที่ 22 มิถุนายน 2569 ข้อมูลอาจเปลี่ยนแปลงได้ตามสภาวะตลาดและการประกาศของบริษัท ผู้อ่านควรศึกษาข้อมูลเพิ่มเติมและปรึกษาที่ปรึกษาทางการเงินก่อนตัดสินใจลงทุนเสมอ<br><br>
+    จัดทำโดย Neon · 22 มิถุนายน 2569
+  </div>
+</footer>
+
+<script>
+(function(){
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+(function(){
+  const links=document.querySelectorAll('.nav-links a');
+  const sections=document.querySelectorAll('div[id], footer[id]');
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}}),{threshold:0.4});
+  sections.forEach(s=>{if(s.id)io.observe(s)});
+})();
+</script>
+</body>
+</html>

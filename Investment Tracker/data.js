@@ -101,6 +101,7 @@ const DATA = {
   bench:{ spx:[0], nasdaq:[0] },
   reports:[
     {ticker:"GRAB", date:"21 มิ.ย. 2026", file:"GRAB_2026-06-21.html"},
-    {ticker:"TE", date:"21 มิ.ย. 2026", file:"TE_2026-06-21.html"}
+    {ticker:"TE", date:"21 มิ.ย. 2026", file:"TE_2026-06-21.html"},
+    {ticker:"NOK", date:"22 มิ.ย. 69", file:"NOK_2026-06-22.html"}
   ]    // {ticker, date, file} — Neon HTML reports ใน dashboard/reports/
 };
