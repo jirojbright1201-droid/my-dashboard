@@ -27,19 +27,43 @@
 .tsum-date { font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
 .tsum-date b { color: var(--accent); }
 .tsum-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 14px; }
+.tsum-row-2 { grid-template-columns: repeat(2,1fr); }
 .tsum-cell { background: var(--surface-2); border-radius: 10px; padding: 12px 10px; text-align: center; }
 .tsum-num { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
 .tsum-lbl { font-size: 0.625rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
 
-/* ── agenda ── */
-.day-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.day-nav button { background: var(--surface-2); border: none; border-radius: 9999px; width: 34px; height: 34px;
-  cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; color: var(--text); transition: background .15s; }
-.day-nav button:hover { background: var(--surface-3); }
-.day-heading { flex: 1; }
-.day-heading .date-big { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.3px; }
-.day-heading .date-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
-.day-heading .date-sub.today-label { color: var(--accent); font-weight: 600; }
+/* ── agenda: week strip ── */
+.wk-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.wk-month { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; letter-spacing: -0.3px; }
+.wk { display: flex; gap: 6px; margin-bottom: 18px; }
+.wk-day { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 0 7px;
+  border-radius: 12px; cursor: pointer; border: 1px solid transparent; transition: background .15s; }
+.wk-day:hover { background: var(--surface-2); }
+.wk-day.today { border-color: var(--border); }
+.wk-day.sel { background: var(--accent); border-color: var(--accent); }
+.wk-dow { font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 0.5px; }
+.wk-num { font-family: var(--mono); font-size: 1rem; font-weight: 600; color: var(--text); }
+.wk-day.sel .wk-dow, .wk-day.sel .wk-num { color: #fff; }
+.wk-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.wk-day.sel .wk-dot { background: #fff; }
+
+/* ── agenda: day heading + timeline ── */
+.ag-dayhead { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 14px; }
+.ag-dayhead .td { font-family: 'Inter',sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--accent);
+  background: var(--accent-soft); padding: 2px 9px; border-radius: 9999px; margin-left: 10px; vertical-align: middle; letter-spacing: 0; }
+.tl { position: relative; padding-left: 56px; }
+.tl::before { content: ''; position: absolute; left: 52px; top: 8px; bottom: 8px; width: 2px; background: var(--border-soft); }
+.tl-item { position: relative; margin-bottom: 10px; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-time { position: absolute; left: -56px; width: 44px; text-align: right; top: 13px;
+  font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--silver); }
+.tl-node { position: absolute; left: -8px; top: 15px; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--surface); z-index: 1; }
+.tl-card { background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 12px; padding: 12px 14px; }
+.tl-title { font-size: 0.9375rem; font-weight: 600; }
+.tl-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.tl-sub .est { color: var(--accent); font-weight: 600; }
+.tl-sub .dot-sep { color: var(--border); }
 
 .event-time { font-size: 0.8125rem; font-weight: 600; color: var(--near-white); flex-shrink: 0; padding-top: 2px; white-space: nowrap; }
 .habits-today { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
@@ -57,26 +81,7 @@
 .todo-title { font-size: 0.9rem; font-weight: 500; word-break: break-word; }
 .todo-title.done { text-decoration: line-through; color: var(--silver); }
 .todo-meta { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
-.chip-todo { background: var(--surface-3); color: var(--silver); }
-.chip-done { background: rgba(204,120,92,.14); color: var(--accent); }
 .chip-cat { background: rgba(204,120,92,.10); color: var(--accent); }
-
-/* ── todos tab ── */
-.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 16px; }
-.stat-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px 18px; text-align: center; }
-.stat-num { font-family: var(--mono); font-size: 1.625rem; font-weight: 600; }
-.stat-lbl { font-size: 0.6375rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
-.search-box { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border: 1px solid transparent;
-  border-radius: 9999px; padding: 8px 14px; margin-bottom: 12px; transition: border-color .15s; }
-.search-box:focus-within { border-color: var(--accent); background: var(--surface); }
-.search-box svg { width: 16px; height: 16px; color: var(--silver); flex-shrink: 0; }
-.search-box input { border: none; background: none; outline: none; flex: 1; font-family: inherit; font-size: 0.875rem; color: var(--text); }
-.filter-row { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
-.filter-btn { background: var(--surface-2); border: 1px solid transparent; border-radius: 9999px; padding: 5px 12px;
-  font-size: 0.775rem; font-weight: 600; color: var(--silver); cursor: pointer; transition: all .15s; font-family: inherit; }
-.filter-btn:hover { color: var(--text); }
-.filter-btn.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.todo-list-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 4px 18px; }
 
 /* ── calendar ── */
 .cal-toggle { display: flex; gap: 4px; background: var(--surface-2); border-radius: 9999px; padding: 3px; }
@@ -144,7 +149,7 @@
 .modal-sec-title:first-child { margin-top: 0; }
 
 @media (max-width: 768px) {
-  .stats-row, .tsum-row, .habit-overview { gap: 10px; }
+  .tsum-row, .habit-overview { gap: 10px; }
   #habitTracks { grid-template-columns: 1fr; }
   .cal-wrap { padding: 12px 10px; }
   .cal-day { min-height: 46px; padding: 4px 3px; }
