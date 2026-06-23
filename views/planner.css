@@ -60,12 +60,12 @@
   font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--silver); }
 .tl-node { position: absolute; left: -8px; top: 15px; width: 10px; height: 10px; border-radius: 50%;
   background: var(--accent); border: 2px solid var(--surface); z-index: 1; }
-.tl-card { background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 12px; padding: 11px 13px;
-  display: flex; align-items: center; gap: 12px; }
-.tl-ic { width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-.tl-ic svg { width: 26px; height: 26px; }
+.tl-card { background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 14px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 14px; }
+.tl-ic { width: 58px; height: 58px; flex-shrink: 0; border-radius: 15px; display: flex; align-items: center; justify-content: center; }
+.tl-ic svg { width: 40px; height: 40px; }
 .tl-card-main { flex: 1; min-width: 0; }
-.tl-title { font-size: 0.9375rem; font-weight: 600; }
+.tl-title { font-size: 1rem; font-weight: 600; }
 .tl-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .tl-sub .dot-sep { color: var(--border); }
 
