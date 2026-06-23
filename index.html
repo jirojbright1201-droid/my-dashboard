@@ -63,9 +63,8 @@
 <script src="./app.js"></script>
 
 <script>
-// ระหว่างสร้าง: ปิด PWA cache + ลบ service worker เก่า เพื่อให้เห็นของใหม่ทุกครั้งที่รีโหลด
-if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
-if (window.caches && caches.keys) caches.keys().then(ks => ks.forEach(k => caches.delete(k)));
+// network-first SW: ออนไลน์ดึงไฟล์สดเสมอ (revalidate กับ server), ออฟไลน์ใช้ cache
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 </script>
 </body>
 </html>
