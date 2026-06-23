@@ -1,12 +1,10 @@
 // ── Planner data — baked from Obsidian vault (agent แตะไฟล์นี้ที่เดียว) ──
-// source of truth: Obsidian\Planner\YYYY\MM\{Events,Todos,Habits}\
+// source of truth: Obsidian\Planner\YYYY\MM\{Events,Habits}\
 // schema:
 //   events: {date:"YYYY-MM-DD", title, time:"HH:MM", end_time, est, notes}
-//   todos:  {title, status:"todo"|"done", est, notes}   // ไม่ผูกกับวัน ไม่มี priority/category
 //   habits: {habit:"exercise"|"read"|"water"|"sleep_early", done_dates:["YYYY-MM-DD", ...]}
 window.PLANNER_DATA = {
   "2026-06": {
-    "todos": [],
     "events": [
       {"date":"2026-06-06","title":"Work at McDonald's","time":"22:00","end_time":"","est":"9h","notes":""},
       {"date":"2026-06-07","title":"ทำความสะอาดห้อง","time":"08:00","end_time":"","est":"1h","notes":""},

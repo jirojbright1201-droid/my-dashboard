@@ -20,7 +20,7 @@ window.PlannerView = (function () {
   const fmtDate = d => `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}`;
   const today = () => fmtDate(new Date());
   const monthOf = s => s.slice(0, 7);
-  const getMonthData = m => DATA[m] || { todos: [], events: [], habits: [] };
+  const getMonthData = m => DATA[m] || { events: [], habits: [] };
   const allMonthsData = () => KEYS.map(getMonthData);
   const $ = id => root.querySelector('#' + id);
 
