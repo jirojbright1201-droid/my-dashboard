@@ -59,10 +59,13 @@
   font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--silver); }
 .tl-node { position: absolute; left: -8px; top: 15px; width: 10px; height: 10px; border-radius: 50%;
   background: var(--accent); border: 2px solid var(--surface); z-index: 1; }
-.tl-card { background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 12px; padding: 12px 14px; }
+.tl-card { background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 12px; padding: 11px 13px;
+  display: flex; align-items: center; gap: 12px; }
+.tl-ic { width: 38px; height: 38px; flex-shrink: 0; border-radius: 11px; display: flex; align-items: center; justify-content: center; }
+.tl-ic svg { width: 21px; height: 21px; }
+.tl-card-main { flex: 1; min-width: 0; }
 .tl-title { font-size: 0.9375rem; font-weight: 600; }
 .tl-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.tl-sub .est { color: var(--accent); font-weight: 600; }
 .tl-sub .dot-sep { color: var(--border); }
 
 .event-time { font-size: 0.8125rem; font-weight: 600; color: var(--near-white); flex-shrink: 0; padding-top: 2px; white-space: nowrap; }

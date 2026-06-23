@@ -3,12 +3,40 @@ window.PlannerView = (function () {
   const DATA = window.PLANNER_DATA || {};
   const KEYS = window.PLANNER_KEYS || [];
   const HABITS = ['exercise', 'read', 'water', 'sleep_early'];
-  const HABIT_LABELS = { exercise: 'ออกกำลังกาย', read: 'อ่านหนังสือ', water: 'ดื่มน้ำ', sleep_early: 'นอนก่อนเที่ยง' };
+  const HABIT_LABELS = { exercise: 'Exercise', read: 'Read', water: 'Water', sleep_early: 'Sleep early' };
 
-  const TH_MONTHS_FULL = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-  const TH_DAYS_SHORT = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
-  const TH_DAYS_FULL = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const FLAME = '<svg class="ic-flame" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1.2 2.8-.6 4.2-1.7 5.9C9.1 9.7 8 11 8 13a4 4 0 0 0 8 0c0-1.6-.7-2.7-1.4-3.7.1 1.1-.6 1.9-1.4 1.9-1 0-1.5-.9-1.2-2.1C11.4 6.5 12.6 4.4 12 2z"/></svg>';
+
+  // ── contextual stickers (inline SVG, ไม่ใช้ emoji) ──
+  const S = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+  const ICONS = {
+    mcdonalds: { bg: 'rgba(232,165,90,.18)', fg: '#cc7a1f', svg: S('<path d="M4 10a8 8 0 0 1 16 0z"/><path d="M3 13.5h18"/><path d="M5 16.5h14a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 16.5z"/>') },
+    work:     { bg: 'rgba(108,106,100,.14)', fg: '#6c6a64', svg: S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>') },
+    sleep:    { bg: 'rgba(108,108,210,.15)', fg: '#6a6ad0', svg: S('<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/>') },
+    exercise: { bg: 'rgba(93,184,114,.18)', fg: '#3a8f52', svg: S('<path d="M2.5 12h2M19.5 12h2"/><rect x="4.5" y="8.5" width="3" height="7" rx="1"/><rect x="16.5" y="8.5" width="3" height="7" rx="1"/><path d="M7.5 12h9"/>') },
+    read:     { bg: 'rgba(204,120,92,.14)', fg: '#cc785c', svg: S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>') },
+    clean:    { bg: 'rgba(93,184,166,.18)', fg: '#3a9685', svg: S('<path d="M12 3l1.5 4L18 8.5 13.5 10 12 14l-1.5-4L6 8.5 10.5 7z"/><path d="M18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>') },
+    doc:      { bg: 'rgba(212,160,23,.16)', fg: '#b8860b', svg: S('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M13 9.5h5M13 12.5h5M5.5 15h7"/>') },
+    video:    { bg: 'rgba(198,69,69,.14)', fg: '#c64545', svg: S('<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>') },
+    default:  { bg: 'var(--surface-3)', fg: 'var(--silver)', svg: S('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>') }
+  };
+  function eventIcon(title) {
+    const t = (title || '').toLowerCase();
+    const has = (...ks) => ks.some(k => t.includes(k));
+    if (has("mcdonald", "แมค")) return ICONS.mcdonalds;
+    if (has("sleep", "นอน")) return ICONS.sleep;
+    if (has("ออกกำลัง", "วิ่ง", "ยิม", "exercise", "gym", "เวท", "workout", "run")) return ICONS.exercise;
+    if (has("อ่าน", "read", "หนังสือ", "book", "เรียน", "study")) return ICONS.read;
+    if (has("ทำความสะอาด", "clean", "ล้าง", "เก็บกวาด", "ซัก", "กวาด")) return ICONS.clean;
+    if (has("บัตร", "เอกสาร", "ธุระ", "ราชการ", "ธนาคาร", "id", "document", "passport")) return ICONS.doc;
+    if (has("youtube", "วิดีโอ", "video", "agent", "content", "อัด", "ถ่าย", "คลิป", "stream", "live")) return ICONS.video;
+    if (has("work", "งาน", "ทำงาน", "ประชุม", "meeting")) return ICONS.work;
+    return ICONS.default;
+  }
 
   // ── state ──
   let root, curMonth = '', selDay = '', activeTab = 'agenda';
@@ -47,14 +75,14 @@ window.PlannerView = (function () {
         <span class="wk-month" id="wkMonth"></span>
         <div class="pl-ctl">
           <button data-wk="-1">&#8592;</button>
-          <button class="btn-today" id="wkToday">วันนี้</button>
+          <button class="btn-today" id="wkToday">Today</button>
           <button data-wk="1">&#8594;</button>
         </div>
       </div>
       <div class="wk" id="wkStrip"></div>
       <div class="ag-dayhead" id="agDayHead"></div>
       <div class="card"><div class="section-title">Timeline</div><div id="agTimeline"></div></div>
-      <div class="card"><div class="section-title">Habits วันนี้</div><div class="habits-today" id="agHabits"></div></div>
+      <div class="card"><div class="section-title">Habits today</div><div class="habits-today" id="agHabits"></div></div>
     </div>
 
     <div id="pl-calendar" class="pl-pane">
@@ -65,8 +93,8 @@ window.PlannerView = (function () {
           <button data-cnav="1">&#8594;</button>
         </div>
         <div class="cal-toggle">
-          <button data-cmode="month" class="on">เดือน</button>
-          <button data-cmode="week">สัปดาห์</button>
+          <button data-cmode="month" class="on">Month</button>
+          <button data-cmode="week">Week</button>
         </div>
       </div>
       <div id="calWrap"></div>
@@ -96,7 +124,7 @@ window.PlannerView = (function () {
   // ── render: shared item builders ──
   function renderEventItem(e) {
     const time = e.time || '';
-    const tags = ['Planner', e.est ? '⏱ ' + e.est : ''].filter(Boolean);
+    const tags = ['Planner', e.end_time ? 'until ' + e.end_time : ''].filter(Boolean);
     return `<div class="todo-item">${time ? `<div class="event-time">${esc(time)}</div>` : ''}
       <div class="todo-bar" style="background:var(--accent)"></div>
       <div class="todo-content"><div class="todo-title">${esc(e.title)}</div>
@@ -107,28 +135,28 @@ window.PlannerView = (function () {
   function renderAgenda() {
     const d = new Date(selDay + 'T00:00:00'), td = today(), isT = selDay === td;
 
-    // week strip — 7 วันของสัปดาห์ที่ selDay อยู่
+    // week strip — 7 days of the week containing selDay
     const ws = startOfWeek(selDay);
-    $('wkMonth').textContent = `${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}`;
+    $('wkMonth').textContent = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
     let strip = '';
     for (let i = 0; i < 7; i++) {
       const wd = new Date(ws); wd.setDate(wd.getDate() + i); const ds = fmtDate(wd);
       const cls = (ds === selDay ? ' sel' : '') + (ds === td ? ' today' : '');
       strip += `<div class="wk-day${cls}" data-selday="${ds}">
-        <span class="wk-dow">${TH_DAYS_SHORT[wd.getDay()]}</span>
+        <span class="wk-dow">${DAYS_SHORT[wd.getDay()]}</span>
         <span class="wk-num">${wd.getDate()}</span>
-        ${ds === td ? '<span class="wk-dot"></span>' : '<span class="wk-dot" style="background:transparent"></span>'}
+        <span class="wk-dot"${ds === td ? '' : ' style="background:transparent"'}></span>
       </div>`;
     }
     $('wkStrip').innerHTML = strip;
 
-    $('agDayHead').innerHTML = `วัน${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}${isT ? '<span class="td">วันนี้</span>' : ''}`;
+    $('agDayHead').innerHTML = `${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}${isT ? '<span class="td">Today</span>' : ''}`;
 
-    // timeline — event ของวันนั้น เรียงตามเวลา
+    // timeline — events of the day, sorted by time
     const dayEvents = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === selDay)
       .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
     $('agTimeline').innerHTML = dayEvents.length ? `<div class="tl">${dayEvents.map(renderTimelineItem).join('')}</div>`
-      : '<div class="empty">ไม่มี event วันนี้</div>';
+      : '<div class="empty">No events today</div>';
 
     const doneMap = habitDoneMap();
     $('agHabits').innerHTML = HABITS.map(h => {
@@ -140,13 +168,17 @@ window.PlannerView = (function () {
   }
 
   function renderTimelineItem(e) {
-    const sub = [e.est ? `<span class="est">⏱ ${esc(e.est)}</span>` : '', e.end_time ? `ถึง ${esc(e.end_time)}` : '', esc(e.notes || '')].filter(Boolean);
+    const ic = eventIcon(e.title);
+    const sub = [e.end_time ? `until ${esc(e.end_time)}` : '', esc(e.notes || '')].filter(Boolean);
     return `<div class="tl-item">
       <div class="tl-time">${esc(e.time || '–')}</div>
       <div class="tl-node"></div>
       <div class="tl-card">
-        <div class="tl-title">${esc(e.title)}</div>
-        ${sub.length ? `<div class="tl-sub">${sub.join('<span class="dot-sep">·</span>')}</div>` : ''}
+        <div class="tl-ic" style="background:${ic.bg};color:${ic.fg}">${ic.svg}</div>
+        <div class="tl-card-main">
+          <div class="tl-title">${esc(e.title)}</div>
+          ${sub.length ? `<div class="tl-sub">${sub.join('<span class="dot-sep">·</span>')}</div>` : ''}
+        </div>
       </div>
     </div>`;
   }
@@ -157,10 +189,10 @@ window.PlannerView = (function () {
     const doneMap = habitDoneMap();
     const hDone = HABITS.filter(h => doneMap[h].has(td)).length;
     $('todaySum').innerHTML = `
-      <div class="tsum-date">วันนี้ · <b>${TH_DAYS_FULL[d.getDay()]} ${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}</b></div>
+      <div class="tsum-date">Today · <b>${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</b></div>
       <div class="tsum-row tsum-row-2">
-        <div class="tsum-cell"><div class="tsum-num" style="color:var(--accent)">${evToday}</div><div class="tsum-lbl">Event วันนี้</div></div>
-        <div class="tsum-cell"><div class="tsum-num" style="color:var(--green)">${hDone}/${HABITS.length}</div><div class="tsum-lbl">Habit วันนี้</div></div>
+        <div class="tsum-cell"><div class="tsum-num" style="color:var(--accent)">${evToday}</div><div class="tsum-lbl">Events</div></div>
+        <div class="tsum-cell"><div class="tsum-num" style="color:var(--green)">${hDone}/${HABITS.length}</div><div class="tsum-lbl">Habits</div></div>
       </div>`;
   }
 
@@ -171,24 +203,24 @@ window.PlannerView = (function () {
     const td = today();
     if (calMode === 'week') {
       const ws = startOfWeek(calAnchor), we = new Date(ws); we.setDate(we.getDate() + 6);
-      $('calLabel').textContent = `${ws.getDate()} ${TH_MONTHS_FULL[ws.getMonth()].slice(0,3)} – ${we.getDate()} ${TH_MONTHS_FULL[we.getMonth()].slice(0,3)}`;
+      $('calLabel').textContent = `${ws.getDate()} ${MONTHS_SHORT[ws.getMonth()]} – ${we.getDate()} ${MONTHS_SHORT[we.getMonth()]}`;
       const evByDate = {}; allMonthsData().flatMap(m => m.events || []).forEach(e => (evByDate[e.date] ??= []).push(e));
       let rows = '';
       for (let i = 0; i < 7; i++) {
         const d = new Date(ws); d.setDate(d.getDate() + i); const ds = fmtDate(d), isT = ds === td;
         const evs = (evByDate[ds] || []).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
         const body = evs.length ? evs.map(e => `<div class="calw-ev"><span class="calw-ev-time">${esc(e.time || '–')}</span><span>${esc(e.title)}</span></div>`).join('')
-          : '<div class="calw-empty">ไม่มี event</div>';
+          : '<div class="calw-empty">No events</div>';
         rows += `<div class="calw-day${isT ? ' today-day' : ''}" data-open="${ds}">
-          <div class="calw-head"><span class="calw-dow">${TH_DAYS_SHORT[d.getDay()]}</span><span class="calw-num">${d.getDate()}</span></div>${body}</div>`;
+          <div class="calw-head"><span class="calw-dow">${DAYS_SHORT[d.getDay()]}</span><span class="calw-num">${d.getDate()}</span></div>${body}</div>`;
       }
       $('calWrap').innerHTML = `<div class="cal-wrap">${rows}</div>`;
     } else {
       const [y, m] = monthOf(calAnchor).split('-').map(Number);
-      $('calLabel').textContent = `${TH_MONTHS_FULL[m - 1]} ${y}`;
+      $('calLabel').textContent = `${MONTHS[m - 1]} ${y}`;
       const days = new Date(y, m, 0).getDate(), startDow = new Date(y, m - 1, 1).getDay();
       const evByDate = {}; getMonthData(`${y}-${p2(m)}`).events.forEach(e => (evByDate[e.date] ??= []).push(e));
-      const heads = TH_DAYS_SHORT.map(d => `<div class="cal-head">${d}</div>`).join('');
+      const heads = DAYS_SHORT.map(d => `<div class="cal-head">${d}</div>`).join('');
       let cells = '';
       for (let i = 0; i < startDow; i++) cells += `<div class="cal-day empty"></div>`;
       for (let day = 1; day <= days; day++) {
@@ -209,10 +241,10 @@ window.PlannerView = (function () {
 
   function renderHabits() {
     const [y, m] = curMonth.split('-').map(Number);
-    $('habLabel').textContent = `${TH_MONTHS_FULL[m - 1]} ${y}`;
+    $('habLabel').textContent = `${MONTHS[m - 1]} ${y}`;
     const days = new Date(y, m, 0).getDate(), td = today(), done = habitDoneMap();
     const startDow = new Date(y, m - 1, 1).getDay();
-    const dayHeaders = TH_DAYS_SHORT.map(d => `<div class="habit-cal-head">${d}</div>`).join('');
+    const dayHeaders = DAYS_SHORT.map(d => `<div class="habit-cal-head">${d}</div>`).join('');
 
     let bestStreak = 0, totalDone = 0, totalElapsed = 0;
     const cards = HABITS.map(h => {
@@ -231,17 +263,17 @@ window.PlannerView = (function () {
       bestStreak = Math.max(bestStreak, streak); totalDone += doneCount; totalElapsed += elapsed;
       return `<div class="habit-track-card"><div class="habit-track-header">
         <span class="habit-track-name">${HABIT_LABELS[h]}</span>
-        <div class="habit-track-meta">${streak > 0 ? `<span class="habit-streak">${FLAME} ${streak} วัน</span>` : ''}
-        <span class="habit-pct">${doneCount} วัน · ${pct}%</span></div></div>
+        <div class="habit-track-meta">${streak > 0 ? `<span class="habit-streak">${FLAME} ${streak}d</span>` : ''}
+        <span class="habit-pct">${doneCount}d · ${pct}%</span></div></div>
         <div class="habit-cal-grid">${dayHeaders}${cells}</div></div>`;
     }).join('');
 
     const avgPct = totalElapsed > 0 ? Math.round(totalDone / totalElapsed * 100) : 0;
     const tdDone = HABITS.filter(h => done[h].has(td)).length;
     $('habitOverview').innerHTML = `
-      <div class="ho-card"><div class="ho-num" style="color:var(--accent)">${FLAME} ${bestStreak}</div><div class="ho-lbl">Streak สูงสุด</div></div>
-      <div class="ho-card"><div class="ho-num">${avgPct}%</div><div class="ho-lbl">เฉลี่ยเดือนนี้</div></div>
-      <div class="ho-card"><div class="ho-num" style="color:var(--green)">${tdDone}/${HABITS.length}</div><div class="ho-lbl">วันนี้</div></div>`;
+      <div class="ho-card"><div class="ho-num" style="color:var(--accent)">${FLAME} ${bestStreak}</div><div class="ho-lbl">Best streak</div></div>
+      <div class="ho-card"><div class="ho-num">${avgPct}%</div><div class="ho-lbl">This month</div></div>
+      <div class="ho-card"><div class="ho-num" style="color:var(--green)">${tdDone}/${HABITS.length}</div><div class="ho-lbl">Today</div></div>`;
     $('habitTracks').innerHTML = cards;
   }
 
@@ -249,11 +281,11 @@ window.PlannerView = (function () {
   function openModal(ds) {
     const d = new Date(ds + 'T00:00:00');
     const evs = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === ds).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-    $('mTitle').textContent = `${d.getDate()} ${TH_MONTHS_FULL[d.getMonth()]}`;
-    $('mSub').textContent = `วัน${TH_DAYS_FULL[d.getDay()]}`;
+    $('mTitle').textContent = `${d.getDate()} ${MONTHS[d.getMonth()]}`;
+    $('mSub').textContent = DAYS_FULL[d.getDay()];
     let html = '';
     if (evs.length) html += `<div class="modal-sec-title">Events</div>` + evs.map(renderEventItem).join('');
-    $('mBody').innerHTML = html || `<div class="modal-empty">ไม่มี event</div>`;
+    $('mBody').innerHTML = html || `<div class="modal-empty">No events</div>`;
     $('plOverlay').classList.add('active');
   }
   const closeModal = () => $('plOverlay').classList.remove('active');
