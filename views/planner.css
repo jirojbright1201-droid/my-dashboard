@@ -62,9 +62,8 @@
   background: var(--accent); border: 2px solid var(--surface); z-index: 1; }
 .tl-card { background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 12px; padding: 11px 13px;
   display: flex; align-items: center; gap: 12px; }
-.tl-ic { width: 38px; height: 38px; flex-shrink: 0; border-radius: 11px; display: flex; align-items: center; justify-content: center;
-  background: var(--accent-soft); color: var(--accent); }
-.tl-ic svg { width: 21px; height: 21px; }
+.tl-ic { width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.tl-ic svg { width: 26px; height: 26px; }
 .tl-card-main { flex: 1; min-width: 0; }
 .tl-title { font-size: 0.9375rem; font-weight: 600; }
 .tl-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }

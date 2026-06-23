@@ -11,18 +11,18 @@ window.PlannerView = (function () {
   const DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const FLAME = '<svg class="ic-flame" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1.2 2.8-.6 4.2-1.7 5.9C9.1 9.7 8 11 8 13a4 4 0 0 0 8 0c0-1.6-.7-2.7-1.4-3.7.1 1.1-.6 1.9-1.4 1.9-1 0-1.5-.9-1.2-2.1C11.4 6.5 12.6 4.4 12 2z"/></svg>';
 
-  // ── contextual stickers (inline SVG, สีเดียวตามธีม — รูปทรงต่างตามบริบท) ──
-  const S = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+  // ── contextual stickers (inline SVG illustration หลายสี — ชุดเดียวกัน โทนอุ่น) ──
+  const W = (p) => `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${p}</svg>`;
   const ICONS = {
-    mcdonalds: S('<path d="M4 10a8 8 0 0 1 16 0z"/><path d="M3 13.5h18"/><path d="M5 16.5h14a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 16.5z"/>'),
-    work:     S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
-    sleep:    S('<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/>'),
-    exercise: S('<path d="M2.5 12h2M19.5 12h2"/><rect x="4.5" y="8.5" width="3" height="7" rx="1"/><rect x="16.5" y="8.5" width="3" height="7" rx="1"/><path d="M7.5 12h9"/>'),
-    read:     S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>'),
-    clean:    S('<path d="M12 3l1.5 4L18 8.5 13.5 10 12 14l-1.5-4L6 8.5 10.5 7z"/><path d="M18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>'),
-    doc:      S('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M13 9.5h5M13 12.5h5M5.5 15h7"/>'),
-    video:    S('<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>'),
-    default:  S('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>')
+    mcdonalds: { bg: 'rgba(227,163,94,.18)', svg: W('<path d="M4 9.6C4 6.2 7.6 4.2 12 4.2s8 2 8 5.4z" fill="#e3a35e"/><circle cx="9" cy="7" r=".5" fill="#fff"/><circle cx="12.4" cy="6.3" r=".5" fill="#fff"/><circle cx="15.4" cy="7.1" r=".5" fill="#fff"/><path d="M4.3 9.7h15.4v1a1.2 1.2 0 0 1-1.2 1.2H5.5A1.2 1.2 0 0 1 4.3 10.7z" fill="#7cbf6a"/><rect x="4.6" y="11.7" width="14.8" height="2.4" rx="1" fill="#9c6b45"/><path d="M4 14.3h16c0 3.3-3.6 5.3-8 5.3s-8-2-8-5.3z" fill="#d98f4a"/>') },
+    work:     { bg: 'rgba(224,121,92,.14)', svg: W('<rect x="3.5" y="8" width="17" height="11" rx="2.2" fill="#e0795c"/><path d="M3.5 11.4h17v1.2H3.5z" fill="#c75f43"/><path d="M9 8V6.6A1.6 1.6 0 0 1 10.6 5h2.8A1.6 1.6 0 0 1 15 6.6V8" fill="none" stroke="#c75f43" stroke-width="1.6"/><rect x="10.6" y="11.4" width="2.8" height="2" rx=".5" fill="#fff"/>') },
+    sleep:    { bg: 'rgba(125,122,214,.15)', svg: W('<path d="M20 13.4A7.5 7.5 0 1 1 11 4.4a6 6 0 0 0 9 9z" fill="#7d7ad6"/><path d="M16.4 4.6l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" fill="#ecc15a"/>') },
+    exercise: { bg: 'rgba(111,184,106,.16)', svg: W('<rect x="2.4" y="9.6" width="2.3" height="4.8" rx="1" fill="#4f9a4d"/><rect x="4.6" y="8" width="2.6" height="8" rx="1.1" fill="#6fb86a"/><rect x="16.8" y="8" width="2.6" height="8" rx="1.1" fill="#6fb86a"/><rect x="19.3" y="9.6" width="2.3" height="4.8" rx="1" fill="#4f9a4d"/><rect x="7.2" y="10.8" width="9.6" height="2.4" rx="1.2" fill="#9a958c"/>') },
+    read:     { bg: 'rgba(224,121,92,.13)', svg: W('<path d="M12 6.6C10.4 5.4 8.2 5.1 5.4 5.4v11.6C8.2 16.7 10.4 17 12 18.2z" fill="#e0795c"/><path d="M12 6.6C13.6 5.4 15.8 5.1 18.6 5.4v11.6C15.8 16.7 13.6 17 12 18.2z" fill="#ef9c84"/><path d="M12 6.6v11.6" stroke="#c75f43" stroke-width="1"/>') },
+    clean:    { bg: 'rgba(91,182,164,.16)', svg: W('<rect x="7.8" y="9" width="6" height="9.2" rx="1.5" fill="#5bb6a4"/><path d="M7.8 9V7.4h4V6h2.1l1 1.4V9z" fill="#3f9a89"/><path d="M16 6.4l1.7-.5M16 8l1.8.1M16.3 9.6l1.6.9" stroke="#5bb6a4" stroke-width="1.3" stroke-linecap="round"/><rect x="9.3" y="11.4" width="3" height="2.2" rx=".6" fill="#fff" opacity=".75"/>') },
+    doc:      { bg: 'rgba(230,169,78,.16)', svg: W('<rect x="3.5" y="6" width="17" height="12" rx="2" fill="#e6a94e"/><circle cx="8" cy="11" r="2.1" fill="#fff"/><rect x="11.6" y="9.4" width="6" height="1.5" rx=".75" fill="#fff"/><rect x="11.6" y="12.2" width="6" height="1.5" rx=".75" fill="#fff" opacity=".75"/>') },
+    video:    { bg: 'rgba(214,90,90,.13)', svg: W('<rect x="3.5" y="6" width="17" height="12" rx="3" fill="#d65a5a"/><path d="M10.4 9.2l4.6 2.8-4.6 2.8z" fill="#fff"/>') },
+    default:  { bg: 'rgba(224,121,92,.13)', svg: W('<rect x="4" y="5.6" width="16" height="13.8" rx="2.4" fill="#e0795c"/><path d="M4 9.4h16v-1.4a2.4 2.4 0 0 0-2.4-2.4H6.4A2.4 2.4 0 0 0 4 8z" fill="#c75f43"/><rect x="7.6" y="3.6" width="1.6" height="3.4" rx=".8" fill="#c75f43"/><rect x="14.8" y="3.6" width="1.6" height="3.4" rx=".8" fill="#c75f43"/><circle cx="9" cy="13" r="1.1" fill="#fff"/><circle cx="12.5" cy="13" r="1.1" fill="#fff" opacity=".8"/><circle cx="16" cy="13" r="1.1" fill="#fff" opacity=".6"/>') }
   };
   function eventIcon(title) {
     const t = (title || '').toLowerCase();
@@ -161,11 +161,12 @@ window.PlannerView = (function () {
   }
 
   function renderTimelineItem(e) {
+    const ic = eventIcon(e.title);
     return `<div class="tl-item">
       <div class="tl-time">${esc(e.time || '–')}</div>
       <div class="tl-node"></div>
       <div class="tl-card">
-        <div class="tl-ic">${eventIcon(e.title)}</div>
+        <div class="tl-ic" style="background:${ic.bg}">${ic.svg}</div>
         <div class="tl-card-main">
           <div class="tl-title">${esc(e.title)}</div>
         </div>

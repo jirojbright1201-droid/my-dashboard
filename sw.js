@@ -1,7 +1,7 @@
 // Dashboard PWA service worker
 // Pages: network-first (always fresh when online, cached copy when offline)
 // Static assets: cache-first with runtime caching
-const CACHE = 'dash-v9';
+const CACHE = 'dash-v10';
 const CORE = [
   './',
   './index.html',
@@ -51,8 +51,9 @@ self.addEventListener('fetch', e => {
     && /\.(js|css)$/.test(url.pathname)
     && !url.pathname.endsWith('/sw.js');
   if (isPage || isLocalCode) {
+    // no-cache = revalidate กับ server ทุกครั้ง (ETag) → ได้ไฟล์สดเมื่อมีการแก้ ไม่ติด HTTP cache 10 นาทีของ Pages
     e.respondWith(
-      fetch(req)
+      fetch(req, { cache: 'no-cache' })
         .then(res => {
           const copy = res.clone();
           caches.open(CACHE).then(c => { try { c.put(req, copy); } catch (_) {} });
