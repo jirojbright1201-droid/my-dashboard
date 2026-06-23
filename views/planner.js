@@ -11,18 +11,18 @@ window.PlannerView = (function () {
   const DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const FLAME = '<svg class="ic-flame" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1.2 2.8-.6 4.2-1.7 5.9C9.1 9.7 8 11 8 13a4 4 0 0 0 8 0c0-1.6-.7-2.7-1.4-3.7.1 1.1-.6 1.9-1.4 1.9-1 0-1.5-.9-1.2-2.1C11.4 6.5 12.6 4.4 12 2z"/></svg>';
 
-  // ── contextual stickers (inline SVG, ไม่ใช้ emoji) ──
+  // ── contextual stickers (inline SVG, สีเดียวตามธีม — รูปทรงต่างตามบริบท) ──
   const S = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
   const ICONS = {
-    mcdonalds: { bg: 'rgba(232,165,90,.18)', fg: '#cc7a1f', svg: S('<path d="M4 10a8 8 0 0 1 16 0z"/><path d="M3 13.5h18"/><path d="M5 16.5h14a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 16.5z"/>') },
-    work:     { bg: 'rgba(108,106,100,.14)', fg: '#6c6a64', svg: S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>') },
-    sleep:    { bg: 'rgba(108,108,210,.15)', fg: '#6a6ad0', svg: S('<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/>') },
-    exercise: { bg: 'rgba(93,184,114,.18)', fg: '#3a8f52', svg: S('<path d="M2.5 12h2M19.5 12h2"/><rect x="4.5" y="8.5" width="3" height="7" rx="1"/><rect x="16.5" y="8.5" width="3" height="7" rx="1"/><path d="M7.5 12h9"/>') },
-    read:     { bg: 'rgba(204,120,92,.14)', fg: '#cc785c', svg: S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>') },
-    clean:    { bg: 'rgba(93,184,166,.18)', fg: '#3a9685', svg: S('<path d="M12 3l1.5 4L18 8.5 13.5 10 12 14l-1.5-4L6 8.5 10.5 7z"/><path d="M18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>') },
-    doc:      { bg: 'rgba(212,160,23,.16)', fg: '#b8860b', svg: S('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M13 9.5h5M13 12.5h5M5.5 15h7"/>') },
-    video:    { bg: 'rgba(198,69,69,.14)', fg: '#c64545', svg: S('<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>') },
-    default:  { bg: 'var(--surface-3)', fg: 'var(--silver)', svg: S('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>') }
+    mcdonalds: S('<path d="M4 10a8 8 0 0 1 16 0z"/><path d="M3 13.5h18"/><path d="M5 16.5h14a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 16.5z"/>'),
+    work:     S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
+    sleep:    S('<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/>'),
+    exercise: S('<path d="M2.5 12h2M19.5 12h2"/><rect x="4.5" y="8.5" width="3" height="7" rx="1"/><rect x="16.5" y="8.5" width="3" height="7" rx="1"/><path d="M7.5 12h9"/>'),
+    read:     S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>'),
+    clean:    S('<path d="M12 3l1.5 4L18 8.5 13.5 10 12 14l-1.5-4L6 8.5 10.5 7z"/><path d="M18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>'),
+    doc:      S('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M13 9.5h5M13 12.5h5M5.5 15h7"/>'),
+    video:    S('<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>'),
+    default:  S('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>')
   };
   function eventIcon(title) {
     const t = (title || '').toLowerCase();
@@ -82,7 +82,6 @@ window.PlannerView = (function () {
       <div class="wk" id="wkStrip"></div>
       <div class="ag-dayhead" id="agDayHead"></div>
       <div class="card"><div class="section-title">Timeline</div><div id="agTimeline"></div></div>
-      <div class="card"><div class="section-title">Habits today</div><div class="habits-today" id="agHabits"></div></div>
     </div>
 
     <div id="pl-calendar" class="pl-pane">
@@ -124,7 +123,7 @@ window.PlannerView = (function () {
   // ── render: shared item builders ──
   function renderEventItem(e) {
     const time = e.time || '';
-    const tags = ['Planner', e.end_time ? 'until ' + e.end_time : ''].filter(Boolean);
+    const tags = ['Planner'];
     return `<div class="todo-item">${time ? `<div class="event-time">${esc(time)}</div>` : ''}
       <div class="todo-bar" style="background:var(--accent)"></div>
       <div class="todo-content"><div class="todo-title">${esc(e.title)}</div>
@@ -158,26 +157,19 @@ window.PlannerView = (function () {
     $('agTimeline').innerHTML = dayEvents.length ? `<div class="tl">${dayEvents.map(renderTimelineItem).join('')}</div>`
       : '<div class="empty">No events today</div>';
 
-    const doneMap = habitDoneMap();
-    $('agHabits').innerHTML = HABITS.map(h => {
-      const state = doneMap[h].has(selDay) ? 'done' : 'no-log';
-      return `<div class="habit-today-item"><div class="habit-dot ${state}"></div><span class="habit-name">${HABIT_LABELS[h]}</span></div>`;
-    }).join('');
-
     renderTodaySummary();
   }
 
   function renderTimelineItem(e) {
-    const ic = eventIcon(e.title);
-    const sub = [e.end_time ? `until ${esc(e.end_time)}` : '', esc(e.notes || '')].filter(Boolean);
+    const note = esc(e.notes || '');
     return `<div class="tl-item">
       <div class="tl-time">${esc(e.time || '–')}</div>
       <div class="tl-node"></div>
       <div class="tl-card">
-        <div class="tl-ic" style="background:${ic.bg};color:${ic.fg}">${ic.svg}</div>
+        <div class="tl-ic">${eventIcon(e.title)}</div>
         <div class="tl-card-main">
           <div class="tl-title">${esc(e.title)}</div>
-          ${sub.length ? `<div class="tl-sub">${sub.join('<span class="dot-sep">·</span>')}</div>` : ''}
+          ${note ? `<div class="tl-sub">${note}</div>` : ''}
         </div>
       </div>
     </div>`;
@@ -186,13 +178,10 @@ window.PlannerView = (function () {
   function renderTodaySummary() {
     const td = today(), d = new Date(td + 'T00:00:00');
     const evToday = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === td).length;
-    const doneMap = habitDoneMap();
-    const hDone = HABITS.filter(h => doneMap[h].has(td)).length;
     $('todaySum').innerHTML = `
       <div class="tsum-date">Today · <b>${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</b></div>
-      <div class="tsum-row tsum-row-2">
-        <div class="tsum-cell"><div class="tsum-num" style="color:var(--accent)">${evToday}</div><div class="tsum-lbl">Events</div></div>
-        <div class="tsum-cell"><div class="tsum-num" style="color:var(--green)">${hDone}/${HABITS.length}</div><div class="tsum-lbl">Habits</div></div>
+      <div class="tsum-row tsum-row-1">
+        <div class="tsum-cell"><div class="tsum-num" style="color:var(--accent)">${evToday}</div><div class="tsum-lbl">Events today</div></div>
       </div>`;
   }
 
