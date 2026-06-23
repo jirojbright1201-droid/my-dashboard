@@ -1,0 +1,25 @@
+/* ===== Savings view ===== */
+#view-money .container { padding-top: 18px; }
+
+.sav-head { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; padding: 16px 18px; margin-bottom: 16px; }
+.sav-total-lbl { font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
+.sav-total { font-family: var(--mono); font-size: 1.75rem; font-weight: 600; letter-spacing: -0.02em; margin-top: 4px; }
+.sav-total span { font-size: 1rem; color: var(--silver); font-weight: 500; }
+
+.jar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.jar-card { position: relative; background: var(--surface); border: 1px solid var(--border-soft); border-radius: 16px; padding: 16px 14px 14px; text-align: center; }
+.jar-badge { position: absolute; top: 13px; right: 13px; font-size: 0.6875rem; font-weight: 700; padding: 3px 10px; border-radius: 9999px; }
+.jar-badge.togo { background: rgba(217,162,63,.16); color: #b07d20; }
+.jar-badge.done { background: rgba(93,184,114,.16); color: var(--green); }
+.jar-illu { display: flex; justify-content: center; margin-bottom: 8px; }
+.jar-svg { width: 92px; height: 108px; }
+.jar-name { font-size: 0.9375rem; font-weight: 600; color: var(--text); }
+.jar-amt { font-family: var(--mono); font-size: 0.9375rem; margin-top: 4px; }
+.jar-amt b { font-weight: 600; color: var(--text); }
+.jar-amt span { color: var(--silver); font-weight: 500; font-size: 0.8125rem; }
+.jar-bar { height: 7px; background: var(--surface-3); border-radius: 9999px; margin: 11px 0 7px; overflow: hidden; }
+.jar-bar-fill { height: 100%; border-radius: 9999px; background: linear-gradient(90deg,#f0c878,#dca23f); transition: width .4s ease; }
+.jar-foot { font-size: 0.75rem; color: var(--silver); font-weight: 500; }
+
+.sav-note { margin-top: 16px; font-size: 0.8125rem; color: var(--silver); text-align: center;
+  background: var(--surface-2); border-radius: 10px; padding: 11px 14px; }
