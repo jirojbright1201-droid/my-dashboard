@@ -112,6 +112,7 @@ window.PlannerView = (function () {
 
   <div class="overlay" id="plOverlay">
     <div class="modal">
+      <div class="sheet-handle"></div>
       <div class="modal-head">
         <div><div class="modal-title" id="mTitle"></div><div class="modal-sub" id="mSub"></div></div>
         <button class="modal-close" id="mClose"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
@@ -278,7 +279,11 @@ window.PlannerView = (function () {
     $('mBody').innerHTML = html || `<div class="modal-empty">No events</div>`;
     $('plOverlay').classList.add('active');
   }
-  const closeModal = () => $('plOverlay').classList.remove('active');
+  function closeModal() {
+    const o = $('plOverlay');
+    o.classList.add('closing');
+    setTimeout(() => o.classList.remove('active', 'closing'), 300);
+  }
 
   // ── tab switching ──
   function switchTab(tab) {
@@ -323,6 +328,24 @@ window.PlannerView = (function () {
     });
     $('mClose').onclick = closeModal;
     $('plOverlay').onclick = e => { if (e.target === $('plOverlay')) closeModal(); };
+
+    // drag-to-dismiss bottom sheet (จับจาก handle/head)
+    const sheet = $('plOverlay').querySelector('.modal');
+    let sy = 0, dragging = false;
+    sheet.addEventListener('touchstart', e => {
+      if (!e.target.closest('.sheet-handle, .modal-head')) return;
+      sy = e.touches[0].clientY; dragging = true; sheet.style.transition = 'none';
+    }, { passive: true });
+    sheet.addEventListener('touchmove', e => {
+      if (!dragging) return;
+      const dy = e.touches[0].clientY - sy;
+      if (dy > 0) sheet.style.transform = `translateY(${dy}px)`;
+    }, { passive: true });
+    sheet.addEventListener('touchend', e => {
+      if (!dragging) return;
+      dragging = false; sheet.style.transition = ''; sheet.style.transform = '';
+      if (e.changedTouches[0].clientY - sy > 90) closeModal();
+    }, { passive: true });
   }
 
   // ── public ──

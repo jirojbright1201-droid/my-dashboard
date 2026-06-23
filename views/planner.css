@@ -20,7 +20,7 @@
 .btn-today:hover { background: var(--accent-hover); }
 
 .pl-pane { display: none; }
-.pl-pane.active { display: block; }
+.pl-pane.active { display: block; animation: viewIn .2s cubic-bezier(.32,.72,0,1); }
 
 /* ── today summary (หน้าแรก) ── */
 .tsum { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; }
@@ -140,9 +140,13 @@
 .habit-cal-day.today-day { outline: 1.5px solid var(--accent); outline-offset: -1.5px; color: var(--accent); }
 
 /* ── modal ── */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(10,11,13,.45); z-index: 100; align-items: center; justify-content: center; }
-.overlay.active { display: flex; }
-.modal { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; width: 440px; max-width: 95vw; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 12px 32px rgba(10,11,13,.12); }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(20,20,19,.45); z-index: 100; align-items: flex-end; justify-content: center; opacity: 0; transition: opacity .25s ease; }
+.overlay.active { display: flex; opacity: 1; }
+.overlay.active.closing { opacity: 0; }
+.modal { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; max-height: 86vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 -8px 32px rgba(20,20,19,.16); padding-bottom: env(safe-area-inset-bottom); transform: translateY(100%); transition: transform .3s cubic-bezier(.32,.72,0,1); }
+.overlay.active .modal { transform: translateY(0); }
+.overlay.active.closing .modal { transform: translateY(100%); }
+.sheet-handle { width: 40px; height: 4px; border-radius: 9999px; background: var(--border); margin: 10px auto 2px; flex-shrink: 0; }
 .modal-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--border-soft); display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0; }
 .modal-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; }
 .modal-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
