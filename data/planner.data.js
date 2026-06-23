@@ -20,7 +20,10 @@ window.PLANNER_DATA = {
       {"date":"2026-06-12","title":"Work at McDonald's","time":"13:00","end_time":"22:00","est":"9h","notes":""},
       {"date":"2026-06-13","title":"Work at McDonald's","time":"13:00","end_time":"22:00","est":"9h","notes":""},
       {"date":"2026-06-14","title":"Work at McDonald's","time":"13:00","end_time":"22:00","est":"9h","notes":""},
-      {"date":"2026-06-17","title":"Work at McDonald's","time":"22:00","end_time":"07:00","est":"9h","notes":""}
+      {"date":"2026-06-17","title":"Work at McDonald's","time":"22:00","end_time":"07:00","est":"9h","notes":""},
+      {"date":"2026-06-23","title":"ออกกำลังกาย","time":"09:00","end_time":"09:45","est":"45m","notes":"วิ่ง + เวท"},
+      {"date":"2026-06-23","title":"Work at McDonald's","time":"13:00","end_time":"22:00","est":"9h","notes":""},
+      {"date":"2026-06-23","title":"อ่านหนังสือ","time":"21:30","end_time":"22:00","est":"30m","notes":"ก่อนนอน"}
     ],
     "habits": [
       {"habit":"exercise","done_dates":[]},
@@ -31,4 +34,4 @@ window.PLANNER_DATA = {
   }
 };
 window.PLANNER_KEYS = ["2026-06"];
-window.PLANNER_UPDATED = "22/06/2026";
+window.PLANNER_UPDATED = "23/06/2026";
