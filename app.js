@@ -9,6 +9,7 @@
     document.querySelector('.scroll').scrollTop = 0;
     // lazy-mount dashboard module on first open
     if (name === 'planner' && window.PlannerView) window.PlannerView.mount(document.getElementById('view-planner'));
+    if (name === 'money' && window.SavingsView) window.SavingsView.mount(document.getElementById('view-money'));
   }
 
   document.querySelectorAll('.bn').forEach(b => b.addEventListener('click', () => showView(b.dataset.view)));

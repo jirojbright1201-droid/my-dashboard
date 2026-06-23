@@ -161,7 +161,6 @@ window.PlannerView = (function () {
   }
 
   function renderTimelineItem(e) {
-    const note = esc(e.notes || '');
     return `<div class="tl-item">
       <div class="tl-time">${esc(e.time || '–')}</div>
       <div class="tl-node"></div>
@@ -169,7 +168,6 @@ window.PlannerView = (function () {
         <div class="tl-ic">${eventIcon(e.title)}</div>
         <div class="tl-card-main">
           <div class="tl-title">${esc(e.title)}</div>
-          ${note ? `<div class="tl-sub">${note}</div>` : ''}
         </div>
       </div>
     </div>`;
@@ -178,10 +176,13 @@ window.PlannerView = (function () {
   function renderTodaySummary() {
     const td = today(), d = new Date(td + 'T00:00:00');
     const evToday = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === td).length;
+    const doneMap = habitDoneMap();
+    const hDone = HABITS.filter(h => doneMap[h].has(td)).length;
     $('todaySum').innerHTML = `
       <div class="tsum-date">Today · <b>${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</b></div>
-      <div class="tsum-row tsum-row-1">
-        <div class="tsum-cell"><div class="tsum-num" style="color:var(--accent)">${evToday}</div><div class="tsum-lbl">Events today</div></div>
+      <div class="tsum-row tsum-row-2">
+        <div class="tsum-cell"><div class="tsum-num" style="color:var(--accent)">${evToday}</div><div class="tsum-lbl">Events</div></div>
+        <div class="tsum-cell"><div class="tsum-num" style="color:var(--green)">${hDone}/${HABITS.length}</div><div class="tsum-lbl">Habits</div></div>
       </div>`;
   }
 
