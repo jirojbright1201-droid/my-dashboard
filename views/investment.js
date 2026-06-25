@@ -58,18 +58,32 @@ window.InvestmentView = (function () {
     const w = 320, h = 120, mn = Math.min(...pf, 0), mx = Math.max(...pf, 0), r = (mx - mn) || 1;
     const X = i => (i / (pf.length - 1)) * w;
     const Y = v => h - 6 - ((v - mn) / r) * (h - 12);
-    const pts = pf.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
-    const area = `0,${h} ${pts} ${w},${h}`;
+    // เส้นโค้งนุ่ม (Catmull-Rom → cubic bezier)
+    const P = pf.map((v, i) => ({ x: X(i), y: Y(v) }));
+    let dPath = `M ${P[0].x.toFixed(1)} ${P[0].y.toFixed(1)}`;
+    for (let i = 0; i < P.length - 1; i++) {
+      const p0 = P[i ? i - 1 : 0], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2 < P.length ? i + 2 : i + 1], t = 0.17;
+      dPath += ` C ${(p1.x + (p2.x - p0.x) * t).toFixed(1)} ${(p1.y + (p2.y - p0.y) * t).toFixed(1)}, ${(p2.x - (p3.x - p1.x) * t).toFixed(1)} ${(p2.y - (p3.y - p1.y) * t).toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+    }
+    const areaPath = `${dPath} L ${w},${h} L 0,${h} Z`;
     const up = pf[pf.length - 1] >= 0, col = up ? 'var(--green)' : 'var(--red)';
-    const lx = X(pf.length - 1), ly = Y(pf[pf.length - 1]);
+    // จุดเด่น: สูงสุด / ต่ำสุด / ล่าสุด
+    let hiI = 0, loI = 0;
+    pf.forEach((v, i) => { if (v > pf[hiI]) hiI = i; if (v < pf[loI]) loI = i; });
+    const lastI = pf.length - 1;
+    const dots = [...new Set([hiI, loI, lastI])].map(i => `<circle cx="${X(i).toFixed(1)}" cy="${Y(pf[i]).toFixed(1)}" r="${i === lastI ? 4 : 3.2}" fill="${col}" stroke="#fff" stroke-width="${i === lastI ? 2 : 1.5}"/>`).join('');
     // ข้อมูลต่อจุดสำหรับ crosshair (left%/top% + ค่าที่จะโชว์ตอน hover)
     const meta = pf.map((v, i) => ({ l: +(i / (pf.length - 1) * 100).toFixed(2), t: +(Y(v) / h * 100).toFixed(2), p: +v.toFixed(2), dt: d[i].date, ch: Math.round(d[i].change || 0) }));
     return `<div class="inv-perf-wrap" data-pts='${JSON.stringify(meta)}'>
       <svg class="inv-perf" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-      <defs><linearGradient id="invpf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".18"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
-      <polygon points="${area}" fill="url(#invpf)"/>
-      <polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="${col}" stroke="#fff" stroke-width="2"/>
+      <defs>
+        <linearGradient id="invpf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".20"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient>
+        <filter id="invglow" x="-10%" y="-40%" width="120%" height="200%"><feGaussianBlur stdDeviation="3.2"/></filter>
+      </defs>
+      <path d="${areaPath}" fill="url(#invpf)"/>
+      <path d="${dPath}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" opacity=".42" filter="url(#invglow)"/>
+      <path d="${dPath}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      ${dots}
     </svg>
       <span class="inv-cross"></span><span class="inv-cross-dot"></span><span class="inv-perf-tip"></span>
     </div>`;
