@@ -3,6 +3,14 @@ window.SavingsView = (function () {
   const D = window.SAVINGS_DATA || { currency: '฿', jars: [] };
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmt = n => D.currency + Number(n || 0).toLocaleString('en-US');
+  const TH_M = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  // อีกกี่เดือนถึงเป้า + เดือนที่คาดถึง (จาก remain / monthly)
+  function eta(remain, monthly) {
+    if (!monthly || monthly <= 0 || remain <= 0) return '';
+    const n = Math.ceil(remain / monthly);
+    const t = new Date(); t.setMonth(t.getMonth() + n);
+    return `อีก ~${n} เดือน · ${TH_M[t.getMonth()]} ${t.getFullYear()}`;
+  }
 
   // โหลแก้ว + เหรียญทองวาด SVG แยกชิ้น (radial gradient + ขอบ + ตรา ฿ + ประกาย) กองตาม pct (0..1)
   function jarSVG(pct, i) {
@@ -58,7 +66,8 @@ window.SavingsView = (function () {
         <div class="jar-name">${esc(j.name)}</div>
         <div class="jar-amt"><b>${fmt(j.saved)}</b> <span>/ ${fmt(j.goal)}</span></div>
         <div class="jar-bar"><div class="jar-bar-fill" style="width:${Math.min(100, pctR)}%"></div></div>
-        <div class="jar-foot">${done ? 'Goal reached' : fmt(remain) + ' to go'}</div>
+        <div class="jar-foot">${done ? 'ครบเป้าแล้ว' : 'เหลือ ' + fmt(remain)}</div>
+        ${done ? '' : `<div class="jar-eta">${eta(remain, j.monthly) || 'ตั้งยอดเก็บต่อเดือนเพื่อดูว่าอีกกี่เดือนถึง'}</div>`}
       </div>`;
     }).join('');
 
