@@ -78,7 +78,7 @@ window.HomeView = (function () {
 
     root.innerHTML = `<div class="container ho">
       <div class="ho-greet">
-        <div class="ho-hi">${greeting()}, jiroj</div>
+        <div class="ho-hi">${greeting()}, Bright</div>
         <div class="ho-date">${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</div>
       </div>
 
