@@ -1,8 +1,8 @@
 // ===== PWA shell — bottom-nav router + swipe + install prompt =====
 (function () {
-  const ORDER = ['planner', 'money', 'investment'];
-  const TITLES = { planner: 'Planner', money: 'Money', investment: 'Investment' };
-  let current = 'planner';
+  const ORDER = ['home', 'planner', 'money', 'investment'];
+  const TITLES = { home: 'Home', planner: 'Planner', money: 'Money', investment: 'Investment' };
+  let current = 'home';
   const haptic = () => { try { if (navigator.vibrate) navigator.vibrate(8); } catch (_) {} };
 
   function showView(name) {
@@ -13,9 +13,11 @@
     document.getElementById('appTitle').textContent = TITLES[name] || '';
     document.querySelector('.scroll').scrollTop = 0;
     // lazy-mount dashboard module on first open
+    if (name === 'home' && window.HomeView) window.HomeView.mount(document.getElementById('view-home'));
     if (name === 'planner' && window.PlannerView) window.PlannerView.mount(document.getElementById('view-planner'));
     if (name === 'money' && window.SavingsView) window.SavingsView.mount(document.getElementById('view-money'));
   }
+  window.Shell = { showView };
 
   document.querySelectorAll('.bn').forEach(b => b.addEventListener('click', () => { haptic(); showView(b.dataset.view); }));
 
@@ -53,5 +55,5 @@
   });
   window.addEventListener('appinstalled', () => bar.classList.remove('show'));
 
-  showView('planner');
+  showView('home');
 })();

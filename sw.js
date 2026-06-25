@@ -1,12 +1,14 @@
 // Dashboard PWA service worker
 // Pages: network-first (always fresh when online, cached copy when offline)
 // Static assets: cache-first with runtime caching
-const CACHE = 'dash-v11';
+const CACHE = 'dash-v12';
 const CORE = [
   './',
   './index.html',
   './app.css',
   './app.js',
+  './views/home.js',
+  './views/home.css',
   './data/planner.data.js',
   './views/planner.js',
   './views/planner.css',
