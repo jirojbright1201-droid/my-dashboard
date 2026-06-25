@@ -2,6 +2,7 @@
 window.MoneyView = (function () {
   const DATA = window.MONEY_DATA || {};
   const KEYS = window.MONEY_KEYS || [];
+  const SUBS = (window.SUBS_DATA && window.SUBS_DATA.subs) || [];
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtMoney = n => '฿' + Number(n || 0).toLocaleString('en-US');
@@ -32,10 +33,12 @@ window.MoneyView = (function () {
     <div class="mny-tabs">
       <button class="mny-tab active" data-tab="overview">ภาพรวม</button>
       <button class="mny-tab" data-tab="tx">รายการ</button>
+      <button class="mny-tab" data-tab="subs">ประจำ</button>
       <button class="mny-tab" data-tab="savings">โหลเงิน</button>
     </div>
     <div id="mny-overview" class="mny-pane active"></div>
     <div id="mny-tx" class="mny-pane"></div>
+    <div id="mny-subs" class="mny-pane"></div>
     <div id="mny-savings" class="mny-pane"></div>
   </div>
 
@@ -162,6 +165,49 @@ window.MoneyView = (function () {
     renderTx();
   }
 
+  // ── subscriptions radar ──
+  const moEquiv = s => s.cycle === 'yr' ? s.amount / 12 : s.amount;
+  function nextRenew(s) {
+    const now = new Date(); now.setHours(0, 0, 0, 0);
+    if (s.cycle === 'yr') {
+      const m = (s.month || 1) - 1;
+      let d = new Date(now.getFullYear(), m, s.day);
+      if (d < now) d = new Date(now.getFullYear() + 1, m, s.day);
+      return d;
+    }
+    let d = new Date(now.getFullYear(), now.getMonth(), s.day);
+    if (d < now) d = new Date(now.getFullYear(), now.getMonth() + 1, s.day);
+    return d;
+  }
+  function renderSubs() {
+    if (!SUBS.length) { $('mny-subs').innerHTML = '<div class="empty">ยังไม่มีรายการประจำ</div>'; return; }
+    const now = new Date(); now.setHours(0, 0, 0, 0);
+    const moBurn = SUBS.reduce((s, x) => s + moEquiv(x), 0);
+    const yrBurn = SUBS.reduce((s, x) => s + (x.cycle === 'yr' ? x.amount : x.amount * 12), 0);
+    const sorted = [...SUBS].map(s => ({ ...s, next: nextRenew(s) })).sort((a, b) => a.next - b.next);
+    const rows = sorted.map(s => {
+      const days = Math.round((s.next - now) / 86400000);
+      const soon = days <= 5;
+      const cyc = s.cycle === 'yr' ? '/ปี' : '/เดือน';
+      const nextStr = `${s.next.getDate()} ${THMONTH[s.next.getMonth()].slice(0, 3)}`;
+      return `<div class="mny-sub-row">
+        <div class="mny-tile">${(s.name[0] || '#').toUpperCase()}</div>
+        <div class="mny-sub-body">
+          <div class="mny-sub-head"><span class="mny-sub-name">${esc(s.name)}</span>
+            <span class="mny-sub-amt">${fmtMoney(s.amount)}<span class="mny-sub-cyc">${cyc}</span></span></div>
+          <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">ตัดบิล ${nextStr} · อีก ${days} วัน</span>
+            ${s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/เดือน</span>` : (s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>` : '')}</div>
+        </div></div>`;
+    }).join('');
+    $('mny-subs').innerHTML = `
+      <div class="card mny-hero">
+        <div class="mny-hero-lbl">จ่ายประจำต่อเดือน</div>
+        <div class="mny-hero-bal">${fmtMoney(Math.round(moBurn))}</div>
+        <div class="mny-hero-sub">${SUBS.length} รายการ · รวมทั้งปี ${fmtMoney(Math.round(yrBurn))}</div>
+      </div>
+      <div class="card"><div class="section-title">เรียงตามรอบตัดบิลถัดไป</div><div class="mny-subs-list">${rows}</div></div>`;
+  }
+
   // ── category history modal ──
   function openCat(cat) {
     const items = (cur().expenses || []).filter(e => e.category === cat).sort((a, b) => b.date.localeCompare(a.date));
@@ -187,6 +233,7 @@ window.MoneyView = (function () {
     root.querySelectorAll('.mny-pane').forEach(p => p.classList.toggle('active', p.id === 'mny-' + tab));
     if (tab === 'overview') renderOverview();
     else if (tab === 'tx') buildTxPane();
+    else if (tab === 'subs') renderSubs();
     else if (tab === 'savings' && window.SavingsView) window.SavingsView.render($('mny-savings'));
   }
 

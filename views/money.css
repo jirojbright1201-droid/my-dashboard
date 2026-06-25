@@ -81,6 +81,20 @@
 .mny-amt.neg { color: var(--text); }
 .mny-amt.pos { color: var(--green); }
 
+/* ── subscriptions ── */
+.mny-sub-row { display: flex; gap: 12px; align-items: center; padding: 12px 0; }
+.mny-sub-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.mny-sub-row .mny-tile { font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--accent); }
+.mny-sub-body { flex: 1; min-width: 0; }
+.mny-sub-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.mny-sub-name { font-size: 0.9375rem; font-weight: 600; }
+.mny-sub-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; }
+.mny-sub-cyc { font-size: 0.6875rem; color: var(--silver); font-weight: 500; margin-left: 2px; }
+.mny-sub-foot { display: flex; justify-content: space-between; gap: 10px; margin-top: 4px; }
+.mny-sub-next { font-size: 0.75rem; color: var(--silver); }
+.mny-sub-next.soon { color: var(--accent); font-weight: 600; }
+.mny-sub-eq { font-size: 0.75rem; color: var(--silver); white-space: nowrap; }
+
 /* ── savings sub-tab: strip nested container padding ── */
 #mny-savings .container { padding: 0; max-width: none; }
 #mny-savings .sav-head { margin-top: 0; }

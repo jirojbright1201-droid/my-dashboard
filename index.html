@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="./views/savings.css">
 <link rel="stylesheet" href="./views/money.css">
 <link rel="stylesheet" href="./views/investment.css">
+<link rel="stylesheet" href="./views/capture.css">
 </head>
 <body>
 
@@ -49,6 +50,31 @@
   <button class="install-x" id="installX" aria-label="ปิด">&#10005;</button>
 </div>
 
+<button class="fab" id="fab" aria-label="จดเร็ว">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  <span class="fab-badge" id="fabBadge"></span>
+</button>
+<div class="overlay" id="capOverlay">
+  <div class="modal">
+    <div class="sheet-handle"></div>
+    <div class="modal-head">
+      <div><div class="modal-title">จดเร็ว</div><div class="modal-sub">เก็บไว้ก่อน เดี๋ยว Jarvis ดึงไปลงระบบให้</div></div>
+      <button class="modal-close" id="capClose"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="cap-types" id="capTypes"></div>
+      <div class="cap-input-row">
+        <input id="capText" placeholder="จดอะไรไว้... เช่น ซื้อกาแฟ" autocomplete="off">
+        <input id="capAmount" class="cap-amt" placeholder="บาท" inputmode="decimal" autocomplete="off">
+      </div>
+      <button class="cap-add" id="capAdd">เพิ่มเข้ากล่อง</button>
+      <div class="cap-list-head" id="capListHead"></div>
+      <div class="cap-list" id="capList"></div>
+      <div class="cap-actions" id="capActions"></div>
+    </div>
+  </div>
+</div>
+
 <nav class="bnav">
   <button class="bn active" data-view="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-6h5v6"/></svg>
@@ -73,11 +99,13 @@
 <script src="./data/savings.data.js"></script>
 <script src="./views/savings.js"></script>
 <script src="./data/money.data.js"></script>
+<script src="./data/subscriptions.data.js"></script>
 <script src="./views/money.js"></script>
 <script src="./Investment%20Tracker/data.js"></script>
 <script src="./views/investment.js"></script>
 <script src="./views/home.js"></script>
 <script src="./app.js"></script>
+<script src="./views/capture.js"></script>
 
 <script>
 // network-first SW: ออนไลน์ดึงไฟล์สดเสมอ (revalidate กับ server), ออฟไลน์ใช้ cache

@@ -1,0 +1,41 @@
+/* ===== Quick capture — FAB + กล่องจด ===== */
+.fab { position: fixed; right: 18px; bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 18px); z-index: 45;
+  width: 54px; height: 54px; border-radius: 50%; background: var(--accent); color: #fff; border: none;
+  box-shadow: 0 6px 20px rgba(204,120,92,.42); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: transform .12s, box-shadow .15s; }
+.fab:active { transform: scale(.9); }
+.fab svg { width: 26px; height: 26px; }
+.fab-badge { position: absolute; top: -3px; right: -3px; min-width: 20px; height: 20px; padding: 0 5px;
+  border-radius: 9999px; background: var(--text); color: #fff; font-size: 0.6875rem; font-weight: 700;
+  display: none; align-items: center; justify-content: center; border: 2px solid #fff; }
+
+.cap-types { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.cap-type { border: 1px solid var(--border); background: var(--surface); color: var(--silver); font-family: inherit;
+  font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 9999px; cursor: pointer; transition: all .15s; }
+.cap-type.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cap-input-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.cap-input-row input { border: 1px solid var(--border); border-radius: 11px; padding: 12px 14px; font-family: inherit;
+  font-size: 0.9375rem; color: var(--text); outline: none; background: var(--surface);
+  -webkit-user-select: text; user-select: text; }
+#capText { flex: 1; min-width: 0; }
+#capText:focus, .cap-amt:focus { border-color: var(--accent); }
+.cap-amt { width: 96px; flex-shrink: 0; }
+.cap-add { width: 100%; background: var(--accent); color: #fff; border: none; font-family: inherit;
+  font-size: 0.9375rem; font-weight: 700; padding: 12px; border-radius: 11px; cursor: pointer; transition: transform .1s; }
+.cap-add:active { transform: scale(.98); }
+.cap-list-head { font-size: 0.6875rem; font-weight: 700; color: var(--silver); text-transform: uppercase;
+  letter-spacing: 1px; margin: 20px 0 8px; }
+.cap-list { display: flex; flex-direction: column; }
+.cap-item { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--border-soft); }
+.cap-item-t { font-size: 0.625rem; font-weight: 700; color: var(--accent); background: var(--accent-soft);
+  padding: 3px 8px; border-radius: 9999px; white-space: nowrap; }
+.cap-item-x { flex: 1; min-width: 0; font-size: 0.875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cap-del { background: none; border: none; color: var(--silver); cursor: pointer; font-size: 0.85rem; padding: 4px; flex-shrink: 0; }
+.cap-empty { color: var(--silver); font-size: 0.875rem; text-align: center; padding: 18px 0; }
+.cap-actions { display: flex; gap: 8px; margin-top: 16px; }
+.cap-actions:empty { display: none; }
+.cap-copy { flex: 1; background: var(--text); color: #fff; border: none; font-family: inherit; font-size: 0.875rem;
+  font-weight: 700; padding: 11px; border-radius: 10px; cursor: pointer; transition: transform .1s; }
+.cap-copy:active { transform: scale(.98); }
+.cap-clear { background: var(--surface-2); color: var(--silver); border: 1px solid var(--border-soft);
+  font-family: inherit; font-size: 0.875rem; font-weight: 600; padding: 11px 16px; border-radius: 10px; cursor: pointer; }
