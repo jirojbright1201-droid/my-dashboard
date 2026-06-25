@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Energy (BE) — รายงานเชิงลึก</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#f4b000;
+  --accent-active:#c98f00;
+  --ink:#0a0b0d;
+  --body:#5b616e;
+  --muted:#7c828a;
+  --canvas:#ffffff;
+  --surface-soft:#f7f7f7;
+  --surface-strong:#eef0f3;
+  --hairline:#dee1e6;
+  --up:#05b169;
+  --down:#cf202f;
+  --shadow-sm:0 4px 12px rgba(0,0,0,0.04);
+  --r-card:24px;
+  --r-pill:100px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:'Sarabun','Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.nav-logo svg{display:block}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--body);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent-active)}
+.nav-badge{background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:var(--r-pill);margin-left:8px;letter-spacing:0.3px}
+
+#hero{min-height:100vh;background:var(--canvas);border-bottom:1px solid var(--hairline);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
+.hero-left{z-index:1}
+.hero-logo-row{display:flex;align-items:center;gap:14px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.05s ease forwards}
+.hero-mono{width:52px;height:52px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-mono span{font-family:'Inter',sans-serif;font-weight:700;font-size:24px;color:#0a0b0d;letter-spacing:-1px}
+.hero-logo-name{font-family:'Inter',sans-serif;font-size:18px;font-weight:600;color:var(--ink);line-height:1.1}
+.hero-logo-name small{display:block;font-size:12px;font-weight:500;color:var(--muted);letter-spacing:1px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--surface-strong);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--body);letter-spacing:0.5px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
+.hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero-title{font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,72px);font-weight:400;line-height:1.0;letter-spacing:-2px;color:var(--ink);margin-bottom:24px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
+.hero-title strong{font-weight:400;color:var(--accent-active)}
+.hero-desc{font-size:18px;color:var(--body);line-height:1.7;max-width:540px;margin-bottom:40px;opacity:0;animation:fadeUp 0.7s 0.4s ease forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#fff;font-size:16px;font-weight:600;padding:16px 32px;height:56px;border-radius:var(--r-pill);opacity:0;animation:fadeUp 0.7s 0.55s ease forwards;cursor:default;text-decoration:none}
+.hero-cta-arrow{font-size:18px}
+
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 0.8s 0.7s ease forwards}
+.hero-card-stack{position:relative;width:320px;height:400px}
+.hero-card{position:absolute;background:var(--canvas);border-radius:var(--r-card);padding:28px;border:1px solid var(--hairline)}
+.hero-card-main{width:300px;top:40px;left:0;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+.hero-card-back{width:280px;top:0;left:20px;height:360px;opacity:0.5;transform:scale(0.97);z-index:-1;background:var(--surface-soft)}
+.hero-card-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.hero-card-val{font-family:'JetBrains Mono','Courier New',monospace;font-size:28px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.hero-card-sub{font-size:13px;color:var(--body);margin-bottom:20px}
+.hero-card-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--hairline);font-size:13px}
+.hero-card-row-label{color:var(--body)}
+.hero-card-row-val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--ink)}
+.hero-card-row-up{color:var(--up)}
+
+#hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(244,176,0,0.10) 0%,transparent 70%);pointer-events:none}
+
+.section-white{background:var(--canvas);padding:96px 0}
+.section-gray{background:var(--surface-soft);padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+
+.sec-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--ink);text-transform:uppercase;margin-bottom:16px;background:var(--surface-strong);padding:4px 14px;border-radius:var(--r-pill)}
+.sec-title{font-family:'Inter',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:400;letter-spacing:-1px;color:var(--ink);line-height:1.12;margin-bottom:16px}
+.sec-sub{font-size:17px;color:var(--body);max-width:680px;line-height:1.7;margin-bottom:56px}
+
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.card-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.card-body{font-size:14px;color:var(--body);line-height:1.7}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+.metric-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px 24px;text-align:center;transition:all 0.2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.metric-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.metric-val-accent{color:var(--accent-active)}
+.metric-label{font-size:13px;color:var(--muted);font-weight:500}
+
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:1px;background:var(--hairline)}
+.timeline-item{position:relative;margin-bottom:32px}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline-item.neg::before{background:var(--down)}
+.timeline-date{font-size:12px;font-weight:600;color:var(--accent-active);letter-spacing:0.5px;margin-bottom:4px;text-transform:uppercase}
+.timeline-item.neg .timeline-date{color:var(--down)}
+.timeline-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--body);line-height:1.6}
+
+.risk-card{border-radius:16px;padding:24px 28px;border:1px solid}
+.risk-high{background:#fff8f8;border-color:#fcd4d4}
+.risk-med{background:#fffcf0;border-color:#fde9a2}
+.risk-low{background:#f0fdf6;border-color:#b3f0d0}
+.risk-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:var(--r-pill);margin-bottom:12px;text-transform:uppercase}
+.risk-high .risk-badge{background:#fcd4d4;color:#c0392b}
+.risk-med  .risk-badge{background:#fde9a2;color:#8a6d00}
+.risk-low  .risk-badge{background:#b3f0d0;color:#1a7a4a}
+.risk-high .risk-title{color:#c0392b}
+.risk-med  .risk-title{color:#8a6d00}
+.risk-low  .risk-title{color:#1a7a4a}
+.risk-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.risk-body{font-size:14px;color:var(--body);line-height:1.7}
+
+.comp-table{width:100%;border-collapse:collapse}
+.comp-table th{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);padding:12px 20px;text-align:left;border-bottom:1px solid var(--hairline);text-transform:uppercase}
+.comp-table td{padding:16px 20px;font-size:14px;color:var(--body);border-bottom:1px solid var(--surface-soft);vertical-align:top}
+.comp-table td:first-child{font-weight:600;color:var(--ink)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr.highlight-row{background:rgba(244,176,0,0.06)}
+.comp-table tr.highlight-row td:first-child{color:var(--accent-active)}
+
+.analyst-bar-wrap{margin:20px 0}
+.analyst-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500}
+.analyst-bar-track{height:6px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.analyst-bar-fill{height:100%;border-radius:var(--r-pill)}
+
+.person-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:28px 24px;transition:all 0.2s}
+.person-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.person-avatar{width:48px;height:48px;border-radius:50%;background:var(--surface-strong);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--accent-active);margin-bottom:16px;border:1px solid var(--hairline)}
+.person-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.person-title{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--accent-active);text-transform:uppercase;margin-bottom:12px}
+.person-bio{font-size:13px;color:var(--body);line-height:1.7}
+
+.partner-grid{display:flex;flex-wrap:wrap;gap:10px}
+.partner-badge{font-size:13px;font-weight:600;padding:8px 18px;border-radius:var(--r-pill);border:1px solid var(--hairline);color:var(--body);background:var(--canvas);transition:all 0.15s}
+.partner-badge:hover{border-color:var(--accent);color:var(--accent-active);background:rgba(244,176,0,0.06)}
+
+.tech-flow{display:flex;align-items:center;margin:48px 0;flex-wrap:wrap;gap:8px;justify-content:center}
+.tech-node{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:28px 20px;text-align:center;min-width:150px;flex:1;transition:all 0.2s}
+.tech-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.tech-node-icon{width:40px;height:40px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--accent-active)}
+.tech-node-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tech-node-val{font-size:14px;font-weight:600;color:var(--ink)}
+.tech-arrow{font-size:20px;color:var(--hairline);padding:0 4px}
+
+.big-stat-row{display:flex;gap:0;border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;margin:48px 0}
+.big-stat{flex:1;padding:32px 24px;border-right:1px solid var(--hairline)}
+.big-stat:last-child{border-right:none}
+.big-stat-num{font-family:'JetBrains Mono',monospace;font-size:clamp(26px,3.2vw,40px);font-weight:500;color:var(--ink);line-height:1;margin-bottom:8px}
+.big-stat-desc{font-size:13px;color:var(--body)}
+
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:5px 14px;border-radius:var(--r-pill);margin:3px;letter-spacing:0.2px}
+.pill-neutral{background:var(--surface-strong);color:var(--body)}
+.pill-accent{background:rgba(244,176,0,0.12);color:var(--accent-active);border:1px solid rgba(244,176,0,0.25)}
+.pill-up{background:rgba(5,177,105,0.08);color:var(--up)}
+.pill-down{background:rgba(207,32,47,0.08);color:var(--down)}
+
+.callout{border-left:3px solid var(--accent);background:rgba(244,176,0,0.06);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;font-size:14px;color:var(--body)}
+.callout strong{color:var(--accent-active)}
+
+.fin-chart{display:flex;align-items:flex-end;gap:16px;height:200px;margin:32px 0}
+.fin-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.fin-bar-track{width:100%;display:flex;flex-direction:column-reverse;height:150px}
+.fin-bar{width:100%;border-radius:6px 6px 0 0;background:var(--accent);opacity:0.9;min-height:4px}
+.fin-bar.projected{background:var(--surface-strong);border:2px dashed var(--accent);opacity:1}
+.fin-bar-year{font-size:11px;color:var(--muted);font-weight:500}
+.fin-bar-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-active);font-weight:500}
+
+.data-table{width:100%}
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline)}
+.data-row:last-child{border-bottom:none}
+.data-key{font-size:14px;color:var(--body)}
+.data-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink)}
+.data-val-up{color:var(--up)}
+.data-val-down{color:var(--down)}
+.data-val-accent{color:var(--accent-active)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.08s}
+.reveal-delay-2{transition-delay:0.16s}
+.reveal-delay-3{transition-delay:0.24s}
+
+.divider{height:1px;background:var(--hairline);margin:0}
+
+footer{background:var(--canvas);padding:64px 48px;border-top:1px solid var(--hairline);max-width:1200px;margin:0 auto}
+.footer-legal{font-size:12px;color:var(--muted);line-height:1.7;margin-top:24px}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:100px 24px 64px}
+  .hero-right{display:none}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section-white,.section-gray{padding:64px 0}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .big-stat-row{flex-direction:column}
+  .big-stat{border-right:none;border-bottom:1px solid var(--hairline)}
+  .big-stat:last-child{border-bottom:none}
+  .tech-arrow{display:none}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface-soft)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#f4b000"/><text x="11" y="16" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0a0b0d" text-anchor="middle">B</text></svg>
+    Bloom Energy <span style="color:var(--muted)">·</span> BE
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">ภาพรวม</a></li>
+    <li><a href="#technology">เทคโนโลยี</a></li>
+    <li><a href="#market">ตลาด</a></li>
+    <li><a href="#financials">การเงิน</a></li>
+    <li><a href="#competition">คู่แข่ง</a></li>
+    <li><a href="#leadership">ผู้บริหาร</a></li>
+    <li><a href="#catalysts">ตัวเร่ง</a></li>
+    <li><a href="#risks">ความเสี่ยง</a></li>
+    <li><a href="#analysts">นักวิเคราะห์</a></li>
+  </ul>
+  <span class="nav-badge">NYSE: BE</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-logo-row">
+      <div class="hero-mono"><span>B</span></div>
+      <div class="hero-logo-name">Bloom Energy<small>NYSE : BE</small></div>
+    </div>
+    <div class="hero-eyebrow">
+      <span class="hero-ticker-dot"></span>
+      รายงานเชิงลึก · 26 มิ.ย. 2026
+    </div>
+    <h1 class="hero-title">โรงไฟฟ้า<br><strong>หน้าตู้แร็คเซิร์ฟเวอร์</strong></h1>
+    <p class="hero-desc">Bloom Energy ผลิตเซลล์เชื้อเพลิงแบบ solid-oxide (SOFC — เซลล์เชื้อเพลิงออกไซด์แข็งอุณหภูมิสูง) ที่เปลี่ยนก๊าซธรรมชาติ/ไฮโดรเจนเป็นไฟฟ้าได้ตรงจุดใช้งานโดยไม่ต้องเผาไหม้ กลายเป็น "ตัวเลือกจ่ายไฟ" ของ data center AI ที่รอเชื่อมกริด (โครงข่ายไฟฟ้าหลัก) ไม่ไหว</p>
+    <a href="#overview" class="hero-cta">อ่านรายงาน <span class="hero-cta-arrow">↓</span></a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="hero-card-label">ภาพรวมตัวเลข</div>
+        <div class="hero-card-val">~$88B</div>
+        <div class="hero-card-sub">มูลค่าตลาด (market cap) · 25 มิ.ย. 2026</div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">รายได้ปี 2025</span>
+          <span class="hero-card-row-val">$2.02B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">รายได้ Q1/26</span>
+          <span class="hero-card-row-val hero-card-row-up">+130%</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">Backlog รวม</span>
+          <span class="hero-card-row-val">~$20B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">หุ้น 12 เดือน</span>
+          <span class="hero-card-row-val hero-card-row-up">+1,400%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 OVERVIEW -->
+<div class="section-white" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow reveal">01 — ภาพรวมบริษัท</div>
+    <h2 class="sec-title reveal">บริษัทนี้ทำอะไรจริง ๆ</h2>
+    <p class="sec-sub reveal">Bloom Energy ก่อตั้งปี 2001 (เริ่มจากเทคโนโลยีผลิตออกซิเจนสำหรับภารกิจดาวอังคารของ NASA) ขายฮาร์ดแวร์ผลิตไฟฟ้าตรงจุดใช้งานให้ลูกค้าองค์กร ไม่ใช่บริษัทพลังงานหมุนเวียนแบบโซลาร์/ลม แต่เป็น "เครื่องจ่ายไฟพื้นฐาน (baseload) ที่ตั้งหน้าอาคารได้เลย"</p>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-title">ปัญหาที่แก้</div>
+        <div class="card-body">กริดไฟฟ้าสหรัฐต่อคิวยาวหลายปี data center AI กินไฟมหาศาลแต่รอเชื่อมกริดไม่ไหว ขณะที่ไฟดับ/ไฟตกทำให้โรงงานและศูนย์ข้อมูลเสียหาย</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">วิธีแก้</div>
+        <div class="card-body">ติดตั้ง Energy Server หน้าไซต์ จ่ายไฟได้ภายในไม่กี่เดือน (time-to-power เร็ว — ระยะเวลากว่าจะมีไฟใช้จริง) ไม่ต้องรอสายส่งใหม่ ทำงานได้ 24 ชม. ไม่ขึ้นกับแดด/ลม</div>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="card-title">รูปแบบธุรกิจ</div>
+        <div class="card-body">รายได้หลักจาก <strong>ขายเครื่อง (product)</strong> + <strong>สัญญาบริการ/ดูแล (service)</strong> ระยะยาว + ติดตั้ง + ไฟแนนซ์ ทำให้มีรายได้ต่อเนื่องตามฐานเครื่องที่ติดตั้งไปแล้ว</div>
+      </div>
+    </div>
+
+    <div class="big-stat-row reveal">
+      <div class="big-stat"><div class="big-stat-num">2001</div><div class="big-stat-desc">ปีก่อตั้ง (ชื่อเดิม Ion America)</div></div>
+      <div class="big-stat"><div class="big-stat-num">~1.7GW+</div><div class="big-stat-desc">ฐานติดตั้งสะสมทั่วโลก (โดยประมาณ)</div></div>
+      <div class="big-stat"><div class="big-stat-num">2 ผลิตภัณฑ์</div><div class="big-stat-desc">Energy Server (ไฟ) + Electrolyzer (ไฮโดรเจน)</div></div>
+      <div class="big-stat"><div class="big-stat-num">~$20B</div><div class="big-stat-desc">backlog (คำสั่งซื้อค้างส่งมอบ) รวม</div></div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>โมเดลรายได้สำคัญ:</strong> ทุกเครื่องที่ขายไปสร้างกระแสรายได้ 2 ทาง — รายได้ก้อนแรกจากการขายเครื่อง (product) และรายได้ทบต้นจากสัญญาบริการ (service) ที่ต่ออายุไปอีกหลายปี ปัจจุบัน backlog แยกเป็นฝั่ง product ~$6B และ service ~$14B สะท้อนว่าเงินส่วนใหญ่ที่ล็อกไว้คือรายได้ดูแลระยะยาว
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 02 TECHNOLOGY -->
+<div class="section-gray" id="technology">
+  <div class="container">
+    <div class="sec-eyebrow reveal">02 — เทคโนโลยีและสินค้า</div>
+    <h2 class="sec-title reveal">SOFC ต่างจากเซลล์เชื้อเพลิงแบบอื่นอย่างไร</h2>
+    <p class="sec-sub reveal">หัวใจคือ solid-oxide fuel cell — เซลล์เซรามิกที่ทำงานที่อุณหภูมิสูง (~800–1,000°C) เปลี่ยนเชื้อเพลิงเป็นไฟฟ้าผ่านปฏิกิริยาเคมีไฟฟ้า (electrochemical) โดยตรง ไม่มีการเผาไหม้และไม่มีชิ้นส่วนเคลื่อนไหว</p>
+
+    <div class="tech-flow reveal">
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h4l2-7 4 14 2-7h4"/></svg></div>
+        <div class="tech-node-label">เชื้อเพลิงเข้า</div>
+        <div class="tech-node-val">ก๊าซ / ไบโอแก๊ส / H₂</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></svg></div>
+        <div class="tech-node-label">SOFC สแต็ก</div>
+        <div class="tech-node-val">เซรามิกอุณหภูมิสูง</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <div class="tech-node-label">เคมีไฟฟ้า</div>
+        <div class="tech-node-val">ไม่เผาไหม้ ไร้มอเตอร์</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M7 8V5h10v3M9 19v2M15 19v2"/></svg></div>
+        <div class="tech-node-label">ไฟออก</div>
+        <div class="tech-node-val">800V DC ตรงเข้าแร็ค</div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title" style="color:var(--up)">จุดแข็งของ SOFC</div>
+        <div class="card-body">
+          <strong>1. ยืดหยุ่นเชื้อเพลิง</strong> — ใช้ก๊าซธรรมชาติที่หาง่ายได้เลย ไม่จำเป็นต้องมีไฮโดรเจนบริสุทธิ์ (ต่างจากเซลล์แบบ PEM)<br><br>
+          <strong>2. ประสิทธิภาพสูง</strong> — เปลี่ยนเชื้อเพลิงเป็นไฟได้สัดส่วนสูงเพราะไม่ผ่านการเผาไหม้<br><br>
+          <strong>3. รุ่นปี 2026 รองรับ 800V DC</strong> — เสียบเข้าตู้แร็คเซิร์ฟเวอร์ AI ได้ตรง ตัดการสูญเสีย 10–15% จากการแปลงไฟ AC↔DC ในศูนย์ข้อมูลทั่วไป<br><br>
+          <strong>4. โมดูลาร์</strong> — ขยายกำลังเป็นก้อน ๆ ตั้งหน้าไซต์ได้ ไม่ต้องรอกริด
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--down)">ข้อจำกัด</div>
+        <div class="card-body">
+          <strong>1. ยังพึ่งก๊าซธรรมชาติ</strong> — แม้ปล่อยมลพิษต่ำกว่าการเผา แต่ก็ยังเป็นเชื้อเพลิงฟอสซิล ไม่ได้ปลอด CO₂ เต็มร้อยถ้าไม่ใช้ไบโอแก๊ส/ไฮโดรเจน<br><br>
+          <strong>2. อุณหภูมิสูง</strong> — สแต็กเซรามิกร้อนจัด มีประเด็นอายุการใช้งานและการเสื่อมที่ต้องเปลี่ยน (เป็นที่มาของรายได้บริการ แต่ก็เป็นต้นทุน)<br><br>
+          <strong>3. ต้นทุนเครื่องสูง</strong> — เป็นการลงทุนก้อนใหญ่ พึ่งสิทธิภาษี ITC ช่วยให้คุ้ม
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:500;font-size:22px;margin:56px 0 24px;letter-spacing:-0.5px" class="reveal">สองสายผลิตภัณฑ์</h3>
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">Energy Server</div>
+        <div class="card-body">เครื่องผลิตไฟฟ้าหลัก ทำเงินส่วนใหญ่ของบริษัทตอนนี้ จ่ายไฟพื้นฐานต่อเนื่องให้ data center โรงงาน โรงพยาบาล ค้าปลีก</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Bloom Electrolyzer</div>
+        <div class="card-body">ทำงานย้อนทาง — ใช้ไฟผลิตไฮโดรเจน บริษัทเคลมว่าเป็น electrolyzer ที่มีประสิทธิภาพสูงสุดในตลาด (ถึง ~80% เมื่อจับคู่ความร้อนเหลือทิ้งจากอุตสาหกรรม) เป็นตลาดอนาคตที่ยังเล็กเทียบกับ Energy Server</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 03 MARKET -->
+<div class="section-white" id="market">
+  <div class="container">
+    <div class="sec-eyebrow reveal">03 — โอกาสทางตลาด</div>
+    <h2 class="sec-title reveal">คลื่นดีมานด์ data center AI</h2>
+    <p class="sec-sub reveal">ธีมหลักที่ดันหุ้นนี้ปี 2025–2026 คือ AI ดึงไฟ — ศูนย์ข้อมูลใหม่ต้องการกำลังไฟระดับร้อยเมกะวัตต์ถึงกิกะวัตต์ แต่กริดเชื่อมไม่ทัน ทำให้ "ไฟตรงจุด (on-site power)" กลายเป็นทางออกเร่งด่วน และความได้เปรียบเรื่อง time-to-power ของ Bloom กลายเป็นจุดขายหลัก</p>
+
+    <div class="grid-4 reveal">
+      <div class="metric-card"><div class="metric-val metric-val-accent">2.8GW</div><div class="metric-label">ดีล Oracle (สูงสุดถึง)</div></div>
+      <div class="metric-card"><div class="metric-val metric-val-accent">$5B</div><div class="metric-label">พาร์ทเนอร์ Brookfield</div></div>
+      <div class="metric-card"><div class="metric-val">~5GW</div><div class="metric-label">เป้าขยายกำลังผลิต</div></div>
+      <div class="metric-card"><div class="metric-val">~$20B</div><div class="metric-label">backlog รวม</div></div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:48px">
+      <strong>ดีลใหญ่ที่ต้องรู้:</strong> Bloom เซ็นสัญญาส่งกำลังไฟสูงสุดถึง 2.8 GW ให้ Oracle (รวมจ่ายไฟทั้งหมดให้แคมปัส AI "Project Jupiter" ที่นิวเม็กซิโก) — เป็นสัญญาตรงกับ hyperscaler (ผู้ให้บริการคลาวด์รายใหญ่) รายแรก และจับมือ Brookfield (กองทุนสินทรัพย์โครงสร้างพื้นฐานยักษ์) ลงทุนสูงสุด $5B ติดตั้ง SOFC ใน data center AI ทั่วโลก ดีลระดับนี้ไม่เคยเกิดในอุตสาหกรรมเซลล์เชื้อเพลิงมาก่อน
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:500;font-size:22px;margin:48px 0 20px;letter-spacing:-0.5px" class="reveal">พาร์ทเนอร์และลูกค้าหลัก</h3>
+    <div class="partner-grid reveal">
+      <span class="partner-badge">Oracle (data center AI)</span>
+      <span class="partner-badge">Brookfield ($5B)</span>
+      <span class="partner-badge">SK ecoplant (เกาหลีใต้)</span>
+      <span class="partner-badge">Equinix</span>
+      <span class="partner-badge">American Electric Power</span>
+      <span class="partner-badge">ลูกค้าองค์กร / ค้าปลีก / โรงงาน</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:16px" class="reveal">หมายเหตุ: SK ecoplant เป็นบริษัทวิศวกรรม-ก่อสร้างเกาหลีใต้ พาร์ทเนอร์เชิงกลยุทธ์และลูกค้ารายใหญ่ของ Bloom โดยเฉพาะตลาดต่างประเทศและงานไฮโดรเจน รายชื่ออื่นบางส่วนเป็นลูกค้าที่เปิดเผยในอดีต อาจไม่สะท้อนสัดส่วนรายได้ปัจจุบัน</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 04 FINANCIALS -->
+<div class="section-gray" id="financials">
+  <div class="container">
+    <div class="sec-eyebrow reveal">04 — การเงิน</div>
+    <h2 class="sec-title reveal">จากเผาเงินสู่กำไร</h2>
+    <p class="sec-sub reveal">จุดเปลี่ยนสำคัญของ Bloom คือปี 2025–2026 รายได้เร่งตัวจากดีมานด์ data center พร้อมกับมาร์จิ้นที่ดีขึ้นจนพลิกเป็นกำไรสุทธิ — เปลี่ยนภาพจาก "บริษัทเทคพลังงานที่ยัง burn เงิน" เป็น "บริษัทที่เริ่มทำกำไรจริง"</p>
+
+    <div class="fin-chart reveal">
+      <div class="fin-bar-group"><div class="fin-bar-track"><div class="fin-bar" style="height:43%"></div></div><div class="fin-bar-val">$1.47B</div><div class="fin-bar-year">2024</div></div>
+      <div class="fin-bar-group"><div class="fin-bar-track"><div class="fin-bar" style="height:59%"></div></div><div class="fin-bar-val">$2.02B</div><div class="fin-bar-year">2025</div></div>
+      <div class="fin-bar-group"><div class="fin-bar-track"><div class="fin-bar projected" style="height:100%"></div></div><div class="fin-bar-val">$3.4–3.8B</div><div class="fin-bar-year">2026 (คาด)</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:48px" class="reveal">รายได้รายปี · แท่งประ = guidance ที่บริษัทให้สำหรับปี 2026 (กลางช่วงโตราว 80% YoY)</p>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">ผลประกอบการ Q1 2026</div>
+        <div class="data-table">
+          <div class="data-row"><span class="data-key">รายได้รวม</span><span class="data-val">$751.1M</span></div>
+          <div class="data-row"><span class="data-key">เทียบ Q1/25</span><span class="data-val data-val-up">+130.4%</span></div>
+          <div class="data-row"><span class="data-key">รายได้ฝั่ง product</span><span class="data-val data-val-up">+208%</span></div>
+          <div class="data-row"><span class="data-key">Gross margin (GAAP)</span><span class="data-val">30.0%</span></div>
+          <div class="data-row"><span class="data-key">กำไรสุทธิ (GAAP)</span><span class="data-val data-val-up">$70.7M</span></div>
+          <div class="data-row"><span class="data-key">EPS (GAAP, diluted)</span><span class="data-val data-val-up">$0.23</span></div>
+          <div class="data-row"><span class="data-key">EPS (non-GAAP)</span><span class="data-val data-val-up">$0.44</span></div>
+          <div class="data-row"><span class="data-key">Adjusted EBITDA</span><span class="data-val">$143.0M</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">งบดุล / มูลค่าหุ้น</div>
+        <div class="data-table">
+          <div class="data-row"><span class="data-key">รายได้ปี 2025</span><span class="data-val">$2.02B</span></div>
+          <div class="data-row"><span class="data-key">รายได้ TTM (12 เดือน)</span><span class="data-val">$2.45B</span></div>
+          <div class="data-row"><span class="data-key">มูลค่าตลาด</span><span class="data-val data-val-accent">~$88B</span></div>
+          <div class="data-row"><span class="data-key">หุ้นหมุนเวียน</span><span class="data-val">~284M</span></div>
+          <div class="data-row"><span class="data-key">ช่วง 52 สัปดาห์</span><span class="data-val">$21.5–351</span></div>
+          <div class="data-row"><span class="data-key">หนี้แปลงสภาพปี 2030</span><span class="data-val">$2.2B (0%)</span></div>
+          <div class="data-row"><span class="data-key">Current ratio</span><span class="data-val">~4.99</span></div>
+          <div class="data-row"><span class="data-key">P/E</span><span class="data-val">สูงมาก*</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>ข้อสังเกตเรื่องงบ:</strong> Bloom เพิ่งพลิกกำไร กำไรสะสมยังบาง P/E จึงสูงผิดปกติ (หลักหมื่นเท่า) — แปลว่าราคาหุ้นสะท้อน "ความคาดหวังการเติบโตในอนาคต" มากกว่ากำไรปัจจุบัน บริษัทออกหนี้แปลงสภาพ (convertible note — หนี้ที่แปลงเป็นหุ้นได้ตามเงื่อนไข) ก้อน $2.2B ดอกเบี้ย 0% ปี 2025 และมีการแลกหนี้เก่าที่ทำให้เกิดหุ้นเพิ่ม (dilution — การถูกเจือจางสัดส่วนผู้ถือหุ้นเดิม) ราว 42 ล้านหุ้น เป็นต้นทุนแฝงที่ต้องจับตา ส่วน SBC (stock-based compensation — ค่าตอบแทนพนักงานจ่ายเป็นหุ้น) ยังเป็นรายการที่กดกำไร GAAP และเพิ่ม dilution ต่อเนื่อง</p>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px" class="reveal">*ราคาหุ้นและมูลค่าตลาดอ้างอิง ~$309/หุ้น (25 มิ.ย. 2026, stockanalysis.com) ระหว่างวันเคลื่อนไหวแรง ตัวเลขจริงผันผวนรายวัน</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 05 COMPETITION -->
+<div class="section-white" id="competition">
+  <div class="container">
+    <div class="sec-eyebrow reveal">05 — คู่แข่ง</div>
+    <h2 class="sec-title reveal">แข่งกับใคร และได้เปรียบตรงไหน</h2>
+    <p class="sec-sub reveal">คู่แข่งของ Bloom มี 2 กลุ่ม — เซลล์เชื้อเพลิงด้วยกัน และทางเลือกจ่ายไฟตรงจุดแบบอื่น (เครื่องปั่นไฟเครื่องยนต์/กังหันก๊าซ) รวมถึงตัวกริดเองที่เป็นทางเลือก default</p>
+
+    <div class="card reveal" style="padding:0;overflow:hidden">
+      <table class="comp-table">
+        <thead><tr><th>บริษัท / ทางเลือก</th><th>เทคโนโลยี</th><th>จุดเด่น / จุดอ่อนเทียบ Bloom</th></tr></thead>
+        <tbody>
+          <tr class="highlight-row"><td>Bloom Energy (BE)</td><td>SOFC ออกไซด์แข็ง</td><td>ยืดหยุ่นเชื้อเพลิง + ประสิทธิภาพสูง + 800V DC เข้าแร็ค + การเงินแข็งสุดในกลุ่ม</td></tr>
+          <tr><td>Plug Power (PLUG)</td><td>PEM (ต้องใช้ H₂ บริสุทธิ์)</td><td>ต้องพึ่งไฮโดรเจนบริสุทธิ์ ใช้ก๊าซธรรมชาติตรงไม่ได้ การเงินอ่อนกว่า</td></tr>
+          <tr><td>FuelCell Energy</td><td>เซลล์เชื้อเพลิงคาร์บอเนตหลอม</td><td>สเกลเล็กกว่า ยังขาดทุน ตามหลังเรื่องดีล data center</td></tr>
+          <tr><td>Caterpillar / Cummins / Generac</td><td>เครื่องยนต์/เจนเซ็ตก๊าซ</td><td>ราคาถูกกว่า ติดตั้งเร็ว แต่เผาไหม้-ปล่อยมลพิษ-เสียงดังกว่า (Cummins ถอนตัวธุรกิจ electrolyzer ก.พ. 2026)</td></tr>
+          <tr><td>กริดไฟฟ้าหลัก</td><td>สายส่งสาธารณูปโภค</td><td>ถูกที่สุดถ้าต่อได้ แต่คิวเชื่อมยาวหลายปี — เป็นช่องว่างที่ Bloom เข้ามาเสียบ</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout reveal">
+      <strong>Moat (ความได้เปรียบที่ป้องกันคู่แข่ง):</strong> จุดแข็งของ Bloom ไม่ใช่แค่เทคโนโลยี แต่คือ <strong>ความได้เปรียบด้านเวลา</strong> (จ่ายไฟได้เร็วในตอนที่กริดต่อคิวยาว) บวกกับ <strong>การเงินที่แข็งกว่าคู่แข่งเซลล์เชื้อเพลิงทุกราย</strong> ทำให้รับดีลระดับกิกะวัตต์ของ hyperscaler ได้ — สิ่งที่ Plug/FuelCell ทำไม่ได้ในสเกลเดียวกัน
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 06 LEADERSHIP -->
+<div class="section-gray" id="leadership">
+  <div class="container">
+    <div class="sec-eyebrow reveal">06 — ผู้บริหารและนักลงทุน</div>
+    <h2 class="sec-title reveal">ทีมและผู้ถือหุ้นเชิงกลยุทธ์</h2>
+    <p class="sec-sub reveal">ผู้ก่อตั้งยังคุมหางเสือมา 25 ปี ทีมบริหารเสริมตำแหน่งการเงินใหม่ปี 2026 ขณะที่ Brookfield และ SK ecoplant เป็นพันธมิตรเชิงกลยุทธ์ที่หนุนทั้งเงินทุนและช่องทางตลาด</p>
+
+    <div class="grid-3 reveal">
+      <div class="person-card">
+        <div class="person-avatar">KS</div>
+        <div class="person-name">KR Sridhar</div>
+        <div class="person-title">ผู้ก่อตั้ง · ประธาน · CEO</div>
+        <div class="person-bio">ก่อตั้งบริษัทปี 2001 (ดำรงตำแหน่ง CEO ราว 25 ปี) เดิมเป็นผู้อำนวยการห้องปฏิบัติการเทคโนโลยีอวกาศ ม.แอริโซนา และศาสตราจารย์วิศวกรรมการบิน-เครื่องกล เทคโนโลยีของบริษัทมีรากจากงานผลิตออกซิเจนเพื่อภารกิจดาวอังคารของ NASA</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">SE</div>
+        <div class="person-name">Simon Edwards</div>
+        <div class="person-title">CFO (เริ่ม เม.ย. 2026)</div>
+        <div class="person-bio">เข้ารับตำแหน่งประธานเจ้าหน้าที่ฝ่ายการเงินคนใหม่ ช่วงที่บริษัทกำลังขยายกำลังผลิตและจัดการโครงสร้างหนี้/เงินทุนก้อนใหญ่</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">RP</div>
+        <div class="person-name">Ravi Prasher, PhD</div>
+        <div class="person-title">CTO</div>
+        <div class="person-bio">ประธานเจ้าหน้าที่ฝ่ายเทคโนโลยี ดูแลทิศทางเทคโนโลยี SOFC และ electrolyzer ทีมระดับ C อื่นครอบคลุม COO, CCO (พาณิชย์), CLO (กฎหมาย)</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:500;font-size:20px;margin:48px 0 16px;letter-spacing:-0.5px" class="reveal">ผู้ถือหุ้น/พันธมิตรเชิงกลยุทธ์</h3>
+    <div class="partner-grid reveal">
+      <span class="partner-badge">Brookfield Asset Management</span>
+      <span class="partner-badge">SK ecoplant (SK Group เกาหลีใต้)</span>
+      <span class="partner-badge">นักลงทุนสถาบันสหรัฐ</span>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 07 CATALYSTS -->
+<div class="section-white" id="catalysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">07 — ตัวเร่งและข่าว</div>
+    <h2 class="sec-title reveal">ไทม์ไลน์ตัวเร่ง 2025–2026</h2>
+    <p class="sec-sub reveal">เหตุการณ์ที่ขับเคลื่อนหุ้นและธุรกิจ — เครื่องหมายเหลือง = บวก, แดง = ลบ/ความเสี่ยง</p>
+
+    <div class="grid-2">
+      <div class="reveal">
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-date">2025 (กลางปี)</div><div class="timeline-title">สัญญาตรง hyperscaler รายแรก — Oracle</div><div class="timeline-desc">เซ็นสัญญาส่งเซลล์เชื้อเพลิงให้ data center Oracle เริ่มทยอยส่งมอบ</div></div>
+          <div class="timeline-item"><div class="timeline-date">2025 (ปลายปี)</div><div class="timeline-title">พาร์ทเนอร์ Brookfield $5B</div><div class="timeline-desc">กองทุนโครงสร้างพื้นฐานลงทุนสูงสุด $5B ติดตั้ง SOFC ใน data center AI ทั่วโลก</div></div>
+          <div class="timeline-item"><div class="timeline-date">ต.ค. 2025</div><div class="timeline-title">ออกหนี้แปลงสภาพ $2.2B ดอกเบี้ย 0%</div><div class="timeline-desc">ระดมทุนก้อนใหญ่หนุนการขยายกำลังผลิต ราคาแปลงหุ้น ~$195</div></div>
+          <div class="timeline-item"><div class="timeline-date">เม.ย. 2026</div><div class="timeline-title">งบ Q1/26 พลิกกำไร รายได้ +130%</div><div class="timeline-desc">พลิกเป็นกำไรสุทธิ พร้อมขึ้น guidance ทั้งปีเป็น $3.4–3.8B</div></div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-title">ดีล Oracle ขยายถึง 2.8 GW + Project Jupiter</div><div class="timeline-desc">รับจ่ายไฟทั้งแคมปัส AI ที่นิวเม็กซิโก backlog รวมพุ่งสู่ ~$20B</div></div>
+          <div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-title">กฎ FERC หนุนไฟตรงจุด</div><div class="timeline-desc">กฎเชื่อมกริดใหม่เอื้อต่อโซลูชัน on-site power สำหรับ data center ขนาดใหญ่</div></div>
+          <div class="timeline-item neg"><div class="timeline-date">ตลอดปี 2026</div><div class="timeline-title">หุ้นวิ่งแรง +1,400% ใน 12 เดือน</div><div class="timeline-desc">ผันผวนสูงมาก จาก ~$15–21 สู่ระดับ $300+ — valuation ตึงและอ่อนไหวต่อข่าว</div></div>
+          <div class="timeline-item neg"><div class="timeline-date">ทยอยตลอด</div><div class="timeline-title">Dilution จากแลกหนี้/แปลงสภาพ</div><div class="timeline-desc">หุ้นเพิ่มราว 42 ล้านหุ้นจากการแลกหนี้ปี 2028/2029 เจือจางผู้ถือเดิม</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 08 RISKS -->
+<div class="section-gray" id="risks">
+  <div class="container">
+    <div class="sec-eyebrow reveal">08 — ความเสี่ยง</div>
+    <h2 class="sec-title reveal">สิ่งที่อาจทำให้ thesis พัง</h2>
+    <p class="sec-sub reveal">หุ้นเติบโตสูงราคาแพง ความเสี่ยงจึงโตตามราคา — แบ่งตามระดับผลกระทบที่ควรจับตา</p>
+
+    <div class="grid-2 reveal">
+      <div class="risk-card risk-high">
+        <span class="risk-badge">เสี่ยงสูง</span>
+        <div class="risk-title">Valuation ตึง + ความผันผวน</div>
+        <div class="risk-body">หุ้นวิ่ง +1,400% ใน 12 เดือน P/E หลักหมื่นเท่า ราคาสะท้อนความคาดหวังอนาคตเกือบทั้งหมด ข่าวร้ายเล็กน้อยหรือพลาด guidance อาจทำราคาร่วงแรง บางมุมมองมองมูลค่าเหมาะสมต่ำกว่าราคาปัจจุบันมาก</div>
+      </div>
+      <div class="risk-card risk-high">
+        <span class="risk-badge">เสี่ยงสูง</span>
+        <div class="risk-title">พึ่งสิทธิภาษี ITC / นโยบาย</div>
+        <div class="risk-body">Energy Server พึ่งเครดิตภาษีลงทุน (ITC — Investment Tax Credit ตามมาตรา 48) เพื่อให้คุ้มทุน หากนโยบายรัฐเปลี่ยน/ลดสิทธิ หรือทรัพย์สินถูกตัดสิทธิก่อนครบ 5 ปี (recapture) ความคุ้มค่าโครงการลดลงทันที</div>
+      </div>
+      <div class="risk-card risk-med">
+        <span class="risk-badge">เสี่ยงกลาง</span>
+        <div class="risk-title">Dilution + โครงสร้างหนี้</div>
+        <div class="risk-body">หนี้แปลงสภาพ + SBC + การแลกหนี้ ทำให้จำนวนหุ้นเพิ่มต่อเนื่อง เจือจางผู้ถือเดิม การขยายกำลังผลิตสเกลใหญ่ก็กินเงินทุนสูง</div>
+      </div>
+      <div class="risk-card risk-med">
+        <span class="risk-badge">เสี่ยงกลาง</span>
+        <div class="risk-title">ลูกค้ากระจุก + execution</div>
+        <div class="risk-body">ดีลใหญ่กระจุกที่ลูกค้าไม่กี่ราย (เช่น Oracle/Brookfield) หากดีลล่าช้า/เลื่อน/ยกเลิก กระทบรายได้มาก การส่งมอบระดับกิกะวัตต์ตามกำหนดก็ท้าทายซัพพลายเชน</div>
+      </div>
+      <div class="risk-card risk-low">
+        <span class="risk-badge">เสี่ยงต่ำ-กลาง</span>
+        <div class="risk-title">การแข่งขัน + เชื้อเพลิงฟอสซิล</div>
+        <div class="risk-body">เจนเซ็ตก๊าซราคาถูกกว่า และ SOFC ยังพึ่งก๊าซธรรมชาติ หากเทรนด์ ESG เข้มขึ้นหรือราคาก๊าซผันผวน อาจกระทบความน่าสนใจ — แต่ Bloom นำหน้าคู่แข่งเซลล์เชื้อเพลิงชัดเจน</div>
+      </div>
+      <div class="risk-card risk-low">
+        <span class="risk-badge">เสี่ยงต่ำ</span>
+        <div class="risk-title">เทคโนโลยี/อายุสแต็ก</div>
+        <div class="risk-body">สแต็กเซรามิกอุณหภูมิสูงต้องเปลี่ยนตามอายุ เป็นต้นทุนบริการ — แต่กลับเป็นแหล่งรายได้ service ที่ทบต้น พิสูจน์มาแล้วในฐานติดตั้งสะสมหลายปี</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 09 ANALYSTS -->
+<div class="section-white" id="analysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">09 — มุมนักวิเคราะห์</div>
+    <h2 class="sec-title reveal">ภาพรวมความเห็นตลาด</h2>
+    <p class="sec-sub reveal">ฉันทามตินักวิเคราะห์โน้มไปทาง "ซื้อ/ถือ" แต่มีความเห็นแตกชัดระหว่างฝั่งที่เชื่อในดีมานด์ data center กับฝั่งที่กังวลเรื่องราคาแพง (ไม่เน้นเป้าราคารายสำนัก ตามแนวทางอ่านธุรกิจ)</p>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">สัดส่วนคำแนะนำ (จากนักวิเคราะห์ ~21 ราย)</div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>Strong Buy</span><span>~19%</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:19%;background:var(--up)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>Buy</span><span>~29%</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:29%;background:#5fd39a"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>Hold</span><span>~48%</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:48%;background:var(--muted)"></div></div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:16px">consensus โดยรวม = "Buy" แต่กลุ่มใหญ่สุดอยู่ฝั่ง Hold สะท้อนความระวังเรื่องราคา</p>
+      </div>
+      <div class="card">
+        <div class="card-title">มุม Bull vs Bear</div>
+        <div style="margin-bottom:18px">
+          <span class="pill pill-up">BULL</span>
+          <p style="font-size:14px;color:var(--body);margin-top:8px;line-height:1.7">อยู่จุดตัดของดีมานด์เชิงโครงสร้าง — ไฟตรงจุดที่สะอาด เชื่อถือได้ บวกการเงินที่แข็งขึ้นชัด backlog $20B และคลื่น data center AI ที่เพิ่งเริ่ม กำลังผลิตขยายสู่ ~5GW</p>
+        </div>
+        <div>
+          <span class="pill pill-down">BEAR</span>
+          <p style="font-size:14px;color:var(--body);margin-top:8px;line-height:1.7">valuation พรีเมียมจัด ใช้เงินทุนเข้มข้น เสี่ยง dilution บางมุมมองให้มูลค่าเหมาะสมต่ำกว่าราคาตลาดมาก ความคาดหวังถูกตั้งไว้สูงมากแล้ว</p>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:20px" class="reveal">รายงานนี้สรุปเพื่อความเข้าใจธุรกิจ ไม่ใช่คำแนะนำซื้อ-ขาย ตัวเลขนักวิเคราะห์เป็นค่าประมาณ ณ ช่วงรายงาน เปลี่ยนแปลงได้</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 10 SUMMARY -->
+<div class="section-gray">
+  <div class="container">
+    <div class="sec-eyebrow reveal">10 — สรุป</div>
+    <h2 class="sec-title reveal">เข้าใจ Bloom Energy ในหน้าเดียว</h2>
+
+    <div class="grid-2 reveal" style="margin-bottom:32px">
+      <div class="card">
+        <div class="card-title" style="color:var(--accent-active)">สิ่งที่ต้องรู้</div>
+        <div class="card-body">
+          • ขายเซลล์เชื้อเพลิง SOFC ตั้งหน้าไซต์ จ่ายไฟพื้นฐานตรงจุด ไม่ต้องรอกริด<br>
+          • รายได้ = ขายเครื่อง + บริการระยะยาว (backlog แยก product ~$6B / service ~$14B)<br>
+          • คลื่นหนุนหลัก = data center AI ที่ต้องการไฟเร็ว (time-to-power)<br>
+          • พลิกกำไรปี 2026 รายได้ Q1 +130% ขึ้น guidance เป็น $3.4–3.8B<br>
+          • ดีลเรือธง: Oracle (สูงสุด 2.8GW) + Brookfield ($5B)
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--down)">สิ่งที่ต้องจับตา</div>
+        <div class="card-body">
+          • Valuation ตึงมาก P/E หลักหมื่น หุ้นผันผวนแรง<br>
+          • พึ่งสิทธิภาษี ITC — นโยบายเปลี่ยนกระทบความคุ้มทุน<br>
+          • Dilution จากหนี้แปลงสภาพ + SBC + แลกหนี้<br>
+          • ลูกค้ากระจุก — ดีลใหญ่ล่าช้า/ยกเลิกกระทบหนัก<br>
+          • ยังพึ่งก๊าซธรรมชาติ ไม่ปลอด CO₂ เต็มร้อย
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="font-size:15px;line-height:1.8">
+      <strong>สรุปหนึ่งย่อหน้า:</strong> Bloom Energy คือบริษัทที่ขาย "โรงไฟฟ้าขนาดเล็กตั้งหน้าตึก" ด้วยเทคโนโลยีเซลล์เชื้อเพลิง solid-oxide ที่ยืดหยุ่นเชื้อเพลิงและประสิทธิภาพสูง จุดเปลี่ยนคือคลื่นดีมานด์ data center AI ที่ทำให้ "ไฟตรงจุดเร็ว ๆ" มีค่ามหาศาลในตอนที่กริดต่อคิวยาว ดีล Oracle และ Brookfield ดันให้บริษัทพลิกจากเผาเงินเป็นทำกำไรจริงพร้อม backlog $20B แต่ราคาหุ้นวิ่งไปไกลถึง +1,400% ใน 12 เดือน ทำให้ความเสี่ยงไม่ได้อยู่ที่ "ธุรกิจดีไหม" (ธุรกิจกำลังดี) แต่อยู่ที่ "ราคาแพงไปแล้วหรือยัง" — บวกความเสี่ยงเชิงโครงสร้างเรื่องพึ่งสิทธิภาษี ITC, dilution และการกระจุกตัวของลูกค้ารายใหญ่
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="nav-logo" style="margin-bottom:8px">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#f4b000"/><text x="11" y="16" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0a0b0d" text-anchor="middle">B</text></svg>
+    Bloom Energy · NYSE: BE
+  </div>
+  <div class="footer-legal">
+    รายงานเชิงลึกฉบับนี้จัดทำเพื่อความเข้าใจธุรกิจเท่านั้น ไม่ใช่คำแนะนำการลงทุน ไม่ใช่การประเมินมูลค่า และไม่ใช่การคาดการณ์ราคา ตัวเลขการเงิน/ราคา/มูลค่าตลาดอ้างอิงข้อมูลสาธารณะ ณ ช่วงปลายมิ.ย. 2026 (รายได้ปี 2025 $2.02B, ผลประกอบการ Q1/26, ราคาหุ้น ~$309 และมูลค่าตลาด ~$88B วันที่ 25 มิ.ย. 2026 จาก stockanalysis.com; ผลประกอบการจาก SEC filings และข่าวบริษัท) ตัวเลขบางรายการเป็นค่าประมาณและอาจคลาดเคลื่อน/เปลี่ยนแปลงได้ ผู้อ่านควรตรวจสอบข้อมูลล่าสุดก่อนตัดสินใจใด ๆ<br><br>
+    จัดทำโดย Neon · 26 มิ.ย. 2026
+  </div>
+</footer>
+
+<script>
+(function(){
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+(function(){
+  const links=document.querySelectorAll('.nav-links a');
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}}),{threshold:0.4});
+  document.querySelectorAll('[id]').forEach(s=>{if(s.tagName!=='NAV')io.observe(s)});
+})();
+</script>
+</body>
+</html>
