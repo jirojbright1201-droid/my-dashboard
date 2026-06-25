@@ -15,7 +15,7 @@
     // lazy-mount dashboard module on first open
     if (name === 'home' && window.HomeView) window.HomeView.mount(document.getElementById('view-home'));
     if (name === 'planner' && window.PlannerView) window.PlannerView.mount(document.getElementById('view-planner'));
-    if (name === 'money' && window.SavingsView) window.SavingsView.mount(document.getElementById('view-money'));
+    if (name === 'money' && window.MoneyView) window.MoneyView.mount(document.getElementById('view-money'));
   }
   window.Shell = { showView };
 
