@@ -4,37 +4,22 @@ window.SavingsView = (function () {
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmt = n => D.currency + Number(n || 0).toLocaleString('en-US');
 
-  // glass jar that fills with a pile of real coin emoji, scaled to pct (0..1)
+  // โหลแก้ว (SVG พื้นหลัง) + เหรียญ emoji วาง HTML ทับ clip ด้วย CSS เติมสูงตาม pct (0..1)
+  // ใช้ emoji เป็น HTML ไม่ใช่ SVG <text> → เรนเดอร์รูปเหรียญทองจริงชัวร์ทุกเครื่อง
   function jarSVG(pct, i) {
     pct = Math.max(0, Math.min(1, pct));
-    const top = 24, bot = 102, h = bot - top;
-    const fillY = bot - h * pct;          // ระดับยอดกองเหรียญ
-    const cid = 'jc' + i;
-
-    let coins = '';
-    if (pct > 0.01) {
-      const rowH = 9.5;                   // เหรียญเหลื่อมซ้อนกันเป็นกอง (hex-pack)
-      const even = [29, 43, 57, 71], odd = [36, 50, 64];
-      let r = 0;
-      for (let y = bot - 7; y > fillY - 2 && y > top + 2; y -= rowH, r++) {
-        const xs = (r % 2 === 0) ? even : odd;
-        xs.forEach((x, c) => {
-          const jx = (((i * 5 + r * 7 + c * 11) % 3) - 1);   // ขยับเล็กน้อยให้เป็นธรรมชาติ
-          coins += `<text x="${x + jx}" y="${y}" font-size="14.5" text-anchor="middle" dominant-baseline="central">🪙</text>`;
-        });
-      }
-    }
-
-    return `<svg class="jar-svg" viewBox="0 0 96 112" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <clipPath id="${cid}"><rect x="19" y="23" width="58" height="80" rx="13"/></clipPath>
-      </defs>
+    const glass = `<svg class="jar-glass" viewBox="0 0 96 112" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <rect x="26" y="6" width="44" height="11" rx="4" fill="#efece6" stroke="#d8cfc2" stroke-width="2"/>
       <rect x="18" y="22" width="60" height="82" rx="14" fill="#ffffff" stroke="#d8cfc2" stroke-width="2"/>
-      <g clip-path="url(#${cid})">${coins}</g>
       <rect x="18" y="22" width="60" height="82" rx="14" fill="none" stroke="#d8cfc2" stroke-width="2"/>
       <path d="M27 33 v58" stroke="rgba(255,255,255,0.65)" stroke-width="3" stroke-linecap="round"/>
     </svg>`;
+    // เหรียญจำนวนคงที่ เติมเต็มโหล แล้ว clip ด้วยความสูง .jar-fill = pct
+    const coins = pct > 0.005 ? '<span class="jc">🪙</span>'.repeat(44) : '';
+    return `<div class="jar-svg jarbox">
+      ${glass}
+      <div class="jar-clip"><div class="jar-fill" style="height:${(pct * 100).toFixed(1)}%">${coins}</div></div>
+    </div>`;
   }
 
   function render(root) {
