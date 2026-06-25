@@ -56,6 +56,19 @@
 .inv-pf-sub { font-size: 0.8125rem; color: var(--silver); margin: 6px 0 14px; }
 .inv-pf-sub b { font-weight: 600; }
 .inv-perf { width: 100%; height: 120px; display: block; }
+.inv-perf-wrap { position: relative; cursor: crosshair; touch-action: pan-y; }
+.inv-cross, .inv-cross-dot, .inv-perf-tip { position: absolute; opacity: 0; pointer-events: none; transition: opacity .12s ease; z-index: 2; }
+.inv-perf-wrap.show .inv-cross, .inv-perf-wrap.show .inv-cross-dot, .inv-perf-wrap.show .inv-perf-tip { opacity: 1; }
+.inv-cross { top: 0; bottom: 0; width: 0; border-left: 1px dashed rgba(20,20,19,.30); transform: translateX(-.5px); }
+.inv-cross-dot { width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--surface); transform: translate(-50%,-50%); box-shadow: 0 1px 4px rgba(0,0,0,.18); }
+.inv-cross-dot.pos { background: var(--green); }
+.inv-cross-dot.neg { background: var(--red); }
+.inv-perf-tip { top: 2px; display: flex; align-items: center; gap: 7px; white-space: nowrap; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 4px 9px; font-size: .7rem; box-shadow: 0 4px 14px rgba(20,20,19,.10); }
+.inv-perf-tip b { font-weight: 700; }
+.inv-perf-tip span { color: var(--silver); }
+.inv-perf-tip i { font-style: normal; font-weight: 600; }
+.inv-perf-tip .pos { color: var(--green); }
+.inv-perf-tip .neg { color: var(--red); }
 
 /* ── trades ── */
 .inv-trade { display: flex; gap: 11px; padding: 11px 0; }

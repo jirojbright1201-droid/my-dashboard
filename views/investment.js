@@ -62,12 +62,49 @@ window.InvestmentView = (function () {
     const area = `0,${h} ${pts} ${w},${h}`;
     const up = pf[pf.length - 1] >= 0, col = up ? 'var(--green)' : 'var(--red)';
     const lx = X(pf.length - 1), ly = Y(pf[pf.length - 1]);
-    return `<svg class="inv-perf" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    // ข้อมูลต่อจุดสำหรับ crosshair (left%/top% + ค่าที่จะโชว์ตอน hover)
+    const meta = pf.map((v, i) => ({ l: +(i / (pf.length - 1) * 100).toFixed(2), t: +(Y(v) / h * 100).toFixed(2), p: +v.toFixed(2), dt: d[i].date, ch: Math.round(d[i].change || 0) }));
+    return `<div class="inv-perf-wrap" data-pts='${JSON.stringify(meta)}'>
+      <svg class="inv-perf" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
       <defs><linearGradient id="invpf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".18"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
       <polygon points="${area}" fill="url(#invpf)"/>
       <polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       <circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="${col}" stroke="#fff" stroke-width="2"/>
-    </svg>`;
+    </svg>
+      <span class="inv-cross"></span><span class="inv-cross-dot"></span><span class="inv-perf-tip"></span>
+    </div>`;
+  }
+
+  // เส้นแนวตั้งวิ่งตามเมาส์ (crosshair) + ป้ายค่าวันที่ชี้
+  function attachPerfHover() {
+    const ov = $('inv-overview');
+    const wrap = ov && ov.querySelector('.inv-perf-wrap');
+    if (!wrap) return;
+    let pts; try { pts = JSON.parse(wrap.dataset.pts || '[]'); } catch (e) { return; }
+    if (pts.length < 2) return;
+    const cross = wrap.querySelector('.inv-cross');
+    const dot = wrap.querySelector('.inv-cross-dot');
+    const tip = wrap.querySelector('.inv-perf-tip');
+    const move = e => {
+      const r = wrap.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+      const pt = pts[Math.round(ratio * (pts.length - 1))];
+      const up = pt.p >= 0;
+      cross.style.left = pt.l + '%';
+      dot.style.left = pt.l + '%';
+      dot.style.top = pt.t + '%';
+      dot.className = 'inv-cross-dot ' + (up ? 'pos' : 'neg');
+      tip.innerHTML = `<b class="${up ? 'pos' : 'neg'}">${pct(pt.p)}</b><span>${esc(pt.dt)}</span><i class="${pt.ch >= 0 ? 'pos' : 'neg'}">${pt.ch >= 0 ? '+' : ''}$${Math.abs(pt.ch).toLocaleString()} วันนั้น</i>`;
+      tip.style.left = pt.l + '%';
+      const ir = pt.l / 100;
+      tip.style.transform = ir < 0.14 ? 'translateX(0)' : ir > 0.86 ? 'translateX(-100%)' : 'translateX(-50%)';
+      wrap.classList.add('show');
+    };
+    wrap.addEventListener('mousemove', move);
+    wrap.addEventListener('mouseleave', () => wrap.classList.remove('show'));
+    wrap.addEventListener('touchstart', move, { passive: true });
+    wrap.addEventListener('touchmove', move, { passive: true });
   }
 
   // ── OVERVIEW ──
@@ -113,6 +150,7 @@ window.InvestmentView = (function () {
       </div>
 
       <div class="card"><div class="section-title">เทรดล่าสุด</div><div class="inv-trades">${tradesHtml}</div></div>`;
+    attachPerfHover();
   }
 
   // ── COMPANY ──
