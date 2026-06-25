@@ -105,3 +105,5 @@ const DATA = {
     {ticker:"NOK", date:"22 มิ.ย. 69", file:"NOK_2026-06-22.html"}
   ]    // {ticker, date, file} — Neon HTML reports ใน dashboard/reports/
 };
+// expose ให้ PWA shell (Home + Investment view) อ่านได้ — standalone investment.html ยังใช้ DATA/FX ตามเดิม
+window.INV_DATA = DATA; window.INV_FX = FX;

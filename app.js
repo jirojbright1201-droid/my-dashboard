@@ -16,6 +16,7 @@
     if (name === 'home' && window.HomeView) window.HomeView.mount(document.getElementById('view-home'));
     if (name === 'planner' && window.PlannerView) window.PlannerView.mount(document.getElementById('view-planner'));
     if (name === 'money' && window.MoneyView) window.MoneyView.mount(document.getElementById('view-money'));
+    if (name === 'investment' && window.InvestmentView) window.InvestmentView.mount(document.getElementById('view-investment'));
   }
   window.Shell = { showView };
 

@@ -72,6 +72,9 @@ window.HomeView = (function () {
     const mBudget = Object.values(md.budget || {}).reduce((s, v) => s + v, 0);
     const budgetPct = mBudget > 0 ? Math.round(mOut / mBudget * 100) : 0;
 
+    // investment — สรุปพอร์ตจาก InvestmentView
+    const inv = window.InvestmentView ? window.InvestmentView.summary() : null;
+
     // ── today's events timeline (compact) ──
     const evHTML = evToday.length
       ? evToday.map(e => `<div class="ho-ev">
@@ -118,15 +121,16 @@ window.HomeView = (function () {
           <div class="ho-foot">ใช้งบ ${budgetPct}% · เก็บแล้ว <b>${baht(totalSaved)}</b></div>
         </div>
 
-        <div class="card ho-mini ho-invest" data-go="investment">
+        <div class="card ho-mini" data-go="investment">
           <div class="ho-card-head">
             <div class="section-title" style="margin:0">ลงทุน</div>
             <span class="ho-link">Invest &#8594;</span>
           </div>
-          <div class="ho-invest-illu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg>
-          </div>
-          <div class="ho-foot">เปิดดูพอร์ต thesis และข่าวหุ้นที่ถือ</div>
+          ${inv ? `<div class="ho-big">$${Math.round(inv.value).toLocaleString()}</div>
+          <div class="ho-sub">${inv.holdings} ตัว · เงินสด $${inv.cash.toFixed(2)}</div>
+          <div class="ho-foot" style="color:${inv.pl < 0 ? 'var(--red)' : 'var(--green)'}">${inv.pl >= 0 ? '+' : '−'}$${Math.abs(inv.pl).toFixed(2)} (${inv.plpct >= 0 ? '+' : ''}${inv.plpct.toFixed(1)}%)</div>`
+          : `<div class="ho-invest-illu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg></div>
+          <div class="ho-foot">เปิดดูพอร์ต</div>`}
         </div>
       </div>
 
