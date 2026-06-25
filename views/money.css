@@ -1,0 +1,92 @@
+/* ===== Money hub ===== */
+.mny { padding-top: 16px; }
+
+/* ── month bar ── */
+.mny-monthbar { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; }
+.mny-month { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; min-width: 150px; text-align: center; letter-spacing: -0.01em; }
+.mny-chev { width: 38px; height: 38px; border-radius: 50%; border: none; background: none; cursor: pointer;
+  color: var(--accent); font-size: 1.5rem; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background .15s, transform .1s; }
+.mny-chev:active { background: var(--surface-2); transform: scale(.92); }
+.mny-chev:disabled { color: var(--border); cursor: default; }
+
+/* ── sub-tabs (segmented) ── */
+.mny-tabs { display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border-soft);
+  border-radius: 11px; padding: 4px; margin-bottom: 16px; }
+.mny-tab { flex: 1; border: none; background: none; cursor: pointer; font-family: inherit; color: var(--silver);
+  font-size: 0.8125rem; font-weight: 600; padding: 8px 4px; border-radius: 8px; transition: all .15s; }
+.mny-tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(20,20,19,.08); }
+.mny-pane { display: none; }
+.mny-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── hero ── */
+.mny-hero-lbl { font-size: 0.8125rem; color: var(--silver); font-weight: 500; }
+.mny-hero-bal { font-family: var(--mono); font-size: 2.25rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-top: 2px; }
+.mny-hero-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; }
+.mny-hero-split { display: flex; margin-top: 16px; border-top: 1px solid var(--border-soft); }
+.mny-hs { flex: 1; padding: 14px 4px 2px; }
+.mny-hs + .mny-hs { border-left: 1px solid var(--border-soft); padding-left: 18px; }
+.mny-hs-lab { font-size: 0.75rem; color: var(--silver); font-weight: 500; }
+.mny-hs-val { font-family: var(--mono); font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; margin-top: 3px; }
+.mny-hs-val.up { color: var(--green); }
+.mny-hs-val.down { color: var(--red); }
+.mny-hs-cnt { font-size: 0.6875rem; color: var(--silver); margin-top: 3px; }
+
+/* ── donut ── */
+.mny-donut-wrap { display: flex; gap: 18px; align-items: center; }
+.mny-donut { position: relative; width: 148px; height: 148px; border-radius: 50%; flex-shrink: 0; }
+.mny-donut-hole { position: absolute; inset: 27px; background: var(--surface); border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.mny-donut-hole span { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; color: var(--text); }
+.mny-donut-hole small { font-size: 0.6875rem; color: var(--silver); margin-top: 2px; }
+.mny-legend { flex: 1; display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+.mny-leg { display: flex; align-items: center; gap: 8px; }
+.mny-leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.mny-leg-name { flex: 1; font-size: 0.8125rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mny-leg-val { font-family: var(--mono); font-size: 0.6875rem; color: var(--silver); white-space: nowrap; }
+
+/* ── budget rows ── */
+.mny-brow { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; cursor: pointer; }
+.mny-brow:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.mny-brow:active { opacity: .6; }
+.mny-tile { width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center; font-size: 19px; line-height: 1;
+  font-family: 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif; }
+.mny-brow-body { flex: 1; min-width: 0; }
+.mny-brow-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.mny-brow-name { font-size: 0.9375rem; font-weight: 600; }
+.mny-brow-amt { font-family: var(--mono); font-size: 0.75rem; color: var(--silver); white-space: nowrap; }
+.mny-prog { height: 6px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
+.mny-prog-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .4s ease; }
+.mny-prog-fill.over { background: var(--red); }
+.mny-brow-foot { display: flex; justify-content: space-between; font-size: 0.75rem; margin-top: 6px; }
+.mny-pct { font-weight: 700; color: var(--text); }
+.mny-pct.over, .mny-rem.over { color: var(--red); }
+.mny-rem { color: var(--silver); }
+
+/* ── transactions ── */
+.mny-txtoggle { display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border-soft);
+  border-radius: 10px; padding: 4px; margin-bottom: 14px; }
+.mny-txtoggle button { flex: 1; border: none; background: none; cursor: pointer; font-family: inherit;
+  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px; border-radius: 7px; transition: all .15s; }
+.mny-txtoggle button.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(20,20,19,.08); }
+.mny-list-head { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--silver);
+  font-weight: 600; padding: 0 4px 8px; }
+.mny-list { padding: 6px 16px; }
+.mny-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; }
+.mny-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.mny-row-lead { flex: 1; min-width: 0; }
+.mny-row-title { font-size: 0.9375rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mny-row-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
+.mny-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; flex-shrink: 0; }
+.mny-amt.neg { color: var(--text); }
+.mny-amt.pos { color: var(--green); }
+
+/* ── savings sub-tab: strip nested container padding ── */
+#mny-savings .container { padding: 0; max-width: none; }
+#mny-savings .sav-head { margin-top: 0; }
+
+@media (max-width: 560px) {
+  .mny-donut-wrap { flex-direction: column; }
+  .mny-donut { width: 160px; height: 160px; }
+  .mny-legend { width: 100%; }
+}

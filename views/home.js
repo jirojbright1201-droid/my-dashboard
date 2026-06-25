@@ -4,6 +4,8 @@ window.HomeView = (function () {
   const P = window.PLANNER_DATA || {};
   const PKEYS = window.PLANNER_KEYS || [];
   const SV = window.SAVINGS_DATA || { currency: '฿', jars: [] };
+  const MD = window.MONEY_DATA || {};
+  const MKEYS = window.MONEY_KEYS || [];
   const HABITS = ['exercise', 'read', 'water', 'sleep_early'];
   const HABIT_LABELS = { exercise: 'Exercise', read: 'Read', water: 'Water', sleep_early: 'Sleep early' };
   const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -62,6 +64,14 @@ window.HomeView = (function () {
     const nearest = jars.filter(j => j.goal > 0 && j.saved < j.goal)
       .sort((a, b) => (b.saved / b.goal) - (a.saved / a.goal))[0];
 
+    // money — เดือนล่าสุด
+    const md = MD[MKEYS[MKEYS.length - 1]] || { income: [], expenses: [], budget: {} };
+    const mIn = (md.income || []).reduce((s, i) => s + i.amount, 0);
+    const mOut = (md.expenses || []).reduce((s, e) => s + e.amount, 0);
+    const mBal = mIn - mOut;
+    const mBudget = Object.values(md.budget || {}).reduce((s, v) => s + v, 0);
+    const budgetPct = mBudget > 0 ? Math.round(mOut / mBudget * 100) : 0;
+
     // ── today's events timeline (compact) ──
     const evHTML = evToday.length
       ? evToday.map(e => `<div class="ho-ev">
@@ -99,13 +109,13 @@ window.HomeView = (function () {
       <div class="ho-row2">
         <div class="card ho-mini" data-go="money">
           <div class="ho-card-head">
-            <div class="section-title" style="margin:0">เงินเก็บ</div>
+            <div class="section-title" style="margin:0">เดือนนี้</div>
             <span class="ho-link">Money &#8594;</span>
           </div>
-          <div class="ho-big">${baht(totalSaved)}</div>
-          <div class="ho-sub">จาก ${baht(totalGoal)} · ${savPct}%</div>
-          <div class="ho-bar"><div class="ho-bar-fill" style="width:${Math.min(100, savPct)}%"></div></div>
-          ${nearest ? `<div class="ho-foot">ใกล้เป้าสุด: <b>${esc(nearest.name)}</b> ${Math.round(nearest.saved / nearest.goal * 100)}%</div>` : '<div class="ho-foot">ครบทุกโหลแล้ว</div>'}
+          <div class="ho-big" style="color:${mBal < 0 ? 'var(--red)' : 'var(--text)'}">${baht(mBal)}</div>
+          <div class="ho-sub">รับ ${baht(mIn)} · จ่าย ${baht(mOut)}</div>
+          <div class="ho-bar"><div class="ho-bar-fill" style="width:${Math.min(100, budgetPct)}%${budgetPct > 100 ? ';background:var(--red)' : ''}"></div></div>
+          <div class="ho-foot">ใช้งบ ${budgetPct}% · เก็บแล้ว <b>${baht(totalSaved)}</b></div>
         </div>
 
         <div class="card ho-mini ho-invest" data-go="investment">

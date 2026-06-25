@@ -77,5 +77,5 @@ window.SavingsView = (function () {
     el.dataset.mounted = '1';
     render(el);
   }
-  return { mount };
+  return { mount, render };   // render() ใช้ฝังในซับแท็บโหลเงินของ Money hub
 })();
