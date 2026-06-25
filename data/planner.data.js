@@ -31,7 +31,18 @@ window.PLANNER_DATA = {
       {"habit":"water","done_dates":[]},
       {"habit":"sleep_early","done_dates":[]}
     ]
+  },
+  "2026-07": {
+    "events": [
+      {"date":"2026-07-01","title":"เช็คลิสต์เงินต้นเดือน","time":"09:00","end_time":"","notes":"1) ตั้งงบเดือนใหม่ • 2) โอนเข้าโหลเก็บเงิน • 3) จ่ายบิล/ค่าสมัครประจำ • 4) รีวิวเดือนที่แล้ว"}
+    ],
+    "habits": [
+      {"habit":"exercise","done_dates":[]},
+      {"habit":"read","done_dates":[]},
+      {"habit":"water","done_dates":[]},
+      {"habit":"sleep_early","done_dates":[]}
+    ]
   }
 };
-window.PLANNER_KEYS = ["2026-06"];
-window.PLANNER_UPDATED = "23/06/2026";
+window.PLANNER_KEYS = ["2026-06","2026-07"];
+window.PLANNER_UPDATED = "26/06/2026";
