@@ -1,0 +1,58 @@
+/* ===== Home view — super-app landing ===== */
+.ho-greet { margin-bottom: 18px; }
+.ho-hi { font-family: var(--serif); font-size: 1.75rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+.ho-date { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
+
+.ho-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.ho-link { font-size: 0.6875rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.card[data-go] { cursor: pointer; }
+.card[data-go]:active { transform: scale(.99); }
+
+/* ── วันนี้ ── */
+.ho-today-grid { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start; }
+.ho-events { display: flex; flex-direction: column; gap: 11px; min-width: 0; }
+.ho-ev { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.ho-ev-time { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); width: 44px; flex-shrink: 0; }
+.ho-ev-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.ho-ev-title { font-size: 0.875rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ho-empty { color: var(--silver); font-size: 0.8125rem; padding: 6px 0; }
+
+.ho-habits-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.ring { width: 64px; height: 64px; flex-shrink: 0; }
+.ring-txt { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; fill: var(--text); }
+.ho-habits { display: flex; flex-direction: column; gap: 5px; }
+.ho-hab { display: flex; align-items: center; gap: 5px; font-size: 0.6875rem; font-weight: 600; color: var(--silver); }
+.ho-hab-tick { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px;
+  border-radius: 50%; border: 1.5px solid var(--border); font-size: 0.6rem; color: #fff; flex-shrink: 0; }
+.ho-hab.on { color: var(--text); }
+.ho-hab.on .ho-hab-tick { background: var(--green); border-color: var(--green); }
+
+/* ── row: เงินเก็บ + ลงทุน ── */
+.ho-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ho-row2 .card { margin-bottom: 0; display: flex; flex-direction: column; }
+.ho-big { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+.ho-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
+.ho-bar { height: 6px; border-radius: 9999px; background: var(--surface-3); overflow: hidden; margin: 12px 0 10px; }
+.ho-bar-fill { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, var(--accent), #e0a07f); }
+.ho-foot { font-size: 0.75rem; color: var(--silver); margin-top: auto; line-height: 1.45; }
+.ho-foot b { color: var(--text); font-weight: 600; }
+
+.ho-invest { align-items: flex-start; }
+.ho-invest-illu { display: flex; align-items: center; justify-content: center; width: 100%; flex: 1; padding: 14px 0; }
+.ho-invest-illu svg { width: 40px; height: 40px; color: var(--accent); opacity: .85; }
+
+/* ── quick actions ── */
+.ho-quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+.ho-q { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 14px 6px;
+  background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; cursor: pointer;
+  font-family: inherit; color: var(--text); transition: transform .1s, background .15s; }
+.ho-q:active { transform: scale(.94); background: var(--surface-2); }
+.ho-q svg { width: 22px; height: 22px; color: var(--accent); }
+.ho-q span { font-size: 0.6875rem; font-weight: 600; color: var(--silver); }
+
+@media (max-width: 560px) {
+  .ho-today-grid { grid-template-columns: 1fr; }
+  .ho-habits-wrap { flex-direction: row; align-self: stretch; justify-content: flex-start;
+    border-top: 1px solid var(--border-soft); padding-top: 14px; }
+  .ho-row2 { grid-template-columns: 1fr; }
+}
