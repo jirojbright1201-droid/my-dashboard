@@ -48,9 +48,11 @@
 .mny-brow { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; cursor: pointer; }
 .mny-brow:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
 .mny-brow:active { opacity: .6; }
-.mny-tile { width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0; background: var(--surface-2);
-  display: flex; align-items: center; justify-content: center; font-size: 19px; line-height: 1;
-  font-family: 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif; }
+.mny-tile { width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0; background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center; }
+.mny-tile svg { width: 20px; height: 20px; color: var(--accent); }
+.mny-mtitle-ic { display: inline-flex; vertical-align: -4px; margin-right: 7px; }
+.mny-mtitle-ic svg { width: 19px; height: 19px; color: var(--accent); }
 .mny-brow-body { flex: 1; min-width: 0; }
 .mny-brow-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; }
 .mny-brow-name { font-size: 0.9375rem; font-weight: 600; }

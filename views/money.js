@@ -10,13 +10,31 @@ window.MoneyView = (function () {
   const THMONTH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
   const monthLabel = k => { const [y, m] = k.split('-').map(Number); return `${THMONTH[m - 1]} ${y}`; };
 
-  const CAT_EMOJI = {
-    Restaurant:'🍜', Family:'👪', Subscriptions:'💳', Rent:'🏠', Investment:'📈',
-    Shopping:'🛍️', Books:'📚', Transport:'🚗', Beauty:'💄', Entertainment:'🎬', Study:'🎓', Emergency:'🚨'
+  // ── line-icon set (สไตล์เดียวกับ Planner) ──
+  const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+  const CAT_ICON = {
+    Restaurant:    S('<path d="M4 12h16"/><path d="M5 12a7 7 0 0 0 14 0"/><path d="M9 3c0 1.2-1 1.2-1 2.4S9 6.6 9 7.8"/><path d="M13 3c0 1.2-1 1.2-1 2.4s1 1.2 1 2.4"/>'),
+    Family:        S('<circle cx="9" cy="8" r="2.6"/><circle cx="16.5" cy="9" r="2.1"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M14.5 19a4 4 0 0 1 6-3.2"/>'),
+    Subscriptions: S('<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/>'),
+    Rent:          S('<path d="M4 11l8-6 8 6"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/>'),
+    Investment:    S('<path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/>'),
+    Shopping:      S('<path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/>'),
+    Books:         S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>'),
+    Transport:     S('<path d="M5 13l1.4-4.2A2 2 0 0 1 8.3 7.4h7.4a2 2 0 0 1 1.9 1.4L19 13"/><path d="M4 13h16v4H4z"/><circle cx="7.5" cy="17.5" r="1.2"/><circle cx="16.5" cy="17.5" r="1.2"/>'),
+    Beauty:        S('<path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="M18.5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'),
+    Entertainment: S('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>'),
+    Study:         S('<path d="M3 9l9-4 9 4-9 4z"/><path d="M7 11.5V16c0 1 2.2 2 5 2s5-1 5-2v-4.5"/>'),
+    Emergency:     S('<path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/>'),
+    default:       S('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')
+  };
+  const SRC_ICON = {
+    Salary: S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
+    Other:  S('<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12"/><path d="M12 8C9.5 8 8.5 4.5 10.2 4.5S12 8 12 8s.1-3.5 1.8-3.5S14.5 8 12 8z"/>')
   };
   const PALETTE = ['#cc785c','#d99e3a','#5a9e6f','#c2604a','#caa45a','#8c7a6b','#b5854a','#9a9488'];
-  const catTile = c => `<div class="mny-tile">${CAT_EMOJI[c] || '🧾'}</div>`;
-  const srcTile = s => `<div class="mny-tile">${s === 'Salary' ? '💼' : '🎁'}</div>`;
+  const catSvg = c => CAT_ICON[c] || CAT_ICON.default;
+  const catTile = c => `<div class="mny-tile">${catSvg(c)}</div>`;
+  const srcTile = s => `<div class="mny-tile">${SRC_ICON[s] || SRC_ICON.Other}</div>`;
 
   // ── state ──
   let root, monthIdx = 0, activeTab = 'overview', txKind = 'expense';
@@ -212,7 +230,7 @@ window.MoneyView = (function () {
   function openCat(cat) {
     const items = (cur().expenses || []).filter(e => e.category === cat).sort((a, b) => b.date.localeCompare(a.date));
     const total = items.reduce((s, e) => s + e.amount, 0);
-    $('mnyMTitle').textContent = `${CAT_EMOJI[cat] || '🧾'}  ${cat}`;
+    $('mnyMTitle').innerHTML = `<span class="mny-mtitle-ic">${catSvg(cat)}</span>${esc(cat)}`;
     $('mnyMSub').textContent = items.length ? `${items.length} รายการ · รวม ${fmtMoney(total)}` : 'ยังไม่มีรายการ';
     $('mnyMBody').innerHTML = items.length
       ? `<div class="card mny-list">${items.map(e => `<div class="mny-row"><div class="mny-row-lead">
