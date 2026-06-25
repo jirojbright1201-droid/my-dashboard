@@ -4,29 +4,40 @@ window.SavingsView = (function () {
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmt = n => D.currency + Number(n || 0).toLocaleString('en-US');
 
-  // glass jar with coin fill scaled to pct (0..1)
+  // glass jar that fills with a pile of stacked coins, scaled to pct (0..1)
   function jarSVG(pct, i) {
     pct = Math.max(0, Math.min(1, pct));
     const top = 24, bot = 102, h = bot - top;
-    const fillY = bot - h * pct;
-    const cid = 'jc' + i, gid = 'jg' + i;
-    const coins = pct > 0.03 ? `
-      <ellipse cx="39" cy="${fillY + 5}" rx="9" ry="3.1" fill="#f4d089"/>
-      <ellipse cx="56" cy="${fillY + 9}" rx="8" ry="2.9" fill="#e6b257"/>
-      <ellipse cx="46" cy="${fillY + 13}" rx="10" ry="3.2" fill="#f4d089"/>` : '';
+    const fillY = bot - h * pct;          // ระดับยอดกองเหรียญ
+    const cid = 'jc' + i;
+    const rowGap = 6;                     // ระยะห่างเหรียญแต่ละชั้น
+    // jitter/สี deterministic ต่อโหล+ชั้น → ดูเป็นกองสุ่มแต่คงที่ทุก render
+    const GOLD = ['#e0a93f', '#f0c463', '#ecbb53', '#e7b24a'];
+
+    let coins = '';
+    if (pct > 0.01) {
+      let r = 0;
+      for (let y = bot - 4; y > fillY + 1 && y > top + 1; y -= rowGap, r++) {
+        const j = ((i * 7 + r * 13) % 5) - 2;   // เลื่อนซ้าย-ขวา ±2
+        const cx = 48 + j;
+        const col = GOLD[(i + r) % GOLD.length];
+        // ตัวเหรียญ + ขอบล่างเข้มนิด + ไฮไลต์บนสว่าง = ดูเป็นแผ่นกลมหนา
+        coins += `<ellipse cx="${cx}" cy="${y + 1}" rx="26" ry="4.4" fill="#b9842d"/>
+          <ellipse cx="${cx}" cy="${y}" rx="26" ry="4.4" fill="${col}"/>
+          <ellipse cx="${cx}" cy="${y - 1.1}" rx="22" ry="2.4" fill="#fbe6b0" opacity="0.55"/>`;
+      }
+      // เหรียญหลวมๆ ผิวบนสุดของกอง ให้ดูเป็นกองพูน
+      coins += `<ellipse cx="40" cy="${fillY + 4}" rx="8" ry="3" fill="#f3cd83"/>
+        <ellipse cx="57" cy="${fillY + 6}" rx="7" ry="2.7" fill="#e6b257"/>`;
+    }
+
     return `<svg class="jar-svg" viewBox="0 0 96 112" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
-        <linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#f3cd83"/><stop offset="1" stop-color="#dca23f"/>
-        </linearGradient>
         <clipPath id="${cid}"><rect x="19" y="23" width="58" height="80" rx="13"/></clipPath>
       </defs>
       <rect x="26" y="6" width="44" height="11" rx="4" fill="#efece6" stroke="#d8cfc2" stroke-width="2"/>
       <rect x="18" y="22" width="60" height="82" rx="14" fill="#ffffff" stroke="#d8cfc2" stroke-width="2"/>
-      <g clip-path="url(#${cid})">
-        <rect x="18" y="${fillY}" width="60" height="${bot - fillY + 4}" fill="url(#${gid})"/>
-        ${coins}
-      </g>
+      <g clip-path="url(#${cid})">${coins}</g>
       <rect x="18" y="22" width="60" height="82" rx="14" fill="none" stroke="#d8cfc2" stroke-width="2"/>
       <path d="M27 33 v58" stroke="rgba(255,255,255,0.65)" stroke-width="3" stroke-linecap="round"/>
     </svg>`;
