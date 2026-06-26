@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POET Technologies (POET) — รายงานเชิงลึก</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#0052ff;--accent-active:#003ecc;--ink:#0a0b0d;--body:#5b616e;--muted:#7c828a;
+  --canvas:#ffffff;--surface-soft:#f7f7f7;--surface-strong:#eef0f3;--hairline:#dee1e6;
+  --up:#05b169;--down:#cf202f;--shadow-sm:0 4px 12px rgba(0,0,0,0.04);
+  --r-card:24px;--r-pill:100px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:'Sarabun','Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--body);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:var(--r-pill);margin-left:8px;letter-spacing:0.3px}
+
+#hero{min-height:100vh;background:var(--canvas);border-bottom:1px solid var(--hairline);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
+.hero-left{z-index:1}
+.hero-brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.hero-logo{width:52px;height:52px;border-radius:14px;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.hero-brand-name{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.hero-brand-sub{font-size:12px;color:var(--muted)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--surface-strong);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--body);letter-spacing:0.5px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
+.hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero-title{font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,72px);font-weight:400;line-height:1.02;letter-spacing:-2px;color:var(--ink);margin-bottom:24px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
+.hero-title strong{font-weight:400;color:var(--accent)}
+.hero-desc{font-size:18px;color:var(--body);line-height:1.7;max-width:520px;margin-bottom:40px;opacity:0;animation:fadeUp 0.7s 0.4s ease forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;padding:16px 32px;height:56px;border-radius:var(--r-pill);opacity:0;animation:fadeUp 0.7s 0.55s ease forwards;cursor:default;text-decoration:none}
+.hero-cta-arrow{font-size:18px}
+
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 0.8s 0.7s ease forwards}
+.hero-card-stack{position:relative;width:320px;height:400px}
+.hero-card{position:absolute;background:var(--canvas);border-radius:var(--r-card);padding:28px;border:1px solid var(--hairline)}
+.hero-card-main{width:310px;top:40px;left:0;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+.hero-card-back{width:290px;top:0;left:20px;opacity:0.5;transform:scale(0.97);z-index:-1;background:var(--surface-soft)}
+.hero-card-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.hero-card-val{font-family:'JetBrains Mono','Courier New',monospace;font-size:28px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.hero-card-sub{font-size:13px;color:var(--body);margin-bottom:18px}
+.hero-card-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--hairline);font-size:13px}
+.hero-card-row-label{color:var(--body)}
+.hero-card-row-val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--ink)}
+.hero-card-row-up{color:var(--up)}
+.hero-card-row-down{color:var(--down)}
+#hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,82,255,0.05) 0%,transparent 70%);pointer-events:none}
+
+.section-white{background:var(--canvas);padding:96px 0}
+.section-gray{background:var(--surface-soft);padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.sec-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--ink);text-transform:uppercase;margin-bottom:16px;background:var(--surface-strong);padding:4px 14px;border-radius:var(--r-pill)}
+.sec-title{font-family:'Inter',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:400;letter-spacing:-1px;color:var(--ink);line-height:1.1;margin-bottom:16px}
+.sec-sub{font-size:17px;color:var(--body);max-width:680px;line-height:1.7;margin-bottom:56px}
+
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.card-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.card-body{font-size:14px;color:var(--body);line-height:1.7}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+.metric-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px 24px;text-align:center;transition:all 0.2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.metric-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.metric-val-accent{color:var(--accent)}
+.metric-label{font-size:13px;color:var(--muted);font-weight:500}
+
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:1px;background:var(--hairline)}
+.timeline-item{position:relative;margin-bottom:30px}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline-item.neg::before{background:var(--down)}
+.timeline-date{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.5px;margin-bottom:4px;text-transform:uppercase}
+.timeline-item.neg .timeline-date{color:var(--down)}
+.timeline-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--body);line-height:1.6}
+
+.risk-card{border-radius:16px;padding:24px 28px;border:1px solid}
+.risk-high{background:#fff8f8;border-color:#fcd4d4}
+.risk-med{background:#fffcf0;border-color:#fde9a2}
+.risk-low{background:#f0fdf6;border-color:#b3f0d0}
+.risk-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:var(--r-pill);margin-bottom:12px;text-transform:uppercase}
+.risk-high .risk-badge{background:#fcd4d4;color:#c0392b}
+.risk-med .risk-badge{background:#fde9a2;color:#8a6d00}
+.risk-low .risk-badge{background:#b3f0d0;color:#1a7a4a}
+.risk-high .risk-title{color:#c0392b}
+.risk-med .risk-title{color:#8a6d00}
+.risk-low .risk-title{color:#1a7a4a}
+.risk-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.risk-body{font-size:14px;color:var(--body);line-height:1.7}
+
+.comp-table{width:100%;border-collapse:collapse}
+.comp-table th{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);padding:12px 20px;text-align:left;border-bottom:1px solid var(--hairline);text-transform:uppercase}
+.comp-table td{padding:16px 20px;font-size:14px;color:var(--body);border-bottom:1px solid var(--surface-soft)}
+.comp-table td:first-child{font-weight:600;color:var(--ink)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr.highlight-row{background:rgba(0,82,255,0.03)}
+.comp-table tr.highlight-row td:first-child{color:var(--accent)}
+
+.analyst-bar-wrap{margin:18px 0}
+.analyst-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500}
+.analyst-bar-track{height:8px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.analyst-bar-fill{height:100%;border-radius:var(--r-pill)}
+
+.person-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:28px 24px;transition:all 0.2s}
+.person-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.person-avatar{width:48px;height:48px;border-radius:50%;background:var(--surface-strong);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--accent);margin-bottom:16px;border:1px solid var(--hairline)}
+.person-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.person-title{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.person-bio{font-size:13px;color:var(--body);line-height:1.7}
+
+.partner-grid{display:flex;flex-wrap:wrap;gap:10px}
+.partner-badge{font-size:13px;font-weight:600;padding:8px 18px;border-radius:var(--r-pill);border:1px solid var(--hairline);color:var(--body);background:var(--canvas);transition:all 0.15s}
+.partner-badge:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,82,255,0.04)}
+
+.tech-flow{display:flex;align-items:center;margin:48px 0;flex-wrap:wrap;gap:0;justify-content:center}
+.tech-node{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:28px 20px;text-align:center;min-width:150px;flex:1;transition:all 0.2s}
+.tech-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.tech-node-icon{width:40px;height:40px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.tech-node-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tech-node-val{font-size:14px;font-weight:600;color:var(--ink)}
+.tech-arrow{font-size:20px;color:var(--hairline);padding:0 10px}
+
+.big-stat-row{display:flex;gap:0;border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;margin:48px 0}
+.big-stat{flex:1;padding:32px 24px;border-right:1px solid var(--hairline)}
+.big-stat:last-child{border-right:none}
+.big-stat-num{font-family:'JetBrains Mono',monospace;font-size:clamp(26px,3vw,40px);font-weight:500;color:var(--ink);line-height:1;margin-bottom:8px}
+.big-stat-desc{font-size:13px;color:var(--body)}
+
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:5px 14px;border-radius:var(--r-pill);margin:3px;letter-spacing:0.2px}
+.pill-neutral{background:var(--surface-strong);color:var(--body)}
+.pill-blue{background:rgba(0,82,255,0.08);color:var(--accent);border:1px solid rgba(0,82,255,0.15)}
+.pill-up{background:rgba(5,177,105,0.08);color:var(--up)}
+.pill-down{background:rgba(207,32,47,0.08);color:var(--down)}
+
+.callout{border-left:3px solid var(--accent);background:rgba(0,82,255,0.04);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;font-size:14px;color:var(--body)}
+.callout strong{color:var(--accent)}
+.callout.warn{border-left-color:var(--down);background:rgba(207,32,47,0.04)}
+.callout.warn strong{color:var(--down)}
+
+.fin-chart{display:flex;align-items:flex-end;gap:16px;height:200px;margin:32px 0}
+.fin-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.fin-bar-track{width:100%;display:flex;flex-direction:column-reverse;height:150px}
+.fin-bar{width:100%;border-radius:6px 6px 0 0;background:var(--accent);opacity:0.85;min-height:4px}
+.fin-bar.projected{background:var(--surface-strong);border:2px dashed var(--accent);opacity:1}
+.fin-bar-year{font-size:11px;color:var(--muted);font-weight:500}
+.fin-bar-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:500}
+
+.data-table{width:100%}
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline)}
+.data-row:last-child{border-bottom:none}
+.data-key{font-size:14px;color:var(--body)}
+.data-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink)}
+.data-val-up{color:var(--up)}
+.data-val-down{color:var(--down)}
+.data-val-accent{color:var(--accent)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.08s}.reveal-delay-2{transition-delay:0.16s}.reveal-delay-3{transition-delay:0.24s}.reveal-delay-4{transition-delay:0.32s}
+.divider{height:1px;background:var(--hairline);margin:0}
+footer{background:var(--canvas);padding:64px 48px;border-top:1px solid var(--hairline);max-width:1200px;margin:0 auto}
+.footer-legal{font-size:12px;color:var(--muted);line-height:1.7;margin-top:24px}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:100px 24px 64px}
+  .hero-right{display:none}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section-white,.section-gray{padding:64px 0}
+  nav{padding:0 24px}.nav-links{display:none}
+  .big-stat-row{flex-direction:column}
+  .big-stat{border-right:none;border-bottom:1px solid var(--hairline)}
+  .big-stat:last-child{border-bottom:none}
+  .tech-arrow{transform:rotate(90deg);padding:8px 0}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface-soft)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" fill="#0a0b0d"/><circle cx="12" cy="12" r="5" fill="none" stroke="#0052ff" stroke-width="1.6"/><circle cx="12" cy="12" r="1.6" fill="#0052ff"/></svg>
+    POET <span>·</span> Technologies
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">ภาพรวม</a></li>
+    <li><a href="#technology">เทคโนโลยี</a></li>
+    <li><a href="#market">ตลาด</a></li>
+    <li><a href="#financials">การเงิน</a></li>
+    <li><a href="#competition">คู่แข่ง</a></li>
+    <li><a href="#leadership">ผู้บริหาร</a></li>
+    <li><a href="#catalysts">ตัวเร่ง</a></li>
+    <li><a href="#risks">ความเสี่ยง</a></li>
+    <li><a href="#analysts">นักวิเคราะห์</a></li>
+  </ul>
+  <span class="nav-badge">NASDAQ: POET</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-brand">
+      <div class="hero-logo">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" fill="none" stroke="#0052ff" stroke-width="1.8"/><circle cx="12" cy="12" r="2.4" fill="#0052ff"/><path d="M12 4 L12 1 M12 23 L12 20 M4 12 L1 12 M23 12 L20 12" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="hero-brand-name">POET Technologies Inc.</div>
+        <div class="hero-brand-sub">Optical Interposer · Semiconductors</div>
+      </div>
+    </div>
+    <div class="hero-eyebrow">
+      <span class="hero-ticker-dot"></span>
+      รายงานเชิงลึก · 26 มิถุนายน 2026
+    </div>
+    <h1 class="hero-title">เชื่อมแสง<br>เข้ากับ<strong>ชิป AI</strong></h1>
+    <p class="hero-desc">บริษัทเซมิคอนดักเตอร์ที่ออกแบบ "ออปติคัล อินเตอร์โพเซอร์" — แพลตฟอร์มรวมชิ้นส่วนอิเล็กทรอนิกส์กับชิ้นส่วนแสง (โฟโทนิกส์) ไว้บนชิปเดียว เพื่อเร่งการรับ-ส่งข้อมูลในศูนย์ข้อมูล AI ให้เร็วขึ้น กินไฟน้อยลง ต้นทุนถูกลง — แต่รายได้ยังเล็กมากและเพิ่งเจอมรสุมความเชื่อมั่นครั้งใหญ่</p>
+    <a href="#overview" class="hero-cta">อ่านรายงาน <span class="hero-cta-arrow">↓</span></a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="hero-card-label">ภาพรวมตัวเลข (มิ.ย. 2026)</div>
+        <div class="hero-card-val">~$1.75B</div>
+        <div class="hero-card-sub">มูลค่าตลาด (market cap)</div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">รายได้ปี 2025</span>
+          <span class="hero-card-row-val">~$1.07M</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">เงินสด (สิ้นปี 2025)</span>
+          <span class="hero-card-row-val">~$313M</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">ขาดทุนสุทธิ 2025</span>
+          <span class="hero-card-row-val hero-card-row-down">-$63.0M</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">ราคาหุ้น (26 มิ.ย.)</span>
+          <span class="hero-card-row-val">~$9.81</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 OVERVIEW -->
+<div class="section-white" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow reveal">01 — ภาพรวมบริษัท</div>
+    <h2 class="sec-title reveal">POET ทำธุรกิจอะไรจริงๆ</h2>
+    <p class="sec-sub reveal">POET Technologies เป็นบริษัทออกแบบและพัฒนา (design & development) ที่จดทะเบียนในแคนาดา แต่ขายฝันเรื่องเดียวกับ AI โลก: ทำให้ชิปคุยกันด้วย "แสง" แทน "ไฟฟ้า" ได้ถูกและประหยัดพลังงานกว่าเดิม</p>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-title">ปัญหา</div>
+        <div class="card-body">ศูนย์ข้อมูล AI (เช่นที่รัน NVIDIA GPU จำนวนมหาศาล) ติดคอขวดที่การ "ส่งข้อมูลระหว่างชิป" — สายไฟฟ้าทองแดงเริ่มไปต่อไม่ไหวที่ความเร็วสูง ทั้งร้อน กินไฟ และสัญญาณรบกวน การย้ายไปใช้แสงจึงจำเป็น แต่ของเดิมประกอบยาก แพง และเล็กลงยาก</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">วิธีแก้ของ POET</div>
+        <div class="card-body">POET Optical Interposer™ — แผ่นฐาน (interposer = แผ่นเชื่อมต่อที่อยู่ใต้ชิป) ที่ใช้ท่อนำแสง (waveguide) ฝังในตัว ทำให้วางทั้งชิ้นส่วนไฟฟ้าและชิ้นส่วนแสงลงบนโมดูลเดียวได้ ด้วยกระบวนการผลิตระดับเวเฟอร์ (wafer-level — ผลิตทีละแผ่นใหญ่พร้อมกันหลายชิ้น) ตัดขั้นตอนจัดแนวเลเซอร์ทีละตัวที่แพงและช้าออกไป</div>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="card-title">รูปแบบธุรกิจ</div>
+        <div class="card-body">ขายออปติคัลเอนจิน (optical engine — ชุดเครื่องยนต์แสงในโมดูล), โมดูลรับ-ส่งสัญญาณความเร็วสูง (800G / 1.6T) และแหล่งกำเนิดแสง (light source) ให้ลูกค้ากลุ่ม AI และผู้ให้บริการคลาวด์รายใหญ่ (hyperscaler) ปัจจุบันรายได้ส่วนใหญ่ยังเป็น NRE (non-recurring engineering — ค่าจ้างงานวิศวกรรมเฉพาะโปรเจกต์ ไม่ใช่ยอดขายสินค้าซ้ำๆ)</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>ใจความสำคัญ:</strong> POET ยังเป็นบริษัท "ก่อนรายได้จริง" (pre-revenue) ในเชิงปฏิบัติ — เทคโนโลยีน่าสนใจและตรงเทรนด์ AI แต่ยอดขายปี 2025 ทั้งปีอยู่ที่ราว 1 ล้านดอลลาร์เท่านั้น ขณะที่มูลค่าตลาดอยู่ระดับพันล้าน เรื่องราวทั้งหมดจึงอยู่ที่ "จะทำให้ออเดอร์กลายเป็นการผลิตจริงได้หรือไม่" ในปี 2026–2027</div>
+
+    <div class="big-stat-row reveal">
+      <div class="big-stat"><div class="big-stat-num">2008</div><div class="big-stat-desc">ปีก่อตั้ง (สำนักงานใหญ่ โทรอนโต แคนาดา)</div></div>
+      <div class="big-stat"><div class="big-stat-num">~$313M</div><div class="big-stat-desc">เงินสด+ลงทุนระยะสั้น สิ้นปี 2025</div></div>
+      <div class="big-stat"><div class="big-stat-num">~132M</div><div class="big-stat-desc">จำนวนหุ้น (สิ้นปี 2025 ก่อนดีลใหม่)</div></div>
+      <div class="big-stat"><div class="big-stat-num">800G–3.2T</div><div class="big-stat-desc">ช่วงความเร็วผลิตภัณฑ์ (โรดแมป)</div></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 02 TECHNOLOGY -->
+<div class="section-gray" id="technology">
+  <div class="container">
+    <div class="sec-eyebrow reveal">02 — เทคโนโลยีและสินค้า</div>
+    <h2 class="sec-title reveal">รวมแสงกับไฟฟ้าไว้บนชิปเดียว</h2>
+    <p class="sec-sub reveal">หัวใจของ POET คือการเอาท่อนำแสงไปฝังในแผ่นอินเตอร์โพเซอร์ แล้ว "วางเลเซอร์/ตัวขับสัญญาณ (driver)" ลงไปแบบ flip-chip (กลับด้านชิปลงมาเชื่อมโดยตรง) จัดแนวอัตโนมัติด้วยตัวท่อนำแสงเอง — ตัดสายเชื่อมลวด (wire bond) ออก ลดสัญญาณรบกวนและต้นทุน</p>
+
+    <div class="tech-flow reveal">
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h6l-2-3M3 12c0-4 4-6 9-6"/><circle cx="17" cy="9" r="2.5"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 1</div>
+        <div class="tech-node-val">แหล่งกำเนิดแสง<br>(Blazar laser)</div>
+      </div>
+      <span class="tech-arrow">→</span>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v8M11 8v8M15 8v8"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 2</div>
+        <div class="tech-node-val">Optical Interposer<br>ฝังท่อนำแสง</div>
+      </div>
+      <span class="tech-arrow">→</span>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 3</div>
+        <div class="tech-node-val">Optical Engine<br>800G / 1.6T</div>
+      </div>
+      <span class="tech-arrow">→</span>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 18v2M17 18v2M12 10v4M10 12h4"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 4</div>
+        <div class="tech-node-val">โมดูล/สวิตช์<br>ในศูนย์ข้อมูล AI</div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:48px">
+      <div class="card">
+        <div class="card-title">POET Blazar — แหล่งกำเนิดแสง</div>
+        <div class="card-body">เลเซอร์ไฮบริดหลายช่องสัญญาณกำลังสูง ใช้แพ็กเกจระดับชิป (wafer-level chip-scale packaging) ตั้งชื่อตาม "เบลซาร์" วัตถุท้องฟ้าที่สว่างจัด ออกแบบมาเป็นทางเลือกแทนเลเซอร์ DFB แบบเดิม สำหรับป้อนแสงให้ระบบ co-packaged optics (CPO — วางชิ้นส่วนแสงไว้ติดกับชิปประมวลผลในแพ็กเกจเดียว) เป็นตัวที่เรียกความสนใจจากตลาดมากที่สุดตัวหนึ่ง</div>
+      </div>
+      <div class="card">
+        <div class="card-title">ออปติคัลเอนจิน 800G / 1.6T</div>
+        <div class="card-body">เอนจินส่งสัญญาณรุ่น 800G FR4/DR4 ประกอบเลเซอร์ EML (externally modulated laser — เลเซอร์ที่ใช้ตัวมอดูเลตแยกเพื่อความเร็วสูง) + ตัวขับ + ตัวรวมสัญญาณ จุดเด่นคือเอนจิน 1.6T ใช้เลเซอร์เพียง 4 ตัว แทนมาตรฐาน 8 ตัว (อาศัยดีไซน์ 2x200G ของ Mitsubishi Electric) ช่วยลดต้นทุนชิ้นส่วนที่แพงที่สุด</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:400;font-size:24px;letter-spacing:-0.5px;margin:64px 0 24px" class="reveal">เส้นทางวิวัฒนาการ (โรดแมปความเร็ว)</h3>
+    <div class="reveal">
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-date">2024–2025</div><div class="timeline-title">800G & 1.6T — เปิดตัวและสาธิต</div><div class="timeline-desc">สาธิตออปติคัลเอนจิน 1.6T และแหล่งกำเนิดแสงในงาน OFC 2025 ร่วมพันธมิตรอย่าง InSiGa (ตัวขับเลเซอร์) — เน้นความเร็วสูงสุดที่มีในตลาดและต้นทุนต่ำ</div></div>
+        <div class="timeline-item"><div class="timeline-date">ครึ่งหลัง 2026</div><div class="timeline-title">เริ่มส่งมอบเชิงผลิต</div><div class="timeline-desc">ตามออเดอร์ผลิต 800G มูลค่า $5 ล้าน คาดเริ่มส่งมอบครึ่งหลังปี 2026 (ผลิตที่มาเลเซีย) บริษัทระบุเป้าส่งออปติคัลเอนจินกว่า 30,000 ชิ้นในปี 2026</div></div>
+        <div class="timeline-item"><div class="timeline-date">ปลาย 2026</div><div class="timeline-title">3.2T & ก้าวสู่ CPO/NPO</div><div class="timeline-desc">ร่วมพัฒนา 3.2 Tbps กับ Quantum Computing Inc. และวางแพลตฟอร์มไฮบริด InP + ซิลิคอนโฟโทนิกส์กับ Lumilens สำหรับ NPO (near-package optics) และ CPO</div></div>
+        <div class="timeline-item"><div class="timeline-date">2027</div><div class="timeline-title">เป้าผลิตปริมาณมาก</div><div class="timeline-desc">ตัวอย่างวิศวกรรมจากดีล Lumilens คาดได้ปลายปี 2026 และเร่งผลิตให้ตรงกับการติดตั้งของลูกค้า hyperscaler ในปี 2027 — ปีนี้คือปีพิสูจน์ว่าออเดอร์จะกลายเป็นรายได้จริงหรือไม่</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 03 MARKET -->
+<div class="section-white" id="market">
+  <div class="container">
+    <div class="sec-eyebrow reveal">03 — โอกาสทางตลาด</div>
+    <h2 class="sec-title reveal">ตลาดใหญ่ แต่การแข่งขันก็หนัก</h2>
+    <p class="sec-sub reveal">POET เล่นในตลาด co-packaged optics และออปติกความเร็วสูงสำหรับ AI ซึ่งโตเร็วตามการลงทุนศูนย์ข้อมูล แต่ตัวเลขขนาดตลาด (TAM = total addressable market = ขนาดตลาดรวมที่เข้าถึงได้) จากแต่ละสำนักวิจัยต่างกันมาก จึงควรมองเป็น "ทิศทาง" มากกว่าตัวเลขแน่นอน</p>
+
+    <div class="grid-3 reveal">
+      <div class="metric-card"><div class="metric-val metric-val-accent">~$12B</div><div class="metric-label">ตลาด 3.2T (pluggable + CPO) คาดถึงปี 2030 — อ้างอิง POET</div></div>
+      <div class="metric-card"><div class="metric-val">30,000+</div><div class="metric-label">เป้าจำนวนออปติคัลเอนจินที่ตั้งใจส่งในปี 2026</div></div>
+      <div class="metric-card"><div class="metric-val">$500M+</div><div class="metric-label">กรอบความร่วมมือสะสม 5 ปีที่อาจเกิดกับ Lumilens</div></div>
+    </div>
+
+    <div class="callout warn reveal">
+      <strong>ระวังตัวเลข TAM:</strong> รายงานบางสำนักระบุ "ตลาด co-packaged optics ยุโรปปี 2025 ราว $49.7 พันล้าน" ซึ่งดูสูงผิดสัดส่วนเมื่อเทียบกับตัวเลขอื่น — ตัวเลข TAM ในอุตสาหกรรมนี้นิยามต่างกันและ <strong>ไม่พบข้อมูลยืนยันที่ตรงกันชัดเจน</strong> ควรถือเป็นภาพคร่าวๆ ไม่ใช่ตัวเลขที่เชื่อถือได้ทั้งหมด</div>
+
+    <h3 style="font-family:'Inter';font-weight:400;font-size:22px;letter-spacing:-0.5px;margin:56px 0 20px" class="reveal">พันธมิตรและลูกค้าที่ประกาศแล้ว</h3>
+    <div class="partner-grid reveal">
+      <span class="partner-badge">Lumilens (ออเดอร์ $50M, กรอบถึง $500M+)</span>
+      <span class="partner-badge">LITEON Technology (ร่วมพัฒนาโมดูล AI)</span>
+      <span class="partner-badge">Quantum Computing Inc. (3.2T CPO)</span>
+      <span class="partner-badge">Mitsubishi Electric (เลเซอร์ EML)</span>
+      <span class="partner-badge">InSiGa (ตัวขับเลเซอร์)</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:16px" class="reveal">หมายเหตุ: พันธมิตรหลายรายเป็นข้อตกลง "ร่วมพัฒนา/กรอบความร่วมมือ" ซึ่งยังไม่การันตีรายได้จริง และมีฝ่ายวิจารณ์ (short-seller) ตั้งคำถามถึงน้ำหนักของบางดีล — ดูส่วนความเสี่ยง</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 04 FINANCIALS -->
+<div class="section-gray" id="financials">
+  <div class="container">
+    <div class="sec-eyebrow reveal">04 — การเงิน</div>
+    <h2 class="sec-title reveal">เงินสดเยอะ รายได้น้อย ขาดทุนกว้าง</h2>
+    <p class="sec-sub reveal">ภาพการเงินของ POET ชัดเจน: ระดมทุนได้มหาศาลในปี 2025 ทำให้มีเงินสดหนา แต่รายได้ยังเล็กระดับล้านดอลลาร์ ขณะที่ขาดทุนสุทธิทั้งปีเกิน 60 ล้านดอลลาร์ ส่วนหนึ่งจากค่าใช้จ่ายที่ไม่เป็นเงินสด เช่น SBC (stock-based compensation — ค่าตอบแทนพนักงานจ่ายเป็นหุ้น)</p>
+
+    <h3 style="font-family:'Inter';font-weight:400;font-size:20px;margin-bottom:8px;letter-spacing:-0.3px" class="reveal">รายได้รายไตรมาส (NRE + สินค้า)</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:8px" class="reveal">หน่วย: พันดอลลาร์ — รายได้โตทุกไตรมาสแต่ฐานยังเล็กมาก</p>
+    <div class="fin-chart reveal">
+      <div class="fin-bar-group"><div class="fin-bar-val">$167K</div><div class="fin-bar-track"><div class="fin-bar" style="height:24%"></div></div><div class="fin-bar-year">Q1'25</div></div>
+      <div class="fin-bar-group"><div class="fin-bar-val">$268K</div><div class="fin-bar-track"><div class="fin-bar" style="height:39%"></div></div><div class="fin-bar-year">Q2'25</div></div>
+      <div class="fin-bar-group"><div class="fin-bar-val">$298K</div><div class="fin-bar-track"><div class="fin-bar" style="height:44%"></div></div><div class="fin-bar-year">Q3'25</div></div>
+      <div class="fin-bar-group"><div class="fin-bar-val">$341K</div><div class="fin-bar-track"><div class="fin-bar" style="height:50%"></div></div><div class="fin-bar-year">Q4'25</div></div>
+      <div class="fin-bar-group"><div class="fin-bar-val">$503K</div><div class="fin-bar-track"><div class="fin-bar" style="height:74%"></div></div><div class="fin-bar-year">Q1'26</div></div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:48px">
+      <div class="card">
+        <div class="card-title">งบดุล (สิ้นปี 2025)</div>
+        <div class="data-table" style="margin-top:12px">
+          <div class="data-row"><span class="data-key">สินทรัพย์รวม</span><span class="data-val">~$328.6M</span></div>
+          <div class="data-row"><span class="data-key">เงินสด + ลงทุนระยะสั้น</span><span class="data-val data-val-accent">~$313.4M</span></div>
+          <div class="data-row"><span class="data-key">รายได้ทั้งปี 2025</span><span class="data-val">~$1.07M</span></div>
+          <div class="data-row"><span class="data-key">ขาดทุนสุทธิ ทั้งปี 2025</span><span class="data-val data-val-down">-$63.0M</span></div>
+          <div class="data-row"><span class="data-key">หุ้นคงเหลือ (31 ธ.ค. 2025)</span><span class="data-val">~132.0M</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">ไตรมาสล่าสุด (Q1 2026)</div>
+        <div class="data-table" style="margin-top:12px">
+          <div class="data-row"><span class="data-key">รายได้</span><span class="data-val data-val-up">$503K (+194% YoY)</span></div>
+          <div class="data-row"><span class="data-key">ขาดทุนสุทธิ</span><span class="data-val data-val-down">-$12.3M</span></div>
+          <div class="data-row"><span class="data-key">ขาดทุนต่อหุ้น</span><span class="data-val data-val-down">-$0.08</span></div>
+          <div class="data-row"><span class="data-key">ค่าใช้จ่าย R&D</span><span class="data-val">$4.5M</span></div>
+          <div class="data-row"><span class="data-key">SBC (จ่ายหุ้น, ไม่ใช่เงินสด)</span><span class="data-val">$3.4M</span></div>
+          <div class="data-row"><span class="data-key">กระแสเงินสดจากดำเนินงาน</span><span class="data-val data-val-down">-$8.8M</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>บริบทสำหรับนักลงทุน:</strong> ปี 2025 บริษัทระดมทุนรอบ equity หลายครั้งกับนักลงทุนสถาบันใหม่ ได้เงินรวม ~$375 ล้าน และในปี 2026 ยังมีดีลขายหุ้นตรง ~$400 ล้านที่ราคา $21/หุ้น (พร้อมวอร์แรนต์) — เงินสดจึงไม่ใช่ปัญหาเฉพาะหน้า แต่ทุกครั้งที่ออกหุ้นใหม่คือการ <strong>ทำให้สัดส่วนผู้ถือเดิมเจือจาง (dilution)</strong> ราคา $21 ในดีลล่าสุดยังสูงกว่าราคาตลาดปัจจุบันราว $9.81 มาก ซึ่งสะท้อนว่าราคาหุ้นปรับลงแรงหลังข่าวร้าย</div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 05 COMPETITION -->
+<div class="section-white" id="competition">
+  <div class="container">
+    <div class="sec-eyebrow reveal">05 — คู่แข่งและความได้เปรียบ</div>
+    <h2 class="sec-title reveal">ปลาเล็กในบ่อยักษ์</h2>
+    <p class="sec-sub reveal">ตลาด co-packaged optics เต็มไปด้วยยักษ์เซมิคอนดักเตอร์และสตาร์ทอัปที่เงินหนา POET เป็นรายเล็กที่วางตัวเป็นผู้ผลิตออปติก "white-label" (ผลิตให้แบรนด์อื่นนำไปใส่ชิปตัวเอง) คล้ายแนวของ Ayar Labs — จุดต่างคือกระบวนการอินเตอร์โพเซอร์ระดับเวเฟอร์ที่เคลมว่าถูกและสเกลง่ายกว่า</p>
+
+    <div class="card reveal" style="padding:8px 8px 0">
+      <table class="comp-table">
+        <thead><tr><th>ผู้เล่น</th><th>ลักษณะ</th><th>จุดเด่น</th><th>ขนาด</th></tr></thead>
+        <tbody>
+          <tr class="highlight-row"><td>POET Technologies</td><td>Optical Interposer / chiplet</td><td>ผลิตระดับเวเฟอร์ ต้นทุนต่ำ สเกลง่าย (เคลม)</td><td>เล็กมาก (~$1.75B cap, รายได้ ~$1M)</td></tr>
+          <tr><td>Broadcom</td><td>ยักษ์ชิป + CPO</td><td>ฐานลูกค้า hyperscaler, สเกลผลิตจริงแล้ว</td><td>ยักษ์ใหญ่</td></tr>
+          <tr><td>NVIDIA</td><td>แพลตฟอร์ม AI + ซิลิคอนโฟโทนิกส์</td><td>ครองระบบนิเวศ GPU ของ AI</td><td>ยักษ์ใหญ่สุด</td></tr>
+          <tr><td>Coherent / Cisco / Intel</td><td>ผู้ผลิตออปติก/เครือข่าย</td><td>สายผลิตภัณฑ์ครบ ฐานลูกค้ากว้าง</td><td>ใหญ่</td></tr>
+          <tr><td>Ayar Labs</td><td>chiplet white-label (เอกชน)</td><td>โมเดลใกล้เคียง POET, หนุนโดยทุนใหญ่</td><td>สตาร์ทอัปเงินหนา</td></tr>
+          <tr><td>Ranovus</td><td>โซลูชัน CPO/โฟโทนิกส์</td><td>คู่แข่งตรงในกลุ่มเฉพาะ</td><td>เล็ก-กลาง</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:14px" class="reveal">ขนาด/มูลค่าเป็นค่าประมาณเชิงเปรียบเทียบ ตัวเลขรายบริษัทคู่แข่งบางรายเป็นเอกชน ไม่มีตัวเลขสาธารณะยืนยัน</p>
+
+    <div class="grid-2 reveal" style="margin-top:48px">
+      <div class="card">
+        <div class="card-title">moat (ความได้เปรียบที่ป้องกันคู่แข่ง) — ฝั่งสนับสนุน</div>
+        <div class="card-body">สิทธิบัตรแพลตฟอร์ม Optical Interposer + แนวทางผลิตระดับเวเฟอร์ที่ตัดขั้นตอนจัดแนวเลเซอร์ราคาแพง ถ้าพิสูจน์ได้ว่าถูกและผลิตจำนวนมากได้จริง จะเป็นจุดต่างที่ยักษ์เลียนแบบยากในระยะสั้น</div>
+      </div>
+      <div class="card">
+        <div class="card-title">ข้อจำกัดของ moat — ฝั่งระวัง</div>
+        <div class="card-body">moat ยัง "ยังไม่ถูกพิสูจน์ด้วยรายได้" — ยังไม่มีการผลิตปริมาณมากจริง ลูกค้ารายใหญ่ยังไม่ผูกมัดระยะยาว และคู่แข่งทุนหนากว่ามากสามารถเร่งพัฒนาแซงได้ถ้าตลาดโตจริง</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 06 LEADERSHIP -->
+<div class="section-gray" id="leadership">
+  <div class="container">
+    <div class="sec-eyebrow reveal">06 — ผู้บริหารและนักลงทุน</div>
+    <h2 class="sec-title reveal">ทีมที่มาจากสายผลิตชิปจริง</h2>
+    <p class="sec-sub reveal">จุดแข็งของทีมคือภูมิหลังเซมิคอนดักเตอร์ระดับโรงงานจริง โดยเฉพาะ CEO ที่มาจาก GLOBALFOUNDRIES (โรงผลิตชิปอันดับต้นของโลก)</p>
+
+    <div class="grid-3 reveal">
+      <div class="person-card">
+        <div class="person-avatar">SV</div>
+        <div class="person-name">Dr. Suresh Venkatesan</div>
+        <div class="person-title">ประธาน & CEO</div>
+        <div class="person-bio">นั่งตำแหน่ง CEO ตั้งแต่ มิ.ย. 2015 (ดำรงตำแหน่งกว่า 10 ปี) ก่อนหน้าเป็น SVP ฝ่ายพัฒนาเทคโนโลยีที่ GLOBALFOUNDRIES — เป็นแกนหลักของวิสัยทัศน์ Optical Interposer</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">TM</div>
+        <div class="person-name">Thomas Mika</div>
+        <div class="person-title">EVP & CFO</div>
+        <div class="person-bio">คุมการเงิน ดูแลการระดมทุนรอบใหญ่ปี 2025–2026 ที่ทำให้บริษัทมีเงินสดหนาขึ้นมาก</div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">SK</div>
+        <div class="person-name">Sandeep Kumar</div>
+        <div class="person-title">COO (เริ่ม 11 พ.ค. 2026)</div>
+        <div class="person-bio">เพิ่งได้รับแต่งตั้งเป็นประธานเจ้าหน้าที่ฝ่ายปฏิบัติการ สะท้อนการเตรียมโครงสร้างรองรับการผลิตจริง</div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:40px">
+      <strong>คณะกรรมการ:</strong> 6 คน นำโดย Dr. Suresh Venkatesan (ประธาน) และ Jean-Louis Malinge (กรรมการอิสระอาวุโส) ร่วมด้วย Theresa Lan Ende, Glen Riley, Robert Tirva และ Sohail Khan — ฐานเงินทุนปี 2025 มาจากนักลงทุนสถาบันใหม่หลายรายผ่านการระดมทุนรอบ equity (รายชื่อนักลงทุนเฉพาะรายไม่เปิดเผยสาธารณะครบถ้วน)</div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 07 CATALYSTS -->
+<div class="section-white" id="catalysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">07 — ตัวเร่งและข่าวสำคัญ</div>
+    <h2 class="sec-title reveal">ปีแห่งทั้งข่าวดีและข่าวร้าย</h2>
+    <p class="sec-sub reveal">ปี 2026 ของ POET เป็นปีที่ผันผวนรุนแรง — มีทั้งดีลใหม่มูลค่าสูงและการยกเลิกออเดอร์ครั้งใหญ่ในเวลาไล่เลี่ยกัน จุดสีน้ำเงิน = บวก จุดสีแดง = ลบ</p>
+
+    <div class="reveal">
+      <div class="timeline">
+        <div class="timeline-item neg"><div class="timeline-date">เม.ย. 2026 — ลบ</div><div class="timeline-title">Marvell ยกเลิกออเดอร์ Celestial AI ทั้งหมด</div><div class="timeline-desc">Marvell (ซึ่งซื้อกิจการ Celestial AI) แจ้งเป็นลายลักษณ์อักษรยกเลิกออเดอร์ทั้งหมด อ้างว่าผู้บริหาร POET เปิดเผยข้อมูลลับเรื่องปริมาณ/กำหนดส่ง เหตุการณ์นี้ทำหุ้นร่วงราว 46–47% ในวันเดียว และจุดชนวนคดีฟ้องร้องแบบกลุ่ม (class action)</div></div>
+        <div class="timeline-item"><div class="timeline-date">พ.ค. 2026 — บวก</div><div class="timeline-title">ดีล Lumilens — ออเดอร์ $50M กรอบถึง $500M+</div><div class="timeline-desc">ออเดอร์ผลิตเอนจิน EOI เริ่มต้น $50 ล้าน ภายใต้กรอบความร่วมมือที่อาจสะสมเกิน $500 ล้านใน 5 ปี ครอบคลุมตั้งแต่ 800G/1.6T ไปจนถึง NPO/CPO — ตัวอย่างวิศวกรรมคาดได้ปลายปี 2026</div></div>
+        <div class="timeline-item"><div class="timeline-date">2026 — บวก</div><div class="timeline-title">ออเดอร์ผลิต 800G $5 ล้าน</div><div class="timeline-desc">รับออเดอร์ผลิตออปติคัลเอนจิน 800G คาดเริ่มส่งมอบครึ่งหลังปี 2026 — เป็นก้าวจากการสาธิตสู่การผลิตจริง</div></div>
+        <div class="timeline-item"><div class="timeline-date">2026 — บวก</div><div class="timeline-title">ความร่วมมือ LITEON & Quantum Computing</div><div class="timeline-desc">ร่วมพัฒนาโมดูล AI กับ LITEON (ต้นแบบปลายปี 2026, ผลิตจริง 2027) และพัฒนา 3.2 Tbps สำหรับ CPO กับ Quantum Computing Inc.</div></div>
+        <div class="timeline-item neg"><div class="timeline-date">พ.ค.–มิ.ย. 2026 — ลบ</div><div class="timeline-title">รายงานนักขายชอร์ต + คดีกลุ่มเพิ่ม</div><div class="timeline-desc">มีรายงาน short-seller ตั้งคำถามว่าพันธมิตรหลายราย (รวมถึง Foxconn, LITEON, และตั้งคำถามถึง Lumilens) เป็นดีล "กลวง/รีไซเคิล" ขณะที่คดี class action ยังเพิ่มขึ้นจากเหตุ Marvell — กดดันความเชื่อมั่นต่อเนื่อง</div></div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px" class="reveal">หมายเหตุ: ข้อกล่าวหาจากรายงาน short-seller เป็นมุมมองฝ่ายที่มีส่วนได้เสีย (เดิมพันราคาลง) ยังไม่ถือเป็นข้อเท็จจริงที่พิสูจน์แล้ว — นำเสนอเพื่อให้เห็นภาพความเสี่ยงรอบด้าน</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 08 RISKS -->
+<div class="section-gray" id="risks">
+  <div class="container">
+    <div class="sec-eyebrow reveal">08 — ความเสี่ยง</div>
+    <h2 class="sec-title reveal">สิ่งที่ต้องจับตามากที่สุด</h2>
+    <p class="sec-sub reveal">POET เป็นหุ้น "เรื่องราวล้วนๆ" (story stock) ที่ราคาขึ้นกับความเชื่อว่าอนาคตจะเกิดขึ้นจริง ความเสี่ยงจึงสูงและกระจุกตัว</p>
+
+    <div class="grid-2 reveal">
+      <div class="risk-card risk-high">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3 L22 20 H2 Z"/><path d="M12 10v4M12 17v0.5"/></svg> สูง</div>
+        <div class="risk-title">มูลค่าสูงเกินรายได้มหาศาล</div>
+        <div class="risk-body">รายได้ย้อนหลัง 12 เดือนราว $1.1M แต่มูลค่าตลาดระดับ ~$1.75–2B ทำให้อัตราส่วน P/S (ราคาต่อยอดขาย) สูงกว่า 1,000 เท่า — ราคาขึ้นกับ "คาดหวังอนาคต" เกือบทั้งหมด หากการผลิตจริงล่าช้า ราคามีโอกาสปรับลงแรง</div>
+      </div>
+      <div class="risk-card risk-high">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3 L22 20 H2 Z"/><path d="M12 10v4M12 17v0.5"/></svg> สูง</div>
+        <div class="risk-title">ออเดอร์ถูกยกเลิก + คดีฟ้องร้อง</div>
+        <div class="risk-body">เหตุ Marvell/Celestial ยกเลิกออเดอร์ในเดือน เม.ย. 2026 ทำหุ้นร่วง ~46% และจุดชนวน class action หลายคดี ปัญหาเรื่องการเปิดเผยข้อมูลและความน่าเชื่อถือของดีลเป็นความเสี่ยงต่อเนื่องในปี 2026</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> กลาง</div>
+        <div class="risk-title">การเจือจางหุ้น (dilution)</div>
+        <div class="risk-body">ระดมทุนรอบใหญ่หลายครั้ง รวมดีลขายหุ้นตรง ~$400M ที่ $21/หุ้น พร้อมวอร์แรนต์ — แม้ทำให้เงินสดหนา แต่เพิ่มจำนวนหุ้นและกดมูลค่าต่อหุ้นของผู้ถือเดิม</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> กลาง</div>
+        <div class="risk-title">รายได้ยังเป็น NRE ไม่ใช่ยอดขายซ้ำ</div>
+        <div class="risk-body">รายได้ส่วนใหญ่มาจากงานวิศวกรรมเฉพาะโปรเจกต์ (NRE) ที่ไม่เกิดซ้ำ ยังไม่เห็นรายได้สินค้าต่อเนื่องเป็นกอบเป็นกำ ต้องรอผลการผลิต 800G ครึ่งหลังปี 2026 พิสูจน์</div>
+      </div>
+      <div class="risk-card risk-med">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> กลาง</div>
+        <div class="risk-title">คู่แข่งใหญ่กว่ามาก</div>
+        <div class="risk-body">Broadcom, NVIDIA, Coherent, Cisco, Intel และสตาร์ทอัปเงินหนาอย่าง Ayar Labs ต่างชิงตลาดเดียวกัน หาก POET ไม่สามารถผลิตจำนวนมากได้ทันและถูกจริง อาจถูกแซง</div>
+      </div>
+      <div class="risk-card risk-low">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3 L20 7 V12 C20 17 16 20 12 21 C8 20 4 17 4 12 V7 Z"/></svg> ต่ำ-กลาง</div>
+        <div class="risk-title">สภาพคล่องเฉพาะหน้า</div>
+        <div class="risk-body">เงินสด ~$313M สิ้นปี 2025 บวกดีลปี 2026 ทำให้ความเสี่ยง "เงินหมด" ในระยะใกล้ต่ำ — แต่ด้วยกระแสเงินสดดำเนินงานติดลบ ~$8.8M/ไตรมาส ต้องเฝ้าดูว่าจะถึงจุดคุ้มทุนได้เมื่อใด</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 09 ANALYSTS -->
+<div class="section-white" id="analysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">09 — มุมมองนักวิเคราะห์</div>
+    <h2 class="sec-title reveal">เสียงแตก: ระวังกับมองไกล</h2>
+    <p class="sec-sub reveal">นักวิเคราะห์ที่ตามหุ้นนี้มีน้อยราย และเป้าราคาห่างกันมากตามความเชื่อเรื่อง "execution" (ความสามารถทำให้ออเดอร์เป็นรายได้จริง)</p>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:20px">เป้าราคาจากนักวิเคราะห์ (ค่าประมาณ)</div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>เป้ากลาง (Wall St., ~4 ราย)</span><span style="color:var(--accent)">~$8.20</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:37%;background:var(--accent)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>เป้าต่ำสุด (Wall St.)</span><span>~$8.00</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:36%;background:var(--muted)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>มุมมองอิสระเชิงบวก (24/7 Wall St.)</span><span style="color:var(--up)">~$22.23</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:100%;background:var(--up)"></div></div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:16px">เรตติง Wall St. หลักเป็น "ซื้อ" (Buy) จากนักวิเคราะห์จำนวนน้อย — ตัวเลขควรถือเป็นค่าประมาณ เปลี่ยนแปลงได้ตามข่าว ราคาตลาด 26 มิ.ย. ~$9.81</p>
+      </div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px">มุมมองสองด้าน</div>
+        <div style="margin-bottom:18px">
+          <span class="pill pill-up">Bull — ฝั่งมองบวก</span>
+          <p class="card-body" style="margin-top:8px">เทคโนโลยีตรงคอขวด AI ที่สำคัญที่สุดเรื่องหนึ่ง (การเชื่อมต่อด้วยแสง) มีเงินสดหนาให้พัฒนาต่อ มีดีล/พันธมิตรหลายราย ถ้าเริ่มผลิต 800G ได้จริงครึ่งหลังปี 2026 และ Lumilens เดินตามกรอบ $500M+ เรื่องราวจะเปลี่ยนจาก "คาดหวัง" เป็น "รายได้จริง"</p>
+        </div>
+        <div>
+          <span class="pill pill-down">Bear — ฝั่งมองลบ</span>
+          <p class="card-body" style="margin-top:8px">รายได้ยังจิ๋ว ขาดทุนกว้าง มูลค่าแพงมหาศาลเทียบยอดขาย เพิ่งโดนยกเลิกออเดอร์ใหญ่ + คดีกลุ่ม + รายงาน short-seller ตั้งคำถามคุณภาพดีล และมีการเจือจางหุ้นต่อเนื่อง ความเสี่ยง execution สูงมาก</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 10 SUMMARY -->
+<div class="section-gray" id="summary">
+  <div class="container">
+    <div class="sec-eyebrow reveal">10 — สรุป</div>
+    <h2 class="sec-title reveal">เข้าใจ POET ในหน้าเดียว</h2>
+
+    <div class="grid-2 reveal" style="margin-bottom:32px">
+      <div class="card">
+        <div class="card-title">สิ่งที่ควรรู้ (What to know)</div>
+        <div class="card-body">
+          • POET ออกแบบ "ออปติคัล อินเตอร์โพเซอร์" รวมแสง+ไฟฟ้าบนชิปเดียว เพื่อเร่งการเชื่อมต่อในศูนย์ข้อมูล AI ให้เร็ว ถูก ประหยัดไฟ<br><br>
+          • ปัจจุบันยังเป็นบริษัทก่อนรายได้จริง — ยอดขายทั้งปี 2025 ราว $1M แต่มูลค่าตลาด ~$1.75–2B<br><br>
+          • เงินสดหนา ~$313M (สิ้นปี 2025) + ดีลปี 2026 จึงไม่เสี่ยงเงินหมดเฉพาะหน้า แต่แลกมากับการเจือจางหุ้น
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">สิ่งที่ต้องจับตา (What to watch)</div>
+        <div class="card-body">
+          • การส่งมอบ 800G เชิงผลิตจริงครึ่งหลังปี 2026 (เป้า 30,000+ เอนจิน) — จะกลายเป็นรายได้จริงแค่ไหน<br><br>
+          • ดีล Lumilens เดินตามกรอบ $50M → $500M+ ได้จริงหรือไม่ และตัวอย่างวิศวกรรมปลายปี 2026<br><br>
+          • ความคืบหน้าคดี class action จากเหตุ Marvell และการตอบโต้รายงาน short-seller
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="background:var(--canvas)">
+      <div class="card-title">สรุปย่อหน้าเดียว</div>
+      <div class="card-body">POET Technologies คือบริษัทเซมิคอนดักเตอร์สัญชาติแคนาดาที่เดิมพันกับเทรนด์ใหญ่ที่สุดเรื่องหนึ่งของยุค AI — การย้ายการเชื่อมต่อข้อมูลในศูนย์ข้อมูลจาก "ไฟฟ้า" ไปสู่ "แสง" ผ่านแพลตฟอร์ม Optical Interposer ที่เคลมว่าผลิตระดับเวเฟอร์ได้ถูกและสเกลง่ายกว่าคู่แข่ง เทคโนโลยีและทีม (CEO มาจาก GLOBALFOUNDRIES) น่าเชื่อถือ และบริษัทมีเงินสดหนาพอเดินหน้าได้หลายปี แต่ความจริงคือ <strong>รายได้ยังเล็กระดับล้านดอลลาร์ ขณะที่มูลค่าตลาดระดับพันล้าน</strong> ทำให้เป็นหุ้น "เรื่องราว" ที่ราคาขึ้นกับความเชื่อในอนาคตเกือบทั้งหมด ปี 2026 ผันผวนหนัก ทั้งดีล Lumilens มูลค่าสูงและการถูก Marvell ยกเลิกออเดอร์จนหุ้นร่วงเกือบครึ่งและเกิดคดีกลุ่ม รายงานนี้จัดทำเพื่อ "ความเข้าใจธุรกิจ" ไม่ใช่คำแนะนำซื้อ-ขาย — บทพิสูจน์ที่แท้จริงคือครึ่งหลังปี 2026 ว่าออเดอร์ในมือจะกลายเป็นการผลิตและรายได้จริงได้หรือไม่</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="nav-logo" style="margin-bottom:8px">POET <span>·</span> Technologies Inc. — NASDAQ: POET</div>
+  <div class="footer-legal">
+    รายงานนี้จัดทำโดย Neon เพื่อ "ความเข้าใจธุรกิจ" เท่านั้น ไม่ใช่คำแนะนำการลงทุน ไม่ใช่การชี้นำซื้อ-ขาย และไม่มีการคาดการณ์ราคา · ข้อมูล ณ 26 มิถุนายน 2026 จากการ research สาธารณะ (ข่าวบริษัท, SEC filings 6-K/20-F, บทวิเคราะห์, ผู้รวบรวมข้อมูลตลาด) ตัวเลขบางส่วนเป็นค่าประมาณและอาจคลาดเคลื่อน — ตัวเลขมูลค่าตลาดและขนาดตลาด (TAM) จากแต่ละแหล่งต่างกันมาก ส่วนที่ไม่ยืนยันได้ระบุว่า "ไม่พบข้อมูลยืนยัน" · ข้อกล่าวหาจากรายงาน short-seller เป็นมุมมองฝ่ายที่มีส่วนได้เสีย ยังไม่ใช่ข้อเท็จจริงที่พิสูจน์แล้ว · โปรดตรวจสอบข้อมูลล่าสุดจากเอกสารทางการของบริษัทก่อนตัดสินใจใดๆ
+  </div>
+</footer>
+
+<script>
+(function(){
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+(function(){
+  const links=document.querySelectorAll('.nav-links a');
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}}),{threshold:0.4});
+  document.querySelectorAll('div[id]').forEach(s=>io.observe(s));
+})();
+</script>
+</body>
+</html>
