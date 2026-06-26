@@ -22,9 +22,9 @@
 .mny-hero-lbl { font-size: 0.8125rem; color: var(--silver); font-weight: 500; }
 .mny-hero-bal { font-family: var(--mono); font-size: 2.25rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-top: 2px; }
 .mny-hero-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; }
-.mny-hero-split { display: flex; margin-top: 16px; border-top: 1px solid var(--border-soft); }
+.mny-hero-split { display: flex; margin-top: 16px; border-top: 1px solid rgba(204,120,92,.20); }
 .mny-hs { flex: 1; padding: 14px 4px 2px; }
-.mny-hs + .mny-hs { border-left: 1px solid var(--border-soft); padding-left: 18px; }
+.mny-hs + .mny-hs { border-left: 1px solid rgba(204,120,92,.20); padding-left: 18px; }
 .mny-hs-lab { font-size: 0.75rem; color: var(--silver); font-weight: 500; }
 .mny-hs-val { font-family: var(--mono); font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; margin-top: 3px; }
 .mny-hs-val.up { color: var(--green); }
