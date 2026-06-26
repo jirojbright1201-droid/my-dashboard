@@ -63,7 +63,7 @@ const DATA = {
      exchange:'mai', country:'Thailand', founded:'2014', web:'mebmarket.com',
      about:'เจ้าของแพลตฟอร์มอีบุ๊ก (e-book / หนังสืออิเล็กทรอนิกส์) อันดับ 1 ของไทยในเครือเซ็นทรัล ครองส่วนแบ่งตลาด ~60% รายได้ >2,100 ล้านบาท/ปี ด้วยโมเดล take rate (ค่าหัวคิวที่หักจากยอดขาย) แทบไม่ต้องลงทุนสต็อกสินค้า'},
     {tk:'BE', name:'Bloom Energy', sector:'Fuel Cells / Clean Energy', status:'watch',
-     exchange:'NYSE', country:'USA', founded:'2001', web:'bloomenergy.com', nologo:true,
+     exchange:'NYSE', country:'USA', founded:'2001', web:'bloomenergy.com',
      about:'ผลิตเซลล์เชื้อเพลิงแบบ solid-oxide (SOFC — เซลล์เชื้อเพลิงออกไซด์แข็งอุณหภูมิสูง) เปลี่ยนก๊าซธรรมชาติ/ไฮโดรเจนเป็นไฟฟ้าตรงจุดใช้งานโดยไม่ต้องเผาไหม้ กลายเป็นตัวเลือกจ่ายไฟของ data center AI ที่รอเชื่อมกริดไม่ไหว'}
   ],
   market:{
