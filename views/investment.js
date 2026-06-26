@@ -4,8 +4,14 @@ window.InvestmentView = (function () {
   const D = window.INV_DATA || { holdings: [], thesis: [], companies: [], market: { indices: [], holdings_news: [] }, timeline: [], reports: [] };
   const FX = window.INV_FX || 33;
   // map ticker → domain เว็บ (ใช้ดึงโลโก้บริษัทอัตโนมัติเมื่อไม่มีไฟล์โลโก้ในเครื่อง)
-  const WEB = {};
-  [...(D.holdings || []), ...(D.companies || [])].forEach(c => { if (c && c.web) WEB[String(c.tk).toUpperCase()] = c.web; });
+  // NOLOGO = ตัวที่ favicon คุณภาพแย่ (เล็ก/เบลอ) → ข้าม favicon ไปใช้ตัวย่อสะอาดแทน (ยังเก็บ web ไว้ทำลิงก์)
+  const WEB = {}, NOLOGO = {};
+  [...(D.holdings || []), ...(D.companies || [])].forEach(c => {
+    if (!c) return;
+    const k = String(c.tk).toUpperCase();
+    if (c.web) WEB[k] = c.web;
+    if (c.nologo) NOLOGO[k] = 1;
+  });
 
   // ── derived ──
   const H = (D.holdings || []).map(h => {
@@ -45,7 +51,8 @@ window.InvestmentView = (function () {
   // ── company icon (logo → fallback ตัวย่อ) ──
   function icon(tk, big) {
     const f = String(tk || '').toLowerCase();
-    const dom = WEB[String(tk).toUpperCase()] || '';
+    const k = String(tk).toUpperCase();
+    const dom = NOLOGO[k] ? '' : (WEB[k] || '');
     // local png → (ถ้าพลาด) logo service ตาม domain → (ถ้าพลาด) ตัวย่อ
     const onerr = dom
       ? `if(this.dataset.r){this.remove()}else{this.dataset.r=1;this.src='https://www.google.com/s2/favicons?sz=128&amp;domain=${esc(dom)}'}`
