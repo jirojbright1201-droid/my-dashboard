@@ -48,7 +48,7 @@ window.InvestmentView = (function () {
     const dom = WEB[String(tk).toUpperCase()] || '';
     // local png → (ถ้าพลาด) logo service ตาม domain → (ถ้าพลาด) ตัวย่อ
     const onerr = dom
-      ? `if(this.dataset.r){this.remove()}else{this.dataset.r=1;this.src='https://logo.clearbit.com/${esc(dom)}'}`
+      ? `if(this.dataset.r){this.remove()}else{this.dataset.r=1;this.src='https://www.google.com/s2/favicons?sz=128&amp;domain=${esc(dom)}'}`
       : `this.remove()`;
     return `<div class="inv-ic${big ? ' lg' : ''}"><img src="./Investment Tracker/assets/logos/${esc(f)}.png" alt="" onload="this.parentNode.classList.add('hl')" onerror="${onerr}"><span>${esc(String(tk).slice(0, 2))}</span></div>`;
   }
