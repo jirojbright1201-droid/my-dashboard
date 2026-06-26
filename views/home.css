@@ -1,12 +1,13 @@
 /* ===== Home view — super-app landing ===== */
-.ho-greet { margin-bottom: 18px; }
-.ho-hi { font-family: var(--serif); font-size: 1.75rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
-.ho-date { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
+/* ── hero (greeting + วันนี้) ── */
+.ho-hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.ho-hi { font-family: var(--serif); font-size: 1.65rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); line-height: 1.15; }
+.ho-hero-date { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
 
 .ho-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.ho-link { font-size: 0.6875rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
-.card[data-go] { cursor: pointer; }
-.card[data-go]:active { transform: scale(.99); }
+.ho-link { font-size: 0.6875rem; font-weight: 700; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+.card[data-go], .hero[data-go] { cursor: pointer; }
+.card[data-go]:active, .hero[data-go]:active { transform: scale(.99); }
 
 /* ── วันนี้ ── */
 .ho-today-grid { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start; }
@@ -40,15 +41,6 @@
 .ho-invest { align-items: flex-start; }
 .ho-invest-illu { display: flex; align-items: center; justify-content: center; width: 100%; flex: 1; padding: 14px 0; }
 .ho-invest-illu svg { width: 40px; height: 40px; color: var(--accent); opacity: .85; }
-
-/* ── quick actions ── */
-.ho-quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
-.ho-q { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 14px 6px;
-  background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; cursor: pointer;
-  font-family: inherit; color: var(--text); transition: transform .1s, background .15s; }
-.ho-q:active { transform: scale(.94); background: var(--surface-2); }
-.ho-q svg { width: 22px; height: 22px; color: var(--accent); }
-.ho-q span { font-size: 0.6875rem; font-weight: 600; color: var(--silver); }
 
 @media (max-width: 560px) {
   .ho-today-grid { grid-template-columns: 1fr; }

@@ -90,14 +90,12 @@ window.HomeView = (function () {
       </span>`).join('');
 
     root.innerHTML = `<div class="container ho">
-      <div class="ho-greet">
-        <div class="ho-hi">${greeting()}, Bright</div>
-        <div class="ho-date">${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</div>
-      </div>
-
-      <div class="card ho-today" data-go="planner">
-        <div class="ho-card-head">
-          <div class="section-title" style="margin:0">วันนี้</div>
+      <div class="hero ho-hero" data-go="planner">
+        <div class="ho-hero-top">
+          <div>
+            <div class="ho-hi">${greeting()}, Bright</div>
+            <div class="ho-hero-date">${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</div>
+          </div>
           <span class="ho-link">Planner &#8594;</span>
         </div>
         <div class="ho-today-grid">
@@ -132,25 +130,6 @@ window.HomeView = (function () {
           : `<div class="ho-invest-illu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg></div>
           <div class="ho-foot">เปิดดูพอร์ต</div>`}
         </div>
-      </div>
-
-      <div class="ho-quick">
-        <button class="ho-q" data-go="planner">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
-          <span>ตาราง</span>
-        </button>
-        <button class="ho-q" data-go="planner">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1.2 2.8-.6 4.2-1.7 5.9C9.1 9.7 8 11 8 13a4 4 0 0 0 8 0c0-1.6-.7-2.7-1.4-3.7.1 1.1-.6 1.9-1.4 1.9-1 0-1.5-.9-1.2-2.1C11.4 6.5 12.6 4.4 12 2z"/></svg>
-          <span>Habits</span>
-        </button>
-        <button class="ho-q" data-go="money">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z"/><path d="M16 8V6a2 2 0 0 0-2-2"/></svg>
-          <span>โหลเงิน</span>
-        </button>
-        <button class="ho-q" data-go="investment">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg>
-          <span>พอร์ต</span>
-        </button>
       </div>
     </div>`;
 

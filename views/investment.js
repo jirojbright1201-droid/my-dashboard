@@ -146,10 +146,14 @@ window.InvestmentView = (function () {
     }).join('') : '<div class="empty">ยังไม่มีการเทรด</div>';
 
     $('inv-overview').innerHTML = `
-      <div class="inv-kpis">
-        <div class="card inv-kpi"><div class="inv-kpi-l">มูลค่าพอร์ต</div><div class="inv-kpi-v">$${PF.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><div class="inv-kpi-s">${thb(PF)} · เงินสด $${CASH.toFixed(2)}</div></div>
-        <div class="card inv-kpi"><div class="inv-kpi-l">ต้นทุน</div><div class="inv-kpi-v">$${Math.round(TCOST).toLocaleString()}</div><div class="inv-kpi-s">${thb(TCOST)}</div></div>
-        <div class="card inv-kpi"><div class="inv-kpi-l">กำไร/ขาดทุน</div><div class="inv-kpi-v ${cls(TPL)}">${TPL >= 0 ? '+$' : '-$'}${Math.abs(Math.round(TPL)).toLocaleString()}</div><div class="inv-kpi-s ${cls(TPL)}">${pct(TPLPCT)}</div></div>
+      <div class="hero inv-hero">
+        <div class="hero-eyebrow">มูลค่าพอร์ต</div>
+        <div class="hero-figure">$${PF.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+        <div class="hero-cap">${thb(PF)} · เงินสด $${CASH.toFixed(2)}</div>
+        <div class="hero-split">
+          <div class="hero-cell"><div class="hero-cell-lab">ต้นทุน</div><div class="hero-cell-val">$${Math.round(TCOST).toLocaleString()}</div><div class="hero-cell-sub">${thb(TCOST)}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">กำไร/ขาดทุน</div><div class="hero-cell-val ${cls(TPL)}">${TPL >= 0 ? '+$' : '-$'}${Math.abs(Math.round(TPL)).toLocaleString()}</div><div class="hero-cell-sub ${cls(TPL)}">${pct(TPLPCT)}</div></div>
+        </div>
       </div>
 
       <div class="card"><div class="section-title">ถืออยู่</div><div class="inv-assets">${assets}</div></div>

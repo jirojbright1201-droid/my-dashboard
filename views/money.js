@@ -125,7 +125,7 @@ window.MoneyView = (function () {
     }).join('');
 
     $('mny-overview').innerHTML = `
-      <div class="card mny-hero">
+      <div class="hero mny-hero">
         <div class="mny-hero-lbl">คงเหลือเดือนนี้</div>
         <div class="mny-hero-bal" style="color:${balance < 0 ? 'var(--red)' : 'var(--text)'}">${fmtMoney(balance)}</div>
         <div class="mny-hero-sub">งบรวม ${fmtMoney(totalBudget)}</div>
@@ -218,7 +218,7 @@ window.MoneyView = (function () {
         </div></div>`;
     }).join('');
     $('mny-subs').innerHTML = `
-      <div class="card mny-hero">
+      <div class="hero mny-hero">
         <div class="mny-hero-lbl">จ่ายประจำต่อเดือน</div>
         <div class="mny-hero-bal">${fmtMoney(Math.round(moBurn))}</div>
         <div class="mny-hero-sub">${SUBS.length} รายการ · รวมทั้งปี ${fmtMoney(Math.round(yrBurn))}</div>

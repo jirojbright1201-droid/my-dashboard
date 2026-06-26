@@ -55,6 +55,28 @@ body {
 .empty { color: var(--silver); font-size: 0.875rem; text-align: center; padding: 24px 0; }
 .chip { font-size: 0.6375rem; font-weight: 700; padding: 2px 7px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
 
+/* ── hero (super-app focal card — ทุกแท็บเปิดมาด้วยอันนี้ ภาษาเดียวกัน) ── */
+.hero { position: relative; overflow: hidden; margin-bottom: 16px; padding: 22px 24px; border-radius: 20px;
+  background: linear-gradient(152deg, #ffffff 0%, #fdf6f1 54%, #faece2 100%); border: 1px solid #f0e2d6;
+  box-shadow: 0 1px 2px rgba(20,20,19,.04), 0 12px 32px rgba(204,120,92,.08); }
+.hero::after { content: ''; position: absolute; top: -46px; right: -34px; width: 168px; height: 168px; pointer-events: none;
+  background: radial-gradient(circle, rgba(204,120,92,.17), transparent 70%); }
+.hero > * { position: relative; z-index: 1; }
+.hero-eyebrow { font-size: 0.6875rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1.3px; }
+.hero-figure { font-family: var(--mono); font-size: 2.4rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; margin-top: 4px; color: var(--text); }
+.hero-figure.down { color: var(--red); }
+.hero-cap { font-size: 0.8125rem; color: var(--silver); margin-top: 5px; }
+.hero-split { display: flex; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(204,120,92,.20); }
+.hero-cell { flex: 1; min-width: 0; }
+.hero-cell + .hero-cell { border-left: 1px solid rgba(204,120,92,.20); padding-left: 18px; }
+.hero-cell-lab { font-size: 0.75rem; color: var(--silver); font-weight: 500; }
+.hero-cell-val { font-family: var(--mono); font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.02em; margin-top: 3px; }
+.hero-cell-val.up { color: var(--green); }
+.hero-cell-val.down { color: var(--red); }
+.hero-cell-sub { font-size: 0.6875rem; color: var(--silver); margin-top: 3px; }
+.hero-cell-sub.up { color: var(--green); }
+.hero-cell-sub.down { color: var(--red); }
+
 /* ── placeholder views ── */
 .placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center;
   min-height: 64vh; text-align: center; color: var(--silver); padding: 0 24px; }
