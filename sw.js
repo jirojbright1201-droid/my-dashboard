@@ -1,7 +1,7 @@
 // Dashboard PWA service worker
 // Pages: network-first (always fresh when online, cached copy when offline)
 // Static assets: cache-first with runtime caching
-const CACHE = 'dash-v23';
+const CACHE = 'dash-v24';
 const CORE = [
   './',
   './index.html',
@@ -32,7 +32,6 @@ const CORE = [
   './Investment%20Tracker/assets/logos/te.png',
   './Investment%20Tracker/assets/logos/poet.png',
   './Investment%20Tracker/assets/logos/meb.png',
-  './Investment%20Tracker/assets/logos/be.png',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png'
