@@ -9,6 +9,23 @@
 .card[data-go], .hero[data-go] { cursor: pointer; }
 .card[data-go]:active, .hero[data-go]:active { transform: scale(.99); }
 
+/* ── hero เข้ม: override สีลูกในให้อ่านบนพื้นมืด ── */
+.ho-hero .ho-hi { color: #fff; }
+.ho-hero .ho-hero-date { color: rgba(255,255,255,.6); }
+.ho-hero .ho-link { color: var(--accent-bright); }
+.ho-hero .ho-ev-time { color: var(--accent-bright); }
+.ho-hero .ho-ev-dot { background: var(--accent-bright); }
+.ho-hero .ho-ev-title { color: #f2efea; }
+.ho-hero .ho-empty { color: rgba(255,255,255,.5); }
+.ho-hero .ring circle:first-of-type { stroke: rgba(255,255,255,.14); }
+.ho-hero .ring circle:nth-of-type(2) { stroke: var(--pos-bright); }
+.ho-hero .ring-txt { fill: #fff; }
+.ho-hero .ho-hab { color: rgba(255,255,255,.6); }
+.ho-hero .ho-hab.on { color: #fff; }
+.ho-hero .ho-hab-tick { border-color: rgba(255,255,255,.3); }
+.ho-hero .ho-hab.on .ho-hab-tick { background: var(--pos-bright); border-color: var(--pos-bright); color: #14110f; }
+.ho-hero .ho-habits-wrap { border-top-color: rgba(255,255,255,.13); }
+
 /* ── วันนี้ ── */
 .ho-today-grid { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start; }
 .ho-events { display: flex; flex-direction: column; gap: 11px; min-width: 0; }

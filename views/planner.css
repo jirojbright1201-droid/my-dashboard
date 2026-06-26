@@ -22,8 +22,8 @@
 .pl-pane { display: none; }
 .pl-pane.active { display: block; animation: viewIn .2s cubic-bezier(.32,.72,0,1); }
 
-/* ── today summary (หน้าแรก) — ใช้ .hero primitive จาก app.css ── */
-.tsum-date { font-size: 0.8125rem; color: var(--silver); font-weight: 600; margin-top: 3px; }
+/* ── today summary (หน้าแรก) — ใช้ .hero primitive (พื้นเข้ม) จาก app.css ── */
+.tsum-date { font-size: 0.8125rem; color: rgba(255,255,255,.6); font-weight: 600; margin-top: 3px; }
 
 /* ── agenda: week strip ── */
 .wk-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }

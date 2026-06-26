@@ -82,7 +82,7 @@ window.InvestmentView = (function () {
       </defs>
       <path d="${areaPath}" fill="url(#invpf)"/>
       <path d="${dPath}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" opacity=".42" filter="url(#invglow)"/>
-      <path d="${dPath}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <path class="inv-pf-line" d="${dPath}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       ${dots}
     </svg>
       <span class="inv-cross"></span><span class="inv-cross-dot"></span><span class="inv-perf-tip"></span>
@@ -148,7 +148,7 @@ window.InvestmentView = (function () {
     $('inv-overview').innerHTML = `
       <div class="hero inv-hero">
         <div class="hero-eyebrow">มูลค่าพอร์ต</div>
-        <div class="hero-figure">$${PF.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+        <div class="hero-figure" data-count="${PF}" data-cprefix="$" data-cdec="2">$${PF.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
         <div class="hero-cap">${thb(PF)} · เงินสด $${CASH.toFixed(2)}</div>
         <div class="hero-split">
           <div class="hero-cell"><div class="hero-cell-lab">ต้นทุน</div><div class="hero-cell-val">$${Math.round(TCOST).toLocaleString()}</div><div class="hero-cell-sub">${thb(TCOST)}</div></div>
@@ -169,6 +169,7 @@ window.InvestmentView = (function () {
 
       <div class="card"><div class="section-title">เทรดล่าสุด</div><div class="inv-trades">${tradesHtml}</div></div>`;
     attachPerfHover();
+    if (window.UIFX) window.UIFX.countAll($('inv-overview'));
   }
 
   // ── COMPANY ──

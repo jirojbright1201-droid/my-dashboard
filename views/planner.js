@@ -183,7 +183,7 @@ window.PlannerView = (function () {
       <div class="hero-eyebrow">วันนี้</div>
       <div class="tsum-date">${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</div>
       <div class="hero-split">
-        <div class="hero-cell"><div class="hero-cell-lab">นัดหมาย</div><div class="hero-cell-val" style="color:var(--accent)">${evToday}</div></div>
+        <div class="hero-cell"><div class="hero-cell-lab">นัดหมาย</div><div class="hero-cell-val" style="color:var(--accent-bright)">${evToday}</div></div>
         <div class="hero-cell"><div class="hero-cell-lab">Habits วันนี้</div><div class="hero-cell-val up">${hDone}/${HABITS.length}</div></div>
       </div>`;
   }

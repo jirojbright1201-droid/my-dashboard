@@ -127,7 +127,7 @@ window.MoneyView = (function () {
     $('mny-overview').innerHTML = `
       <div class="hero mny-hero">
         <div class="mny-hero-lbl">คงเหลือเดือนนี้</div>
-        <div class="mny-hero-bal" style="color:${balance < 0 ? 'var(--red)' : 'var(--text)'}">${fmtMoney(balance)}</div>
+        <div class="mny-hero-bal${balance < 0 ? ' neg' : ''}" data-count="${balance}" data-cprefix="฿" data-cdec="0">${fmtMoney(balance)}</div>
         <div class="mny-hero-sub">งบรวม ${fmtMoney(totalBudget)}</div>
         <div class="mny-hero-split">
           <div class="mny-hs"><div class="mny-hs-lab">รายรับ</div><div class="mny-hs-val up">${fmtMoney(totalIn)}</div><div class="mny-hs-cnt">${income.length} รายการ</div></div>
@@ -149,6 +149,7 @@ window.MoneyView = (function () {
         <div class="section-title">งบแต่ละหมวด · แตะดูรายการ</div>
         <div class="mny-budget">${brows}</div>
       </div>`;
+    if (window.UIFX) window.UIFX.countAll($('mny-overview'));
   }
 
   // ── transactions ──

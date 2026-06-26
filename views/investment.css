@@ -2,6 +2,14 @@
 .inv { padding-top: 16px; }
 #view-investment .pos { color: var(--green); }
 #view-investment .neg { color: var(--red); }
+/* hero พื้นเข้ม: ใช้เขียว/แดงสว่างให้ตัดกับพื้นมืด (ทับ ID specificity ด้านบน) */
+#view-investment .hero-cell-val.pos, #view-investment .hero-cell-sub.pos { color: var(--pos-bright); }
+#view-investment .hero-cell-val.neg, #view-investment .hero-cell-sub.neg { color: var(--neg-bright); }
+
+/* กราฟผลตอบแทนวาดเส้นเข้า (draw-in) */
+.inv-pf-line { stroke-dasharray: 1500; stroke-dashoffset: 1500; animation: invPfDraw 1.3s cubic-bezier(.4,0,.2,1) .05s forwards; }
+@keyframes invPfDraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .inv-pf-line { animation: none; stroke-dashoffset: 0; } }
 
 /* ── sub-tabs ── */
 .inv-tabs { display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 11px; padding: 4px; margin-bottom: 16px; }
