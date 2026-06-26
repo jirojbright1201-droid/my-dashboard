@@ -24,7 +24,7 @@ window.InvestmentView = (function () {
   const paraHtml = s => String(s || '').split(/\n+/).map(p => p.trim()).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('');
   const THAI_M = { 'ม.ค.':0,'ก.พ.':1,'มี.ค.':2,'เม.ย.':3,'พ.ค.':4,'มิ.ย.':5,'ก.ค.':6,'ส.ค.':7,'ก.ย.':8,'ต.ค.':9,'พ.ย.':10,'ธ.ค.':11 };
   const thaiTs = s => { const p = String(s).trim().split(/\s+/); return new Date(+p[2] || 2026, THAI_M[p[1]] ?? 0, +p[0] || 1).getTime(); };
-  const CORAL = ['#cc785c','#d99e3a','#5a9e6f','#c2604a','#caa45a','#8c7a6b','#b5854a','#9a9488'];
+  const CORAL = ['#cc785c','#e0993c','#5b9e74','#cf6a55','#4f9b96','#c9a23f','#b06f93','#9c7b62'];
 
   let root, tab = 'overview', coSearch = '';
   const $ = id => root.querySelector('#' + id);

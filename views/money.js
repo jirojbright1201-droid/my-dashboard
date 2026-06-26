@@ -31,7 +31,7 @@ window.MoneyView = (function () {
     Salary: S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
     Other:  S('<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12"/><path d="M12 8C9.5 8 8.5 4.5 10.2 4.5S12 8 12 8s.1-3.5 1.8-3.5S14.5 8 12 8z"/>')
   };
-  const PALETTE = ['#cc785c','#d99e3a','#5a9e6f','#c2604a','#caa45a','#8c7a6b','#b5854a','#9a9488'];
+  const PALETTE = ['#cc785c','#e0993c','#5b9e74','#cf6a55','#4f9b96','#c9a23f','#b06f93','#9c7b62'];
   const catSvg = c => CAT_ICON[c] || CAT_ICON.default;
   const catTile = c => `<div class="mny-tile">${catSvg(c)}</div>`;
   const srcTile = s => `<div class="mny-tile">${SRC_ICON[s] || SRC_ICON.Other}</div>`;
