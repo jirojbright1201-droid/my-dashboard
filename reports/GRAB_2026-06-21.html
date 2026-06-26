@@ -41,6 +41,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 #hero{min-height:100vh;background:var(--surface-dark);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
 .hero-left{z-index:1}
+.hero-brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.hero-logo{width:52px;height:52px;border-radius:14px;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.hero-brand-name{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.hero-brand-sub{font-size:12px;color:var(--muted)}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.10);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--on-dark-soft);letter-spacing:0.5px;margin-bottom:32px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
 .hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
 .hero-title{font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,72px);font-weight:400;line-height:1.05;letter-spacing:-2px;color:var(--on-dark);margin-bottom:24px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
@@ -263,6 +267,16 @@ footer{background:var(--surface-soft);padding:64px 48px;border-top:1px solid var
 <!-- HERO -->
 <div id="hero">
   <div class="hero-left">
+    <div class="hero-brand">
+      <div class="hero-logo" style="background:#fff;overflow:hidden">
+        <img src="data:image/png;base64,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" alt="GRAB" style="width:100%;height:100%;object-fit:contain;padding:8px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;background:var(--ink);color:#fff;font:600 18px Inter,sans-serif">GR</span>
+      </div>
+      <div>
+        <div class="hero-brand-name">Grab Holdings Ltd.</div>
+        <div class="hero-brand-sub">Super App · Southeast Asia</div>
+      </div>
+    </div>
     <div class="hero-eyebrow">
       <span class="hero-ticker-dot"></span>
       รายงานเชิงลึก &nbsp;·&nbsp; 21 มิถุนายน 2569
