@@ -20,6 +20,25 @@
   }
   window.Shell = { showView };
 
+  // ── UIFX: ตัวเลขวิ่งนับขึ้น (count-up) — defensive: ลงท้ายที่ข้อความจริงที่ view เรนเดอร์เสมอ ──
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function countUp(el) {
+    const to = parseFloat(el.dataset.count);
+    if (!isFinite(to) || reduceMotion) return; // ค่าจริงอยู่ใน textContent อยู่แล้ว
+    const final = el.textContent;
+    const prefix = el.dataset.cprefix || '', dec = parseInt(el.dataset.cdec || '0', 10);
+    const dur = 720, t0 = performance.now(), ease = t => 1 - Math.pow(1 - t, 3);
+    function frame(now) {
+      const t = Math.min(1, (now - t0) / dur);
+      if (t >= 1) { el.textContent = final; return; }
+      const v = to * ease(t);
+      el.textContent = prefix + v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  window.UIFX = { countAll(scope) { (scope || document).querySelectorAll('[data-count]').forEach(countUp); } };
+
   document.querySelectorAll('.bn').forEach(b => b.addEventListener('click', () => { haptic(); showView(b.dataset.view); }));
 
   // ── swipe ซ้าย/ขวา เปลี่ยนแท็บหลัก ──
