@@ -24,7 +24,17 @@ window.InvestmentView = (function () {
   const paraHtml = s => String(s || '').split(/\n+/).map(p => p.trim()).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('');
   const THAI_M = { 'ม.ค.':0,'ก.พ.':1,'มี.ค.':2,'เม.ย.':3,'พ.ค.':4,'มิ.ย.':5,'ก.ค.':6,'ส.ค.':7,'ก.ย.':8,'ต.ค.':9,'พ.ย.':10,'ธ.ค.':11 };
   const thaiTs = s => { const p = String(s).trim().split(/\s+/); return new Date(+p[2] || 2026, THAI_M[p[1]] ?? 0, +p[0] || 1).getTime(); };
-  const CORAL = ['#cc785c','#e0993c','#5b9e74','#cf6a55','#4f9b96','#c9a23f','#b06f93','#9c7b62'];
+  // ไล่เฉด coral แบบ gradient (เข้ม → อ่อน) ตามจำนวนตัว
+  const _lerp = (a, b, t) => Math.round(a + (b - a) * t);
+  const _hx = n => n.toString(16).padStart(2, '0');
+  function ramp(n) {
+    const c1 = [0xb0, 0x53, 0x39], c2 = [0xf0, 0xcb, 0xb3]; // terracotta เข้ม → พีชอ่อน
+    if (n <= 1) return ['#cc785c'];
+    return Array.from({ length: n }, (_, i) => {
+      const t = i / (n - 1);
+      return '#' + _hx(_lerp(c1[0], c2[0], t)) + _hx(_lerp(c1[1], c2[1], t)) + _hx(_lerp(c1[2], c2[2], t));
+    });
+  }
 
   let root, tab = 'overview', coSearch = '';
   const $ = id => root.querySelector('#' + id);
@@ -38,7 +48,8 @@ window.InvestmentView = (function () {
   // ── donut (conic-gradient) สัดส่วนพอร์ต ──
   function donut() {
     const sorted = [...H].sort((a, b) => b.val - a.val);
-    const segs = [...sorted.map((h, i) => ({ label: h.tk, val: h.val, col: CORAL[i % CORAL.length] })), { label: 'Cash', val: CASH, col: '#cfc8bd' }];
+    const cols = ramp(sorted.length);
+    const segs = [...sorted.map((h, i) => ({ label: h.tk, val: h.val, col: cols[i] })), { label: 'Cash', val: CASH, col: '#d8d2c8' }];
     const total = segs.reduce((s, x) => s + x.val, 0) || 1;
     let acc = 0;
     const stops = segs.map(s => { const a = acc / total * 100; acc += s.val; return `${s.col} ${a.toFixed(2)}% ${(acc / total * 100).toFixed(2)}%`; });

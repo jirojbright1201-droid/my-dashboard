@@ -31,7 +31,17 @@ window.MoneyView = (function () {
     Salary: S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
     Other:  S('<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12"/><path d="M12 8C9.5 8 8.5 4.5 10.2 4.5S12 8 12 8s.1-3.5 1.8-3.5S14.5 8 12 8z"/>')
   };
-  const PALETTE = ['#cc785c','#e0993c','#5b9e74','#cf6a55','#4f9b96','#c9a23f','#b06f93','#9c7b62'];
+  // ไล่เฉด coral แบบ gradient (เข้ม → อ่อน) ตามจำนวนหมวด
+  const _lerp = (a, b, t) => Math.round(a + (b - a) * t);
+  const _hx = n => n.toString(16).padStart(2, '0');
+  function ramp(n) {
+    const c1 = [0xb0, 0x53, 0x39], c2 = [0xf0, 0xcb, 0xb3]; // terracotta เข้ม → พีชอ่อน
+    if (n <= 1) return ['#cc785c'];
+    return Array.from({ length: n }, (_, i) => {
+      const t = i / (n - 1);
+      return '#' + _hx(_lerp(c1[0], c2[0], t)) + _hx(_lerp(c1[1], c2[1], t)) + _hx(_lerp(c1[2], c2[2], t));
+    });
+  }
   const catSvg = c => CAT_ICON[c] || CAT_ICON.default;
   const catTile = c => `<div class="mny-tile">${catSvg(c)}</div>`;
   const srcTile = s => `<div class="mny-tile">${SRC_ICON[s] || SRC_ICON.Other}</div>`;
@@ -76,12 +86,12 @@ window.MoneyView = (function () {
     const m = {}; expenses.forEach(e => m[e.category] = (m[e.category] || 0) + e.amount); return m;
   }
 
-  function donutCSS(pairs, total) {
+  function donutCSS(pairs, total, cols) {
     if (!total) return 'conic-gradient(var(--surface-3) 0 100%)';
     let acc = 0;
     const stops = pairs.map(([, val], i) => {
       const a = acc / total * 100; acc += val; const b = acc / total * 100;
-      return `${PALETTE[i % PALETTE.length]} ${a.toFixed(2)}% ${b.toFixed(2)}%`;
+      return `${cols[i]} ${a.toFixed(2)}% ${b.toFixed(2)}%`;
     });
     return `conic-gradient(${stops.join(',')})`;
   }
@@ -101,8 +111,9 @@ window.MoneyView = (function () {
       const head = pairs.slice(0, 6), rest = pairs.slice(6).reduce((s, p) => s + p[1], 0);
       pairs = head.concat([['อื่นๆ', rest]]);
     }
+    const cols = ramp(pairs.length);
     const legend = pairs.map(([cat, val], i) => `<div class="mny-leg">
-      <span class="mny-leg-dot" style="background:${PALETTE[i % PALETTE.length]}"></span>
+      <span class="mny-leg-dot" style="background:${cols[i]}"></span>
       <span class="mny-leg-name">${esc(cat)}</span>
       <span class="mny-leg-val">${fmtMoney(val)} · ${totalOut ? Math.round(val / totalOut * 100) : 0}%</span>
     </div>`).join('');
@@ -138,7 +149,7 @@ window.MoneyView = (function () {
       <div class="card">
         <div class="section-title">สัดส่วนรายจ่าย</div>
         <div class="mny-donut-wrap">
-          <div class="mny-donut" style="background:${donutCSS(pairs, totalOut)}">
+          <div class="mny-donut" style="background:${donutCSS(pairs, totalOut, cols)}">
             <div class="mny-donut-hole"><span>${fmtMoney(totalOut)}</span><small>จ่ายแล้ว</small></div>
           </div>
           <div class="mny-legend">${legend || '<div class="empty">ไม่มีรายจ่าย</div>'}</div>
