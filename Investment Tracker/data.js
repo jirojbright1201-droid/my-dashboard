@@ -55,7 +55,10 @@ const DATA = {
      about:'ซูเปอร์แอปอาเซียน 8 ประเทศ รวมเรียกรถ/ส่งอาหาร/การเงินไว้ในแอปเดียว หักค่าหัวคิวทุกดีล โมเดล asset-light (ไม่ต้องเป็นเจ้าของรถ/ร้าน) ปี 2025 ทำกำไรสุทธิปีแรก'},
     {tk:'TE', name:'T1 Energy', sector:'Solar Manufacturing', status:'watch',
      exchange:'NYSE', country:'USA', founded:'2018', web:'t1energy.com',
-     about:'ผู้ผลิตแผงโซลาร์สหรัฐ (เดิม Freyr Battery rebrand ปี 2025) เดิมพันบนเครดิตภาษีการผลิต 45X + กฎ domestic content สำนักงานใหญ่ Austin, Texas'}
+     about:'ผู้ผลิตแผงโซลาร์สหรัฐ (เดิม Freyr Battery rebrand ปี 2025) เดิมพันบนเครดิตภาษีการผลิต 45X + กฎ domestic content สำนักงานใหญ่ Austin, Texas'},
+    {tk:'POET', name:'POET Technologies', sector:'Optical Interposer / Semiconductors', status:'watch',
+     exchange:'NASDAQ', country:'Canada', founded:'2008', web:'poet-technologies.com',
+     about:'บริษัทออกแบบ optical interposer (ชิปฐานที่รวมชิ้นส่วนแสง+ไฟฟ้าไว้บนตัวเดียว) เร่งการเชื่อมต่อใน data center AI ให้เร็ว-ประหยัดไฟ ตรงคอขวด AI พอดี — แต่ยังก่อนรายได้จริง (ปี 2025 ยอดขาย ~$1M เทียบ market cap ~$1.75-2B) เป็น story stock ทุกอย่างขึ้นกับการส่งมอบ 800G เชิงผลิตครึ่งหลังปี 2026 สำนักงานใหญ่โทรอนโต แคนาดา'}
   ],
   market:{
     indices:[             // S&P/Nasdaq/Dow/VIX — Newwy ดึงของจริง (as of 16 มิ.ย. 2026 | ปรับแก้ 17 มิ.ย.)
