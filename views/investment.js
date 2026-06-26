@@ -3,6 +3,9 @@
 window.InvestmentView = (function () {
   const D = window.INV_DATA || { holdings: [], thesis: [], companies: [], market: { indices: [], holdings_news: [] }, timeline: [], reports: [] };
   const FX = window.INV_FX || 33;
+  // map ticker → domain เว็บ (ใช้ดึงโลโก้บริษัทอัตโนมัติเมื่อไม่มีไฟล์โลโก้ในเครื่อง)
+  const WEB = {};
+  [...(D.holdings || []), ...(D.companies || [])].forEach(c => { if (c && c.web) WEB[String(c.tk).toUpperCase()] = c.web; });
 
   // ── derived ──
   const H = (D.holdings || []).map(h => {
@@ -42,7 +45,12 @@ window.InvestmentView = (function () {
   // ── company icon (logo → fallback ตัวย่อ) ──
   function icon(tk, big) {
     const f = String(tk || '').toLowerCase();
-    return `<div class="inv-ic${big ? ' lg' : ''}"><img src="./Investment Tracker/assets/logos/${esc(f)}.png" alt="" onload="this.parentNode.classList.add('hl')" onerror="this.remove()"><span>${esc(String(tk).slice(0, 2))}</span></div>`;
+    const dom = WEB[String(tk).toUpperCase()] || '';
+    // local png → (ถ้าพลาด) logo service ตาม domain → (ถ้าพลาด) ตัวย่อ
+    const onerr = dom
+      ? `if(this.dataset.r){this.remove()}else{this.dataset.r=1;this.src='https://logo.clearbit.com/${esc(dom)}'}`
+      : `this.remove()`;
+    return `<div class="inv-ic${big ? ' lg' : ''}"><img src="./Investment Tracker/assets/logos/${esc(f)}.png" alt="" onload="this.parentNode.classList.add('hl')" onerror="${onerr}"><span>${esc(String(tk).slice(0, 2))}</span></div>`;
   }
 
   // ── donut (conic-gradient) สัดส่วนพอร์ต ──
