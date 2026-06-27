@@ -12,12 +12,14 @@
 @media (prefers-reduced-motion: reduce) { .inv-pf-line { animation: none; stroke-dashoffset: 0; } }
 
 /* ── sub-tabs ── */
-.inv-tabs { display: flex; gap: 2px; overflow-x: auto; margin-bottom: 18px; }
-.inv-tabs::-webkit-scrollbar { display: none; }
-.inv-tab { border: none; background: none; cursor: pointer; padding: 7px 15px; border-radius: 9999px;
-  font-size: 0.8125rem; font-weight: 600; color: var(--silver); white-space: nowrap; transition: all .15s; font-family: inherit; }
-.inv-tab:hover { color: var(--text); background: var(--surface-2); }
-.inv-tab.active { color: var(--text); background: var(--surface-3); }
+.inv-tabs { display: flex; position: relative; margin-bottom: 18px; border-bottom: 1px solid var(--border-soft); }
+.inv-tab { flex: 1; border: none; background: none; cursor: pointer; padding: 11px 4px 13px;
+  font-size: 0.8125rem; font-weight: 600; color: var(--silver); white-space: nowrap; transition: color .2s; font-family: inherit; }
+.inv-tab:hover { color: var(--text); }
+.inv-tab.active { color: var(--text); }
+.inv-ink { position: absolute; bottom: -1px; left: 0; width: 25%; height: 2px; background: var(--accent);
+  border-radius: 2px 2px 0 0; transition: transform .28s cubic-bezier(.32,.72,0,1); }
+@media (prefers-reduced-motion: reduce) { .inv-ink { transition: none; } }
 .inv-pane { display: none; }
 .inv-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
 

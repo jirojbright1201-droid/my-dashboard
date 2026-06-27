@@ -334,10 +334,13 @@ window.InvestmentView = (function () {
   }
 
   // ── tabs ──
+  const TAB_ORDER = ['overview', 'company', 'thesis', 'market'];
   function switchTab(t) {
     tab = t;
     root.querySelectorAll('.inv-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
     root.querySelectorAll('.inv-pane').forEach(p => p.classList.toggle('active', p.id === 'inv-' + t));
+    const ink = root.querySelector('.inv-ink');
+    if (ink) ink.style.transform = `translateX(${Math.max(0, TAB_ORDER.indexOf(t)) * 100}%)`;
     ({ overview: renderOverview, company: renderCompany, thesis: renderThesis, market: renderMarket })[t]();
   }
 
@@ -348,6 +351,7 @@ window.InvestmentView = (function () {
       <button class="inv-tab" data-tab="company">บริษัท</button>
       <button class="inv-tab" data-tab="thesis">Thesis</button>
       <button class="inv-tab" data-tab="market">ตลาด</button>
+      <span class="inv-ink"></span>
     </div>
     <div id="inv-overview" class="inv-pane active"></div>
     <div id="inv-company" class="inv-pane"></div>
