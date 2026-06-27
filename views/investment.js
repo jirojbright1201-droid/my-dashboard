@@ -193,29 +193,9 @@ window.InvestmentView = (function () {
         ${perfChart()}
       </div>
 
-      <div class="card"><div class="section-title">เทรดล่าสุด</div><div class="inv-trades">${tradesHtml}</div></div>
-
-      <div class="section-title" style="margin-top:4px">สำรวจเพิ่มเติม</div>
-      <div class="inv-nav">${navCards()}</div>`;
+      <div class="card"><div class="section-title">เทรดล่าสุด</div><div class="inv-trades">${tradesHtml}</div></div>`;
     attachPerfHover();
     if (window.UIFX) window.UIFX.countAll($('inv-overview'));
-  }
-
-  // การ์ด preview ท้ายภาพรวม — กดเด้งเข้าแท็บนั้น (แบบหน้า Home)
-  function navCards() {
-    const chev = '<svg class="inv-nav-arr" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
-    const coN = (REG && REG.list.length) || 0;
-    const coTk = REG ? REG.list.slice(0, 5).map(c => c.tk).join(' · ') : '';
-    const ths = D.thesis || [];
-    const thLatest = ths.length ? ths[0].t : 'ยังไม่มี thesis';
-    const m0 = (D.market.indices || [])[0];
-    const newsN = [...H.flatMap(h => (h.news || [])), ...(D.market.holdings_news || [])].length;
-    const mktSub = m0 ? `${esc(m0.n)} ${esc(m0.p)} ${m0.c >= 0 ? '▲' : '▼'} ${pct(m0.c)} · ข่าว ${newsN}` : `ข่าวหุ้นที่ถือ ${newsN} รายการ`;
-    const card = (tab, h, s) => `<div class="card inv-nav-c" data-act="goTab" data-tab="${tab}">
-      <div class="inv-nav-tx"><div class="inv-nav-h">${h}</div><div class="inv-nav-s">${s}</div></div>${chev}</div>`;
-    return card('company', 'บริษัท', `${coN} บริษัทในระบบ${coTk ? ' · ' + esc(coTk) : ''}`)
-      + card('thesis', 'Thesis', `${ths.length} มุมมอง · ${esc(thLatest)}`)
-      + card('market', 'ตลาด', mktSub);
   }
 
   // ── COMPANY ──
@@ -354,13 +334,10 @@ window.InvestmentView = (function () {
   }
 
   // ── tabs ──
-  const TAB_ORDER = ['overview', 'company', 'thesis', 'market'];
   function switchTab(t) {
     tab = t;
     root.querySelectorAll('.inv-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
     root.querySelectorAll('.inv-pane').forEach(p => p.classList.toggle('active', p.id === 'inv-' + t));
-    const ink = root.querySelector('.inv-ink');
-    if (ink) ink.style.transform = `translateX(${Math.max(0, TAB_ORDER.indexOf(t)) * 100}%)`;
     ({ overview: renderOverview, company: renderCompany, thesis: renderThesis, market: renderMarket })[t]();
   }
 
@@ -371,7 +348,6 @@ window.InvestmentView = (function () {
       <button class="inv-tab" data-tab="company">บริษัท</button>
       <button class="inv-tab" data-tab="thesis">Thesis</button>
       <button class="inv-tab" data-tab="market">ตลาด</button>
-      <span class="inv-ink"></span>
     </div>
     <div id="inv-overview" class="inv-pane active"></div>
     <div id="inv-company" class="inv-pane"></div>
@@ -399,7 +375,6 @@ window.InvestmentView = (function () {
       else if (act === 'co') openCo(a.dataset.tk);
       else if (act === 'th') openThesis(+a.dataset.i);
       else if (act === 'news') openNews(+a.dataset.i);
-      else if (act === 'goTab') { switchTab(a.dataset.tab); root.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
     $('invMClose').onclick = closeModal;
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) closeModal(); };
