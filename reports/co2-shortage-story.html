@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ก๊าซในน้ำอัดลม กำลังเขย่าวงการชิปโลก</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#fbfaf8; --card:#ffffff; --ink:#141413; --ink-soft:#56544e;
+  --line:#eae7e1; --accent:#cc785c; --accent-dk:#a85c43;
+  --accent-bright:#f0a88c; --pos:#4f7a52; --neg:#b4503e;
+  --warm:#f5f0e8; --shadow:0 1px 3px rgba(20,20,19,.04),0 10px 30px rgba(20,20,19,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans Thai',sans-serif;background:var(--canvas);color:var(--ink);
+  line-height:1.85;font-weight:400;-webkit-font-smoothing:antialiased;font-size:17.5px}
+.wrap{max-width:680px;margin:0 auto;padding:0 22px}
+.ic{width:1.05em;height:1.05em;flex:0 0 auto;vertical-align:-3px}
+.ic *{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hl .t .ic,.tight p .ic{color:var(--accent);margin-right:4px}
+.vs h3 .ic,.trivia .t .ic{margin-right:5px}
+.sumup .row .e{color:var(--accent-bright)}
+.sumup .row .e .ic{width:22px;height:22px;vertical-align:-4px}
+
+/* COVER */
+.cover{position:relative;overflow:hidden;background:linear-gradient(155deg,#1c1b19,#262320 55%,#171513);
+  color:#f3efe9;border-radius:0 0 30px 30px;text-align:center}
+.cover::before{content:"";position:absolute;width:480px;height:480px;border-radius:50%;top:-200px;left:50%;
+  transform:translateX(-50%);background:radial-gradient(circle,rgba(204,120,92,.4),transparent 65%);animation:pulse 9s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.12)}}
+@media(prefers-reduced-motion){.cover::before{animation:none}}
+.cover-in{position:relative;z-index:2;padding:58px 0 48px}
+.kicker{display:inline-block;font-size:12px;letter-spacing:.16em;font-weight:700;color:var(--accent-bright);
+  border:1px solid rgba(240,168,140,.4);border-radius:30px;padding:6px 16px;text-transform:uppercase}
+.cover h1{font-size:clamp(30px,6.5vw,46px);font-weight:800;line-height:1.18;letter-spacing:-.01em;margin:20px 0 14px}
+.cover h1 em{font-style:normal;color:var(--accent-bright)}
+.cover .sub{font-size:17px;color:#d3cdc3;font-weight:300;max-width:460px;margin:0 auto}
+.cover .meta{margin-top:24px;font-size:13px;color:#a39d92;display:flex;gap:8px;justify-content:center;align-items:center}
+.cover .meta span{display:inline-flex;align-items:center;gap:5px}
+
+/* ARTICLE */
+article{padding:46px 0 20px}
+.lead-p{font-size:20px;font-weight:500;line-height:1.7;margin-bottom:6px}
+.block{margin:38px 0}
+.block .head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.block .no{flex:0 0 auto;width:38px;height:38px;border-radius:11px;background:var(--accent);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;display:grid;place-items:center;box-shadow:0 6px 16px rgba(204,120,92,.3)}
+.block .head h2{font-size:22px;font-weight:700;line-height:1.3}
+.block p{margin:12px 0}
+.block .emoji{font-size:21px}
+.tight p{margin:6px 0}
+
+/* big inline number */
+.big{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent-dk);font-size:1.06em;
+  background:linear-gradient(transparent 62%,#f6ddd2 62%);padding:0 2px}
+
+/* pull quote */
+.pull{background:#1c1b19;color:#f3efe9;border-radius:18px;padding:26px 26px;margin:30px 0;position:relative}
+.pull .q{font-family:'Cormorant',serif;font-size:54px;line-height:.5;color:var(--accent);opacity:.5;height:24px}
+.pull p{font-size:20px;font-weight:600;line-height:1.55;margin:0}
+.pull p b{color:var(--accent-bright)}
+
+/* highlight card */
+.hl{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:14px;padding:18px 20px;margin:22px 0;box-shadow:var(--shadow)}
+.hl .t{font-weight:700;font-size:15px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.hl p{font-size:15.5px;color:var(--ink-soft);margin:4px 0 0}
+
+/* two-side win/lose simple */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.vs .side{border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.vs .win{background:#eef4ee;border:1px solid #d4e4d5}
+.vs .lose{background:#faece8;border:1px solid #f0d4cc}
+.vs h3{font-size:17px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.vs .win h3{color:var(--pos)}
+.vs .lose h3{color:var(--neg)}
+.vs ul{list-style:none;font-size:15px}
+.vs li{padding:7px 0;border-bottom:1px dashed rgba(0,0,0,.08);line-height:1.5}
+.vs li:last-child{border-bottom:0}
+.vs li b{font-weight:700}
+.vs small{display:block;color:var(--ink-soft);font-size:13px;font-weight:400}
+
+/* trivia */
+.trivia{background:var(--warm);border-radius:16px;padding:20px 22px;margin:26px 0}
+.trivia .t{font-weight:700;font-size:15px;color:var(--accent-dk);margin-bottom:6px}
+.trivia p{font-size:15px;color:var(--ink-soft);margin:0}
+
+/* sum up */
+.sumup{background:linear-gradient(135deg,#1c1b19,#2a2622);color:#f3efe9;border-radius:22px;padding:32px 28px;margin:40px 0 10px}
+.sumup h3{font-size:24px;font-weight:800;margin-bottom:16px}
+.sumup .row{display:flex;gap:13px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:16px;line-height:1.5}
+.sumup .row:last-child{border-bottom:0}
+.sumup .row .e{flex:0 0 auto;font-size:20px}
+.sumup .row b{color:#fff}
+.sumup .row span{color:#d3cdc3}
+
+footer{padding:24px 0 60px;text-align:center;color:var(--ink-soft);font-size:12.5px}
+footer .d{max-width:600px;margin:0 auto 10px;line-height:1.6}
+
+@media(max-width:560px){
+  body{font-size:16.5px}
+  .vs{grid-template-columns:1fr}
+  .cover h1{font-size:30px}
+}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap cover-in">
+    <span class="kicker">เล่าเรื่องเศรษฐกิจ · อ่าน 3 นาที</span>
+    <h1>ก๊าซในน้ำอัดลม<br>กำลังเขย่า<em>วงการชิป</em>โลก</h1>
+    <p class="sub">เรื่องของ CO2 ก๊าซธรรมดาที่จู่ๆ ก็กลายเป็นของหายาก จนสะเทือนตั้งแต่ชิป AI ไปถึงเบียร์</p>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+    <p class="lead-p">รู้ไหมว่า... ก๊าซตัวเดียวกับที่ทำให้น้ำอัดลม "ซ่า"</p>
+    <p>คือก๊าซตัวเดียวกับที่ใช้ "ล้างทำความสะอาด" ชิปคอมพิวเตอร์ที่แพงที่สุดในโลก</p>
+    <p>และตอนนี้... มันกำลังขาดแคลน</p>
+    <p>เรื่องนี้สำคัญยังไง ทำไมต้องสนใจ — Jarvis จะเล่าให้ฟังแบบเข้าใจง่ายๆ</p>
+
+    <!-- 1 -->
+    <div class="block">
+      <div class="head"><div class="no">1</div><h2>CO2 มันไปเกี่ยวอะไรกับชิป?</h2></div>
+      <p>ชิปสมัยนี้ลายวงจรเล็กมากกก เล็กระดับที่ตาเปล่ามองไม่เห็น</p>
+      <p>ปัญหาคือ... ถ้าเอา "น้ำ" ไปล้าง พอน้ำแห้งมันจะดึงลายวงจรให้ <b>ล้มพังหมด</b> เหมือนเอาน้ำราดปราสาททราย</p>
+      <p>แต่ CO2 แบบพิเศษ (อัดแรงดันสูงจนกลายเป็น "ของไหลเหนือวิกฤต" คือครึ่งของเหลว-ครึ่งก๊าซ) ล้างได้สะอาดเอี่ยม โดยไม่ทำลายลายวงจร</p>
+      <div class="hl">
+        <div class="t"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.5.5 1 1.4 1 2.5h6c0-1.1.5-2 1-2.5A6 6 0 0 0 12 3Z"/></svg>สรุปง่ายๆ</div>
+        <p>CO2 = "น้ำยาล้างชิป" ที่ไม่มีอะไรมาแทนได้ดีเท่า ยิ่งชิป AI ล้ำเท่าไหร่ ยิ่งต้องใช้เยอะ</p>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="block">
+      <div class="head"><div class="no">2</div><h2>แล้วทำไมจู่ๆ ก็ขาด?</h2></div>
+      <p>และนี่คือจุดที่หลายคนคาดไม่ถึง...</p>
+      <p>เพราะ CO2 <b>ไม่มีโรงงานทำขายตรงๆ</b></p>
+      <p>มันเป็นแค่ <span class="big">"ของแถม"</span> ที่ออกมาจากโรงกลั่นน้ำมันและโรงงานเคมี</p>
+      <div class="pull">
+        <div class="q">"</div>
+        <p>พอโรงงานแม่ <b>ลดงาน-ปิดตัว</b><br>ของแถมอย่าง CO2 ก็หายไปด้วย</p>
+      </div>
+      <p>แล้วทำไมโรงงานพวกนั้นถึงปิด? มี 2 เหตุ:</p>
+      <div class="tight">
+        <p><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 10a6 6 0 0 1-12 0c0-3 3-6 6-10Z"/></svg> <b>น้ำมันแพง</b> — ความวุ่นวายในตะวันออกกลางทำต้นทุนพุ่ง</p>
+        <p><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18"/></svg> <b>สู้จีนไม่ได้</b> — จีนผลิตล้นตลาด ขายถูกกว่า โรงงานเกาหลี/ญี่ปุ่นเลยขาดทุนจนต้องปิด</p>
+      </div>
+      <p>และที่สำคัญ — หลายโรง <b>ปิดถาวร</b> ไม่ใช่แค่หยุดชั่วคราว</p>
+    </div>
+
+    <!-- 3 -->
+    <div class="block">
+      <div class="head"><div class="no">3</div><h2>ถ้าขาดจริง จะเกิดอะไร?</h2></div>
+      <p>ไม่ใช่แค่วงการชิปที่เดือดร้อน...</p>
+      <div class="hl">
+        <div class="t"><svg class="ic" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3"/></svg>ฝั่งชิป</div>
+        <p>โรงงานชิปอาจต้องชะลอหรือหยุดผลิต → ชิปขาด ราคาแพงขึ้นทั้งตลาด ในจังหวะที่ AI กำลังต้องการชิปมากที่สุด</p>
+      </div>
+      <div class="hl">
+        <div class="t"><svg class="ic" viewBox="0 0 24 24"><path d="M5 8h11v8a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4Z"/><path d="M16 10h2a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-2"/><path d="M8 3v2M11 3v2"/></svg>ฝั่งอาหาร-เครื่องดื่ม (โดยเฉพาะยุโรป)</div>
+        <p>เบียร์ น้ำอัดลม อาหารแช่แข็ง ก็ใช้ CO2 เหมือนกัน → เสี่ยงของขาด ราคาขึ้น</p>
+      </div>
+      <p>ใช่แล้ว... เรื่องเดียวกัน แต่เจ็บกันคนละมุมโลก</p>
+    </div>
+
+    <!-- 4 -->
+    <div class="block">
+      <div class="head"><div class="no">4</div><h2>ใครได้ ใครเสีย?</h2></div>
+      <div class="vs">
+        <div class="side win">
+          <h3><svg class="ic" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 7-7"/><path d="M17 8h4v4"/></svg>ฝั่งได้</h3>
+          <ul>
+            <li><b>คนทำ CO2 ขาย</b><small>เช่น Taekyung เจ้าใหญ่เกาหลี — ของขาด ราคาขึ้น กำไรดีขึ้น</small></li>
+            <li><b>คนดักจับ CO2 จากปล่องควัน</b><small>ธุรกิจที่เปลี่ยน "ควันเสีย" เป็น CO2 ขาย</small></li>
+          </ul>
+        </div>
+        <div class="side lose">
+          <h3><svg class="ic" viewBox="0 0 24 24"><path d="M3 7l6 6 4-4 7 7"/><path d="M17 16h4v-4"/></svg>ฝั่งเสีย</h3>
+          <ul>
+            <li><b>โรงงานชิป</b><small>Samsung, SK Hynix — แต่ต้นทุน CO2 จิ๋วมาก เลยเป็น "ความเสี่ยง" มากกว่าเจ็บจริง</small></li>
+            <li><b>โรงเบียร์ / อาหาร</b><small>CO2 เป็นของจำเป็น เลี่ยงไม่ได้ ต้นทุนขึ้นตรงๆ</small></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trivia">
+        <div class="t"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>จุดที่หลายคนพลาด</div>
+        <p>คนชอบมองยักษ์ใหญ่อย่าง Samsung แต่จริงๆ เรื่องนี้กระทบ <b>"หุ้นตัวเล็ก" ที่ขาย CO2 โดยตรง</b> มากกว่า เพราะมันคือรายได้หลักของเขา ไม่ใช่ค่าใช้จ่ายจิ๋วๆ แบบยักษ์</p>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="block">
+      <div class="head"><div class="no">5</div><h2>แล้วต่อไปจะเป็นยังไง?</h2></div>
+      <p>ภาพมันชัดมาก และมันสวนทางกัน</p>
+      <div class="tight">
+        <p><svg class="ic" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 7-7"/><path d="M17 8h4v4"/></svg> <b>ความต้องการ "เพิ่ม"</b> — ชิป AI ยิ่งล้ำ ยิ่งใช้ CO2 เยอะ</p>
+        <p><svg class="ic" viewBox="0 0 24 24"><path d="M3 7l6 6 4-4 7 7"/><path d="M17 16h4v-4"/></svg> <b>ของ "หดถาวร"</b> — โรงงานแม่ปิดไปแล้วไม่กลับมา</p>
+      </div>
+      <div class="pull">
+        <div class="q">"</div>
+        <p>ต้องการมากขึ้น แต่ของน้อยลง<br>แปลว่า CO2 น่าจะ <b>แพงและตึงไปอีกนาน</b></p>
+      </div>
+      <p>ทางแก้จริงๆ คือต้องไป <b>ดักจับ CO2 จากปล่องควันโรงงาน</b> มาใช้แทนการรอ "ของแถม"</p>
+      <p>แต่...อันนั้นใช้เวลาเป็นปี ระยะสั้นทำได้แค่ตุนของกับแบ่งกันใช้</p>
+    </div>
+
+    <!-- SUM -->
+    <div class="sumup">
+      <h3>สรุปให้จบใน 5 บรรทัด</h3>
+      <div class="row"><span class="e"><svg class="ic" viewBox="0 0 24 24"><circle cx="9" cy="13" r="4"/><circle cx="16" cy="8" r="2.5"/><circle cx="17" cy="15.5" r="1.5"/></svg></span><span><b>CO2</b> = ก๊าซน้ำอัดลม แต่เกรดพิเศษใช้ล้างชิป (ขาดไม่ได้)</span></div>
+      <div class="row"><span class="e"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="1"/><path d="M4 13h16M12 9v11"/><path d="M12 9S10.5 4 8.2 5.5 12 9 12 9ZM12 9s1.5-5 3.8-3.5S12 9 12 9Z"/></svg></span><span>มันเป็น <b>"ของแถม"</b> จากโรงกลั่น/โรงเคมี ที่กำลังทยอยปิด</span></div>
+      <div class="row"><span class="e"><svg class="ic" viewBox="0 0 24 24"><path d="M13 3 5 14h6l-1 7 8-11h-6Z"/></svg></span><span>ขาดแล้วกระทบ <b>ทั้งชิปและเบียร์</b> คนละมุมโลก</span></div>
+      <div class="row"><span class="e"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M14.5 9.3c-.4-.8-1.4-1.3-2.5-1.3-1.4 0-2.5.8-2.5 2s1.1 1.7 2.5 2 2.5.9 2.5 2-1.1 2-2.5 2c-1.1 0-2.1-.5-2.5-1.3"/></svg></span><span>คนได้ = <b>คนขาย CO2</b> · คนเสี่ยง = โรงงานชิป + อาหาร</span></div>
+      <div class="row"><span class="e"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="3.2"/></svg></span><span>อนาคต: ของหดถาวร + ดีมานด์โต = <b>แพงและตึงไปอีกนาน</b></span></div>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <p class="d">เล่าโดย Jarvis · 29 มิ.ย. 2026 — เรื่องและกลไกอ้างอิงรายงานจริงในวงการ ส่วนตัวเลขรายบริษัทบางตัวเป็นข้อมูลวงในที่ยังไม่มีแหล่งทางการยืนยัน · บทความนี้เพื่อความเข้าใจ ไม่ใช่คำแนะนำลงทุน</p>
+  </div>
+</footer>
+
+</body>
+</html>

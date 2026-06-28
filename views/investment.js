@@ -246,10 +246,15 @@ window.InvestmentView = (function () {
 
   // ── THESIS ──
   function renderThesis() {
-    $('inv-thesis').innerHTML = `<div class="section-title">Thesis — มุมมองเบื้องหลังการลงทุน</div>
-      ${(D.thesis || []).map((t, i) => `<div class="card inv-th-row" data-act="th" data-i="${i}">
+    const thesisHtml = (D.thesis || []).map((t, i) => `<div class="card inv-th-row" data-act="th" data-i="${i}">
         <span class="inv-th-cat">${esc(t.cat)}</span>
-        <div class="inv-th-t">${esc(t.t)}</div><div class="inv-th-m">${esc(t.sum)}</div></div>`).join('') || '<div class="empty">ยังไม่มี thesis</div>'}`;
+        <div class="inv-th-t">${esc(t.t)}</div><div class="inv-th-m">${esc(t.sum)}</div></div>`).join('') || '<div class="empty">ยังไม่มี thesis</div>';
+    const exps = D.explainers || [];
+    const expHtml = exps.length ? `<div class="section-title" style="margin-top:26px">บทความ / ความรู้</div>
+      ${exps.map(e => `<div class="card inv-th-row" data-act="exp" data-file="${esc(e.file)}">
+        <span class="inv-th-cat">${esc(e.mode)} · ${esc(e.date)}</span>
+        <div class="inv-th-t">${esc(e.title)} <span class="inv-rep">เปิด ↗</span></div><div class="inv-th-m">${esc(e.sum)}</div></div>`).join('')}` : '';
+    $('inv-thesis').innerHTML = `<div class="section-title">Thesis — มุมมองเบื้องหลังการลงทุน</div>${thesisHtml}${expHtml}`;
   }
 
   // ── MARKET ──
@@ -374,6 +379,7 @@ window.InvestmentView = (function () {
       if (act === 'hold') openHold(a.dataset.tk);
       else if (act === 'co') openCo(a.dataset.tk);
       else if (act === 'th') openThesis(+a.dataset.i);
+      else if (act === 'exp') window.open('./reports/' + a.dataset.file, '_blank');
       else if (act === 'news') openNews(+a.dataset.i);
     });
     $('invMClose').onclick = closeModal;

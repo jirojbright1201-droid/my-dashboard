@@ -54,6 +54,11 @@ const DATA = {
   bench:{ spx:[0], nasdaq:[0] },
   reports:[
     {ticker:"POET", date:"26 มิ.ย. 2026", file:"POET_2026-06-26.html"}
+  ],
+  // บทความความรู้ทั่วไป (explainer-html) — ไม่ผูก ticker, โชว์ในแท็บ Thesis. ใหม่สุดไว้บนสุด
+  explainers:[
+    {title:"วิกฤต CO2 ความบริสุทธิ์สูง — ภาพรวมตลาดโลก", sum:"ก๊าซที่ใช้ล้างชิป (และทำเบียร์ซ่า) กำลังขาดทั้งโลก", mode:"ละเอียด", date:"29 มิ.ย. 2026", file:"co2-shortage-detailed.html"},
+    {title:"ก๊าซในน้ำอัดลม กำลังเขย่าวงการชิปโลก", sum:"เวอร์ชันเล่าเรื่องอ่านง่าย 3 นาทีจบ", mode:"เล่าเรื่อง", date:"29 มิ.ย. 2026", file:"co2-shortage-story.html"}
   ]
 };
 // expose ให้ PWA shell (Home + Investment view) อ่านได้ — standalone investment.html ยังใช้ DATA/FX ตามเดิม
