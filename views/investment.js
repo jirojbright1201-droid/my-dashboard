@@ -312,7 +312,7 @@ window.InvestmentView = (function () {
   }
   function openCo(tk) {
     const rep = (D.reports || []).slice().reverse().find(r => r.ticker === tk);
-    if (rep) { window.open('./reports/' + rep.file, '_blank'); return; }
+    if (rep) { window.open((window.REPORTS_BASE || './reports/') +rep.file, '_blank'); return; }
     const c = REG.list.find(x => x.tk === tk); if (!c) return;
     const allNw = REG.newsByTk[tk] || [];
     const news = allNw.length ? allNw.map(n => `<div class="inv-news"><div class="inv-news-h">${esc(n.head)}</div>${n.sum ? `<div class="inv-news-s">${esc(n.sum)}</div>` : ''}<div class="inv-news-f">${esc(n.src)} · ${esc(n.date)}</div></div>`).join('') : '<div class="empty">ยังไม่มีข่าว</div>';
@@ -379,7 +379,7 @@ window.InvestmentView = (function () {
       if (act === 'hold') openHold(a.dataset.tk);
       else if (act === 'co') openCo(a.dataset.tk);
       else if (act === 'th') openThesis(+a.dataset.i);
-      else if (act === 'exp') window.open('./reports/' + a.dataset.file, '_blank');
+      else if (act === 'exp') window.open((window.REPORTS_BASE || './reports/') +a.dataset.file, '_blank');
       else if (act === 'news') openNews(+a.dataset.i);
     });
     $('invMClose').onclick = closeModal;

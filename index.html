@@ -3,114 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Dashboard</title>
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" type="image/png" href="./icons/icon-192.png">
-<meta name="theme-color" content="#ffffff">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Dashboard">
+<title>เลือกแอป</title>
+<meta name="theme-color" content="#fbfaf8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./app.css">
-<link rel="stylesheet" href="./views/home.css">
-<link rel="stylesheet" href="./views/planner.css">
-<link rel="stylesheet" href="./views/savings.css">
-<link rel="stylesheet" href="./views/money.css">
-<link rel="stylesheet" href="./views/investment.css">
-<link rel="stylesheet" href="./views/capture.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--canvas:#fbfaf8;--card:#fff;--ink:#141413;--ink-soft:#56544e;--line:#eae7e1;--accent:#cc785c;--accent-bright:#f0a88c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter','Noto Sans Thai',sans-serif;background:var(--canvas);color:var(--ink);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:32px 22px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:460px;margin:0 auto;width:100%}
+.head{text-align:center;margin-bottom:30px}
+.head .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--accent)}
+.head h1{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;margin-top:8px;letter-spacing:-.01em}
+.head p{color:var(--ink-soft);font-size:14.5px;margin-top:4px}
+.apps{display:flex;flex-direction:column;gap:14px}
+.app{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:0 1px 3px rgba(20,20,19,.04),0 8px 28px rgba(20,20,19,.06);transition:transform .15s,box-shadow .15s}
+.app:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(20,20,19,.1)}
+.app .ic{flex:0 0 auto;width:52px;height:52px;border-radius:14px;background:linear-gradient(150deg,#1c1b19,#262320);color:var(--accent-bright);display:grid;place-items:center}
+.app .ic svg{width:26px;height:26px}
+.app .tx{flex:1}
+.app .tx h2{font-size:19px;font-weight:700}
+.app .tx p{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.app .go{color:var(--accent);font-size:22px;font-weight:700}
+.foot{text-align:center;color:var(--ink-soft);font-size:12px;margin-top:28px;line-height:1.6}
+</style>
 </head>
 <body>
-
-<div class="scroll">
-  <div class="app-head">
-    <div class="app-head-in">
-      <div class="app-title">
-        <svg class="spike" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></svg>
-        <span id="appTitle">Planner</span>
-      </div>
-      <div class="app-head-slot" id="appHeadSlot"></div>
-    </div>
+<div class="wrap">
+  <div class="head">
+    <span class="eyebrow">Jarvis</span>
+    <h1>เลือกแอป</h1>
+    <p>แต่ละตัวติดตั้งแยกเป็นแอปบนมือถือได้</p>
   </div>
-
-  <div class="view active" id="view-home"></div>
-
-  <div class="view" id="view-planner"></div>
-
-  <div class="view" id="view-money"></div>
-
-  <div class="view" id="view-investment"></div>
-</div>
-
-<div class="install-bar" id="installBar">
-  <div class="install-txt">ติดตั้งเป็นแอป — เปิดเต็มจอ ไม่มีแถบเบราว์เซอร์</div>
-  <button class="install-btn" id="installBtn">ติดตั้ง</button>
-  <button class="install-x" id="installX" aria-label="ปิด">&#10005;</button>
-</div>
-
-<button class="fab" id="fab" aria-label="จดเร็ว">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-  <span class="fab-badge" id="fabBadge"></span>
-</button>
-<div class="overlay" id="capOverlay">
-  <div class="modal">
-    <div class="sheet-handle"></div>
-    <div class="modal-head">
-      <div><div class="modal-title">จดเร็ว</div><div class="modal-sub">เก็บไว้ก่อน เดี๋ยว Jarvis ดึงไปลงระบบให้</div></div>
-      <button class="modal-close" id="capClose"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    </div>
-    <div class="modal-body">
-      <div class="cap-types" id="capTypes"></div>
-      <div class="cap-input-row">
-        <input id="capText" placeholder="จดอะไรไว้... เช่น ซื้อกาแฟ" autocomplete="off">
-        <input id="capAmount" class="cap-amt" placeholder="บาท" inputmode="decimal" autocomplete="off">
-      </div>
-      <button class="cap-add" id="capAdd">เพิ่มเข้ากล่อง</button>
-      <div class="cap-list-head" id="capListHead"></div>
-      <div class="cap-list" id="capList"></div>
-      <div class="cap-actions" id="capActions"></div>
-    </div>
+  <div class="apps">
+    <a class="app" href="./planner/">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>
+      <span class="tx"><h2>Planner</h2><p>ตาราง · Agenda · Habits</p></span>
+      <span class="go">→</span>
+    </a>
+    <a class="app" href="./money/">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3zM3 11h18"/><circle cx="8" cy="14" r="1"/></svg></span>
+      <span class="tx"><h2>Money</h2><p>รายรับจ่าย · งบ · โหลเก็บเงิน</p></span>
+      <span class="go">→</span>
+    </a>
+    <a class="app" href="./invest/">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg></span>
+      <span class="tx"><h2>Invest</h2><p>พอร์ต · Thesis · ตลาด</p></span>
+      <span class="go">→</span>
+    </a>
   </div>
+  <p class="foot">เปิดแต่ละแอปแล้วกด "ติดตั้ง" เพื่อปักไอคอนแยกบนหน้าจอ</p>
 </div>
-
-<nav class="bnav">
-  <button class="bn active" data-view="home">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-6h5v6"/></svg>
-    <span class="bn-lab">Home</span>
-  </button>
-  <button class="bn" data-view="planner">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
-    <span class="bn-lab">Planner</span>
-  </button>
-  <button class="bn" data-view="money">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3zM3 11h18"/><circle cx="8" cy="14" r="1"/></svg>
-    <span class="bn-lab">Money</span>
-  </button>
-  <button class="bn" data-view="investment">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg>
-    <span class="bn-lab">Invest</span>
-  </button>
-</nav>
-
-<script src="./data/planner.data.js"></script>
-<script src="./views/planner.js"></script>
-<script src="./data/savings.data.js"></script>
-<script src="./views/savings.js"></script>
-<script src="./data/money.data.js"></script>
-<script src="./data/subscriptions.data.js"></script>
-<script src="./views/money.js"></script>
-<script src="./Investment%20Tracker/data.js"></script>
-<script src="./views/investment.js"></script>
-<script src="./views/home.js"></script>
-<script src="./app.js"></script>
-<script src="./views/capture.js"></script>
 
 <script>
-// network-first SW: ออนไลน์ดึงไฟล์สดเสมอ (revalidate กับ server), ออฟไลน์ใช้ cache
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+// retire SW เดิม (monolith) ถ้ายังลงทะเบียนอยู่ — sw.js กลายเป็น self-destruct แล้ว
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => {
+    if (r.scope.endsWith('/dashboard/') || r.scope.endsWith('/my-dashboard/')) r.update();
+  }));
+}
 </script>
 </body>
 </html>
