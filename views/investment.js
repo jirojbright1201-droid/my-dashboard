@@ -348,16 +348,16 @@ window.InvestmentView = (function () {
 
   const TEMPLATE = `
   <div class="container inv">
-    <div class="inv-tabs">
-      <button class="inv-tab active" data-tab="overview">ภาพรวม</button>
-      <button class="inv-tab" data-tab="company">บริษัท</button>
-      <button class="inv-tab" data-tab="thesis">Thesis</button>
-      <button class="inv-tab" data-tab="market">ตลาด</button>
-    </div>
     <div id="inv-overview" class="inv-pane active"></div>
     <div id="inv-company" class="inv-pane"></div>
     <div id="inv-thesis" class="inv-pane"></div>
     <div id="inv-market" class="inv-pane"></div>
+    <nav class="tabbar">
+      <button class="inv-tab tab-item active" data-tab="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>ภาพรวม</span></button>
+      <button class="inv-tab tab-item" data-tab="company"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 21v-4h6v4"/></svg><span>บริษัท</span></button>
+      <button class="inv-tab tab-item" data-tab="thesis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.5.5 1 1.4 1 2.5h6c0-1.1.5-2 1-2.5A6 6 0 0 0 12 3Z"/></svg><span>Thesis</span></button>
+      <button class="inv-tab tab-item" data-tab="market"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg><span>ตลาด</span></button>
+    </nav>
   </div>
   <div class="overlay" id="invOverlay">
     <div class="modal">

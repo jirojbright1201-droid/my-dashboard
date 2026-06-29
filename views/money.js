@@ -58,16 +58,16 @@ window.MoneyView = (function () {
       <span class="mny-month" id="mnyMonth"></span>
       <button class="mny-chev" data-mnav="1" aria-label="ถัดไป">&#8250;</button>
     </div>
-    <div class="mny-tabs">
-      <button class="mny-tab active" data-tab="overview">ภาพรวม</button>
-      <button class="mny-tab" data-tab="tx">รายการ</button>
-      <button class="mny-tab" data-tab="subs">ประจำ</button>
-      <button class="mny-tab" data-tab="savings">โหลเงิน</button>
-    </div>
     <div id="mny-overview" class="mny-pane active"></div>
     <div id="mny-tx" class="mny-pane"></div>
     <div id="mny-subs" class="mny-pane"></div>
     <div id="mny-savings" class="mny-pane"></div>
+    <nav class="tabbar">
+      <button class="mny-tab tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>ภาพรวม</span></button>
+      <button class="mny-tab tab-item" data-tab="tx">${S('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>')}<span>รายการ</span></button>
+      <button class="mny-tab tab-item" data-tab="subs">${S('<path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>')}<span>ประจำ</span></button>
+      <button class="mny-tab tab-item" data-tab="savings">${S('<path d="M5 9h11a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6a3 3 0 0 1-3-3V8a2 2 0 0 1 2-2h7"/><path d="M16 13h.01"/>')}<span>โหลเงิน</span></button>
+    </nav>
   </div>
 
   <div class="overlay" id="mnyOverlay">
