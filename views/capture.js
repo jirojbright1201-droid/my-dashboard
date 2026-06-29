@@ -3,11 +3,11 @@
 (function () {
   const KEY = 'jarvis_inbox';
   const ALL_TYPES = [
-    { k: 'expense', l: 'รายจ่าย', amt: true },
-    { k: 'income', l: 'รายรับ', amt: true },
+    { k: 'expense', l: 'Expense', amt: true },
+    { k: 'income', l: 'Income', amt: true },
     { k: 'event', l: 'Event' },
     { k: 'habit', l: 'Habit' },
-    { k: 'note', l: 'โน้ต' }
+    { k: 'note', l: 'Note' }
   ];
   const TLAB = Object.fromEntries(ALL_TYPES.map(t => [t.k, t.l]));
   // จดเร็วแยกตามแอป — โชว์เฉพาะประเภทของ dashboard นั้น ไม่ขึ้นข้ามโดเมน
@@ -25,7 +25,7 @@
   const haptic = () => { try { if (navigator.vibrate) navigator.vibrate(8); } catch (_) {} };
 
   function fmtItem(it) {
-    const amt = it.amount ? ` – ${Number(it.amount).toLocaleString()} บาท` : '';
+    const amt = it.amount ? ` – ${Number(it.amount).toLocaleString()} THB` : '';
     return `[${TLAB[it.type] || it.type}] ${it.text}${amt}`;
   }
 
@@ -37,19 +37,19 @@
 
   function renderList() {
     const items = load().filter(inScope);
-    $('capListHead').textContent = items.length ? `ในกล่อง ${items.length} รายการ` : '';
+    $('capListHead').textContent = items.length ? `${items.length} in inbox` : '';
     $('capList').innerHTML = items.length
       ? items.map(it => `<div class="cap-item">
           <span class="cap-item-t">${TLAB[it.type] || it.type}</span>
           <span class="cap-item-x">${esc(it.text)}${it.amount ? ` · ${Number(it.amount).toLocaleString()}฿` : ''}</span>
-          <button class="cap-del" data-id="${it.id}" aria-label="ลบ">&#10005;</button></div>`).join('')
-      : '<div class="cap-empty">ยังไม่มีอะไรในกล่อง</div>';
+          <button class="cap-del" data-id="${it.id}" aria-label="Delete">&#10005;</button></div>`).join('')
+      : '<div class="cap-empty">Inbox is empty</div>';
     $('capActions').innerHTML = items.length
-      ? `<button class="cap-copy" id="capCopy">คัดลอกส่ง Jarvis</button><button class="cap-clear" id="capClear">เคลียร์</button>`
+      ? `<button class="cap-copy" id="capCopy">Copy for Jarvis</button><button class="cap-clear" id="capClear">Clear</button>`
       : '';
     if (items.length) {
       $('capCopy').onclick = copyAll;
-      $('capClear').onclick = () => { if (confirm('ลบรายการในกล่องทั้งหมด?')) { save(load().filter(it => !inScope(it))); renderList(); updateBadge(); } };
+      $('capClear').onclick = () => { if (confirm('Delete all items in inbox?')) { save(load().filter(it => !inScope(it))); renderList(); updateBadge(); } };
     }
     updateBadge();
   }
@@ -77,8 +77,8 @@
   function copyAll() {
     const items = load().filter(inScope);
     if (!items.length) return;
-    const txt = 'กล่องจด Jarvis:\n' + items.map(fmtItem).join('\n');
-    const done = () => { const b = $('capCopy'); if (b) { b.textContent = 'คัดลอกแล้ว ✓'; setTimeout(() => { if ($('capCopy')) $('capCopy').textContent = 'คัดลอกส่ง Jarvis'; }, 1500); } };
+    const txt = 'Jarvis inbox:\n' + items.map(fmtItem).join('\n');
+    const done = () => { const b = $('capCopy'); if (b) { b.textContent = 'Copied ✓'; setTimeout(() => { if ($('capCopy')) $('capCopy').textContent = 'Copy for Jarvis'; }, 1500); } };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done).catch(() => fallbackCopy(txt, done));
     else fallbackCopy(txt, done);
   }

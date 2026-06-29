@@ -58,12 +58,12 @@
 </div>
 
 <div class="install-bar" id="installBar">
-  <div class="install-txt">ติดตั้งเป็นแอป — เปิดเต็มจอ ไม่มีแถบเบราว์เซอร์</div>
-  <button class="install-btn" id="installBtn">ติดตั้ง</button>
-  <button class="install-x" id="installX" aria-label="ปิด">&#10005;</button>
+  <div class="install-txt">Install as an app — fullscreen, no browser bar</div>
+  <button class="install-btn" id="installBtn">Install</button>
+  <button class="install-x" id="installX" aria-label="Close">&#10005;</button>
 </div>
 
-<button class="fab" id="fab" aria-label="จดเร็ว">
+<button class="fab" id="fab" aria-label="Quick capture">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
   <span class="fab-badge" id="fabBadge"></span>
 </button>
@@ -71,16 +71,16 @@
   <div class="modal">
     <div class="sheet-handle"></div>
     <div class="modal-head">
-      <div><div class="modal-title">จดเร็ว</div><div class="modal-sub">เก็บไว้ก่อน เดี๋ยว Jarvis ดึงไปลงระบบให้</div></div>
+      <div><div class="modal-title">Quick capture</div><div class="modal-sub">Saved locally — Jarvis will file it later</div></div>
       <button class="modal-close" id="capClose"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="modal-body">
       <div class="cap-types" id="capTypes"></div>
       <div class="cap-input-row">
-        <input id="capText" placeholder="จดอะไรไว้... เช่น ซื้อกาแฟ" autocomplete="off">
-        <input id="capAmount" class="cap-amt" placeholder="บาท" inputmode="decimal" autocomplete="off">
+        <input id="capText" placeholder="Jot something... e.g. buy coffee" autocomplete="off">
+        <input id="capAmount" class="cap-amt" placeholder="THB" inputmode="decimal" autocomplete="off">
       </div>
-      <button class="cap-add" id="capAdd">เพิ่มเข้ากล่อง</button>
+      <button class="cap-add" id="capAdd">Add to inbox</button>
       <div class="cap-list-head" id="capListHead"></div>
       <div class="cap-list" id="capList"></div>
       <div class="cap-actions" id="capActions"></div>

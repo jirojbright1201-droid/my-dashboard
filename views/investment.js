@@ -71,14 +71,14 @@ window.InvestmentView = (function () {
     const legend = segs.map(s => `<div class="inv-leg"><span class="inv-leg-dot" style="background:${s.col}"></span>
       <span class="inv-leg-n">${esc(s.label)}</span><span class="inv-leg-v">${(s.val / total * 100).toFixed(1)}%</span></div>`).join('');
     return `<div class="inv-donut-wrap">
-      <div class="inv-donut" style="background:conic-gradient(${stops.join(',')})"><div class="inv-donut-hole"><span>${H.length}</span><small>ตัว</small></div></div>
+      <div class="inv-donut" style="background:conic-gradient(${stops.join(',')})"><div class="inv-donut-hole"><span>${H.length}</span><small>stocks</small></div></div>
       <div class="inv-legend">${legend}</div></div>`;
   }
 
   // ── performance line (inline SVG area) ──
   function perfChart() {
     const d = D.timeline || [];
-    if (d.length < 2) return '<div class="empty">ยังไม่มีข้อมูลพอเพียงพอ</div>';
+    if (d.length < 2) return '<div class="empty">Not enough data</div>';
     const start = d[0].total;
     const pf = d.map(x => (x.total / start - 1) * 100);
     const w = 320, h = 120, mn = Math.min(...pf, 0), mx = Math.max(...pf, 0), r = (mx - mn) || 1;
@@ -135,7 +135,7 @@ window.InvestmentView = (function () {
       dot.style.left = pt.l + '%';
       dot.style.top = pt.t + '%';
       dot.className = 'inv-cross-dot ' + (up ? 'pos' : 'neg');
-      tip.innerHTML = `<b class="${up ? 'pos' : 'neg'}">${pct(pt.p)}</b><span>${esc(pt.dt)}</span><i class="${pt.ch >= 0 ? 'pos' : 'neg'}">${pt.ch >= 0 ? '+' : ''}$${Math.abs(pt.ch).toLocaleString()} วันนั้น</i>`;
+      tip.innerHTML = `<b class="${up ? 'pos' : 'neg'}">${pct(pt.p)}</b><span>${esc(pt.dt)}</span><i class="${pt.ch >= 0 ? 'pos' : 'neg'}">${pt.ch >= 0 ? '+' : ''}$${Math.abs(pt.ch).toLocaleString()} that day</i>`;
       tip.style.left = pt.l + '%';
       const ir = pt.l / 100;
       tip.style.transform = ir < 0.14 ? 'translateX(0)' : ir > 0.86 ? 'translateX(-100%)' : 'translateX(-50%)';
@@ -155,7 +155,7 @@ window.InvestmentView = (function () {
       <div class="inv-asset-i"><div class="inv-a-tk">${esc(h.tk)}</div><div class="inv-a-nm">${esc(h.name)}</div></div>
       <div class="inv-asset-m"><div class="inv-a-p">$${h.price.toFixed(2)}</div><div class="inv-a-d ${cls(h.day)}">${pct(h.day)}</div></div>
       <div class="inv-asset-e"><div class="inv-a-v">$${Math.round(h.val).toLocaleString()}</div><div class="inv-a-w ${cls(h.pl)}">${pct(h.plpct)}</div></div>
-    </div>`).join('') : '<div class="empty" style="line-height:1.7">ยังไม่มีสถานะ — เงินสดรอลงไม้แรก<br><span style="font-size:.78rem">ลงทุนแบบมีวินัย: มี thesis ก่อนซื้อทุกครั้ง</span></div>';
+    </div>`).join('') : '<div class="empty" style="line-height:1.7">No positions yet — cash waiting for the first entry<br><span style="font-size:.78rem">Invest with discipline: have a thesis before every buy</span></div>';
 
     const d = D.timeline || [];
     const cur = d.length ? d[d.length - 1].total : PF, st = d.length ? d[0].total : PF;
@@ -169,31 +169,31 @@ window.InvestmentView = (function () {
       return `<div class="inv-trade"><div class="inv-tr-ic ${buy ? 'buy' : 'sell'}">${buy ? '↑' : '↓'}</div>
         <div class="inv-tr-b"><div class="inv-tr-top"><span class="inv-tr-tk">${esc(t.tk)}</span><span class="inv-tr-dt">${esc(t.date)}</span></div>
         <div class="inv-tr-why">${esc(t.why)}</div></div></div>`;
-    }).join('') : '<div class="empty">ยังไม่มีการเทรด</div>';
+    }).join('') : '<div class="empty">No trades yet</div>';
 
     $('inv-overview').innerHTML = `
       <div class="hero inv-hero">
-        <div class="hero-eyebrow">มูลค่าพอร์ต</div>
+        <div class="hero-eyebrow">Portfolio value</div>
         <div class="hero-figure" data-count="${PF}" data-cprefix="$" data-cdec="2">$${PF.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-        <div class="hero-cap">${thb(PF)} · เงินสด $${CASH.toFixed(2)}</div>
+        <div class="hero-cap">${thb(PF)} · Cash $${CASH.toFixed(2)}</div>
         <div class="hero-split">
-          <div class="hero-cell"><div class="hero-cell-lab">ต้นทุน</div><div class="hero-cell-val">$${Math.round(TCOST).toLocaleString()}</div><div class="hero-cell-sub">${thb(TCOST)}</div></div>
-          <div class="hero-cell"><div class="hero-cell-lab">กำไร/ขาดทุน</div><div class="hero-cell-val ${cls(TPL)}">${TPL >= 0 ? '+$' : '-$'}${Math.abs(Math.round(TPL)).toLocaleString()}</div><div class="hero-cell-sub ${cls(TPL)}">${pct(TPLPCT)}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">Cost</div><div class="hero-cell-val">$${Math.round(TCOST).toLocaleString()}</div><div class="hero-cell-sub">${thb(TCOST)}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">P/L</div><div class="hero-cell-val ${cls(TPL)}">${TPL >= 0 ? '+$' : '-$'}${Math.abs(Math.round(TPL)).toLocaleString()}</div><div class="hero-cell-sub ${cls(TPL)}">${pct(TPLPCT)}</div></div>
         </div>
       </div>
 
-      <div class="card"><div class="section-title">ถืออยู่</div><div class="inv-assets">${assets}</div></div>
+      <div class="card"><div class="section-title">Holdings</div><div class="inv-assets">${assets}</div></div>
 
-      <div class="card"><div class="section-title">สัดส่วนพอร์ต</div>${donut()}</div>
+      <div class="card"><div class="section-title">Allocation</div>${donut()}</div>
 
       <div class="card">
-        <div class="inv-pf-head"><div><div class="section-title" style="margin:0">ผลตอบแทนตั้งแต่เริ่ม</div>
+        <div class="inv-pf-head"><div><div class="section-title" style="margin:0">Return since start</div>
           <div class="inv-pf-bal">$${cur.toLocaleString()} <span class="${cls(chgPct)}">${chgPct >= 0 ? '▲' : '▼'} ${pct(chgPct)}</span></div></div></div>
-        <div class="inv-pf-sub">เริ่ม $${st.toLocaleString()} · วันนี้ <b class="${cls(today)}">${today >= 0 ? '+' : ''}$${Math.abs(today).toLocaleString()}</b></div>
+        <div class="inv-pf-sub">Start $${st.toLocaleString()} · today <b class="${cls(today)}">${today >= 0 ? '+' : ''}$${Math.abs(today).toLocaleString()}</b></div>
         ${perfChart()}
       </div>
 
-      <div class="card"><div class="section-title">เทรดล่าสุด</div><div class="inv-trades">${tradesHtml}</div></div>`;
+      <div class="card"><div class="section-title">Recent trades</div><div class="inv-trades">${tradesHtml}</div></div>`;
     attachPerfHover();
     if (window.UIFX) window.UIFX.countAll($('inv-overview'));
   }
@@ -216,16 +216,16 @@ window.InvestmentView = (function () {
   }
   let REG = null;
   function badge(tk) {
-    if (REG.youSet.has(tk)) return '<span class="inv-badge you">ถืออยู่</span>';
-    if (REG.watchSet.has(tk)) return '<span class="inv-badge watch">กำลังดู</span>';
-    if (REG.soldSet.has(tk)) return '<span class="inv-badge sold">ขายแล้ว</span>';
+    if (REG.youSet.has(tk)) return '<span class="inv-badge you">Holding</span>';
+    if (REG.watchSet.has(tk)) return '<span class="inv-badge watch">Watching</span>';
+    if (REG.soldSet.has(tk)) return '<span class="inv-badge sold">Sold</span>';
     return '';
   }
   function renderCompany() {
     REG = registry();
     $('inv-company').innerHTML = `
       <div class="inv-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.4-3.4"/></svg>
-        <input id="invCoSearch" placeholder="ค้นหา ticker หรือชื่อบริษัท" value="${esc(coSearch)}"></div>
+        <input id="invCoSearch" placeholder="Search ticker or company" value="${esc(coSearch)}"></div>
       <div id="invCoList"></div>`;
     $('invCoSearch').oninput = e => { coSearch = e.target.value; renderCoList(); };
     renderCoList();
@@ -239,22 +239,22 @@ window.InvestmentView = (function () {
         <div class="inv-co-top">${icon(c.tk)}<div class="inv-co-h"><span class="inv-co-tk">${esc(c.tk)}</span>${badge(c.tk)}</div></div>
         <div class="inv-co-nm">${esc(c.name)}</div>
         <div class="inv-co-about">${esc(c.about || '—')}</div>
-        <div class="inv-co-foot"><span>${esc(c.sector || '')}</span>${hasRep ? '<span class="inv-rep">รายงาน ↗</span>' : ''}</div>
+        <div class="inv-co-foot"><span>${esc(c.sector || '')}</span>${hasRep ? '<span class="inv-rep">Report ↗</span>' : ''}</div>
       </div>`;
-    }).join('')}</div>` : '<div class="empty">ไม่พบบริษัทที่ค้นหา</div>';
+    }).join('')}</div>` : '<div class="empty">No companies found</div>';
   }
 
   // ── THESIS ──
   function renderThesis() {
     const thesisHtml = (D.thesis || []).map((t, i) => `<div class="card inv-th-row" data-act="th" data-i="${i}">
         <span class="inv-th-cat">${esc(t.cat)}</span>
-        <div class="inv-th-t">${esc(t.t)}</div><div class="inv-th-m">${esc(t.sum)}</div></div>`).join('') || '<div class="empty">ยังไม่มี thesis</div>';
+        <div class="inv-th-t">${esc(t.t)}</div><div class="inv-th-m">${esc(t.sum)}</div></div>`).join('') || '<div class="empty">No thesis yet</div>';
     const exps = D.explainers || [];
-    const expHtml = exps.length ? `<div class="section-title" style="margin-top:26px">บทความ / ความรู้</div>
+    const expHtml = exps.length ? `<div class="section-title" style="margin-top:26px">Articles / Knowledge</div>
       ${exps.map(e => `<div class="card inv-th-row" data-act="exp" data-file="${esc(e.file)}">
         <span class="inv-th-cat">${esc(e.mode)} · ${esc(e.date)}</span>
-        <div class="inv-th-t">${esc(e.title)} <span class="inv-rep">เปิด ↗</span></div><div class="inv-th-m">${esc(e.sum)}</div></div>`).join('')}` : '';
-    $('inv-thesis').innerHTML = `<div class="section-title">Thesis — มุมมองเบื้องหลังการลงทุน</div>${thesisHtml}${expHtml}`;
+        <div class="inv-th-t">${esc(e.title)} <span class="inv-rep">Open ↗</span></div><div class="inv-th-m">${esc(e.sum)}</div></div>`).join('')}` : '';
+    $('inv-thesis').innerHTML = `<div class="section-title">Thesis — the thinking behind each position</div>${thesisHtml}${expHtml}`;
   }
 
   // ── MARKET ──
@@ -278,10 +278,10 @@ window.InvestmentView = (function () {
     const newsHtml = news.length ? news.map(n => `<div class="card inv-hn" data-act="news" data-i="${n._i}">
       <div class="inv-hn-top"><span class="inv-hn-tk">${esc(n.tk)}</span></div>
       <div class="inv-hn-head">${esc(n.head)}</div>
-      <div class="inv-hn-foot"><span>${esc(n.src)}</span> · <span>${esc(n.date)}</span></div></div>`).join('') : '<div class="empty">ยังไม่มีข่าว</div>';
+      <div class="inv-hn-foot"><span>${esc(n.src)}</span> · <span>${esc(n.date)}</span></div></div>`).join('') : '<div class="empty">No news</div>';
     INV_NEWS = news;
-    $('inv-market').innerHTML = `<div class="section-title">ดัชนีตลาด</div><div class="inv-idx-grid">${idx}</div>
-      <div class="section-title">ข่าวหุ้นที่ถือ</div><div class="inv-hn-grid">${newsHtml}</div>`;
+    $('inv-market').innerHTML = `<div class="section-title">Market indices</div><div class="inv-idx-grid">${idx}</div>
+      <div class="section-title">Holdings news</div><div class="inv-hn-grid">${newsHtml}</div>`;
   }
   let INV_NEWS = [];
 
@@ -296,40 +296,40 @@ window.InvestmentView = (function () {
     const h = H.find(x => x.tk === tk); if (!h) return;
     const wk = Date.now() - 7 * 86400000;
     const recent = (h.news || []).filter(n => thaiTs(n.date) >= wk);
-    const news = recent.length ? recent.map(n => `<div class="inv-news"><div class="inv-news-h">${esc(n.head)}</div><div class="inv-news-f">${esc(n.src)} · ${esc(n.date)}</div></div>`).join('') : '<div class="empty">ไม่มีข่าวใน 7 วันล่าสุด</div>';
+    const news = recent.length ? recent.map(n => `<div class="inv-news"><div class="inv-news-h">${esc(n.head)}</div><div class="inv-news-f">${esc(n.src)} · ${esc(n.date)}</div></div>`).join('') : '<div class="empty">No news in the last 7 days</div>';
     const trades = (h.trades || []).map(t => `<div class="inv-news"><div class="inv-news-h">${esc(t.t)} · ${esc(t.date)}</div><div class="inv-tr-why">${esc(t.why)}</div></div>`).join('') || '<div class="empty">—</div>';
     openModal(`${esc(h.tk)} <span class="inv-m-name">${esc(h.name)}</span>`, h.sector,
       `<div class="inv-stats">
-        <div class="inv-st"><span>ราคา</span><b>$${h.price.toFixed(2)} <span class="${cls(h.day)}">${pct(h.day)}</span></b></div>
-        <div class="inv-st"><span>มูลค่า</span><b>$${h.val.toFixed(2)}</b></div>
-        <div class="inv-st"><span>จำนวนหุ้น</span><b>${h.shares}</b></div>
-        <div class="inv-st"><span>ต้นทุนเฉลี่ย</span><b>$${h.avg.toFixed(2)}</b></div>
-        <div class="inv-st"><span>สัดส่วน</span><b>${h.weight.toFixed(1)}%</b></div>
-        <div class="inv-st"><span>กำไร/ขาดทุน</span><b class="${cls(h.pl)}">${h.pl >= 0 ? '+$' : '-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</b></div>
+        <div class="inv-st"><span>Price</span><b>$${h.price.toFixed(2)} <span class="${cls(h.day)}">${pct(h.day)}</span></b></div>
+        <div class="inv-st"><span>Value</span><b>$${h.val.toFixed(2)}</b></div>
+        <div class="inv-st"><span>Shares</span><b>${h.shares}</b></div>
+        <div class="inv-st"><span>Avg cost</span><b>$${h.avg.toFixed(2)}</b></div>
+        <div class="inv-st"><span>Weight</span><b>${h.weight.toFixed(1)}%</b></div>
+        <div class="inv-st"><span>P/L</span><b class="${cls(h.pl)}">${h.pl >= 0 ? '+$' : '-$'}${Math.abs(h.pl).toFixed(2)} (${pct(h.plpct)})</b></div>
       </div>
-      <div class="inv-m-sec">ประวัติเทรด</div>${trades}
-      <div class="inv-m-sec">ข่าวล่าสุด (7 วัน)</div>${news}`);
+      <div class="inv-m-sec">Trade history</div>${trades}
+      <div class="inv-m-sec">Recent news (7d)</div>${news}`);
   }
   function openCo(tk) {
     const rep = (D.reports || []).slice().reverse().find(r => r.ticker === tk);
     if (rep) { window.open((window.REPORTS_BASE || './reports/') +rep.file, '_blank'); return; }
     const c = REG.list.find(x => x.tk === tk); if (!c) return;
     const allNw = REG.newsByTk[tk] || [];
-    const news = allNw.length ? allNw.map(n => `<div class="inv-news"><div class="inv-news-h">${esc(n.head)}</div>${n.sum ? `<div class="inv-news-s">${esc(n.sum)}</div>` : ''}<div class="inv-news-f">${esc(n.src)} · ${esc(n.date)}</div></div>`).join('') : '<div class="empty">ยังไม่มีข่าว</div>';
+    const news = allNw.length ? allNw.map(n => `<div class="inv-news"><div class="inv-news-h">${esc(n.head)}</div>${n.sum ? `<div class="inv-news-s">${esc(n.sum)}</div>` : ''}<div class="inv-news-f">${esc(n.src)} · ${esc(n.date)}</div></div>`).join('') : '<div class="empty">No news</div>';
     const fact = (k, v) => v ? `<div class="inv-fact"><span>${k}</span><span>${esc(String(v))}</span></div>` : '';
     const web = c.web ? `<div class="inv-fact"><span>Website</span><a href="https://${esc(c.web)}" target="_blank" rel="noopener">${esc(c.web)}</a></div>` : '';
     const thIdx = c.thesisRef ? (D.thesis || []).findIndex(t => t.cat === c.thesisRef) : -1;
-    const thesis = thIdx >= 0 ? `<div class="inv-m-sec">Thesis ที่เกี่ยวข้อง</div><div class="card inv-th-row" data-act="th" data-i="${thIdx}"><span class="inv-th-cat">${esc(D.thesis[thIdx].cat)}</span><div class="inv-th-t">${esc(D.thesis[thIdx].t)}</div></div>` : '';
+    const thesis = thIdx >= 0 ? `<div class="inv-m-sec">Related thesis</div><div class="card inv-th-row" data-act="th" data-i="${thIdx}"><span class="inv-th-cat">${esc(D.thesis[thIdx].cat)}</span><div class="inv-th-t">${esc(D.thesis[thIdx].t)}</div></div>` : '';
     openModal(`${esc(c.tk)} <span class="inv-m-name">${esc(c.name)}</span>`, c.sector,
       `<div class="inv-facts">${fact('Exchange', c.exchange)}${fact('Country', c.country)}${fact('Founded', c.founded)}${web}</div>
-       <div class="inv-m-sec">เกี่ยวกับ</div><div class="inv-about">${esc(c.about || '—')}</div>
+       <div class="inv-m-sec">About</div><div class="inv-about">${esc(c.about || '—')}</div>
        ${thesis}
-       <div class="inv-m-sec">ข่าว (${allNw.length})</div>${news}`);
+       <div class="inv-m-sec">News (${allNw.length})</div>${news}`);
   }
   function openThesis(i) {
     const t = (D.thesis || [])[i]; if (!t) return;
     const secs = (t.sections || []).map(s => `<div class="inv-th-sec"><div class="inv-th-sec-h">${esc(s.h)}</div><div class="inv-th-sec-b">${paraHtml(s.b)}</div></div>`).join('');
-    openModal(`<span class="inv-th-cat">${esc(t.cat)}</span><div class="inv-m-thtitle">${esc(t.t)}</div>`, 'อัปเดต ' + esc(t.updated),
+    openModal(`<span class="inv-th-cat">${esc(t.cat)}</span><div class="inv-m-thtitle">${esc(t.t)}</div>`, 'Updated ' + esc(t.updated),
       `<div class="inv-th-sum">${esc(t.sum)}</div><div class="inv-th-full">${paraHtml(t.full)}</div>${secs}`);
   }
   function openNews(i) {
@@ -353,10 +353,10 @@ window.InvestmentView = (function () {
     <div id="inv-thesis" class="inv-pane"></div>
     <div id="inv-market" class="inv-pane"></div>
     <nav class="tabbar">
-      <button class="inv-tab tab-item active" data-tab="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>ภาพรวม</span></button>
-      <button class="inv-tab tab-item" data-tab="company"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 21v-4h6v4"/></svg><span>บริษัท</span></button>
+      <button class="inv-tab tab-item active" data-tab="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></button>
+      <button class="inv-tab tab-item" data-tab="company"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 21v-4h6v4"/></svg><span>Companies</span></button>
       <button class="inv-tab tab-item" data-tab="thesis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.5.5 1 1.4 1 2.5h6c0-1.1.5-2 1-2.5A6 6 0 0 0 12 3Z"/></svg><span>Thesis</span></button>
-      <button class="inv-tab tab-item" data-tab="market"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg><span>ตลาด</span></button>
+      <button class="inv-tab tab-item" data-tab="market"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/></svg><span>Market</span></button>
     </nav>
   </div>
   <div class="overlay" id="invOverlay">

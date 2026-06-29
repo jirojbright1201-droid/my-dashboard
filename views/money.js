@@ -7,7 +7,7 @@ window.MoneyView = (function () {
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtMoney = n => '฿' + Number(n || 0).toLocaleString('en-US');
   const fmtDate = d => { const [, m, day] = (d || '').split('-'); return `${day}/${m}`; };
-  const THMONTH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const THMONTH = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const monthLabel = k => { const [y, m] = k.split('-').map(Number); return `${THMONTH[m - 1]} ${y}`; };
 
   // ── line-icon set (สไตล์เดียวกับ Planner) ──
@@ -54,19 +54,19 @@ window.MoneyView = (function () {
   const TEMPLATE = `
   <div class="container mny">
     <div class="mny-monthbar">
-      <button class="mny-chev" data-mnav="-1" aria-label="ก่อนหน้า">&#8249;</button>
+      <button class="mny-chev" data-mnav="-1" aria-label="Previous">&#8249;</button>
       <span class="mny-month" id="mnyMonth"></span>
-      <button class="mny-chev" data-mnav="1" aria-label="ถัดไป">&#8250;</button>
+      <button class="mny-chev" data-mnav="1" aria-label="Next">&#8250;</button>
     </div>
     <div id="mny-overview" class="mny-pane active"></div>
     <div id="mny-tx" class="mny-pane"></div>
     <div id="mny-subs" class="mny-pane"></div>
     <div id="mny-savings" class="mny-pane"></div>
     <nav class="tabbar">
-      <button class="mny-tab tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>ภาพรวม</span></button>
-      <button class="mny-tab tab-item" data-tab="tx">${S('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>')}<span>รายการ</span></button>
-      <button class="mny-tab tab-item" data-tab="subs">${S('<path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>')}<span>ประจำ</span></button>
-      <button class="mny-tab tab-item" data-tab="savings">${S('<path d="M5 9h11a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6a3 3 0 0 1-3-3V8a2 2 0 0 1 2-2h7"/><path d="M16 13h.01"/>')}<span>โหลเงิน</span></button>
+      <button class="mny-tab tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>Overview</span></button>
+      <button class="mny-tab tab-item" data-tab="tx">${S('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>')}<span>Activity</span></button>
+      <button class="mny-tab tab-item" data-tab="subs">${S('<path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>')}<span>Recurring</span></button>
+      <button class="mny-tab tab-item" data-tab="savings">${S('<path d="M5 9h11a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6a3 3 0 0 1-3-3V8a2 2 0 0 1 2-2h7"/><path d="M16 13h.01"/>')}<span>Savings</span></button>
     </nav>
   </div>
 
@@ -109,7 +109,7 @@ window.MoneyView = (function () {
     let pairs = Object.entries(sc).sort((a, b) => b[1] - a[1]);
     if (pairs.length > 7) {
       const head = pairs.slice(0, 6), rest = pairs.slice(6).reduce((s, p) => s + p[1], 0);
-      pairs = head.concat([['อื่นๆ', rest]]);
+      pairs = head.concat([['Others', rest]]);
     }
     const cols = ramp(pairs.length);
     const legend = pairs.map(([cat, val], i) => `<div class="mny-leg">
@@ -130,34 +130,34 @@ window.MoneyView = (function () {
             <span class="mny-brow-amt">${fmtMoney(spent)} / ${fmtMoney(alloc)}</span></div>
           <div class="mny-prog"><div class="mny-prog-fill${over ? ' over' : ''}" style="width:${pct}%"></div></div>
           <div class="mny-brow-foot"><span class="mny-pct${over ? ' over' : ''}">${pct}%</span>
-            <span class="mny-rem${over ? ' over' : ''}">${over ? 'เกิน ' + fmtMoney(spent - alloc) : 'เหลือ ' + fmtMoney(alloc - spent)}</span></div>
+            <span class="mny-rem${over ? ' over' : ''}">${over ? 'Over ' + fmtMoney(spent - alloc) : 'Left ' + fmtMoney(alloc - spent)}</span></div>
         </div>
       </div>`;
     }).join('');
 
     $('mny-overview').innerHTML = `
       <div class="hero mny-hero">
-        <div class="mny-hero-lbl">คงเหลือเดือนนี้</div>
+        <div class="mny-hero-lbl">Balance this month</div>
         <div class="mny-hero-bal${balance < 0 ? ' neg' : ''}" data-count="${balance}" data-cprefix="฿" data-cdec="0">${fmtMoney(balance)}</div>
-        <div class="mny-hero-sub">งบรวม ${fmtMoney(totalBudget)}</div>
+        <div class="mny-hero-sub">Total budget ${fmtMoney(totalBudget)}</div>
         <div class="mny-hero-split">
-          <div class="mny-hs"><div class="mny-hs-lab">รายรับ</div><div class="mny-hs-val up">${fmtMoney(totalIn)}</div><div class="mny-hs-cnt">${income.length} รายการ</div></div>
-          <div class="mny-hs"><div class="mny-hs-lab">รายจ่าย</div><div class="mny-hs-val down">${fmtMoney(totalOut)}</div><div class="mny-hs-cnt">${expenses.length} รายการ</div></div>
+          <div class="mny-hs"><div class="mny-hs-lab">Income</div><div class="mny-hs-val up">${fmtMoney(totalIn)}</div><div class="mny-hs-cnt">${income.length} items</div></div>
+          <div class="mny-hs"><div class="mny-hs-lab">Expenses</div><div class="mny-hs-val down">${fmtMoney(totalOut)}</div><div class="mny-hs-cnt">${expenses.length} items</div></div>
         </div>
       </div>
 
       <div class="card">
-        <div class="section-title">สัดส่วนรายจ่าย</div>
+        <div class="section-title">Spending breakdown</div>
         <div class="mny-donut-wrap">
           <div class="mny-donut" style="background:${donutCSS(pairs, totalOut, cols)}">
-            <div class="mny-donut-hole"><span>${fmtMoney(totalOut)}</span><small>จ่ายแล้ว</small></div>
+            <div class="mny-donut-hole"><span>${fmtMoney(totalOut)}</span><small>Spent</small></div>
           </div>
-          <div class="mny-legend">${legend || '<div class="empty">ไม่มีรายจ่าย</div>'}</div>
+          <div class="mny-legend">${legend || '<div class="empty">No expenses</div>'}</div>
         </div>
       </div>
 
       <div class="card">
-        <div class="section-title">งบแต่ละหมวด · แตะดูรายการ</div>
+        <div class="section-title">Budget by category · tap to view</div>
         <div class="mny-budget">${brows}</div>
       </div>`;
     if (window.UIFX) window.UIFX.countAll($('mny-overview'));
@@ -180,15 +180,15 @@ window.MoneyView = (function () {
       return `<div class="mny-row">${tile}<div class="mny-row-lead">
         <div class="mny-row-title">${esc(it.name || tag)}</div><div class="mny-row-sub">${sub}</div></div>${amt}</div>`;
     }).join('');
-    $('mnyTxList').innerHTML = `<div class="mny-list-head"><span>${items.length} รายการ</span><span>รวม ${fmtMoney(total)}</span></div>
-      <div class="card mny-list">${rows || '<div class="empty">ไม่มีรายการ</div>'}</div>`;
+    $('mnyTxList').innerHTML = `<div class="mny-list-head"><span>${items.length} items</span><span>Total ${fmtMoney(total)}</span></div>
+      <div class="card mny-list">${rows || '<div class="empty">No items</div>'}</div>`;
   }
 
   function buildTxPane() {
     $('mny-tx').innerHTML = `
       <div class="mny-txtoggle">
-        <button data-txtab="expense" class="on">รายจ่าย</button>
-        <button data-txtab="income">รายรับ</button>
+        <button data-txtab="expense" class="on">Expenses</button>
+        <button data-txtab="income">Income</button>
       </div>
       <div id="mnyTxList"></div>`;
     root.querySelectorAll('[data-txtab]').forEach(b => b.onclick = () => { txKind = b.dataset.txtab; renderTx(); });
@@ -210,7 +210,7 @@ window.MoneyView = (function () {
     return d;
   }
   function renderSubs() {
-    if (!SUBS.length) { $('mny-subs').innerHTML = '<div class="empty">ยังไม่มีรายการประจำ</div>'; return; }
+    if (!SUBS.length) { $('mny-subs').innerHTML = '<div class="empty">No recurring items</div>'; return; }
     const now = new Date(); now.setHours(0, 0, 0, 0);
     const moBurn = SUBS.reduce((s, x) => s + moEquiv(x), 0);
     const yrBurn = SUBS.reduce((s, x) => s + (x.cycle === 'yr' ? x.amount : x.amount * 12), 0);
@@ -218,24 +218,24 @@ window.MoneyView = (function () {
     const rows = sorted.map(s => {
       const days = Math.round((s.next - now) / 86400000);
       const soon = days <= 5;
-      const cyc = s.cycle === 'yr' ? '/ปี' : '/เดือน';
+      const cyc = s.cycle === 'yr' ? '/yr' : '/mo';
       const nextStr = `${s.next.getDate()} ${THMONTH[s.next.getMonth()].slice(0, 3)}`;
       return `<div class="mny-sub-row">
         <div class="mny-tile">${(s.name[0] || '#').toUpperCase()}</div>
         <div class="mny-sub-body">
           <div class="mny-sub-head"><span class="mny-sub-name">${esc(s.name)}</span>
             <span class="mny-sub-amt">${fmtMoney(s.amount)}<span class="mny-sub-cyc">${cyc}</span></span></div>
-          <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">ตัดบิล ${nextStr} · อีก ${days} วัน</span>
-            ${s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/เดือน</span>` : (s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>` : '')}</div>
+          <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">Bill ${nextStr} · ${days}d left</span>
+            ${s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/mo</span>` : (s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>` : '')}</div>
         </div></div>`;
     }).join('');
     $('mny-subs').innerHTML = `
       <div class="hero mny-hero">
-        <div class="mny-hero-lbl">จ่ายประจำต่อเดือน</div>
+        <div class="mny-hero-lbl">Recurring per month</div>
         <div class="mny-hero-bal">${fmtMoney(Math.round(moBurn))}</div>
-        <div class="mny-hero-sub">${SUBS.length} รายการ · รวมทั้งปี ${fmtMoney(Math.round(yrBurn))}</div>
+        <div class="mny-hero-sub">${SUBS.length} items · ${fmtMoney(Math.round(yrBurn))}/yr</div>
       </div>
-      <div class="card"><div class="section-title">เรียงตามรอบตัดบิลถัดไป</div><div class="mny-subs-list">${rows}</div></div>`;
+      <div class="card"><div class="section-title">By next billing date</div><div class="mny-subs-list">${rows}</div></div>`;
   }
 
   // ── category history modal ──
@@ -243,12 +243,12 @@ window.MoneyView = (function () {
     const items = (cur().expenses || []).filter(e => e.category === cat).sort((a, b) => b.date.localeCompare(a.date));
     const total = items.reduce((s, e) => s + e.amount, 0);
     $('mnyMTitle').innerHTML = `<span class="mny-mtitle-ic">${catSvg(cat)}</span>${esc(cat)}`;
-    $('mnyMSub').textContent = items.length ? `${items.length} รายการ · รวม ${fmtMoney(total)}` : 'ยังไม่มีรายการ';
+    $('mnyMSub').textContent = items.length ? `${items.length} items · ${fmtMoney(total)}` : 'No items';
     $('mnyMBody').innerHTML = items.length
       ? `<div class="card mny-list">${items.map(e => `<div class="mny-row"><div class="mny-row-lead">
           <div class="mny-row-title">${esc(e.name)}</div><div class="mny-row-sub">${fmtDate(e.date)}${e.notes ? ' · ' + esc(e.notes) : ''}</div></div>
           <span class="mny-amt neg">-${fmtMoney(e.amount)}</span></div>`).join('')}</div>`
-      : '<div class="empty">ยังไม่มีรายจ่ายในหมวดนี้</div>';
+      : '<div class="empty">No expenses in this category</div>';
     $('mnyOverlay').classList.add('active');
   }
   function closeModal() {

@@ -105,7 +105,7 @@ window.PlannerView = (function () {
     </div>
     <nav class="tabbar">
       <button class="pl-tab tab-item active" data-tab="agenda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Agenda</span></button>
-      <button class="pl-tab tab-item" data-tab="calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><span>ปฏิทิน</span></button>
+      <button class="pl-tab tab-item" data-tab="calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><span>Calendar</span></button>
       <button class="pl-tab tab-item" data-tab="habits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 7-7"/><path d="M20 12a8 8 0 1 1-3.5-6.6"/></svg><span>Habits</span></button>
     </nav>
   </div>
@@ -180,11 +180,11 @@ window.PlannerView = (function () {
     const doneMap = habitDoneMap();
     const hDone = HABITS.filter(h => doneMap[h].has(td)).length;
     $('todaySum').innerHTML = `
-      <div class="hero-eyebrow">วันนี้</div>
+      <div class="hero-eyebrow">Today</div>
       <div class="tsum-date">${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</div>
       <div class="hero-split">
-        <div class="hero-cell"><div class="hero-cell-lab">นัดหมาย</div><div class="hero-cell-val" style="color:var(--accent-bright)">${evToday}</div></div>
-        <div class="hero-cell"><div class="hero-cell-lab">Habits วันนี้</div><div class="hero-cell-val up">${hDone}/${HABITS.length}</div></div>
+        <div class="hero-cell"><div class="hero-cell-lab">Events</div><div class="hero-cell-val" style="color:var(--accent-bright)">${evToday}</div></div>
+        <div class="hero-cell"><div class="hero-cell-lab">Habits today</div><div class="hero-cell-val up">${hDone}/${HABITS.length}</div></div>
       </div>`;
   }
 
