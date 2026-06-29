@@ -1,11 +1,11 @@
 // Planner PWA service worker (scope: /planner/)
-const CACHE = 'planner-v2';
+const CACHE = 'planner-v3';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
   '../data/planner.data.js', '../views/planner.js', '../views/planner.css',
   '../views/capture.js', '../views/capture.css',
-  '../icons/icon-192.png', '../icons/icon-512.png'
+  '../icons/planner-192.png', '../icons/planner-512.png'
 ];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting()));
