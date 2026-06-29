@@ -1,12 +1,12 @@
 // Money PWA service worker (scope: /money/)
-const CACHE = 'money-v2';
+const CACHE = 'money-v3';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
   '../data/savings.data.js', '../views/savings.js', '../views/savings.css',
   '../data/money.data.js', '../data/subscriptions.data.js', '../views/money.js', '../views/money.css',
   '../views/capture.js', '../views/capture.css',
-  '../icons/icon-192.png', '../icons/icon-512.png'
+  '../icons/money-192.png', '../icons/money-512.png'
 ];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting()));

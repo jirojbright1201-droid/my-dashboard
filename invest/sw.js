@@ -1,11 +1,11 @@
 // Invest PWA service worker (scope: /invest/)
-const CACHE = 'invest-v2';
+const CACHE = 'invest-v3';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
   '../Investment%20Tracker/data.js', '../views/investment.js', '../views/investment.css',
   '../views/capture.js', '../views/capture.css',
-  '../icons/icon-192.png', '../icons/icon-512.png'
+  '../icons/invest-192.png', '../icons/invest-512.png'
 ];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting()));
