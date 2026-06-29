@@ -197,6 +197,12 @@ window.MoneyView = (function () {
 
   // ── subscriptions radar ──
   const moEquiv = s => s.cycle === 'yr' ? s.amount / 12 : s.amount;
+  const FXR = (window.SUBS_DATA && window.SUBS_DATA.usdthb) || 33.7;
+  const toTHB = s => s.cur === 'USD' ? s.amount * FXR : s.amount;          // native single charge → THB
+  const moEquivTHB = s => s.cycle === 'yr' ? toTHB(s) / 12 : toTHB(s);     // THB per month
+  const fmtCur = (n, cur) => cur === 'USD'
+    ? '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '฿' + Math.round(n).toLocaleString('en-US');
   function nextRenew(s) {
     const now = new Date(); now.setHours(0, 0, 0, 0);
     if (s.cycle === 'yr') {
@@ -212,8 +218,8 @@ window.MoneyView = (function () {
   function renderSubs() {
     if (!SUBS.length) { $('mny-subs').innerHTML = '<div class="empty">No recurring items</div>'; return; }
     const now = new Date(); now.setHours(0, 0, 0, 0);
-    const moBurn = SUBS.reduce((s, x) => s + moEquiv(x), 0);
-    const yrBurn = SUBS.reduce((s, x) => s + (x.cycle === 'yr' ? x.amount : x.amount * 12), 0);
+    const moBurn = SUBS.reduce((s, x) => s + moEquivTHB(x), 0);
+    const yrBurn = SUBS.reduce((s, x) => s + (x.cycle === 'yr' ? toTHB(x) : toTHB(x) * 12), 0);
     const sorted = [...SUBS].map(s => ({ ...s, next: nextRenew(s) })).sort((a, b) => a.next - b.next);
     const rows = sorted.map(s => {
       const days = Math.round((s.next - now) / 86400000);
@@ -224,9 +230,11 @@ window.MoneyView = (function () {
         <div class="mny-tile">${(s.name[0] || '#').toUpperCase()}</div>
         <div class="mny-sub-body">
           <div class="mny-sub-head"><span class="mny-sub-name">${esc(s.name)}</span>
-            <span class="mny-sub-amt">${fmtMoney(s.amount)}<span class="mny-sub-cyc">${cyc}</span></span></div>
+            <span class="mny-sub-amt">${fmtCur(s.amount, s.cur)}<span class="mny-sub-cyc">${cyc}</span></span></div>
           <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">Bill ${nextStr} · ${days}d left</span>
-            ${s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/mo</span>` : (s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>` : '')}</div>
+            ${s.cur === 'USD' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquivTHB(s)))}/mo</span>`
+              : s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/mo</span>`
+              : (s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>` : '')}</div>
         </div></div>`;
     }).join('');
     $('mny-subs').innerHTML = `
