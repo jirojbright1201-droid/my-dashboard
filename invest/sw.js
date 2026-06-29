@@ -1,5 +1,5 @@
 // Invest PWA service worker (scope: /invest/)
-const CACHE = 'invest-v12';
+const CACHE = 'invest-v13';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
