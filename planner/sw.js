@@ -1,5 +1,5 @@
 // Planner PWA service worker (scope: /planner/)
-const CACHE = 'planner-v5';
+const CACHE = 'planner-v6';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
