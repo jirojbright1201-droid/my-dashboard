@@ -1,5 +1,5 @@
 // Money PWA service worker (scope: /money/)
-const CACHE = 'money-v4';
+const CACHE = 'money-v5';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
