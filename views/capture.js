@@ -2,15 +2,20 @@
 // static PWA ไม่มี backend → จดไว้ในเครื่อง, กดคัดลอกส่งให้ Jarvis process + push ทีหลัง
 (function () {
   const KEY = 'jarvis_inbox';
-  const TYPES = [
+  const ALL_TYPES = [
     { k: 'expense', l: 'รายจ่าย', amt: true },
     { k: 'income', l: 'รายรับ', amt: true },
     { k: 'event', l: 'Event' },
     { k: 'habit', l: 'Habit' },
     { k: 'note', l: 'โน้ต' }
   ];
-  const TLAB = Object.fromEntries(TYPES.map(t => [t.k, t.l]));
-  let sel = 'expense';
+  const TLAB = Object.fromEntries(ALL_TYPES.map(t => [t.k, t.l]));
+  // จดเร็วแยกตามแอป — โชว์เฉพาะประเภทของ dashboard นั้น ไม่ขึ้นข้ามโดเมน
+  const SCOPE = { money: ['expense', 'income'], planner: ['event', 'habit'], investment: ['note'] };
+  const allow = SCOPE[window.APP_VIEW] || ALL_TYPES.map(t => t.k);
+  const TYPES = ALL_TYPES.filter(t => allow.includes(t.k));
+  const inScope = it => allow.includes(it.type); // กล่องแต่ละแอปเห็นเฉพาะของตัวเอง
+  let sel = (TYPES[0] && TYPES[0].k) || 'note';
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) { return []; } };
@@ -25,13 +30,13 @@
   }
 
   function updateBadge() {
-    const n = load().length, b = $('fabBadge');
+    const n = load().filter(inScope).length, b = $('fabBadge');
     if (!b) return;
     b.textContent = n; b.style.display = n ? 'flex' : 'none';
   }
 
   function renderList() {
-    const items = load();
+    const items = load().filter(inScope);
     $('capListHead').textContent = items.length ? `ในกล่อง ${items.length} รายการ` : '';
     $('capList').innerHTML = items.length
       ? items.map(it => `<div class="cap-item">
@@ -44,7 +49,7 @@
       : '';
     if (items.length) {
       $('capCopy').onclick = copyAll;
-      $('capClear').onclick = () => { if (confirm('ลบรายการในกล่องทั้งหมด?')) { save([]); renderList(); updateBadge(); } };
+      $('capClear').onclick = () => { if (confirm('ลบรายการในกล่องทั้งหมด?')) { save(load().filter(it => !inScope(it))); renderList(); updateBadge(); } };
     }
     updateBadge();
   }
@@ -70,7 +75,7 @@
   }
 
   function copyAll() {
-    const items = load();
+    const items = load().filter(inScope);
     if (!items.length) return;
     const txt = 'กล่องจด Jarvis:\n' + items.map(fmtItem).join('\n');
     const done = () => { const b = $('capCopy'); if (b) { b.textContent = 'คัดลอกแล้ว ✓'; setTimeout(() => { if ($('capCopy')) $('capCopy').textContent = 'คัดลอกส่ง Jarvis'; }, 1500); } };
