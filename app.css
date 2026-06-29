@@ -108,3 +108,17 @@ body {
 .install-btn:active { transform: scale(.93); }
 .install-x { flex-shrink: 0; background: rgba(255,255,255,0.14); color: #fff; border: none; width: 30px; height: 30px;
   border-radius: 9999px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+
+/* ===== Dime-style bottom tab nav (per-app sub-tabs) — แถบลอยเข้ม ขอบมน, active = pill coral ===== */
+.tabbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom));
+  width: calc(100% - 28px); max-width: 412px; z-index: 50; display: flex; gap: 4px;
+  background: linear-gradient(150deg,#241f1b,#1a1613); border: 1px solid rgba(255,255,255,.06);
+  border-radius: 24px; padding: 7px; box-shadow: 0 16px 38px -10px rgba(26,22,19,.6); }
+.tabbar .tab-item { flex: 1; border: 0; background: transparent; font-family: inherit; display: flex;
+  flex-direction: column; align-items: center; gap: 4px; padding: 9px 0; color: #9b948a; cursor: pointer;
+  border-radius: 17px; transition: color .2s, background .2s; -webkit-tap-highlight-color: transparent; }
+.tabbar .tab-item svg { width: 22px; height: 22px; }
+.tabbar .tab-item span { font-size: 10.5px; font-weight: 600; }
+.tabbar .tab-item.active { background: linear-gradient(150deg,#cc785c,#b5613f); color: #fff;
+  box-shadow: 0 6px 16px -4px rgba(204,120,92,.6); }
+.tabbar .tab-item:active { transform: scale(.95); }
