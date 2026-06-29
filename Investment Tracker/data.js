@@ -12,7 +12,10 @@ const DATA = {
   companies: [
     {tk:'POET', name:'POET Technologies', sector:'Optical Interposer / Semiconductors', status:'watch',
      exchange:'NASDAQ', country:'Canada', founded:'2008', web:'poet-technologies.com',
-     about:'บริษัทออกแบบ optical interposer (ชิปฐานที่รวมชิ้นส่วนแสง+ไฟฟ้าไว้บนตัวเดียว) เร่งการเชื่อมต่อใน data center AI ให้เร็ว-ประหยัดไฟ ตรงคอขวด AI พอดี — แต่ยังก่อนรายได้จริง (ปี 2025 ยอดขาย ~$1M เทียบ market cap ~$1.75-2B) เป็น story stock ทุกอย่างขึ้นกับการส่งมอบ 800G เชิงผลิตครึ่งหลังปี 2026 สำนักงานใหญ่โทรอนโต แคนาดา'}
+     about:'บริษัทออกแบบ optical interposer (ชิปฐานที่รวมชิ้นส่วนแสง+ไฟฟ้าไว้บนตัวเดียว) เร่งการเชื่อมต่อใน data center AI ให้เร็ว-ประหยัดไฟ ตรงคอขวด AI พอดี — แต่ยังก่อนรายได้จริง (ปี 2025 ยอดขาย ~$1M เทียบ market cap ~$1.75-2B) เป็น story stock ทุกอย่างขึ้นกับการส่งมอบ 800G เชิงผลิตครึ่งหลังปี 2026 สำนักงานใหญ่โทรอนโต แคนาดา'},
+    {tk:'OXY', name:'Occidental Petroleum', sector:'Oil & Gas E&P / Chemicals', status:'watch',
+     exchange:'NYSE', country:'USA', founded:'1920', web:'oxy.com',
+     about:'บริษัทน้ำมัน-ก๊าซสหรัฐ (Houston) — ธุรกิจหลัก upstream (ขุดเจาะผลิตน้ำมันดิบ/ก๊าซ) เน้น Permian Basin + OxyChem (เคมีภัณฑ์) + เดิมพันใหญ่ที่ Direct Air Capture (DAC ดูดคาร์บอนจากอากาศ ผ่าน 1PointFive/STRATOS). Berkshire (Buffett) ถือ ~28% + วอร์แรนต์. เพิ่งซื้อ CrownRock เสริม Permian แต่แบกหนี้เพิ่ม กำไรผูกกับราคาน้ำมันโดยตรง — ดูรายละเอียดในรายงาน'}
   ],
   market:{
     indices:[             // S&P/Nasdaq/Dow/VIX — as of ปิดตลาด ศุกร์ 26 มิ.ย. 2026 (อัป 27 มิ.ย.)
@@ -53,6 +56,7 @@ const DATA = {
   journal:[],   // pros/cons ฝั่งคุณบนแท็บ Log — เพิ่มได้ภายหลัง
   bench:{ spx:[0], nasdaq:[0] },
   reports:[
+    {ticker:"OXY", date:"30 มิ.ย. 2026", file:"OXY_2026-06-30.html"},
     {ticker:"POET", date:"26 มิ.ย. 2026", file:"POET_2026-06-26.html"}
   ],
   // บทความความรู้ทั่วไป (explainer-html) — ไม่ผูก ticker, โชว์ในแท็บ Thesis. ใหม่สุดไว้บนสุด

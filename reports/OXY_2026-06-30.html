@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Occidental Petroleum (OXY) — รายงานเชิงลึก</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#b87514;          /* deep oil-amber — readable on white (Energy sector) */
+  --accent-active:#94590c;
+  --accent-bright:#f4b000;   /* bright gold — fills/dots */
+  --ink:#0a0b0d;
+  --body:#5b616e;
+  --muted:#7c828a;
+  --canvas:#ffffff;
+  --surface-soft:#f7f7f7;
+  --surface-strong:#eef0f3;
+  --surface-dark:#0a0b0d;
+  --surface-dark-el:#16181c;
+  --hairline:#dee1e6;
+  --on-dark:#ffffff;
+  --on-dark-soft:#a8acb3;
+  --up:#05b169;
+  --down:#cf202f;
+  --shadow-sm:0 4px 12px rgba(0,0,0,0.04);
+  --r-card:24px;
+  --r-pill:100px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:'Sarabun','Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+.nav-logo{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--body);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:var(--r-pill);margin-left:8px;letter-spacing:0.3px}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--canvas);border-bottom:1px solid var(--hairline);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
+.hero-left{z-index:1}
+.hero-brand{display:flex;align-items:center;gap:16px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.05s ease forwards}
+.hero-logo{width:56px;height:56px;border-radius:14px;border:1px solid var(--hairline);background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.hero-brand-meta{font-size:13px;color:var(--muted);font-weight:500}
+.hero-brand-meta strong{display:block;font-size:15px;color:var(--ink);font-weight:600}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--surface-strong);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--body);letter-spacing:0.5px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
+.hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-bright);display:inline-block}
+.hero-title{font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,72px);font-weight:400;line-height:1.02;letter-spacing:-2px;color:var(--ink);margin-bottom:24px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
+.hero-title strong{font-weight:500;color:var(--accent)}
+.hero-desc{font-size:18px;color:var(--body);line-height:1.7;max-width:540px;margin-bottom:40px;opacity:0;animation:fadeUp 0.7s 0.4s ease forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;padding:16px 32px;height:56px;border-radius:var(--r-pill);opacity:0;animation:fadeUp 0.7s 0.55s ease forwards;cursor:default}
+.hero-cta-arrow{font-size:18px}
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 0.8s 0.7s ease forwards}
+.hero-card-stack{position:relative;width:340px;height:400px}
+.hero-card{position:absolute;background:var(--canvas);border-radius:var(--r-card);padding:28px;border:1px solid var(--hairline)}
+.hero-card-main{width:320px;top:40px;left:0;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+.hero-card-back{width:300px;top:0;left:20px;opacity:0.5;transform:scale(0.97);z-index:-1;background:var(--surface-soft)}
+.hero-card-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.hero-card-val{font-family:'JetBrains Mono','Courier New',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.hero-card-sub{font-size:13px;color:var(--body);margin-bottom:18px}
+.hero-card-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid var(--hairline);font-size:13px}
+.hero-card-row-label{color:var(--body)}
+.hero-card-row-val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--ink)}
+.hero-card-row-down{color:var(--down)}
+#hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(244,176,0,0.07) 0%,transparent 70%);pointer-events:none}
+
+/* SECTIONS */
+.section-white{background:var(--canvas);padding:96px 0}
+.section-gray{background:var(--surface-soft);padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.sec-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--ink);text-transform:uppercase;margin-bottom:16px;background:var(--surface-strong);padding:4px 14px;border-radius:var(--r-pill)}
+.sec-title{font-family:'Inter',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:400;letter-spacing:-1px;color:var(--ink);line-height:1.12;margin-bottom:16px}
+.sec-sub{font-size:17px;color:var(--body);max-width:680px;line-height:1.7;margin-bottom:56px}
+
+/* CARDS */
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.card-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.card-body{font-size:14px;color:var(--body);line-height:1.7}
+.card-icon{width:44px;height:44px;border-radius:12px;background:rgba(244,176,0,0.12);display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:18px}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* METRIC */
+.metric-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:30px 24px;text-align:center;transition:all 0.2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.metric-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.metric-val-accent{color:var(--accent)}
+.metric-label{font-size:13px;color:var(--muted);font-weight:500}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:1px;background:var(--hairline)}
+.timeline-item{position:relative;margin-bottom:30px}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent-bright)}
+.timeline-item.neg::before{background:var(--down)}
+.timeline-item.pos::before{background:var(--up)}
+.timeline-date{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.5px;margin-bottom:4px;text-transform:uppercase}
+.timeline-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--body);line-height:1.6}
+
+/* RISK */
+.risk-card{border-radius:16px;padding:24px 28px;border:1px solid}
+.risk-high{background:#fff8f8;border-color:#fcd4d4}
+.risk-med{background:#fffcf0;border-color:#fde9a2}
+.risk-low{background:#f0fdf6;border-color:#b3f0d0}
+.risk-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:var(--r-pill);margin-bottom:12px;text-transform:uppercase}
+.risk-high .risk-badge{background:#fcd4d4;color:#c0392b}
+.risk-med  .risk-badge{background:#fde9a2;color:#8a6d00}
+.risk-low  .risk-badge{background:#b3f0d0;color:#1a7a4a}
+.risk-high .risk-title{color:#c0392b}
+.risk-med  .risk-title{color:#8a6d00}
+.risk-low  .risk-title{color:#1a7a4a}
+.risk-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.risk-body{font-size:14px;color:var(--body);line-height:1.7}
+
+/* COMP TABLE */
+.comp-table{width:100%;border-collapse:collapse}
+.comp-table th{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);padding:12px 18px;text-align:left;border-bottom:1px solid var(--hairline);text-transform:uppercase}
+.comp-table td{padding:16px 18px;font-size:14px;color:var(--body);border-bottom:1px solid var(--surface-soft)}
+.comp-table td:first-child{font-weight:600;color:var(--ink)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr.highlight-row{background:rgba(244,176,0,0.06)}
+.comp-table tr.highlight-row td:first-child{color:var(--accent)}
+
+/* ANALYST */
+.analyst-bar-wrap{margin:18px 0}
+.analyst-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500}
+.analyst-bar-track{height:8px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.analyst-bar-fill{height:100%;border-radius:var(--r-pill)}
+
+/* PERSON */
+.person-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:28px 24px;transition:all 0.2s}
+.person-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.person-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.person-title{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.person-bio{font-size:13px;color:var(--body);line-height:1.7}
+
+/* PARTNER */
+.partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.partner-card{display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--hairline);border-radius:14px;background:var(--canvas);transition:all 0.15s}
+.partner-card:hover{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.partner-logo-txt{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-0.3px;flex-shrink:0;min-width:96px}
+.partner-note{font-size:12.5px;color:var(--muted);line-height:1.4}
+
+/* TECH FLOW */
+.tech-flow{display:flex;align-items:stretch;margin:48px 0;flex-wrap:wrap;gap:0;justify-content:center}
+.tech-node{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:26px 18px;text-align:center;min-width:150px;flex:1;transition:all 0.2s}
+.tech-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.tech-node-icon{width:40px;height:40px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.tech-node-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tech-node-val{font-size:14px;font-weight:600;color:var(--ink)}
+.tech-arrow{display:flex;align-items:center;font-size:20px;color:var(--accent-bright);padding:0 10px}
+
+/* BIG STAT */
+.big-stat-row{display:flex;gap:0;border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;margin:48px 0}
+.big-stat{flex:1;padding:32px 24px;border-right:1px solid var(--hairline)}
+.big-stat:last-child{border-right:none}
+.big-stat-num{font-family:'JetBrains Mono',monospace;font-size:clamp(26px,3.2vw,40px);font-weight:500;color:var(--ink);line-height:1;margin-bottom:8px}
+.big-stat-desc{font-size:13px;color:var(--body)}
+
+/* PILLS */
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:5px 14px;border-radius:var(--r-pill);margin:3px;letter-spacing:0.2px}
+.pill-accent{background:rgba(244,176,0,0.12);color:var(--accent);border:1px solid rgba(244,176,0,0.25)}
+.pill-neutral{background:var(--surface-strong);color:var(--body)}
+.pill-up{background:rgba(5,177,105,0.08);color:var(--up)}
+.pill-down{background:rgba(207,32,47,0.08);color:var(--down)}
+
+/* CALLOUT */
+.callout{border-left:3px solid var(--accent);background:rgba(244,176,0,0.06);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;font-size:14px;color:var(--body)}
+.callout strong{color:var(--accent)}
+
+/* REVENUE CHART */
+.fin-chart{display:flex;align-items:flex-end;gap:14px;height:200px;margin:32px 0}
+.fin-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.fin-bar-track{width:100%;display:flex;flex-direction:column-reverse;height:150px}
+.fin-bar{width:100%;border-radius:6px 6px 0 0;background:var(--accent);opacity:0.9;min-height:4px}
+.fin-bar.projected{background:var(--surface-strong);border:2px dashed var(--accent);opacity:1}
+.fin-bar-year{font-size:11px;color:var(--muted);font-weight:500}
+.fin-bar-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:500}
+
+/* DATA TABLE */
+.data-table{width:100%}
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline)}
+.data-row:last-child{border-bottom:none}
+.data-key{font-size:14px;color:var(--body)}
+.data-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink)}
+.data-val-up{color:var(--up)}
+.data-val-down{color:var(--down)}
+.data-val-accent{color:var(--accent)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.08s}
+.reveal-delay-2{transition-delay:0.16s}
+.reveal-delay-3{transition-delay:0.24s}
+
+.divider{height:1px;background:var(--hairline);margin:0}
+footer{background:var(--canvas);padding:64px 48px;border-top:1px solid var(--hairline);max-width:1200px;margin:0 auto}
+.footer-legal{font-size:12px;color:var(--muted);line-height:1.7;margin-top:24px}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:100px 24px 64px}
+  .hero-right{display:none}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section-white,.section-gray{padding:64px 0}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .big-stat-row{flex-direction:column}
+  .big-stat{border-right:none;border-bottom:1px solid var(--hairline)}
+  .big-stat:last-child{border-bottom:none}
+  .partner-grid{grid-template-columns:1fr}
+  .tech-arrow{transform:rotate(90deg);padding:8px 0}
+  .comp-table thead{display:none}
+  .comp-table,.comp-table tbody,.comp-table tr,.comp-table td{display:block;width:100%}
+  .comp-table tr{border:1px solid var(--hairline);border-radius:12px;margin-bottom:14px;padding:6px 0;background:#fff}
+  .comp-table tr.highlight-row{background:rgba(244,176,0,0.06)}
+  .comp-table td{border-bottom:none;padding:7px 18px;font-size:14px}
+  .comp-table td:first-child{font-size:16px;font-weight:700;color:var(--ink);padding-top:12px}
+  .comp-table tr.highlight-row td:first-child{color:var(--accent)}
+  .comp-table td:not(:first-child){display:flex;gap:12px;align-items:baseline}
+  .comp-table td:not(:first-child)::before{content:attr(data-label);flex:0 0 88px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface-soft)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Occidental <span>·</span> OXY</div>
+  <ul class="nav-links">
+    <li><a href="#overview">ภาพรวม</a></li>
+    <li><a href="#technology">ธุรกิจ/DAC</a></li>
+    <li><a href="#market">ตลาด</a></li>
+    <li><a href="#financials">การเงิน</a></li>
+    <li><a href="#competition">คู่แข่ง</a></li>
+    <li><a href="#leadership">ผู้บริหาร</a></li>
+    <li><a href="#catalysts">ตัวเร่ง</a></li>
+    <li><a href="#risks">ความเสี่ยง</a></li>
+    <li><a href="#analysts">นักวิเคราะห์</a></li>
+  </ul>
+  <span class="nav-badge">NYSE: OXY</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-brand">
+      <div class="hero-logo">
+        <img src="data:image/png;base64,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"
+          alt="OXY" style="width:100%;height:100%;object-fit:contain;padding:8px"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;background:var(--ink);color:#fff;font:600 18px Inter,sans-serif">OXY</span>
+      </div>
+      <div class="hero-brand-meta">
+        <strong>Occidental Petroleum</strong>
+        NYSE: OXY · พลังงาน / E&P · สหรัฐฯ
+      </div>
+    </div>
+    <div class="hero-eyebrow">
+      <span class="hero-ticker-dot"></span>
+      รายงานเชิงลึก · 30 มิ.ย. 2026
+    </div>
+    <h1 class="hero-title">บริษัทน้ำมัน<br>ที่ <strong>Buffett</strong> สะสม<br>กำลังแปลงร่างเรื่องคาร์บอน</h1>
+    <p class="hero-desc">ผู้ผลิตน้ำมัน-ก๊าซรายใหญ่ใน Permian Basin ที่กำลังลดหนี้หลังดีลใหญ่ พร้อมเดิมพันใหญ่กับเทคโนโลยีดูดคาร์บอนจากอากาศ (Direct Air Capture) — และมี Berkshire Hathaway ของ Warren Buffett ถือหุ้นเศรษฐกิจรวมราว 33%</p>
+    <div class="hero-cta">อ่านรายงาน <span class="hero-cta-arrow">↓</span></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="hero-card-label">ภาพรวมตัวเลข · 29 มิ.ย. 2026</div>
+        <div class="hero-card-val">$49.85</div>
+        <div class="hero-card-sub">ราคาหุ้น OXY (ปิดก่อนหน้า $49.99)</div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">มูลค่าตลาด (Market Cap)</span>
+          <span class="hero-card-row-val">~$49.5B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">Berkshire ถือ (รวม warrants)</span>
+          <span class="hero-card-row-val">~32.7%</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">หนี้หลัก (Principal Debt)</span>
+          <span class="hero-card-row-val">$13.3B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">ช่วง 52 สัปดาห์</span>
+          <span class="hero-card-row-val">$38.8 – $67.5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 OVERVIEW -->
+<div class="section-white" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow reveal">01 — ภาพรวมบริษัท</div>
+    <h2 class="sec-title reveal">บริษัทน้ำมันสัญชาติอเมริกัน<br>ที่เลือกเดินทางสองสาย</h2>
+    <p class="sec-sub reveal">Occidental Petroleum (ก่อตั้งปี 1920, สำนักงานใหญ่ที่ Houston, Texas) คือผู้ผลิตน้ำมันดิบและก๊าซธรรมชาติรายใหญ่ของสหรัฐฯ แกนหลักคือ upstream (ขุดเจาะ-ผลิตน้ำมันดิบ/ก๊าซ) ใน Permian Basin แหล่งน้ำมันเชลใหญ่ที่สุดของอเมริกา แต่สิ่งที่ทำให้ OXY ต่างจากบริษัทน้ำมันทั่วไปคือการเดิมพันก้อนใหญ่กับ "ธุรกิจคาร์บอน" — ดูดคาร์บอนจากอากาศแล้วฝังกลับลงดิน</p>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M5 8l7-5 7 5M5 16l7 5 7-5"/></svg>
+        </div>
+        <div class="card-title">ปัญหา: เป็นบริษัทน้ำมัน "ยุคเปลี่ยนผ่าน"</div>
+        <div class="card-body">ธุรกิจน้ำมันถูกกดดันสองด้านพร้อมกัน — ราคาน้ำมันผันผวนหนัก และโลกกำลังกดดันเรื่องลดคาร์บอน บริษัทน้ำมันต้องพิสูจน์ว่าจะอยู่รอดและทำกำไรได้ในระยะยาว</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+        </div>
+        <div class="card-title">วิธีแก้: ผลิตน้ำมันต้นทุนต่ำ + ขายบริการคาร์บอน</div>
+        <div class="card-body">ใช้พื้นที่ Permian ต้นทุนต่ำ (breakeven ~$40/บาร์เรล = ราคาที่คุ้มทุน) เป็นเครื่องปั๊มเงินสด แล้วเอาความเชี่ยวชาญเรื่องการอัดคาร์บอนลงดิน (จากเทคนิค EOR) มาทำเป็นธุรกิจดูดคาร์บอนจากอากาศขายเป็นบริการ</div>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+        </div>
+        <div class="card-title">รูปแบบธุรกิจ: เงินสดจากน้ำมัน → ลดหนี้ + ลงทุนคาร์บอน</div>
+        <div class="card-body">หลังขายธุรกิจเคมี OxyChem ให้ Berkshire ($9.7B) เมื่อต้นปี 2026 OXY โฟกัสที่น้ำมัน-ก๊าซ + คาร์บอน เร่งลดหนี้จากดีลซื้อกิจการ CrownRock และเดินหน้าโรงงาน DAC แห่งแรก</div>
+      </div>
+    </div>
+
+    <div class="big-stat-row reveal">
+      <div class="big-stat">
+        <div class="big-stat-num">~1.43M</div>
+        <div class="big-stat-desc">บาร์เรลเทียบเท่าต่อวัน (boe/d) ผลิตได้ใน Q1 2026 — เกินเป้าที่บริษัทตั้งไว้</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">$40</div>
+        <div class="big-stat-desc">ราคาน้ำมันต่อบาร์เรล (WTI) ที่ทำให้คลังสำรอง Permian ส่วนใหญ่คุ้มทุน (breakeven)</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">~106 ปี</div>
+        <div class="big-stat-desc">ก่อตั้งปี 1920 — บริษัทพลังงานเก่าแก่ที่ผ่านวัฏจักรน้ำมันมาแล้วนับไม่ถ้วน</div>
+      </div>
+    </div>
+
+    <div class="callout reveal"><strong>เข้าใจง่ายๆ:</strong> OXY คือบริษัทน้ำมันที่พยายามเป็น "บริษัทจัดการคาร์บอน" ไปพร้อมกัน — ขาหนึ่งขุดน้ำมันขายเอาเงินสด อีกขาเอาเงินนั้นไปลดหนี้และสร้างโรงงานดูดคาร์บอน ความน่าสนใจอยู่ที่ว่าทั้งสองขานี้จะส่งเสริมหรือถ่วงกันแน่</div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 02 TECHNOLOGY / DAC -->
+<div class="section-gray" id="technology">
+  <div class="container">
+    <div class="sec-eyebrow reveal">02 — ธุรกิจ &amp; เทคโนโลยีคาร์บอน</div>
+    <h2 class="sec-title reveal">สามขาธุรกิจ + เดิมพันใหญ่<br>ชื่อ STRATOS</h2>
+    <p class="sec-sub reveal">หลังขาย OxyChem ออกไป โครงสร้าง OXY เหลือ 2 ส่วนงานหลักตามบัญชี (Oil &amp; Gas และ Midstream &amp; Marketing) บวกธุรกิจอนาคต Oxy Low Carbon Ventures (OLCV) ที่ดำเนินผ่านบริษัทลูก 1PointFive</p>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M6 21V9l6-4 6 4v12M9 21v-6h6v6"/></svg>
+        </div>
+        <div class="card-title">1. Oil &amp; Gas (Upstream) — แกนเงินสด</div>
+        <div class="card-body">ขุดเจาะ-ผลิตน้ำมันดิบ/ก๊าซ ส่วนใหญ่จาก Permian Basin, Rockies และอ่าวเม็กซิโก ผลิตรวม ~1.43M boe/d (Q1 2026) Permian อย่างเดียวเกิน 1.2M boe/d เป็นแหล่งกำไรหลักของบริษัท</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="1.5" fill="currentColor"/><circle cx="16" cy="17" r="1.5" fill="currentColor"/></svg>
+        </div>
+        <div class="card-title">2. Midstream &amp; Marketing — ท่อ + ค้าขาย</div>
+        <div class="card-body">ให้บริการรวบรวม ขนส่ง และแปรรูปน้ำมัน/ก๊าซ ช่วยเสริมกระแสเงินสด ~$400 ล้านต่อปีตั้งแต่ปี 2026 จากสัญญาขนส่งน้ำมันที่เจรจาใหม่</div>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a4 4 0 0 1 4 4c2 0 4 2 4 4a4 4 0 0 1-4 4H8a5 5 0 1 1 1-9.9A4 4 0 0 1 12 3z"/><path d="M12 21v-6M9 18l3-3 3 3"/></svg>
+        </div>
+        <div class="card-title">3. Oxy Low Carbon Ventures (1PointFive) — เดิมพันอนาคต</div>
+        <div class="card-body">ธุรกิจ "คาร์บอนเป็นบริการ" (Carbon as a Service) ดูดคาร์บอนจากอากาศ (DAC) แล้วฝังลงดิน ต่อยอดจากความเชี่ยวชาญ CO2-EOR (อัดคาร์บอนเพิ่มแรงดันในหลุมเพื่อรีดน้ำมัน) ที่ OXY ทำมานานหลายสิบปี</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;font-weight:600;margin:64px 0 8px;color:var(--ink)" class="reveal">STRATOS ทำงานอย่างไร</h3>
+    <p style="font-size:15px;color:var(--body);max-width:680px;margin-bottom:8px" class="reveal">DAC (Direct Air Capture = ดูดคาร์บอนไดออกไซด์จากอากาศโดยตรง) ใช้พัดลมดูดอากาศผ่านสารเคมีที่จับ CO2 แล้วแยกออกมาเป็นก๊าซเข้มข้น ก่อนอัดลงชั้นหินใต้ดินอย่างถาวร</p>
+
+    <div class="tech-flow">
+      <div class="tech-node reveal">
+        <div class="tech-node-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 1</div>
+        <div class="tech-node-val">พัดลมดูดอากาศ</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node reveal reveal-delay-1">
+        <div class="tech-node-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6l-1 7a3 3 0 0 0 .8 2l3 4a2 2 0 0 1-1.6 3H7.8a2 2 0 0 1-1.6-3l3-4a3 3 0 0 0 .8-2L9 3z"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 2</div>
+        <div class="tech-node-val">สารเคมีจับ CO2</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node reveal reveal-delay-2">
+        <div class="tech-node-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2C8 7 6 10 6 14a6 6 0 0 0 12 0c0-4-2-7-6-12z"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 3</div>
+        <div class="tech-node-val">แยกเป็น CO2 เข้มข้น</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node reveal reveal-delay-3">
+        <div class="tech-node-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8M8 6l4 4 4-4"/><path d="M4 14c0 4 4 8 8 8s8-4 8-8"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 4</div>
+        <div class="tech-node-val">อัดฝังลงชั้นหิน</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:48px">
+      <div class="card reveal">
+        <div class="card-title">STRATOS — โรงงาน DAC ใหญ่สุดในโลก</div>
+        <div class="card-body">
+          ตั้งที่ Ector County, Texas ออกแบบให้ดูดคาร์บอนได้สูงสุด <strong>500,000 ตันต่อปี</strong> เงินลงทุนราว $1.3 พันล้าน ได้รับใบอนุญาต Class VI (อนุญาตอัดคาร์บอนลงดินถาวร) จาก EPA เมื่อ เม.ย. 2025
+          <br><br>
+          <span class="pill pill-down">ดีเลย์</span> เดิมตั้งเป้าเปิดปลายปี 2024 → เลื่อนเป็นปลายปี 2025 → ณ พ.ค. 2026 ก่อสร้างเกือบเสร็จ เริ่มทดสอบหน่วยแรกแล้ว (เทคโนโลยีทำงานตามคาด) แต่เจอปัญหาที่ชิ้นส่วน "นอกกระบวนการหลัก" ทำให้เปิดเต็มรูปแบบช้าออกไป
+        </div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">วิสัยทัศน์ระยะยาว: 70 โรงงาน</div>
+        <div class="card-body">
+          OXY ตั้งเป้าสร้างโรงงานดูดคาร์บอนถึง <strong>70 แห่ง</strong> ดูดได้รวมสูงสุด 30 ล้านตัน CO2 ต่อปีภายในปี 2035 งบประมาณราว $8 พันล้าน
+          <br><br>
+          รายได้มาจากการขาย "เครดิตคาร์บอน" ให้บริษัทที่ต้องชดเชยการปล่อยคาร์บอน + เครดิตภาษีจากรัฐบาลสหรัฐฯ (45Q) + การขายเชื้อเพลิงคาร์บอนต่ำ
+          <br><br>
+          <span class="pill pill-accent">JV ใหม่</span> จับมือ XRG (บริษัทลูก ADNOC ของ UAE) ศึกษาตั้งศูนย์ DAC ใน South Texas เพิ่ม
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal"><strong>จุดสำคัญที่ต้องเข้าใจ:</strong> DAC ยังเป็นเทคโนโลยีที่ยัง "ไม่พิสูจน์เชิงพาณิชย์" — ต้นทุนต่อตันยังสูงมาก และต้องพึ่งเงินอุดหนุน/เครดิตภาษีรัฐบาลเป็นหลัก STRATOS คือการทดสอบจริงครั้งแรกว่าโมเดลนี้จะทำเงินได้หรือไม่ ถ้าสำเร็จจะเป็นเครื่องยนต์การเติบโตใหม่ ถ้าล้มเหลวก็เป็นแค่ต้นทุนจม</div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 03 MARKET -->
+<div class="section-white" id="market">
+  <div class="container">
+    <div class="sec-eyebrow reveal">03 — โอกาสทางตลาด</div>
+    <h2 class="sec-title reveal">เจ้าที่ดินรายใหญ่ใน Permian<br>+ ตลาดคาร์บอนที่เพิ่งเริ่ม</h2>
+    <p class="sec-sub reveal">OXY ยืนอยู่บนตลาดสองตลาดที่ต่างกันสุดขั้ว — ตลาดน้ำมันที่โตเต็มที่แล้วและผันผวนตามราคาโภคภัณฑ์ กับตลาดจัดการคาร์บอนที่ยังเล็กแต่อาจโตมหาศาลถ้านโยบายโลกหนุน</p>
+
+    <div class="grid-4">
+      <div class="metric-card reveal">
+        <div class="metric-val metric-val-accent">เบอร์ต้นๆ</div>
+        <div class="metric-label">ผู้ถือครองพื้นที่ Permian รายใหญ่ที่สุดรายหนึ่งของสหรัฐฯ</div>
+      </div>
+      <div class="metric-card reveal reveal-delay-1">
+        <div class="metric-val">~1,700</div>
+        <div class="metric-label">หลุมที่ยังไม่พัฒนา (locations) ได้เพิ่มจากดีล CrownRock</div>
+      </div>
+      <div class="metric-card reveal reveal-delay-2">
+        <div class="metric-val">30M ตัน</div>
+        <div class="metric-label">เป้าหมายดูดคาร์บอน/ปี ภายในปี 2035 (DAC)</div>
+      </div>
+      <div class="metric-card reveal reveal-delay-3">
+        <div class="metric-val">$45Q</div>
+        <div class="metric-label">เครดิตภาษีคาร์บอนสหรัฐฯ ที่หนุนเศรษฐศาสตร์ DAC</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;font-weight:600;margin:64px 0 24px;color:var(--ink)" class="reveal">พันธมิตร &amp; ลูกค้าคาร์บอน</h3>
+    <p style="font-size:15px;color:var(--body);max-width:680px;margin-bottom:28px" class="reveal">จุดที่ทำให้ DAC ของ OXY น่าเชื่อถือกว่าสตาร์ทอัพคาร์บอนทั่วไป คือมีบริษัทระดับโลกจองซื้อเครดิตคาร์บอนล่วงหน้า และมีพันธมิตรเงินทุนใหญ่</p>
+
+    <div class="partner-grid">
+      <div class="partner-card reveal"><span class="partner-logo-txt">BlackRock</span><span class="partner-note">บริษัทจัดการสินทรัพย์ใหญ่สุดในโลก ร่วมลงทุน $550 ล้านในโครงการ STRATOS ผ่าน JV</span></div>
+      <div class="partner-card reveal reveal-delay-1"><span class="partner-logo-txt">Microsoft</span><span class="partner-note">ทำสัญญาซื้อเครดิตการดูดคาร์บอนปริมาณมากเพื่อชดเชยการปล่อยคาร์บอนของดาต้าเซ็นเตอร์ AI</span></div>
+      <div class="partner-card reveal"><span class="partner-logo-txt">ADNOC / XRG</span><span class="partner-note">บริษัทน้ำมันแห่งชาติ UAE ศึกษา JV ตั้งศูนย์ DAC ใน South Texas ร่วมกัน</span></div>
+      <div class="partner-card reveal reveal-delay-1"><span class="partner-logo-txt">Berkshire</span><span class="partner-note">นอกจากถือหุ้น ยังซื้อ OxyChem $9.7B และถือหุ้นบุริมสิทธิ $8.5B (ดอกเบี้ย 8%)</span></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 04 FINANCIALS -->
+<div class="section-gray" id="financials">
+  <div class="container">
+    <div class="sec-eyebrow reveal">04 — การเงิน</div>
+    <h2 class="sec-title reveal">เรื่องราวคือ "ลดหนี้"<br>หลังดีลใหญ่สองดีล</h2>
+    <p class="sec-sub reveal">โจทย์การเงินที่สำคัญที่สุดของ OXY ตอนนี้คือหนี้ — หนี้พุ่งจากการซื้อ CrownRock ($12B) ปี 2024 แล้วกำลังถูกกดลงอย่างรวดเร็วด้วยเงินสดจากการดำเนินงานและเงินขาย OxyChem ($9.7B) ต้นปี 2026 ตัวเลขทั้งหมดอ้างอิงผลประกอบการไตรมาส 1/2026 (รายงาน 5 พ.ค. 2026)</p>
+
+    <div class="grid-2" style="align-items:start;gap:40px">
+      <div class="reveal">
+        <h3 style="font-size:16px;font-weight:600;margin-bottom:8px;color:var(--ink)">การลดหนี้หลัก (Principal Debt)</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:8px">หน่วย: พันล้านดอลลาร์ — ลดลงเร็วมากในรอบ 6 เดือน</p>
+        <div class="fin-chart">
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar" style="height:100%"></div></div>
+            <div class="fin-bar-val">$20.8B</div>
+            <div class="fin-bar-year">ปลายปี'25</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar" style="height:66%"></div></div>
+            <div class="fin-bar-val">$13.8B</div>
+            <div class="fin-bar-year">หลังขาย OxyChem</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar" style="height:64%"></div></div>
+            <div class="fin-bar-val">$13.3B</div>
+            <div class="fin-bar-year">5 พ.ค.'26</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-track"><div class="fin-bar projected" style="height:48%"></div></div>
+            <div class="fin-bar-val">$10B</div>
+            <div class="fin-bar-year">เป้าหมาย</div>
+          </div>
+        </div>
+        <p style="font-size:12.5px;color:var(--muted)">แท่งประ = เป้าหมายที่ยังไม่ถึง · ชำระหนี้ไปแล้ว $7.1B ในช่วง ~5 เดือนแรกของปี 2026</p>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <h3 style="font-size:16px;font-weight:600;margin-bottom:16px;color:var(--ink)">ตัวเลขสำคัญ Q1 2026</h3>
+        <div class="card" style="padding:8px 28px">
+          <div class="data-table">
+            <div class="data-row"><span class="data-key">กำไรต่อหุ้น (EPS)</span><span class="data-val data-val-up">$1.06</span></div>
+            <div class="data-row"><span class="data-key">คาดการณ์นักวิเคราะห์</span><span class="data-val">$0.59</span></div>
+            <div class="data-row"><span class="data-key">รายได้ (Revenue)</span><span class="data-val">$5.11B</span></div>
+            <div class="data-row"><span class="data-key">กำไรสุทธิ</span><span class="data-val data-val-up">$3.2B</span></div>
+            <div class="data-row"><span class="data-key">FCF (กระแสเงินสดอิสระ)*</span><span class="data-val data-val-up">$1.7B</span></div>
+            <div class="data-row"><span class="data-key">เงินสดในมือ</span><span class="data-val">$3.8B</span></div>
+            <div class="data-row"><span class="data-key">ราคาน้ำมันที่ขายได้จริง</span><span class="data-val">$69.91/บาร์เรล</span></div>
+            <div class="data-row"><span class="data-key">ต้นทุนผลิตในประเทศ</span><span class="data-val data-val-accent">~$8.10/boe</span></div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">*FCF ก่อนเงินทุนหมุนเวียน เพิ่มขึ้น 52% เทียบปีก่อน · EPS ชนะคาดถึง ~80% แต่รายได้ยังพลาดเป้าเล็กน้อย</p>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:48px"><strong>เข้าใจดีล CrownRock:</strong> ปี 2024 OXY ซื้อผู้ผลิต Permian ชื่อ CrownRock มูลค่า $12B (จ่ายเงินสด+หุ้น+รับหนี้ $1.2B) เพิ่มกำลังผลิต 170,000 boe/d และคลังหลุมต้นทุนต่ำ +33% ทำให้พอร์ตน้ำมันแกร่งขึ้น แต่ก็เป็นต้นเหตุของภาระหนี้ก้อนใหญ่ที่บริษัทกำลังเร่งจ่ายคืนอยู่ตอนนี้</div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 05 COMPETITION -->
+<div class="section-white" id="competition">
+  <div class="container">
+    <div class="sec-eyebrow reveal">05 — คู่แข่ง</div>
+    <h2 class="sec-title reveal">ตัวเล็กกว่ายักษ์<br>แต่มีของที่ยักษ์ไม่มี</h2>
+    <p class="sec-sub reveal">ใน Permian OXY ต้องสู้กับซูเปอร์เมเจอร์อย่าง ExxonMobil และ Chevron ที่ใหญ่กว่าและงบดุลแข็งแรงกว่ามาก จุดต่างของ OXY คือสเกลธุรกิจคาร์บอน (DAC) ที่นำหน้าคู่แข่ง และการมี Berkshire หนุนหลัง</p>
+
+    <div class="card reveal" style="padding:12px 8px;overflow-x:auto">
+      <table class="comp-table">
+        <thead>
+          <tr><th>บริษัท</th><th>กำลังผลิต Permian</th><th>มูลค่าตลาด</th><th>จุดเด่น</th></tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td>Occidental (OXY)</td>
+            <td data-label="Permian">~1.2M+ boe/d</td>
+            <td data-label="Market Cap">~$49.5B</td>
+            <td data-label="จุดเด่น">ผู้นำ DAC/คาร์บอน + Berkshire หนุน + ต้นทุนต่ำ</td>
+          </tr>
+          <tr>
+            <td>ExxonMobil (XOM)</td>
+            <td data-label="Permian">~1.7M boe/d</td>
+            <td data-label="Market Cap">~$500B+</td>
+            <td data-label="จุดเด่น">ใหญ่สุดใน Permian หลังซื้อ Pioneer งบดุลแกร่งสุด</td>
+          </tr>
+          <tr>
+            <td>Chevron (CVX)</td>
+            <td data-label="Permian">~1.06M boe/d</td>
+            <td data-label="Market Cap">~$300B+</td>
+            <td data-label="จุดเด่น">โมเดล "โรงงาน" ต้นทุนต่ำ + ที่ดินมรดกค่าสัมปทานถูก</td>
+          </tr>
+          <tr>
+            <td>ConocoPhillips (COP)</td>
+            <td data-label="Permian">รายใหญ่</td>
+            <td data-label="Market Cap">~$120B+</td>
+            <td data-label="จุดเด่น">ผู้ผลิตอิสระชั้นนำ พอร์ตกระจายหลายแอ่ง</td>
+          </tr>
+          <tr>
+            <td>Diamondback (FANG)</td>
+            <td data-label="Permian">เน้น Permian ล้วน</td>
+            <td data-label="Market Cap">~$45B</td>
+            <td data-label="จุดเด่น">ต้นทุนต่ำ โฟกัส Permian อย่างเดียว ประสิทธิภาพสูง</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:14px" class="reveal">มูลค่าตลาดเป็นค่าโดยประมาณ ณ กลางปี 2026 อาจคลาดเคลื่อนตามราคาตลาด</p>
+
+    <div class="grid-2" style="margin-top:40px">
+      <div class="card reveal">
+        <div class="card-title">Moat (ความได้เปรียบที่ป้องกันคู่แข่ง) ของ OXY</div>
+        <div class="card-body">• <strong>ความเชี่ยวชาญ CO2-EOR</strong> ระดับลึกที่สุดในอุตสาหกรรม — เป็นรากฐานทำให้ DAC น่าเชื่อถือ<br>• <strong>คลังหลุม Permian ต้นทุนต่ำ</strong> breakeven ~$40 ทำให้ทำกำไรได้แม้น้ำมันถูก<br>• <strong>ผู้นำ DAC</strong> ที่มีโรงงานจริงเดินเครื่อง ไม่ใช่แค่แผน</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">จุดอ่อนเทียบคู่แข่ง</div>
+        <div class="card-body">• <strong>หนี้สูงกว่า</strong> มากเทียบกับ XOM/CVX ที่งบดุลสะอาด<br>• <strong>เล็กกว่ามาก</strong> ทนแรงกระแทกราคาน้ำมันได้น้อยกว่าซูเปอร์เมเจอร์<br>• <strong>ภาระจ่าย Berkshire</strong> ดอกเบี้ยหุ้นบุริมสิทธิ 8% เป็นต้นทุนที่คู่แข่งไม่มี</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 06 LEADERSHIP -->
+<div class="section-gray" id="leadership">
+  <div class="container">
+    <div class="sec-eyebrow reveal">06 — ผู้บริหารและนักลงทุน</div>
+    <h2 class="sec-title reveal">เปลี่ยน CEO กลางปี 2026<br>+ เงาของ Warren Buffett</h2>
+    <p class="sec-sub reveal">จุดเปลี่ยนสำคัญ: Vicki Hollub ผู้นำตำนานที่พา OXY ผ่านการแปลงร่าง 10 ปี เกษียณตำแหน่ง CEO เมื่อ 1 มิ.ย. 2026 ส่งไม้ต่อให้ Richard Jackson คนที่มาจากสายธุรกิจคาร์บอนต้นทุนต่ำ</p>
+
+    <div class="grid-3">
+      <div class="person-card reveal">
+        <div class="person-name">Richard Jackson</div>
+        <div class="person-title">President &amp; CEO (ตั้งแต่ 1 มิ.ย. 2026)</div>
+        <div class="person-bio">เดิมเป็น COO และเคยดำรงตำแหน่ง President of Low Carbon Integrated Technologies — สะท้อนว่า OXY ตั้งใจสานต่อกลยุทธ์คาร์บอน รับช่วงต่อพร้อมโจทย์ใหญ่: ลดหนี้ ดันราคาหุ้นที่ยังนิ่ง และจ่ายปันผลก้อนโตให้ Berkshire</div>
+      </div>
+      <div class="person-card reveal reveal-delay-1">
+        <div class="person-name">Vicki Hollub</div>
+        <div class="person-title">อดีต CEO (2016–2026) · ยังอยู่ในบอร์ด</div>
+        <div class="person-bio">ผู้หญิงคนแรกที่นำบริษัทน้ำมันใหญ่ของสหรัฐฯ เป็นคนผลักดันดีล Anadarko (2019), CrownRock (2024) และวิสัยทัศน์ "Net-Zero Oil" ผ่าน DAC คนที่ Buffett ชื่นชมในความเข้าใจธุรกิจน้ำมันอย่างลึกซึ้ง</div>
+      </div>
+      <div class="person-card reveal reveal-delay-2">
+        <div class="person-name">Warren Buffett / Berkshire</div>
+        <div class="person-title">ผู้ถือหุ้นรายใหญ่ที่สุด</div>
+        <div class="person-bio">ถือหุ้นสามัญ ~26.6% (264.9 ล้านหุ้น ณ 31 มี.ค. 2026) เมื่อรวม warrants (สิทธิซื้อหุ้น) เป็นสัดส่วนเศรษฐกิจ ~32.7% มีไฟเขียวจากทางการให้ซื้อได้ถึง 50%</div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-top:32px">
+      <div class="card-title">ทำไม Buffett ถึงชอบ OXY?</div>
+      <div class="card-body" style="font-size:14.5px">
+        Berkshire เริ่มสะสม OXY หนักตั้งแต่ปี 2022 เหตุผลที่มักถูกอ้างถึง:<br><br>
+        • <strong>เข้าใจง่าย ทำเงินจริง</strong> — เป็นสินทรัพย์น้ำมันในสหรัฐฯ ต้นทุนต่ำ สร้างกระแสเงินสดได้ในราคาน้ำมันหลากหลายระดับ ตรงสไตล์ Buffett ที่ชอบธุรกิจเรียบง่ายแต่ทำกำไรสม่ำเสมอ<br>
+        • <strong>ดีลที่ได้เปรียบ</strong> — Berkshire ถือหุ้นบุริมสิทธิ $8.5B ที่ได้ดอกเบี้ย <strong>8% ต่อปี</strong> (รับปันผลบุริมสิทธิ ~$170 ล้านใน Q1 2026 เดียว) บวก warrants ราคาใช้สิทธิ $59.586 — เป็นโครงสร้างที่ให้ผลตอบแทนมั่นคงก่อน upside<br>
+        • <strong>ความเชื่อในผู้บริหาร</strong> — Buffett ยกย่อง Vicki Hollub ต่อสาธารณะหลายครั้ง<br><br>
+        <span class="pill pill-accent">หมายเหตุ</span> ภาระจ่าย Berkshire ก็เป็นดาบสองคม — เป็นต้นทุนหนักของ OXY และ Barclays คาดว่ากว่า OXY จะเตรียมเงินไถ่ถอนหุ้นบุริมสิทธิคืนได้ต้องรอถึงครึ่งหลังปี 2027
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 07 CATALYSTS -->
+<div class="section-white" id="catalysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">07 — ตัวเร่งและข่าว</div>
+    <h2 class="sec-title reveal">ไทม์ไลน์เหตุการณ์สำคัญ</h2>
+    <p class="sec-sub reveal">เส้นทางล่าสุดของ OXY — สีเขียว = บวก, สีแดง = ลบ/กดดัน, สีทอง = เป็นกลาง/ต้องจับตา</p>
+
+    <div class="grid-2" style="gap:48px;align-items:start">
+      <div class="reveal">
+        <div class="timeline">
+          <div class="timeline-item pos">
+            <div class="timeline-date">ส.ค. 2024</div>
+            <div class="timeline-title">ปิดดีลซื้อ CrownRock $12B</div>
+            <div class="timeline-desc">เพิ่มกำลังผลิต Permian +170,000 boe/d และคลังหลุมต้นทุนต่ำ แต่ก่อหนี้ก้อนใหญ่</div>
+          </div>
+          <div class="timeline-item pos">
+            <div class="timeline-date">เม.ย. 2025</div>
+            <div class="timeline-title">STRATOS ได้ใบอนุญาต Class VI</div>
+            <div class="timeline-desc">EPA อนุมัติให้อัดคาร์บอนลงดินถาวร — ก้าวสำคัญทางกฎหมายของธุรกิจ DAC</div>
+          </div>
+          <div class="timeline-item pos">
+            <div class="timeline-date">2 ม.ค. 2026</div>
+            <div class="timeline-title">ปิดการขาย OxyChem $9.7B</div>
+            <div class="timeline-desc">ขายธุรกิจเคมีให้ Berkshire เงินสดล้วน นำไปจ่ายหนี้ ~$6.7B ทันที — เหตุการณ์การเงินสำคัญสุดของต้นปี</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">1 พ.ค. 2026</div>
+            <div class="timeline-title">ประกาศเปลี่ยน CEO</div>
+            <div class="timeline-desc">Vicki Hollub เกษียณ (มีผล 1 มิ.ย.) Richard Jackson ขึ้นแทน — ต่อเนื่องกลยุทธ์คาร์บอน</div>
+          </div>
+          <div class="timeline-item pos">
+            <div class="timeline-date">5 พ.ค. 2026</div>
+            <div class="timeline-title">Q1 2026: EPS ชนะคาด ~80%</div>
+            <div class="timeline-desc">EPS $1.06 vs คาด $0.59, ผลิตเกินเป้า, FCF +52% — แต่หุ้นกลับร่วงเพราะรายได้พลาดเป้า</div>
+          </div>
+          <div class="timeline-item neg">
+            <div class="timeline-date">พ.ค. 2026</div>
+            <div class="timeline-title">STRATOS เจอปัญหาชิ้นส่วน เลื่อนเปิดเต็มรูปแบบ</div>
+            <div class="timeline-desc">เทคโนโลยีหลักทำงานได้ แต่ติดปัญหาชิ้นส่วนนอกกระบวนการ ทำให้เปิดเชิงพาณิชย์เต็มที่ช้าลงอีก</div>
+          </div>
+          <div class="timeline-item neg">
+            <div class="timeline-date">มิ.ย. 2026</div>
+            <div class="timeline-title">ราคาหุ้นอ่อนตัว -10.7% ในเดือน</div>
+            <div class="timeline-desc">หุ้นลงมาแถว $49.85 (29 มิ.ย.) ต่ำกว่าเป้านักวิเคราะห์ — CEO ใหม่รับโจทย์หนัก</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 08 RISKS -->
+<div class="section-gray" id="risks">
+  <div class="container">
+    <div class="sec-eyebrow reveal">08 — ความเสี่ยง</div>
+    <h2 class="sec-title reveal">สิ่งที่อาจทำให้พลาด</h2>
+    <p class="sec-sub reveal">OXY มีความเสี่ยงเฉพาะตัวที่สูงกว่าบริษัทน้ำมันทั่วไป เพราะแบกทั้งหนี้ ราคาน้ำมัน และเดิมพันเทคโนโลยีที่ยังไม่พิสูจน์ พร้อมกัน</p>
+
+    <div class="grid-3">
+      <div class="risk-card risk-high reveal">
+        <span class="risk-badge">ความเสี่ยงสูง</span>
+        <div class="risk-title">ราคาน้ำมันผันผวน</div>
+        <div class="risk-body">รายได้และกระแสเงินสดผูกกับราคา WTI โดยตรง ถ้าราคาน้ำมันดิ่งต่ำกว่า breakeven นานๆ แผนลดหนี้และลงทุนคาร์บอนจะสะดุดทันที เป็นตัวแปรที่บริษัทควบคุมไม่ได้เลย</div>
+      </div>
+      <div class="risk-card risk-high reveal reveal-delay-1">
+        <span class="risk-badge">ความเสี่ยงสูง</span>
+        <div class="risk-title">ภาระหนี้ + ปันผล Berkshire</div>
+        <div class="risk-body">แม้ลดหนี้เร็ว แต่ยังเหลือ $13.3B และต้องจ่ายดอกเบี้ยหุ้นบุริมสิทธิ Berkshire 8%/ปี การไถ่ถอนหุ้นบุริมสิทธิคาดต้องรอถึงครึ่งหลังปี 2027 จำกัดความยืดหยุ่นทางการเงิน</div>
+      </div>
+      <div class="risk-card risk-med reveal reveal-delay-2">
+        <span class="risk-badge">ความเสี่ยงกลาง</span>
+        <div class="risk-title">DAC ยังไม่พิสูจน์เชิงพาณิชย์</div>
+        <div class="risk-body">STRATOS ดีเลย์ซ้ำและต้นทุนต่อตันยังสูง ถ้าทำกำไรเองไม่ได้และพึ่งเงินอุดหนุนรัฐ การลงทุน $8B กับ 70 โรงงานอาจกลายเป็นต้นทุนจมแทนที่จะเป็นเครื่องยนต์โต</div>
+      </div>
+      <div class="risk-card risk-med reveal">
+        <span class="risk-badge">ความเสี่ยงกลาง</span>
+        <div class="risk-title">ความเสี่ยงนโยบาย/เครดิตภาษี</div>
+        <div class="risk-body">เศรษฐศาสตร์ DAC พึ่งเครดิตภาษี 45Q และนโยบายสนับสนุนคาร์บอนของรัฐบาลสหรัฐฯ การเปลี่ยนรัฐบาลหรือแก้กฎหมายอาจกระทบรายได้ส่วนนี้โดยตรง</div>
+      </div>
+      <div class="risk-card risk-med reveal reveal-delay-1">
+        <span class="risk-badge">ความเสี่ยงกลาง</span>
+        <div class="risk-title">เปลี่ยนผู้นำในจังหวะสำคัญ</div>
+        <div class="risk-body">CEO ใหม่ Richard Jackson รับช่วงพร้อมโจทย์หนัก (หนี้ + หุ้นนิ่ง + คาร์บอน) แม้มาจากภายในและสานต่อกลยุทธ์ แต่การเปลี่ยนผู้นำในช่วงเปราะบางก็เป็นความไม่แน่นอน</div>
+      </div>
+      <div class="risk-card risk-low reveal reveal-delay-2">
+        <span class="risk-badge">ความเสี่ยงต่ำ</span>
+        <div class="risk-title">คุณภาพสินทรัพย์หลัก</div>
+        <div class="risk-body">พอร์ต Permian ต้นทุนต่ำและความเชี่ยวชาญทางเทคนิคของ OXY แข็งแกร่ง ฐานการผลิตน้ำมันหลักจึงค่อนข้างมั่นคง เป็นเกราะรองรับในช่วงเปลี่ยนผ่าน</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 09 ANALYSTS -->
+<div class="section-white" id="analysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">09 — มุมมองนักวิเคราะห์</div>
+    <h2 class="sec-title reveal">ตลาดมองว่า "ถือไว้"<br>upside จำกัด</h2>
+    <p class="sec-sub reveal">ฉันทามตินักวิเคราะห์ Wall Street ส่วนใหญ่ให้เรต "Hold" (ถือ) — มองว่าราคาปัจจุบันสะท้อนภาพรวมไปมากแล้ว ทั้งฝั่งดีและฝั่งเสี่ยง ข้อมูล ณ กลางปี 2026</p>
+
+    <div class="grid-2" style="gap:48px;align-items:start">
+      <div class="reveal">
+        <h3 style="font-size:16px;font-weight:600;margin-bottom:20px;color:var(--ink)">การกระจายเรต (ราว 40 นักวิเคราะห์)</h3>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>ซื้อ (Buy)</span><span>~8 ราย</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:31%;background:var(--up)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>ถือ (Hold)</span><span>~15 ราย</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:58%;background:var(--accent-bright)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>ขาย (Sell)</span><span>~3 ราย</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:11%;background:var(--down)"></div></div>
+        </div>
+
+        <div class="big-stat-row" style="margin-top:36px">
+          <div class="big-stat">
+            <div class="big-stat-num">~$62</div>
+            <div class="big-stat-desc">ราคาเป้าหมายเฉลี่ย (คลัสเตอร์ $61–65)</div>
+          </div>
+          <div class="big-stat">
+            <div class="big-stat-num">$55–75</div>
+            <div class="big-stat-desc">ช่วงเป้าหมาย ต่ำสุด–สูงสุด</div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">เทียบราคา $49.85 (29 มิ.ย.) เป้าเฉลี่ยบ่งชี้ upside ~20% แต่ยังเป็นเรต Hold เพราะความไม่แน่นอนสูง</p>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <div class="card" style="margin-bottom:20px;border-left:3px solid var(--up)">
+          <div class="card-title" style="color:var(--up)">มุมมองฝั่งบวก (Bull case)</div>
+          <div class="card-body">• ลดหนี้เร็วกว่าคาด เงิน OxyChem ช่วยล้างงบดุล<br>• Permian ต้นทุนต่ำปั๊มเงินสดได้แม้น้ำมันถูก<br>• DAC อาจเป็นเครื่องยนต์โตใหม่ถ้าสำเร็จ + Microsoft/BlackRock หนุน<br>• Berkshire ถือหนัก = พื้นรับราคา (มองว่าอาจซื้อเพิ่ม)</div>
+        </div>
+        <div class="card" style="border-left:3px solid var(--down)">
+          <div class="card-title" style="color:var(--down)">มุมมองฝั่งลบ (Bear case)</div>
+          <div class="card-body">• หนี้ยังสูง + ภาระปันผลบุริมสิทธิ Berkshire กดผลตอบแทนผู้ถือหุ้นสามัญ<br>• DAC ดีเลย์ซ้ำ ยังไม่พิสูจน์ว่าทำเงินได้<br>• ราคาน้ำมันอ่อนตัวกระทบทันที<br>• หุ้น underperform ตลาด ราคายังนิ่ง</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 10 SUMMARY -->
+<div class="section-gray" id="summary">
+  <div class="container">
+    <div class="sec-eyebrow reveal">10 — สรุป</div>
+    <h2 class="sec-title reveal">สรุปสำหรับคนที่เพิ่งรู้จัก OXY</h2>
+
+    <div class="grid-2" style="gap:24px;margin-bottom:32px">
+      <div class="card reveal">
+        <div class="card-title">สิ่งที่ต้องรู้ (What to know)</div>
+        <div class="card-body">
+          • OXY = ผู้ผลิตน้ำมัน-ก๊าซรายใหญ่ใน Permian + ผู้บุกเบิกธุรกิจดูดคาร์บอน (DAC)<br>
+          • ขายธุรกิจเคมี OxyChem ให้ Berkshire $9.7B ต้นปี 2026 เพื่อเร่งลดหนี้<br>
+          • Berkshire ของ Buffett ถือหุ้นเศรษฐกิจรวม ~32.7% เป็นทั้งแรงหนุนและภาระ (ปันผลบุริมสิทธิ 8%)<br>
+          • เปลี่ยน CEO กลางปี 2026 จาก Vicki Hollub เป็น Richard Jackson
+        </div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">สิ่งที่ต้องจับตา (What to watch)</div>
+        <div class="card-body">
+          • หนี้หลักเดินถึงเป้า $10B ได้ตามแผนหรือไม่<br>
+          • STRATOS เปิดเชิงพาณิชย์เต็มรูปแบบเมื่อไหร่ และทำเงินได้จริงแค่ไหน<br>
+          • ราคาน้ำมัน WTI — ตัวแปรใหญ่สุดต่อกระแสเงินสด<br>
+          • Berkshire จะซื้อเพิ่ม / ไถ่ถอนหุ้นบุริมสิทธิเมื่อไหร่ (คาดครึ่งหลัง 2027)<br>
+          • ผลงาน Q2 2026 (รายงาน 4 ส.ค. 2026)
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="background:var(--canvas);border:1px solid var(--hairline)">
+      <div class="card-title">สรุปหนึ่งย่อหน้า</div>
+      <div class="card-body" style="font-size:15px;line-height:1.8">
+        Occidental Petroleum (OXY) คือบริษัทน้ำมัน-ก๊าซขนาดกลางที่กำลังเล่นเกมสองชั้น — ใช้พอร์ต Permian ต้นทุนต่ำเป็นเครื่องปั๊มเงินสดเพื่อเร่งลดหนี้ก้อนใหญ่จากดีล CrownRock พร้อมเดิมพันอนาคตกับเทคโนโลยีดูดคาร์บอนจากอากาศ (DAC) ผ่านโรงงาน STRATOS และแผน 70 โรงงานในปี 2035 จุดเด่นคือมี Warren Buffett/Berkshire ถือหุ้นหนักเป็นแรงหนุนความเชื่อมั่น และต้นทุนผลิตที่แข่งขันได้ จุดเสี่ยงคือหนี้ที่ยังสูง ภาระปันผลบุริมสิทธิ ความผันผวนของราคาน้ำมัน และ DAC ที่ยังพิสูจน์เชิงพาณิชย์ไม่ได้ ตลาดส่วนใหญ่จึงให้เรต "ถือ" — มองว่าเป็นเรื่องราวการพลิกฟื้น (turnaround) ที่น่าติดตามแต่ยังต้องรอพิสูจน์
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="nav-logo">Occidental Petroleum <span>·</span> OXY</div>
+  <div class="footer-legal">
+    รายงานฉบับนี้จัดทำเพื่อความเข้าใจเชิงธุรกิจเท่านั้น ไม่ใช่คำแนะนำการลงทุน ไม่ใช่การชี้นำซื้อ-ขาย และไม่ใช่การประเมินมูลค่าหุ้น (valuation) ตัวเลขทั้งหมดอ้างอิงข้อมูลสาธารณะ ณ ช่วงปลายเดือน มิ.ย. 2026 (ราคาหุ้น $49.85 ณ 29 มิ.ย. 2026; ผลประกอบการ Q1 2026 รายงาน 5 พ.ค. 2026) ผู้ลงทุนควรตรวจสอบข้อมูลล่าสุดและศึกษาเพิ่มเติมก่อนตัดสินใจ · แหล่งข้อมูล: รายงานบริษัท (oxy.com / SEC filings), CNBC, Reuters, StockAnalysis, MarketBeat, Carbon Herald, 1PointFive และสื่อการเงินอื่นๆ
+    <br><br>
+    จัดทำโดย Neon · 30 มิ.ย. 2026
+  </div>
+</footer>
+
+<script>
+(function(){
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+(function(){
+  const links=document.querySelectorAll('.nav-links a');
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}}),{threshold:0.4});
+  document.querySelectorAll('[id]').forEach(s=>{if(s.tagName!=='NAV')io.observe(s)});
+})();
+</script>
+</body>
+</html>
