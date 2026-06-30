@@ -245,7 +245,7 @@ window.MoneyView = (function () {
       const cyc = s.cycle === 'yr' ? '/yr' : '/mo';
       const nextStr = `${s.next.getDate()} ${THMONTH[s.next.getMonth()].slice(0, 3)}`;
       const initial = esc((s.name[0] || '#').toUpperCase());
-      const src = s.logo ? esc(s.logo) : (s.domain ? `https://logo.clearbit.com/${esc(s.domain)}?size=128` : '');
+      const src = s.logo ? esc(s.logo) : (s.domain ? `https://www.google.com/s2/favicons?sz=128&amp;domain=${esc(s.domain)}` : '');
       const tile = src
         ? `<div class="mny-tile mny-sub-ic"><img src="${src}" alt="" onerror="this.remove()"><span>${initial}</span></div>`
         : `<div class="mny-tile">${initial}</div>`;
