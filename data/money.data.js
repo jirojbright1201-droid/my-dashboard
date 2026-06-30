@@ -13,9 +13,11 @@ window.MONEY_DATA = {
     ],
     "expenses": [
       {"date":"2026-07-01","amount":1500,"category":"Investment","name":"Dime","notes":""},
-      {"date":"2026-07-01","amount":1000,"category":"Emergency","name":"Emergency Fund","notes":""}
+      {"date":"2026-07-01","amount":1000,"category":"Emergency","name":"Emergency Fund","notes":""},
+      {"date":"2026-07-01","amount":3000,"category":"Family","name":"ครอบครัว","notes":""},
+      {"date":"2026-07-01","amount":1500,"category":"Rent","name":"ค่าเช่า","notes":""}
     ]
   }
 };
 window.MONEY_KEYS = ["2026-07"];
-window.MONEY_UPDATED = "30/06/2026";
+window.MONEY_UPDATED = "01/07/2026";
