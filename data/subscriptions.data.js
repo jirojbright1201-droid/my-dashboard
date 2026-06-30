@@ -2,7 +2,8 @@
 // schema: subs: {name, amount, cycle:'mo'|'yr', day(1-31), month(1-12 เฉพาะ yr), cur:'USD'(ออปชัน, default บาท), domain(ออปชัน), note}
 //   cycle = 'mo' รายเดือน / 'yr' รายปี · day/month = รอบตัดบิล
 //   cur:'USD' = amount เป็นดอลลาร์ (โชว์ $ จริง) · รวมยอดแปลงเป็นบาทด้วย usdthb
-//   domain = โดเมนแบรนด์สำหรับดึงโลโก้ (เช่น 'ais.co.th') → Clearbit → favicon → ตัวอักษรย่อ ถ้าไม่ใส่ใช้ตัวอักษรย่อ
+//   domain = โดเมนแบรนด์ดึงโลโก้ผ่าน Clearbit (เช่น 'ais.co.th') → ถ้าไม่มีเด้งเป็นตัวอักษรย่อ
+//   logo = URL โลโก้ตรงๆ (ออปชัน) ใช้ override ถ้า Clearbit ไม่มีแบรนด์นั้น — มาก่อน domain
 window.SUBS_DATA = {
   "currency": "฿",
   "usdthb": 33.7,
