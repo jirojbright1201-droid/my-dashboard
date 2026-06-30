@@ -105,6 +105,16 @@ window.MoneyView = (function () {
     const balance = totalIn - totalOut;
     const totalBudget = Object.values(budget).reduce((s, v) => s + v, 0);
 
+    // เหลือใช้ต่อวัน — งบที่ยังไม่ใช้ ÷ วันที่เหลือในเดือนที่เลือก
+    const mkey = KEYS[monthIdx] || '';
+    const [my, mm] = mkey.split('-').map(Number);
+    const now = new Date();
+    const dim = new Date(my, mm, 0).getDate();
+    let daysLeft = 0;
+    if (my === now.getFullYear() && mm === now.getMonth() + 1) daysLeft = dim - now.getDate() + 1;
+    else if (my > now.getFullYear() || (my === now.getFullYear() && mm > now.getMonth() + 1)) daysLeft = dim;
+    const perDay = (totalBudget > 0 && daysLeft > 0) ? Math.max(0, Math.floor((totalBudget - totalOut) / daysLeft)) : null;
+
     // donut — รวมหมวดเล็กเป็น "อื่นๆ"
     const sc = spentByCat(expenses);
     let pairs = Object.entries(sc).sort((a, b) => b[1] - a[1]);
@@ -138,6 +148,7 @@ window.MoneyView = (function () {
         <div class="mny-hero-lbl">Balance this month</div>
         <div class="mny-hero-bal${balance < 0 ? ' neg' : ''}" data-count="${balance}" data-cprefix="฿" data-cdec="0">${fmtMoney(balance)}</div>
         <div class="mny-hero-sub">Total budget ${fmtMoney(totalBudget)}</div>
+        ${perDay != null ? `<div class="mny-hero-safe"><b data-count="${perDay}" data-cprefix="฿" data-cdec="0">${fmtMoney(perDay)}</b><span>เหลือใช้/วัน · อีก ${daysLeft} วัน</span></div>` : ''}
         <div class="mny-hero-split">
           <div class="mny-hs"><div class="mny-hs-lab">Income</div><div class="mny-hs-val up">${fmtMoney(totalIn)}</div><div class="mny-hs-cnt">${income.length} items</div></div>
           <div class="mny-hs"><div class="mny-hs-lab">Expenses</div><div class="mny-hs-val down">${fmtMoney(totalOut)}</div><div class="mny-hs-cnt">${expenses.length} items</div></div>
