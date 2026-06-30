@@ -56,7 +56,7 @@ const DATA = {
   journal:[],   // pros/cons ฝั่งคุณบนแท็บ Log — เพิ่มได้ภายหลัง
   bench:{ spx:[0], nasdaq:[0] },
   reports:[
-    {ticker:"OXY", date:"30 มิ.ย. 2026", file:"OXY_2026-06-30.html"},
+    {ticker:"OXY", date:"30 มิ.ย. 2026", file:"OXY_2026-06-30.html?v=2"},
     {ticker:"POET", date:"26 มิ.ย. 2026", file:"POET_2026-06-26.html"}
   ],
   // บทความความรู้ทั่วไป (explainer-html) — ไม่ผูก ticker, โชว์ในแท็บ Thesis. ใหม่สุดไว้บนสุด
