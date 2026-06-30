@@ -11,7 +11,10 @@ window.MONEY_DATA = {
     "income": [
       {"date":"2026-07-01","amount":14728,"source":"Salary","name":"เงินเดือน","notes":""}
     ],
-    "expenses": []
+    "expenses": [
+      {"date":"2026-07-01","amount":1500,"category":"Investment","name":"Dime","notes":""},
+      {"date":"2026-07-01","amount":1000,"category":"Emergency","name":"Emergency Fund","notes":""}
+    ]
   }
 };
 window.MONEY_KEYS = ["2026-07"];
