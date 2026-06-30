@@ -3,7 +3,11 @@
 // source = vault markdown, ไฟล์นี้ = ตัว deploy. CRUD เล็กแก้ที่นี่ + vault แล้ว push
 window.MONEY_DATA = {
   "2026-07": {
-    "budget": {},
+    "budget": {
+      "Restaurant": 3000, "Family": 3000, "Subscriptions": 2000, "Rent": 1500,
+      "Investment": 1500, "Shopping": 500, "Beauty": 0, "Books": 500,
+      "Entertainment": 0, "Study": 0, "Transport": 100, "Emergency": 0
+    },
     "income": [
       {"date":"2026-07-01","amount":14728,"source":"Salary","name":"เงินเดือน","notes":""}
     ],
