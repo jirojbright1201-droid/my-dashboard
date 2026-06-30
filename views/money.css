@@ -23,6 +23,10 @@
 .mny-hero-bal { font-family: var(--mono); font-size: 2.4rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; margin-top: 3px; color: #fff; }
 .mny-hero-bal.neg { color: var(--neg-bright); }
 .mny-hero-sub { font-size: 0.8125rem; color: rgba(255,255,255,.6); margin-top: 5px; }
+.mny-hero-safe { display: inline-flex; align-items: baseline; gap: 7px; margin-top: 12px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); padding: 7px 13px; border-radius: 99px; }
+.mny-hero-safe b { font-family: var(--mono); font-size: 0.95rem; font-weight: 700; color: var(--accent-bright); }
+.mny-hero-safe span { font-size: 0.72rem; color: rgba(255,255,255,.6); }
 .mny-hero-split { display: flex; margin-top: 18px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,.13); }
 .mny-hs { flex: 1; padding: 14px 4px 2px; }
 .mny-hs + .mny-hs { border-left: 1px solid rgba(255,255,255,.13); padding-left: 18px; }
@@ -62,9 +66,13 @@
 .mny-prog { height: 6px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
 .mny-prog-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .4s ease; }
 .mny-prog-fill.over { background: var(--red); }
+.mny-prog-fill.near { background: var(--orange); }
 .mny-brow-foot { display: flex; justify-content: space-between; font-size: 0.72rem; }
 .mny-pct { font-weight: 700; color: var(--text); }
 .mny-pct.over, .mny-rem.over { color: var(--red); }
+.mny-pct.near, .mny-rem.near { color: var(--orange); }
+.mny-brow.over { background: rgba(198,69,69,.08); }
+.mny-brow.near { background: rgba(212,160,23,.10); }
 .mny-rem { color: var(--silver); }
 
 /* ── transactions ── */

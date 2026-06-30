@@ -105,6 +105,16 @@ window.MoneyView = (function () {
     const balance = totalIn - totalOut;
     const totalBudget = Object.values(budget).reduce((s, v) => s + v, 0);
 
+    // เหลือใช้ต่อวัน — งบที่ยังไม่ใช้ ÷ วันที่เหลือในเดือนที่เลือก
+    const mkey = KEYS[monthIdx] || '';
+    const [my, mm] = mkey.split('-').map(Number);
+    const now = new Date();
+    const dim = new Date(my, mm, 0).getDate();
+    let daysLeft = 0;
+    if (my === now.getFullYear() && mm === now.getMonth() + 1) daysLeft = dim - now.getDate() + 1;
+    else if (my > now.getFullYear() || (my === now.getFullYear() && mm > now.getMonth() + 1)) daysLeft = dim;
+    const perDay = (totalBudget > 0 && daysLeft > 0) ? Math.max(0, Math.floor((totalBudget - totalOut) / daysLeft)) : null;
+
     // donut — รวมหมวดเล็กเป็น "อื่นๆ"
     const sc = spentByCat(expenses);
     let pairs = Object.entries(sc).sort((a, b) => b[1] - a[1]);
@@ -119,25 +129,35 @@ window.MoneyView = (function () {
       <span class="mny-leg-val">${fmtMoney(val)} · ${totalOut ? Math.round(val / totalOut * 100) : 0}%</span>
     </div>`).join('');
 
-    // budget rows (เรียงงบมาก→น้อย)
-    const brows = Object.entries(budget).sort((a, b) => b[1] - a[1]).map(([cat, alloc]) => {
-      const spent = sc[cat] || 0;
-      const pct = alloc > 0 ? Math.min(100, Math.round(spent / alloc * 100)) : (spent > 0 ? 100 : 0);
-      const over = spent > alloc;
-      return `<div class="mny-brow" data-cat="${esc(cat)}">
-        <div class="mny-brow-top">${catTile(cat)}<span class="mny-brow-name">${esc(cat)}</span></div>
-        <div class="mny-brow-amt">${fmtMoney(spent)} <span>/ ${fmtMoney(alloc)}</span></div>
-        <div class="mny-prog"><div class="mny-prog-fill${over ? ' over' : ''}" style="width:${pct}%"></div></div>
-        <div class="mny-brow-foot"><span class="mny-pct${over ? ' over' : ''}">${pct}%</span>
-          <span class="mny-rem${over ? ' over' : ''}">${over ? 'Over ' + fmtMoney(spent - alloc) : 'Left ' + fmtMoney(alloc - spent)}</span></div>
+    // budget rows — เรียงตาม % ที่ใช้ไป (เผาเร็วสุดขึ้นก่อน) · ซ่อนหมวดงบ 0 ที่ยังไม่ใช้ · เตือน near(≥80%)/over
+    const brows = Object.entries(budget)
+      .map(([cat, alloc]) => {
+        const spent = sc[cat] || 0;
+        const ratio = alloc > 0 ? spent / alloc : (spent > 0 ? Infinity : 0);
+        const pct = alloc > 0 ? Math.min(100, Math.round(spent / alloc * 100)) : (spent > 0 ? 100 : 0);
+        const over = spent > alloc;
+        const near = !over && alloc > 0 && spent / alloc >= 0.8;
+        return { cat, alloc, spent, ratio, pct, over, near };
+      })
+      .filter(o => !(o.alloc === 0 && o.spent === 0))
+      .sort((a, b) => (b.ratio - a.ratio) || (b.alloc - a.alloc))
+      .map(o => {
+        const st = o.over ? ' over' : (o.near ? ' near' : '');
+        return `<div class="mny-brow${st}" data-cat="${esc(o.cat)}">
+        <div class="mny-brow-top">${catTile(o.cat)}<span class="mny-brow-name">${esc(o.cat)}</span></div>
+        <div class="mny-brow-amt">${fmtMoney(o.spent)} <span>/ ${fmtMoney(o.alloc)}</span></div>
+        <div class="mny-prog"><div class="mny-prog-fill${st}" style="width:${o.pct}%"></div></div>
+        <div class="mny-brow-foot"><span class="mny-pct${st}">${o.pct}%</span>
+          <span class="mny-rem${st}">${o.over ? 'Over ' + fmtMoney(o.spent - o.alloc) : 'Left ' + fmtMoney(o.alloc - o.spent)}</span></div>
       </div>`;
-    }).join('');
+      }).join('');
 
     $('mny-overview').innerHTML = `
       <div class="hero mny-hero">
         <div class="mny-hero-lbl">Balance this month</div>
         <div class="mny-hero-bal${balance < 0 ? ' neg' : ''}" data-count="${balance}" data-cprefix="฿" data-cdec="0">${fmtMoney(balance)}</div>
         <div class="mny-hero-sub">Total budget ${fmtMoney(totalBudget)}</div>
+        ${perDay != null ? `<div class="mny-hero-safe"><b data-count="${perDay}" data-cprefix="฿" data-cdec="0">${fmtMoney(perDay)}</b><span>เหลือใช้/วัน · อีก ${daysLeft} วัน</span></div>` : ''}
         <div class="mny-hero-split">
           <div class="mny-hs"><div class="mny-hs-lab">Income</div><div class="mny-hs-val up">${fmtMoney(totalIn)}</div><div class="mny-hs-cnt">${income.length} items</div></div>
           <div class="mny-hs"><div class="mny-hs-lab">Expenses</div><div class="mny-hs-val down">${fmtMoney(totalOut)}</div><div class="mny-hs-cnt">${expenses.length} items</div></div>
