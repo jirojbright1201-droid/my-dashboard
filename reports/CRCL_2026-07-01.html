@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circle Internet Group (CRCL) — รายงานเชิงลึก</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#2775CA;          /* USDC blue — ดึงจากแบรนด์ USDC */
+  --accent-active:#1f5da3;
+  --accent-bright:#4d94e0;
+  --ink:#0a0b0d;
+  --body:#5b616e;
+  --muted:#7c828a;
+  --canvas:#ffffff;
+  --surface-soft:#f7f7f7;
+  --surface-strong:#eef0f3;
+  --hairline:#dee1e6;
+  --up:#05b169;
+  --down:#cf202f;
+  --shadow-sm:0 4px 12px rgba(0,0,0,0.04);
+  --r-card:24px;
+  --r-pill:100px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:'Sarabun','Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+.nav-logo{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.2px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--body);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:var(--r-pill);margin-left:8px;letter-spacing:0.3px}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--canvas);border-bottom:1px solid var(--hairline);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
+.hero-left{z-index:1}
+.hero-brand{display:flex;align-items:center;gap:16px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.05s ease forwards}
+.hero-logo{width:56px;height:56px;border-radius:14px;border:1px solid var(--hairline);background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.hero-brand-name{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--ink)}
+.hero-brand-sub{font-size:13px;color:var(--muted)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--surface-strong);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--body);letter-spacing:0.5px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
+.hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero-title{font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,72px);font-weight:400;line-height:1.02;letter-spacing:-2px;color:var(--ink);margin-bottom:24px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
+.hero-title strong{font-weight:400;color:var(--accent)}
+.hero-desc{font-size:18px;color:var(--body);line-height:1.7;max-width:540px;margin-bottom:40px;opacity:0;animation:fadeUp 0.7s 0.4s ease forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;padding:16px 32px;height:56px;border-radius:var(--r-pill);opacity:0;animation:fadeUp 0.7s 0.55s ease forwards;cursor:default;text-decoration:none}
+.hero-cta-arrow{font-size:18px}
+
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 0.8s 0.7s ease forwards}
+.hero-card-stack{position:relative;width:320px;height:400px}
+.hero-card{position:absolute;background:var(--canvas);border-radius:var(--r-card);padding:28px;border:1px solid var(--hairline)}
+.hero-card-main{width:300px;top:40px;left:0;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+.hero-card-back{width:280px;top:0;left:20px;height:360px;opacity:0.5;transform:scale(0.97);z-index:-1;background:var(--surface-soft)}
+.hero-card-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.hero-card-val{font-family:'JetBrains Mono','Courier New',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.hero-card-sub{font-size:13px;color:var(--body);margin-bottom:18px}
+.hero-card-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid var(--hairline);font-size:13px}
+.hero-card-row-label{color:var(--body)}
+.hero-card-row-val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--ink)}
+.hero-card-row-up{color:var(--up)}
+.hero-card-row-down{color:var(--down)}
+#hero::before{content:'';position:absolute;top:-100px;right:-100px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(39,117,202,0.06) 0%,transparent 70%);pointer-events:none}
+
+/* SECTIONS */
+.section-white{background:var(--canvas);padding:96px 0}
+.section-gray{background:var(--surface-soft);padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.sec-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--ink);text-transform:uppercase;margin-bottom:16px;background:var(--surface-strong);padding:4px 14px;border-radius:var(--r-pill)}
+.sec-title{font-family:'Inter',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:400;letter-spacing:-1px;color:var(--ink);line-height:1.12;margin-bottom:16px}
+.sec-sub{font-size:17px;color:var(--body);max-width:680px;line-height:1.7;margin-bottom:60px}
+
+/* CARDS */
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.card-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.card-body{font-size:14px;color:var(--body);line-height:1.7}
+.card-num{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--accent);margin-bottom:14px;letter-spacing:0.5px}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* METRIC */
+.metric-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px 24px;text-align:center;transition:all 0.2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.metric-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.metric-val-accent{color:var(--accent)}
+.metric-label{font-size:13px;color:var(--muted);font-weight:500}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:1px;background:var(--hairline)}
+.timeline-item{position:relative;margin-bottom:30px}
+.timeline-item:last-child{margin-bottom:0}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline-date{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.5px;margin-bottom:4px;text-transform:uppercase}
+.timeline-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--body);line-height:1.6}
+.timeline-item.neg::before{background:var(--down)}
+.timeline-item.neg .timeline-date{color:var(--down)}
+.timeline-item.pos::before{background:var(--up)}
+.timeline-item.pos .timeline-date{color:var(--up)}
+
+/* RISK */
+.risk-card{border-radius:16px;padding:24px 28px;border:1px solid}
+.risk-high{background:#fff8f8;border-color:#fcd4d4}
+.risk-med{background:#fffcf0;border-color:#fde9a2}
+.risk-low{background:#f0fdf6;border-color:#b3f0d0}
+.risk-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:var(--r-pill);margin-bottom:12px;text-transform:uppercase}
+.risk-high .risk-badge{background:#fcd4d4;color:#c0392b}
+.risk-med  .risk-badge{background:#fde9a2;color:#8a6d00}
+.risk-low  .risk-badge{background:#b3f0d0;color:#1a7a4a}
+.risk-high .risk-title{color:#c0392b}
+.risk-med  .risk-title{color:#8a6d00}
+.risk-low  .risk-title{color:#1a7a4a}
+.risk-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.risk-body{font-size:14px;color:var(--body);line-height:1.7}
+
+/* COMP TABLE */
+.comp-table{width:100%;border-collapse:collapse}
+.comp-table th{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);padding:12px 20px;text-align:left;border-bottom:1px solid var(--hairline);text-transform:uppercase}
+.comp-table td{padding:16px 20px;font-size:14px;color:var(--body);border-bottom:1px solid var(--surface-soft);vertical-align:top}
+.comp-table td:first-child{font-weight:600;color:var(--ink)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr.highlight-row{background:rgba(39,117,202,0.04)}
+.comp-table tr.highlight-row td:first-child{color:var(--accent)}
+
+/* ANALYST */
+.analyst-bar-wrap{margin:18px 0}
+.analyst-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500;color:var(--ink)}
+.analyst-bar-track{height:8px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.analyst-bar-fill{height:100%;border-radius:var(--r-pill)}
+
+/* PERSON */
+.person-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:28px 24px;transition:all 0.2s}
+.person-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.person-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.person-title{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.person-bio{font-size:13px;color:var(--body);line-height:1.7}
+
+/* PARTNERS */
+.partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.partner-card{display:flex;align-items:center;gap:16px;padding:14px 18px;border:1px solid var(--hairline);border-radius:14px;background:var(--canvas);transition:all 0.15s}
+.partner-card:hover{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.partner-logo{height:28px;max-width:140px;width:auto;object-fit:contain;flex-shrink:0}
+.partner-note{font-size:12.5px;color:var(--muted);line-height:1.35}
+
+/* TECH FLOW */
+.tech-flow{display:flex;align-items:center;margin:48px 0;flex-wrap:wrap;gap:0;justify-content:center}
+.tech-node{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:28px 20px;text-align:center;min-width:150px;flex:1;transition:all 0.2s}
+.tech-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.tech-node-icon{width:40px;height:40px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.tech-node-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tech-node-val{font-size:14px;font-weight:600;color:var(--ink)}
+.tech-arrow{font-size:20px;color:var(--hairline);padding:0 12px}
+
+/* BIG STAT */
+.big-stat-row{display:flex;gap:0;border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;margin:48px 0}
+.big-stat{flex:1;padding:32px 24px;border-right:1px solid var(--hairline)}
+.big-stat:last-child{border-right:none}
+.big-stat-num{font-family:'JetBrains Mono',monospace;font-size:clamp(26px,3.2vw,40px);font-weight:500;color:var(--ink);line-height:1;margin-bottom:8px}
+.big-stat-desc{font-size:13px;color:var(--body)}
+
+/* PILLS */
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:5px 14px;border-radius:var(--r-pill);margin:3px;letter-spacing:0.2px}
+.pill-neutral{background:var(--surface-strong);color:var(--body)}
+.pill-blue{background:rgba(39,117,202,0.08);color:var(--accent);border:1px solid rgba(39,117,202,0.15)}
+.pill-up{background:rgba(5,177,105,0.08);color:var(--up)}
+.pill-down{background:rgba(207,32,47,0.08);color:var(--down)}
+
+/* CALLOUT */
+.callout{border-left:3px solid var(--accent);background:rgba(39,117,202,0.04);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;font-size:14px;color:var(--body)}
+.callout strong{color:var(--accent)}
+
+/* REVENUE CHART */
+.fin-chart{display:flex;align-items:flex-end;gap:18px;height:220px;margin:32px 0}
+.fin-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.fin-bar-track{width:100%;display:flex;flex-direction:column-reverse;height:170px}
+.fin-bar{width:100%;border-radius:6px 6px 0 0;background:var(--accent);opacity:0.88;min-height:4px}
+.fin-bar.soft{background:var(--accent-bright);opacity:0.55}
+.fin-bar-year{font-size:11px;color:var(--muted);font-weight:500}
+.fin-bar-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:500}
+
+/* DATA TABLE */
+.data-table{width:100%}
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline)}
+.data-row:last-child{border-bottom:none}
+.data-key{font-size:14px;color:var(--body)}
+.data-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink)}
+.data-val-up{color:var(--up)}
+.data-val-down{color:var(--down)}
+.data-val-accent{color:var(--accent)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.08s}
+.reveal-delay-2{transition-delay:0.16s}
+.reveal-delay-3{transition-delay:0.24s}
+
+.divider{height:1px;background:var(--hairline);margin:0}
+
+footer{background:var(--canvas);padding:64px 48px;border-top:1px solid var(--hairline);max-width:1200px;margin:0 auto}
+.footer-legal{font-size:12px;color:var(--muted);line-height:1.7;margin-top:24px}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:100px 24px 64px}
+  .hero-right{display:none}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section-white,.section-gray{padding:64px 0}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .big-stat-row{flex-direction:column}
+  .big-stat{border-right:none;border-bottom:1px solid var(--hairline)}
+  .big-stat:last-child{border-bottom:none}
+  .partner-grid{grid-template-columns:1fr}
+  .tech-flow{flex-direction:column;align-items:center}
+  .tech-node{width:100%;max-width:300px;flex:none}
+  .tech-arrow{transform:rotate(90deg);padding:8px 0}
+  .comp-table thead{display:none}
+  .comp-table,.comp-table tbody,.comp-table tr,.comp-table td{display:block;width:100%}
+  .comp-table tr{border:1px solid var(--hairline);border-radius:12px;margin-bottom:14px;padding:6px 0;background:#fff}
+  .comp-table tr.highlight-row{background:rgba(39,117,202,0.04)}
+  .comp-table td{border-bottom:none;padding:7px 18px;font-size:14px}
+  .comp-table td:first-child{font-size:16px;font-weight:700;color:var(--ink);padding-top:12px}
+  .comp-table tr.highlight-row td:first-child{color:var(--accent)}
+  .comp-table td:not(:first-child){display:flex;gap:12px;align-items:baseline}
+  .comp-table td:not(:first-child)::before{content:attr(data-label);flex:0 0 84px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+  .fin-chart{gap:10px}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface-soft)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Circle <span>·</span> CRCL</div>
+  <ul class="nav-links">
+    <li><a href="#overview">ภาพรวม</a></li>
+    <li><a href="#technology">สินค้า/เทคโนโลยี</a></li>
+    <li><a href="#market">ตลาด</a></li>
+    <li><a href="#financials">การเงิน</a></li>
+    <li><a href="#competition">คู่แข่ง</a></li>
+    <li><a href="#leadership">ผู้บริหาร</a></li>
+    <li><a href="#catalysts">ตัวเร่ง</a></li>
+    <li><a href="#risks">ความเสี่ยง</a></li>
+    <li><a href="#analysts">นักวิเคราะห์</a></li>
+  </ul>
+  <span class="nav-badge">NYSE: CRCL</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-brand">
+      <div class="hero-logo">
+        <img src="https://logo.clearbit.com/circle.com" alt="CRCL" style="width:100%;height:100%;object-fit:contain;padding:8px"
+          onerror="if(this.dataset.r){this.style.display='none';this.nextElementSibling.style.display='flex'}else{this.dataset.r=1;this.src='https://www.google.com/s2/favicons?sz=128&domain=circle.com'}">
+        <span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;background:var(--ink);color:#fff;font:600 18px Inter,sans-serif">CR</span>
+      </div>
+      <div>
+        <div class="hero-brand-name">Circle Internet Group, Inc.</div>
+        <div class="hero-brand-sub">ผู้ออก USDC · จดทะเบียน NYSE มิ.ย. 2025</div>
+      </div>
+    </div>
+    <div class="hero-eyebrow">
+      <span class="hero-ticker-dot"></span>
+      รายงานเชิงลึก · 1 กรกฎาคม 2026
+    </div>
+    <h1 class="hero-title">ผู้ออก<strong>ดอลลาร์ดิจิทัล</strong><br>ที่อยู่ใต้กฎหมาย</h1>
+    <p class="hero-desc">Circle คือบริษัทที่ออก USDC — stablecoin (เหรียญคริปโตที่ตรึงค่าไว้กับสกุลเงินจริง 1 เหรียญ = 1 ดอลลาร์) ที่ใหญ่เป็นอันดับสองของโลก รายได้หลักมาจากดอกเบี้ยของเงินสำรองที่หนุนเหรียญไว้ ไม่ใช่ค่าธรรมเนียมผู้ใช้ ทำให้ธุรกิจนี้ผูกติดกับ "ดอกเบี้ย" และ "ปริมาณเหรียญหมุนเวียน" อย่างแยกไม่ออก</p>
+    <a href="#overview" class="hero-cta">อ่านรายงาน <span class="hero-cta-arrow">↓</span></a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="hero-card-label">ภาพรวมตัวเลข · 30 มิ.ย. 2026</div>
+        <div class="hero-card-val">$65.63</div>
+        <div class="hero-card-sub">ราคาหุ้น CRCL (มูลค่าตลาด ~$16.3B)</div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">USDC หมุนเวียน</span>
+          <span class="hero-card-row-val hero-card-row-up">$77.0B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">รายได้+ดอกเบี้ยสำรอง FY2025</span>
+          <span class="hero-card-row-val">$2.75B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">จุดสูงสุด 52 สัปดาห์</span>
+          <span class="hero-card-row-val">$262.97</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">จุดต่ำสุด 52 สัปดาห์</span>
+          <span class="hero-card-row-val hero-card-row-down">$49.90</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 OVERVIEW -->
+<div class="section-white" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow reveal">01 — ภาพรวมบริษัท</div>
+    <h2 class="sec-title reveal">บริษัทที่ทำให้ดอลลาร์<br>วิ่งบนบล็อกเชนได้</h2>
+    <p class="sec-sub reveal">Circle Internet Group ก่อตั้งปี 2013 ที่เมืองบอสตัน โดย Jeremy Allaire และ Sean Neville เป็นผู้ออกและบริหาร USDC (USD Coin) — เหรียญดิจิทัลที่ตรึงมูลค่าไว้ที่ 1 ดอลลาร์ และ EURC ที่ตรึงกับยูโร เป้าหมายคือทำให้เงินดอลลาร์เคลื่อนย้ายข้ามโลกได้เร็วและถูกเหมือนส่งอีเมล</p>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-num">ปัญหา</div>
+        <div class="card-title">โอนเงินข้ามประเทศยังช้าและแพง</div>
+        <div class="card-body">ระบบธนาคารแบบเดิมโอนเงินข้ามพรมแดนใช้เวลาหลายวันและคิดค่าธรรมเนียมสูง คริปโตทั่วไป (เช่น Bitcoin) ราคาผันผวนเกินจะใช้จ่ายจริง ตลาดต้องการ "เงินดิจิทัลที่ค่าคงที่"</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-num">วิธีแก้</div>
+        <div class="card-title">เหรียญที่ตรึงค่า 1:1 หนุนด้วยสินทรัพย์จริง</div>
+        <div class="card-body">ทุก USDC ที่ออกมา 1 เหรียญ จะมีเงินสดและพันธบัตรรัฐบาลสหรัฐระยะสั้น (T-bills) หนุนหลังไว้ 1 ดอลลาร์เต็ม ผู้ใช้ไถ่ถอนกลับเป็นดอลลาร์ได้ตลอดเวลา จึงใช้แทนเงินสดบนบล็อกเชนได้</div>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="card-num">รูปแบบธุรกิจ</div>
+        <div class="card-title">รายได้จากดอกเบี้ยเงินสำรอง</div>
+        <div class="card-body">Circle เอาเงินสำรองที่หนุน USDC ไปลงทุนใน T-bills แล้วกินดอกเบี้ย เรียกว่า reserve income (รายได้จากเงินสำรอง) ยิ่งมีเหรียญหมุนเวียนมากและดอกเบี้ยสูง รายได้ยิ่งมาก — แต่ผู้ถือเหรียญไม่ได้ดอกเบี้ยนั้น</div>
+      </div>
+    </div>
+
+    <div class="big-stat-row reveal">
+      <div class="big-stat">
+        <div class="big-stat-num">$77.0B</div>
+        <div class="big-stat-desc">USDC หมุนเวียน ณ สิ้นไตรมาส 1/2026 (+28% เทียบปีก่อน)</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">$21.5T</div>
+        <div class="big-stat-desc">ปริมาณธุรกรรม USDC บนเครือข่าย ไตรมาส 1/2026 (+263%)</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">&gt;$25T</div>
+        <div class="big-stat-desc">ปริมาณธุรกรรมสะสมตลอดอายุของ USDC</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">2013</div>
+        <div class="big-stat-desc">ปีก่อตั้ง · USDC เปิดตัวปี 2018 · IPO ปี 2025</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>หัวใจที่ต้องเข้าใจ:</strong> Circle ไม่ได้หาเงินจาก "ค่าธรรมเนียมการใช้เหรียญ" แต่หาจาก "ดอกเบี้ยของเงินที่ฝากไว้หนุนเหรียญ" ฉะนั้นเวลาประเมินบริษัทนี้ ตัวแปรสำคัญที่สุดคือ (1) จำนวน USDC ที่หมุนเวียน และ (2) อัตราดอกเบี้ยสหรัฐ — ไม่ใช่จำนวนผู้ใช้แบบแอปทั่วไป
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 02 TECHNOLOGY -->
+<div class="section-gray" id="technology">
+  <div class="container">
+    <div class="sec-eyebrow reveal">02 — สินค้าและเทคโนโลยี</div>
+    <h2 class="sec-title reveal">จากเหรียญเดียว<br>สู่โครงสร้างพื้นฐานการเงิน</h2>
+    <p class="sec-sub reveal">เดิม Circle มีสินค้าหลักคือ USDC เหรียญเดียว แต่ปี 2026 บริษัทขยายเป็น "แพลตฟอร์มเต็มสแตก" ครอบคลุมทั้งเครือข่ายชำระเงินและบล็อกเชนของตัวเอง เพื่อลดการพึ่งพารายได้ดอกเบี้ยอย่างเดียว</p>
+
+    <!-- กลไก USDC -->
+    <div class="tech-flow">
+      <div class="tech-node reveal">
+        <div class="tech-node-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="tech-node-label">รับเงิน</div>
+        <div class="tech-node-val">ผู้ใช้ฝากดอลลาร์</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node reveal reveal-delay-1">
+        <div class="tech-node-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 11h18M7 3v4M17 3v4"/></svg>
+        </div>
+        <div class="tech-node-label">เงินสำรอง</div>
+        <div class="tech-node-val">ลงใน T-bills + เงินสด</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node reveal reveal-delay-2">
+        <div class="tech-node-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5h4.5a2 2 0 0 1 0 4H9"/></svg>
+        </div>
+        <div class="tech-node-label">ออกเหรียญ</div>
+        <div class="tech-node-val">สร้าง USDC 1:1</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node reveal reveal-delay-3">
+        <div class="tech-node-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18M12 3v18M5 8l-2 4 2 4M19 8l2 4-2 4"/></svg>
+        </div>
+        <div class="tech-node-label">หมุนเวียน</div>
+        <div class="tech-node-val">โอน-ชำระบนบล็อกเชน</div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:8px">
+      <div class="card">
+        <div class="card-title">เงินสำรองบริหารโดย BlackRock</div>
+        <div class="card-body">เงินสำรองส่วนใหญ่ของ USDC อยู่ใน Circle Reserve Fund ที่บริหารโดย BlackRock (บริษัทจัดการสินทรัพย์ใหญ่ที่สุดในโลก) ผ่านกองทุนตลาดเงิน BUIDL ทำให้เงินสำรองโปร่งใสและถือสินทรัพย์คุณภาพสูง แต่ก็แลกมากับการพึ่งพาคู่ค้ารายเดียวสูง</div>
+      </div>
+      <div class="card">
+        <div class="card-title">EURC — เหรียญตรึงยูโร</div>
+        <div class="card-body">นอกจาก USDC แล้ว Circle ยังออก EURC ที่ตรึงค่ากับยูโร ส่วนแบ่งตลาดของ EURC กำลังไต่ขึ้น ช่วยให้บริษัทกระจายออกจากการพึ่งดอลลาร์อย่างเดียว และจับตลาดยุโรปที่มีกรอบกฎหมาย MiCA (กฎคริปโตของสหภาพยุโรป) รองรับ</div>
+      </div>
+      <div class="card">
+        <div class="card-title">CPN — เครือข่ายชำระเงิน Circle</div>
+        <div class="card-body">Circle Payments Network เปิดตัวเต็มรูปแบบ เม.ย. 2026 ให้ธนาคารและผู้ให้บริการชำระเงินใช้ USDC ชำระเงินข้ามพรมแดนได้ "โดยไม่ต้องถือคริปโตเอง" เชื่อมต่อมากกว่า 20 บล็อกเชนและระบบชำระเงินในประเทศ ลดต้นทุนค่าแลกเปลี่ยนเงิน</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Arc — บล็อกเชนของ Circle เอง</div>
+        <div class="card-body">Arc คือบล็อกเชนชั้นฐาน (Layer 1) ที่ Circle สร้างเอง ระดมทุนพรีเซล (presale — ขายโทเคนล่วงหน้าก่อนเปิดใช้) ได้ $222 ล้าน ที่มูลค่า $3 พันล้าน เครือข่ายทดสอบ (testnet) ทำธุรกรรมสะสม ~430 ล้านรายการ มีสถาบันร่วมกว่า 100 ราย เช่น BlackRock, HSBC, Visa, AWS</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:500;font-size:22px;margin:64px 0 8px;letter-spacing:-0.5px" class="reveal">เส้นทางวิวัฒนาการ</h3>
+    <div class="grid-2" style="margin-top:32px">
+      <div class="reveal">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2013</div>
+            <div class="timeline-title">ก่อตั้ง Circle ที่บอสตัน</div>
+            <div class="timeline-desc">Jeremy Allaire และ Sean Neville ตั้งบริษัทเป็นแอปโอนเงิน/คริปโตสำหรับผู้บริโภค</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2018</div>
+            <div class="timeline-title">เปิดตัว USDC</div>
+            <div class="timeline-desc">ร่วมกับ Coinbase ตั้งกลุ่ม Centre ออก USDC เป็น stablecoin ที่อยู่ใต้กฎเกณฑ์</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2022</div>
+            <div class="timeline-title">ระดมทุน $400 ล้าน</div>
+            <div class="timeline-desc">นักลงทุนรวม BlackRock, Fidelity, Marshall Wace ดีลควบรวมผ่าน SPAC ก่อนหน้านี้ล้มเหลว</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">มิ.ย. 2025</div>
+            <div class="timeline-title">IPO บน NYSE ที่ $31</div>
+            <div class="timeline-desc">วันแรกพุ่ง 168% ราคาแตะ ~$100 ในเวลาต่อมาขึ้นถึงจุดสูงสุด $263 (23 มิ.ย. 2025)</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">เม.ย. 2026</div>
+            <div class="timeline-title">เปิด CPN Managed Payments</div>
+            <div class="timeline-desc">เครือข่ายชำระเงินข้ามพรมแดนสำหรับธนาคารและผู้ให้บริการชำระเงิน</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">พ.ค. 2026</div>
+            <div class="timeline-title">ปิดพรีเซล Arc $222 ล้าน</div>
+            <div class="timeline-desc">นำโดย a16z crypto ร่วมด้วย BlackRock, Apollo, ICE, ARK — บล็อกเชนของ Circle เอง</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 03 MARKET -->
+<div class="section-white" id="market">
+  <div class="container">
+    <div class="sec-eyebrow reveal">03 — โอกาสทางตลาด</div>
+    <h2 class="sec-title reveal">ตลาด stablecoin โต<br>แต่เค้กถูกแย่งมากขึ้น</h2>
+    <p class="sec-sub reveal">ตลาด stablecoin รวมโตทะลุ $300 พันล้านแล้ว และ Citi คาดว่าจะโตถึง $4 ล้านล้านภายในปี 2030 USDC เป็นผู้นำในกลุ่ม "เหรียญที่อยู่ใต้กฎหมาย" แต่ยังเล็กกว่า Tether มาก และกำลังเจอผู้ท้าชิงหน้าใหม่จากกลุ่มยักษ์การเงิน</p>
+
+    <div class="grid-4 reveal">
+      <div class="metric-card">
+        <div class="metric-val metric-val-accent">$300B+</div>
+        <div class="metric-label">ขนาดตลาด stablecoin รวมปัจจุบัน</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">$4T</div>
+        <div class="metric-label">ประมาณการตลาดปี 2030 (Citi)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">$77B</div>
+        <div class="metric-label">USDC หมุนเวียน (อันดับ 2 ของตลาด)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">63%</div>
+        <div class="metric-label">ส่วนแบ่งธุรกรรมเชิงพาณิชย์ผ่าน Visa ไตรมาสล่าสุด</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:500;font-size:22px;margin:64px 0 24px;letter-spacing:-0.5px" class="reveal">พันธมิตรเชิงกลยุทธ์</h3>
+    <p class="sec-sub reveal" style="margin-bottom:28px">USDC ฝังตัวอยู่ในเครือข่ายการเงินและเทคโนโลยีระดับโลก ยิ่งมีพาร์ทเนอร์ใช้งานมาก ยิ่งสร้าง moat (ความได้เปรียบที่กันคู่แข่งได้) — แต่บางรายในนี้กำลังกลายเป็นคู่แข่งด้วย</p>
+    <div class="partner-grid reveal">
+      <div class="partner-card">
+        <img class="partner-logo" src="https://logo.clearbit.com/visa.com" alt="Visa" onerror="this.style.display='none'">
+        <span class="partner-note">63% ของธุรกรรม stablecoin เชิงพาณิชย์ผ่าน Visa ไตรมาสล่าสุด</span>
+      </div>
+      <div class="partner-card">
+        <img class="partner-logo" src="https://logo.clearbit.com/blackrock.com" alt="BlackRock" onerror="this.style.display='none'">
+        <span class="partner-note">บริหารเงินสำรอง USDC ผ่านกองทุน BUIDL + ลงทุนใน Arc</span>
+      </div>
+      <div class="partner-card">
+        <img class="partner-logo" src="https://logo.clearbit.com/coinbase.com" alt="Coinbase" onerror="this.style.display='none'">
+        <span class="partner-note">ช่องทางจัดจำหน่ายหลัก + พันธมิตรเดิมตั้งแต่ก่อตั้ง USDC</span>
+      </div>
+      <div class="partner-card">
+        <img class="partner-logo" src="https://logo.clearbit.com/mastercard.com" alt="Mastercard" onerror="this.style.display='none'">
+        <span class="partner-note">เชื่อมการชำระเงินด้วย stablecoin บนเครือข่ายบัตร</span>
+      </div>
+      <div class="partner-card">
+        <img class="partner-logo" src="https://logo.clearbit.com/hsbc.com" alt="HSBC" onerror="this.style.display='none'">
+        <span class="partner-note">หนึ่งใน 100+ สถาบันที่ร่วมทดสอบเครือข่าย Arc</span>
+      </div>
+      <div class="partner-card">
+        <img class="partner-logo" src="https://logo.clearbit.com/aws.amazon.com" alt="AWS" onerror="this.style.display='none'">
+        <span class="partner-note">โครงสร้างพื้นฐานคลาวด์ + ร่วมทดสอบ Arc</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 04 FINANCIALS -->
+<div class="section-gray" id="financials">
+  <div class="container">
+    <div class="sec-eyebrow reveal">04 — การเงิน</div>
+    <h2 class="sec-title reveal">รายได้โตแรง<br>แต่กำไรถูกบีบ</h2>
+    <p class="sec-sub reveal">รายได้รวม Circle โตต่อเนื่องจาก USDC ที่หมุนเวียนมากขึ้น แต่กำไรสุทธิกลับหดในไตรมาสล่าสุด เพราะต้นทุนการจัดจำหน่าย (ส่วนใหญ่จ่ายให้ Coinbase) และการลงทุนในผลิตภัณฑ์ใหม่เพิ่มขึ้นเร็ว นี่คือสมการสำคัญที่นักลงทุนจับตา</p>
+
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title" style="margin-bottom:20px">รายได้ + ดอกเบี้ยเงินสำรอง (ต่อปี)</div>
+        <div class="fin-chart">
+          <div class="fin-bar-group">
+            <div class="fin-bar-val">$1.68B</div>
+            <div class="fin-bar-track"><div class="fin-bar" style="height:61%"></div></div>
+            <div class="fin-bar-year">2024</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-val">$2.75B</div>
+            <div class="fin-bar-track"><div class="fin-bar" style="height:100%"></div></div>
+            <div class="fin-bar-year">2025</div>
+          </div>
+          <div class="fin-bar-group">
+            <div class="fin-bar-val">$694M</div>
+            <div class="fin-bar-track"><div class="fin-bar soft" style="height:25%"></div></div>
+            <div class="fin-bar-year">Q1'26</div>
+          </div>
+        </div>
+        <div class="card-body" style="margin-top:8px">ปี 2025 รายได้+ดอกเบี้ยเงินสำรองรวม $2.75 พันล้าน ในจำนวนนี้เป็นดอกเบี้ยเงินสำรอง $2.64 พันล้าน ส่วนรายได้อื่นมีเพียง $110 ล้าน สะท้อนว่ารายได้เกือบทั้งหมดมาจากดอกเบี้ย (แท่ง Q1'26 เป็นยอดไตรมาสเดียว ไม่ใช่ทั้งปี)</div>
+      </div>
+
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title" style="margin-bottom:8px">ผลประกอบการไตรมาส 1/2026</div>
+        <div class="data-table">
+          <div class="data-row"><span class="data-key">รายได้ + ดอกเบี้ยเงินสำรอง</span><span class="data-val">$694M</span></div>
+          <div class="data-row"><span class="data-key">เทียบปีก่อน</span><span class="data-val data-val-up">+20%</span></div>
+          <div class="data-row"><span class="data-key">กำไรสุทธิ (จากธุรกิจต่อเนื่อง)</span><span class="data-val">$55M</span></div>
+          <div class="data-row"><span class="data-key">เทียบปีก่อน</span><span class="data-val data-val-down">−15%</span></div>
+          <div class="data-row"><span class="data-key">EBITDA ปรับปรุง</span><span class="data-val">$151M</span></div>
+          <div class="data-row"><span class="data-key">เทียบปีก่อน</span><span class="data-val data-val-up">+24%</span></div>
+          <div class="data-row"><span class="data-key">อัตรากำไรสุทธิ</span><span class="data-val">8%</span></div>
+          <div class="data-row"><span class="data-key">ค่าใช้จ่ายดำเนินงานปรับปรุง</span><span class="data-val data-val-down">$136M (+32%)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:32px">
+      <strong>โครงสร้างที่ต้องเข้าใจ — ต้นทุนจ่าย Coinbase:</strong> ตามข้อตกลง Coinbase ได้รับ 100% ของดอกเบี้ยเงินสำรองจาก USDC ที่ถือบนแพลตฟอร์ม Coinbase และ 50% ของดอกเบี้ยที่เกิดนอกแพลตฟอร์ม ปี 2024 Circle จ่ายให้ Coinbase ราว $908 ล้าน จากต้นทุนการจัดจำหน่ายทั้งหมด ~$1.01 พันล้าน — เท่ากับว่าราว $0.54 ของทุก $1 ที่ Circle หาได้ ถูกแบ่งออกไป ทั้งที่ Circle เป็นผู้แบกภาระดูแลเงินสำรองและกฎเกณฑ์ทั้งหมดเอง
+    </div>
+
+    <div class="big-stat-row reveal">
+      <div class="big-stat">
+        <div class="big-stat-num">~$16.3B</div>
+        <div class="big-stat-desc">มูลค่าตลาด (30 มิ.ย. 2026; ~248.6 ล้านหุ้น × $65.63)</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">96%</div>
+        <div class="big-stat-desc">สัดส่วนรายได้ที่มาจากดอกเบี้ยเงินสำรองปี 2025</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">40%</div>
+        <div class="big-stat-desc">เป้าเติบโต USDC ต่อปี (CAGR) ตามแนวทางบริษัท</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 05 COMPETITION -->
+<div class="section-white" id="competition">
+  <div class="container">
+    <div class="sec-eyebrow reveal">05 — คู่แข่ง</div>
+    <h2 class="sec-title reveal">ผู้นำที่ "อยู่ใต้กฎ"<br>ในตลาดที่กำลังแออัด</h2>
+    <p class="sec-sub reveal">จุดขายของ Circle คือความเป็นผู้นำเหรียญที่อยู่ใต้กฎหมายและโปร่งใส แต่คู่แข่งมาจากทุกทิศ — ทั้ง Tether ที่ใหญ่กว่ามากและกำไรสูง, PYUSD ของ PayPal และล่าสุดกลุ่มพันธมิตรยักษ์ใหญ่ที่จะออกเหรียญใหม่ Open USD</p>
+
+    <div style="overflow-x:auto" class="reveal">
+      <table class="comp-table">
+        <thead>
+          <tr><th>เหรียญ / ผู้ออก</th><th>ขนาด</th><th>จุดเด่น</th><th>จุดต่าง</th></tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td>USDC (Circle)</td>
+            <td data-label="ขนาด">~$77B</td>
+            <td data-label="จุดเด่น">อยู่ใต้กฎหมาย โปร่งใส เงินสำรองบริหารโดย BlackRock</td>
+            <td data-label="จุดต่าง">แบ่งดอกเบี้ยให้ Coinbase สูง กำไรต่อเหรียญต่ำกว่าคู่แข่ง</td>
+          </tr>
+          <tr>
+            <td>USDT (Tether)</td>
+            <td data-label="ขนาด">~$185B</td>
+            <td data-label="จุดเด่น">ใหญ่สุดในตลาด สภาพคล่องสูง ครองตลาดเอเชีย/นอกสหรัฐ</td>
+            <td data-label="จุดต่าง">ตั้งนอกสหรัฐ ความโปร่งใสเงินสำรองถูกตั้งคำถามมานาน</td>
+          </tr>
+          <tr>
+            <td>PYUSD (PayPal)</td>
+            <td data-label="ขนาด">เล็กกว่ามาก</td>
+            <td data-label="จุดเด่น">ฐานผู้ใช้ PayPal/Venmo มหาศาล แบรนด์ผู้บริโภคแข็ง</td>
+            <td data-label="จุดต่าง">เน้นภายในระบบนิเวศ PayPal ยังไม่ใช่เหรียญกลางของตลาด</td>
+          </tr>
+          <tr>
+            <td>Open USD (กลุ่มพันธมิตร)</td>
+            <td data-label="ขนาด">เพิ่งประกาศ</td>
+            <td data-label="จุดเด่น">หนุนโดย Stripe, Coinbase, Mastercard, Visa, BlackRock</td>
+            <td data-label="จุดต่าง">ให้พาร์ทเนอร์ "เก็บดอกเบี้ยเงินสำรองเอง" — กระแทกจุดทำเงินของ Circle</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout reveal" style="margin-top:36px">
+      <strong>สัญญาณเตือนล่าสุด (30 มิ.ย. 2026):</strong> หุ้น CRCL ร่วงราว 14% หลังกลุ่มพันธมิตร Stripe, Coinbase, Mastercard, Visa และ BlackRock ประกาศหนุนเหรียญคู่แข่ง Open USD ที่ออกแบบให้พาร์ทเนอร์เก็บดอกเบี้ยเงินสำรองได้เอง ซึ่งเป็นการโจมตีตรงจุดที่เป็นรายได้หลักของ Circle และที่น่ากังวลคือบางรายในกลุ่มนี้ (Coinbase, Visa, Mastercard, BlackRock) เป็นพันธมิตรของ Circle เอง
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:500;font-size:22px;margin:56px 0 24px;letter-spacing:-0.5px" class="reveal">moat ของ Circle อยู่ตรงไหน</h3>
+    <div class="grid-3 reveal">
+      <div class="card">
+        <div class="card-title">สถานะ "อยู่ใต้กฎ"</div>
+        <div class="card-body">เป็นเหรียญที่ออกโดยบริษัทมหาชนสหรัฐที่เปิดเผยงบและเงินสำรอง สถาบันการเงินไว้ใจใช้งานมากกว่าเหรียญที่ตั้งนอกระบบ</div>
+      </div>
+      <div class="card">
+        <div class="card-title">เครือข่ายฝังลึก</div>
+        <div class="card-body">USDC ฝังอยู่ในบล็อกเชนหลายสิบเครือข่าย, Visa, Mastercard และ CPN ยิ่งใช้มาก ยิ่งย้ายออกยาก</div>
+      </div>
+      <div class="card">
+        <div class="card-title">ขยายสู่โครงสร้างพื้นฐาน</div>
+        <div class="card-body">CPN และ Arc เปลี่ยน Circle จาก "ผู้ออกเหรียญ" เป็น "เจ้าของราง" ซึ่งหากสำเร็จจะสร้างรายได้ที่ไม่พึ่งดอกเบี้ย</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 06 LEADERSHIP -->
+<div class="section-gray" id="leadership">
+  <div class="container">
+    <div class="sec-eyebrow reveal">06 — ผู้บริหารและนักลงทุน</div>
+    <h2 class="sec-title reveal">ทีมที่มาจากสาย<br>เทคและกฎเกณฑ์</h2>
+    <p class="sec-sub reveal">ผู้บริหารระดับสูงผสมระหว่างผู้ก่อตั้งสายเทคโนโลยีอินเทอร์เน็ตรุ่นเก๋า กับอดีตผู้กำกับดูแลตลาด สะท้อนกลยุทธ์ "เติบโตในกรอบกฎหมาย" ของบริษัท</p>
+
+    <div class="grid-2 reveal">
+      <div class="person-card">
+        <div class="person-name">Jeremy Allaire</div>
+        <div class="person-title">ผู้ร่วมก่อตั้ง · ประธาน · CEO</div>
+        <div class="person-bio">ผู้ประกอบการสายซอฟต์แวร์อินเทอร์เน็ตกว่า 20 ปี อดีตผู้ก่อตั้ง/CEO ของ Brightcove, CTO ของ Macromedia และผู้ร่วมก่อตั้ง Allaire Corporation ได้รับเลือกเป็น TIME100 (100 บุคคลทรงอิทธิพลของโลก) ปี 2026 เป็นผู้กำหนดวิสัยทัศน์และนำการขยายสู่ Arc</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Heath Tarbert</div>
+        <div class="person-title">ประธานบริษัท (President)</div>
+        <div class="person-bio">อดีตประธาน CFTC (คณะกรรมการกำกับการซื้อขายสินค้าโภคภัณฑ์ล่วงหน้าสหรัฐ) นำประสบการณ์ด้านกฎเกณฑ์ระดับสูงมาช่วยให้ Circle เดินเกมในกรอบกฎหมายได้เปรียบคู่แข่ง</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Jeremy Fox-Geen</div>
+        <div class="person-title">ประธานเจ้าหน้าที่การเงิน (CFO)</div>
+        <div class="person-bio">ดูแลโครงสร้างการเงิน เงินสำรอง และการสื่อสารกับนักลงทุนหลังเข้าตลาด เป็นคนคุมสมการรายได้ดอกเบี้ยกับต้นทุนการจัดจำหน่าย</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Li Fan</div>
+        <div class="person-title">ประธานเจ้าหน้าที่เทคโนโลยีและ AI</div>
+        <div class="person-bio">นำทีมเทคโนโลยีและกลยุทธ์ AI รวมถึง Circle Agent Stack ที่ผลักดันการใช้ stablecoin กับ AI agent (โปรแกรมอัตโนมัติที่ทำธุรกรรมแทนผู้ใช้)</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Inter';font-weight:500;font-size:22px;margin:56px 0 20px;letter-spacing:-0.5px" class="reveal">นักลงทุนและผู้สนับสนุนเชิงกลยุทธ์</h3>
+    <p class="reveal" style="margin-bottom:20px">
+      <span class="pill pill-blue">BlackRock</span>
+      <span class="pill pill-neutral">Fidelity</span>
+      <span class="pill pill-neutral">Coinbase</span>
+      <span class="pill pill-neutral">a16z crypto</span>
+      <span class="pill pill-neutral">Apollo</span>
+      <span class="pill pill-neutral">ARK Invest</span>
+      <span class="pill pill-neutral">ICE / NYSE</span>
+      <span class="pill pill-neutral">Standard Chartered Ventures</span>
+      <span class="pill pill-neutral">SBI Group</span>
+    </p>
+    <p class="card-body reveal" style="max-width:760px">Circle ระดมทุนรวมราว $1.5 พันล้านก่อน IPO ส่วนรอบพรีเซล Arc ($222 ล้าน) นำโดย a16z crypto ($75 ล้าน) ร่วมด้วย BlackRock, Apollo, ICE (บริษัทแม่ของ NYSE), SBI Group, Standard Chartered Ventures, Janus Henderson, ARK Invest และ Bullish</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 07 CATALYSTS -->
+<div class="section-white" id="catalysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">07 — ตัวเร่งและข่าว</div>
+    <h2 class="sec-title reveal">แรงหนุนและแรงกด<br>ที่ขับเคลื่อนหุ้น</h2>
+    <p class="sec-sub reveal">ปี 2026 มีทั้งข่าวบวกจากการขยายผลิตภัณฑ์ และข่าวลบจากการแข่งขันที่ดุขึ้นและกำไรที่ถูกบีบ ทำให้ราคาหุ้นผันผวนสูง</p>
+
+    <div class="grid-2">
+      <div class="reveal">
+        <h3 style="font-family:'Inter';font-weight:500;font-size:18px;margin-bottom:24px;color:var(--up)">แรงหนุน</h3>
+        <div class="timeline">
+          <div class="timeline-item pos">
+            <div class="timeline-date">พ.ค. 2026</div>
+            <div class="timeline-title">ปิดพรีเซล Arc $222 ล้าน @ $3B</div>
+            <div class="timeline-desc">ได้สถาบันใหญ่ร่วมลงทุน เปิดแหล่งรายได้ใหม่ที่ไม่พึ่งดอกเบี้ย</div>
+          </div>
+          <div class="timeline-item pos">
+            <div class="timeline-date">เม.ย. 2026</div>
+            <div class="timeline-title">เปิด CPN Managed Payments</div>
+            <div class="timeline-desc">ดึงธนาคารและผู้ให้บริการชำระเงินเข้าสู่การชำระด้วย USDC</div>
+          </div>
+          <div class="timeline-item pos">
+            <div class="timeline-date">ตลอดปี</div>
+            <div class="timeline-title">USDC หมุนเวียน +28%, ปริมาณธุรกรรม +263%</div>
+            <div class="timeline-desc">การใช้งานจริงโตเร็ว หนุนฐานรายได้ดอกเบี้ยเงินสำรอง</div>
+          </div>
+          <div class="timeline-item pos">
+            <div class="timeline-date">ก.ค. 2025</div>
+            <div class="timeline-title">GENIUS Act มีผลบังคับใช้</div>
+            <div class="timeline-desc">กฎหมาย stablecoin ระดับรัฐบาลกลางให้ความชัดเจน เอื้อผู้เล่นที่อยู่ใต้กฎอย่าง Circle</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <h3 style="font-family:'Inter';font-weight:500;font-size:18px;margin-bottom:24px;color:var(--down)">แรงกด</h3>
+        <div class="timeline">
+          <div class="timeline-item neg">
+            <div class="timeline-date">30 มิ.ย. 2026</div>
+            <div class="timeline-title">หุ้นร่วง ~14% จากข่าว Open USD</div>
+            <div class="timeline-desc">กลุ่มพันธมิตรยักษ์ใหญ่ (รวมพาร์ทเนอร์เดิมของ Circle) หนุนเหรียญคู่แข่ง</div>
+          </div>
+          <div class="timeline-item neg">
+            <div class="timeline-date">Q1 2026</div>
+            <div class="timeline-title">กำไรสุทธิ −15% เทียบปีก่อน</div>
+            <div class="timeline-desc">ต้นทุนจัดจำหน่ายและการลงทุนผลิตภัณฑ์ใหม่กดอัตรากำไรลงเหลือ 8%</div>
+          </div>
+          <div class="timeline-item neg">
+            <div class="timeline-date">ปี 2026</div>
+            <div class="timeline-title">ความเสี่ยงดอกเบี้ยขาลง</div>
+            <div class="timeline-desc">หาก Fed ลดดอกเบี้ย รายได้ดอกเบี้ยเงินสำรองจะหดตามทันที</div>
+          </div>
+          <div class="timeline-item neg">
+            <div class="timeline-date">ปี 2026</div>
+            <div class="timeline-title">ผู้บริหาร/ผู้ถือหุ้นในทยอยขายหุ้น</div>
+            <div class="timeline-desc">มีรายงานการลดสัดส่วนถือครองของกลุ่มภายใน สะท้อนความระมัดระวัง</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 08 RISKS -->
+<div class="section-gray" id="risks">
+  <div class="container">
+    <div class="sec-eyebrow reveal">08 — ความเสี่ยง</div>
+    <h2 class="sec-title reveal">จุดเปราะ<br>ที่ต้องจับตา</h2>
+    <p class="sec-sub reveal">โมเดลธุรกิจของ Circle แข็งแกร่งในแง่การเติบโต แต่ก็เปราะในหลายจุด โดยเฉพาะการพึ่งดอกเบี้ยและการพึ่งพาคู่ค้ารายใหญ่ ต่อไปนี้คือความเสี่ยงเรียงตามระดับความรุนแรง</p>
+
+    <div class="grid-2" style="gap:20px">
+      <div class="risk-card risk-high reveal">
+        <span class="risk-badge">เสี่ยงสูง</span>
+        <div class="risk-title">พึ่งดอกเบี้ยเกือบ 100% ของรายได้</div>
+        <div class="risk-body">ปี 2025 ราว 96% ของรายได้มาจากดอกเบี้ยเงินสำรอง หาก Fed ลดดอกเบี้ย รายได้จะหดทันทีโดยไม่เกี่ยวกับจำนวนผู้ใช้ นี่คือความเสี่ยงที่ควบคุมเองไม่ได้</div>
+      </div>
+      <div class="risk-card risk-high reveal reveal-delay-1">
+        <span class="risk-badge">เสี่ยงสูง</span>
+        <div class="risk-title">พึ่งพา Coinbase หนัก</div>
+        <div class="risk-body">Coinbase ได้ 100% ของดอกเบี้ยจาก USDC บนแพลตฟอร์มตัวเอง และ 50% นอกแพลตฟอร์ม ปี 2024 รับไปราว $908 ล้าน หากความสัมพันธ์เปลี่ยน หรือ Coinbase หนุนเหรียญคู่แข่ง จะกระทบหนัก</div>
+      </div>
+      <div class="risk-card risk-high reveal">
+        <span class="risk-badge">เสี่ยงสูง</span>
+        <div class="risk-title">คู่แข่งใหม่จากพันธมิตรเดิม</div>
+        <div class="risk-body">Open USD ที่หนุนโดย Stripe, Coinbase, Mastercard, Visa, BlackRock ออกแบบให้พาร์ทเนอร์เก็บดอกเบี้ยเองได้ ซึ่งโจมตีตรงจุดทำเงินของ Circle และมาจากกลุ่มที่เคยเป็นพันธมิตร</div>
+      </div>
+      <div class="risk-card risk-med reveal reveal-delay-1">
+        <span class="risk-badge">เสี่ยงกลาง</span>
+        <div class="risk-title">กฎ GENIUS Act เรื่องห้ามจ่ายดอกเบี้ย</div>
+        <div class="risk-body">GENIUS Act ห้ามผู้ออกเหรียญจ่ายดอกเบี้ย/ผลตอบแทนแก่ผู้ถือ และ OCC (หน่วยงานกำกับธนาคารสหรัฐ) เสนอกฎที่อาจตีความว่าโครงสร้างรางวัล USDC ผ่าน Coinbase เข้าข่ายต้องห้าม หากบังคับใช้จริงอาจกระทบโมเดลการจัดจำหน่าย</div>
+      </div>
+      <div class="risk-card risk-med reveal">
+        <span class="risk-badge">เสี่ยงกลาง</span>
+        <div class="risk-title">มูลค่าหุ้นผันผวนรุนแรง</div>
+        <div class="risk-body">ในรอบ 52 สัปดาห์ ราคาเคลื่อนจาก $49.90 ถึง $262.97 สะท้อนว่าตลาดยังหาฉันทามติเรื่องมูลค่าที่เหมาะสมไม่ได้ ความผันผวนระดับนี้เป็นความเสี่ยงในตัวเอง</div>
+      </div>
+      <div class="risk-card risk-low reveal reveal-delay-1">
+        <span class="risk-badge">เสี่ยงต่ำ</span>
+        <div class="risk-title">ความเสี่ยงเหรียญหลุดค่าตรึง</div>
+        <div class="risk-body">USDC เคยหลุดค่าตรึงชั่วคราวช่วงวิกฤตธนาคาร SVB (มี.ค. 2023) แต่กลับมาได้เร็ว ปัจจุบันเงินสำรองคุณภาพสูงและโปร่งใสขึ้นมาก ความเสี่ยงนี้ต่ำแต่ไม่เป็นศูนย์</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 09 ANALYSTS -->
+<div class="section-white" id="analysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">09 — มุมมองนักวิเคราะห์</div>
+    <h2 class="sec-title reveal">ความเห็นแตก<br>อย่างชัดเจน</h2>
+    <p class="sec-sub reveal">นักวิเคราะห์ส่วนใหญ่ให้เรตติ้ง "ซื้อ" โดยรวม แต่ช่วงราคาเป้าหมายกว้างมากผิดปกติ สะท้อนว่าตลาดยังไม่ลงตัวว่าจะให้มูลค่าธุรกิจที่ผูกกับดอกเบี้ยแบบนี้อย่างไร</p>
+
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title" style="margin-bottom:20px">ฉันทามติ (จาก S&P Global ~24 ราย)</div>
+        <div class="analyst-bar-wrap">
+          <div class="analyst-bar-label"><span>เรตติ้งโดยรวม</span><span style="color:var(--accent)">ซื้อ (Buy)</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:72%;background:var(--accent)"></div></div>
+        </div>
+        <div class="data-table" style="margin-top:18px">
+          <div class="data-row"><span class="data-key">ราคาเป้าหมายเฉลี่ย</span><span class="data-val data-val-accent">~$143</span></div>
+          <div class="data-row"><span class="data-key">เป้าหมายสูงสุด</span><span class="data-val data-val-up">$235–280</span></div>
+          <div class="data-row"><span class="data-key">เป้าหมายต่ำสุด (Wolfe)</span><span class="data-val data-val-down">$60</span></div>
+          <div class="data-row"><span class="data-key">Mizuho</span><span class="data-val">$100 · เป็นกลาง</span></div>
+          <div class="data-row"><span class="data-key">ราคาปัจจุบัน (30 มิ.ย. 2026)</span><span class="data-val">$65.63</span></div>
+        </div>
+        <div class="card-body" style="margin-top:14px;font-size:13px;color:var(--muted)">หมายเหตุ: ช่วงเป้าหมายกว้างมาก ($60 ถึง $280) บ่งชี้ว่านักวิเคราะห์มีมุมมองตรงข้ามกันสุดขั้ว ตัวเลขเป้าหมายเป็นความเห็นนักวิเคราะห์ ไม่ใช่การการันตี</div>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-title" style="color:var(--up)">มุมมองฝั่งบวก (Bull)</div>
+          <div class="card-body">
+            • ตลาด stablecoin ยังอยู่ช่วงต้นของการโต (คาดแตะ $4T ปี 2030)<br>
+            • เป็นผู้นำเหรียญที่อยู่ใต้กฎหมาย ได้เปรียบเมื่อกฎเกณฑ์ชัดขึ้น<br>
+            • CPN และ Arc เปิดทางรายได้ใหม่ที่ไม่พึ่งดอกเบี้ย<br>
+            • USDC หมุนเวียนและปริมาณธุรกรรมยังโตเร็ว
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--down)">มุมมองฝั่งลบ (Bear)</div>
+          <div class="card-body">
+            • รายได้เกือบทั้งหมดผูกกับดอกเบี้ย เสี่ยงเมื่อ Fed ลดดอกเบี้ย<br>
+            • แบ่งรายได้ให้ Coinbase สูง กำไรต่อเหรียญบาง<br>
+            • คู่แข่งใหม่ Open USD จากกลุ่มยักษ์โจมตีจุดทำเงิน<br>
+            • มูลค่าหุ้นยังผันผวนสูงและแพงเทียบกำไรปัจจุบัน
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 10 SUMMARY -->
+<div class="section-gray" id="summary">
+  <div class="container">
+    <div class="sec-eyebrow reveal">10 — สรุป</div>
+    <h2 class="sec-title reveal">สรุปก่อนปิดรายงาน</h2>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="card-title">สิ่งที่ต้องรู้ (What to know)</div>
+        <div class="card-body">
+          • Circle คือผู้ออก USDC — stablecoin อันดับ 2 ของโลก ($77B หมุนเวียน) รองจาก Tether ($185B)<br><br>
+          • รายได้ ~96% มาจาก "ดอกเบี้ยเงินสำรอง" ที่หนุน USDC ไม่ใช่ค่าธรรมเนียมผู้ใช้<br><br>
+          • Circle แบ่งดอกเบี้ยจำนวนมากให้ Coinbase (ปี 2024 ราว $908 ล้าน) ทำให้กำไรต่อเหรียญบาง<br><br>
+          • บริษัทกำลังขยายสู่ CPN และบล็อกเชน Arc เพื่อหารายได้ที่ไม่พึ่งดอกเบี้ย
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">สิ่งที่ต้องจับตา (What to watch)</div>
+        <div class="card-body">
+          • ทิศทางดอกเบี้ย Fed — ตัวแปรสำคัญที่สุดต่อรายได้<br><br>
+          • การแข่งขันจาก Open USD และเหรียญใหม่จากกลุ่มยักษ์การเงิน<br><br>
+          • ความคืบหน้ากฎ GENIUS Act / OCC เรื่องการจ่ายดอกเบี้ยผ่านคนกลาง<br><br>
+          • การเติบโตของ USDC หมุนเวียน และความสำเร็จของ CPN/Arc ในการสร้างรายได้ใหม่
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:32px;font-size:15px;line-height:1.8">
+      <strong>สรุปหนึ่งย่อหน้า:</strong> Circle เป็นผู้นำที่ชัดเจนของ stablecoin ที่อยู่ใต้กฎหมาย ในตลาดที่ยังอยู่ช่วงต้นของการเติบโต จุดแข็งคือสถานะที่ได้รับความเชื่อถือจากสถาบันและการเริ่มขยายออกจากการเป็นแค่ "ผู้ออกเหรียญ" สู่ "เจ้าของรางการชำระเงิน" ผ่าน CPN และ Arc แต่จุดเปราะที่ใหญ่ที่สุดคือรายได้เกือบทั้งหมดผูกกับดอกเบี้ยและถูกแบ่งให้ Coinbase จำนวนมาก ขณะที่คู่แข่งหน้าใหม่ — รวมถึงพันธมิตรเดิมของบริษัทเอง — กำลังโจมตีตรงจุดทำเงิน ราคาหุ้นที่เหวี่ยงจาก $49.90 ถึง $262.97 ในรอบปีสะท้อนว่าตลาดยังหาคำตอบไม่ได้ว่าธุรกิจแบบนี้ควรมีมูลค่าเท่าไร รายงานนี้มีไว้เพื่อเข้าใจตัวธุรกิจ ไม่ใช่คำแนะนำซื้อขายหรือการประเมินราคา
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="nav-logo" style="font-size:16px;margin-bottom:8px">Circle Internet Group <span style="color:var(--accent)">·</span> CRCL</div>
+  <div class="footer-legal">
+    รายงานเชิงลึกฉบับนี้จัดทำเพื่อ "ความเข้าใจธุรกิจ" เท่านั้น · ข้อมูล ณ 1 กรกฎาคม 2026 · ราคาและตัวเลขอ้างอิงข้อมูลล่าสุด ณ 30 มิ.ย. 2026<br>
+    ไม่ใช่คำแนะนำการลงทุน ไม่มีการแนะนำซื้อ-ขาย และไม่ใช่การประเมินมูลค่าหุ้น · ตัวเลขรวบรวมจากแหล่งสาธารณะ (รายงานผลประกอบการ Q1 2026 ของ Circle, Businesswire, CNBC, Decrypt, CoinDesk, Yahoo Finance, MarketBeat, congress.gov) ผู้อ่านควรตรวจสอบข้อมูลล่าสุดก่อนตัดสินใจใดๆ ด้วยตนเอง<br>
+    ตัวเลขที่ระบุ "~" หรือ "ราว" คือค่าประมาณที่อาจต่างกันเล็กน้อยตามแหล่งและวันที่ · มูลค่าตลาดคำนวณจากราคา $65.63 × หุ้นหมุนเวียนราว 248.6 ล้านหุ้น (แหล่งบางรายระบุมูลค่าตลาดต่างกันในช่วง $17.6B–$21.7B ตามวันที่)
+  </div>
+</footer>
+
+<script>
+(function(){
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+(function(){
+  const links=document.querySelectorAll('.nav-links a');
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}}),{threshold:0.4});
+  document.querySelectorAll('div[id]').forEach(s=>io.observe(s));
+})();
+</script>
+</body>
+</html>
