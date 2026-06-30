@@ -136,11 +136,16 @@ window.MoneyView = (function () {
       const over = spent > alloc;
       const state = over ? ' over' : (pct >= 80 ? ' near' : '');
       return `<div class="mny-brow${state}" data-cat="${esc(cat)}">
-        <div class="mny-brow-top">${catTile(cat)}<span class="mny-brow-name">${esc(cat)}</span></div>
-        <div class="mny-brow-amt"><b>${fmtMoney(spent)}</b><span>/ ${fmtMoney(alloc)}</span></div>
-        <div class="mny-prog"><div class="mny-prog-fill" style="width:${pct}%"></div></div>
-        <div class="mny-brow-foot"><span class="mny-pct">${pct}%</span>
-          <span class="mny-rem">${over ? 'Over ' + fmtMoney(spent - alloc) : 'Left ' + fmtMoney(alloc - spent)}</span></div>
+        ${catTile(cat)}
+        <div class="mny-brow-body">
+          <div class="mny-brow-head">
+            <span class="mny-brow-name">${esc(cat)}</span>
+            <span class="mny-brow-amt"><b>${fmtMoney(spent)}</b><span>/ ${fmtMoney(alloc)}</span></span>
+          </div>
+          <div class="mny-prog"><div class="mny-prog-fill" style="width:${pct}%"></div></div>
+          <div class="mny-brow-foot"><span class="mny-pct">${pct}%</span>
+            <span class="mny-rem">${over ? 'Over ' + fmtMoney(spent - alloc) : 'Left ' + fmtMoney(alloc - spent)}</span></div>
+        </div>
       </div>`;
     }).join('');
 
