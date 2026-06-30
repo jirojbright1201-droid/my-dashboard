@@ -8,9 +8,9 @@ window.SUBS_DATA = {
   "subs": [
     { "name": "Adobe",       "amount": 762, "cycle": "mo", "day": 1, "note": "Creative Cloud" },
     { "name": "Claude",      "amount": 21.40, "cur": "USD", "cycle": "mo", "day": 7, "note": "" },
-    { "name": "Internet",    "amount": 424, "cycle": "mo", "day": 1, "note": "" },
+    { "name": "Internet",    "amount": 424, "cycle": "mo", "day": 26, "note": "" },
     { "name": "Spotify",     "amount": 79,  "cycle": "mo", "day": 1, "note": "" },
     { "name": "Debit card",  "amount": 250, "cycle": "yr", "day": 3, "month": 6, "note": "ค่าธรรมเนียมรายปี" }
   ]
 };
-window.SUBS_UPDATED = "25/06/2026";
+window.SUBS_UPDATED = "30/06/2026";
