@@ -10,9 +10,9 @@ window.SUBS_DATA = {
   "subs": [
     { "name": "Adobe",       "amount": 762, "cycle": "mo", "day": 1, "domain": "adobe.com", "note": "Creative Cloud" },
     { "name": "Claude",      "amount": 21.40, "cur": "USD", "cycle": "mo", "day": 7, "domain": "claude.ai", "note": "" },
-    { "name": "Internet",    "amount": 424, "cycle": "mo", "day": 26, "domain": "ais.co.th", "note": "" },
+    { "name": "Internet",    "amount": 424, "cycle": "mo", "day": 26, "domain": "ais.co.th", "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/Advanced_Info_Service_logo.svg?width=128", "note": "AIS" },
     { "name": "Spotify",     "amount": 79,  "cycle": "mo", "day": 1, "domain": "spotify.com", "note": "" },
-    { "name": "Debit card",  "amount": 250, "cycle": "yr", "day": 3, "month": 6, "domain": "kasikornbank.com", "note": "ค่าธรรมเนียมรายปี K Bank" }
+    { "name": "Debit card",  "amount": 250, "cycle": "yr", "day": 3, "month": 6, "domain": "kasikornbank.com", "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/Kasikornbank_Logo.svg?width=128", "note": "ค่าธรรมเนียมรายปี K Bank" }
   ]
 };
 window.SUBS_UPDATED = "01/07/2026";
