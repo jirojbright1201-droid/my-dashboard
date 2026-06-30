@@ -130,22 +130,25 @@ window.MoneyView = (function () {
     </div>`).join('');
 
     // budget rows (เรียงงบมาก→น้อย)
+    // ฿ ในฟอนต์ปกติ (sans) เลขใน mono — กันบาทชนเลขบน JetBrains
+    const bAmt = n => `<span class="bt">฿</span>${Number(n || 0).toLocaleString('en-US')}`;
+    const RC = 20, RCIRC = 2 * Math.PI * RC; // ring radius/circumference
     const brows = Object.entries(budget).sort((a, b) => b[1] - a[1]).map(([cat, alloc]) => {
       const spent = sc[cat] || 0;
       const pct = alloc > 0 ? Math.min(100, Math.round(spent / alloc * 100)) : (spent > 0 ? 100 : 0);
       const over = spent > alloc;
-      const state = over ? ' over' : (pct >= 80 ? ' near' : '');
-      return `<div class="mny-brow${state}" data-cat="${esc(cat)}">
+      const off = RCIRC * (1 - pct / 100);
+      return `<div class="mny-brow${over ? ' over' : ''}" data-cat="${esc(cat)}">
         ${catTile(cat)}
         <div class="mny-brow-body">
-          <div class="mny-brow-head">
-            <span class="mny-brow-name">${esc(cat)}</span>
-            <span class="mny-brow-amt"><b>${fmtMoney(spent)}</b><span>/ ${fmtMoney(alloc)}</span></span>
-          </div>
-          <div class="mny-prog"><div class="mny-prog-fill" style="width:${pct}%"></div></div>
-          <div class="mny-brow-foot"><span class="mny-pct">${pct}%</span>
-            <span class="mny-rem">${over ? 'Over ' + fmtMoney(spent - alloc) : 'Left ' + fmtMoney(alloc - spent)}</span></div>
+          <div class="mny-brow-name">${esc(cat)}</div>
+          <div class="mny-brow-amt"><b>${bAmt(spent)}</b><span class="of">/ ${bAmt(alloc)}</span></div>
+          <div class="mny-brow-sub">${over ? 'Over ' + bAmt(spent - alloc) : 'Left ' + bAmt(alloc - spent)}</div>
         </div>
+        <div class="mny-ring"><svg viewBox="0 0 46 46">
+          <circle cx="23" cy="23" r="${RC}" fill="none" stroke="var(--surface-3)" stroke-width="4"/>
+          <circle cx="23" cy="23" r="${RC}" fill="none" stroke="${over ? 'var(--red)' : 'var(--accent)'}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${RCIRC.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 23 23)"/>
+        </svg><span class="mny-ring-lbl">${pct}%</span></div>
       </div>`;
     }).join('');
 

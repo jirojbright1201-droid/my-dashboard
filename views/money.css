@@ -49,42 +49,34 @@
 .mny-leg-name { flex: 1; font-size: 0.8125rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mny-leg-val { font-family: var(--mono); font-size: 0.6875rem; color: var(--silver); white-space: nowrap; }
 
-/* ── budget cards (1-col · Dime/Apple full-width rows) ── */
-.mny-budget { display: flex; flex-direction: column; gap: 10px; }
-.mny-brow { display: flex; align-items: flex-start; gap: 13px; padding: 14px 16px; cursor: pointer;
-  background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 16px; min-width: 0;
-  transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
-.mny-brow:active { transform: scale(.99); }
-@media (hover: hover) { .mny-brow:hover { background: var(--surface); transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(20,20,19,.07); } }
-.mny-tile { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; margin-top: 1px; background: var(--accent-soft);
-  display: flex; align-items: center; justify-content: center; transition: background .15s ease; }
-.mny-tile svg { width: 20px; height: 20px; color: var(--accent); transition: color .15s ease; }
+/* ── budget (flush list + % ring · Apple × Dime) ── */
+.mny-budget { display: flex; flex-direction: column; }
+.mny-brow { display: flex; align-items: center; gap: 13px; padding: 14px 2px; cursor: pointer; min-width: 0;
+  transition: opacity .15s ease; }
+.mny-brow + .mny-brow { border-top: 1px solid var(--border-soft); }
+.mny-brow:active { opacity: .55; }
+.mny-tile { width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0; background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center; }
+.mny-tile svg { width: 19px; height: 19px; color: var(--accent); }
 .mny-mtitle-ic { display: inline-flex; vertical-align: -4px; margin-right: 7px; }
 .mny-mtitle-ic svg { width: 19px; height: 19px; color: var(--accent); }
-.mny-brow-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 9px; }
-.mny-brow-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.mny-brow-body { flex: 1; min-width: 0; }
 .mny-brow-name { font-size: 0.95rem; font-weight: 600; letter-spacing: -.01em;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mny-brow-amt { display: flex; align-items: baseline; gap: 5px; font-family: var(--mono); flex-shrink: 0; }
-.mny-brow-amt b { font-size: 1rem; font-weight: 600; color: var(--text); letter-spacing: -.02em; }
-.mny-brow-amt span { font-size: 0.78rem; font-weight: 400; color: var(--silver); }
-.mny-prog { height: 7px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
-.mny-prog-fill { height: 100%; border-radius: 99px;
-  background: linear-gradient(90deg, var(--accent-hover), var(--accent));
-  transition: width .5s cubic-bezier(.4,0,.2,1); }
-.mny-brow-foot { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.72rem; }
-.mny-pct { font-family: var(--mono); font-weight: 600; color: var(--text); }
-.mny-rem { color: var(--silver); font-weight: 500; }
-/* near-limit (>=80%) */
-.mny-brow.near .mny-prog-fill { background: linear-gradient(90deg, #c98a12, var(--orange)); }
-.mny-brow.near .mny-pct { color: var(--orange); }
+.mny-brow-amt { display: flex; align-items: baseline; gap: 5px; font-family: var(--mono); margin-top: 3px; min-width: 0; }
+.mny-brow-amt b { font-size: 0.95rem; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
+.mny-brow-amt .of { font-size: 0.8rem; font-weight: 400; color: var(--silver); }
+.mny-brow-amt .bt { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 600; margin-right: 1px; }
+.mny-brow-sub { font-size: 0.74rem; color: var(--silver); margin-top: 3px; }
+.mny-ring { position: relative; width: 46px; height: 46px; flex-shrink: 0; }
+.mny-ring svg { display: block; width: 46px; height: 46px; }
+.mny-ring svg circle { transition: stroke-dashoffset .6s cubic-bezier(.4,0,.2,1); }
+.mny-ring-lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.66rem; font-weight: 600; color: var(--text); }
 /* over budget */
-.mny-brow.over { border-color: rgba(198,69,69,.28); }
-.mny-brow.over .mny-prog-fill { background: linear-gradient(90deg, #a83838, var(--red)); }
-.mny-brow.over .mny-pct, .mny-brow.over .mny-rem { color: var(--red); }
 .mny-brow.over .mny-tile { background: rgba(198,69,69,.10); }
 .mny-brow.over .mny-tile svg { color: var(--red); }
+.mny-brow.over .mny-brow-sub, .mny-brow.over .mny-ring-lbl { color: var(--red); }
 
 /* ── transactions ── */
 .mny-txtoggle { display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border-soft);
