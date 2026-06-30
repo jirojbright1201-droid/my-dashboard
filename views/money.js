@@ -58,6 +58,7 @@ window.MoneyView = (function () {
       <span class="mny-month" id="mnyMonth"></span>
       <button class="mny-chev" data-mnav="1" aria-label="Next">&#8250;</button>
     </div>
+    <div id="mnyBillAlert"></div>
     <div id="mny-overview" class="mny-pane active"></div>
     <div id="mny-tx" class="mny-pane"></div>
     <div id="mny-subs" class="mny-pane"></div>
@@ -294,11 +295,25 @@ window.MoneyView = (function () {
     $('mnyOverlay').onclick = e => { if (e.target === $('mnyOverlay')) closeModal(); };
   }
 
+  // ── bill reminder banner (subscription ตัดบิลใน 2 วัน) ──
+  function renderBillAlert() {
+    const el = $('mnyBillAlert'); if (!el) return;
+    const now = new Date(); now.setHours(0, 0, 0, 0);
+    const soon = SUBS.map(s => ({ ...s, days: Math.round((nextRenew(s) - now) / 86400000) }))
+      .filter(s => s.days >= 0 && s.days <= 2).sort((a, b) => a.days - b.days);
+    if (!soon.length) { el.innerHTML = ''; return; }
+    const when = d => d === 0 ? 'today' : d === 1 ? 'tomorrow' : `in ${d} days`;
+    const items = soon.map(s => `<div><b>${esc(s.name)}</b> bills ${when(s.days)} · ${fmtCur(s.amount, s.cur)}</div>`).join('');
+    el.innerHTML = `<div style="display:flex;gap:10px;align-items:flex-start;background:rgba(204,120,92,.1);border:1px solid rgba(204,120,92,.28);border-radius:14px;padding:11px 14px;margin:0 0 14px">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#cc785c" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;margin-top:2px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <div style="font-size:13.5px;line-height:1.55;color:var(--ink)">${items}</div></div>`;
+  }
+
   function mount(el) {
     if (el.dataset.mounted) return;
     root = el; el.innerHTML = TEMPLATE; el.dataset.mounted = '1';
     monthIdx = KEYS.length - 1;
-    wire(); renderMonthBar(); switchTab('overview');
+    wire(); renderMonthBar(); renderBillAlert(); switchTab('overview');
   }
   return { mount };
 })();
