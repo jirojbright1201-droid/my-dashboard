@@ -5,7 +5,7 @@ window.MONEY_DATA = {
   "2026-07": {
     "budget": {
       "Restaurant": 3000, "Family": 3000, "Subscriptions": 2000, "Rent": 1500,
-      "Investment": 1500, "Shopping": 500, "Beauty": 0, "Books": 500,
+      "Investment": 1500, "Shopping": 1000, "Beauty": 0,
       "Entertainment": 0, "Study": 0, "Transport": 100, "Emergency": 1000
     },
     "income": [
