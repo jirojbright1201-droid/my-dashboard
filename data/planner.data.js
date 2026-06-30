@@ -4,10 +4,10 @@
 //   events: {date:"YYYY-MM-DD", title, time:"HH:MM", end_time, notes}
 //   habits: {habit:"exercise"|"read"|"water"|"sleep_early", done_dates:["YYYY-MM-DD", ...]}
 window.PLANNER_DATA = {
-  "2026-06": {
+  "2026-07": {
     "events": [],
     "habits": []
   }
 };
-window.PLANNER_KEYS = ["2026-06"];
+window.PLANNER_KEYS = ["2026-07"];
 window.PLANNER_UPDATED = "30/06/2026";
