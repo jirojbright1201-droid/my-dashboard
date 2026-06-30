@@ -45,24 +45,24 @@
 .mny-leg-name { flex: 1; font-size: 0.8125rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mny-leg-val { font-family: var(--mono); font-size: 0.6875rem; color: var(--silver); white-space: nowrap; }
 
-/* ── budget rows (2-col card grid, ยุบ 1 คอลัมน์เองบนจอแคบ) ── */
-.mny-budget { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-.mny-brow { display: flex; gap: 11px; align-items: flex-start; padding: 13px 14px; cursor: pointer;
-  background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 14px; }
+/* ── budget rows (2-col compact cards) ── */
+.mny-budget { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mny-brow { display: flex; flex-direction: column; gap: 8px; padding: 12px 13px; cursor: pointer;
+  background: var(--surface-2); border-radius: 13px; min-width: 0; }
 .mny-brow:active { opacity: .6; }
-.mny-tile { width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0; background: var(--accent-soft);
+.mny-brow-top { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.mny-tile { width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0; background: var(--accent-soft);
   display: flex; align-items: center; justify-content: center; }
-.mny-tile svg { width: 20px; height: 20px; color: var(--accent); }
+.mny-tile svg { width: 17px; height: 17px; color: var(--accent); }
 .mny-mtitle-ic { display: inline-flex; vertical-align: -4px; margin-right: 7px; }
 .mny-mtitle-ic svg { width: 19px; height: 19px; color: var(--accent); }
-.mny-brow-body { flex: 1; min-width: 0; }
-.mny-brow-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; }
-.mny-brow-name { font-size: 0.9375rem; font-weight: 600; }
-.mny-brow-amt { font-family: var(--mono); font-size: 0.75rem; color: var(--silver); white-space: nowrap; }
+.mny-brow-name { font-size: 0.875rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mny-brow-amt { font-family: var(--mono); font-size: 0.8125rem; font-weight: 600; color: var(--text); }
+.mny-brow-amt span { color: var(--silver); font-weight: 400; }
 .mny-prog { height: 6px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
 .mny-prog-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .4s ease; }
 .mny-prog-fill.over { background: var(--red); }
-.mny-brow-foot { display: flex; justify-content: space-between; font-size: 0.75rem; margin-top: 6px; }
+.mny-brow-foot { display: flex; justify-content: space-between; font-size: 0.72rem; }
 .mny-pct { font-weight: 700; color: var(--text); }
 .mny-pct.over, .mny-rem.over { color: var(--red); }
 .mny-rem { color: var(--silver); }
