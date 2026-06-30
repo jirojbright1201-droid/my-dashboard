@@ -49,24 +49,25 @@
 .mny-leg-name { flex: 1; font-size: 0.8125rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mny-leg-val { font-family: var(--mono); font-size: 0.6875rem; color: var(--silver); white-space: nowrap; }
 
-/* ── budget cards (2-col · Dime/Apple grouped tiles) ── */
-.mny-budget { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.mny-brow { display: flex; flex-direction: column; gap: 11px; padding: 15px 15px 14px; cursor: pointer;
-  background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 18px; min-width: 0;
+/* ── budget cards (1-col · Dime/Apple full-width rows) ── */
+.mny-budget { display: flex; flex-direction: column; gap: 10px; }
+.mny-brow { display: flex; align-items: flex-start; gap: 13px; padding: 14px 16px; cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 16px; min-width: 0;
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
-.mny-brow:active { transform: scale(.975); }
+.mny-brow:active { transform: scale(.99); }
 @media (hover: hover) { .mny-brow:hover { background: var(--surface); transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(20,20,19,.07); } }
-.mny-brow-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.mny-tile { width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0; background: var(--accent-soft);
+.mny-tile { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; margin-top: 1px; background: var(--accent-soft);
   display: flex; align-items: center; justify-content: center; transition: background .15s ease; }
-.mny-tile svg { width: 18px; height: 18px; color: var(--accent); transition: color .15s ease; }
+.mny-tile svg { width: 20px; height: 20px; color: var(--accent); transition: color .15s ease; }
 .mny-mtitle-ic { display: inline-flex; vertical-align: -4px; margin-right: 7px; }
 .mny-mtitle-ic svg { width: 19px; height: 19px; color: var(--accent); }
-.mny-brow-name { font-size: 0.9rem; font-weight: 600; letter-spacing: -.01em;
+.mny-brow-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 9px; }
+.mny-brow-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.mny-brow-name { font-size: 0.95rem; font-weight: 600; letter-spacing: -.01em;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mny-brow-amt { display: flex; align-items: baseline; gap: 5px; font-family: var(--mono); }
-.mny-brow-amt b { font-size: 1.0625rem; font-weight: 600; color: var(--text); letter-spacing: -.02em; }
+.mny-brow-amt { display: flex; align-items: baseline; gap: 5px; font-family: var(--mono); flex-shrink: 0; }
+.mny-brow-amt b { font-size: 1rem; font-weight: 600; color: var(--text); letter-spacing: -.02em; }
 .mny-brow-amt span { font-size: 0.78rem; font-weight: 400; color: var(--silver); }
 .mny-prog { height: 7px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
 .mny-prog-fill { height: 100%; border-radius: 99px;
