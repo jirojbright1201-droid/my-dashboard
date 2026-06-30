@@ -12,39 +12,29 @@ window.SavingsView = (function () {
     return `~${n} mo left · ${TH_M[t.getMonth()]} ${t.getFullYear()}`;
   }
 
-  // โหลแก้ว + เหรียญทองวาด SVG แยกชิ้น (radial gradient + ขอบ + ตรา ฿ + ประกาย) กองตาม pct (0..1)
+  // โหลแก้ว + ระดับ "น้ำทอง" เติมจากก้นตาม pct (0..1) — มี min sliver เวลามีเงินเพื่อให้เห็น progress แม้น้อย
   function jarSVG(pct, i) {
     pct = Math.max(0, Math.min(1, pct));
-    const top = 24, bot = 102, h = bot - top, fillY = bot - h * pct;
+    const top = 24, bot = 102, h = bot - top;
+    let fillY = bot - h * pct;
+    if (pct > 0) fillY = Math.min(fillY, bot - 6);   // มีเงินปุ๊บ โชว์น้ำบางๆ ที่ก้นเสมอ (ขั้นต่ำ ~6px)
     const gid = 'jg' + i, cid = 'jc' + i;
 
-    // หนึ่งเหรียญทองมีมิติที่ (cx,cy)
-    const coin = (cx, cy) => `<g>
-      <circle cx="${cx}" cy="${cy + 0.8}" r="8.4" fill="#9c6f25"/>
-      <circle cx="${cx}" cy="${cy}" r="8.4" fill="url(#${gid})"/>
-      <circle cx="${cx}" cy="${cy}" r="8.4" fill="none" stroke="#b07d20" stroke-width="1"/>
-      <circle cx="${cx}" cy="${cy}" r="5.6" fill="none" stroke="#c8902c" stroke-width="0.8"/>
-      <text x="${cx}" y="${cy + 0.3}" font-size="7" font-weight="800" text-anchor="middle" dominant-baseline="central" fill="#a9772a" font-family="Georgia,serif">฿</text>
-      <path d="M${cx - 4} ${cy - 3.4} a5.4 5.4 0 0 1 4 -1.6" fill="none" stroke="#fdeec2" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
-    </g>`;
-
-    let coins = '', r = 0;
-    if (pct > 0.005) {
-      const E = [31, 46, 61], O = [38.5, 53.5];   // hex-pack: แถวคู่ 3 / แถวคี่ 2 เหรียญ
-      for (let y = bot - 8; y > fillY - 2 && y > top + 2; y -= 9, r++) {
-        (r % 2 === 0 ? E : O).forEach(x => coins += coin(x, y));
-      }
-    }
+    const liquid = pct > 0 ? `<g clip-path="url(#${cid})">
+        <rect x="18" y="${fillY.toFixed(1)}" width="60" height="${(104 - fillY).toFixed(1)}" fill="url(#${gid})"/>
+        <ellipse cx="48" cy="${fillY.toFixed(1)}" rx="29" ry="2.6" fill="#fff3cf" opacity="0.6"/>
+        <rect x="18" y="${fillY.toFixed(1)}" width="60" height="2.4" fill="#fdeec2" opacity="0.55"/>
+      </g>` : '';
 
     return `<svg class="jar-svg" viewBox="0 0 96 112" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
-        <radialGradient id="${gid}" cx="0.38" cy="0.32" r="0.8">
-          <stop offset="0" stop-color="#fbe7a6"/><stop offset="0.55" stop-color="#eebb55"/><stop offset="1" stop-color="#d99e3a"/>
-        </radialGradient>
+        <linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fbe7a6"/><stop offset="0.5" stop-color="#eebb55"/><stop offset="1" stop-color="#d99e3a"/>
+        </linearGradient>
         <clipPath id="${cid}"><rect x="19" y="23" width="58" height="80" rx="13"/></clipPath>
       </defs>
       <rect x="26" y="6" width="44" height="11" rx="4" fill="#efece6" stroke="#d8cfc2" stroke-width="2"/>
-      <g clip-path="url(#${cid})">${coins}</g>
+      ${liquid}
       <rect x="18" y="22" width="60" height="82" rx="14" fill="none" stroke="#d8cfc2" stroke-width="2"/>
       <path d="M27 33 v58" stroke="rgba(255,255,255,0.65)" stroke-width="3" stroke-linecap="round"/>
     </svg>`;
