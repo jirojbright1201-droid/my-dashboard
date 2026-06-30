@@ -244,8 +244,12 @@ window.MoneyView = (function () {
       const soon = days <= 5;
       const cyc = s.cycle === 'yr' ? '/yr' : '/mo';
       const nextStr = `${s.next.getDate()} ${THMONTH[s.next.getMonth()].slice(0, 3)}`;
+      const initial = esc((s.name[0] || '#').toUpperCase());
+      const tile = s.domain
+        ? `<div class="mny-tile mny-sub-ic"><img src="https://logo.clearbit.com/${esc(s.domain)}" alt="" onerror="if(this.dataset.r){this.remove()}else{this.dataset.r=1;this.src='https://www.google.com/s2/favicons?sz=128&amp;domain=${esc(s.domain)}'}"><span>${initial}</span></div>`
+        : `<div class="mny-tile">${initial}</div>`;
       return `<div class="mny-sub-row">
-        <div class="mny-tile">${(s.name[0] || '#').toUpperCase()}</div>
+        ${tile}
         <div class="mny-sub-body">
           <div class="mny-sub-head"><span class="mny-sub-name">${esc(s.name)}</span>
             <span class="mny-sub-amt">${fmtCur(s.amount, s.cur)}<span class="mny-sub-cyc">${cyc}</span></span></div>
