@@ -9,7 +9,11 @@ const DATA = {
   thesis:[],
   timeline:[],
   // บริษัทที่ดู/watchlist — status: 'sold' (เคยถือแล้วขาย), 'watch' (กำลังดู)
-  companies: [],
+  companies: [
+    {tk:'CRCL', name:'Circle Internet Group', sector:'Fintech/Stablecoin', exchange:'NYSE', country:'US', founded:2013, web:'circle.com', status:'watch',
+      about:'ผู้ออก USDC stablecoin (เหรียญดิจิทัลผูกมูลค่ากับดอลลาร์ 1:1) รายใหญ่อันดับ 2 ของโลก รายได้หลักมาจากดอกเบี้ยเงินสำรองที่ลงทุนในพันธบัตรรัฐบาลสหรัฐระยะสั้น',
+      trades:[], news:[]}
+  ],
   market:{
     indices:[             // S&P/Nasdaq/Dow/VIX — as of ปิดตลาด ศุกร์ 26 มิ.ย. 2026 (อัป 27 มิ.ย.)
       {n:'S&P 500', p:'7,354.02', c:-0.05, spark:[7301,7372,7431,7554,7549,7354]},
