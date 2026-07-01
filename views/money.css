@@ -107,8 +107,8 @@
 .mny-sub-name { font-size: 0.9375rem; font-weight: 600; }
 .mny-sub-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; }
 .mny-sub-cyc { font-size: 0.6875rem; color: var(--silver); font-weight: 500; margin-left: 2px; }
-.mny-sub-foot { display: flex; justify-content: space-between; gap: 10px; margin-top: 4px; }
-.mny-sub-next { font-size: 0.75rem; color: var(--silver); }
+.mny-sub-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 10px; margin-top: 4px; }
+.mny-sub-next { font-size: 0.75rem; color: var(--silver); white-space: nowrap; }
 .mny-sub-next.soon { color: var(--accent); font-weight: 600; }
 .mny-sub-eq { font-size: 0.75rem; color: var(--silver); white-space: nowrap; }
 
