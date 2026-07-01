@@ -318,11 +318,16 @@ window.MoneyView = (function () {
   }
 
   // ── bill reminder banner (subscription ตัดบิลใน 2 วัน) ──
+  function paidThisCycle(s) {
+    const latestKey = KEYS[KEYS.length - 1];
+    const exps = (DATA[latestKey] && DATA[latestKey].expenses) || [];
+    return exps.some(e => e.category === 'Subscriptions' && e.name.trim().toLowerCase() === s.name.trim().toLowerCase());
+  }
   function renderBillAlert() {
     const el = $('mnyBillAlert'); if (!el) return;
     const now = new Date(); now.setHours(0, 0, 0, 0);
     const soon = SUBS.map(s => ({ ...s, days: Math.round((nextRenew(s) - now) / 86400000) }))
-      .filter(s => s.days >= 0 && s.days <= 2).sort((a, b) => a.days - b.days);
+      .filter(s => s.days >= 0 && s.days <= 2 && !paidThisCycle(s)).sort((a, b) => a.days - b.days);
     if (!soon.length) { el.innerHTML = ''; return; }
     const when = d => d === 0 ? 'today' : d === 1 ? 'tomorrow' : `in ${d} days`;
     const items = soon.map(s => `<div><b>${esc(s.name)}</b> bills ${when(s.days)} · ${fmtCur(s.amount, s.cur)}</div>`).join('');
