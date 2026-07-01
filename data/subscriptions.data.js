@@ -12,7 +12,7 @@ window.SUBS_DATA = {
     { "name": "Claude",      "amount": 21.40, "cur": "USD", "cycle": "mo", "day": 7, "domain": "claude.ai", "note": "Pro plan" },
     { "name": "Internet",    "amount": 424, "cycle": "mo", "day": 26, "domain": "ais.co.th", "logo": "../assets/sub-logos/ais.jpg", "note": "AIS 5G Fixxy" },
     { "name": "Spotify",     "amount": 79,  "cycle": "mo", "day": 1, "domain": "spotify.com", "note": "Premium Student" },
-    { "name": "Debit card",  "amount": 250, "cycle": "yr", "day": 3, "month": 6, "domain": "kasikornbank.com", "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/Kasikornbank_Logo.svg?width=128", "note": "Kasikornbank annual fee" },
+    { "name": "Debit card",  "amount": 250, "cycle": "yr", "day": 3, "month": 6, "domain": "kasikornbank.com", "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/Kasikornbank_Logo.svg?width=128", "note": "Kasikornbank" },
     { "name": "Shopee VIP",  "amount": 365, "cycle": "yr", "day": 30, "month": 4, "domain": "shopee.co.th", "note": "Free shipping + coupons" }
   ]
 };
