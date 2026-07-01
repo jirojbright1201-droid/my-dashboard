@@ -9,7 +9,7 @@ window.SUBS_DATA = {
   "usdthb": 33.7,
   "subs": [
     { "name": "Adobe",       "amount": 762, "cycle": "mo", "day": 1, "domain": "adobe.com", "note": "Creative Cloud" },
-    { "name": "Claude",      "amount": 21.40, "cur": "USD", "cycle": "mo", "day": 7, "domain": "claude.ai", "note": "" },
+    { "name": "Claude",      "amount": 21.40, "cur": "USD", "cycle": "mo", "day": 7, "domain": "claude.ai", "note": "Pro plan" },
     { "name": "Internet",    "amount": 424, "cycle": "mo", "day": 26, "domain": "ais.co.th", "logo": "../assets/sub-logos/ais.jpg", "note": "AIS" },
     { "name": "Spotify",     "amount": 79,  "cycle": "mo", "day": 1, "domain": "spotify.com", "note": "Premium Student" },
     { "name": "Debit card",  "amount": 250, "cycle": "yr", "day": 3, "month": 6, "domain": "kasikornbank.com", "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/Kasikornbank_Logo.svg?width=128", "note": "ค่าธรรมเนียมรายปี K Bank" },
