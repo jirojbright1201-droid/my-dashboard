@@ -8,7 +8,7 @@ window.SUBS_DATA = {
   "currency": "฿",
   "usdthb": 33.7,
   "subs": [
-    { "name": "Adobe",       "amount": 762, "cycle": "mo", "day": 1, "domain": "adobe.com", "note": "Student Plan" },
+    { "name": "Adobe",       "amount": 762, "cycle": "mo", "day": 1, "domain": "adobe.com", "note": "Creative Cloud Pro (Student)" },
     { "name": "Claude",      "amount": 21.40, "cur": "USD", "cycle": "mo", "day": 7, "domain": "claude.ai", "note": "Pro plan" },
     { "name": "Internet",    "amount": 424, "cycle": "mo", "day": 26, "domain": "ais.co.th", "logo": "../assets/sub-logos/ais.jpg", "note": "AIS" },
     { "name": "Spotify",     "amount": 79,  "cycle": "mo", "day": 1, "domain": "spotify.com", "note": "Premium Student" },
