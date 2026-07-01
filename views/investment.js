@@ -234,12 +234,17 @@ window.InvestmentView = (function () {
     const q = coSearch.trim().toLowerCase();
     const f = REG.list.filter(c => !q || c.tk.toLowerCase().includes(q) || String(c.name || '').toLowerCase().includes(q));
     $('invCoList').innerHTML = f.length ? `<div class="inv-co-grid">${f.map(c => {
-      const hasRep = (D.reports || []).some(r => r.ticker === c.tk);
-      return `<div class="inv-co-card" data-act="co" data-tk="${esc(c.tk)}">
-        <div class="inv-co-top">${icon(c.tk)}<div class="inv-co-h"><span class="inv-co-tk">${esc(c.tk)}</span>${badge(c.tk)}</div></div>
-        <div class="inv-co-nm">${esc(c.name)}</div>
-        <div class="inv-co-about">${esc(c.about || '—')}</div>
-        <div class="inv-co-foot"><span>${esc(c.sector || '')}</span>${hasRep ? '<span class="inv-rep">Report ↗</span>' : ''}</div>
+      const reps = (D.reports || []).filter(r => r.ticker === c.tk);
+      const bizRep = reps.filter(r => !r.type || r.type === 'business').slice(-1)[0];
+      const fundRep = reps.filter(r => r.type === 'fundamentals').slice(-1)[0];
+      const repBtn = (r, label) => r ? `<button class="inv-rep-btn" data-act="rep" data-file="${esc(r.file)}">${label} ↗</button>` : '';
+      const reBtns = repBtn(bizRep, 'รายงานธุรกิจ') + repBtn(fundRep, 'งบการเงินเชิงลึก');
+      return `<div class="inv-co-card">
+        <div class="inv-co-top" data-act="co" data-tk="${esc(c.tk)}">${icon(c.tk)}<div class="inv-co-h"><span class="inv-co-tk">${esc(c.tk)}</span>${badge(c.tk)}</div></div>
+        <div class="inv-co-nm" data-act="co" data-tk="${esc(c.tk)}">${esc(c.name)}</div>
+        <div class="inv-co-about" data-act="co" data-tk="${esc(c.tk)}">${esc(c.about || '—')}</div>
+        <div class="inv-co-foot"><span>${esc(c.sector || '')}</span></div>
+        ${reBtns ? `<div class="inv-co-reps">${reBtns}</div>` : ''}
       </div>`;
     }).join('')}</div>` : '<div class="empty">No companies found</div>';
   }
@@ -306,8 +311,6 @@ window.InvestmentView = (function () {
       <div class="inv-m-sec">Recent news (7d)</div>${news}`);
   }
   function openCo(tk) {
-    const rep = (D.reports || []).slice().reverse().find(r => r.ticker === tk);
-    if (rep) { window.open((window.REPORTS_BASE || './reports/') +rep.file, '_blank'); return; }
     const c = REG.list.find(x => x.tk === tk); if (!c) return;
     const allNw = REG.newsByTk[tk] || [];
     const news = allNw.length ? allNw.map(n => `<div class="inv-news"><div class="inv-news-h">${esc(n.head)}</div>${n.sum ? `<div class="inv-news-s">${esc(n.sum)}</div>` : ''}<div class="inv-news-f">${esc(n.src)} · ${esc(n.date)}</div></div>`).join('') : '<div class="empty">No news</div>';
@@ -373,6 +376,7 @@ window.InvestmentView = (function () {
       const act = a.dataset.act;
       if (act === 'hold') openHold(a.dataset.tk);
       else if (act === 'co') openCo(a.dataset.tk);
+      else if (act === 'rep') window.open((window.REPORTS_BASE || './reports/') + a.dataset.file, '_blank');
       else if (act === 'th') openThesis(+a.dataset.i);
       else if (act === 'news') openNews(+a.dataset.i);
     });

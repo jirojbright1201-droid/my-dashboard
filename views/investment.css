@@ -93,8 +93,9 @@
 
 /* ── company cards ── */
 .inv-co-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.inv-co-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; padding: 14px; cursor: pointer; transition: transform .1s; }
-.inv-co-card:active { transform: scale(.98); }
+.inv-co-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; padding: 14px; transition: transform .1s; }
+.inv-co-top, .inv-co-nm, .inv-co-about { cursor: pointer; }
+.inv-co-top:active, .inv-co-nm:active, .inv-co-about:active { opacity: .85; }
 .inv-co-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .inv-co-h { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .inv-co-tk { font-weight: 700; font-size: 0.9375rem; }
@@ -105,7 +106,9 @@
 .inv-co-nm { font-size: 0.75rem; color: var(--silver); margin-bottom: 7px; }
 .inv-co-about { font-size: 0.8125rem; color: var(--near-white); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-co-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; font-size: 0.6875rem; color: var(--silver); }
-.inv-rep { color: var(--accent); font-weight: 700; }
+.inv-co-reps { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.inv-rep-btn { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--border-soft); background: transparent; color: var(--accent); font-size: 0.75rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: background .15s; }
+.inv-rep-btn:active { background: rgba(204,120,92,.12); }
 
 /* ── thesis ── */
 .inv-th-row { cursor: pointer; transition: transform .1s; }
