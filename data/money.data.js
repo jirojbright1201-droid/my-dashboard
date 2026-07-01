@@ -12,7 +12,7 @@ window.MONEY_DATA = {
       {"date":"2026-07-01","amount":14728,"source":"Salary","name":"เงินเดือน","notes":""}
     ],
     "expenses": [
-      {"date":"2026-07-01","amount":1500,"category":"Investment","name":"Dime","notes":""},
+      {"date":"2026-07-01","amount":1500,"category":"Investment","name":"Stocks","notes":""},
       {"date":"2026-07-01","amount":1000,"category":"Emergency","name":"Emergency Fund","notes":""},
       {"date":"2026-07-01","amount":3000,"category":"Family","name":"ครอบครัว","notes":""},
       {"date":"2026-07-01","amount":1500,"category":"Rent","name":"ค่าเช่า","notes":""},
