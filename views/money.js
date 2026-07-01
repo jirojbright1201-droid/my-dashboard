@@ -242,7 +242,7 @@ window.MoneyView = (function () {
     const rows = sorted.map(s => {
       const days = Math.round((s.next - now) / 86400000);
       const soon = days <= 5;
-      const cyc = s.cycle === 'yr' ? '/yr' : '/mo';
+      const cyc = s.cycle === 'yr' ? '/year' : '/month';
       const nextStr = `${s.next.getDate()} ${THMONTH[s.next.getMonth()].slice(0, 3)}`;
       const initial = esc((s.name[0] || '#').toUpperCase());
       const src = s.logo ? esc(s.logo) : (s.domain ? `https://www.google.com/s2/favicons?sz=128&amp;domain=${esc(s.domain)}` : '');
@@ -256,8 +256,8 @@ window.MoneyView = (function () {
             <span class="mny-sub-amt">${fmtCur(s.amount, s.cur)}<span class="mny-sub-cyc">${cyc}</span></span></div>
           <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">Bill ${nextStr} · ${days}d left</span>
             ${s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>`
-              : s.cur === 'USD' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquivTHB(s)))}/mo</span>`
-              : s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/mo</span>`
+              : s.cur === 'USD' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquivTHB(s)))}/month</span>`
+              : s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/month</span>`
               : ''}</div>
         </div></div>`;
     }).join('');
@@ -265,7 +265,7 @@ window.MoneyView = (function () {
       <div class="hero mny-hero">
         <div class="mny-hero-lbl">Recurring per month</div>
         <div class="mny-hero-bal">${fmtMoney(Math.round(moBurn))}</div>
-        <div class="mny-hero-sub">${SUBS.length} items · ${fmtMoney(Math.round(yrBurn))}/yr</div>
+        <div class="mny-hero-sub">${SUBS.length} items · ${fmtMoney(Math.round(yrBurn))}/year</div>
       </div>
       <div class="card"><div class="section-title">By next billing date</div><div class="mny-subs-list">${rows}</div></div>`;
   }
