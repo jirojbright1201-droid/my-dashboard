@@ -17,7 +17,8 @@ window.MONEY_DATA = {
       {"date":"2026-07-01","amount":3000,"category":"Family","name":"ครอบครัว","notes":""},
       {"date":"2026-07-01","amount":1500,"category":"Rent","name":"ค่าเช่า","notes":""},
       {"date":"2026-07-01","amount":762,"category":"Subscriptions","name":"Adobe","notes":"Creative Cloud"},
-      {"date":"2026-07-01","amount":79,"category":"Subscriptions","name":"Spotify","notes":"Premium Student"}
+      {"date":"2026-07-01","amount":79,"category":"Subscriptions","name":"Spotify","notes":"Premium Student"},
+      {"date":"2026-07-01","amount":8,"category":"Restaurant","name":"น้ำเต้าหู้","notes":""}
     ]
   }
 };
