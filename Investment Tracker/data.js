@@ -9,17 +9,7 @@ const DATA = {
   thesis:[],
   timeline:[],
   // บริษัทที่ดู/watchlist — status: 'sold' (เคยถือแล้วขาย), 'watch' (กำลังดู)
-  companies: [
-    {tk:'POET', name:'POET Technologies', sector:'Optical Interposer / Semiconductors', status:'watch',
-     exchange:'NASDAQ', country:'Canada', founded:'2008', web:'poet-technologies.com',
-     about:'บริษัทออกแบบ optical interposer (ชิปฐานที่รวมชิ้นส่วนแสง+ไฟฟ้าไว้บนตัวเดียว) เร่งการเชื่อมต่อใน data center AI ให้เร็ว-ประหยัดไฟ ตรงคอขวด AI พอดี — แต่ยังก่อนรายได้จริง (ปี 2025 ยอดขาย ~$1M เทียบ market cap ~$1.75-2B) เป็น story stock ทุกอย่างขึ้นกับการส่งมอบ 800G เชิงผลิตครึ่งหลังปี 2026 สำนักงานใหญ่โทรอนโต แคนาดา'},
-    {tk:'OXY', name:'Occidental Petroleum', sector:'Oil & Gas E&P / Chemicals', status:'watch',
-     exchange:'NYSE', country:'USA', founded:'1920', web:'oxy.com',
-     about:'บริษัทน้ำมัน-ก๊าซสหรัฐ (Houston) — ธุรกิจหลัก upstream (ขุดเจาะผลิตน้ำมันดิบ/ก๊าซ) เน้น Permian Basin + OxyChem (เคมีภัณฑ์) + เดิมพันใหญ่ที่ Direct Air Capture (DAC ดูดคาร์บอนจากอากาศ ผ่าน 1PointFive/STRATOS). Berkshire (Buffett) ถือ ~28% + วอร์แรนต์. เพิ่งซื้อ CrownRock เสริม Permian แต่แบกหนี้เพิ่ม กำไรผูกกับราคาน้ำมันโดยตรง — ดูรายละเอียดในรายงาน'},
-    {tk:'CRCL', name:'Circle Internet Group', sector:'Stablecoin / Fintech', status:'watch',
-     exchange:'NYSE', country:'USA', founded:'2013', web:'circle.com',
-     about:'ผู้ออก USDC (stablecoin — เหรียญคริปโตที่ตรึงค่ากับดอลลาร์ 1:1) เบอร์ 2 ของโลก หมุนเวียน ~$77B รองจาก Tether/USDT (~$185B). รายได้ ~96% มาจาก reserve income (เอาเงินหนุน USDC ไปถือพันธบัตรรัฐสหรัฐ/T-bills กินดอกเบี้ย) — จุดอ่อนคือผูกกับดอกเบี้ยโดยตรง ถ้า Fed ลดดอกเบี้ยรายได้หด และต้องจ่าย Coinbase ~54% ของรายได้ตามดีลจัดจำหน่าย. IPO มิ.ย. 2025 ($31 → พีค $263) ราคาผันผวนแรง. 30 มิ.ย. 2026 ร่วง ~14% หลังกลุ่ม Open USD (Visa/Stripe/Coinbase/BlackRock) หนุนเหรียญคู่แข่ง — ดูรายละเอียดในรายงาน'}
-  ],
+  companies: [],
   market:{
     indices:[             // S&P/Nasdaq/Dow/VIX — as of ปิดตลาด ศุกร์ 26 มิ.ย. 2026 (อัป 27 มิ.ย.)
       {n:'S&P 500', p:'7,354.02', c:-0.05, spark:[7301,7372,7431,7554,7549,7354]},
@@ -58,11 +48,7 @@ const DATA = {
   },
   journal:[],   // pros/cons ฝั่งคุณบนแท็บ Log — เพิ่มได้ภายหลัง
   bench:{ spx:[0], nasdaq:[0] },
-  reports:[
-    {ticker:"CRCL", date:"1 ก.ค. 2026", file:"CRCL_2026-07-01.html"},
-    {ticker:"OXY", date:"30 มิ.ย. 2026", file:"OXY_2026-06-30.html?v=2"},
-    {ticker:"POET", date:"26 มิ.ย. 2026", file:"POET_2026-06-26.html"}
-  ]
+  reports:[]
 };
 // expose ให้ PWA shell (Home + Investment view) อ่านได้ — standalone investment.html ยังใช้ DATA/FX ตามเดิม
 window.INV_DATA = DATA; window.INV_FX = FX;
