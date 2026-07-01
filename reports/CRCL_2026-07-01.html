@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circle Internet Group (CRCL) — รายงานเชิงลึก</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* === RESET + VARS (Coinbase-Inspired, accent = Circle blue) === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#0173c3;
+  --accent-active:#015a94;
+  --accent-bright:#4fa8e0;
+  --ink:#0a0b0d;
+  --body:#5b616e;
+  --muted:#7c828a;
+  --canvas:#ffffff;
+  --surface-soft:#f7f7f7;
+  --surface-strong:#eef0f3;
+  --hairline:#dee1e6;
+  --on-dark:#ffffff;
+  --on-dark-soft:#a8acb3;
+  --up:#05b169;
+  --down:#cf202f;
+  --shadow-sm:0 4px 12px rgba(0,0,0,0.04);
+  --r-card:24px;
+  --r-pill:100px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:'Sarabun','Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* === NAV === */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+.nav-logo{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-0.2px;display:flex;align-items:center;gap:8px}
+.nav-logo span{color:var(--accent)}
+.nav-logo-mark{width:22px;height:22px;border-radius:6px;overflow:hidden;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:13.5px;font-weight:500;color:var(--body);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:var(--r-pill);margin-left:8px;letter-spacing:0.3px}
+
+/* === HERO — white canvas === */
+#hero{min-height:100vh;background:var(--canvas);border-bottom:1px solid var(--hairline);display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:48px;padding:120px 80px 96px;position:relative;overflow:hidden}
+.hero-left{z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--surface-strong);border-radius:var(--r-pill);padding:6px 16px;font-size:12px;font-weight:500;color:var(--body);letter-spacing:0.5px;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.1s ease forwards}
+.hero-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero-brand-row{display:flex;align-items:center;gap:16px;margin-bottom:20px;opacity:0;animation:fadeUp 0.7s 0.18s ease forwards}
+.hero-logo{width:56px;height:56px;border-radius:16px;background:#fff;border:1px solid var(--hairline);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.hero-title{font-family:'Inter',sans-serif;font-size:clamp(38px,4.6vw,64px);font-weight:400;line-height:1.05;letter-spacing:-2px;color:var(--ink);margin-bottom:22px;opacity:0;animation:fadeUp 0.7s 0.25s ease forwards}
+.hero-title strong{font-weight:400;color:var(--accent)}
+.hero-desc{font-size:18px;color:var(--body);line-height:1.75;max-width:560px;margin-bottom:44px;opacity:0;animation:fadeUp 0.7s 0.4s ease forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;padding:16px 32px;height:56px;border-radius:var(--r-pill);opacity:0;animation:fadeUp 0.7s 0.55s ease forwards;cursor:default}
+.hero-cta-arrow{font-size:18px}
+
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 0.8s 0.7s ease forwards}
+.hero-card-stack{position:relative;width:320px;height:380px}
+.hero-card{position:absolute;background:var(--canvas);border-radius:var(--r-card);padding:28px;border:1px solid var(--hairline)}
+.hero-card-main{width:300px;top:40px;left:0;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+.hero-card-back{width:280px;top:0;left:20px;opacity:0.5;transform:scale(0.97);z-index:-1;background:var(--surface-soft)}
+.hero-card-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.hero-card-val{font-family:'JetBrains Mono','Courier New',monospace;font-size:28px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.hero-card-sub{font-size:13px;color:var(--body);margin-bottom:20px}
+.hero-card-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--hairline);font-size:13px}
+.hero-card-row-label{color:var(--body)}
+.hero-card-row-val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--ink)}
+
+#hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(1,115,195,0.06) 0%,transparent 70%);pointer-events:none}
+
+/* === CONTENT SECTIONS === */
+.section-white{background:var(--canvas);padding:96px 0}
+.section-gray{background:var(--surface-soft);padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+
+.sec-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--ink);text-transform:uppercase;margin-bottom:16px;background:var(--surface-strong);padding:4px 14px;border-radius:var(--r-pill)}
+.sec-title{font-family:'Inter',sans-serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;letter-spacing:-1px;color:var(--ink);line-height:1.1;margin-bottom:16px}
+.sec-sub{font-size:17px;color:var(--body);max-width:680px;line-height:1.7;margin-bottom:56px}
+
+/* === CARDS === */
+.card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.card-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.card-body{font-size:14px;color:var(--body);line-height:1.7}
+
+/* === GRID === */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* === METRIC CARDS === */
+.metric-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:32px 24px;text-align:center;transition:all 0.2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.metric-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.metric-val-accent{color:var(--accent)}
+.metric-label{font-size:13px;color:var(--muted);font-weight:500}
+
+/* === TIMELINE === */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:1px;background:var(--hairline)}
+.timeline-item{position:relative;margin-bottom:32px}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline-date{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.5px;margin-bottom:4px;text-transform:uppercase}
+.timeline-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--body);line-height:1.6}
+
+/* === RISK CARDS === */
+.risk-card{border-radius:16px;padding:24px 28px;border:1px solid}
+.risk-high{background:#fff8f8;border-color:#fcd4d4}
+.risk-med{background:#fffcf0;border-color:#fde9a2}
+.risk-low{background:#f0fdf6;border-color:#b3f0d0}
+.risk-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:var(--r-pill);margin-bottom:12px;text-transform:uppercase}
+.risk-high .risk-badge{background:#fcd4d4;color:#c0392b}
+.risk-med  .risk-badge{background:#fde9a2;color:#8a6d00}
+.risk-low  .risk-badge{background:#b3f0d0;color:#1a7a4a}
+.risk-high .risk-title{color:#c0392b}
+.risk-med  .risk-title{color:#8a6d00}
+.risk-low  .risk-title{color:#1a7a4a}
+.risk-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.risk-body{font-size:14px;color:var(--body);line-height:1.7}
+
+/* === COMP TABLE === */
+.comp-table{width:100%;border-collapse:collapse}
+.comp-table th{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);padding:12px 20px;text-align:left;border-bottom:1px solid var(--hairline);text-transform:uppercase}
+.comp-table td{padding:16px 20px;font-size:14px;color:var(--body);border-bottom:1px solid var(--surface-soft)}
+.comp-table td:first-child{font-weight:600;color:var(--ink)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr.highlight-row{background:rgba(1,115,195,0.03)}
+.comp-table tr.highlight-row td:first-child{color:var(--accent)}
+
+/* === ANALYST BARS === */
+.analyst-bar-wrap{margin:20px 0}
+.analyst-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500}
+.analyst-bar-track{height:6px;background:var(--surface-strong);border-radius:var(--r-pill);overflow:hidden}
+.analyst-bar-fill{height:100%;border-radius:var(--r-pill)}
+
+/* === PERSON CARDS === */
+.person-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:28px 24px;transition:all 0.2s}
+.person-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.person-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.person-title{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.person-bio{font-size:13px;color:var(--body);line-height:1.7}
+
+/* === PARTNER BADGES === */
+.partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.partner-card{display:flex;align-items:center;gap:16px;padding:14px 18px;border:1px solid var(--hairline);border-radius:14px;background:var(--canvas);transition:all 0.15s}
+.partner-card:hover{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.partner-logo-txt{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-0.3px;flex-shrink:0;min-width:78px}
+.partner-note{font-size:12.5px;color:var(--muted);line-height:1.4}
+
+/* === TECH FLOW === */
+.tech-flow{display:flex;align-items:center;margin:48px 0;flex-wrap:wrap;gap:0;justify-content:center}
+.tech-node{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:28px 20px;text-align:center;min-width:160px;flex:1;transition:all 0.2s;box-shadow:none}
+.tech-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.tech-node-icon{width:40px;height:40px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.tech-node-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.tech-node-val{font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.4}
+.tech-arrow{font-size:20px;color:var(--hairline);padding:0 12px}
+
+/* === BIG STATS === */
+.big-stat-row{display:flex;gap:0;border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;margin:48px 0}
+.big-stat{flex:1;padding:32px 24px;border-right:1px solid var(--hairline)}
+.big-stat:last-child{border-right:none}
+.big-stat-num{font-family:'JetBrains Mono',monospace;font-size:clamp(24px,3.2vw,38px);font-weight:500;color:var(--ink);line-height:1;margin-bottom:8px}
+.big-stat-desc{font-size:13px;color:var(--body)}
+
+/* === PILLS === */
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:5px 14px;border-radius:var(--r-pill);margin:3px;letter-spacing:0.2px}
+.pill-accent{background:var(--surface-strong);color:var(--body)}
+.pill-blue{background:rgba(1,115,195,0.08);color:var(--accent);border:1px solid rgba(1,115,195,0.15)}
+.pill-up{background:rgba(5,177,105,0.08);color:var(--up)}
+.pill-down{background:rgba(207,32,47,0.08);color:var(--down)}
+
+/* === CALLOUT === */
+.callout{border-left:3px solid var(--accent);background:rgba(1,115,195,0.04);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;font-size:14px;color:var(--body)}
+.callout strong{color:var(--accent)}
+
+/* === DATA TABLE (key-value) === */
+.data-table{width:100%}
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline);gap:20px}
+.data-row:last-child{border-bottom:none}
+.data-key{font-size:14px;color:var(--body)}
+.data-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink);text-align:right}
+.data-val-up{color:var(--up)}
+.data-val-down{color:var(--down)}
+.data-val-accent{color:var(--accent)}
+
+/* === SCROLL REVEAL === */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.08s}
+.reveal-delay-2{transition-delay:0.16s}
+.reveal-delay-3{transition-delay:0.24s}
+.reveal-delay-4{transition-delay:0.32s}
+
+.divider{height:1px;background:var(--hairline);margin:0}
+
+footer{background:var(--canvas);padding:64px 48px;border-top:1px solid var(--hairline);max-width:1200px;margin:0 auto}
+.footer-legal{font-size:12px;color:var(--muted);line-height:1.7;margin-top:24px}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:100px 24px 64px}
+  .hero-right{display:none}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section-white,.section-gray{padding:64px 0}
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  .big-stat-row{flex-direction:column}
+  .big-stat{border-right:none;border-bottom:1px solid var(--hairline)}
+  .big-stat:last-child{border-bottom:none}
+  .partner-grid{grid-template-columns:1fr}
+  .tech-flow{flex-direction:column;align-items:center}
+  .tech-node{width:100%;max-width:300px;flex:none}
+  .tech-arrow{transform:rotate(90deg);padding:8px 0}
+  .comp-table thead{display:none}
+  .comp-table,.comp-table tbody,.comp-table tr,.comp-table td{display:block;width:100%}
+  .comp-table tr{border:1px solid var(--hairline);border-radius:12px;margin-bottom:14px;padding:6px 0;background:#fff}
+  .comp-table tr.highlight-row{background:rgba(1,115,195,0.04)}
+  .comp-table td{border-bottom:none;padding:7px 18px;font-size:14px}
+  .comp-table td:first-child{font-size:16px;font-weight:700;color:var(--ink);padding-top:12px}
+  .comp-table tr.highlight-row td:first-child{color:var(--accent)}
+  .comp-table td:not(:first-child){display:flex;gap:12px;align-items:baseline}
+  .comp-table td:not(:first-child)::before{content:attr(data-label);flex:0 0 90px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+  .data-row{flex-direction:column;align-items:flex-start;gap:4px}
+  .data-val{text-align:left;white-space:normal;word-break:break-word}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface-soft)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-mark">
+      <img src="https://www.google.com/s2/favicons?sz=64&domain=circle.com" alt="CRCL" style="width:100%;height:100%;object-fit:contain"
+        onerror="this.style.display='none'">
+    </span>
+    Circle <span>·</span> CRCL
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">ภาพรวม</a></li>
+    <li><a href="#technology">สินค้า/เทคโนโลยี</a></li>
+    <li><a href="#market">ตลาด</a></li>
+    <li><a href="#financials">การเงิน</a></li>
+    <li><a href="#competition">คู่แข่ง</a></li>
+    <li><a href="#leadership">ผู้บริหาร</a></li>
+    <li><a href="#catalysts">ตัวเร่ง</a></li>
+    <li><a href="#risks">ความเสี่ยง</a></li>
+    <li><a href="#analysts">นักวิเคราะห์</a></li>
+  </ul>
+  <span class="nav-badge">NYSE: CRCL</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="hero-ticker-dot"></span>
+      รายงานเชิงลึก · 1 กรกฎาคม 2026
+    </div>
+    <div class="hero-brand-row">
+      <div class="hero-logo">
+        <img src="https://www.google.com/s2/favicons?sz=128&domain=circle.com" alt="Circle" style="width:100%;height:100%;object-fit:contain;padding:8px"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;background:var(--ink);color:#fff;font:600 16px Inter,sans-serif">CR</span>
+      </div>
+    </div>
+    <h1 class="hero-title">Circle Internet Group<br><strong>ผู้ออก USDC</strong></h1>
+    <p class="hero-desc">บริษัทผู้ออก USDC สเตเบิลคอยน์ (stablecoin — เหรียญดิจิทัลที่ผูกมูลค่ากับดอลลาร์สหรัฐ 1:1) รายใหญ่อันดับ 2 ของโลก รายได้เกือบทั้งหมดมาจากดอกเบี้ยพันธบัตรรัฐบาลสหรัฐระยะสั้นที่หนุนหลังเงินสำรอง USDC</p>
+    <div class="hero-cta">อ่านรายงาน <span class="hero-cta-arrow">↓</span></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="hero-card-label">ภาพรวมตัวเลข</div>
+        <div class="hero-card-val">$77.0B</div>
+        <div class="hero-card-sub">USDC หมุนเวียน (สิ้น Q1/2026)</div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">มูลค่าตลาดบริษัท</span>
+          <span class="hero-card-row-val">$15.6B</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">รายได้ Q1/2026</span>
+          <span class="hero-card-row-val">$694.1M</span>
+        </div>
+        <div class="hero-card-row">
+          <span class="hero-card-row-label">ราคาหุ้น (1 ก.ค. 2026)</span>
+          <span class="hero-card-row-val">$63.79</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 ภาพรวมบริษัท -->
+<div class="section-white" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow reveal">01 — ภาพรวมบริษัท</div>
+    <h2 class="sec-title reveal">เงินดอลลาร์ที่เคลื่อนที่แบบอินเทอร์เน็ต</h2>
+    <p class="sec-sub reveal">เงินดอลลาร์สหรัฐแบบดั้งเดิมเคลื่อนย้ายข้ามพรมแดนช้าและต้นทุนสูง USDC คือ "เงินดอลลาร์บนบล็อกเชน" ที่โอน แลกเปลี่ยน และถือครองได้แบบเรียลไทม์ 24 ชั่วโมง 7 วัน โดยแต่ละ 1 USDC หนุนหลังด้วยสินทรัพย์สภาพคล่องสูง 1:1</p>
+
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">ปัญหาที่แก้</div>
+        <div class="card-body">การโอนเงินดอลลาร์ข้ามประเทศ/ข้ามแพลตฟอร์มผ่านระบบธนาคารดั้งเดิม (correspondent banking) ใช้เวลานานหลายวันและมีค่าธรรมเนียมสูง ไม่เหมาะกับโลกที่ธุรกรรมดิจิทัลต้องการความเร็วแบบเรียลไทม์</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">วิธีแก้ของ Circle</div>
+        <div class="card-body">ออก USDC บนเครือข่ายบล็อกเชนกว่า 33 เครือข่าย (Ethereum, Solana, Base, Arbitrum, Avalanche ฯลฯ) ให้โอน-แลกเปลี่ยนมูลค่าดอลลาร์ได้ทันทีโดยไม่ต้องพึ่งธนาคารตัวกลางในทุกขั้นตอน</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>รูปแบบรายได้หลัก:</strong> Circle ไม่คิดค่าธรรมเนียมออก/ไถ่ถอน USDC โดยตรง แต่นำเงินสำรองที่มูลค่าเท่ากับ USDC หมุนเวียนไปลงทุนในพันธบัตรรัฐบาลสหรัฐระยะสั้นและกองทุนตลาดเงิน แล้วรับดอกเบี้ยเป็นรายได้หลัก ("reserve income" — คิดเป็นสัดส่วนส่วนใหญ่ของรายได้รวมในหลายไตรมาส) ที่เหลือมาจากค่าธรรมเนียมบริการองค์กรผ่าน Circle Payments Network
+    </div>
+
+    <div class="big-stat-row reveal">
+      <div class="big-stat">
+        <div class="big-stat-num">$77.0B</div>
+        <div class="big-stat-desc">USDC หมุนเวียน สิ้นไตรมาส 1/2026 — เติบโต 28% เทียบปีก่อนหน้า (Circle press release)</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">$21.5T</div>
+        <div class="big-stat-desc">ปริมาณธุรกรรมออนเชนของ USDC ไตรมาส 1/2026 — เติบโต 263% เทียบปีก่อนหน้า</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">33</div>
+        <div class="big-stat-desc">จำนวนเครือข่ายบล็อกเชนที่รองรับ USDC พร้อม CCTP (Cross-Chain Transfer Protocol — โปรโตคอลโอนสินทรัพย์ข้ามเชนของ Circle) เชื่อม 17 เชนโดยไม่ต้องใช้ wrapped token (โทเคนสังเคราะห์ที่ผูกมูลค่ากับสินทรัพย์ต้นทางข้ามเชน)</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 02 เทคโนโลยีและสินค้า -->
+<div class="section-gray" id="technology">
+  <div class="container">
+    <div class="sec-eyebrow reveal">02 — เทคโนโลยีและสินค้า</div>
+    <h2 class="sec-title reveal">จากเงินสำรองสู่ USDC บนหลายบล็อกเชน</h2>
+    <p class="sec-sub reveal">โครงสร้างพื้นฐานของ Circle ออกแบบให้ USDC เคลื่อนที่ได้อิสระข้ามเครือข่ายบล็อกเชน พร้อมความโปร่งใสของเงินสำรองที่ตรวจสอบได้สม่ำเสมอ</p>
+
+    <div class="tech-flow reveal">
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.2c0-1.2 1.1-2.2 2.5-2.2s2.5 .9 2.5 2c0 2.5-5 1.8-5 4.3 0 1.1 1.1 2 2.5 2s2.5-1 2.5-2.2"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 1</div>
+        <div class="tech-node-val">รับฝากดอลลาร์สหรัฐ</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 2</div>
+        <div class="tech-node-val">ออก USDC หนุนหลัง 1:1</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><path d="M6.5 7.3L10.8 11M17.5 7.3L13.2 11M6.5 16.7L10.8 13M17.5 16.7L13.2 13"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 3</div>
+        <div class="tech-node-val">กระจายบน 33 บล็อกเชน</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-node-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/></svg></div>
+        <div class="tech-node-label">ขั้นที่ 4</div>
+        <div class="tech-node-val">CCTP โอนข้ามเชนไร้ wrapped token</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Circle Reserve Fund — โครงสร้างเงินสำรอง</div>
+        <div class="card-body">เงินสำรองราว 80% อยู่ใน Circle Reserve Fund กองทุนตลาดเงินภาครัฐจดทะเบียนภายใต้ Rule 2a-7 (กฎกำกับกองทุนตลาดเงินสหรัฐที่เข้มงวด) บริหารโดย BlackRock รับฝากทรัพย์สินที่ BNY Mellon ส่วนที่เหลือราว 20% เป็นเงินสดในธนาคารขนาดใหญ่ระดับโลก</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Arc — เลเยอร์ 1 บล็อกเชนเฉพาะทาง</div>
+        <div class="card-body">เปิดตัว 12 ส.ค. 2025 เป็น Layer-1 blockchain (เครือข่ายบล็อกเชนหลักที่ประมวลผลเอง) ใช้ USDC เป็นค่าแก๊ส มี FX engine ในตัว และ finality (การยืนยันธุรกรรมที่เปลี่ยนแปลงไม่ได้) ต่ำกว่า 1 วินาที ช่วง 90 วันแรกของ testnet มีธุรกรรมกว่า 150 ล้านรายการ วางแผนเปิด mainnet beta ในปี 2026</div>
+      </div>
+    </div>
+
+    <div class="timeline reveal" style="margin-top:48px">
+      <div class="timeline-item">
+        <div class="timeline-date">5 มิ.ย. 2025</div>
+        <div class="timeline-title">IPO บน NYSE</div>
+        <div class="timeline-desc">ราคาเสนอขาย $31/หุ้น ระดมทุน 1.05 พันล้านดอลลาร์</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">12 ส.ค. 2025</div>
+        <div class="timeline-title">เปิดตัว Arc</div>
+        <div class="timeline-desc">ประกาศ Layer-1 blockchain เฉพาะทางสำหรับสเตเบิลคอยน์</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">28 ต.ค. 2025</div>
+        <div class="timeline-title">เปิด public testnet ของ Arc</div>
+        <div class="timeline-desc">ธุรกรรมกว่า 150 ล้านรายการ กระเป๋าใช้งานเกือบ 1.5 ล้านใบใน 90 วันแรก</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">29 ม.ค. 2026</div>
+        <div class="timeline-title">ประกาศวิสัยทัศน์ผลิตภัณฑ์ 2026</div>
+        <div class="timeline-desc">วางกลยุทธ์ 3 เสาหลัก: Arc, USDC/EURC, และแอปองค์กร CPN/StableFX</div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-top:32px">
+      <div class="card-title">Circle Payments Network (CPN) และ StableFX</div>
+      <div class="card-body">CPN เชื่อมสถาบันการเงินเข้าเครือข่าย Circle โดยตรงเพื่อชำระเงินข้ามพรมแดนแบบเกือบเรียลไทม์ผ่านสเตเบิลคอยน์ ต้นปี 2026 มีสถาบันลงทะเบียนแล้ว 136 แห่ง ปริมาณธุรกรรมรายปี (annualized) ราว 8.3 พันล้านดอลลาร์ ส่วน StableFX เป็นบริการเทรดอัตราแลกเปลี่ยนสำหรับสถาบันแบบ 24/7 พร้อมชำระราคาบนเชน</div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 03 โอกาสทางตลาด -->
+<div class="section-white" id="market">
+  <div class="container">
+    <div class="sec-eyebrow reveal">03 — โอกาสทางตลาด</div>
+    <h2 class="sec-title reveal">ตลาดสเตเบิลคอยน์ที่โตเร็วและกฎหมายที่เพิ่งชัดเจน</h2>
+    <p class="sec-sub reveal">มูลค่าตลาดสเตเบิลคอยน์รวมทะลุ 320-321 พันล้านดอลลาร์ในปี 2026 โดย USDT และ USDC ครองส่วนแบ่งรวมกันกว่า 80-92% ของตลาด (ตัวเลขต่างกันตามช่วงเวลาที่วัด)</p>
+
+    <div class="grid-3">
+      <div class="metric-card reveal">
+        <div class="metric-val metric-val-accent">$320B+</div>
+        <div class="metric-label">มูลค่าตลาดสเตเบิลคอยน์รวม 2026</div>
+      </div>
+      <div class="metric-card reveal reveal-delay-1">
+        <div class="metric-val">2 ปี</div>
+        <div class="metric-label">USDC โตเร็วกว่า USDT ต่อเนื่องเป็นปีที่สอง</div>
+      </div>
+      <div class="metric-card reveal reveal-delay-2">
+        <div class="metric-val">18 ก.ค. 2025</div>
+        <div class="metric-label">วันลงนาม GENIUS Act — กฎหมายสเตเบิลคอยน์สหพันธรัฐฉบับแรก</div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:40px">
+      <strong>GENIUS Act:</strong> กรอบกฎหมายกำหนดให้ต้องมีสินทรัพย์หนุนหลัง 1:1 ด้วยสินทรัพย์สภาพคล่องสูง ตรวจสอบบัญชีและเปิดเผยข้อมูลสม่ำเสมอ พร้อมเส้นทางขอใบอนุญาตระดับสหพันธรัฐที่ชัดเจน — เอื้อประโยชน์ต่อผู้ออกที่ compliant อย่าง USDC มากกว่าคู่แข่งที่เน้นตลาดนอกสหรัฐ
+    </div>
+
+    <h3 style="font-size:16px;font-weight:600;margin:48px 0 20px">พันธมิตรและ segment เป้าหมาย</h3>
+    <div class="partner-grid reveal">
+      <div class="partner-card">
+        <span class="partner-logo-txt">FIS</span>
+        <span class="partner-note">ผสาน USDC เข้ากับโครงสร้างพื้นฐานการเงินดั้งเดิม เปิดทางสถาบันการเงินใช้งานง่ายขึ้น</span>
+      </div>
+      <div class="partner-card">
+        <span class="partner-logo-txt">BlackRock</span>
+        <span class="partner-note">บริหารเงินสำรอง USDC ผ่าน Circle Reserve Fund และเป็นผู้สนับสนุนเชิงกลยุทธ์ก่อน IPO</span>
+      </div>
+      <div class="partner-card">
+        <span class="partner-logo-txt">Coinbase</span>
+        <span class="partner-note">พันธมิตรกระจาย USDC รายใหญ่ที่สุด ภายใต้ข้อตกลงแบ่งรายได้ที่จะหมดอายุ ส.ค. 2026</span>
+      </div>
+      <div class="partner-card">
+        <span class="partner-logo-txt">Meta</span>
+        <span class="partner-note">ใช้งาน USDC สำหรับจ่ายเงินให้ครีเอเตอร์ในบางพื้นที่</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 04 การเงิน -->
+<div class="section-gray" id="financials">
+  <div class="container">
+    <div class="sec-eyebrow reveal">04 — การเงิน</div>
+    <h2 class="sec-title reveal">รายได้ผูกกับดอกเบี้ย — เติบโตแต่กำไรบางลง</h2>
+    <p class="sec-sub reveal">ข้อมูลล่าสุดที่เปิดเผยคือผลประกอบการไตรมาส 1/2026 (ประกาศ 11 พ.ค. 2026) เนื่องจากไตรมาส 2/2026 ยังไม่ประกาศ ณ วันที่ทำรายงานนี้ (คาดประกาศเดือนสิงหาคม 2026)</p>
+
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">ผลประกอบการไตรมาส 1/2026</div>
+        <div class="data-table" style="margin-top:12px">
+          <div class="data-row"><span class="data-key">รายได้</span><span class="data-val">$694.1M <span style="color:var(--body);font-weight:400">(+20% YoY)</span></span></div>
+          <div class="data-row"><span class="data-key">กำไรสุทธิ</span><span class="data-val data-val-down">$55.3M (-15% YoY)</span></div>
+          <div class="data-row"><span class="data-key">กำไรต่อหุ้น (EPS)</span><span class="data-val">$0.23</span></div>
+          <div class="data-row"><span class="data-key">อัตรากำไรสุทธิ</span><span class="data-val data-val-down">8.0% (จาก 11% ปีก่อน)</span></div>
+          <div class="data-row"><span class="data-key">USDC หมุนเวียนสิ้นไตรมาส</span><span class="data-val data-val-accent">$77.0B (+28% YoY)</span></div>
+        </div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">โครงสร้างรายได้ปี 2024 (ก่อน IPO)</div>
+        <div class="card-body">รายได้รวมราว 1.6 พันล้านดอลลาร์ จากฐานเงินสำรองราว 44 พันล้านดอลลาร์ (อัตราผลตอบแทนเงินสำรองราว 3.6%) แต่หลังหักต้นทุนการกระจาย USDC (distribution cost) กว่า 900 ล้านดอลลาร์ ซึ่งส่วนใหญ่จ่ายให้ Coinbase ตามข้อตกลงแบ่งรายได้ Circle เหลือรายได้สุทธิจาก USDC ราว 768 ล้านดอลลาร์</div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:32px">
+      <strong>ข้อตกลงแบ่งรายได้กับ Coinbase:</strong> Coinbase ได้รับดอกเบี้ย 100% จาก USDC ที่ถือครองบนแพลตฟอร์มตนเอง และแบ่ง 50:50 กับ Circle สำหรับ USDC นอกแพลตฟอร์ม ข้อตกลงต่ออายุทุก 3 ปี รอบปัจจุบันหมดอายุเดือนสิงหาคม 2026 — เป็นปัจจัยกำหนดกำไรที่สำคัญที่สุดตัวหนึ่งของ Circle
+    </div>
+
+    <div class="grid-2" style="margin-top:32px">
+      <div class="card reveal">
+        <div class="card-title">ความอ่อนไหวต่อดอกเบี้ย</div>
+        <div class="card-body">ทุกการลดดอกเบี้ยนโยบาย 0.25% อาจทำให้ EBITDA (กำไรก่อนหักดอกเบี้ย ภาษี ค่าเสื่อมราคา และค่าตัดจำหน่าย) ลดลงราว 100 ล้านดอลลาร์ และหากดอกเบี้ยลดลง 1% อาจทำให้รายได้รายปีลดลงราว 441 ล้านดอลลาร์ — ความเสี่ยงเชิงโครงสร้างที่ผูกกับวัฏจักรดอกเบี้ยของธนาคารกลางสหรัฐโดยตรง</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">ราคาหุ้นและมูลค่าตลาด</div>
+        <div class="card-body">IPO ที่ $31/หุ้น มูลค่าบริษัทตอน IPO ราว 8 พันล้านดอลลาร์ขึ้นไป จุดสูงสุดหลัง IPO ราว $263-299/หุ้น (มิ.ย. 2025) ราคาปัจจุบัน (1 ก.ค. 2026) ประมาณ $63.79/หุ้น มูลค่าตลาดราว 15.6 พันล้านดอลลาร์ — ลดลงกว่า 75% จากจุดสูงสุด จุดต่ำสุด 52 สัปดาห์ราว $49.90 (5 ก.พ. 2026)</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 05 คู่แข่ง -->
+<div class="section-white" id="competition">
+  <div class="container">
+    <div class="sec-eyebrow reveal">05 — คู่แข่งและการแข่งขัน</div>
+    <h2 class="sec-title reveal">USDC vs USDT และผู้เล่นหน้าใหม่จากธนาคาร</h2>
+    <p class="sec-sub reveal">ตลาดสเตเบิลคอยน์เริ่มแบ่งขั้วตามกรอบกำกับดูแล — USDC เป็นตัวเลือกแรกของสถาบันที่ต้องการความ compliant ขณะที่ USDT ยังครองสภาพคล่องฝั่งคริปโตเนทีฟ</p>
+
+    <table class="comp-table reveal">
+      <thead>
+        <tr><th>ผู้เล่น</th><th>ลักษณะ</th><th>ส่วนแบ่งตลาดโดยประมาณ (2026)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tether (USDT)</td>
+          <td data-label="ลักษณะ">สเตเบิลคอยน์อันดับ 1 ของโลก เน้นตลาดคริปโตเนทีฟและนอกสหรัฐ ยังไม่ปฏิบัติตามมาตรฐาน PPSI/GENIUS เต็มรูปแบบ</td>
+          <td data-label="ส่วนแบ่งตลาด">ราว 59-65% มูลค่าราว $186-193B</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>USDC (Circle)</td>
+          <td data-label="ลักษณะ">ผู้นำกลุ่มสเตเบิลคอยน์ที่กำกับดูแลเข้มงวด เน้นสถาบัน/องค์กรในสหรัฐ</td>
+          <td data-label="ส่วนแบ่งตลาด">ราว 23-24% มูลค่าราว $75-78B</td>
+        </tr>
+        <tr>
+          <td>PayPal USD (PYUSD)</td>
+          <td data-label="ลักษณะ">เติบโตเร็ว (บางช่วง 300%+ YoY) แต่ฐานยังเล็กกว่ามาก ผู้ใช้คริปโตบางส่วนระแวงการควบคุมจากศูนย์กลาง</td>
+          <td data-label="ส่วนแบ่งตลาด">เล็กกว่า USDC มาก แต่เติบโตเร็วสุดในกลุ่ม</td>
+        </tr>
+        <tr>
+          <td>สเตเบิลคอยน์ธนาคาร (JPMD, SoFiUSD)</td>
+          <td data-label="ลักษณะ">ธนาคารดั้งเดิมเริ่มออกสเตเบิลคอยน์เองภายใต้ GENIUS Act เพื่อใช้ชำระเงินองค์กร</td>
+          <td data-label="ส่วนแบ่งตลาด">เพิ่งเริ่มต้น ยังเล็ก แต่เป็นภัยคุกคามระยะยาว</td>
+        </tr>
+        <tr>
+          <td>Ethena USDe, DAI/USDS</td>
+          <td data-label="ลักษณะ">สเตเบิลคอยน์แบบ decentralized/yield-bearing (จ่ายผลตอบแทน) ทางเลือก</td>
+          <td data-label="ส่วนแบ่งตลาด">รวมกันเป็นส่วนที่เหลือของตลาด (5 อันดับแรกครองราว 88%)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:16px;font-weight:600;margin:48px 0 20px">Moat ของ Circle (ความได้เปรียบที่ป้องกันคู่แข่งได้)</h3>
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-title">Regulatory moat</div>
+        <div class="card-body">USDC ถูกมองว่าเป็นสเตเบิลคอยน์ที่ compliant ที่สุดตัวหนึ่งในสหรัฐภายใต้ GENIUS Act ทำให้สถาบันการเงินเลือกใช้มากกว่า USDT</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Network effect ข้ามเชน</div>
+        <div class="card-body">ออกใน 33 บล็อกเชน พร้อม CCTP เชื่อม 17 เชน ทำให้สภาพคล่องกระจายกว้างและต้นทุนย้ายไปใช้เจ้าอื่น (switching cost) สูงสำหรับนักพัฒนา/สถาบัน</div>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="card-title">ขนาดตลาดนำคู่แข่งกลุ่มเดียวกัน</div>
+        <div class="card-body">มูลค่าตลาด USDC สูงกว่าคู่แข่งกลุ่ม compliant เกือบ 15 เท่า ทำให้เป็นตัวเลือกแรกของสถาบัน</div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:32px">
+      <strong>ความเสี่ยงต่อ moat:</strong> กลุ่มพันธมิตร "Open USD" (อ้างว่ามีพันธมิตรกว่า 140 ราย) เสนอโมเดลไม่คิดค่าธรรมเนียมเล็งแย่งรายได้ดอกเบี้ยสำรองของ Circle โดยตรง ขณะที่ Mastercard เข้าซื้อ BVNK มูลค่าสูงสุด 1.8 พันล้านดอลลาร์ เพื่อสร้างโครงสร้างพื้นฐานสเตเบิลคอยน์ของตนเอง
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 06 ผู้บริหารและนักลงทุน -->
+<div class="section-gray" id="leadership">
+  <div class="container">
+    <div class="sec-eyebrow reveal">06 — ผู้บริหารและนักลงทุน</div>
+    <h2 class="sec-title reveal">ทีมผู้ก่อตั้งที่อยู่กับสเตเบิลคอยน์มากว่าทศวรรษ</h2>
+    <p class="sec-sub reveal">Jeremy Allaire นำ Circle มาตั้งแต่ก่อตั้งจนถึง IPO ได้รับการสนับสนุนจากนักลงทุนสถาบันรายใหญ่ก่อนเข้าตลาด</p>
+
+    <div class="grid-4">
+      <div class="person-card reveal">
+        <div class="person-name">Jeremy Allaire</div>
+        <div class="person-title">ผู้ร่วมก่อตั้ง ประธาน และ CEO</div>
+        <div class="person-bio">ประสบการณ์กว่า 20 ปีในการสร้างแพลตฟอร์มซอฟต์แวร์อินเทอร์เน็ต เคยเป็นผู้ก่อตั้ง/CEO ของ Brightcove, CTO ของ Macromedia ได้รับการเสนอชื่อใน TIME100 ปี 2026</div>
+      </div>
+      <div class="person-card reveal reveal-delay-1">
+        <div class="person-name">Li Fan</div>
+        <div class="person-title">Chief Technology Officer</div>
+        <div class="person-bio">ดูแลกลยุทธ์เทคโนโลยี นวัตกรรม และปฏิบัติการวิศวกรรมของบริษัท</div>
+      </div>
+      <div class="person-card reveal reveal-delay-2">
+        <div class="person-name">Sherice Torres</div>
+        <div class="person-title">Chief Marketing Officer</div>
+        <div class="person-bio">ดูแลกลยุทธ์การตลาดระดับโลกและการสร้างแบรนด์ของ Circle</div>
+      </div>
+      <div class="person-card reveal reveal-delay-3">
+        <div class="person-name">Flavia Naves</div>
+        <div class="person-title">Chief Legal Officer</div>
+        <div class="person-bio">รับผิดชอบงานกฎหมาย กำกับดูแล และการปฏิบัติตามกฎระเบียบทั่วโลก</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:600;margin:48px 0 20px">นักลงทุนและผู้จัดจำหน่าย IPO</h3>
+    <p class="card-body" style="max-width:760px">Circle ได้รับเงินทุนจากนักลงทุนเวนเจอร์ก่อน IPO รวมถึง <strong style="color:var(--ink)">Accel</strong> และ <strong style="color:var(--ink)">General Catalyst</strong> (ผู้ถือหุ้นที่ขายหุ้นบางส่วนตอน IPO) รวมถึงได้รับการสนับสนุนจาก <strong style="color:var(--ink)">BlackRock</strong>, <strong style="color:var(--ink)">Fidelity</strong> และ <strong style="color:var(--ink)">Coinbase Ventures</strong> ผู้จัดจำหน่ายหลัก (lead underwriters) ของ IPO คือ J.P. Morgan, Citigroup และ Goldman Sachs จากทั้งหมด 15 ธนาคารที่ร่วมจัดจำหน่าย</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 07 ตัวเร่งและข่าว -->
+<div class="section-white" id="catalysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">07 — ตัวเร่งและข่าว</div>
+    <h2 class="sec-title reveal">กฎระเบียบเป็นทั้งลมหนุนและความเสี่ยง</h2>
+    <p class="sec-sub reveal">2026 เป็นปีที่กฎระเบียบสเตเบิลคอยน์เคลื่อนไหวเร็ว ทั้งด้านบวก (GENIUS Act) และด้านลบ (ร่าง CLARITY Act) ต่อโมเดลธุรกิจของ Circle โดยตรง</p>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="font-size:14px;font-weight:600;color:var(--up);margin-bottom:20px;text-transform:uppercase;letter-spacing:0.5px">ปัจจัยบวก</h3>
+        <div class="timeline reveal">
+          <div class="timeline-item">
+            <div class="timeline-date">18 ก.ค. 2025</div>
+            <div class="timeline-title">GENIUS Act ลงนามเป็นกฎหมาย</div>
+            <div class="timeline-desc">กรอบกฎหมายสเตเบิลคอยน์สหพันธรัฐฉบับแรกของสหรัฐ ให้ความชัดเจนด้านกำกับดูแล</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025-2026</div>
+            <div class="timeline-title">พันธมิตรกับ FIS</div>
+            <div class="timeline-desc">ผสาน USDC เข้ากับโครงสร้างพื้นฐานการเงินดั้งเดิม</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">ต่อเนื่อง</div>
+            <div class="timeline-title">USDC โตเร็วกว่า USDT ปีที่สองติดต่อกัน</div>
+            <div class="timeline-desc">สัญญาณตลาดเลือกสเตเบิลคอยน์ที่กำกับดูแลเข้มงวดมากขึ้น</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:14px;font-weight:600;color:var(--down);margin-bottom:20px;text-transform:uppercase;letter-spacing:0.5px">ปัจจัยลบ</h3>
+        <div class="timeline reveal">
+          <div class="timeline-item">
+            <div class="timeline-date">มี.ค. 2026</div>
+            <div class="timeline-title">ร่าง CLARITY Act เผยแพร่</div>
+            <div class="timeline-desc">เสนอห้ามจ่ายผลตอบแทนแบบพาสซีฟให้ผู้ถือรายย่อย หุ้น Circle ร่วง 18-20% ในวันเดียว</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">14 เม.ย. 2026</div>
+            <div class="timeline-title">คดีความ Drift Protocol</div>
+            <div class="timeline-desc">ฟ้องกลุ่ม (class action) กล่าวหา Circle ล้มเหลวอายัดเงินขโมยที่แปลงเป็น USDC มูลค่าราว $230M</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">14 พ.ค. 2026</div>
+            <div class="timeline-title">CLARITY Act ผ่านชั้นกรรมาธิการ</div>
+            <div class="timeline-desc">ผ่านวุฒิสภาด้านการธนาคาร 15-9 เป้าหมายผ่านวุฒิสภาเต็มสภาก่อน ส.ค. 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:16px">
+      <strong>แรงกดดันด้านการแข่งขัน:</strong> Tether เปิดตัว USAT มุ่งตลาดสหรัฐที่ USDC เคยครองอยู่, SoFi เปิด SoFiUSD (สเตเบิลคอยน์แรกจากธนาคารสหรัฐภายใต้ GENIUS Act), JPMorgan เดินหน้า JPMD และข้อตกลง Coinbase ใกล้หมดอายุ (ส.ค. 2026) สร้างความไม่แน่นอนต่อโครงสร้างต้นทุน-รายได้ในอนาคต
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 08 ความเสี่ยง -->
+<div class="section-gray" id="risks">
+  <div class="container">
+    <div class="sec-eyebrow reveal">08 — ความเสี่ยง</div>
+    <h2 class="sec-title reveal">ความเสี่ยงที่ต้องรู้ก่อนทำความเข้าใจธุรกิจนี้</h2>
+
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="risk-card risk-high reveal">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></svg> ความเสี่ยงสูง</div>
+        <div class="risk-title">ความเสี่ยงจากอัตราดอกเบี้ย</div>
+        <div class="risk-body">รายได้เกือบทั้งหมดผูกกับดอกเบี้ยพันธบัตรรัฐบาลระยะสั้น หากธนาคารกลางสหรัฐลดดอกเบี้ยต่อเนื่อง รายได้และกำไรจะถูกกดดันโดยตรงและรวดเร็ว (ทุก 0.25% ที่ลดลง กระทบ EBITDA ราว $100M)</div>
+      </div>
+      <div class="risk-card risk-high reveal reveal-delay-1">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></svg> ความเสี่ยงสูง</div>
+        <div class="risk-title">ความเสี่ยงด้านกฎระเบียบ (CLARITY Act)</div>
+        <div class="risk-body">หากกฎหมายห้ามจ่ายผลตอบแทนแก่ผู้ถือสเตเบิลคอยน์รายย่อยผ่านชั้นสุดท้ายและมีผลบังคับใช้ อาจกระทบโมเดลการกระจาย USDC ผ่านพันธมิตรอย่าง Coinbase</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="risk-card risk-med reveal">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> ความเสี่ยงปานกลาง</div>
+        <div class="risk-title">การต่อรองสัญญา Coinbase</div>
+        <div class="risk-body">ข้อตกลงแบ่งรายได้หมดอายุเดือนสิงหาคม 2026 ผลการเจรจาใหม่อาจกระทบอัตรากำไรอย่างมีนัยสำคัญไม่ว่าทางใดทางหนึ่ง</div>
+      </div>
+      <div class="risk-card risk-med reveal reveal-delay-1">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> ความเสี่ยงปานกลาง</div>
+        <div class="risk-title">การแข่งขันจากธนาคารและผู้เล่นรายใหม่</div>
+        <div class="risk-body">JPMD, SoFiUSD, USAT ของ Tether และกลุ่ม Open USD (140 พันธมิตร) ล้วนพุ่งเป้าแย่งส่วนแบ่งตลาดหรือรายได้ดอกเบี้ยสำรองของ Circle โดยตรง</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="risk-card risk-med reveal">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> ความเสี่ยงปานกลาง</div>
+        <div class="risk-title">คดีความ Drift Protocol</div>
+        <div class="risk-body">ผลลัพธ์ทางกฎหมายยังไม่แน่นอน อาจกระทบชื่อเสียงเรื่องมาตรฐานการอายัดทรัพย์สินที่ถูกขโมย</div>
+      </div>
+      <div class="risk-card risk-low reveal reveal-delay-1">
+        <div class="risk-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg> ความเสี่ยงต่ำ</div>
+        <div class="risk-title">การดำเนินงานของเงินสำรอง</div>
+        <div class="risk-body">เงินสำรอง USDC บริหารโดย BlackRock ภายใต้กองทุนที่กำกับดูแลเข้มงวด (Rule 2a-7) และรับฝากทรัพย์สินที่ BNY Mellon ลดความเสี่ยงเชิงปฏิบัติการเทียบผู้ออกรายเล็ก</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 09 นักวิเคราะห์ -->
+<div class="section-white" id="analysts">
+  <div class="container">
+    <div class="sec-eyebrow reveal">09 — มุมมองนักวิเคราะห์</div>
+    <h2 class="sec-title reveal">ฉันทามติ Buy แต่ช่วงเป้าหมายราคากว้างมาก</h2>
+    <p class="sec-sub reveal">จากนักวิเคราะห์ประมาณ 17 รายที่ติดตามหุ้น (ข้อมูล ณ 11 พ.ค. 2026) ความเห็นโดยรวมเป็น Buy</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="analyst-bar-wrap reveal">
+          <div class="analyst-bar-label"><span>Buy (ซื้อ)</span><span>9 ราย · 53%</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:53%;background:var(--up)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap reveal reveal-delay-1">
+          <div class="analyst-bar-label"><span>Hold (ถือ)</span><span>6 ราย · 35%</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:35%;background:var(--muted)"></div></div>
+        </div>
+        <div class="analyst-bar-wrap reveal reveal-delay-2">
+          <div class="analyst-bar-label"><span>Sell (ขาย)</span><span>2 ราย · 12%</span></div>
+          <div class="analyst-bar-track"><div class="analyst-bar-fill" style="width:12%;background:var(--down)"></div></div>
+        </div>
+        <div class="card-body" style="margin-top:16px">ช่วงราคาเป้าหมาย: ต่ำสุด $60 (Wolfe Research, 2 ธ.ค. 2025) — สูงสุด $235 (Seaport Global, 20 มิ.ย. 2025) ค่าเฉลี่ยฉันทามติราว $125-143 ตามช่วงเวลาของแต่ละแหล่งข้อมูล (HC Wainwright & Co. ปรับเป้าขึ้นเป็น $150 เมื่อ 18 พ.ค. 2026)</div>
+      </div>
+      <div class="grid-2" style="grid-template-columns:1fr">
+        <div class="card reveal">
+          <div class="card-title" style="color:var(--up)">มุมมอง Bull (บวก)</div>
+          <div class="card-body">Circle มี first-mover advantage (ความได้เปรียบจากการเป็นผู้บุกเบิกตลาดก่อนคู่แข่ง) ในกลุ่มสเตเบิลคอยน์ที่กำกับดูแลเข้มงวด สภาพคล่องลึกกว่าคู่แข่งกลุ่มเดียวกันมาก และ GENIUS Act จะตอกย้ำความได้เปรียบด้านกฎระเบียบระยะยาว ผลิตภัณฑ์ใหม่อย่าง Arc และ CPN อาจเปิดรายได้ใหม่ที่ไม่พึ่งดอกเบี้ยเงินสำรองเพียงอย่างเดียว</div>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <div class="card-title" style="color:var(--down)">มุมมอง Bear (ลบ)</div>
+          <div class="card-body">โมเดลรายได้ผูกกับดอกเบี้ยระยะสั้นมากเกินไป เสี่ยงสูงเมื่อธนาคารกลางเข้าสู่วัฏจักรลดดอกเบี้ย การแข่งขันจากธนาคารใหญ่ Tether และผู้เล่นรายใหม่อาจกัดกร่อนส่วนแบ่งตลาดระยะยาว บางฝ่ายมองว่าราคาหุ้นเคยตีมูลค่าล่วงหน้าสูงเกินพื้นฐาน</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 10 สรุป -->
+<div class="section-gray" id="summary">
+  <div class="container">
+    <div class="sec-eyebrow reveal">10 — สรุป</div>
+    <h2 class="sec-title reveal">Pure-play ของธีมสเตเบิลคอยน์ที่ถูกกำกับดูแล</h2>
+
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">สิ่งที่ควรรู้</div>
+        <div class="card-body">Circle คือผู้ออก USDC สเตเบิลคอยน์รายใหญ่อันดับ 2 ของโลก มีโมเดลรายได้เรียบง่ายแต่เปราะบาง: นำเงินสำรองที่หนุนหลัง USDC ไปลงทุนในพันธบัตรรัฐบาลสหรัฐระยะสั้นแล้วรับดอกเบี้ย ธุรกิจได้รับแรงหนุนจาก GENIUS Act แต่ต้องแบ่งรายได้ก้อนใหญ่ให้ Coinbase ราคาหุ้นร่วงกว่า 75% จากจุดสูงสุดหลัง IPO เพราะความกังวลดอกเบี้ยขาลง CLARITY Act และการแข่งขันที่รุนแรงขึ้น</div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">สิ่งที่ควรติดตาม</div>
+        <div class="card-body">
+          <ul style="padding-left:18px;margin:0">
+            <li>ผลเจรจาต่อสัญญา Coinbase ที่หมดอายุ ส.ค. 2026</li>
+            <li>ความคืบหน้า CLARITY Act ในวุฒิสภาสหรัฐ</li>
+            <li>ทิศทางดอกเบี้ยนโยบายของ Fed ช่วงที่เหลือปี 2026</li>
+            <li>การเปิดตัว Arc mainnet และรายได้นอกเหนือดอกเบี้ยเงินสำรอง</li>
+            <li>ผลไตรมาส 2/2026 ที่คาดประกาศเดือนสิงหาคม 2026</li>
+            <li>ความคืบหน้าคดีความ Drift Protocol</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:32px">
+      Circle เป็นตัวแทนบริสุทธิ์ (pure-play) ของธีมสเตเบิลคอยน์ที่ถูกกำกับดูแลอย่างเข้มงวดในสหรัฐ ได้ประโยชน์ชัดเจนจาก GENIUS Act แต่รายได้ยังกระจุกตัวสูงในดอกเบี้ยพันธบัตรระยะสั้นและต้องแบ่งรายได้จำนวนมากให้พันธมิตรกระจาย USDC อย่าง Coinbase ทำให้ธุรกิจนี้อยู่ตรงจุดตัดระหว่างโอกาสเชิงโครงสร้างระยะยาวจากการยอมรับสเตเบิลคอยน์ที่กว้างขึ้น กับความเสี่ยงเชิงวัฏจักรจากดอกเบี้ยและการแข่งขันที่รุนแรงขึ้นในระยะสั้น-กลาง
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="font-size:13px;color:var(--muted)">รายงานนี้จัดทำเพื่อการศึกษาและทำความเข้าใจธุรกิจเท่านั้น ไม่ใช่คำแนะนำการลงทุน ไม่มีการวิเคราะห์มูลค่าหุ้นหรือคาดการณ์ราคาในอนาคต</div>
+  <div class="footer-legal">ข้อมูลรวบรวมจากแหล่งสาธารณะ ณ วันที่ 1 กรกฎาคม 2026 รวมถึง Circle press release, SEC filings, Yahoo Finance, Seeking Alpha, MarketBeat, CoinDesk, TipRanks และแหล่งข่าวอื่นที่อ้างอิงในเนื้อหา ตัวเลขบางส่วนอาจแตกต่างกันเล็กน้อยตามแหล่งข้อมูลและช่วงเวลาที่วัด ผู้จัดทำพยายาม cross-verify จากอย่างน้อย 2 แหล่งสำหรับตัวเลขสำคัญ แต่ไม่รับประกันความถูกต้องสมบูรณ์ 100%</div>
+</footer>
+
+<script>
+(function(){
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+(function(){
+  const links=document.querySelectorAll('.nav-links a');
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}}),{threshold:0.4});
+  document.querySelectorAll('[id]').forEach(s=>{if(s.tagName!=='NAV')io.observe(s)});
+})();
+</script>
+</body>
+</html>
