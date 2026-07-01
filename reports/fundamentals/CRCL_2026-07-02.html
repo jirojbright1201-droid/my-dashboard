@@ -207,7 +207,7 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
       รายงานงบการเงินเชิงลึก (Fundamentals) · 2 ก.ค. 2026
     </div>
     <h1 class="hero-title">Circle Internet Group <strong>(CRCL)</strong></h1>
-    <p class="hero-desc">Circle หาเงินยังไง แล้วงบการเงินที่ประกาศออกมาจริงๆ บอกอะไรเราบ้าง — รายงานนี้ไล่ดูทีละบรรทัดว่าเงินเข้า-เงินออกของบริษัทเป็นยังไง ตัวเลขทุกตัวคัดมาจากเอกสารที่บริษัทต้องยื่นต่อหน่วยงานกำกับหลักทรัพย์สหรัฐฯ (SEC) โดยตรง ไม่ใช่สรุปจากข่าวหรือเดาเอาเอง (ดูลิงก์เอกสารต้นฉบับได้ที่ส่วน "แหล่งอ้างอิง" ท้ายรายงาน)</p>
+    <p class="hero-desc">รายงานนี้เน้นตัวเลขจาก filing ต้นทาง SEC เท่านั้น — ไม่ใช่ narrative ธุรกิจ ทุกตัวเลขสอบกลับไปที่ 10-K/10-Q/XBRL (รูปแบบข้อมูลมาตรฐานที่ SEC บังคับใช้ให้บริษัทยื่นตัวเลขงบการเงิน)/8-K ได้โดยตรง (ดูส่วน "แหล่งอ้างอิง" ท้ายรายงาน)</p>
     <div class="hero-filing-pill">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 2h9l5 5v15H6V2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15 2v5h5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
       Filing ล่าสุด: 10-Q ไตรมาส 1/2026 (งวดสิ้นสุด 31 มี.ค. 2026) · ยื่น 11 พ.ค. 2026
@@ -248,8 +248,8 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-white" id="income">
   <div class="container">
     <div class="sec-eyebrow">01 — งบกำไรขาดทุน (Income Statement)</div>
-    <h2 class="sec-title">รายได้โตทุกไตรมาส แต่มีไตรมาสหนึ่งที่กำไรหายไปทั้งก้อน — เพราะเรื่องเดียว และจบไปแล้ว</h2>
-    <p class="sec-sub">ถ้าดูแค่บรรทัดกำไรสุทธิของ Circle ปีที่ผ่านมา อาจสะดุ้งว่าทำไมมีไตรมาสหนึ่งขาดทุนหนักขนาดนี้ ทั้งที่รายได้จริงๆ โตต่อเนื่องทุกไตรมาส เดี๋ยวไล่ดูทีละบรรทัดกันว่าเงินของบริษัทนี้มาจากไหนและไปไหนบ้าง (ตัวเลขอ้างอิงจากประกาศผลประกอบการที่ยื่นต่อ SEC ไตรมาส 1/2026 — รายละเอียดที่มาดูได้ท้ายรายงาน)</p>
+    <h2 class="sec-title">รายได้โต 20% YoY แต่กำไรสุทธิยังฟื้นจากผลกระทบ SBC ก้อนใหญ่ตอน IPO</h2>
+    <p class="sec-sub">ตัวเลขทั้งหมดในตารางนี้มาจาก 8-K exhibit press release ไตรมาส 1/2026 (ยื่น 11 พ.ค. 2026) สอบทานตรงกับ XBRL companyfacts แล้วตรงกันทุกจุด — หมายเหตุ: XBRL ไม่มี tag เดียวสำหรับ "Total revenue and reserve income" ต้องรวมจาก 2 tag คือ <code>RevenueFromContractWithCustomerExcludingAssessedTax</code> (Other revenue) + <code>InterestAndDividendIncomeOperating</code> (Reserve income) เอง ตารางนี้ยังมีตัวเลข Adjusted EBITDA ซึ่งเป็น non-GAAP (ตัวชี้วัดทางเลือกที่บริษัทคำนวณเองนอกเหนือมาตรฐานบัญชี GAAP — ปรับปรุงเพื่อตัดรายการที่บริษัทมองว่าไม่ใช่ operating ปกติออก เช่น SBC, ภาษี, ค่าเสื่อม) กำกับไว้ชัดเจนทุกจุด</p>
 
     <table class="comp-table">
       <caption>รายไตรมาส (หน่วยล้าน USD เว้นระบุ, GAAP)</caption>
@@ -269,7 +269,7 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
     </table>
 
     <div class="callout callout-warn">
-      <strong>ทำไมไตรมาส 2/2025 ขาดทุนไป 482 ล้านดอลลาร์:</strong> ไม่ใช่เพราะธุรกิจแย่ลง แต่เพราะพนักงาน Circle ถือ "หุ้นตอบแทน" ที่บริษัทให้ไว้ตั้งแต่ก่อนเข้าตลาดหุ้น (คล้ายโบนัสที่จ่ายเป็นหุ้นแทนเงินสด) แต่หุ้นก้อนนี้จะ "ปลดล็อก" ให้พนักงานเป็นเจ้าของจริงก็ต่อเมื่อหุ้นบริษัทเริ่มซื้อขายในตลาดได้ — พอ Circle เข้าเทรดบน NYSE จริงเดือนมิถุนายน 2025 หุ้นก้อนสะสมทั้งหมดก็เลยปลดล็อกพร้อมกันทีเดียว บริษัทต้องบันทึกเป็นค่าใช้จ่ายทันที 435 ล้านดอลลาร์ในไตรมาสเดียว เป็นรายการบัญชีที่เกิดครั้งเดียวจบ ไม่ใช่ปัญหาที่จะเกิดซ้ำทุกไตรมาส
+      <strong>ทำไม Q2'25 ขาดทุน $482M:</strong> ค่าใช้จ่ายพนักงานจ่ายเป็นหุ้น (SBC = stock-based compensation) $434.966M ถูกบันทึกทันทีในไตรมาสนั้น เพราะเงื่อนไข vesting ของ RSU ที่ผูกกับ "liquidity event" ถูก trigger ตอนหุ้น CRCL เริ่มเทรดบน NYSE (มิ.ย. 2025) — เป็นรายการบัญชีครั้งเดียว ไม่ใช่ operating loss ต่อเนื่อง (ที่มา: 10-Q ไตรมาส 2/2025 non-GAAP reconciliation อ้างอิงผ่าน 8-K press release ไตรมาส 4/2025)
     </div>
 
     <div class="fin-chart">
@@ -282,7 +282,7 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
     <p style="font-size:11.5px;color:var(--muted);text-align:center;margin-top:-16px;margin-bottom:32px">Total revenue and reserve income รายไตรมาส (ล้าน USD) — สูงสุด Q4'25 ที่ $770M</p>
 
     <table class="comp-table">
-      <caption>มองภาพรวมทั้งปี (หน่วยล้าน USD)</caption>
+      <caption>รายปี (หน่วยล้าน USD, GAAP) — จาก 10-K FY2025 + XBRL companyfacts</caption>
       <thead><tr><th>รายการ</th><th>FY2023</th><th>FY2024</th><th>FY2025</th></tr></thead>
       <tbody>
         <tr><td>Reserve income</td><td data-label="FY2023">1,430.61</td><td data-label="FY2024">1,661.08</td><td data-label="FY2025">2,636.82</td></tr>
@@ -295,7 +295,7 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
         <tr><td>Adjusted EBITDA (non-GAAP)</td><td data-label="FY2023">ไม่พบข้อมูลยืนยัน**</td><td data-label="FY2024">284.87</td><td data-label="FY2025">582.22</td></tr>
       </tbody>
     </table>
-    <p style="font-size:12px;color:var(--muted);margin-top:12px">* บริษัทโชว์ตัวเลขเทียบแค่ 2 ปีล่าสุดในรายงานประจำปี เลยไม่มีตัวเลขปี 2023 แยกให้เทียบ &nbsp;&nbsp;** บริษัทเริ่มรายงานตัวเลขนี้อย่างเป็นระบบหลังเข้าตลาดหุ้น (มิ.ย. 2025) เลยไม่มีตัวเลขปี 2023 ที่ยืนยันได้</p>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px">* 10-K FY2025 แสดงตารางเปรียบเทียบเฉพาะ FY2025 vs FY2024 ไม่ได้แยกต้นทุน FY2023 ไว้ในตารางเดียวกัน &nbsp;&nbsp;** บริษัทเริ่มเปิดเผย Adjusted EBITDA อย่างเป็นระบบหลัง IPO (มิ.ย. 2025) จึงไม่พบตัวเลข FY2023 ที่ยืนยันได้</p>
   </div>
 </div>
 <div class="divider"></div>
@@ -304,18 +304,18 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-gray" id="balance">
   <div class="container">
     <div class="sec-eyebrow">02 — งบดุล (Balance Sheet)</div>
-    <h2 class="sec-title">งบดุลก้อนใหญ่ของ Circle เกือบทั้งหมดไม่ใช่ "ทรัพย์สินของบริษัท" จริงๆ</h2>
-    <p class="sec-sub">งบดุลบอกว่าบริษัทมีสินทรัพย์อะไรบ้าง และมีหนี้สินอะไรค้างอยู่ ณ วันหนึ่ง — แต่ของ Circle ต้องดูให้ดี เพราะสินทรัพย์และหนี้สินส่วนใหญ่ที่เห็นในตัวเลขก้อนโต ไม่ใช่เงินของบริษัทเองเลย</p>
+    <h2 class="sec-title">งบดุล ~96% คือสินทรัพย์/หนี้สินสำรอง USDC ไม่ใช่โครงสร้างทุนทั่วไป</h2>
+    <p class="sec-sub">จาก 10-Q ไตรมาส 1/2026 (Condensed Consolidated Balance Sheets) + 10-K FY2025 + XBRL companyfacts</p>
 
     <table class="comp-table">
-      <caption>งบดุล ณ สิ้นงวด (หน่วยพันดอลลาร์)</caption>
+      <caption>Snapshot (หน่วยพันดอลลาร์)</caption>
       <thead><tr><th>รายการ</th><th>31 มี.ค. 2026</th><th>31 ธ.ค. 2025</th><th>31 ธ.ค. 2024</th></tr></thead>
       <tbody>
         <tr><td>Total current assets</td><td data-label="Q1'26">79,602,575</td><td data-label="FY2025">77,801,467</td><td data-label="FY2024">45,164,949</td></tr>
         <tr class="highlight-row"><td>Total assets</td><td data-label="Q1'26">80,536,778</td><td data-label="FY2025">78,713,207</td><td data-label="FY2024">45,834,409</td></tr>
         <tr><td>Total current liabilities</td><td data-label="Q1'26">77,055,382</td><td data-label="FY2025">75,328,395</td><td data-label="FY2024">44,030,967</td></tr>
         <tr><td>Total liabilities</td><td data-label="Q1'26">77,108,147</td><td data-label="FY2025">75,382,434</td><td data-label="FY2024">44,124,115</td></tr>
-        <tr class="highlight-row"><td>ส่วนของผู้ถือหุ้นทั้งหมด</td><td data-label="Q1'26">3,428,631</td><td data-label="FY2025">3,330,773</td><td data-label="FY2024">570,529</td></tr>
+        <tr class="highlight-row"><td>Total stockholders' equity (รวม NCI)</td><td data-label="Q1'26">3,428,631</td><td data-label="FY2025">3,330,773</td><td data-label="FY2024">570,529</td></tr>
         <tr><td>เงินสด (ไม่รวมสำรอง stablecoin)</td><td data-label="Q1'26">1,517,264</td><td data-label="FY2025">1,526,046</td><td data-label="FY2024">750,981</td></tr>
         <tr><td>เงินสดสำรอง corporate-held stablecoin</td><td data-label="Q1'26">792,662</td><td data-label="FY2025">822,963</td><td data-label="FY2024">294,493</td></tr>
         <tr><td>เงินสดสำรอง เพื่อประโยชน์ผู้ถือ stablecoin</td><td data-label="Q1'26">76,893,681</td><td data-label="FY2025">75,067,932</td><td data-label="FY2024">43,918,572</td></tr>
@@ -325,29 +325,29 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
     </table>
 
     <div class="callout callout-warn">
-      <strong>ทำไมต้องดู "สภาพคล่องที่แท้จริง" แยกต่างหาก:</strong> ลองนึกภาพร้านรับฝากทองที่ต้องเก็บทองของลูกค้าไว้เต็มตู้เซฟตลอดเวลา — ตัวเลขในตู้เซฟนั้นดูเยอะมาก แต่ไม่ใช่เงินของร้านเอง Circle ก็คล้ายกัน: เกือบ 96% ของสินทรัพย์ในงบดุลคือเงินสดและพันธบัตรที่กันไว้ค้ำมูลค่า USDC ที่คนถืออยู่ (ฝั่งหนี้สินก็มีก้อนเกือบเท่ากันพอดี เพราะกฎหมายบังคับให้ต้องมีสินทรัพย์หนุนหลัง 1:1) ถ้าดูแค่ตัวเลขสินทรัพย์รวมจะดูเหมือนบริษัทใหญ่โต แต่เงินที่บริษัทใช้ได้จริงในการดำเนินธุรกิจมีแค่ <strong>$2.31 พันล้าน</strong> เท่านั้น (เงินสด + เงินสดสำรองส่วนของบริษัทเอง ณ 31 มี.ค. 2026 — ตามที่ผู้บริหารระบุไว้ในรายงานผลประกอบการ)
+      <strong>อ่าน ratio ด้านล่างด้วยความระมัดระวัง:</strong> งบดุลของ Circle ~96% ถูกครอบงำด้วยสินทรัพย์สำรอง (เงินสด + Circle Reserve Fund ที่บริหารโดย BlackRock) ที่ค้ำ USDC หมุนเวียน เทียบกับหนี้สิน "Deposits from stablecoin holders" ที่เกือบเท่ากันตามกฎหมาย ทำให้ current ratio ดูเหมือนบริษัทการเงินทั่วไปแต่ไม่ได้สะท้อนสภาพคล่องเชิงธุรกิจ — MD&amp;A (Management's Discussion and Analysis, ส่วนที่ผู้บริหารอธิบายผลประกอบการเองใน filing) ระบุ "corporate liquidity" ที่แท้จริง (เงินสด + เงินสดสำรององค์กร) = <strong>$2.31 พันล้าน</strong> ณ 31 มี.ค. 2026
     </div>
 
     <div class="grid-4" style="margin-top:32px">
       <div class="metric-card">
         <div class="metric-val">1.033</div>
-        <div class="metric-label">สินทรัพย์หมุนเวียน ÷ หนี้สินหมุนเวียน</div>
-        <div class="metric-note">มีเงินสดพร้อมจ่ายมากกว่าหนี้สินระยะสั้นเล็กน้อย — 31 มี.ค. 2026 (ปี 2025 = 1.033, ปี 2024 = 1.026)</div>
+        <div class="metric-label">Current ratio</div>
+        <div class="metric-note">31 มี.ค. 2026 (FY2025 = 1.033, FY2024 = 1.026)</div>
       </div>
       <div class="metric-card">
         <div class="metric-val metric-val-accent">0%</div>
-        <div class="metric-label">หนี้ที่มีดอกเบี้ย เทียบส่วนของผู้ถือหุ้น</div>
-        <div class="metric-note">ไม่มีหนี้ก่อดอกเบี้ยเหลือแล้ว — หุ้นกู้แปลงสภาพแปลงหมดตั้งแต่ ม.ค. 2026 (ปี 2025 = 1.1%)</div>
+        <div class="metric-label">Debt/Equity</div>
+        <div class="metric-note">convertible debt แปลงหมดแล้ว ม.ค. 2026 (FY2025 = 1.1%)</div>
       </div>
       <div class="metric-card">
         <div class="metric-val">95.7%</div>
-        <div class="metric-label">หนี้สินรวม เทียบสินทรัพย์รวม</div>
-        <div class="metric-note">สูงเพราะเงินฝาก USDC นับเป็นหนี้สิน (ปี 2025 = 95.8%, ปี 2024 = 96.3%)</div>
+        <div class="metric-label">Total liabilities / assets</div>
+        <div class="metric-note">FY2025 = 95.8%, FY2024 = 96.3%</div>
       </div>
       <div class="metric-card">
         <div class="metric-val">$2.31B</div>
-        <div class="metric-label">เงินที่บริษัทใช้ได้จริง</div>
-        <div class="metric-note">เงินสด + เงินสดสำรองส่วนของบริษัทเอง (ไม่รวมส่วนที่กันไว้ค้ำ USDC)</div>
+        <div class="metric-label">Corporate liquidity (MD&amp;A)</div>
+        <div class="metric-note">เงินสด + เงินสดสำรอง corporate-held เท่านั้น</div>
       </div>
     </div>
   </div>
@@ -358,8 +358,8 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-white" id="cashflow">
   <div class="container">
     <div class="sec-eyebrow">03 — กระแสเงินสด (Cash Flow)</div>
-    <h2 class="sec-title">เงินสดจากการดำเนินธุรกิจเป็นบวกต่อเนื่อง แต่ตัวเลขก้อนใหญ่ที่สุดในงบนี้ไม่ใช่เรื่องเงินทุนเลย</h2>
-    <p class="sec-sub">งบกระแสเงินสดบอกว่าเงินสดของบริษัทเพิ่มขึ้น-ลดลงจากอะไรบ้างในแต่ละปี แบ่งเป็น 3 ก๊อก: เงินจากการทำธุรกิจปกติ, เงินจากการลงทุน, และเงินจากกิจกรรมด้านเงินทุน (กู้/คืนหนี้/ระดมทุน)</p>
+    <h2 class="sec-title">Operating cash flow เป็นบวกต่อเนื่อง แต่ financing activities สะท้อนการโต USDC ไม่ใช่การระดมทุน</h2>
+    <p class="sec-sub">จาก XBRL companyfacts (<code>NetCashProvidedByUsedInOperatingActivities</code> / <code>InvestingActivities</code> / <code>FinancingActivities</code>) + MD&amp;A 10-Q ไตรมาส 1/2026</p>
 
     <table class="comp-table">
       <caption>หน่วยล้าน USD</caption>
@@ -372,17 +372,17 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
     </table>
 
     <div class="callout callout-warn">
-      <strong>อย่าตกใจกับตัวเลขหลักพันล้าน-หมื่นล้านในก๊อก "กิจกรรมด้านเงินทุน":</strong> ปกติตัวเลขก้อนนี้จะสะท้อนว่าบริษัทกู้เงินหรือคืนหนี้เท่าไหร่ แต่ของ Circle ตัวเลขก้อนใหญ่เกือบทั้งหมดมาจากคนซื้อ-ขาย/แลก USDC เข้า-ออกระบบ (ทุกครั้งที่มีคนสร้าง USDC ใหม่หรือแลกคืนเป็นเงินดอลลาร์ ตัวเลขนี้จะขยับตาม) ผู้บริหารเองก็ยืนยันตรงๆ ว่าตัวเลข 1.8 พันล้านดอลลาร์ในไตรมาสนี้มาจากยอด USDC หมุนเวียนที่เพิ่มขึ้น ไม่ใช่บริษัทไปกู้เงินหรือระดมทุนเพิ่มแต่อย่างใด
+      <strong>คำเตือนการตีความ:</strong> ตัวเลข financing activities หลักพันล้าน/หมื่นล้านดอลลาร์ <strong>ไม่ได้มาจากการระดมทุน/จ่ายหนี้แบบบริษัททั่วไป</strong> แต่มาจากการเปลี่ยนแปลงของเงินฝาก stablecoin holders (การ mint/redeem USDC) เกือบทั้งหมด — MD&amp;A ระบุตรงๆ ว่า "net cash provided by financing activities was $1.8 billion, reflecting a $1.9 billion increase in net changes in deposits held for stablecoin holders primarily due to the increase in USDC in circulation" ตัวเลขนี้สะท้อนการเติบโตของ USDC ไม่ใช่สภาพคล่องทางธุรกิจของบริษัท
     </div>
 
     <div class="grid-2" style="margin-top:24px">
       <div class="card">
-        <div class="card-title">เงินสดที่เหลือใช้จริงหลังลงทุน — ไตรมาส 1/2026</div>
-        <div class="card-body">เงินสดที่ทำได้จากธุรกิจปกติ $21.08M หักลบเงินที่ต้องเอาไปลงทุนต่อ (พัฒนาซอฟต์แวร์ + ซื้ออุปกรณ์/สินทรัพย์ระยะยาว) ราว $25.0M ตามที่ผู้บริหารระบุไว้ ≈ <strong style="color:var(--down)">เหลือติดลบราว -$3.9M</strong> (ตัวเลขนี้เป็นค่าประมาณจากรายงาน ไม่ใช่ตัวเลขที่บริษัทพิมพ์ไว้ตรงๆ)</div>
+        <div class="card-title">Free Cash Flow (FCF, กระแสเงินสดอิสระ หลังหักรายจ่ายลงทุน) โดยประมาณ — Q1 2026</div>
+        <div class="card-body">Operating CF $21.08M หัก capitalization ซอฟต์แวร์ $15.6M + purchase of long-lived assets $9.4M (รวม ≈ $25.0M ตามที่ MD&amp;A ระบุเป็นข้อความ ไม่มี tag XBRL แยกสำหรับ "capex") ≈ <strong style="color:var(--down)">FCF ติดลบราว -$3.9M</strong> (เป็นค่าประมาณ ไม่ใช่ตัวเลขที่บริษัทรายงานตรงๆ)</div>
       </div>
       <div class="card">
-        <div class="card-title">เทียบกับไตรมาสเดียวกันปีก่อน — ไตรมาส 1/2025</div>
-        <div class="card-body">เงินสดจากธุรกิจปกติ $56.6M หักเงินลงทุนต่อราว $17.6M ≈ <strong style="color:var(--up)">เหลือบวกราว +$39.0M</strong> — ปีนี้เหลือน้อยกว่าปีก่อนเพราะเงินสดจากธุรกิจลดลง ไม่ใช่เพราะลงทุนเพิ่ม</div>
+        <div class="card-title">Free Cash Flow โดยประมาณ — Q1 2025 (เทียบ)</div>
+        <div class="card-body">Operating CF $56.6M หัก capitalization ซอฟต์แวร์ $11.7M + long-lived assets $5.9M (รวม ≈ $17.6M) ≈ <strong style="color:var(--up)">FCF บวกราว +$39.0M</strong></div>
       </div>
     </div>
   </div>
@@ -393,27 +393,27 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-gray" id="ratio">
   <div class="container">
     <div class="sec-eyebrow">04 — Ratio และแนวโน้ม</div>
-    <h2 class="sec-title">กำไรส่วนที่ Circle เก็บเองได้ (หลังแบ่งให้พาร์ทเนอร์) ขยับขึ้นแตะจุดสูงสุดในรอบ 5 ไตรมาส</h2>
-    <p class="sec-sub">รายได้ของ Circle ต้องแบ่งก้อนใหญ่ให้พาร์ทเนอร์ที่ช่วยกระจาย USDC (เช่น Coinbase) ก่อนเสมอ ตัวเลขที่บริษัทเน้นย้ำเองทุกครั้งประกาศผลคือ "รายได้หลังหักส่วนแบ่งให้พาร์ทเนอร์แล้ว" เพราะสะท้อนกำไรที่ Circle เก็บเข้ากระเป๋าตัวเองได้จริงมากกว่าตัวเลขรายได้รวม</p>
+    <h2 class="sec-title">RLDC margin ขยับขึ้นแตะ 41% ในไตรมาสล่าสุด — สูงสุดในรอบ 5 ไตรมาส</h2>
+    <p class="sec-sub">RLDC = Revenue Less Distribution Costs (รายได้หลังหักต้นทุนกระจาย/แจกจ่าย) — margin นี้เป็นตัวชี้วัดที่บริษัทเน้นเองในทุก press release</p>
 
-    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>สัดส่วนที่เก็บเองได้ — Q1'25</span><b>40%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:40%"></div></div></div>
-    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>สัดส่วนที่เก็บเองได้ — Q2'25</span><b>38%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:38%"></div></div></div>
-    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>สัดส่วนที่เก็บเองได้ — Q3'25</span><b>39%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:39%"></div></div></div>
-    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>สัดส่วนที่เก็บเองได้ — Q4'25</span><b>40%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:40%"></div></div></div>
-    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>สัดส่วนที่เก็บเองได้ — Q1'26</span><b>41%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:41%"></div></div></div>
+    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>RLDC Margin — Q1'25</span><b>40%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:40%"></div></div></div>
+    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>RLDC Margin — Q2'25</span><b>38%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:38%"></div></div></div>
+    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>RLDC Margin — Q3'25</span><b>39%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:39%"></div></div></div>
+    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>RLDC Margin — Q4'25</span><b>40%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:40%"></div></div></div>
+    <div class="margin-bar-wrap"><div class="margin-bar-label"><span>RLDC Margin — Q1'26</span><b>41%</b></div><div class="margin-bar-track"><div class="margin-bar-fill" style="width:41%"></div></div></div>
 
     <table class="comp-table" style="margin-top:32px">
-      <caption>เทียบ 2 แบบ: กำไรสุทธิจริง vs กำไรที่ตัดรายการพิเศษออก</caption>
+      <caption>Margin trend รายไตรมาส</caption>
       <thead><tr><th>Margin</th><th>Q1'25</th><th>Q2'25</th><th>Q3'25</th><th>Q4'25</th><th>Q1'26</th></tr></thead>
       <tbody>
-        <tr><td>กำไรสุทธิ / รายได้ (ตัวเลขจริงตามบัญชี)</td><td data-label="Q1'25">11%</td><td data-label="Q2'25" style="color:var(--down)">ขาดทุน**</td><td data-label="Q3'25">29%</td><td data-label="Q4'25">17%</td><td data-label="Q1'26">8%</td></tr>
-        <tr><td>กำไรตัดรายการพิเศษออก / รายได้ (บริษัทคำนวณเอง)*</td><td data-label="Q1'25">53%*</td><td data-label="Q2'25">53%*</td><td data-label="Q3'25">59%*</td><td data-label="Q4'25">57%*</td><td data-label="Q1'26">53%</td></tr>
+        <tr><td>Net income margin (GAAP)</td><td data-label="Q1'25">11%</td><td data-label="Q2'25" style="color:var(--down)">NM (ขาดทุน)</td><td data-label="Q3'25">29%</td><td data-label="Q4'25">17%</td><td data-label="Q1'26">8%</td></tr>
+        <tr><td>Adjusted EBITDA margin (non-GAAP)*</td><td data-label="Q1'25">53%*</td><td data-label="Q2'25">53%*</td><td data-label="Q3'25">59%*</td><td data-label="Q4'25">57%*</td><td data-label="Q1'26">53%</td></tr>
       </tbody>
     </table>
-    <p style="font-size:12px;color:var(--muted);margin-top:10px">* บริษัทพิมพ์ตัวเลขนี้ตรงๆ เฉพาะไตรมาสล่าสุด (Q1'26 = 53%) ไตรมาสอื่นคำนวณจากสูตรเดียวกันที่บริษัทระบุไว้ ไม่ใช่ตัวเลขที่บริษัทพิมพ์ไว้ตรงๆ ทุกไตรมาส &nbsp;&nbsp;** ไตรมาสนี้ขาดทุน เลยเทียบเป็น % กับรายได้ไม่ได้</p>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px">* บริษัทพิมพ์ Adjusted EBITDA margin ตรงๆ เฉพาะไตรมาสล่าสุด (Q1'26 = 53%) ไตรมาสอื่นคำนวณเองจากสูตรเดียวกัน (Adjusted EBITDA ÷ RLDC) ที่บริษัทระบุไว้ ไม่ใช่ตัวเลขที่บริษัทพิมพ์ไว้ตรงๆ ทุกไตรมาส</p>
 
     <div class="callout callout-warn" style="margin-top:32px">
-      <strong>ผลตอบแทนต่อเงินทุนของผู้ถือหุ้น ในรอบ 12 เดือนล่าสุด ติดลบ — แต่ตัวเลขนี้บอกความจริงไม่ครบ:</strong> เอากำไร/ขาดทุนสุทธิ 4 ไตรมาสล่าสุด (ไตรมาส 2/2025 ถึงไตรมาส 1/2026) มารวมกัน จะได้ขาดทุนสุทธิรวม <strong>-$79.05 ล้าน</strong> เมื่อเทียบกับเงินทุนของผู้ถือหุ้น ($3,427.20 ล้าน) จะได้ผลตอบแทนราว <strong style="color:var(--down)">-2.3%</strong> — แต่ตัวเลขนี้ถูกฉุดลงเกือบทั้งหมดจากค่าใช้จ่ายหุ้นตอบแทนก้อนเดียวตอนเข้าตลาดหุ้นในไตรมาส 2/2025 (อธิบายไว้ในส่วนงบกำไรขาดทุนด้านบน) ซึ่งเป็นรายการที่เกิดครั้งเดียว ไม่ใช่เงินสดที่จ่ายจริง และจะไม่เกิดซ้ำอีก รายงานนี้ไม่ปรับตัวเลขเพิ่มเติมเอง เพื่อไม่ให้กลายเป็นการประเมินมูลค่าหุ้น
+      <strong>ROE (Return on Equity, ผลตอบแทนต่อส่วนของผู้ถือหุ้น) แบบ TTM (trailing twelve months, ผลรวมย้อนหลัง 12 เดือนล่าสุด):</strong> Net income attributable TTM (Q2'25 ถึง Q1'26) = (482.10)+214.39+133.42+55.25 = <strong>-$79.05M</strong> ÷ equity ณ 31 มี.ค. 2026 ($3,427.20M) = <strong style="color:var(--down)">ประมาณ -2.3%</strong> — ตัวเลขนี้บิดเบือนอย่างมากจากรายการ SBC ก้อนเดียว (IPO vesting) ใน Q2'25 ที่ไม่ใช่รายจ่ายเป็นเงินสดและไม่เกิดซ้ำ รายงานนี้ไม่ทำการปรับ/ประมาณการเพิ่มเติมนอกเหนือจาก non-GAAP ที่บริษัทเปิดเผยเอง เพื่อไม่ให้เป็นการประเมินมูลค่า (valuation)
     </div>
 
     <div class="grid-3" style="margin-top:32px">
@@ -429,8 +429,8 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
       </div>
       <div class="metric-card">
         <div class="metric-val metric-val-down">3.5%</div>
-        <div class="metric-label">ผลตอบแทนจากเงินสำรอง USDC</div>
-        <div class="metric-note">ลดลงจากปีก่อน 0.66 จุด — เพราะ Fed ลดดอกเบี้ยนโยบาย</div>
+        <div class="metric-label">Reserve return rate</div>
+        <div class="metric-note">ลดลง 66bps YoY (ผลจากการลดดอกเบี้ยของ Fed)</div>
       </div>
     </div>
   </div>
@@ -441,23 +441,23 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-white" id="guidance">
   <div class="container">
     <div class="sec-eyebrow">05 — Guidance เทียบผลจริง</div>
-    <h2 class="sec-title">บริษัทเคยประเมินไว้ว่าปีนี้จะเป็นยังไง — แล้วผลไตรมาสแรกออกมาตรงไหม</h2>
-    <p class="sec-sub">ทุกต้นปี บริษัทมักบอกนักลงทุนไว้คร่าวๆ ว่าทั้งปีนี้คาดว่าตัวเลขสำคัญจะอยู่ช่วงไหน (เรียกว่า "guidance") Circle ให้ตัวเลขนี้ไว้ตอนประกาศผลไตรมาส 4/2025 (ก.พ. 2026) แล้วยืนยันไม่เปลี่ยนแปลงอีกครั้งตอนประกาศผลไตรมาสแรกของปีนี้</p>
+    <h2 class="sec-title">Guidance FY2026 ยืนยันไม่เปลี่ยนแปลงตอนประกาศผล Q1'26</h2>
+    <p class="sec-sub">Guidance ให้ไว้ครั้งแรกตอนประกาศผล Q4/FY2025 (8-K ยื่น 25 ก.พ. 2026) และยืนยันไม่เปลี่ยนแปลงตอนประกาศผล Q1 2026 (8-K + earnings call, 11 พ.ค. 2026)</p>
 
     <table class="comp-table">
-      <thead><tr><th>ตัวชี้วัด</th><th>บริษัทเคยบอกไว้ (ทั้งปี 2026)</th><th>ผลจริงไตรมาสแรก</th><th>ถ้าคูณ 4 ไตรมาสเท่ากันหมด</th></tr></thead>
+      <thead><tr><th>ตัวชี้วัด</th><th>Guidance FY2026</th><th>Actual Q1'26</th><th>Annualize (x4)</th></tr></thead>
       <tbody>
-        <tr><td>รายได้อื่นๆ นอกจากดอกเบี้ยสำรอง</td><td data-label="Guidance">$150M – $170M</td><td data-label="Actual">$41.6M</td><td data-label="Annualize">≈$166.5M — อยู่ในช่วงที่เคยบอกไว้</td></tr>
-        <tr><td>สัดส่วนกำไรที่เก็บเองได้</td><td data-label="Guidance">38% – 40%</td><td data-label="Actual">41%</td><td data-label="Annualize">สูงกว่าขอบบนที่เคยบอกไว้เล็กน้อย</td></tr>
-        <tr><td>ค่าใช้จ่ายดำเนินงาน (ตัดรายการพิเศษ)</td><td data-label="Guidance">$570M – $585M</td><td data-label="Actual">$135.7M</td><td data-label="Annualize">≈$542.7M — ต่ำกว่าที่เคยบอกไว้ (แต่บริษัทเตือนว่าค่าใช้จ่ายมักไล่ขึ้นตามจำนวนพนักงานที่เพิ่มระหว่างปี ไม่ได้กระจายเท่ากันทุกไตรมาส)</td></tr>
-        <tr><td>ยอด USDC หมุนเวียน</td><td data-label="Guidance">โตเฉลี่ยปีละ 40% (มองหลายปี ไม่ใช่แค่ปีนี้)</td><td data-label="Actual">+28% YoY (สิ้นงวด) / +39% YoY (เฉลี่ย)</td><td data-label="Annualize">เทียบตรงกับที่บอกไว้ไม่ได้ เพราะเป้าหมายเดิมมองยาวหลายปี</td></tr>
+        <tr><td>Other Revenue</td><td data-label="Guidance">$150M – $170M</td><td data-label="Actual">$41.6M</td><td data-label="Annualize">≈$166.5M — อยู่ในช่วง guidance</td></tr>
+        <tr><td>RLDC Margin</td><td data-label="Guidance">38% – 40%</td><td data-label="Actual">41%</td><td data-label="Annualize">สูงกว่าขอบบนของ guidance</td></tr>
+        <tr><td>Adjusted Operating Expenses</td><td data-label="Guidance">$570M – $585M</td><td data-label="Actual">$135.7M</td><td data-label="Annualize">≈$542.7M — ต่ำกว่าขอบล่าง (แต่บริษัทระบุ opex มักไล่ขึ้นตาม headcount ระหว่างปี ไม่กระจายเท่ากันทุกไตรมาส)</td></tr>
+        <tr><td>USDC in Circulation</td><td data-label="Guidance">CAGR 40% (Compound Annual Growth Rate, อัตราเติบโตเฉลี่ยต่อปีแบบทบต้น) (multi-year)</td><td data-label="Actual">+28% YoY (สิ้นงวด) / +39% YoY (เฉลี่ย)</td><td data-label="Annualize">เป็น multi-year guidance ไม่ใช่รายปี เทียบตรงไม่ได้</td></tr>
       </tbody>
     </table>
 
     <div class="callout">
-      <strong>ผู้บริหารพูดตรงๆ ในวันประกาศผล (11 พ.ค. 2026):</strong> Jeremy Fox-Geen (CFO) — "We are leaving our full year 2026 guidance unchanged. However, this guidance does not include the future financial impacts of the Arc token presale" (แปลใจความ: ยังคงเป้าหมายทั้งปีไว้เท่าเดิม แต่เป้านี้ยังไม่รวมผลจากการขายโทเคน Arc ล่วงหน้าที่เพิ่งประกาศไป)
+      <strong>คำพูดผู้บริหารตรงๆ (earnings call 11 พ.ค. 2026):</strong> Jeremy Fox-Geen (CFO) — "We are leaving our full year 2026 guidance unchanged. However, this guidance does not include the future financial impacts of the Arc token presale"
     </div>
-    <p style="font-size:12.5px;color:var(--muted)">หมายเหตุ: บริษัทให้เป้าหมายเป็นรายปีเท่านั้น ไม่ได้แยกเป็นรายไตรมาส ตัวเลข "ถ้าคูณ 4" ในตารางเป็นแค่การประมาณเพื่อเทียบเคียง ไม่ใช่ตัวเลขที่บริษัทรับรอง — ไตรมาสแรกไตรมาสเดียวยังเร็วเกินไปที่จะสรุปว่าทั้งปีจะเข้าเป้าหรือไม่</p>
+    <p style="font-size:12.5px;color:var(--muted)">หมายเหตุ: บริษัทให้ guidance เป็นรายปีเท่านั้น ไม่มี guidance ระดับไตรมาสจากบริษัท การ annualize (x4) ข้างต้นเป็นการประมาณเพื่อการเปรียบเทียบ ไม่ใช่ตัวเลขที่บริษัทรับรอง — 1 ไตรมาสแรกยังเร็วเกินจะสรุปว่าจะเข้า guidance ทั้งปีหรือไม่</p>
   </div>
 </div>
 <div class="divider"></div>
@@ -466,8 +466,8 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-gray" id="earnings-call">
   <div class="container">
     <div class="sec-eyebrow">06 — ไฮไลต์ Earnings Call</div>
-    <h2 class="sec-title">ผู้บริหารพูดอะไรบ้างในวันประกาศผลประกอบการ</h2>
-    <p class="sec-sub">ทุกไตรมาส บริษัทมหาชนจะมีการประชุมทางโทรศัพท์กับนักวิเคราะห์และนักลงทุน (เรียกว่า earnings call) เพื่ออธิบายผลประกอบการและตอบคำถาม — นี่คือคำพูดตรงๆ ของผู้บริหาร Circle จากการประชุมครั้งล่าสุด (11 พ.ค. 2026)</p>
+    <h2 class="sec-title">Earnings Call ไตรมาส 1/2026 (11 พ.ค. 2026)</h2>
+    <p class="sec-sub">แหล่ง: Motley Fool transcript — สอบทานผ่าน WebFetch ไม่พบ paywall (ลิงก์เต็มในส่วนแหล่งอ้างอิง)</p>
 
     <div class="grid-4" style="margin-bottom:40px">
       <div class="person-card"><div class="person-name">Jeremy Allaire</div><div class="person-title">Co-Founder, CEO &amp; Chairman</div></div>
@@ -476,19 +476,19 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
       <div class="person-card"><div class="person-name">Heath Tarbert</div><div class="person-title">President</div></div>
     </div>
 
-    <div class="quote-card"><div class="quote-text">Total revenue and reserve income was $694 million in the quarter, up 20% year-over-year</div><div class="quote-attr">รายได้รวมไตรมาสนี้ 694 ล้านดอลลาร์ โต 20% จากปีก่อน — <b>Jeremy Fox-Geen</b>, CFO</div></div>
-    <div class="quote-card"><div class="quote-text">We ended the quarter with $77 billion of USDC in circulation, representing 28% year-over-year growth.</div><div class="quote-attr">สิ้นไตรมาสมี USDC หมุนเวียน 7.7 หมื่นล้านดอลลาร์ โต 28% จากปีก่อน — <b>Jeremy Allaire</b>, CEO</div></div>
-    <div class="quote-card"><div class="quote-text">Onchain transaction volume up 263% to $21.5 trillion</div><div class="quote-attr">ปริมาณธุรกรรมบนบล็อกเชนโต 263% แตะ 21.5 ล้านล้านดอลลาร์ — <b>Jeremy Allaire</b>, CEO</div></div>
-    <div class="quote-card"><div class="quote-text">We are leaving our full year 2026 guidance unchanged. However, this guidance does not include the future financial impacts of the Arc token presale</div><div class="quote-attr">ยังคงเป้าหมายทั้งปีไว้เท่าเดิม แต่ยังไม่รวมผลจากการขายโทเคน Arc ล่วงหน้า — <b>Jeremy Fox-Geen</b>, CFO</div></div>
-    <div class="quote-card"><div class="quote-text">We announced the presale of the Arc token, raising $222 million</div><div class="quote-attr">เพิ่งประกาศขายโทเคน Arc ล่วงหน้า ระดมทุนได้ 222 ล้านดอลลาร์ — <b>Jeremy Allaire</b>, CEO</div></div>
+    <div class="quote-card"><div class="quote-text">Total revenue and reserve income was $694 million in the quarter, up 20% year-over-year</div><div class="quote-attr"><b>Jeremy Fox-Geen</b>, CFO</div></div>
+    <div class="quote-card"><div class="quote-text">We ended the quarter with $77 billion of USDC in circulation, representing 28% year-over-year growth.</div><div class="quote-attr"><b>Jeremy Allaire</b>, CEO</div></div>
+    <div class="quote-card"><div class="quote-text">Onchain transaction volume up 263% to $21.5 trillion</div><div class="quote-attr"><b>Jeremy Allaire</b>, CEO</div></div>
+    <div class="quote-card"><div class="quote-text">We are leaving our full year 2026 guidance unchanged. However, this guidance does not include the future financial impacts of the Arc token presale</div><div class="quote-attr"><b>Jeremy Fox-Geen</b>, CFO</div></div>
+    <div class="quote-card"><div class="quote-text">We announced the presale of the Arc token, raising $222 million</div><div class="quote-attr"><b>Jeremy Allaire</b>, CEO</div></div>
     <p style="font-size:11.5px;color:var(--muted);margin-top:-6px;margin-bottom:12px">คำพูดข้างต้นยกจาก transcript ของ Motley Fool ตรงคำเท่าที่ทำได้ — บางส่วนอาจเป็นการสรุปความใกล้เคียงหากต้นฉบับมีการตัดต่อคำเชื่อม ไม่ใช่การแต่งเนื้อหาใหม่</p>
 
     <h3 style="font-size:16px;font-weight:600;margin:32px 0 16px;color:var(--ink)">ประเด็น Q&amp;A ที่น่าสนใจ</h3>
     <div class="timeline">
-      <div class="timeline-item"><div class="timeline-title">USDC ยังครองตลาดฝั่งที่กำกับดูแลเข้มงวด</div><div class="timeline-desc">Allaire เน้นย้ำว่า USDC ครองสัดส่วนสูงของธุรกรรมดอลลาร์ดิจิทัลบนบล็อกเชน และมีพันธมิตรองค์กรใหญ่เพิ่มขึ้นเรื่อยๆ (เช่น Meta, DoorDash)</div></div>
-      <div class="timeline-item"><div class="timeline-title">คนใช้ USDC ซื้อของจริง ไม่ใช่แค่เก็งกำไร</div><div class="timeline-desc">อ้างอิงข้อมูลจาก Visa ที่ชี้ว่าธุรกรรมเชิงพาณิชย์ (ซื้อขายสินค้า/บริการจริง ไม่ใช่แค่เทรดเก็งกำไร) โตหลายร้อยเปอร์เซ็นต์ต่อปี และเครือข่ายชำระเงินของ Circle เองก็มีปริมาณธุรกรรมโต 75%</div></div>
-      <div class="timeline-item"><div class="timeline-title">กฎหมายใหม่อาจเปิดทางให้คู่แข่งมากขึ้น</div><div class="timeline-desc">Heath Tarbert พูดถึงร่างกฎหมายฉบับใหม่ที่กำลังพิจารณาอยู่ ซึ่งจะเปิดทางให้ธนาคารดั้งเดิมออก stablecoin ของตัวเองได้ง่ายขึ้น</div></div>
-      <div class="timeline-item"><div class="timeline-title">Arc คือเดิมพันก้อนใหม่ของ Circle</div><div class="timeline-desc">Allaire อธิบายว่า Arc (บล็อกเชนที่บริษัทพัฒนาเอง) ถูกวางตำแหน่งให้เป็นโครงสร้างพื้นฐานกลางสำหรับธุรกรรมการเงินทั่วไป แข่งกับบล็อกเชนเจ้าอื่น พร้อมยืนยันว่าจะยังคงเปิดกว้างให้ USDC กระจายผ่านทุกแพลตฟอร์มเหมือนเดิม ไม่ผูกขาดเฉพาะ Arc</div></div>
+      <div class="timeline-item"><div class="timeline-title">ส่วนแบ่งตลาด stablecoin</div><div class="timeline-desc">Allaire เน้นย้ำ USDC ครองสัดส่วนสูงของธุรกรรม onchain dollar และพันธมิตรองค์กรที่ขยายตัว (Meta, DoorDash)</div></div>
+      <div class="timeline-item"><div class="timeline-title">การใช้งานที่ไม่ใช่เก็งกำไร</div><div class="timeline-desc">อ้างอิงข้อมูล Visa analytics ที่แสดงการเติบโตของธุรกรรมเชิงพาณิชย์ "multi-hundred percent growth year-over-year" และ CPN (Circle Payments Network) มี payment volume โต 75%</div></div>
+      <div class="timeline-item"><div class="timeline-title">ผลกระทบกฎระเบียบ</div><div class="timeline-desc">Heath Tarbert พูดถึงร่างกฎหมาย CLARITY Act ที่จะเปิดทางให้สถาบันการเงินดั้งเดิมใช้ stablecoin และรองรับโมเดล incentive แบบอิงธุรกรรม</div></div>
+      <div class="timeline-item"><div class="timeline-title">ตำแหน่งการแข่งขันของ Arc</div><div class="timeline-desc">Allaire วาง Arc (บล็อกเชน Layer-1 ที่บริษัทพัฒนาเอง) เป็น "general purpose horizontal economic operating system" แข่งกับ Layer-1 อื่น พร้อมคงความเป็นกลางของแพลตฟอร์มสำหรับการกระจาย USDC</div></div>
     </div>
     <p style="font-size:12.5px;color:var(--muted);margin-top:20px">ไม่พบข้อมูลตัวเลขเฉพาะเจาะจงเพิ่มเติมนอกเหนือจากที่สรุปนี้ในแหล่งฟรีที่เข้าถึงได้ — transcript ฉบับเต็มอยู่ที่ investor.circle.com</p>
   </div>
@@ -499,28 +499,28 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-white" id="mdna">
   <div class="container">
     <div class="sec-eyebrow">07 — สรุป MD&amp;A (Management's Discussion and Analysis)</div>
-    <h2 class="sec-title">4 เรื่องที่ผู้บริหารอยากให้นักลงทุนรู้ ในคำอธิบายผลประกอบการไตรมาสนี้</h2>
+    <h2 class="sec-title">สิ่งที่ผู้บริหารอธิบายเองใน 10-Q ไตรมาส 1/2026 (Item 2)</h2>
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">รายได้มาจากไหน</div>
-        <div class="card-body">รายได้หลักของ Circle (94% ของทั้งหมด) คือดอกเบี้ยที่ได้จากการเอาเงินสำรอง USDC ไปลงทุนในพันธบัตรรัฐบาลสั้นๆ ไตรมาสนี้ดอกเบี้ยก้อนนี้เพิ่มขึ้น $94.6M เพราะยอด USDC หมุนเวียนโตเร็ว (+39% จากปีก่อน) แต่ก็โดนหักไปบางส่วนเพราะ Fed ลดดอกเบี้ยนโยบายทำให้ผลตอบแทนต่อหน่วยลดลง ส่วนรายได้อื่นๆ นอกเหนือจากดอกเบี้ย (6% ของรายได้) โตเร็วถึง 101% จากค่าธรรมเนียมและบริการเสริมต่างๆ</div>
+        <div class="card-title">ปัจจัยขับเคลื่อนรายได้</div>
+        <div class="card-body">Reserve income (94.0% ของรายได้รวม) เพิ่มขึ้น $94.6M (+17.0%) — +$200.9M มาจาก USDC หมุนเวียนเฉลี่ยโต 39.1% แต่ถูกหักด้วย -$106.3M จาก reserve return rate ที่ลดลง 66bps (ผลจากการลดดอกเบี้ยของ Fed). Other revenue (6.0%) โต 101.5% จากบริการ integration, blockchain rewards, ค่าธรรมเนียม redemption และค่าบริหารกองทุน</div>
       </div>
       <div class="card">
-        <div class="card-title">ต้นทุนไปไหนบ้าง</div>
-        <div class="card-body">ต้นทุนก้อนใหญ่สุดคือส่วนแบ่งรายได้ที่ต้องจ่ายให้ Coinbase ตามสัญญาที่ทั้งสองบริษัทเคยตกลงกันไว้ (จ่ายเพิ่มขึ้น $27.4M ไตรมาสนี้) ส่วนค่าใช้จ่ายในการดำเนินงานโตแรงถึง 76% ซึ่งเกือบทั้งหมดมาจากค่าตอบแทนพนักงาน ทั้งหุ้นตอบแทนที่ทยอยปลดล็อกต่อเนื่องและการจ้างพนักงานเพิ่ม</div>
+        <div class="card-title">ต้นทุนและค่าใช้จ่าย</div>
+        <div class="card-body">Distribution and transaction costs โต 16.7% ส่วนใหญ่จากการจ่ายให้ Coinbase (+$27.4M) ภายใต้ Collaboration Agreement (Coinbase ได้ส่วนแบ่งตามยอด USDC บนแพลตฟอร์มตนหลังหัก issuer retention). Operating expenses โต 75.6% หลักจาก compensation expenses ที่โต 82.7% (SBC vesting ต่อเนื่อง + payroll tax ที่เกี่ยวข้อง + การจ้างงานเพิ่ม)</div>
       </div>
       <div class="card">
-        <div class="card-title">เงินสดพอใช้ไหม</div>
-        <div class="card-body">ณ สิ้นไตรมาส Circle มีเงินสดที่ใช้ได้จริง (ไม่รวมเงินสำรอง USDC) รวม $2.3 พันล้าน ผู้บริหารระบุว่าเพียงพอสำหรับความต้องการใช้เงินหมุนเวียนอย่างน้อย 12 เดือนข้างหน้า</div>
+        <div class="card-title">สภาพคล่อง (Liquidity)</div>
+        <div class="card-body">ณ 31 มี.ค. 2026 มี total liquidity sources $2.3 พันล้าน (เงินสด $1.5B + เงินสดสำรอง corporate-held stablecoins $792.7M) ผู้บริหารเชื่อว่าเพียงพอสำหรับความต้องการเงินทุนหมุนเวียนอย่างน้อย 12 เดือนถัดจากวันที่ยื่น 10-Q</div>
       </div>
       <div class="card">
-        <div class="card-title">เงินสำรอง USDC เก็บไว้ที่ไหน ปลอดภัยแค่ไหน</div>
-        <div class="card-body">ส่วนใหญ่ (86%) ของเงินสำรองที่ค้ำ USDC ถูกเอาไปลงทุนในกองทุนตลาดเงินภาครัฐที่ BlackRock บริหารให้ (กองทุนประเภทนี้ต้องถือสินทรัพย์ความเสี่ยงต่ำมากตามกฎหมาย) ส่วนที่เหลือฝากกระจายไว้หลายธนาคาร — ข้อสังเกตที่น่าสนใจ: เงินฝากธนาคารเหล่านี้มีมูลค่ารวมระดับหมื่นล้านดอลลาร์ แต่วงเงินคุ้มครองเงินฝากมาตรฐานของรัฐบาลสหรัฐฯ (FDIC) ครอบคลุมจริงเพียง <strong>$1.8 ล้าน</strong> เท่านั้น หมายความว่าส่วนใหญ่ไม่ได้รับการค้ำประกันอย่างเป็นทางการ แม้ความเสี่ยงจริงจะต่ำเพราะกระจายฝากไว้กับธนาคารขนาดใหญ่หลายแห่ง</div>
+        <div class="card-title">องค์ประกอบสำรอง USDC</div>
+        <div class="card-body">~86% ของสำรอง USDC ถือใน Circle Reserve Fund (กองทุนตลาดเงินภาครัฐ บริหารโดย BlackRock ภายใต้ Rule 2a-7) ที่เหลือถือเป็นเงินสดกระจายในหลายธนาคาร — เงินสดที่ธนาคารเกินวงเงินคุ้มครอง FDIC อย่างมีนัยสำคัญ (FDIC insurance ครอบคลุมจริงเพียง $1.8M จากสำรองระดับหมื่นล้าน)</div>
       </div>
     </div>
 
-    <div class="callout" style="margin-top:32px">ไม่มีอะไรเปลี่ยนแปลงสำคัญในหลักการตั้งสมมติฐานทางบัญชีที่บริษัทใช้ เทียบกับรายงานประจำปีฉบับล่าสุด</div>
+    <div class="callout" style="margin-top:32px">ไม่มีการเปลี่ยนแปลงสำคัญต่อ critical accounting estimates เทียบกับ 10-K FY2025 (ตามที่ระบุใน 10-Q ไตรมาส 1/2026)</div>
   </div>
 </div>
 <div class="divider"></div>
@@ -529,10 +529,10 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-gray" id="sources">
   <div class="container">
     <div class="sec-eyebrow">08 — แหล่งอ้างอิง</div>
-    <h2 class="sec-title">ตัวเลขในรายงานนี้ผ่านการตรวจทานเทียบ 3 แหล่งแล้ว</h2>
+    <h2 class="sec-title">Cross-check ระหว่าง XBRL / IR release / MD&amp;A</h2>
 
     <div class="callout callout-check">
-      <strong>ผลการตรวจทาน:</strong> เอาตัวเลขทุกตัวในรายงานนี้ไปเทียบกับ 3 แหล่ง — ข้อมูลดิบที่บริษัทยื่นต่อ SEC, ตารางในประกาศผลประกอบการ, และคำอธิบายของผู้บริหารในเอกสารยื่น — <strong>ตรงกันทั้งหมด ไม่พบตัวเลขที่ขัดแย้งกันแบบอธิบายไม่ได้</strong> มีจุดเล็กๆ 2 จุดที่ควรรู้ไว้ (ไม่ใช่ความผิดพลาด): (1) ตัวเลขส่วนของผู้ถือหุ้นสองแบบต่างกันแค่ $1,427K เพราะแบบหนึ่งรวมหุ้นส่วนน้อยในบริษัทลูกด้วย อีกแบบไม่รวม — เป็นธรรมเนียมการรายงานปกติ (2) วิธีคำนวณกำไรตัดรายการพิเศษเปลี่ยนเล็กน้อยตั้งแต่ไตรมาสนี้ ซึ่งบริษัทระบุไว้ชัดเจนในหมายเหตุ ไม่ได้ปิดบัง
+      <strong>ผลการ cross-check:</strong> เทียบตัวเลขทุกตัวใน XBRL companyfacts กับตาราง IR press release (Q1'26 และ Q4/FY2025) และเนื้อหา MD&amp;A ใน 10-Q/10-K — <strong>ตรงกันทั้งหมด ไม่พบตัวเลขที่ขัดแย้งกันโดยอธิบายไม่ได้</strong> จุดเดียวที่ควรทราบ (ไม่ใช่ความขัดแย้ง): XBRL tag <code>StockholdersEquity</code> = "attributable to common stockholders" ($3,427,204K) ต่างจาก total equity รวม noncontrolling interest ($3,428,631K) เพียง $1,427K ตามธรรมเนียมมาตรฐานของ XBRL ไม่ใช่ข้อผิดพลาด. อีกจุด: Adjusted EBITDA เปลี่ยนนิยามตั้งแต่ Q1 2026 (ตัด payroll tax ที่เกี่ยวกับ SBC ออก) — บริษัทเปิดเผยส่วนต่างนี้ชัดเจนในหมายเหตุ ไม่ใช่การซ่อนตัวเลข
     </div>
 
     <div style="margin-top:32px">
