@@ -14,7 +14,7 @@ window.MONEY_DATA = {
     "expenses": [
       {"date":"2026-07-01","amount":1500,"category":"Investment","name":"Stocks","notes":""},
       {"date":"2026-07-01","amount":1000,"category":"Emergency Fund","name":"Crypto","notes":""},
-      {"date":"2026-07-01","amount":3000,"category":"Family","name":"ครอบครัว","notes":""},
+      {"date":"2026-07-01","amount":3000,"category":"Family","name":"Dad","notes":""},
       {"date":"2026-07-01","amount":1500,"category":"Rent","name":"ค่าเช่า","notes":""},
       {"date":"2026-07-01","amount":762,"category":"Subscriptions","name":"Adobe","notes":"Creative Cloud"},
       {"date":"2026-07-01","amount":79,"category":"Subscriptions","name":"Spotify","notes":"Premium Student"},
