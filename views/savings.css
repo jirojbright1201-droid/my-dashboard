@@ -21,6 +21,3 @@
 .jar-bar-fill { height: 100%; border-radius: 9999px; background: linear-gradient(90deg,#f0c878,#dca23f); transition: width .4s ease; }
 .jar-foot { font-size: 0.75rem; color: var(--silver); font-weight: 500; }
 .jar-eta { font-size: 0.6875rem; color: var(--accent); font-weight: 600; margin-top: 3px; }
-
-.sav-note { margin-top: 16px; font-size: 0.8125rem; color: var(--silver); text-align: center;
-  background: var(--surface-2); border-radius: 10px; padding: 11px 14px; }

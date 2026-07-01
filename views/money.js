@@ -255,9 +255,10 @@ window.MoneyView = (function () {
           <div class="mny-sub-head"><span class="mny-sub-name">${esc(s.name)}</span>
             <span class="mny-sub-amt">${fmtCur(s.amount, s.cur)}<span class="mny-sub-cyc">${cyc}</span></span></div>
           <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">Bill ${nextStr} · ${days}d left</span>
-            ${s.cur === 'USD' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquivTHB(s)))}/mo</span>`
+            ${s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>`
+              : s.cur === 'USD' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquivTHB(s)))}/mo</span>`
               : s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/mo</span>`
-              : (s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>` : '')}</div>
+              : ''}</div>
         </div></div>`;
     }).join('');
     $('mny-subs').innerHTML = `

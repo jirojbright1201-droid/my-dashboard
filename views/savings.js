@@ -67,7 +67,6 @@ window.SavingsView = (function () {
         <div class="sav-total"><b>${fmt(totalSaved)}</b> <span>/ ${fmt(totalGoal)}</span></div>
       </div>
       <div class="jar-grid">${cards || '<div class="empty">No jars yet</div>'}</div>
-      <div class="sav-note">Add to a jar via Jarvis — e.g. "add 500 to PS5 jar"</div>
     </div>`;
   }
 
