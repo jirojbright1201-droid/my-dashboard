@@ -24,7 +24,7 @@ window.MoneyView = (function () {
     Beauty:        S('<path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="M18.5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'),
     Entertainment: S('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>'),
     Study:         S('<path d="M3 9l9-4 9 4-9 4z"/><path d="M7 11.5V16c0 1 2.2 2 5 2s5-1 5-2v-4.5"/>'),
-    Emergency:     S('<path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/>'),
+    'Emergency Fund': S('<path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/>'),
     default:       S('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')
   };
   const SRC_ICON = {
