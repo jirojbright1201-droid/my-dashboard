@@ -53,8 +53,7 @@ const DATA = {
   journal:[],   // pros/cons ฝั่งคุณบนแท็บ Log — เพิ่มได้ภายหลัง
   bench:{ spx:[0], nasdaq:[0] },
   reports:[
-    {ticker:'CRCL', date:'2026-07-01', file:'CRCL_2026-07-01.html'},
-    {ticker:'CRCL', date:'2026-07-02', file:'fundamentals/CRCL_2026-07-02.html', type:'fundamentals'}
+    {ticker:'CRCL', date:'2026-07-01', file:'CRCL_2026-07-01.html'}
   ]
 };
 // expose ให้ PWA shell (Home + Investment view) อ่านได้ — standalone investment.html ยังใช้ DATA/FX ตามเดิม
