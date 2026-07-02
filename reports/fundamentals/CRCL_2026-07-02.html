@@ -184,6 +184,17 @@ code{font-family:'JetBrains Mono',monospace;font-size:0.9em;background:var(--sur
 .score-chart-sub b{color:var(--ink);font-weight:700}
 .score-chart-sub b.down{color:var(--down)}
 
+.tldr-wrap{background:var(--surface-soft);padding:48px 0}
+.tldr-head{font-family:'Inter',sans-serif;font-size:20px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.tldr-sub{font-size:13.5px;color:var(--muted);margin-bottom:24px}
+.tldr-item{display:flex;gap:16px;background:var(--canvas);border:1px solid var(--hairline);border-radius:14px;padding:16px 18px;margin-bottom:10px;align-items:flex-start}
+.tldr-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);background:rgba(1,115,195,0.08);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.tldr-body-txt{font-size:13.5px;color:var(--body);line-height:1.65}
+.tldr-body-txt b{color:var(--ink);font-weight:600}
+.tldr-jump{font-size:11.5px;color:var(--accent-active);text-decoration:none;font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.tldr-jump:hover{text-decoration:underline}
+@media(max-width:560px){.tldr-item{flex-wrap:wrap}.tldr-jump{margin-left:40px}}
+
 .bal-group-label{font-size:12px;font-weight:700;color:var(--accent-active);text-transform:uppercase;letter-spacing:0.6px;margin:32px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--hairline)}
 .bal-group-label:first-of-type{margin-top:8px}
 .bal-card{border:1px solid var(--hairline);border-radius:16px;padding:18px 20px;margin-bottom:12px}
@@ -284,6 +295,45 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- TL;DR -->
+<div class="tldr-wrap">
+  <div class="container">
+    <div class="tldr-head">สรุปสั้นก่อนลงรายละเอียด</div>
+    <p class="tldr-sub">รายงานเต็มด้านล่างมี 8 หมวดยาว ถ้าไม่มีเวลาอ่านทั้งหมด อ่าน 6 ข้อนี้พอ — แต่ละข้อกดไปดูรายละเอียด+แหล่งอ้างอิงต่อได้</p>
+
+    <div class="tldr-item">
+      <span class="tldr-num">1</span>
+      <span class="tldr-body-txt"><b>รายได้โตต่อเนื่องเป็นไตรมาสที่ 5</b> — $694M (+20% YoY) ธุรกิจหลัก (USDC หมุนเวียน) ยังขยายฐานได้เรื่อยๆ ไม่ใช่กระแสช่วงสั้น</span>
+      <a class="tldr-jump" href="#income">ดูรายละเอียด →</a>
+    </div>
+    <div class="tldr-item">
+      <span class="tldr-num">2</span>
+      <span class="tldr-body-txt"><b>กำไรสุทธิลดลง 14.7% YoY แต่ไม่ใช่สัญญาณเสีย</b> — สาเหตุคือ Fed ลดดอกเบี้ยกดผลตอบแทนเงินสำรอง USDC ไม่เกี่ยวกับปัญหาบริหารงาน (ตัดปม SBC ก้อนใหญ่ปี 2025 ที่จบไปแล้วออกจากการเทียบนี้)</span>
+      <a class="tldr-jump" href="#income">ดูรายละเอียด →</a>
+    </div>
+    <div class="tldr-item">
+      <span class="tldr-num">3</span>
+      <span class="tldr-body-txt"><b>Adjusted EBITDA โตเร็วกว่ารายได้</b> — +24% vs +20% สะท้อนว่าประสิทธิภาพธุรกิจหลักดีขึ้นจริง ไม่ใช่แค่โตตามปริมาณธุรกรรม</span>
+      <a class="tldr-jump" href="#income">ดูรายละเอียด →</a>
+    </div>
+    <div class="tldr-item">
+      <span class="tldr-num">4</span>
+      <span class="tldr-body-txt"><b>งบดุล ~96% คือสินทรัพย์/หนี้สินสำรอง USDC</b> — ไม่ใช่โครงสร้างทุนบริษัททั่วไป ต้องแยกดู "ทรัพยากรบริษัทเอง" ($2.31B) ออกจากตัวเลขรวมทั้งก้อน</span>
+      <a class="tldr-jump" href="#balance">ดูรายละเอียด →</a>
+    </div>
+    <div class="tldr-item">
+      <span class="tldr-num">5</span>
+      <span class="tldr-body-txt"><b>Guidance ทั้งปี 2026 ยืนยันไม่เปลี่ยน</b> — แต่ CFO ระบุตรงๆ ว่ายังไม่รวมผลกระทบจาก Arc token presale ที่เพิ่งประกาศระดมทุน $222M</span>
+      <a class="tldr-jump" href="#guidance">ดูรายละเอียด →</a>
+    </div>
+    <div class="tldr-item">
+      <span class="tldr-num">6</span>
+      <span class="tldr-body-txt"><b>จุดที่ต้องติดตามต่อ</b> — ทิศทางดอกเบี้ย Fed (กระทบรายได้หลักโดยตรง) และอัตราการโตของค่าใช้จ่ายดำเนินงานที่เร็วกว่ารายได้ (+75.6% vs +20%) ถ้ายังต่างกันขนาดนี้จะเริ่มกดดันกำไรจากการดำเนินงานในระยะยาว</span>
+      <a class="tldr-jump" href="#income">ดูรายละเอียด →</a>
     </div>
   </div>
 </div>
