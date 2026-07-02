@@ -283,64 +283,8 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 <div class="section-white" id="income">
   <div class="container">
     <div class="sec-eyebrow">01 — งบกำไรขาดทุน</div>
-    <h2 class="sec-title">Income Statement หลายงวด</h2>
-    <p class="sec-sub">ตัวเลขทั้งหมดในหน้านี้ดึงตรงจาก Condensed Consolidated Statements of Operations ใน Exhibit 99.1 ของ 8-K (press release งบ) และตรวจไขว้กับ XBRL (ภาษาบัญชีมีโครงสร้างมาตรฐานที่ SEC ใช้แปะป้ายตัวเลขในงบ ให้ดึงข้อมูลอัตโนมัติได้) tag <code>us-gaap:Revenues</code> / <code>us-gaap:NetIncomeLoss</code> แล้ว — ตรงกันทุกบรรทัด</p>
-
-    <div class="table-scroll">
-      <table class="comp-table">
-        <caption>หน่วย: พันดอลลาร์สหรัฐ เว้นแต่ระบุ — สามเดือนสิ้นสุด 31 มี.ค. | แหล่ง: 8-K Exhibit 99.1 ยื่น 11 พ.ค. 2026</caption>
-        <thead><tr><th>รายการ</th><th>Q1 2026</th><th>Q1 2025</th></tr></thead>
-        <tbody>
-          <tr><td>Reserve income (ดอกเบี้ยจาก reserve หนุน USDC/EURC)</td><td data-label="Q1 2026">652,508</td><td data-label="Q1 2025">557,911</td></tr>
-          <tr><td>Other revenue (ค่าธรรมเนียม/subscription/CPN ฯลฯ)</td><td data-label="Q1 2026">41,625</td><td data-label="Q1 2025">20,662</td></tr>
-          <tr class="total-row"><td>Total revenue and reserve income</td><td data-label="Q1 2026">694,133</td><td data-label="Q1 2025">578,573</td></tr>
-          <tr class="sub-row"><td>Distribution and transaction costs</td><td data-label="Q1 2026">405,402</td><td data-label="Q1 2025">347,312</td></tr>
-          <tr class="sub-row"><td>Other costs</td><td data-label="Q1 2026">1,379</td><td data-label="Q1 2025">335</td></tr>
-          <tr class="total-row"><td>Total distribution, transaction &amp; other costs</td><td data-label="Q1 2026">406,781</td><td data-label="Q1 2025">347,647</td></tr>
-          <tr class="sub-row"><td>Compensation expenses</td><td data-label="Q1 2026">138,127</td><td data-label="Q1 2025">75,620</td></tr>
-          <tr class="sub-row"><td>General &amp; administrative expenses</td><td data-label="Q1 2026">57,261</td><td data-label="Q1 2025">30,684</td></tr>
-          <tr class="sub-row"><td>Depreciation &amp; amortization</td><td data-label="Q1 2026">26,767</td><td data-label="Q1 2025">13,880</td></tr>
-          <tr class="sub-row"><td>IT infrastructure costs</td><td data-label="Q1 2026">12,722</td><td data-label="Q1 2025">7,672</td></tr>
-          <tr class="sub-row"><td>Marketing expenses</td><td data-label="Q1 2026">6,617</td><td data-label="Q1 2025">3,860</td></tr>
-          <tr class="sub-row"><td>Digital assets losses (gains)</td><td data-label="Q1 2026">856</td><td data-label="Q1 2025">6,270</td></tr>
-          <tr class="total-row"><td>Total operating expenses</td><td data-label="Q1 2026">242,350</td><td data-label="Q1 2025">137,986</td></tr>
-          <tr class="total-row"><td>Operating income from continuing operations</td><td data-label="Q1 2026">45,002</td><td data-label="Q1 2025">92,940</td></tr>
-          <tr class="sub-row"><td>Other income (expense), net</td><td data-label="Q1 2026">11,683</td><td data-label="Q1 2025">(3,103)</td></tr>
-          <tr class="sub-row"><td>Income tax expense</td><td data-label="Q1 2026">1,439</td><td data-label="Q1 2025">25,046</td></tr>
-          <tr class="total-row"><td>Net income from continuing operations</td><td data-label="Q1 2026">55,246</td><td data-label="Q1 2025">64,791</td></tr>
-          <tr class="total-row"><td>Net income attributable to common stockholders</td><td data-label="Q1 2026">55,253</td><td data-label="Q1 2025">64,791</td></tr>
-          <tr><td>EPS Basic / Diluted</td><td data-label="Q1 2026">$0.23 / $0.21</td><td data-label="Q1 2025">N/A / N/A</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="callout callout-warn">
-      <strong>ทำไม EPS Q1 2025 เป็น N/A ไม่ใช่ $0:</strong> ต้นฉบับ press release (8-K Exhibit 99.1 ยื่น 11 พ.ค. 2026) แสดง EPS ของ Q1 2025 เป็นเครื่องหมาย "—" ทั้งช่อง Basic และ Diluted โดยบริษัทไม่คำนวณค่านี้ให้ เพราะโครงสร้างทุนก่อน IPO (มิ.ย. 2025) กับหลัง IPO ต่างกันมากเกินจะเทียบกันได้อย่างมีความหมาย — หุ้นถัวเฉลี่ยถ่วงน้ำหนัก Q1 2025 มีเพียง 57,966K หุ้น (พื้นฐาน) / 75,650K หุ้น (เจือจาง) เทียบกับ 244,038K / 266,687K หุ้นใน Q1 2026 (เพิ่มขึ้น ~4 เท่าจากการออกหุ้นตอน IPO + follow-on offering) ถ้าคำนวณเองแบบหยาบๆ (กำไรสุทธิ $64.791M ÷ หุ้นเจือจาง 75,650K) จะได้ประมาณ $0.86 ซึ่งไม่มีความหมายเทียบเคียงกับ Q1 2026 ได้ตรงๆ เพราะฐานทุนคนละโครงสร้าง จึงแสดงเป็น N/A ตามที่บริษัทรายงานจริง ไม่ใช่ $0
-    </div>
-    <div class="callout">
-      <strong>Cross-check ผ่าน:</strong> XBRL <code>us-gaap:Revenues</code> Q1 2026 = 694,133,000 ตรงกับ Total revenue and reserve income เป๊ะ; <code>us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax</code> = 41,625,000 ตรงกับ "Other revenue"; ผลต่าง (694,133 - 41,625 = 652,508) ตรงกับ "Reserve income" พอดี — ยืนยันว่าตัวเลขในตารางไม่ได้พิมพ์ผิด/หลอน
-    </div>
-
-    <h3 style="font-size:19px;font-weight:600;margin:44px 0 20px">งบกำไรขาดทุนรายปี — FY2025 เทียบ FY2024</h3>
-    <div class="table-scroll">
-      <table class="comp-table">
-        <caption>หน่วย: พันดอลลาร์สหรัฐ | ปีสิ้นสุด 31 ธ.ค. | แหล่ง: 8-K Exhibit 99.1 ยื่น 25 ก.พ. 2026 (งบ Q4/FY2025)</caption>
-        <thead><tr><th>รายการ</th><th>FY2025</th><th>FY2024</th></tr></thead>
-        <tbody>
-          <tr><td>Reserve income</td><td data-label="FY2025">2,636,822</td><td data-label="FY2024">1,661,084</td></tr>
-          <tr><td>Other revenue</td><td data-label="FY2025">109,820</td><td data-label="FY2024">15,169</td></tr>
-          <tr class="total-row"><td>Total revenue and reserve income</td><td data-label="FY2025">2,746,642</td><td data-label="FY2024">1,676,253</td></tr>
-          <tr class="sub-row"><td>Total distribution, transaction &amp; other costs</td><td data-label="FY2025">1,663,651</td><td data-label="FY2024">1,017,364</td></tr>
-          <tr class="sub-row"><td>Total operating expenses (รวม SBC)</td><td data-label="FY2025">1,179,426</td><td data-label="FY2024">491,731</td></tr>
-          <tr class="total-row"><td>Operating income (loss)</td><td data-label="FY2025">(96,435)</td><td data-label="FY2024">167,158</td></tr>
-          <tr class="total-row"><td>Net income (loss) attributable to common</td><td data-label="FY2025">(69,508)</td><td data-label="FY2024">155,667</td></tr>
-          <tr><td>EPS Basic / Diluted</td><td data-label="FY2025">$(0.44) / $(0.44)</td><td data-label="FY2024">$0.33 / $0.30</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="callout callout-warn">
-      <strong>ทำไม FY2025 ขาดทุน GAAP ทั้งที่รายได้โต 64%:</strong> compensation expenses พุ่งจาก $263.4M เป็น $844.9M (+221%) ส่วนใหญ่มาจาก stock-based compensation (SBC — ค่าตอบแทนพนักงานจ่ายเป็นหุ้น) ที่ปลดล็อกครั้งเดียวตอน IPO มิถุนายน 2025 — เป็นรายการ non-cash (ไม่ใช่เงินสดจ่ายจริง) เป็นหลัก ไม่ใช่ธุรกิจหลักแย่ลง (ดู Adjusted EBITDA ในหัวข้อ Ratio &amp; Trend ที่ยังโตต่อเนื่อง)
-    </div>
+    <h2 class="sec-title">Income Statement — เฉพาะเมตริกที่สำคัญจริง</h2>
+    <p class="sec-sub">ตัดตารางรายบรรทัด GAAP ทั้งหมดออก เหลือ 4 เมตริกที่บอกภาพรวมธุรกิจได้ครบ — ตัวเลขดึงจาก 8-K Exhibit 99.1 (press release งบ) ตรวจไขว้กับ XBRL แล้วทุกจุด รายละเอียดทุกบรรทัดดูได้จากไฟล์ต้นทางใน "แหล่งอ้างอิง" ท้ายรายงาน</p>
 
     <h3 style="font-size:19px;font-weight:600;margin:44px 0 8px">แนวโน้มรายไตรมาส 5 ไตรมาสล่าสุด — แยกเป็น 4 เมตริกหลัก</h3>
     <p style="font-size:13.5px;color:var(--body);margin-bottom:8px">แต่ละเมตริกด้านล่างมีตาราง "ปี × ไตรมาส" ของตัวเอง — แถวปีต่อแถว ไล่คอลัมน์ไตรมาส แต่ละเซลล์โชว์ตัวเลขและ QoQ (เทียบไตรมาสก่อนหน้าตามลำดับเวลาจริง) ของตัวเอง ส่วน YoY แยกเป็นแถวท้ายตาราง</p>
@@ -452,7 +396,10 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
             <div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div>
           </div>
         </div>
-        <div class="matrix-foot">Q2'25 → Q3'25 คือช่วงขาดทุน→กำไร คำนวณ % ไม่ได้จึงใช้ข้อความอธิบายแทนตัวเลข — รายละเอียด SBC ก้อนนี้ดูคำอธิบาย FY2025 ด้านบนและ MD&amp;A summary ท้ายรายงาน</div>
+        <div class="matrix-foot">Q2'25 → Q3'25 คือช่วงขาดทุน→กำไร คำนวณ % ไม่ได้จึงใช้ข้อความอธิบายแทนตัวเลข — รายละเอียด SBC ก้อนนี้ดูคำอธิบายด้านล่างและ MD&amp;A summary ท้ายรายงาน</div>
+      </div>
+      <div class="callout callout-warn">
+        <strong>ทำไมทั้งปี 2025 ขาดทุน GAAP ทั้งที่รายได้โต 64%:</strong> compensation expenses พุ่งจาก $263.4M เป็น $844.9M (+221%) ส่วนใหญ่มาจาก stock-based compensation (SBC — ค่าตอบแทนพนักงานจ่ายเป็นหุ้น) ที่ปลดล็อกครั้งเดียวตอน IPO มิถุนายน 2025 — เป็นรายการ non-cash (ไม่ใช่เงินสดจ่ายจริง) เป็นหลัก ไม่ใช่ธุรกิจหลักแย่ลง (ดู Adjusted EBITDA ถัดไปที่ยังโตต่อเนื่อง)
       </div>
     </div>
 
@@ -498,43 +445,9 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
   <div class="container">
     <div class="sec-eyebrow">02 — งบดุล</div>
     <h2 class="sec-title">Balance Sheet Snapshot</h2>
-    <p class="sec-sub">งบดุลของ Circle มีลักษณะพิเศษ: สินทรัพย์ส่วนใหญ่คือ "เงินสดที่แยกไว้เพื่อผู้ถือ USDC" ซึ่งตรงกับหนี้สิน "เงินฝากจากผู้ถือ stablecoin" แทบจะ 1:1 เสมอ (ลักษณะ custodial pass-through ไม่ใช่สินทรัพย์ของบริษัทจริงๆ) — ต้องแยกดูส่วนที่เป็นของบริษัทจริง (corporate) ออกจากส่วน pass-through ก่อนตีความ ratio ใดๆ</p>
+    <p class="sec-sub">งบดุลของ Circle มีลักษณะพิเศษ: สินทรัพย์ส่วนใหญ่คือ "เงินสดที่แยกไว้เพื่อผู้ถือ USDC" ซึ่งตรงกับหนี้สิน "เงินฝากจากผู้ถือ stablecoin" แทบจะ 1:1 เสมอ (ลักษณะ custodial pass-through ไม่ใช่สินทรัพย์ของบริษัทจริงๆ) — ตัดตารางรายบรรทัดออก เหลือแค่ตัวเลขที่บอกความแข็งแรงทางการเงินของบริษัทจริง (ไม่รวมส่วน pass-through) รายบรรทัดเต็มดูได้จากไฟล์ต้นทางใน "แหล่งอ้างอิง"</p>
 
-    <div class="table-scroll">
-      <table class="comp-table">
-        <caption>หน่วย: พันดอลลาร์สหรัฐ | แหล่ง: Condensed/Consolidated Balance Sheets เต็มฉบับใน 8-K Exhibit 99.1 (11 พ.ค. 2026 และ 25 ก.พ. 2026) — ทุกบรรทัดย่อยบวกลงตัวเป๊ะกับ Total ที่บริษัทรายงาน</caption>
-        <thead><tr><th>รายการ</th><th>31 มี.ค. 2026</th><th>31 ธ.ค. 2025</th><th>31 ธ.ค. 2024</th></tr></thead>
-        <tbody>
-          <tr><td>Cash and cash equivalents (corporate)</td><td data-label="Mar 2026">1,517,264</td><td data-label="Dec 2025">1,526,046</td><td data-label="Dec 2024">750,981</td></tr>
-          <tr><td>Cash segregated for corporate-held stablecoins</td><td data-label="Mar 2026">792,662</td><td data-label="Dec 2025">822,963</td><td data-label="Dec 2024">294,493</td></tr>
-          <tr class="sub-row"><td>Cash segregated for benefit of stablecoin holders (pass-through)</td><td data-label="Mar 2026">76,893,681</td><td data-label="Dec 2025">75,067,932</td><td data-label="Dec 2024">43,918,572</td></tr>
-          <tr><td>Accounts receivable, net</td><td data-label="Mar 2026">72,168</td><td data-label="Dec 2025">62,866</td><td data-label="Dec 2024">6,418</td></tr>
-          <tr><td>Stablecoins receivable, net</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">—</td><td data-label="Dec 2024">6,957</td></tr>
-          <tr><td>Prepaid expenses &amp; other current assets</td><td data-label="Mar 2026">326,800</td><td data-label="Dec 2025">321,660</td><td data-label="Dec 2024">187,528</td></tr>
-          <tr class="total-row"><td>Total current assets</td><td data-label="Mar 2026">79,602,575</td><td data-label="Dec 2025">77,801,467</td><td data-label="Dec 2024">45,164,949</td></tr>
-          <tr><td>Investments</td><td data-label="Mar 2026">100,073</td><td data-label="Dec 2025">84,265</td><td data-label="Dec 2024">84,114</td></tr>
-          <tr><td>Fixed assets, net</td><td data-label="Mar 2026">22,520</td><td data-label="Dec 2025">22,791</td><td data-label="Dec 2024">18,682</td></tr>
-          <tr><td>Digital assets</td><td data-label="Mar 2026">84,217</td><td data-label="Dec 2025">86,515</td><td data-label="Dec 2024">31,330</td></tr>
-          <tr><td>Goodwill</td><td data-label="Mar 2026">265,742</td><td data-label="Dec 2025">265,742</td><td data-label="Dec 2024">169,544</td></tr>
-          <tr><td>Intangible assets, net</td><td data-label="Mar 2026">421,017</td><td data-label="Dec 2025">411,146</td><td data-label="Dec 2024">331,394</td></tr>
-          <tr class="sub-row"><td>Other non-current assets*</td><td data-label="Mar 2026">40,634</td><td data-label="Dec 2025">41,281</td><td data-label="Dec 2024">34,396</td></tr>
-          <tr class="total-row"><td>Total assets</td><td data-label="Mar 2026">80,536,778</td><td data-label="Dec 2025">78,713,207</td><td data-label="Dec 2024">45,834,409</td></tr>
-          <tr class="sub-row"><td>Deposits from stablecoin holders (pass-through liability)</td><td data-label="Mar 2026">76,778,530</td><td data-label="Dec 2025">74,912,567</td><td data-label="Dec 2024">43,727,363</td></tr>
-          <tr><td>Accounts payable &amp; accrued expenses</td><td data-label="Mar 2026">262,215</td><td data-label="Dec 2025">360,609</td><td data-label="Dec 2024">287,007</td></tr>
-          <tr><td>Convertible debt, net (current)</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">36,821</td><td data-label="Dec 2024">—</td></tr>
-          <tr><td>Other current liabilities</td><td data-label="Mar 2026">14,637</td><td data-label="Dec 2025">18,398</td><td data-label="Dec 2024">16,597</td></tr>
-          <tr class="total-row"><td>Total current liabilities</td><td data-label="Mar 2026">77,055,382</td><td data-label="Dec 2025">75,328,395</td><td data-label="Dec 2024">44,030,967</td></tr>
-          <tr><td>Convertible debt, net (non-current)</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">—</td><td data-label="Dec 2024">40,717</td></tr>
-          <tr><td>Other non-current liabilities**</td><td data-label="Mar 2026">52,765</td><td data-label="Dec 2025">54,039</td><td data-label="Dec 2024">52,431</td></tr>
-          <tr class="total-row"><td>Total liabilities</td><td data-label="Mar 2026">77,108,147</td><td data-label="Dec 2025">75,382,434</td><td data-label="Dec 2024">44,124,115</td></tr>
-          <tr><td>Redeemable convertible preferred stock (temporary equity, ก่อน IPO)</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">—</td><td data-label="Dec 2024">1,139,765</td></tr>
-          <tr class="total-row"><td>Total stockholders' equity</td><td data-label="Mar 2026">3,428,631</td><td data-label="Dec 2025">3,330,773</td><td data-label="Dec 2024">570,529</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6">* รวม Restricted cash + Deferred tax assets, net + Other non-current assets ตามที่แจกแจงแยกบรรทัดในงบดุลจริง (31 มี.ค. 2026: $2,800+$11,285+$26,549; 31 ธ.ค. 2025: $2,792+$11,110+$27,379; 31 ธ.ค. 2024: $3,558+$10,223+$20,615 พันดอลลาร์) — รวมเป็นบรรทัดเดียวเพื่อความกระชับ ตรวจสอบย้อนกลับไปงบต้นฉบับได้ทุกบรรทัดย่อย<br>** รวม Deferred tax liabilities, net + Other non-current liabilities (บวก Warrant liability $1,591 พันดอลลาร์ เฉพาะ 31 ธ.ค. 2024 ซึ่งหมดอายุ/ใช้สิทธิไปแล้วก่อนปี 2025)</p>
-
-    <div class="grid-3" style="margin-top:32px">
+    <div class="grid-4" style="margin-top:8px">
       <div class="metric-card">
         <div class="metric-val">1.03x</div>
         <div class="metric-label">Current Ratio (31 มี.ค. 2026)</div>
@@ -546,6 +459,10 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
       <div class="metric-card">
         <div class="metric-val">22.5x</div>
         <div class="metric-label">Total Liabilities/Equity (ผิดปกติสูงเพราะรวม deposit pass-through — ดูคำอธิบายด้านล่าง)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">$3.43B</div>
+        <div class="metric-label">ส่วนของผู้ถือหุ้นรวม (31 มี.ค. 2026) — เพิ่มจาก $3.33B ณ 31 ธ.ค. 2025</div>
       </div>
     </div>
     <div class="callout callout-warn">
