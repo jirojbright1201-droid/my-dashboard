@@ -184,6 +184,18 @@ code{font-family:'JetBrains Mono',monospace;font-size:0.9em;background:var(--sur
 .score-chart-sub b{color:var(--ink);font-weight:700}
 .score-chart-sub b.down{color:var(--down)}
 
+.bal-group-label{font-size:12px;font-weight:700;color:var(--accent-active);text-transform:uppercase;letter-spacing:0.6px;margin:32px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--hairline)}
+.bal-group-label:first-of-type{margin-top:8px}
+.bal-card{border:1px solid var(--hairline);border-radius:16px;padding:18px 20px;margin-bottom:12px}
+.bal-card.bal-highlight{background:rgba(1,115,195,0.03);border-color:rgba(1,115,195,0.2)}
+.bal-card-title{font-size:14.5px;font-weight:600;color:var(--ink)}
+.bal-card-desc{font-size:12px;color:var(--muted);margin:3px 0 14px}
+.bal-vals{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.bal-val-item{display:flex;flex-direction:column;gap:3px}
+.bal-val-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.3px;font-weight:600}
+.bal-val-num{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:var(--ink)}
+@media(max-width:480px){.bal-vals{gap:14px 22px}.bal-val-item{flex:1 1 28%}}
+
 .divider{height:1px;background:var(--hairline);margin:0}
 footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hairline);max-width:1180px;margin:0 auto}
 .footer-legal{font-size:12px;color:var(--muted);line-height:1.75;margin-top:20px}
@@ -574,22 +586,95 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
     <h2 class="sec-title">งบดุล ~96% คือสินทรัพย์/หนี้สินสำรอง USDC ไม่ใช่โครงสร้างทุนทั่วไป</h2>
     <p class="sec-sub">จาก 10-Q ไตรมาส 1/2026 (Condensed Consolidated Balance Sheets) + 10-K FY2025 + XBRL companyfacts</p>
 
-    <table class="comp-table">
-      <caption>Snapshot (หน่วยพันดอลลาร์)</caption>
-      <thead><tr><th>รายการ</th><th>31 มี.ค. 2026</th><th>31 ธ.ค. 2025</th><th>31 ธ.ค. 2024</th></tr></thead>
-      <tbody>
-        <tr><td>Total current assets</td><td data-label="Q1'26">79,602,575</td><td data-label="FY2025">77,801,467</td><td data-label="FY2024">45,164,949</td></tr>
-        <tr class="highlight-row"><td>Total assets</td><td data-label="Q1'26">80,536,778</td><td data-label="FY2025">78,713,207</td><td data-label="FY2024">45,834,409</td></tr>
-        <tr><td>Total current liabilities</td><td data-label="Q1'26">77,055,382</td><td data-label="FY2025">75,328,395</td><td data-label="FY2024">44,030,967</td></tr>
-        <tr><td>Total liabilities</td><td data-label="Q1'26">77,108,147</td><td data-label="FY2025">75,382,434</td><td data-label="FY2024">44,124,115</td></tr>
-        <tr class="highlight-row"><td>Total stockholders' equity (รวม NCI)</td><td data-label="Q1'26">3,428,631</td><td data-label="FY2025">3,330,773</td><td data-label="FY2024">570,529</td></tr>
-        <tr><td>เงินสด (ไม่รวมสำรอง stablecoin)</td><td data-label="Q1'26">1,517,264</td><td data-label="FY2025">1,526,046</td><td data-label="FY2024">750,981</td></tr>
-        <tr><td>เงินสดสำรอง corporate-held stablecoin</td><td data-label="Q1'26">792,662</td><td data-label="FY2025">822,963</td><td data-label="FY2024">294,493</td></tr>
-        <tr><td>เงินสดสำรอง เพื่อประโยชน์ผู้ถือ stablecoin</td><td data-label="Q1'26">76,893,681</td><td data-label="FY2025">75,067,932</td><td data-label="FY2024">43,918,572</td></tr>
-        <tr><td>Deposits from stablecoin holders (หนี้สิน)</td><td data-label="Q1'26">76,778,530</td><td data-label="FY2025">74,912,567</td><td data-label="FY2024">43,727,363</td></tr>
-        <tr><td>Convertible debt คงเหลือ</td><td data-label="Q1'26">0</td><td data-label="FY2025">36,821</td><td data-label="FY2024">40,717</td></tr>
-      </tbody>
-    </table>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">หน่วยพันดอลลาร์เดิมแปลงเป็น $B/$M เพื่อให้อ่านง่าย ตัวเลขจริงยังอ้างอิงจาก 10-Q/10-K ตรงเป๊ะ — จัดกลุ่มตามที่อธิบายไว้ในกล่องด้านล่าง: "ภาพรวม" (ผลรวมทั้งหมด), "สำรอง USDC" (pass-through ผูกกับผู้ถือ USDC โดยตรง), "ทรัพยากรของบริษัทเอง" (ส่วนที่ไม่ใช่สำรองลูกค้า)</p>
+
+    <div class="bal-group-label">ภาพรวม</div>
+    <div class="bal-card bal-highlight">
+      <div class="bal-card-title">Total assets</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$80.54B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$78.71B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$45.83B</span></div>
+      </div>
+    </div>
+    <div class="bal-card">
+      <div class="bal-card-title">Total liabilities</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$77.11B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$75.38B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$44.12B</span></div>
+      </div>
+    </div>
+    <div class="bal-card bal-highlight">
+      <div class="bal-card-title">Total stockholders' equity <span style="font-weight:400;color:var(--muted);font-size:12px">(รวม NCI)</span></div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$3.43B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$3.33B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$570.5M</span></div>
+      </div>
+    </div>
+    <div class="bal-card">
+      <div class="bal-card-title">Total current assets</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$79.60B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$77.80B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$45.16B</span></div>
+      </div>
+    </div>
+    <div class="bal-card">
+      <div class="bal-card-title">Total current liabilities</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$77.06B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$75.33B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$44.03B</span></div>
+      </div>
+    </div>
+
+    <div class="bal-group-label">สำรอง USDC — pass-through ผูกกับผู้ถือ USDC โดยตรง (~96% ของงบดุล)</div>
+    <div class="bal-card">
+      <div class="bal-card-title">เงินสดสำรอง เพื่อประโยชน์ผู้ถือ stablecoin</div>
+      <div class="bal-card-desc">สินทรัพย์ฝั่ง Circle Reserve Fund + เงินสดที่ค้ำ USDC หมุนเวียนอยู่</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$76.89B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$75.07B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$43.92B</span></div>
+      </div>
+    </div>
+    <div class="bal-card">
+      <div class="bal-card-title">Deposits from stablecoin holders <span style="font-weight:400;color:var(--muted);font-size:12px">(หนี้สิน)</span></div>
+      <div class="bal-card-desc">หนี้สินคู่กันของสำรองด้านบน — ตามกฎหมายเกือบเท่ากันเสมอ</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$76.78B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$74.91B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$43.73B</span></div>
+      </div>
+    </div>
+
+    <div class="bal-group-label">ทรัพยากรของบริษัทเอง — ไม่ใช่สำรองลูกค้า</div>
+    <div class="bal-card">
+      <div class="bal-card-title">เงินสด <span style="font-weight:400;color:var(--muted);font-size:12px">(ไม่รวมสำรอง stablecoin)</span></div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$1.52B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$1.53B</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$751.0M</span></div>
+      </div>
+    </div>
+    <div class="bal-card">
+      <div class="bal-card-title">เงินสดสำรอง corporate-held stablecoin</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$792.7M</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$823.0M</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$294.5M</span></div>
+      </div>
+    </div>
+    <div class="bal-card">
+      <div class="bal-card-title">Convertible debt คงเหลือ</div>
+      <div class="bal-vals">
+        <div class="bal-val-item"><span class="bal-val-lbl">31 มี.ค. 2026</span><span class="bal-val-num">$0</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2025</span><span class="bal-val-num">$36.8M</span></div>
+        <div class="bal-val-item"><span class="bal-val-lbl">31 ธ.ค. 2024</span><span class="bal-val-num">$40.7M</span></div>
+      </div>
+    </div>
 
     <div class="callout callout-warn">
       <strong>อ่าน ratio ด้านล่างด้วยความระมัดระวัง:</strong> งบดุลของ Circle ~96% ถูกครอบงำด้วยสินทรัพย์สำรอง (เงินสด + Circle Reserve Fund ที่บริหารโดย BlackRock) ที่ค้ำ USDC หมุนเวียน เทียบกับหนี้สิน "Deposits from stablecoin holders" ที่เกือบเท่ากันตามกฎหมาย ทำให้ current ratio ดูเหมือนบริษัทการเงินทั่วไปแต่ไม่ได้สะท้อนสภาพคล่องเชิงธุรกิจ — MD&amp;A (Management's Discussion and Analysis, ส่วนที่ผู้บริหารอธิบายผลประกอบการเองใน filing) ระบุ "corporate liquidity" ที่แท้จริง (เงินสด + เงินสดสำรององค์กร) = <strong>$2.31 พันล้าน</strong> ณ 31 มี.ค. 2026
