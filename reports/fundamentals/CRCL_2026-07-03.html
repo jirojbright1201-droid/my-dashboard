@@ -205,7 +205,7 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
       <div class="hero-stat-card">
         <div class="hero-stat-label">EPS Diluted</div>
         <div class="hero-stat-val">$0.21</div>
-        <div class="hero-stat-chg" style="color:var(--muted)">Q1 2025: $0 (หุ้นถัวเฉลี่ยก่อน IPO เยอะ)</div>
+        <div class="hero-stat-chg" style="color:var(--muted)">Q1 2025: N/A — บริษัทไม่รายงาน (โครงสร้างทุนก่อน/หลัง IPO ต่างกันมาก)</div>
       </div>
       <div class="hero-stat-card">
         <div class="hero-stat-label">เงินสด (corporate, ไม่รวม segregated)</div>
@@ -246,11 +246,14 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
           <tr class="sub-row"><td>Income tax expense</td><td data-label="Q1 2026">1,439</td><td data-label="Q1 2025">25,046</td></tr>
           <tr class="total-row"><td>Net income from continuing operations</td><td data-label="Q1 2026">55,246</td><td data-label="Q1 2025">64,791</td></tr>
           <tr class="total-row"><td>Net income attributable to common stockholders</td><td data-label="Q1 2026">55,253</td><td data-label="Q1 2025">64,791</td></tr>
-          <tr><td>EPS Basic / Diluted</td><td data-label="Q1 2026">$0.23 / $0.21</td><td data-label="Q1 2025">$0.00 / $0.00</td></tr>
+          <tr><td>EPS Basic / Diluted</td><td data-label="Q1 2026">$0.23 / $0.21</td><td data-label="Q1 2025">N/A / N/A</td></tr>
         </tbody>
       </table>
     </div>
 
+    <div class="callout callout-warn">
+      <strong>ทำไม EPS Q1 2025 เป็น N/A ไม่ใช่ $0:</strong> ต้นฉบับ press release (8-K Exhibit 99.1 ยื่น 11 พ.ค. 2026) แสดง EPS ของ Q1 2025 เป็นเครื่องหมาย "—" ทั้งช่อง Basic และ Diluted โดยบริษัทไม่คำนวณค่านี้ให้ เพราะโครงสร้างทุนก่อน IPO (มิ.ย. 2025) กับหลัง IPO ต่างกันมากเกินจะเทียบกันได้อย่างมีความหมาย — หุ้นถัวเฉลี่ยถ่วงน้ำหนัก Q1 2025 มีเพียง 57,966K หุ้น (พื้นฐาน) / 75,650K หุ้น (เจือจาง) เทียบกับ 244,038K / 266,687K หุ้นใน Q1 2026 (เพิ่มขึ้น ~4 เท่าจากการออกหุ้นตอน IPO + follow-on offering) ถ้าคำนวณเองแบบหยาบๆ (กำไรสุทธิ $64.791M ÷ หุ้นเจือจาง 75,650K) จะได้ประมาณ $0.86 ซึ่งไม่มีความหมายเทียบเคียงกับ Q1 2026 ได้ตรงๆ เพราะฐานทุนคนละโครงสร้าง จึงแสดงเป็น N/A ตามที่บริษัทรายงานจริง ไม่ใช่ $0
+    </div>
     <div class="callout">
       <strong>Cross-check ผ่าน:</strong> XBRL <code>us-gaap:Revenues</code> Q1 2026 = 694,133,000 ตรงกับ Total revenue and reserve income เป๊ะ; <code>us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax</code> = 41,625,000 ตรงกับ "Other revenue"; ผลต่าง (694,133 − 41,625 = 652,508) ตรงกับ "Reserve income" พอดี — ยืนยันว่าตัวเลขในตารางไม่ได้พิมพ์ผิด/หลอน
     </div>
@@ -305,21 +308,37 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
 
     <div class="table-scroll">
       <table class="comp-table">
-        <caption>หน่วย: พันดอลลาร์สหรัฐ | แหล่ง: 8-K Exhibit 99.1 (11 พ.ค. 2026 และ 25 ก.พ. 2026)</caption>
+        <caption>หน่วย: พันดอลลาร์สหรัฐ | แหล่ง: Condensed/Consolidated Balance Sheets เต็มฉบับใน 8-K Exhibit 99.1 (11 พ.ค. 2026 และ 25 ก.พ. 2026) — ทุกบรรทัดย่อยบวกลงตัวเป๊ะกับ Total ที่บริษัทรายงาน</caption>
         <thead><tr><th>รายการ</th><th>31 มี.ค. 2026</th><th>31 ธ.ค. 2025</th><th>31 ธ.ค. 2024</th></tr></thead>
         <tbody>
           <tr><td>Cash and cash equivalents (corporate)</td><td data-label="Mar 2026">1,517,264</td><td data-label="Dec 2025">1,526,046</td><td data-label="Dec 2024">750,981</td></tr>
           <tr><td>Cash segregated for corporate-held stablecoins</td><td data-label="Mar 2026">792,662</td><td data-label="Dec 2025">822,963</td><td data-label="Dec 2024">294,493</td></tr>
-          <tr class="sub-row"><td>Cash segregated for stablecoin holders (pass-through)</td><td data-label="Mar 2026">76,893,681</td><td data-label="Dec 2025">75,067,932</td><td data-label="Dec 2024">43,918,572</td></tr>
+          <tr class="sub-row"><td>Cash segregated for benefit of stablecoin holders (pass-through)</td><td data-label="Mar 2026">76,893,681</td><td data-label="Dec 2025">75,067,932</td><td data-label="Dec 2024">43,918,572</td></tr>
+          <tr><td>Accounts receivable, net</td><td data-label="Mar 2026">72,168</td><td data-label="Dec 2025">62,866</td><td data-label="Dec 2024">6,418</td></tr>
+          <tr><td>Stablecoins receivable, net</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">—</td><td data-label="Dec 2024">6,957</td></tr>
+          <tr><td>Prepaid expenses &amp; other current assets</td><td data-label="Mar 2026">326,800</td><td data-label="Dec 2025">321,660</td><td data-label="Dec 2024">187,528</td></tr>
+          <tr class="total-row"><td>Total current assets</td><td data-label="Mar 2026">79,602,575</td><td data-label="Dec 2025">77,801,467</td><td data-label="Dec 2024">45,164,949</td></tr>
+          <tr><td>Investments</td><td data-label="Mar 2026">100,073</td><td data-label="Dec 2025">84,265</td><td data-label="Dec 2024">84,114</td></tr>
+          <tr><td>Fixed assets, net</td><td data-label="Mar 2026">22,520</td><td data-label="Dec 2025">22,791</td><td data-label="Dec 2024">18,682</td></tr>
+          <tr><td>Digital assets</td><td data-label="Mar 2026">84,217</td><td data-label="Dec 2025">86,515</td><td data-label="Dec 2024">31,330</td></tr>
+          <tr><td>Goodwill</td><td data-label="Mar 2026">265,742</td><td data-label="Dec 2025">265,742</td><td data-label="Dec 2024">169,544</td></tr>
+          <tr><td>Intangible assets, net</td><td data-label="Mar 2026">421,017</td><td data-label="Dec 2025">411,146</td><td data-label="Dec 2024">331,394</td></tr>
+          <tr class="sub-row"><td>Other non-current assets*</td><td data-label="Mar 2026">40,634</td><td data-label="Dec 2025">41,281</td><td data-label="Dec 2024">34,396</td></tr>
           <tr class="total-row"><td>Total assets</td><td data-label="Mar 2026">80,536,778</td><td data-label="Dec 2025">78,713,207</td><td data-label="Dec 2024">45,834,409</td></tr>
           <tr class="sub-row"><td>Deposits from stablecoin holders (pass-through liability)</td><td data-label="Mar 2026">76,778,530</td><td data-label="Dec 2025">74,912,567</td><td data-label="Dec 2024">43,727,363</td></tr>
-          <tr class="sub-row"><td>Accounts payable &amp; accrued expenses</td><td data-label="Mar 2026">262,215</td><td data-label="Dec 2025">360,609</td><td data-label="Dec 2024">287,007</td></tr>
-          <tr class="sub-row"><td>Convertible debt, net</td><td data-label="Mar 2026">0</td><td data-label="Dec 2025">36,821</td><td data-label="Dec 2024">40,717</td></tr>
+          <tr><td>Accounts payable &amp; accrued expenses</td><td data-label="Mar 2026">262,215</td><td data-label="Dec 2025">360,609</td><td data-label="Dec 2024">287,007</td></tr>
+          <tr><td>Convertible debt, net (current)</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">36,821</td><td data-label="Dec 2024">—</td></tr>
+          <tr><td>Other current liabilities</td><td data-label="Mar 2026">14,637</td><td data-label="Dec 2025">18,398</td><td data-label="Dec 2024">16,597</td></tr>
+          <tr class="total-row"><td>Total current liabilities</td><td data-label="Mar 2026">77,055,382</td><td data-label="Dec 2025">75,328,395</td><td data-label="Dec 2024">44,030,967</td></tr>
+          <tr><td>Convertible debt, net (non-current)</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">—</td><td data-label="Dec 2024">40,717</td></tr>
+          <tr><td>Other non-current liabilities**</td><td data-label="Mar 2026">52,765</td><td data-label="Dec 2025">54,039</td><td data-label="Dec 2024">52,431</td></tr>
           <tr class="total-row"><td>Total liabilities</td><td data-label="Mar 2026">77,108,147</td><td data-label="Dec 2025">75,382,434</td><td data-label="Dec 2024">44,124,115</td></tr>
+          <tr><td>Redeemable convertible preferred stock (temporary equity, ก่อน IPO)</td><td data-label="Mar 2026">—</td><td data-label="Dec 2025">—</td><td data-label="Dec 2024">1,139,765</td></tr>
           <tr class="total-row"><td>Total stockholders' equity</td><td data-label="Mar 2026">3,428,631</td><td data-label="Dec 2025">3,330,773</td><td data-label="Dec 2024">570,529</td></tr>
         </tbody>
       </table>
     </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6">* รวม Restricted cash + Deferred tax assets, net + Other non-current assets ตามที่แจกแจงแยกบรรทัดในงบดุลจริง (31 มี.ค. 2026: $2,800+$11,285+$26,549; 31 ธ.ค. 2025: $2,792+$11,110+$27,379; 31 ธ.ค. 2024: $3,558+$10,223+$20,615 พันดอลลาร์) — รวมเป็นบรรทัดเดียวเพื่อความกระชับ ตรวจสอบย้อนกลับไปงบต้นฉบับได้ทุกบรรทัดย่อย<br>** รวม Deferred tax liabilities, net + Other non-current liabilities (บวก Warrant liability $1,591 พันดอลลาร์ เฉพาะ 31 ธ.ค. 2024 ซึ่งหมดอายุ/ใช้สิทธิไปแล้วก่อนปี 2025)</p>
 
     <div class="grid-3" style="margin-top:32px">
       <div class="metric-card">
