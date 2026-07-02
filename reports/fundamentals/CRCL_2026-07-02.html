@@ -152,6 +152,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .ref-body a{color:var(--accent);word-break:break-all}
 code{font-family:'JetBrains Mono',monospace;font-size:0.9em;background:var(--surface-strong);padding:1px 5px;border-radius:4px;word-break:break-all}
 
+.chart-pair-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+@media(max-width:640px){.chart-pair-2{grid-template-columns:1fr}}
+.hero-chart-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:20px;padding:22px 20px 18px;box-shadow:0 4px 20px rgba(10,11,13,0.05)}
+.hero-chart-cap{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.hero-chart-dot{width:8px;height:8px;border-radius:50%}
+.hero-chart-cap-txt{font-size:13px;font-weight:600;color:var(--ink)}
+.hero-chart-svg{width:100%;height:110px;display:block}
+.hero-line-val-row{display:flex;justify-content:space-between;margin-bottom:2px}
+.hero-line-val{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;color:var(--ink)}
+.hero-line-val.down{color:var(--down)}
+.hero-line-val.up{color:var(--up)}
+.hero-line-yr-row{display:flex;justify-content:space-between;margin-top:2px}
+.hero-line-yr{font-size:10.5px;color:var(--muted);font-weight:500}
+
+.score-card{border:1px solid var(--hairline);border-radius:16px;padding:20px 22px;margin-bottom:14px}
+.score-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:2px}
+.score-name{font-size:14.5px;font-weight:600;color:var(--ink)}
+.score-val{font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--body);margin-left:8px;font-weight:400}
+.score-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:var(--r-pill);white-space:nowrap;flex-shrink:0}
+.score-badge.good{background:rgba(5,177,105,0.1);color:var(--up)}
+.score-badge.bad{background:rgba(207,32,47,0.1);color:var(--down)}
+.score-badge.flat{background:var(--surface-strong);color:var(--muted)}
+.score-desc{font-size:12px;color:var(--muted);margin:3px 0 12px;font-weight:400}
+.score-why{font-size:13.5px;color:var(--body);line-height:1.7}
+.score-chart-wrap{background:var(--surface-soft);border-radius:12px;padding:14px 16px 10px;margin-top:14px}
+.score-chart-svg{width:100%;height:56px;display:block}
+.score-chart-wrap .hero-line-val{font-size:10.5px}
+.score-chart-wrap .hero-line-yr{font-size:9.5px}
+.score-chart-sub{font-size:11.5px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--hairline)}
+.score-chart-sub b{color:var(--ink);font-weight:700}
+.score-chart-sub b.down{color:var(--down)}
+
 .divider{height:1px;background:var(--hairline);margin:0}
 footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hairline);max-width:1180px;margin:0 auto}
 .footer-legal{font-size:12px;color:var(--muted);line-height:1.75;margin-top:20px}
@@ -251,36 +283,271 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
     <h2 class="sec-title">รายได้โต 20% YoY แต่กำไรสุทธิยังฟื้นจากผลกระทบ SBC ก้อนใหญ่ตอน IPO</h2>
     <p class="sec-sub">ตัวเลขทั้งหมดในตารางนี้มาจาก 8-K exhibit press release ไตรมาส 1/2026 (ยื่น 11 พ.ค. 2026) สอบทานตรงกับ XBRL companyfacts แล้วตรงกันทุกจุด — หมายเหตุ: XBRL ไม่มี tag เดียวสำหรับ "Total revenue and reserve income" ต้องรวมจาก 2 tag คือ <code>RevenueFromContractWithCustomerExcludingAssessedTax</code> (Other revenue) + <code>InterestAndDividendIncomeOperating</code> (Reserve income) เอง ตารางนี้ยังมีตัวเลข Adjusted EBITDA ซึ่งเป็น non-GAAP (ตัวชี้วัดทางเลือกที่บริษัทคำนวณเองนอกเหนือมาตรฐานบัญชี GAAP — ปรับปรุงเพื่อตัดรายการที่บริษัทมองว่าไม่ใช่ operating ปกติออก เช่น SBC, ภาษี, ค่าเสื่อม) กำกับไว้ชัดเจนทุกจุด</p>
 
-    <table class="comp-table">
-      <caption>รายไตรมาส (หน่วยล้าน USD เว้นระบุ, GAAP)</caption>
-      <thead><tr><th>รายการ</th><th>Q1'25</th><th>Q2'25</th><th>Q3'25</th><th>Q4'25</th><th>Q1'26</th></tr></thead>
-      <tbody>
-        <tr><td>Reserve income</td><td data-label="Q1'25">558</td><td data-label="Q2'25">634</td><td data-label="Q3'25">711</td><td data-label="Q4'25">733</td><td data-label="Q1'26">653</td></tr>
-        <tr><td>Other revenue</td><td data-label="Q1'25">21</td><td data-label="Q2'25">24</td><td data-label="Q3'25">29</td><td data-label="Q4'25">37</td><td data-label="Q1'26">42</td></tr>
-        <tr class="highlight-row"><td>Total revenue &amp; reserve income</td><td data-label="Q1'25">579</td><td data-label="Q2'25">658</td><td data-label="Q3'25">740</td><td data-label="Q4'25">770</td><td data-label="Q1'26">694</td></tr>
-        <tr><td>Distribution/transaction/other costs</td><td data-label="Q1'25">348</td><td data-label="Q2'25">407</td><td data-label="Q3'25">448</td><td data-label="Q4'25">461</td><td data-label="Q1'26">407</td></tr>
-        <tr><td>Revenue less distribution costs (RLDC)</td><td data-label="Q1'25">231</td><td data-label="Q2'25">251</td><td data-label="Q3'25">292</td><td data-label="Q4'25">309</td><td data-label="Q1'26">287</td></tr>
-        <tr><td>Operating expenses (GAAP)</td><td data-label="Q1'25">137.99</td><td data-label="Q2'25">576.72</td><td data-label="Q3'25">211.13</td><td data-label="Q4'25">253.60</td><td data-label="Q1'26">242.35</td></tr>
-        <tr><td>Operating income (loss)</td><td data-label="Q1'25">92.94</td><td data-label="Q2'25" style="color:var(--down)">(325.58)</td><td data-label="Q3'25">81.02</td><td data-label="Q4'25">55.19</td><td data-label="Q1'26">45.00</td></tr>
-        <tr><td>Net income (loss) attributable</td><td data-label="Q1'25">64.79</td><td data-label="Q2'25" style="color:var(--down)">(482.10)</td><td data-label="Q3'25">214.39</td><td data-label="Q4'25">133.42</td><td data-label="Q1'26">55.25</td></tr>
-        <tr><td>EPS diluted (GAAP)</td><td data-label="Q1'25">$0.00</td><td data-label="Q2'25" style="color:var(--down)">$(4.48)</td><td data-label="Q3'25">$0.64</td><td data-label="Q4'25">$0.43</td><td data-label="Q1'26">$0.21</td></tr>
-        <tr><td>Adjusted EBITDA (non-GAAP, นิยามใหม่)</td><td data-label="Q1'25">122.4</td><td data-label="Q2'25">133.0</td><td data-label="Q3'25">171.5</td><td data-label="Q4'25">175.9</td><td data-label="Q1'26">151.4</td></tr>
-      </tbody>
-    </table>
+    <div class="chart-pair-2">
+      <div class="hero-chart-card">
+        <div class="hero-chart-cap"><span class="hero-chart-dot" style="background:var(--accent)"></span><span class="hero-chart-cap-txt">Total revenue &amp; reserve income (ล้าน USD)</span></div>
+        <svg class="hero-chart-svg" viewBox="-4 -4 308 108" preserveAspectRatio="none">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0173c3" stop-opacity="0.2"/><stop offset="100%" stop-color="#0173c3" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,90 C26.25,84.48 60.00,68.13 82.5,56.9 C105.00,45.67 127.50,30.42 150,22.6 C172.50,14.78 195.00,6.80 217.5,10 C240.00,13.20 273.75,36.50 285,41.8 L285,90 L15,90 Z" fill="url(#g1)"/>
+          <path d="M15,90 C26.25,84.48 60.00,68.13 82.5,56.9 C105.00,45.67 127.50,30.42 150,22.6 C172.50,14.78 195.00,6.80 217.5,10 C240.00,13.20 273.75,36.50 285,41.8" fill="none" stroke="#0173c3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="90" r="4.5" fill="#0173c3" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="56.9" r="4.5" fill="#0173c3" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="22.6" r="4.5" fill="#0173c3" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="10" r="5" fill="#0173c3" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="41.8" r="4.5" fill="#0173c3" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$579M</span><span class="hero-line-val">$658M</span><span class="hero-line-val">$740M</span><span class="hero-line-val">$770M</span><span class="hero-line-val up">$694M</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+      <div class="hero-chart-card">
+        <div class="hero-chart-cap"><span class="hero-chart-dot" style="background:var(--down)"></span><span class="hero-chart-cap-txt">Net income (loss) attributable (ล้าน USD)</span></div>
+        <svg class="hero-chart-svg" viewBox="-4 -4 308 108" preserveAspectRatio="none">
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cf202f" stop-opacity="0.16"/><stop offset="100%" stop-color="#cf202f" stop-opacity="0"/></linearGradient></defs>
+          <line x1="15" y1="34.6" x2="285" y2="34.6" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4,4"/>
+          <path d="M15,27.2 C26.25,37.67 60.00,92.87 82.5,90 C105.00,87.13 127.50,21.78 150,10 C172.50,-1.78 195.00,16.25 217.5,19.3 C240.00,22.35 273.75,26.80 285,28.3 L285,90 L15,90 Z" fill="url(#g2)"/>
+          <path d="M15,27.2 C26.25,37.67 60.00,92.87 82.5,90 C105.00,87.13 127.50,21.78 150,10 C172.50,-1.78 195.00,16.25 217.5,19.3 C240.00,22.35 273.75,26.80 285,28.3" fill="none" stroke="#cf202f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="27.2" r="4.5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="90" r="5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="10" r="4.5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="19.3" r="4.5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="28.3" r="4.5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$65M</span><span class="hero-line-val down">$(482M)</span><span class="hero-line-val">$214M</span><span class="hero-line-val">$133M</span><span class="hero-line-val down">$55M</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
 
     <div class="callout callout-warn">
       <strong>ทำไม Q2'25 ขาดทุน $482M:</strong> ค่าใช้จ่ายพนักงานจ่ายเป็นหุ้น (SBC = stock-based compensation) $434.966M ถูกบันทึกทันทีในไตรมาสนั้น เพราะเงื่อนไข vesting ของ RSU ที่ผูกกับ "liquidity event" ถูก trigger ตอนหุ้น CRCL เริ่มเทรดบน NYSE (มิ.ย. 2025) — เป็นรายการบัญชีครั้งเดียว ไม่ใช่ operating loss ต่อเนื่อง (ที่มา: 10-Q ไตรมาส 2/2025 non-GAAP reconciliation อ้างอิงผ่าน 8-K press release ไตรมาส 4/2025)
     </div>
 
-    <div class="fin-chart">
-      <div class="fin-bar-group"><div class="fin-bar-val">579</div><div class="fin-bar-track"><div class="fin-bar" style="height:105px"></div></div><div class="fin-bar-year">Q1'25</div></div>
-      <div class="fin-bar-group"><div class="fin-bar-val">658</div><div class="fin-bar-track"><div class="fin-bar" style="height:120px"></div></div><div class="fin-bar-year">Q2'25</div></div>
-      <div class="fin-bar-group"><div class="fin-bar-val">740</div><div class="fin-bar-track"><div class="fin-bar" style="height:134px"></div></div><div class="fin-bar-year">Q3'25</div></div>
-      <div class="fin-bar-group"><div class="fin-bar-val">770</div><div class="fin-bar-track"><div class="fin-bar" style="height:140px"></div></div><div class="fin-bar-year">Q4'25</div></div>
-      <div class="fin-bar-group"><div class="fin-bar-val">694</div><div class="fin-bar-track"><div class="fin-bar" style="height:126px"></div></div><div class="fin-bar-year">Q1'26</div></div>
-    </div>
-    <p style="font-size:11.5px;color:var(--muted);text-align:center;margin-top:-16px;margin-bottom:32px">Total revenue and reserve income รายไตรมาส (ล้าน USD) — สูงสุด Q4'25 ที่ $770M</p>
+    <p style="font-size:16px;font-weight:600;color:var(--ink);margin:36px 0 16px">แต่ละบรรทัดในงบ เทียบไตรมาสเดียวกันปีก่อน (Q1'25 vs Q1'26) เป็นยังไงบ้าง</p>
 
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Total revenue &amp; reserve income<span class="score-val">$694M (+20% YoY)</span></span><span class="score-badge good">ดีขึ้น</span></div>
+      <div class="score-desc">รายได้รวมทั้งหมดของบริษัท (ดอกเบี้ยจากเงินสำรอง USDC + รายได้อื่น)</div>
+      <div class="score-why">เติบโตต่อเนื่องเป็นไตรมาสที่ 5 ติดต่อกัน ขับเคลื่อนหลักจาก Reserve income ที่โต 17.0% (USDC หมุนเวียนเฉลี่ยโต 39.1% ชดเชยผลกระทบจาก reserve return rate ที่ลดลง 66bps ได้) และ Other revenue ที่โตเร็วกว่ามาก (+101.5%) จากบริการ integration, blockchain rewards และค่าธรรมเนียม redemption — ตามที่ MD&amp;A ระบุไว้ตรงๆ</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#05b169" stop-opacity="0.18"/><stop offset="100%" stop-color="#05b169" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,45 C26.25,42.24 60.00,34.07 82.5,28.45 C105.00,22.83 127.50,15.21 150,11.3 C172.50,7.39 195.00,3.40 217.5,5 C240.00,6.60 273.75,18.25 285,20.9 L285,45 L15,45 Z" fill="url(#gs1)"/>
+          <path d="M15,45 C26.25,42.24 60.00,34.07 82.5,28.45 C105.00,22.83 127.50,15.21 150,11.3 C172.50,7.39 195.00,3.40 217.5,5 C240.00,6.60 273.75,18.25 285,20.9" fill="none" stroke="#05b169" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="45" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="28.45" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="11.3" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="5" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="20.9" r="5" fill="#05b169" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$579M</span><span class="hero-line-val">$658M</span><span class="hero-line-val">$740M</span><span class="hero-line-val">$770M</span><span class="hero-line-val up">$694M</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Net income<span class="score-val">$55.3M (-14.7% YoY)</span></span><span class="score-badge bad">แย่ลง</span></div>
+      <div class="score-desc">กำไร/ขาดทุนสุทธิที่เป็นของผู้ถือหุ้น</div>
+      <div class="score-why">ลดลงจากปีก่อนเพราะ Fed ลดดอกเบี้ยนโยบายต่อเนื่อง ทำให้ reserve return rate ลดลง 66bps เหลือ 3.5% กดดันผลตอบแทนจากเงินสำรอง USDC โดยตรง (ไม่เกี่ยวกับรายการ SBC ปี 2025 ที่อธิบายด้านบน ซึ่งเป็นรายการครั้งเดียวจบไปแล้ว) — ถ้า Fed ลดดอกเบี้ยต่อตามที่ตลาดคาด แรงกดดันนี้จะยังมีต่อเนื่องอีกหลายไตรมาส เป็นความเสี่ยงเชิงโครงสร้างที่ผูกกับวัฏจักรดอกเบี้ยโดยตรง ไม่ใช่ปัญหาการบริหารงาน</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cf202f" stop-opacity="0.16"/><stop offset="100%" stop-color="#cf202f" stop-opacity="0"/></linearGradient></defs>
+          <line x1="15" y1="17.3" x2="285" y2="17.3" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4,4"/>
+          <path d="M15,13.6 C26.25,18.83 60.00,46.43 82.5,45 C105.00,43.57 127.50,10.89 150,5 C172.50,-0.89 195.00,8.13 217.5,9.65 C240.00,11.18 273.75,13.40 285,14.15 L285,45 L15,45 Z" fill="url(#gs2)"/>
+          <path d="M15,13.6 C26.25,18.83 60.00,46.43 82.5,45 C105.00,43.57 127.50,10.89 150,5 C172.50,-0.89 195.00,8.13 217.5,9.65 C240.00,11.18 273.75,13.40 285,14.15" fill="none" stroke="#cf202f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="13.6" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="45" r="4.5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="5" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="9.65" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="14.15" r="5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$65M</span><span class="hero-line-val down">$(482M)</span><span class="hero-line-val">$214M</span><span class="hero-line-val">$133M</span><span class="hero-line-val down">$55M</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+        <div class="score-chart-sub">Reserve return rate Q1'26 = <b class="down">3.5%</b> (ลดจากปีก่อน -66bps) — ต้นเหตุหลักที่ทำให้กำไรไตรมาสนี้ลดลง</div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Adjusted EBITDA (non-GAAP)<span class="score-val">$151.4M (+24% YoY)</span></span><span class="score-badge good">ดีขึ้น</span></div>
+      <div class="score-desc">กำไรที่บริษัทคำนวณเอง ตัดรายการพิเศษ (เช่น หุ้นตอบแทน) ออก — ไม่ใช่ตัวเลขบัญชีมาตรฐาน (GAAP)</div>
+      <div class="score-why">โตเร็วกว่ารายได้รวม (24% vs 20%) สะท้อนประสิทธิภาพธุรกิจหลักที่ดีขึ้น ไม่ใช่แค่โตตามรายได้ — หมายเหตุสำคัญ: บริษัทเปลี่ยนนิยาม Adjusted EBITDA ตั้งแต่ Q1'26 (ตัด payroll tax ที่เกี่ยวกับ SBC ออกเพิ่มเติม) เปิดเผยส่วนต่างนี้ชัดเจนในหมายเหตุของบริษัทเอง ไม่ใช่การซ่อนตัวเลข แต่ทำให้เทียบกับไตรมาสก่อนหน้าต้องระวังเล็กน้อย</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#05b169" stop-opacity="0.18"/><stop offset="100%" stop-color="#05b169" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,45 C26.25,43.68 60.00,43.19 82.5,37.075 C105.00,30.96 127.50,13.65 150,8.3 C172.50,2.95 195.00,2.50 217.5,5 C240.00,7.50 273.75,20.27 285,23.32 L285,45 L15,45 Z" fill="url(#gs3)"/>
+          <path d="M15,45 C26.25,43.68 60.00,43.19 82.5,37.075 C105.00,30.96 127.50,13.65 150,8.3 C172.50,2.95 195.00,2.50 217.5,5 C240.00,7.50 273.75,20.27 285,23.32" fill="none" stroke="#05b169" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="45" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="37.075" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="8.3" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="5" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="23.32" r="5" fill="#05b169" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$122M</span><span class="hero-line-val">$133M</span><span class="hero-line-val">$172M</span><span class="hero-line-val">$176M</span><span class="hero-line-val up">$151M</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">RLDC Margin<span class="score-val">41% (+1pt YoY)</span></span><span class="score-badge flat">ทรงตัว</span></div>
+      <div class="score-desc">สัดส่วนกำไรที่เก็บเองได้ หลังหักส่วนแบ่งพาร์ทเนอร์ เทียบกับรายได้รวม</div>
+      <div class="score-why">แทบไม่ขยับจากปีก่อน แปลว่าสัดส่วนที่ต้องแบ่งให้พาร์ทเนอร์ (หลักคือ Coinbase ภายใต้ Collaboration Agreement) ยังกินสัดส่วนรายได้ใกล้เคียงเดิม แม้ปริมาณธุรกรรมจะโตแรง — เป็นตัวเลขที่บริษัทเน้นเองในทุก press release เพราะสะท้อนว่าโครงสร้างแบ่งรายได้กับพาร์ทเนอร์ไม่ได้แย่ลงตามการเติบโต</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c828a" stop-opacity="0.14"/><stop offset="100%" stop-color="#7c828a" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,18.35 C26.25,22.79 60.00,42.78 82.5,45 C105.00,47.22 127.50,36.09 150,31.65 C172.50,27.21 195.00,22.79 217.5,18.35 C240.00,13.91 273.75,7.22 285,5 L285,45 L15,45 Z" fill="url(#gs4)"/>
+          <path d="M15,18.35 C26.25,22.79 60.00,42.78 82.5,45 C105.00,47.22 127.50,36.09 150,31.65 C172.50,27.21 195.00,22.79 217.5,18.35 C240.00,13.91 273.75,7.22 285,5" fill="none" stroke="#7c828a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="18.35" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="45" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="31.65" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="18.35" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="5" r="5" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">40%</span><span class="hero-line-val">38%</span><span class="hero-line-val">39%</span><span class="hero-line-val">40%</span><span class="hero-line-val">41%</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Reserve income<span class="score-val">$653M (+17.0% YoY)</span></span><span class="score-badge good">ดีขึ้น</span></div>
+      <div class="score-desc">ดอกเบี้ยจากเงินสำรอง USDC — รายได้หลักของบริษัท (94% ของรายได้รวม)</div>
+      <div class="score-why">เพิ่มขึ้น $94.6M — MD&amp;A แยกให้เห็นชัด: +$200.9M มาจาก USDC หมุนเวียนเฉลี่ยที่โต 39.1% แต่ถูกหักด้วย -$106.3M จาก reserve return rate ที่ลดลง 66bps ตามการลดดอกเบี้ยของ Fed (ปัจจัยเดียวกับที่กดดันกำไรสุทธิด้านบน) — ปริมาณ USDC ที่โตเร็วพอชดเชยผลกระทบจากดอกเบี้ยได้ในภาพรวม</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#05b169" stop-opacity="0.18"/><stop offset="100%" stop-color="#05b169" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,45 C26.25,42.10 60.00,33.46 82.5,27.63 C105.00,21.80 127.50,13.80 150,10.03 C172.50,6.26 195.00,2.79 217.5,5 C240.00,7.21 273.75,20.24 285,23.29 L285,45 L15,45 Z" fill="url(#gs5)"/>
+          <path d="M15,45 C26.25,42.10 60.00,33.46 82.5,27.63 C105.00,21.80 127.50,13.80 150,10.03 C172.50,6.26 195.00,2.79 217.5,5 C240.00,7.21 273.75,20.24 285,23.29" fill="none" stroke="#05b169" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="45" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="27.63" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="10.03" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="5" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="23.29" r="5" fill="#05b169" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">558</span><span class="hero-line-val">634</span><span class="hero-line-val">711</span><span class="hero-line-val">733</span><span class="hero-line-val">653</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Other revenue<span class="score-val">$42M (+101.5% YoY)</span></span><span class="score-badge good">ดีขึ้น</span></div>
+      <div class="score-desc">รายได้อื่นที่ไม่ใช่ดอกเบี้ย เช่น ค่าธรรมเนียมบริการ</div>
+      <div class="score-why">โตกว่าเท่าตัว จากบริการ integration, blockchain rewards, ค่าธรรมเนียม redemption และค่าบริหารกองทุน (ตามที่ MD&amp;A ระบุ) แม้จะเป็นสัดส่วนเล็ก (ราว 6% ของรายได้รวม) แต่เป็นรายได้ที่ไม่ผูกกับอัตราดอกเบี้ยของ Fed — ถ้าสัดส่วนนี้ขยายต่อเนื่อง จะช่วยลดความเสี่ยงที่บริษัทพึ่งพารายได้จากดอกเบี้ยเพียงทางเดียว</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#05b169" stop-opacity="0.18"/><stop offset="100%" stop-color="#05b169" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,45 C26.25,44.05 60.00,41.83 82.5,39.29 C105.00,36.75 127.50,33.89 150,29.76 C172.50,25.63 195.00,18.65 217.5,14.52 C240.00,10.39 273.75,6.59 285,5 L285,45 L15,45 Z" fill="url(#gs6)"/>
+          <path d="M15,45 C26.25,44.05 60.00,41.83 82.5,39.29 C105.00,36.75 127.50,33.89 150,29.76 C172.50,25.63 195.00,18.65 217.5,14.52 C240.00,10.39 273.75,6.59 285,5" fill="none" stroke="#05b169" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="45" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="39.29" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="29.76" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="14.52" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="5" r="5" fill="#05b169" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">21</span><span class="hero-line-val">24</span><span class="hero-line-val">29</span><span class="hero-line-val">37</span><span class="hero-line-val">42</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Distribution / transaction / other costs<span class="score-val">$407M (+16.7% YoY)</span></span><span class="score-badge flat">ทรงตัว</span></div>
+      <div class="score-desc">ส่วนแบ่งที่จ่ายให้พาร์ทเนอร์ (เช่น Coinbase) + ต้นทุนธุรกรรม</div>
+      <div class="score-why">เพิ่มขึ้นหลักจากส่วนแบ่งที่จ่ายให้ Coinbase ภายใต้ Collaboration Agreement ที่โต +$27.4M ตามปริมาณ USDC บนแพลตฟอร์ม Coinbase หลังหัก issuer retention (ตามที่ MD&amp;A ระบุ) — อัตราการโตใกล้เคียงกับรายได้รวม (17% vs 20%) ไม่ได้ขยับผิดปกติ</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs7" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c828a" stop-opacity="0.14"/><stop offset="100%" stop-color="#7c828a" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,45 C26.25,41.52 60.00,30.02 82.5,24.12 C105.00,18.22 127.50,12.79 150,9.6 C172.50,6.41 195.00,2.58 217.5,5 C240.00,7.42 273.75,20.93 285,24.12 L285,45 L15,45 Z" fill="url(#gs7)"/>
+          <path d="M15,45 C26.25,41.52 60.00,30.02 82.5,24.12 C105.00,18.22 127.50,12.79 150,9.6 C172.50,6.41 195.00,2.58 217.5,5 C240.00,7.42 273.75,20.93 285,24.12" fill="none" stroke="#7c828a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="45" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="24.12" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="9.6" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="5" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="24.12" r="5" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">348</span><span class="hero-line-val">407</span><span class="hero-line-val">448</span><span class="hero-line-val">461</span><span class="hero-line-val">407</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Revenue less distribution costs (RLDC)<span class="score-val">$287M (+24.2% YoY)</span></span><span class="score-badge good">ดีขึ้น</span></div>
+      <div class="score-desc">รายได้ที่เหลือหลังหักส่วนแบ่งพาร์ทเนอร์ — ตัวที่บริษัทเน้นเอง</div>
+      <div class="score-why">โตเร็วกว่ารายได้รวม (24% vs 20%) — หลังหักส่วนแบ่งพาร์ทเนอร์แล้ว เงินที่เหลือเข้ากระเป๋าบริษัทเองยังโตได้ดี สอดคล้องกับ RLDC Margin ที่ขยับขึ้นเล็กน้อยด้านบน เป็นสัญญาณบวกว่าโครงสร้างการแบ่งรายได้เป็นประโยชน์กับบริษัทมากขึ้นเรื่อยๆ</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs8" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#05b169" stop-opacity="0.18"/><stop offset="100%" stop-color="#05b169" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,45 C26.25,43.29 60.00,39.95 82.5,34.74 C105.00,29.53 127.50,18.68 150,13.72 C172.50,8.76 195.00,4.57 217.5,5 C240.00,5.43 273.75,14.40 285,16.28 L285,45 L15,45 Z" fill="url(#gs8)"/>
+          <path d="M15,45 C26.25,43.29 60.00,39.95 82.5,34.74 C105.00,29.53 127.50,18.68 150,13.72 C172.50,8.76 195.00,4.57 217.5,5 C240.00,5.43 273.75,14.40 285,16.28" fill="none" stroke="#05b169" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="45" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="34.74" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="13.72" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="5" r="4" fill="#05b169" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="16.28" r="5" fill="#05b169" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">231</span><span class="hero-line-val">251</span><span class="hero-line-val">292</span><span class="hero-line-val">309</span><span class="hero-line-val">287</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Operating expenses (GAAP)<span class="score-val">$242.4M (+75.6% YoY)</span></span><span class="score-badge bad">แย่ลง</span></div>
+      <div class="score-desc">ค่าใช้จ่ายดำเนินงานทั้งหมดตามบัญชีมาตรฐาน (GAAP)</div>
+      <div class="score-why">โตเร็วกว่ารายได้รวมมาก (75.6% vs 20%) แม้ตัดไตรมาสที่มีรายการพิเศษ SBC ออกไปแล้ว (พีคที่ Q2'25 จากการปลดล็อกหุ้นตอบแทนก้อนเดียว อธิบายไว้ด้านบน) — MD&amp;A ระบุตรงๆ ว่าหลักมาจาก compensation expenses ที่โต 82.7% (SBC vesting ต่อเนื่อง + payroll tax ที่เกี่ยวข้อง + การจ้างงานเพิ่ม) ถ้าอัตราการโตของค่าใช้จ่ายยังเร็วกว่ารายได้ต่อเนื่อง จะเริ่มกดดันกำไรจากการดำเนินงานในระยะยาว เป็นจุดที่ต้องติดตามไตรมาสถัดไป</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs9" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cf202f" stop-opacity="0.14"/><stop offset="100%" stop-color="#cf202f" stop-opacity="0"/></linearGradient></defs>
+          <path d="M15,45 C26.25,38.33 60.00,6.11 82.5,5 C105.00,3.89 127.50,33.42 150,38.33 C172.50,43.24 195.00,34.93 217.5,34.46 C240.00,33.99 273.75,35.32 285,35.49 L285,45 L15,45 Z" fill="url(#gs9)"/>
+          <path d="M15,45 C26.25,38.33 60.00,6.11 82.5,5 C105.00,3.89 127.50,33.42 150,38.33 C172.50,43.24 195.00,34.93 217.5,34.46 C240.00,33.99 273.75,35.32 285,35.49" fill="none" stroke="#cf202f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="45" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="5" r="5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="38.33" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="34.46" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="35.49" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$138M</span><span class="hero-line-val down">$577M</span><span class="hero-line-val">$211M</span><span class="hero-line-val">$254M</span><span class="hero-line-val">$242M</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">Operating income (loss)<span class="score-val">$45.0M (-51.6% YoY)</span></span><span class="score-badge bad">แย่ลง</span></div>
+      <div class="score-desc">กำไร/ขาดทุนจากธุรกิจหลัก ก่อนหักภาษี</div>
+      <div class="score-why">ลดลงเกือบครึ่งจากปีก่อน เป็นผลจากสองแรงกดดันพร้อมกัน: รายจ่ายดำเนินงานที่โตเร็วกว่ารายได้ (compensation +82.7% ตามที่อธิบายด้านบน) บวกกับผลตอบแทนจากเงินสำรอง USDC ที่ลดลงตามดอกเบี้ยนโยบาย Fed — ทั้งสองปัจจัยเป็นแรงกดดันเชิงโครงสร้างที่ไม่หายไปเร็ววัน ถ้าอยากเห็นกำไรจากการดำเนินงานฟื้น ต้องเห็นอัตราการโตของรายจ่ายชะลอลงให้ใกล้เคียงรายได้มากกว่านี้</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs10" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cf202f" stop-opacity="0.14"/><stop offset="100%" stop-color="#cf202f" stop-opacity="0"/></linearGradient></defs>
+          <line x1="15" y1="13.87" x2="285" y2="13.87" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4,4"/>
+          <path d="M15,5 C26.25,11.67 60.00,44.81 82.5,45 C105.00,45.19 127.50,12.21 150,6.14 C172.50,0.07 195.00,8.04 217.5,8.61 C240.00,9.18 273.75,9.42 285,9.58 L285,45 L15,45 Z" fill="url(#gs10)"/>
+          <path d="M15,5 C26.25,11.67 60.00,44.81 82.5,45 C105.00,45.19 127.50,12.21 150,6.14 C172.50,0.07 195.00,8.04 217.5,8.61 C240.00,9.18 273.75,9.42 285,9.58" fill="none" stroke="#cf202f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="5" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="45" r="4.5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="6.14" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="8.61" r="4" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="9.58" r="5" fill="#cf202f" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$93M</span><span class="hero-line-val down">$(326M)</span><span class="hero-line-val">$81M</span><span class="hero-line-val">$55M</span><span class="hero-line-val">$45M</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-top"><span class="score-name">EPS diluted (GAAP)<span class="score-val">$0.21 (Q1'25: $0.00)</span></span><span class="score-badge flat">เทียบยาก</span></div>
+      <div class="score-desc">กำไรสุทธิเฉลี่ยต่อหุ้น 1 หุ้น</div>
+      <div class="score-why">เทียบ YoY ตรงๆ ไม่แม่นเท่าตัวเลขอื่นในหน้านี้ เพราะ Circle เพิ่งเข้าตลาดหุ้น NYSE จริงเดือนมิถุนายน 2025 — จำนวนหุ้นและโครงสร้างทุนก่อนและหลังเข้าตลาดต่างกันมาก ทำให้ฐานเปรียบเทียบ Q1'25 (ก่อนเข้าตลาด) กับ Q1'26 (หลังเข้าตลาดเต็มปี) ไม่ใช่ apples-to-apples แบบตัวเลขอื่น ควรดู Q1'26 เทียบกับไตรมาสหลัง IPO ด้วยกัน (Q3'25, Q4'25) มากกว่าเทียบข้ามปีตรงๆ</div>
+      <div class="score-chart-wrap">
+        <svg class="score-chart-svg" viewBox="-4 -4 308 58" preserveAspectRatio="none">
+          <defs><linearGradient id="gs11" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c828a" stop-opacity="0.14"/><stop offset="100%" stop-color="#7c828a" stop-opacity="0"/></linearGradient></defs>
+          <line x1="15" y1="10" x2="285" y2="10" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4,4"/>
+          <path d="M15,10 C26.25,15.83 60.00,45.83 82.5,45 C105.00,44.17 127.50,11.39 150,5 C172.50,-1.39 195.00,6.08 217.5,6.64 C240.00,7.20 273.75,8.07 285,8.36 L285,45 L15,45 Z" fill="url(#gs11)"/>
+          <path d="M15,10 C26.25,15.83 60.00,45.83 82.5,45 C105.00,44.17 127.50,11.39 150,5 C172.50,-1.39 195.00,6.08 217.5,6.64 C240.00,7.20 273.75,8.07 285,8.36" fill="none" stroke="#7c828a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="15" cy="10" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="82.5" cy="45" r="4.5" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="150" cy="5" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="217.5" cy="6.64" r="4" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+          <circle cx="285" cy="8.36" r="5" fill="#7c828a" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="hero-line-val-row"><span class="hero-line-val">$0.00</span><span class="hero-line-val down">$(4.48)</span><span class="hero-line-val">$0.64</span><span class="hero-line-val">$0.43</span><span class="hero-line-val">$0.21</span></div>
+        <div class="hero-line-yr-row"><span class="hero-line-yr">Q1'25</span><span class="hero-line-yr">Q2'25</span><span class="hero-line-yr">Q3'25</span><span class="hero-line-yr">Q4'25</span><span class="hero-line-yr">Q1'26</span></div>
+      </div>
+    </div>
+
+    <p style="font-size:16px;font-weight:600;color:var(--ink);margin:40px 0 16px">เทียบรายปี (FY2023–FY2025)</p>
     <table class="comp-table">
       <caption>รายปี (หน่วยล้าน USD, GAAP) — จาก 10-K FY2025 + XBRL companyfacts</caption>
       <thead><tr><th>รายการ</th><th>FY2023</th><th>FY2024</th><th>FY2025</th></tr></thead>
