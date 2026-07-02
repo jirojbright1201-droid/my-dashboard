@@ -97,6 +97,69 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .comp-table tr.sub-row td{color:var(--muted)}
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--hairline);border-radius:var(--r-card);padding:24px}
 
+/* === metric-block + year x quarter matrix (fundamentals-report numeric presentation spec) === */
+.metric-block{margin-top:36px}
+.metric-block:first-of-type{margin-top:0}
+.metric-block+.metric-block{padding-top:36px;border-top:1px solid var(--hairline)}
+.metric-head{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-0.2px;margin-bottom:16px}
+.metric-no{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:rgba(1,115,195,0.08);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+.lede{font-size:15.5px;line-height:1.75;color:var(--body)}
+.lede b{font-weight:600;color:var(--ink)}
+.lede .num{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.lede .num.up{color:var(--up)}
+.lede .num.down{color:var(--down)}
+
+.takeaway{display:flex;gap:12px;background:rgba(1,115,195,0.045);border:1px solid rgba(1,115,195,0.18);border-radius:14px;padding:16px 18px;margin:20px 0}
+.takeaway .ic{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.takeaway .tx{font-size:13.5px;color:var(--ink);line-height:1.6}
+.takeaway .tx b{color:var(--accent)}
+
+.matrix-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-card);padding:22px 20px 18px;margin:22px 0}
+.matrix-title{font-size:12px;font-weight:600;letter-spacing:0.3px;color:var(--ink);margin-bottom:6px}
+.matrix-title .kpi-abbr{font-weight:400;color:var(--muted);font-size:11.5px}
+.matrix-sub{font-size:13px;color:var(--body);line-height:1.6;max-width:640px}
+
+.ymatrix{border:1px solid var(--hairline);border-radius:14px;overflow:hidden;margin-top:16px}
+.ym-row{display:grid;grid-template-columns:64px repeat(4,1fr);gap:10px;align-items:center}
+.ym-row+.ym-row{border-top:1px solid var(--hairline)}
+.ym-head{padding:9px 18px;background:var(--surface-soft);font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--muted)}
+.ym-head>div{text-align:center}
+.ym-yr{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--ink);padding-left:18px}
+.ym-row:not(.ym-head){padding:14px 18px}
+.ym-cell{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-size:14.5px;font-weight:600;color:var(--ink);text-align:center;white-space:nowrap}
+.ym-cell.pending{color:var(--muted);font-weight:400}
+.ym-cell.now{color:var(--accent)}
+.ym-tag{display:block;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--accent);margin-top:2px;white-space:normal}
+.ym-qoq{display:block;font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-size:10.5px;font-weight:600;margin-top:3px;white-space:normal}
+.ym-qoq.up{color:var(--up)}
+.ym-qoq.down{color:var(--down)}
+.ym-qoq.first{font-family:'Sarabun',sans-serif;font-weight:400;color:var(--muted);font-size:10px}
+
+.ym-row.ym-yoy-row{background:var(--surface-soft);border-top:1px solid var(--hairline);padding:10px 18px}
+.ym-yoy-row .ym-yr{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);padding-left:18px}
+.ym-yoy-cell{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:600;text-align:center}
+.ym-yoy-cell.up{color:var(--up)}
+.ym-yoy-cell.down{color:var(--down)}
+.ym-yoy-cell.empty{color:var(--muted);font-weight:400}
+
+.matrix-foot{font-size:12px;color:var(--muted);line-height:1.7;margin-top:14px}
+.matrix-foot .up{color:var(--up)}
+.matrix-foot .down{color:var(--down)}
+
+@media(max-width:520px){
+  .matrix-card{padding:16px 10px 14px}
+  .ym-row{grid-template-columns:30px repeat(4,1fr);gap:5px;row-gap:6px}
+  .ym-yr{padding-left:0;font-size:9.5px;text-align:center}
+  .ym-row:not(.ym-head){padding:12px 4px}
+  .ym-cell{font-size:10.5px;letter-spacing:-0.2px}
+  .ym-tag{font-size:7.5px}
+  .ym-qoq{font-size:8.5px;line-height:1.4}
+  .ym-head{padding:9px 4px;font-size:9px}
+  .ym-yoy-row .ym-yr{padding-left:0;text-align:center;font-size:9px}
+  .ym-yoy-cell{font-size:11px}
+}
+
 .data-table{width:100%}
 .data-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--hairline);gap:16px}
 .data-row:last-child{border-bottom:none}
@@ -255,7 +318,7 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
       <strong>ทำไม EPS Q1 2025 เป็น N/A ไม่ใช่ $0:</strong> ต้นฉบับ press release (8-K Exhibit 99.1 ยื่น 11 พ.ค. 2026) แสดง EPS ของ Q1 2025 เป็นเครื่องหมาย "—" ทั้งช่อง Basic และ Diluted โดยบริษัทไม่คำนวณค่านี้ให้ เพราะโครงสร้างทุนก่อน IPO (มิ.ย. 2025) กับหลัง IPO ต่างกันมากเกินจะเทียบกันได้อย่างมีความหมาย — หุ้นถัวเฉลี่ยถ่วงน้ำหนัก Q1 2025 มีเพียง 57,966K หุ้น (พื้นฐาน) / 75,650K หุ้น (เจือจาง) เทียบกับ 244,038K / 266,687K หุ้นใน Q1 2026 (เพิ่มขึ้น ~4 เท่าจากการออกหุ้นตอน IPO + follow-on offering) ถ้าคำนวณเองแบบหยาบๆ (กำไรสุทธิ $64.791M ÷ หุ้นเจือจาง 75,650K) จะได้ประมาณ $0.86 ซึ่งไม่มีความหมายเทียบเคียงกับ Q1 2026 ได้ตรงๆ เพราะฐานทุนคนละโครงสร้าง จึงแสดงเป็น N/A ตามที่บริษัทรายงานจริง ไม่ใช่ $0
     </div>
     <div class="callout">
-      <strong>Cross-check ผ่าน:</strong> XBRL <code>us-gaap:Revenues</code> Q1 2026 = 694,133,000 ตรงกับ Total revenue and reserve income เป๊ะ; <code>us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax</code> = 41,625,000 ตรงกับ "Other revenue"; ผลต่าง (694,133 − 41,625 = 652,508) ตรงกับ "Reserve income" พอดี — ยืนยันว่าตัวเลขในตารางไม่ได้พิมพ์ผิด/หลอน
+      <strong>Cross-check ผ่าน:</strong> XBRL <code>us-gaap:Revenues</code> Q1 2026 = 694,133,000 ตรงกับ Total revenue and reserve income เป๊ะ; <code>us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax</code> = 41,625,000 ตรงกับ "Other revenue"; ผลต่าง (694,133 - 41,625 = 652,508) ตรงกับ "Reserve income" พอดี — ยืนยันว่าตัวเลขในตารางไม่ได้พิมพ์ผิด/หลอน
     </div>
 
     <h3 style="font-size:19px;font-weight:600;margin:44px 0 20px">งบกำไรขาดทุนรายปี — FY2025 เทียบ FY2024</h3>
@@ -279,21 +342,152 @@ footer{background:var(--canvas);padding:56px 48px;border-top:1px solid var(--hai
       <strong>ทำไม FY2025 ขาดทุน GAAP ทั้งที่รายได้โต 64%:</strong> compensation expenses พุ่งจาก $263.4M เป็น $844.9M (+221%) ส่วนใหญ่มาจาก stock-based compensation (SBC — ค่าตอบแทนพนักงานจ่ายเป็นหุ้น) ที่ปลดล็อกครั้งเดียวตอน IPO มิถุนายน 2025 — เป็นรายการ non-cash (ไม่ใช่เงินสดจ่ายจริง) เป็นหลัก ไม่ใช่ธุรกิจหลักแย่ลง (ดู Adjusted EBITDA ในหัวข้อ Ratio &amp; Trend ที่ยังโตต่อเนื่อง)
     </div>
 
-    <h3 style="font-size:19px;font-weight:600;margin:44px 0 20px">แนวโน้มรายไตรมาส 5 ไตรมาสล่าสุด</h3>
-    <div class="table-scroll">
-      <table class="comp-table">
-        <caption>หน่วย: ล้านดอลลาร์สหรัฐ (ปัดเศษโดยบริษัท) เว้นแต่ระบุ % | แหล่ง: 8-K Exhibit 99.1 ทั้งสองฉบับ (25 ก.พ. 2026 และ 11 พ.ค. 2026)</caption>
-        <thead><tr><th>รายการ</th><th>Q1'25</th><th>Q2'25</th><th>Q3'25</th><th>Q4'25</th><th>Q1'26</th></tr></thead>
-        <tbody>
-          <tr><td>Total revenue &amp; reserve income</td><td data-label="Q1'25">579</td><td data-label="Q2'25">658</td><td data-label="Q3'25">740</td><td data-label="Q4'25">770</td><td data-label="Q1'26">694</td></tr>
-          <tr><td>RLDC (revenue less distribution costs)</td><td data-label="Q1'25">231</td><td data-label="Q2'25">251</td><td data-label="Q3'25">292</td><td data-label="Q4'25">309</td><td data-label="Q1'26">287</td></tr>
-          <tr><td>RLDC Margin</td><td data-label="Q1'25">40%</td><td data-label="Q2'25">38%</td><td data-label="Q3'25">39%</td><td data-label="Q4'25">40%</td><td data-label="Q1'26">41%</td></tr>
-          <tr><td>Net income (loss) attrib. common</td><td data-label="Q1'25">65</td><td data-label="Q2'25">(482)</td><td data-label="Q3'25">214</td><td data-label="Q4'25">133</td><td data-label="Q1'26">55</td></tr>
-        </tbody>
-      </table>
+    <h3 style="font-size:19px;font-weight:600;margin:44px 0 8px">แนวโน้มรายไตรมาส 5 ไตรมาสล่าสุด — แยกเป็น 4 เมตริกหลัก</h3>
+    <p style="font-size:13.5px;color:var(--body);margin-bottom:8px">แต่ละเมตริกด้านล่างมีตาราง "ปี × ไตรมาส" ของตัวเอง — แถวปีต่อแถว ไล่คอลัมน์ไตรมาส แต่ละเซลล์โชว์ตัวเลขและ QoQ (เทียบไตรมาสก่อนหน้าตามลำดับเวลาจริง) ของตัวเอง ส่วน YoY แยกเป็นแถวท้ายตาราง</p>
+
+    <div class="metric-block">
+      <div class="metric-head"><span class="metric-no">1</span>Revenue &amp; reserve income</div>
+      <p class="lede">
+        ไตรมาสนี้ Circle ทำรายได้รวม <b><span class="num">$694.1 ล้าน</span></b> โต <b><span class="num up">20.0%</span></b> จากปีก่อน (Q1 2025: $578.6 ล้าน)
+        แต่ลดลง <b><span class="num down">9.9%</span></b> จากไตรมาสก่อน (Q4 2025: $770.2 ล้าน) — ไม่ใช่เพราะธุรกิจแย่ลง
+        แต่เพราะรายได้ 94.0% ของ Circle มาจาก <b>ดอกเบี้ยของเงินสำรอง (reserve)</b> ที่หนุนหลัง USDC/EURC
+        เมื่อ reserve return rate (อัตราผลตอบแทนจาก reserve) ลดจาก 4.2% เหลือ 3.5% ตามดอกเบี้ยตลาด รายได้ส่วนนี้ก็ลดตามทันที
+        แม้ USDC เฉลี่ยหมุนเวียนจะยังโตต่อเนื่อง 39% YoY ก็ตาม (ที่มา: MD&amp;A 10-Q Q1 2026)
+      </p>
+
+      <div class="takeaway">
+        <div class="ic">!</div>
+        <div class="tx"><b>เข้าใจง่ายๆ:</b> รายได้ของ Circle ไม่ได้ขึ้นอยู่กับว่าคนใช้ USDC เยอะขึ้นแค่ไหนอย่างเดียว แต่ขึ้นอยู่กับอัตราดอกเบี้ยตลาดด้วย — ถ้าดอกเบี้ยลดต่อในอนาคต รายได้มีโอกาสลดลงอีก ต่อให้ USDC ได้รับความนิยมเพิ่มขึ้นก็ตาม</div>
+      </div>
+
+      <div class="matrix-card">
+        <div class="matrix-title">Total revenue and reserve income <span class="kpi-abbr">(รายได้รวม — เมตริกหลักของ section นี้)</span></div>
+        <div class="matrix-sub">แหล่ง: XBRL <code>us-gaap:Revenues</code> (Q1'25-Q3'25 และ Q1'26 ดึงตรง) · Q4'25 คำนวณจาก FY2025 (10-K) ลบผลรวม 3 ไตรมาสแรก</div>
+        <div class="ymatrix">
+          <div class="ym-row ym-head"><div class="ym-yr"></div><div>Q1</div><div>Q2</div><div>Q3</div><div>Q4</div></div>
+          <div class="ym-row">
+            <div class="ym-yr">2025</div>
+            <div class="ym-cell">$578.6M<span class="ym-qoq first">จุดเริ่มข้อมูล</span></div>
+            <div class="ym-cell">$658.1M<span class="ym-qoq up">▲13.7%</span></div>
+            <div class="ym-cell">$739.8M<span class="ym-qoq up">▲12.4%</span></div>
+            <div class="ym-cell">$770.2M<span class="ym-qoq up">▲4.1%</span></div>
+          </div>
+          <div class="ym-row">
+            <div class="ym-yr">2026</div>
+            <div class="ym-cell now">$694.1M<span class="ym-tag">ล่าสุด</span><span class="ym-qoq down">▼9.9%</span></div>
+            <div class="ym-cell pending">—</div><div class="ym-cell pending">—</div><div class="ym-cell pending">—</div>
+          </div>
+          <div class="ym-row ym-yoy-row">
+            <div class="ym-yr">YoY</div>
+            <div class="ym-yoy-cell up">▲20.0%</div>
+            <div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div>
+          </div>
+        </div>
+        <div class="matrix-foot">ไตรมาสที่ยังไม่ถึงกำหนดยื่นงบโชว์เป็น "—" ไม่ใช่ 0 · YoY มีให้เฉพาะคอลัมน์ที่มีข้อมูล 2 ปีแล้ว (ตอนนี้มีแค่ Q1) · Q4'25 เป็นตัวเลขคำนวณจากผลต่าง FY ลบ 9 เดือนแรก ไม่ใช่ตัวเลขที่บริษัทแปะป้ายแยกไตรมาสในไฟล์เดียว</div>
+      </div>
     </div>
-    <div class="callout">
-      Q2 2025 ขาดทุนสุทธิ $482M เป็นไตรมาสที่มี SBC ก้อนใหญ่ปลดล็อกจาก IPO (ครั้งเดียว ไม่ใช่รายจ่ายต่อเนื่อง) — Q3-Q4 2025 กลับมามีกำไรตามปกติ และ Q1 2026 มีกำไร $55M ต่อเนื่อง แต่รายได้รวมลดลง QoQ จาก $770M (Q4'25) เหลือ $694M (Q1'26) จาก reserve return rate (อัตราผลตอบแทนจาก reserve) ที่ลดลงตามดอกเบี้ยตลาด
+
+    <div class="metric-block">
+      <div class="metric-head"><span class="metric-no">2</span>Distribution, transaction &amp; other costs</div>
+      <p class="lede" style="font-size:15px">
+        ต้นทุนที่จ่ายให้พาร์ทเนอร์ (ส่วนใหญ่คือ Coinbase ตามข้อตกลงแบ่งรายได้ USDC) อยู่ที่ <b><span class="num">$406.8 ล้าน</span></b> ในไตรมาสนี้ —
+        เพิ่มขึ้น <b><span class="num down">17.0%</span></b> จากปีก่อน เร็วกว่ารายได้ที่โต 20.0% เล็กน้อย ทำให้ margin ที่เหลือให้ Circle บีบแคบลงนิดหน่อย
+        แต่เทียบไตรมาสก่อนหน้า ต้นทุนกลับลดลง <b><span class="num up">11.7%</span></b> ตามสัดส่วนรายได้ที่ลดลงเช่นกัน
+      </p>
+      <div class="matrix-card">
+        <div class="matrix-title">Distribution, transaction &amp; other costs <span class="kpi-abbr">(ต้นทุนแบ่งพาร์ทเนอร์)</span></div>
+        <div class="matrix-sub">เป็นต้นทุน — ทิศทางที่ดีต่อ Circle คือ "ลดลง" หรือ "โตช้ากว่ารายได้" สีในตารางนี้กลับด้านจาก Revenue (ลดลง = เขียว, เพิ่มขึ้น = แดง) · แหล่ง: ตัวเลขรายไตรมาสที่บริษัทเปิดเผยเองแบบปัดเศษล้านดอลลาร์ใน 8-K Exhibit 99.1 (25 ก.พ. 2026 และ 11 พ.ค. 2026)</div>
+        <div class="ymatrix">
+          <div class="ym-row ym-head"><div class="ym-yr"></div><div>Q1</div><div>Q2</div><div>Q3</div><div>Q4</div></div>
+          <div class="ym-row">
+            <div class="ym-yr">2025</div>
+            <div class="ym-cell">$348M<span class="ym-qoq first">จุดเริ่มข้อมูล</span></div>
+            <div class="ym-cell">$407M<span class="ym-qoq down">▲17.0%</span></div>
+            <div class="ym-cell">$448M<span class="ym-qoq down">▲10.1%</span></div>
+            <div class="ym-cell">$461M<span class="ym-qoq down">▲2.9%</span></div>
+          </div>
+          <div class="ym-row">
+            <div class="ym-yr">2026</div>
+            <div class="ym-cell now">$407M<span class="ym-tag">ล่าสุด</span><span class="ym-qoq up">▼11.7%</span></div>
+            <div class="ym-cell pending">—</div><div class="ym-cell pending">—</div><div class="ym-cell pending">—</div>
+          </div>
+          <div class="ym-row ym-yoy-row">
+            <div class="ym-yr">YoY</div>
+            <div class="ym-yoy-cell down">▲17.0%</div>
+            <div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div>
+          </div>
+        </div>
+        <div class="matrix-foot">ต้นทุนโตช้ากว่ารายได้ตลอด 5 ไตรมาส (YoY ต้นทุน +17.0% vs รายได้ +20.0%) ก่อนลดลงพร้อมกันในไตรมาสนี้ — ตัวเลขไตรมาสนี้ (Q1'26) ปัดเศษจากยอดแม่นยำ $406.781M</div>
+      </div>
+    </div>
+
+    <div class="metric-block">
+      <div class="metric-head"><span class="metric-no">3</span>Net income (loss)</div>
+      <p class="lede" style="font-size:15px">
+        กำไรสุทธิผันผวนหนักตลอดปี 2025 — ไตรมาส 2 ขาดทุนถึง <b><span class="num down">$482.1 ล้าน</span></b> จากค่าใช้จ่ายก้อนเดียวตอน IPO
+        (stock-based compensation หรือ <b>SBC</b> — ค่าตอบแทนพนักงานจ่ายเป็นหุ้น) ก่อนพลิกกลับมาเป็นบวก <b><span class="num up">$214.4 ล้าน</span></b> ในไตรมาส 3
+        แล้วลดลงทุกไตรมาสนับจากนั้น มาอยู่ที่ <b><span class="num">$55.3 ล้าน</span></b> ในไตรมาสนี้ ลดลง <b><span class="num down">58.6%</span></b> จากไตรมาสก่อน
+        และลดลง <b><span class="num down">14.7%</span></b> จากปีก่อน
+      </p>
+      <div class="matrix-card">
+        <div class="matrix-title">Net income (loss) attributable to common <span class="kpi-abbr">(กำไร/ขาดทุนสุทธิ ตามบัญชี GAAP)</span></div>
+        <div class="matrix-sub">ช่วงที่ติดลบสลับบวกโชว์เป็นข้อความแทน % (คำนวณ % จากฐานลบไม่ได้ ทำให้ตัวเลขบิดเบือน) · แหล่ง: XBRL <code>us-gaap:NetIncomeLoss</code> + 8-K Exhibit 99.1</div>
+        <div class="ymatrix">
+          <div class="ym-row ym-head"><div class="ym-yr"></div><div>Q1</div><div>Q2</div><div>Q3</div><div>Q4</div></div>
+          <div class="ym-row">
+            <div class="ym-yr">2025</div>
+            <div class="ym-cell">$64.8M<span class="ym-qoq first">จุดเริ่มข้อมูล</span></div>
+            <div class="ym-cell">-$482.1M<span class="ym-qoq down">พลิกเป็นขาดทุน (SBC)</span></div>
+            <div class="ym-cell">$214.4M<span class="ym-qoq up">พลิกเป็นกำไร</span></div>
+            <div class="ym-cell">$133.4M<span class="ym-qoq down">▼37.8%</span></div>
+          </div>
+          <div class="ym-row">
+            <div class="ym-yr">2026</div>
+            <div class="ym-cell now">$55.3M<span class="ym-tag">ล่าสุด</span><span class="ym-qoq down">▼58.6%</span></div>
+            <div class="ym-cell pending">—</div><div class="ym-cell pending">—</div><div class="ym-cell pending">—</div>
+          </div>
+          <div class="ym-row ym-yoy-row">
+            <div class="ym-yr">YoY</div>
+            <div class="ym-yoy-cell down">▼14.7%</div>
+            <div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div>
+          </div>
+        </div>
+        <div class="matrix-foot">Q2'25 → Q3'25 คือช่วงขาดทุน→กำไร คำนวณ % ไม่ได้จึงใช้ข้อความอธิบายแทนตัวเลข — รายละเอียด SBC ก้อนนี้ดูคำอธิบาย FY2025 ด้านบนและ MD&amp;A summary ท้ายรายงาน</div>
+      </div>
+    </div>
+
+    <div class="metric-block">
+      <div class="metric-head"><span class="metric-no">4</span>Adjusted EBITDA</div>
+      <p class="lede" style="font-size:15px">
+        <b>Adjusted EBITDA</b> (กำไรก่อนหักรายการที่ไม่ใช่เงินสด เช่นค่าตัดจำหน่ายและ SBC — ตัวเลข non-GAAP ที่ไม่ใช่มาตรฐานบัญชีทางการ) ตัดผลกระทบรายการพิเศษตอน IPO ออกไป
+        ทำให้เห็นภาพการดำเนินงานจริงชัดกว่า Net income มาก — โตต่อเนื่องเกือบทุกไตรมาสของปี 2025 ก่อนย่อตัวลง <b><span class="num down">13.9%</span></b> ในไตรมาสนี้ตามรายได้ที่ลดลง
+        แต่ยังโต <b><span class="num up">23.7%</span></b> เทียบปีก่อน มาอยู่ที่ <b><span class="num">$151.4 ล้าน</span></b>
+      </p>
+      <div class="matrix-card">
+        <div class="matrix-title">Adjusted EBITDA <span class="kpi-abbr">(กำไรก่อนหักรายการไม่เป็นเงินสด — restated นิยามใหม่)</span></div>
+        <div class="matrix-sub">ตัวเลข non-GAAP ใช้นิยามใหม่ที่บริษัทเริ่มปรับตั้งแต่ Q1'26 (restate ย้อนหลังเพื่อเทียบกันได้ ดูหมายเหตุท้ายตาราง) · แหล่ง: 8-K Exhibit 99.1 ยื่น 11 พ.ค. 2026 (ตาราง reconciliation)</div>
+        <div class="ymatrix">
+          <div class="ym-row ym-head"><div class="ym-yr"></div><div>Q1</div><div>Q2</div><div>Q3</div><div>Q4</div></div>
+          <div class="ym-row">
+            <div class="ym-yr">2025</div>
+            <div class="ym-cell">$122.4M<span class="ym-qoq first">จุดเริ่มข้อมูล</span></div>
+            <div class="ym-cell">$133.0M<span class="ym-qoq up">▲8.6%</span></div>
+            <div class="ym-cell">$171.5M<span class="ym-qoq up">▲28.9%</span></div>
+            <div class="ym-cell">$175.9M<span class="ym-qoq up">▲2.6%</span></div>
+          </div>
+          <div class="ym-row">
+            <div class="ym-yr">2026</div>
+            <div class="ym-cell now">$151.4M<span class="ym-tag">ล่าสุด</span><span class="ym-qoq down">▼13.9%</span></div>
+            <div class="ym-cell pending">—</div><div class="ym-cell pending">—</div><div class="ym-cell pending">—</div>
+          </div>
+          <div class="ym-row ym-yoy-row">
+            <div class="ym-yr">YoY</div>
+            <div class="ym-yoy-cell up">▲23.7%</div>
+            <div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div><div class="ym-yoy-cell empty">—</div>
+          </div>
+        </div>
+        <div class="matrix-foot">ตัวเลข 2025 ทั้งหมดในตารางนี้เป็นตัวเลข "restated" ภายใต้นิยามใหม่เพื่อเทียบเคียงกับ Q1'26 ได้ — ตัวเลขที่บริษัทประกาศจริง ณ ตอนนั้นใช้นิยามเดิม เช่น Q4'25 ประกาศจริง $167.5M ไม่ใช่ $175.9M ที่โชว์ในตารางนี้ (Q1'26 เองถ้าใช้นิยามเดิมจะได้ $140.8M) ดูกราฟเทียบ "ตามที่รายงานจริงแต่ละไตรมาส" ในหัวข้อ Ratio &amp; Trend ด้านล่าง</div>
+      </div>
     </div>
   </div>
 </div>
