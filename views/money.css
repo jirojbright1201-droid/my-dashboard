@@ -103,8 +103,8 @@
 .mny-sub-ic { position: relative; overflow: hidden; }
 .mny-sub-ic > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 3px; background: #fff; }
 .mny-sub-body { flex: 1; min-width: 0; }
-.mny-sub-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 .mny-sub-name { font-size: 0.9375rem; font-weight: 600; }
+.mny-sub-right { text-align: right; white-space: nowrap; }
 .mny-sub-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; }
 .mny-sub-cyc { font-size: 0.6875rem; color: var(--silver); font-weight: 500; margin-left: 2px; }
 .mny-sub-foot { display: flex; margin-top: 4px; }

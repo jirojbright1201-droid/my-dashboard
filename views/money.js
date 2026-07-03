@@ -256,11 +256,12 @@ window.MoneyView = (function () {
       return `<div class="mny-sub-row">
         ${tile}
         <div class="mny-sub-body">
-          <div class="mny-sub-head"><span class="mny-sub-name">${esc(s.name)}</span>
-            <span class="mny-sub-amt">${fmtCur(s.amount, s.cur)}<span class="mny-sub-cyc">${cyc}</span></span></div>
+          <div class="mny-sub-name">${esc(s.name)}</div>
           <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">Bill ${nextStr} · ${days}d left</span></div>
           ${eqText ? `<div class="mny-sub-eq">${eqText}</div>` : ''}
-        </div></div>`;
+        </div>
+        <div class="mny-sub-right"><span class="mny-sub-amt">${fmtCur(s.amount, s.cur)}<span class="mny-sub-cyc">${cyc}</span></span></div>
+      </div>`;
     }).join('');
     $('mny-subs').innerHTML = `
       <div class="hero mny-hero">
