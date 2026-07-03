@@ -249,16 +249,17 @@ window.MoneyView = (function () {
       const tile = src
         ? `<div class="mny-tile mny-sub-ic"><img src="${src}" alt="" onerror="this.remove()"><span>${initial}</span></div>`
         : `<div class="mny-tile">${initial}</div>`;
+      const eqText = s.note ? esc(s.note)
+        : s.cur === 'USD' ? `≈ ${fmtMoney(Math.round(moEquivTHB(s)))}/month`
+        : s.cycle === 'yr' ? `≈ ${fmtMoney(Math.round(moEquiv(s)))}/month`
+        : '';
       return `<div class="mny-sub-row">
         ${tile}
         <div class="mny-sub-body">
           <div class="mny-sub-head"><span class="mny-sub-name">${esc(s.name)}</span>
             <span class="mny-sub-amt">${fmtCur(s.amount, s.cur)}<span class="mny-sub-cyc">${cyc}</span></span></div>
-          <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">Bill ${nextStr} · ${days}d left</span>
-            ${s.note ? `<span class="mny-sub-eq">${esc(s.note)}</span>`
-              : s.cur === 'USD' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquivTHB(s)))}/month</span>`
-              : s.cycle === 'yr' ? `<span class="mny-sub-eq">≈ ${fmtMoney(Math.round(moEquiv(s)))}/month</span>`
-              : ''}</div>
+          <div class="mny-sub-foot"><span class="mny-sub-next${soon ? ' soon' : ''}">Bill ${nextStr} · ${days}d left</span></div>
+          ${eqText ? `<div class="mny-sub-eq">${eqText}</div>` : ''}
         </div></div>`;
     }).join('');
     $('mny-subs').innerHTML = `
