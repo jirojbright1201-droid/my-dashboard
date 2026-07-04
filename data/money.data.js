@@ -22,7 +22,9 @@ window.MONEY_DATA = {
       {"date":"2026-07-01","amount":300,"category":"Shopping","name":"Kiprun นาฬิกาจับเวลา","notes":""},
       {"date":"2026-07-01","amount":130,"category":"Shopping","name":"Janua Perfume","notes":""},
       {"date":"2026-07-03","amount":45,"category":"Restaurant","name":"ข้าวไก่ทอด","notes":""},
-      {"date":"2026-07-03","amount":8,"category":"Restaurant","name":"น้ำเต้าหู้","notes":""}
+      {"date":"2026-07-03","amount":8,"category":"Restaurant","name":"น้ำเต้าหู้","notes":""},
+      {"date":"2026-07-04","amount":20,"category":"Restaurant","name":"สับปะรด","notes":""},
+      {"date":"2026-07-04","amount":40,"category":"Restaurant","name":"ข้าวปลานิล","notes":""}
     ]
   }
 };
