@@ -18,10 +18,13 @@ window.MONEY_DATA = {
       {"date":"2026-07-01","amount":1500,"category":"Rent","name":"ค่าเช่า","notes":""},
       {"date":"2026-07-01","amount":762,"category":"Subscriptions","name":"Adobe","notes":"Creative Cloud"},
       {"date":"2026-07-01","amount":79,"category":"Subscriptions","name":"Spotify","notes":"Premium Student"},
+      {"date":"2026-07-01","amount":114,"category":"Restaurant","name":"บอนชอน (Shopee)","notes":""},
+      {"date":"2026-07-01","amount":300,"category":"Shopping","name":"Kiprun นาฬิกาจับเวลา","notes":""},
+      {"date":"2026-07-01","amount":130,"category":"Shopping","name":"Janua Perfume","notes":""},
       {"date":"2026-07-03","amount":45,"category":"Restaurant","name":"ข้าวไก่ทอด","notes":""},
       {"date":"2026-07-03","amount":8,"category":"Restaurant","name":"น้ำเต้าหู้","notes":""}
     ]
   }
 };
 window.MONEY_KEYS = ["2026-07"];
-window.MONEY_UPDATED = "03/07/2026";
+window.MONEY_UPDATED = "04/07/2026";
