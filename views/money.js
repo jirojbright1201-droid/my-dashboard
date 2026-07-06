@@ -22,7 +22,7 @@ window.MoneyView = (function () {
     Books:         S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>'),
     Transport:     S('<path d="M5 13l1.4-4.2A2 2 0 0 1 8.3 7.4h7.4a2 2 0 0 1 1.9 1.4L19 13"/><path d="M4 13h16v4H4z"/><circle cx="7.5" cy="17.5" r="1.2"/><circle cx="16.5" cy="17.5" r="1.2"/>'),
     Beauty:        S('<path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="M18.5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'),
-    Entertainment: S('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>'),
+    Entertainment: S('<path d="M6 9Q7 6 8.5 8Q10 5.5 12 8Q14 5.5 15.5 8Q17 6 18 9"/><path d="M7 9l1 11.5a1 1 0 0 0 1 .9h6a1 1 0 0 0 1-.9L17 9z"/><path d="M10.3 9.5v10.5"/><path d="M13.7 9.5v10.5"/>'),
     Study:         S('<path d="M3 9l9-4 9 4-9 4z"/><path d="M7 11.5V16c0 1 2.2 2 5 2s5-1 5-2v-4.5"/>'),
     'Emergency Fund': S('<path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/>'),
     default:       S('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')
