@@ -13,18 +13,18 @@ window.MoneyView = (function () {
   // ── line-icon set (สไตล์เดียวกับ Planner) ──
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
   const CAT_ICON = {
-    Restaurant:    S('<path d="M4 12h16"/><path d="M5 12a7 7 0 0 0 14 0"/><path d="M9 3c0 1.2-1 1.2-1 2.4S9 6.6 9 7.8"/><path d="M13 3c0 1.2-1 1.2-1 2.4s1 1.2 1 2.4"/>'),
-    Family:        S('<circle cx="9" cy="8" r="2.6"/><circle cx="16.5" cy="9" r="2.1"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M14.5 19a4 4 0 0 1 6-3.2"/>'),
-    Subscriptions: S('<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/>'),
-    Rent:          S('<path d="M4 11l8-6 8 6"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/>'),
-    Investment:    S('<path d="M4 18l5-5 4 3 7-8"/><path d="M16 8h5v5"/>'),
-    Shopping:      S('<path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/>'),
+    Restaurant:    S('<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>'),
+    Family:        S('<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
+    Subscriptions: S('<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>'),
+    Rent:          S('<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
+    Investment:    S('<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>'),
+    Shopping:      S('<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>'),
     Books:         S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>'),
-    Transport:     S('<path d="M5 13l1.4-4.2A2 2 0 0 1 8.3 7.4h7.4a2 2 0 0 1 1.9 1.4L19 13"/><path d="M4 13h16v4H4z"/><circle cx="7.5" cy="17.5" r="1.2"/><circle cx="16.5" cy="17.5" r="1.2"/>'),
-    Beauty:        S('<path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="M18.5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'),
-    Entertainment: S('<path d="M6 9Q7 6 8.5 8Q10 5.5 12 8Q14 5.5 15.5 8Q17 6 18 9"/><path d="M7 9l1 11.5a1 1 0 0 0 1 .9h6a1 1 0 0 0 1-.9L17 9z"/><path d="M10.3 9.5v10.5"/><path d="M13.7 9.5v10.5"/>'),
-    Study:         S('<path d="M3 9l9-4 9 4-9 4z"/><path d="M7 11.5V16c0 1 2.2 2 5 2s5-1 5-2v-4.5"/>'),
-    'Emergency Fund': S('<path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/>'),
+    Transport:     S('<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>'),
+    Beauty:        S('<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>'),
+    Entertainment: S('<path d="M18 8a2 2 0 0 0 0-4 2.5 2.5 0 0 0-4.5-2 2 2 0 0 0-3.5 2.5A2 2 0 0 0 6 8"/><path d="M6 8a2 2 0 0 0-2 2 2 2 0 0 0 2 2"/><path d="M18 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2"/><path d="M6.5 12h11l-.9 9.1a2 2 0 0 1-2 1.9H9.4a2 2 0 0 1-2-1.9z"/><path d="M12 6v14"/><path d="M9 12v9"/><path d="M15 12v9"/>'),
+    Study:         S('<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/>'),
+    'Emergency Fund': S('<path d="M19 5c-1.5-1.5-3.5-2-5.5-2-4.5 0-8 3.5-8 8v.5c0 1.6.6 3.1 1.7 4.3L6 18v3h3l1-1c.7.2 1.5.3 2.3.3H14c4.5 0 8-3.5 8-8V9l1-1V6z"/><path d="M2 9v3"/><circle cx="16" cy="11" r="1"/>'),
     default:       S('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')
   };
   const SRC_ICON = {
