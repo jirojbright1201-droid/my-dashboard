@@ -24,9 +24,14 @@ window.MONEY_DATA = {
       {"date":"2026-07-03","amount":45,"category":"Restaurant","name":"ข้าวไก่ทอด","notes":""},
       {"date":"2026-07-03","amount":8,"category":"Restaurant","name":"น้ำเต้าหู้","notes":""},
       {"date":"2026-07-04","amount":20,"category":"Restaurant","name":"สับปะรด","notes":""},
-      {"date":"2026-07-04","amount":40,"category":"Restaurant","name":"ข้าวปลานิล","notes":""}
+      {"date":"2026-07-04","amount":40,"category":"Restaurant","name":"ข้าวปลานิล","notes":""},
+      {"date":"2026-07-05","amount":25,"category":"Restaurant","name":"ข้าวเหนียวไก่คลุกฝุ่น","notes":""},
+      {"date":"2026-07-05","amount":25,"category":"Restaurant","name":"ข้าวเหนียวไก่แหนม","notes":""},
+      {"date":"2026-07-05","amount":50,"category":"Restaurant","name":"บะหมี่เกี๊ยว","notes":""},
+      {"date":"2026-07-06","amount":25,"category":"Restaurant","name":"นมชมพู","notes":""},
+      {"date":"2026-07-06","amount":40,"category":"Restaurant","name":"สุกี้แห้ง","notes":""}
     ]
   }
 };
 window.MONEY_KEYS = ["2026-07"];
-window.MONEY_UPDATED = "04/07/2026";
+window.MONEY_UPDATED = "06/07/2026";
