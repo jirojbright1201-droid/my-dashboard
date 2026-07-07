@@ -55,5 +55,23 @@
   }
 
   // ── service worker ──
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+  // กันปัญหา "PWA ไม่อัพเดท" — SW เดิม skipWaiting/clients.claim ตอน activate อยู่แล้ว
+  // แต่ browser เช็ค SW ใหม่แค่ตอน navigate เท่านั้น ถ้า user แค่สลับแอปกลับมา (ไม่ได้ reload จริง)
+  // จะไม่เช็คเลย เพจที่ค้างอยู่ในหน่วยความจำก็ไม่รู้ว่ามีของใหม่ — เลยต้องบังคับเช็ค + reload เอง
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      if (!reg) return;
+      // กลับมาเปิดแอป (จากพื้นหลัง/สลับแอป) → เช็คอัปเดตทันที ไม่ต้องรอ browser เช็คเอง
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') reg.update().catch(() => {});
+      });
+    });
+    // SW ใหม่ยึด control แล้ว → reload ครั้งเดียวให้ได้ HTML/JS/data ชุดใหม่จริง (กันลูปด้วย flag)
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (reloaded) return;
+      reloaded = true;
+      window.location.reload();
+    });
+  }
 })();
