@@ -33,9 +33,14 @@ window.MONEY_DATA = {
       {"date":"2026-07-07","amount":732,"category":"Subscriptions","name":"Claude","notes":"Pro Plan"},
       {"date":"2026-07-07","amount":139,"category":"Shopping","name":"เคสโทรศัพท์","notes":""},
       {"date":"2026-07-07","amount":25,"category":"Restaurant","name":"ชาไทย","notes":""},
-      {"date":"2026-07-07","amount":50,"category":"Restaurant","name":"ข้าวเหนียวไก่พริกแห้ง","notes":""}
+      {"date":"2026-07-07","amount":50,"category":"Restaurant","name":"ข้าวเหนียวไก่พริกแห้ง","notes":""},
+      {"date":"2026-07-08","amount":37,"category":"Restaurant","name":"แซนวิชไก่ทอด","notes":""},
+      {"date":"2026-07-08","amount":52,"category":"Restaurant","name":"Missed Order","notes":""},
+      {"date":"2026-07-08","amount":10,"category":"Restaurant","name":"ข้าวเปล่า","notes":""},
+      {"date":"2026-07-08","amount":50,"category":"Restaurant","name":"ยำมาม่า","notes":""},
+      {"date":"2026-07-08","amount":25,"category":"Restaurant","name":"ข้าวเหนียวไก่เกาหลี","notes":""}
     ]
   }
 };
 window.MONEY_KEYS = ["2026-07"];
-window.MONEY_UPDATED = "08/07/2026";
+window.MONEY_UPDATED = "09/07/2026";
