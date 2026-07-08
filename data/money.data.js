@@ -30,7 +30,7 @@ window.MONEY_DATA = {
       {"date":"2026-07-05","amount":50,"category":"Restaurant","name":"บะหมี่เกี๊ยว","notes":""},
       {"date":"2026-07-06","amount":25,"category":"Restaurant","name":"นมชมพู","notes":""},
       {"date":"2026-07-06","amount":40,"category":"Restaurant","name":"สุกี้แห้ง","notes":""},
-      {"date":"2026-07-07","amount":732,"category":"Subscriptions","name":"ค่า Subscription Claude","notes":""},
+      {"date":"2026-07-07","amount":732,"category":"Subscriptions","name":"Claude","notes":""},
       {"date":"2026-07-07","amount":139,"category":"Shopping","name":"เคสโทรศัพท์","notes":""},
       {"date":"2026-07-07","amount":25,"category":"Restaurant","name":"ชาไทย","notes":""},
       {"date":"2026-07-07","amount":50,"category":"Restaurant","name":"ข้าวเหนียวไก่พริกแห้ง","notes":""}
