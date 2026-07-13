@@ -8,7 +8,7 @@
 // synopsis: เรื่องย่อภาษาไทยเสมอ (แม้ UI chrome ที่เหลือเป็นอังกฤษ — เนื้อหาหนังสือคงภาษาต้นฉบับ/ภาษาที่ผู้ใช้อ่านจริง)
 // source = vault markdown, ไฟล์นี้ = ตัว deploy. CRUD เล็กแก้ที่นี่ + vault แล้ว push
 window.BOOKS_DATA = {
-  "goals": {},
+  "goals": {"2026": 20},
   "books": [
     {"id":"b0001","title":"อย่าโกหก (Never Lie)","author":"Freida McFadden","status":"reading",
      "genre":"ระทึกขวัญ","format":"ebook","totalPages":null,"currentPage":null,"progressPct":31,
