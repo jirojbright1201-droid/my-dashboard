@@ -6,6 +6,11 @@
 // source = vault markdown, ไฟล์นี้ = ตัว deploy. CRUD เล็กแก้ที่นี่ + vault แล้ว push
 window.BOOKS_DATA = {
   "goals": {},
-  "books": []
+  "books": [
+    {"id":"b0001","title":"อย่าโกหก (Never Lie)","author":"Freida McFadden","status":"reading",
+     "genre":"ระทึกขวัญ","totalPages":284,"currentPage":88,
+     "dateAdded":"2026-07-13","startDate":"2026-07-13","finishDate":null,
+     "rating":null,"review":"","cover":""}
+  ]
 };
 window.BOOKS_UPDATED = "13/07/2026";
