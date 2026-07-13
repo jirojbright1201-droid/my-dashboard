@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Books</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" href="../icons/books-192.png">
+<meta name="theme-color" content="#fbfaf8">
+<link rel="apple-touch-icon" href="../icons/books-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Books">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../views/books.css">
+<link rel="stylesheet" href="../views/capture.css">
+<style>
+  :root{ --nav-h: 0px; }
+  .scroll{ padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
+  .install-bar{ bottom: calc(150px + env(safe-area-inset-bottom)); }
+  #splash{position:fixed;inset:0;z-index:9999;background:#cf7050;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .45s ease}
+  #splash.hide{opacity:0;pointer-events:none}
+  #splash .sp-ic{display:grid;place-items:center}
+  #splash .sp-ic svg{width:118px;height:118px;color:#fff}
+  #splash .sp-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:34px;font-weight:700;color:#fff}
+  #splash .sp-load{display:flex;gap:8px}
+  #splash .sp-load i{width:7px;height:7px;border-radius:50%;background:#fff;animation:spb 1s infinite ease-in-out}
+  #splash .sp-load i:nth-child(2){animation-delay:.16s}
+  #splash .sp-load i:nth-child(3){animation-delay:.32s}
+  @keyframes spb{0%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-5px)}}
+  @media (prefers-reduced-motion:reduce){#splash .sp-load i{animation:none;opacity:.55}}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="sp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+  <div class="sp-name">Books</div>
+  <div class="sp-load"><i></i><i></i><i></i></div>
+</div>
+
+<div class="scroll">
+  <div class="app-head">
+    <div class="app-head-in">
+      <div class="app-title">
+        <svg class="spike" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+        <span>Books</span>
+      </div>
+      <div class="app-head-slot" id="appHeadSlot"></div>
+    </div>
+  </div>
+  <div class="view active" id="view-root"></div>
+</div>
+
+<div class="install-bar" id="installBar">
+  <div class="install-txt">Install as an app — fullscreen, no browser bar</div>
+  <button class="install-btn" id="installBtn">Install</button>
+  <button class="install-x" id="installX" aria-label="Close">&#10005;</button>
+</div>
+
+<button class="fab" id="fab" aria-label="Quick capture">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  <span class="fab-badge" id="fabBadge"></span>
+</button>
+<div class="overlay" id="capOverlay">
+  <div class="modal">
+    <div class="sheet-handle"></div>
+    <div class="modal-head">
+      <div><div class="modal-title">Quick capture</div><div class="modal-sub">Saved locally — Jarvis will file it later</div></div>
+      <button class="modal-close" id="capClose"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="cap-types" id="capTypes"></div>
+      <div class="cap-input-row">
+        <input id="capText" placeholder="Jot something... e.g. want to read this" autocomplete="off">
+        <input id="capAmount" class="cap-amt" placeholder="THB" inputmode="decimal" autocomplete="off">
+      </div>
+      <button class="cap-add" id="capAdd">Add to inbox</button>
+      <div class="cap-list-head" id="capListHead"></div>
+      <div class="cap-list" id="capList"></div>
+      <div class="cap-actions" id="capActions"></div>
+    </div>
+  </div>
+</div>
+
+<script>window.APP_VIEW = 'books';</script>
+<script src="../data/books.data.js"></script>
+<script src="../views/books.js"></script>
+<script src="../shared/boot.js"></script>
+<script src="../views/capture.js"></script>
+</body>
+</html>

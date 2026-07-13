@@ -1,0 +1,64 @@
+/* ===== Book Tracker hub ===== */
+.bk { padding-top: 16px; }
+.bk-pane { display: none; }
+.bk-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── hero: เป้าหมายการอ่านปีนี้ ── */
+.bk-goalbar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.14); margin-top: 12px; overflow: hidden; }
+.bk-goalbar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg,var(--accent-bright),#fff2e8); transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── generic progress bar (การ์ดพื้นขาว) ── */
+.bk-bar { height: 6px; border-radius: 99px; background: var(--surface-3); margin-top: 8px; overflow: hidden; }
+.bk-bar-fill { height: 100%; border-radius: 99px; background: var(--accent); transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── cover tile (ใช้ cover URL ถ้ามี ไม่งั้น initial) ── */
+.bk-tile { position: relative; width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0; overflow: hidden;
+  background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
+.bk-tile span { font-family: var(--serif); font-weight: 700; font-size: 16px; color: var(--accent); }
+.bk-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bk-tile-lg { width: 48px; height: 64px; border-radius: 8px; }
+.bk-tile-lg span { font-size: 20px; }
+
+/* ── overview: currently-reading rows ── */
+.bk-prow { display: flex; align-items: center; gap: 13px; padding: 12px 2px; cursor: pointer; min-width: 0; }
+.bk-prow + .bk-prow { border-top: 1px solid var(--border-soft); }
+.bk-prow:active { opacity: .55; }
+.bk-prow-body { flex: 1; min-width: 0; }
+.bk-prow-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bk-prow-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
+.bk-prow-pct { font-family: var(--mono); font-size: 0.8125rem; font-weight: 600; color: var(--accent); flex-shrink: 0; }
+
+/* ── library: filter chips ── */
+.bk-filters { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+.bk-chipbtn { flex: 0 0 auto; border: 1px solid var(--border-soft); background: var(--surface); cursor: pointer; font-family: inherit;
+  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; transition: all .15s; white-space: nowrap; }
+.bk-chipbtn.on { background: var(--text); border-color: var(--text); color: #fff; }
+
+/* ── library / row list (ใช้ร่วมกับ reviews) ── */
+.bk-list { padding: 6px 16px; }
+.bk-row { display: flex; align-items: flex-start; gap: 13px; padding: 13px 0; cursor: pointer; }
+.bk-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.bk-row:active { opacity: .55; }
+.bk-row-body { flex: 1; min-width: 0; }
+.bk-row-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; }
+.bk-row-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
+.chip.bk-chip-want { background: var(--surface-3); color: var(--silver); margin-top: 6px; display: inline-block; }
+.chip.bk-chip-reading { background: var(--accent-soft); color: var(--accent); margin-top: 6px; display: inline-block; }
+.chip.bk-chip-done { background: rgba(58,143,82,.12); color: var(--green); margin-top: 6px; display: inline-block; }
+
+/* ── reviews ── */
+.bk-review { display: flex; align-items: flex-start; gap: 13px; padding: 15px 0; cursor: pointer; }
+.bk-review:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.bk-review:active { opacity: .55; }
+.bk-review-body { flex: 1; min-width: 0; }
+.bk-stars { display: inline-flex; gap: 1px; margin-top: 6px; }
+.bk-star { font-size: 15px; color: var(--surface-3); }
+.bk-star.on { color: var(--accent); }
+.bk-review-text { font-size: 0.8438rem; color: var(--text); line-height: 1.6; margin-top: 8px; }
+
+/* ── modal detail ── */
+.bk-msub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; }
+
+@media (max-width: 560px) {
+  .bk-tile-lg { width: 42px; height: 56px; }
+}
