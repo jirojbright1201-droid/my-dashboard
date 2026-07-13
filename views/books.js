@@ -187,7 +187,7 @@ window.BooksView = (function () {
       ${b.synopsis ? `<div class="modal-sec-title">Synopsis</div><div class="bk-review-text">${esc(b.synopsis)}</div>` : ''}
       <div class="modal-sec-title">Timeline</div>
       <div class="bk-msub">${b.startDate ? 'Started ' + fmtDate(b.startDate) : 'Not started yet'}${b.finishDate ? ' · Finished ' + fmtDate(b.finishDate) : ''}</div>
-      ${b.status === 'done' ? `<div class="modal-sec-title">Rating &amp; Review</div>${stars(b.rating)}${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : '<div class="empty">No review yet</div>'}` : ''}`;
+      ${b.status === 'done' ? `<div class="modal-sec-title">Rating &amp; Review</div>${stars(b.rating)}${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : ''}` : ''}`;
     $('bkOverlay').classList.add('active');
   }
   function closeModal() {
