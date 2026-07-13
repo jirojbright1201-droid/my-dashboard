@@ -9,36 +9,36 @@ window.MONEY_DATA = {
       "Entertainment": 0, "Study": 0, "Transport": 100, "Emergency Fund": 1000, "Beauty": 0
     },
     "income": [
-      {"date":"2026-07-01","amount":14728,"source":"Salary","name":"Salary","notes":""}
+      {"date":"2026-07-01","amount":14728,"source":"Salary","name":"Salary (เงินเดือน)","notes":""}
     ],
     "expenses": [
       {"date":"2026-07-01","amount":1500,"category":"Investment","name":"Stocks","notes":""},
       {"date":"2026-07-01","amount":1000,"category":"Emergency Fund","name":"Crypto","notes":""},
       {"date":"2026-07-01","amount":3000,"category":"Family","name":"Father","notes":""},
-      {"date":"2026-07-01","amount":1500,"category":"Rent","name":"Rent","notes":""},
+      {"date":"2026-07-01","amount":1500,"category":"Rent","name":"Rent (ค่าเช่า)","notes":""},
       {"date":"2026-07-01","amount":762,"category":"Subscriptions","name":"Adobe","notes":"Creative Cloud Student Plan"},
       {"date":"2026-07-01","amount":79,"category":"Subscriptions","name":"Spotify","notes":"Premium Student Plan"},
       {"date":"2026-07-01","amount":114,"category":"Restaurant","name":"Bonchon","notes":""},
-      {"date":"2026-07-01","amount":300,"category":"Shopping","name":"Kiprun stopwatch","notes":""},
+      {"date":"2026-07-01","amount":300,"category":"Shopping","name":"Kiprun stopwatch (นาฬิกาจับเวลา)","notes":""},
       {"date":"2026-07-01","amount":130,"category":"Shopping","name":"Janua Perfume","notes":""},
-      {"date":"2026-07-03","amount":45,"category":"Restaurant","name":"Fried chicken rice","notes":""},
-      {"date":"2026-07-03","amount":8,"category":"Restaurant","name":"Soy milk","notes":""},
-      {"date":"2026-07-04","amount":20,"category":"Restaurant","name":"Pineapple","notes":""},
-      {"date":"2026-07-04","amount":40,"category":"Restaurant","name":"Tilapia rice","notes":""},
-      {"date":"2026-07-05","amount":25,"category":"Restaurant","name":"Sticky rice, crispy fried chicken","notes":""},
-      {"date":"2026-07-05","amount":25,"category":"Restaurant","name":"Sticky rice, nam fried chicken","notes":""},
-      {"date":"2026-07-05","amount":50,"category":"Restaurant","name":"Wonton noodles","notes":""},
-      {"date":"2026-07-06","amount":25,"category":"Restaurant","name":"Pink milk","notes":""},
-      {"date":"2026-07-06","amount":40,"category":"Restaurant","name":"Dry suki","notes":""},
+      {"date":"2026-07-03","amount":45,"category":"Restaurant","name":"Fried chicken rice (ข้าวไก่ทอด)","notes":""},
+      {"date":"2026-07-03","amount":8,"category":"Restaurant","name":"Soy milk (น้ำเต้าหู้)","notes":""},
+      {"date":"2026-07-04","amount":20,"category":"Restaurant","name":"Pineapple (สับปะรด)","notes":""},
+      {"date":"2026-07-04","amount":40,"category":"Restaurant","name":"Tilapia rice (ข้าวปลานิล)","notes":""},
+      {"date":"2026-07-05","amount":25,"category":"Restaurant","name":"Sticky rice, crispy fried chicken (ข้าวเหนียวไก่คลุกฝุ่น)","notes":""},
+      {"date":"2026-07-05","amount":25,"category":"Restaurant","name":"Sticky rice, nam fried chicken (ข้าวเหนียวไก่แหนม)","notes":""},
+      {"date":"2026-07-05","amount":50,"category":"Restaurant","name":"Wonton noodles (บะหมี่เกี๊ยว)","notes":""},
+      {"date":"2026-07-06","amount":25,"category":"Restaurant","name":"Pink milk (นมชมพู)","notes":""},
+      {"date":"2026-07-06","amount":40,"category":"Restaurant","name":"Dry suki (สุกี้แห้ง)","notes":""},
       {"date":"2026-07-07","amount":732,"category":"Subscriptions","name":"Claude","notes":"Pro Plan"},
-      {"date":"2026-07-07","amount":139,"category":"Shopping","name":"Phone case","notes":""},
-      {"date":"2026-07-07","amount":25,"category":"Restaurant","name":"Thai tea","notes":""},
-      {"date":"2026-07-07","amount":50,"category":"Restaurant","name":"Sticky rice, dry-chili fried chicken","notes":""},
-      {"date":"2026-07-08","amount":37,"category":"Restaurant","name":"Fried chicken sandwich","notes":""},
+      {"date":"2026-07-07","amount":139,"category":"Shopping","name":"Phone case (เคสโทรศัพท์)","notes":""},
+      {"date":"2026-07-07","amount":25,"category":"Restaurant","name":"Thai tea (ชาไทย)","notes":""},
+      {"date":"2026-07-07","amount":50,"category":"Restaurant","name":"Sticky rice, dry-chili fried chicken (ข้าวเหนียวไก่พริกแห้ง)","notes":""},
+      {"date":"2026-07-08","amount":37,"category":"Restaurant","name":"Fried chicken sandwich (แซนวิชไก่ทอด)","notes":""},
       {"date":"2026-07-08","amount":52,"category":"Restaurant","name":"Missed Order","notes":""},
-      {"date":"2026-07-08","amount":10,"category":"Restaurant","name":"Plain rice","notes":""},
-      {"date":"2026-07-08","amount":50,"category":"Restaurant","name":"Spicy mama noodle salad","notes":""},
-      {"date":"2026-07-08","amount":25,"category":"Restaurant","name":"Sticky rice, Korean fried chicken","notes":""}
+      {"date":"2026-07-08","amount":10,"category":"Restaurant","name":"Plain rice (ข้าวเปล่า)","notes":""},
+      {"date":"2026-07-08","amount":50,"category":"Restaurant","name":"Spicy mama noodle salad (ยำมาม่า)","notes":""},
+      {"date":"2026-07-08","amount":25,"category":"Restaurant","name":"Sticky rice, Korean fried chicken (ข้าวเหนียวไก่เกาหลี)","notes":""}
     ]
   }
 };
