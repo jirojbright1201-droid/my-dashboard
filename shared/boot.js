@@ -25,15 +25,6 @@
   const root = document.getElementById('view-root');
   if (view && root) view.mount(root);
 
-  // ── branded splash → fade out เมื่อ view โหลดเสร็จ (กันหน้าโล่ง/native splash จืดๆ) ──
-  const splash = document.getElementById('splash');
-  if (splash) {
-    setTimeout(() => {
-      splash.classList.add('hide');
-      setTimeout(() => splash.remove(), 460);
-    }, 420);
-  }
-
   // ── install prompt (Android/Chrome) ──
   const bar = document.getElementById('installBar');
   if (bar) {
