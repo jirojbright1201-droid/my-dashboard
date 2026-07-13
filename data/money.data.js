@@ -35,7 +35,7 @@ window.MONEY_DATA = {
       {"date":"2026-07-07","amount":25,"category":"Restaurant","name":"Thai tea","name_th":"ชาไทย","notes":""},
       {"date":"2026-07-07","amount":50,"category":"Restaurant","name":"Sticky rice, dry-chili fried chicken","name_th":"ข้าวเหนียวไก่พริกแห้ง","notes":""},
       {"date":"2026-07-08","amount":37,"category":"Restaurant","name":"Fried chicken sandwich","name_th":"แซนวิชไก่ทอด","notes":""},
-      {"date":"2026-07-08","amount":52,"category":"Restaurant","name":"Missed Order","notes":""},
+      {"date":"2026-07-08","amount":52,"category":"Transport","name":"Missed Order","notes":""},
       {"date":"2026-07-08","amount":10,"category":"Restaurant","name":"Plain rice","name_th":"ข้าวเปล่า","notes":""},
       {"date":"2026-07-08","amount":50,"category":"Restaurant","name":"Spicy mama noodle salad","name_th":"ยำมาม่า","notes":""},
       {"date":"2026-07-08","amount":25,"category":"Restaurant","name":"Sticky rice, Korean fried chicken","name_th":"ข้าวเหนียวไก่เกาหลี","notes":""}
