@@ -7,7 +7,7 @@ window.BooksView = (function () {
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-  const STATUS_LABEL = { want: 'อยากอ่าน', reading: 'กำลังอ่าน', done: 'อ่านจบ' };
+  const STATUS_LABEL = { want: 'Want to Read', reading: 'Reading', done: 'Finished' };
 
   // ── state ──
   let root, activeTab = 'overview', libFilter = 'all';
@@ -20,9 +20,9 @@ window.BooksView = (function () {
     <div id="bk-library" class="bk-pane"></div>
     <div id="bk-reviews" class="bk-pane"></div>
     <nav class="tabbar">
-      <button class="bk-tab tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>ภาพรวม</span></button>
-      <button class="bk-tab tab-item" data-tab="library">${S('<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>')}<span>คลัง</span></button>
-      <button class="bk-tab tab-item" data-tab="reviews">${S('<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>')}<span>รีวิว</span></button>
+      <button class="bk-tab tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>Overview</span></button>
+      <button class="bk-tab tab-item" data-tab="library">${S('<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>')}<span>Library</span></button>
+      <button class="bk-tab tab-item" data-tab="reviews">${S('<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>')}<span>Reviews</span></button>
     </nav>
   </div>
 
@@ -53,7 +53,7 @@ window.BooksView = (function () {
   function coverArt(b) {
     const pctB = progressPct(b);
     let badge = '';
-    if (b.status === 'done') badge = `<span class="bk-cover-badge done">อ่านจบ</span>`;
+    if (b.status === 'done') badge = `<span class="bk-cover-badge done">Finished</span>`;
     else if (b.status === 'reading') badge = `<span class="bk-cover-badge">${pctB}%</span>`;
     return `<div class="bk-cover-wrap">${coverArtInner(b)}${badge}</div>`;
   }
@@ -74,7 +74,7 @@ window.BooksView = (function () {
   }
   function progressLabel(b) {
     if (b.format === 'ebook') return 'e-book';
-    if (b.totalPages) return `หน้า ${b.currentPage || 0}/${b.totalPages}`;
+    if (b.totalPages) return `${b.currentPage || 0}/${b.totalPages} pages`;
     return '';
   }
 
@@ -107,30 +107,30 @@ window.BooksView = (function () {
 
     $('bk-overview').innerHTML = `
       <div class="hero bk-hero">
-        <div class="hero-eyebrow center">เป้าหมายปี ${year}</div>
+        <div class="hero-eyebrow center">${year} Reading Goal</div>
         <div class="bk-goal-ring-wrap">
           <svg viewBox="0 0 100 100" class="bk-goal-ring">
             <circle cx="50" cy="50" r="${RC}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="8"/>
             <circle cx="50" cy="50" r="${RC}" fill="none" stroke="var(--accent-bright)" stroke-width="8" stroke-linecap="round"
               stroke-dasharray="${RCIRC.toFixed(1)}" stroke-dashoffset="${ringOff.toFixed(1)}" transform="rotate(-90 50 50)"/>
           </svg>
-          <div class="bk-goal-ring-center"><b data-count="${doneThisYear}" data-cdec="0">${doneThisYear}</b><span>/ ${target || '–'} เล่ม</span></div>
+          <div class="bk-goal-ring-center"><b data-count="${doneThisYear}" data-cdec="0">${doneThisYear}</b><span>/ ${target || '–'} books</span></div>
         </div>
-        <div class="hero-cap center">${target > 0 ? `${pct}% ของเป้าหมาย` : 'เล่มที่อ่านจบปีนี้ · ยังไม่ได้ตั้งเป้าหมาย'}</div>
+        <div class="hero-cap center">${target > 0 ? `${pct}% of goal` : 'Books finished this year · No goal set'}</div>
         <div class="hero-split">
-          <div class="hero-cell"><div class="hero-cell-lab">กำลังอ่าน</div><div class="hero-cell-val">${reading.length}</div></div>
-          <div class="hero-cell"><div class="hero-cell-lab">อ่านจบทั้งหมด</div><div class="hero-cell-val">${doneAll.length}</div></div>
-          <div class="hero-cell"><div class="hero-cell-lab">คะแนนเฉลี่ย</div><div class="hero-cell-val">${avgRating ? avgRating.toFixed(1) : '–'}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">Reading</div><div class="hero-cell-val">${reading.length}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">Finished</div><div class="hero-cell-val">${doneAll.length}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">Avg Rating</div><div class="hero-cell-val">${avgRating ? avgRating.toFixed(1) : '–'}</div></div>
         </div>
         ${reading.length ? `<div class="bk-hero-shelf-wrap">
-          <div class="bk-hero-shelf-lab">กำลังอ่านตอนนี้</div>
+          <div class="bk-hero-shelf-lab">Currently Reading</div>
           <div class="bk-hero-shelf">${reading.map(heroCoverThumb).join('')}</div>
         </div>` : ''}
       </div>
 
       <div class="card">
-        <div class="section-title">กำลังอ่าน</div>
-        ${readingRows || '<div class="empty">ยังไม่มีเล่มที่กำลังอ่าน</div>'}
+        <div class="section-title">Reading Now</div>
+        ${readingRows || '<div class="empty">No books in progress</div>'}
       </div>`;
     if (window.UIFX) window.UIFX.countAll($('bk-overview'));
   }
@@ -147,13 +147,13 @@ window.BooksView = (function () {
       </div>`).join('');
     $('bk-library').innerHTML = `
       <div class="bk-filters">
-        <button class="bk-chipbtn${libFilter === 'all' ? ' on' : ''}" data-filt="all">ทั้งหมด</button>
-        <button class="bk-chipbtn${libFilter === 'want' ? ' on' : ''}" data-filt="want">อยากอ่าน</button>
-        <button class="bk-chipbtn${libFilter === 'reading' ? ' on' : ''}" data-filt="reading">กำลังอ่าน</button>
-        <button class="bk-chipbtn${libFilter === 'done' ? ' on' : ''}" data-filt="done">อ่านจบ</button>
+        <button class="bk-chipbtn${libFilter === 'all' ? ' on' : ''}" data-filt="all">All</button>
+        <button class="bk-chipbtn${libFilter === 'want' ? ' on' : ''}" data-filt="want">Want to Read</button>
+        <button class="bk-chipbtn${libFilter === 'reading' ? ' on' : ''}" data-filt="reading">Reading</button>
+        <button class="bk-chipbtn${libFilter === 'done' ? ' on' : ''}" data-filt="done">Finished</button>
       </div>
-      <div class="section-title">ทั้งหมดในคลัง (${sorted.length} เล่ม)</div>
-      <div class="bk-shelf">${cards || '<div class="empty">ยังไม่มีหนังสือในคลัง</div>'}</div>`;
+      <div class="section-title">All Books (${sorted.length})</div>
+      <div class="bk-shelf">${cards || '<div class="empty">Your library is empty</div>'}</div>`;
     root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { libFilter = b.dataset.filt; renderLibrary(); });
   }
 
@@ -165,12 +165,12 @@ window.BooksView = (function () {
         ${coverTile(b, 'bk-tile-lg')}
         <div class="bk-review-body">
           <div class="bk-row-title">${esc(b.title)}</div>
-          <div class="bk-row-sub">${esc(b.author)} · อ่านจบ ${fmtDate(b.finishDate)}</div>
+          <div class="bk-row-sub">${esc(b.author)} · Finished ${fmtDate(b.finishDate)}</div>
           ${stars(b.rating)}
           ${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : ''}
         </div>
       </div>`).join('');
-    $('bk-reviews').innerHTML = `<div class="card bk-list">${rows || '<div class="empty">ยังไม่มีเล่มที่อ่านจบ</div>'}</div>`;
+    $('bk-reviews').innerHTML = `<div class="card bk-list">${rows || '<div class="empty">No finished books yet</div>'}</div>`;
   }
 
   // ── book detail modal ──
@@ -182,9 +182,9 @@ window.BooksView = (function () {
     $('bkMBody').innerHTML = `
       <span class="chip bk-chip-${b.status}">${STATUS_LABEL[b.status] || b.status}</span>
       ${b.status !== 'want' ? `<div class="bk-bar" style="margin-top:12px"><div class="bk-bar-fill" style="width:${pctB}%"></div></div><div class="bk-msub">${progressLabel(b) ? progressLabel(b) + ' · ' : ''}${pctB}%</div>` : ''}
-      <div class="modal-sec-title">กำหนดเวลา</div>
-      <div class="bk-msub">${b.startDate ? 'เริ่มอ่าน ' + fmtDate(b.startDate) : 'ยังไม่เริ่มอ่าน'}${b.finishDate ? ' · อ่านจบ ' + fmtDate(b.finishDate) : ''}</div>
-      ${b.status === 'done' ? `<div class="modal-sec-title">คะแนน &amp; รีวิว</div>${stars(b.rating)}${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : '<div class="empty">ยังไม่มีรีวิว</div>'}` : ''}`;
+      <div class="modal-sec-title">Timeline</div>
+      <div class="bk-msub">${b.startDate ? 'Started ' + fmtDate(b.startDate) : 'Not started yet'}${b.finishDate ? ' · Finished ' + fmtDate(b.finishDate) : ''}</div>
+      ${b.status === 'done' ? `<div class="modal-sec-title">Rating &amp; Review</div>${stars(b.rating)}${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : '<div class="empty">No review yet</div>'}` : ''}`;
     $('bkOverlay').classList.add('active');
   }
   function closeModal() {
