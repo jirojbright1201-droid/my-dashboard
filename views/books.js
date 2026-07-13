@@ -57,9 +57,10 @@ window.BooksView = (function () {
     else if (b.status === 'reading') badge = `<span class="bk-cover-badge">${pctB}%</span>`;
     return `<div class="bk-cover-wrap">${coverArtInner(b)}${badge}</div>`;
   }
-  // ปกเล็กในฮีโร่ (แถบ "กำลังอ่านตอนนี้")
+  // ปกเล็กในฮีโร่ (แถบ "Recently Read") — badge = คะแนนดาวถ้ามี ไม่มีก็ไม่ต้องมี badge
   function heroCoverThumb(b) {
-    return `<div class="bk-hero-cover" data-id="${esc(b.id)}">${coverArtInner(b, '1rem')}<span class="pct">${progressPct(b)}%</span></div>`;
+    const badge = b.rating ? `<span class="pct">&#9733;${b.rating}</span>` : '';
+    return `<div class="bk-hero-cover" data-id="${esc(b.id)}">${coverArtInner(b, '1rem')}${badge}</div>`;
   }
   function stars(n) {
     n = n || 0;
@@ -88,6 +89,7 @@ window.BooksView = (function () {
     const doneAll = BOOKS.filter(b => b.status === 'done');
     const rated = doneAll.filter(b => b.rating);
     const avgRating = rated.length ? (rated.reduce((s, b) => s + b.rating, 0) / rated.length) : 0;
+    const recentlyRead = [...doneAll].sort((a, b) => (b.finishDate || '').localeCompare(a.finishDate || '')).slice(0, 8);
 
     const readingRows = reading.map(b => {
       const pctB = progressPct(b);
@@ -122,9 +124,9 @@ window.BooksView = (function () {
           <div class="hero-cell"><div class="hero-cell-lab">Finished</div><div class="hero-cell-val">${doneAll.length}</div></div>
           <div class="hero-cell"><div class="hero-cell-lab">Avg Rating</div><div class="hero-cell-val">${avgRating ? avgRating.toFixed(1) : '–'}</div></div>
         </div>
-        ${reading.length ? `<div class="bk-hero-shelf-wrap">
-          <div class="bk-hero-shelf-lab">Currently Reading</div>
-          <div class="bk-hero-shelf">${reading.map(heroCoverThumb).join('')}</div>
+        ${recentlyRead.length ? `<div class="bk-hero-shelf-wrap">
+          <div class="bk-hero-shelf-lab">Recently Read</div>
+          <div class="bk-hero-shelf">${recentlyRead.map(heroCoverThumb).join('')}</div>
         </div>` : ''}
       </div>
 

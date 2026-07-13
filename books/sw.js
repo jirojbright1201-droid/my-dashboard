@@ -1,5 +1,5 @@
 // Books PWA service worker (scope: /books/)
-const CACHE = 'books-v1';
+const CACHE = 'books-v2';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
