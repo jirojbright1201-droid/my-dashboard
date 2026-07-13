@@ -7,7 +7,7 @@ window.BooksView = (function () {
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-  const STATUS_LABEL = { want: 'Want to Read', reading: 'Reading', done: 'Finished' };
+  const STATUS_LABEL = { want: 'Want to Read', tbr: 'To Be Read', reading: 'Reading', done: 'Finished' };
 
   // ── state ──
   let root, activeTab = 'overview', libFilter = 'all';
@@ -57,6 +57,7 @@ window.BooksView = (function () {
     const pctB = progressPct(b);
     if (b.status === 'done') return `<span class="bk-cover-badge done">Finished</span>`;
     if (b.status === 'reading') return `<span class="bk-cover-badge">${pctB}%</span>`;
+    if (b.status === 'tbr') return `<span class="bk-cover-badge tbr">Owned</span>`;
     return '';
   }
   // ปกเล็กในฮีโร่ (แถบ "Recently Read") — badge = คะแนนดาวถ้ามี ไม่มีก็ไม่ต้องมี badge
@@ -154,6 +155,7 @@ window.BooksView = (function () {
       <div class="bk-filters">
         <button class="bk-chipbtn${libFilter === 'all' ? ' on' : ''}" data-filt="all">All</button>
         <button class="bk-chipbtn${libFilter === 'want' ? ' on' : ''}" data-filt="want">Want to Read</button>
+        <button class="bk-chipbtn${libFilter === 'tbr' ? ' on' : ''}" data-filt="tbr">To Be Read</button>
         <button class="bk-chipbtn${libFilter === 'reading' ? ' on' : ''}" data-filt="reading">Reading</button>
         <button class="bk-chipbtn${libFilter === 'done' ? ' on' : ''}" data-filt="done">Finished</button>
       </div>
@@ -186,10 +188,10 @@ window.BooksView = (function () {
     const pctB = progressPct(b);
     $('bkMBody').innerHTML = `
       <span class="chip bk-chip-${b.status}">${STATUS_LABEL[b.status] || b.status}</span>
-      ${b.status !== 'want' ? `<div class="bk-bar" style="margin-top:12px"><div class="bk-bar-fill" style="width:${pctB}%"></div></div><div class="bk-msub">${progressLabel(b) ? progressLabel(b) + ' · ' : ''}${pctB}%</div>` : ''}
+      ${(b.status === 'reading' || b.status === 'done') ? `<div class="bk-bar" style="margin-top:12px"><div class="bk-bar-fill" style="width:${pctB}%"></div></div><div class="bk-msub">${progressLabel(b) ? progressLabel(b) + ' · ' : ''}${pctB}%</div>` : ''}
       ${b.synopsis ? `<div class="modal-sec-title">Synopsis</div><div class="bk-review-text">${esc(b.synopsis)}</div>` : ''}
       <div class="modal-sec-title">Timeline</div>
-      <div class="bk-msub">${[b.startDate ? 'Started ' + fmtDate(b.startDate) : (b.status === 'want' ? '' : 'Start date unknown'), b.finishDate ? 'Finished ' + fmtDate(b.finishDate) : ''].filter(Boolean).join(' · ') || 'Not started yet'}</div>
+      <div class="bk-msub">${[b.startDate ? 'Started ' + fmtDate(b.startDate) : ((b.status === 'want' || b.status === 'tbr') ? '' : 'Start date unknown'), b.finishDate ? 'Finished ' + fmtDate(b.finishDate) : ''].filter(Boolean).join(' · ') || 'Not started yet'}</div>
       ${b.status === 'done' ? `<div class="modal-sec-title">Rating &amp; Review</div>${stars(b.rating)}${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : ''}` : ''}`;
     $('bkOverlay').classList.add('active');
   }
