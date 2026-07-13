@@ -196,7 +196,7 @@ window.MoneyView = (function () {
         ? `<span class="mny-amt pos">+${fmtMoney(it.amount)}</span>`
         : `<span class="mny-amt neg">-${fmtMoney(it.amount)}</span>`;
       return `<div class="mny-row">${tile}<div class="mny-row-lead">
-        <div class="mny-row-title">${esc(it.name || tag)}</div><div class="mny-row-sub">${sub}</div></div>${amt}</div>`;
+        <div class="mny-row-title">${esc(it.name || tag)}</div>${it.name_th ? `<div class="mny-row-th">${esc(it.name_th)}</div>` : ''}<div class="mny-row-sub">${sub}</div></div>${amt}</div>`;
     }).join('');
     $('mnyTxList').innerHTML = `<div class="mny-list-head"><span>${items.length} items</span><span>Total ${fmtMoney(total)}</span></div>
       <div class="card mny-list">${rows || '<div class="empty">No items</div>'}</div>`;
@@ -280,7 +280,7 @@ window.MoneyView = (function () {
     $('mnyMSub').textContent = items.length ? `${items.length} items · ${fmtMoney(total)}` : 'No items';
     $('mnyMBody').innerHTML = items.length
       ? `<div class="card mny-list">${items.map(e => `<div class="mny-row"><div class="mny-row-lead">
-          <div class="mny-row-title">${esc(e.name)}</div><div class="mny-row-sub">${fmtDate(e.date)}${e.notes ? ' · ' + esc(e.notes) : ''}</div></div>
+          <div class="mny-row-title">${esc(e.name)}</div>${e.name_th ? `<div class="mny-row-th">${esc(e.name_th)}</div>` : ''}<div class="mny-row-sub">${fmtDate(e.date)}${e.notes ? ' · ' + esc(e.notes) : ''}</div></div>
           <span class="mny-amt neg">-${fmtMoney(e.amount)}</span></div>`).join('')}</div>`
       : '<div class="empty">No expenses in this category</div>';
     $('mnyOverlay').classList.add('active');

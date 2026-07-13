@@ -91,6 +91,7 @@
 .mny-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
 .mny-row-lead { flex: 1; min-width: 0; }
 .mny-row-title { font-size: 0.9375rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mny-row-th { font-size: 0.75rem; color: var(--silver); opacity: .8; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mny-row-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
 .mny-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; flex-shrink: 0; }
 .mny-amt.neg { color: var(--text); }
