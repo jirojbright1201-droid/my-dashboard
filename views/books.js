@@ -84,7 +84,7 @@ window.BooksView = (function () {
     const readingRows = reading.map(b => {
       const pctB = progressPct(b);
       return `<div class="bk-prow" data-id="${esc(b.id)}">
-        ${coverTile(b)}
+        ${coverTile(b, 'bk-tile-lg')}
         <div class="bk-prow-body">
           <div class="bk-prow-title">${esc(b.title)}</div>
           <div class="bk-prow-sub">${esc(b.author)}${progressLabel(b) ? ' · ' + progressLabel(b) : ''}</div>
