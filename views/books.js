@@ -57,7 +57,7 @@ window.BooksView = (function () {
     const pctB = progressPct(b);
     if (b.status === 'done') return `<span class="bk-cover-badge done">Finished</span>`;
     if (b.status === 'reading') return `<span class="bk-cover-badge">${pctB}%</span>`;
-    if (b.status === 'tbr') return `<span class="bk-cover-badge tbr">Owned</span>`;
+    if (b.status === 'tbr') return `<span class="bk-cover-badge tbr">Not Started</span>`;
     return '';
   }
   // ปกเล็กในฮีโร่ (แถบ "Recently Read") — badge = คะแนนดาวถ้ามี ไม่มีก็ไม่ต้องมี badge
