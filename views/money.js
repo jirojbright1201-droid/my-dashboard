@@ -157,7 +157,7 @@ window.MoneyView = (function () {
         <div class="mny-hero-lbl">Balance this month</div>
         <div class="mny-hero-bal${balance < 0 ? ' neg' : ''}" data-count="${balance}" data-cprefix="฿" data-cdec="0">${fmtMoney(balance)}</div>
         <div class="mny-hero-sub">Total budget ${fmtMoney(totalBudget)}</div>
-        ${perDay != null ? `<div class="mny-hero-safe"><b data-count="${perDay}" data-cprefix="฿" data-cdec="0">${fmtMoney(perDay)}</b><span>เหลือใช้/วัน · อีก ${daysLeft} วัน</span></div>` : ''}
+        ${perDay != null ? `<div class="mny-hero-safe"><b data-count="${perDay}" data-cprefix="฿" data-cdec="0">${fmtMoney(perDay)}</b><span>Left/day · ${daysLeft} days left</span></div>` : ''}
         <div class="mny-hero-split">
           <div class="mny-hs"><div class="mny-hs-lab">Income</div><div class="mny-hs-val up">${fmtMoney(totalIn)}</div><div class="mny-hs-cnt">${income.length} items</div></div>
           <div class="mny-hs"><div class="mny-hs-lab">Expenses</div><div class="mny-hs-val down">${fmtMoney(totalOut)}</div><div class="mny-hs-cnt">${expenses.length} items</div></div>
