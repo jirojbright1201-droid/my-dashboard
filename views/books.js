@@ -7,7 +7,7 @@ window.BooksView = (function () {
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-  const STATUS_LABEL = { want: 'Want to Read', tbr: 'To Be Read', reading: 'Reading', done: 'Finished' };
+  const STATUS_LABEL = { want: 'Want to Read', tbr: 'Not Started', reading: 'Reading', done: 'Finished' };
 
   // ── state ──
   let root, activeTab = 'overview', libFilter = 'all';
@@ -155,7 +155,7 @@ window.BooksView = (function () {
       <div class="bk-filters">
         <button class="bk-chipbtn${libFilter === 'all' ? ' on' : ''}" data-filt="all">All</button>
         <button class="bk-chipbtn${libFilter === 'want' ? ' on' : ''}" data-filt="want">Want to Read</button>
-        <button class="bk-chipbtn${libFilter === 'tbr' ? ' on' : ''}" data-filt="tbr">To Be Read</button>
+        <button class="bk-chipbtn${libFilter === 'tbr' ? ' on' : ''}" data-filt="tbr">Not Started</button>
         <button class="bk-chipbtn${libFilter === 'reading' ? ' on' : ''}" data-filt="reading">Reading</button>
         <button class="bk-chipbtn${libFilter === 'done' ? ' on' : ''}" data-filt="done">Finished</button>
       </div>
