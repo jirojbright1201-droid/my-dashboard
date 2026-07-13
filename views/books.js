@@ -18,10 +18,12 @@ window.BooksView = (function () {
   <div class="container bk">
     <div id="bk-overview" class="bk-pane active"></div>
     <div id="bk-library" class="bk-pane"></div>
+    <div id="bk-wishlist" class="bk-pane"></div>
     <div id="bk-reviews" class="bk-pane"></div>
     <nav class="tabbar">
       <button class="bk-tab tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>Overview</span></button>
       <button class="bk-tab tab-item" data-tab="library">${S('<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>')}<span>Library</span></button>
+      <button class="bk-tab tab-item" data-tab="wishlist">${S('<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>')}<span>Wishlist</span></button>
       <button class="bk-tab tab-item" data-tab="reviews">${S('<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>')}<span>Reviews</span></button>
     </nav>
   </div>
@@ -140,9 +142,10 @@ window.BooksView = (function () {
     if (window.UIFX) window.UIFX.countAll($('bk-overview'));
   }
 
-  // ── library (ชั้นหนังสือ — grid ปกใหญ่) ──
+  // ── library (ชั้นหนังสือ — grid ปกใหญ่; ไม่รวมเล่ม wishlist/want ซึ่งแยกไปแท็บ Wishlist) ──
   function renderLibrary() {
-    const list = libFilter === 'all' ? BOOKS : BOOKS.filter(b => b.status === libFilter);
+    const owned = BOOKS.filter(b => b.status !== 'want');
+    const list = libFilter === 'all' ? owned : owned.filter(b => b.status === libFilter);
     const sorted = [...list].sort((a, b) => (b.dateAdded || '').localeCompare(a.dateAdded || ''));
     const cards = sorted.map(b => `
       <div class="bk-cover-card" data-id="${esc(b.id)}">
@@ -154,7 +157,6 @@ window.BooksView = (function () {
     $('bk-library').innerHTML = `
       <div class="bk-filters">
         <button class="bk-chipbtn${libFilter === 'all' ? ' on' : ''}" data-filt="all">All</button>
-        <button class="bk-chipbtn${libFilter === 'want' ? ' on' : ''}" data-filt="want">Want to Read</button>
         <button class="bk-chipbtn${libFilter === 'tbr' ? ' on' : ''}" data-filt="tbr">Not Started</button>
         <button class="bk-chipbtn${libFilter === 'reading' ? ' on' : ''}" data-filt="reading">Reading</button>
         <button class="bk-chipbtn${libFilter === 'done' ? ' on' : ''}" data-filt="done">Finished</button>
@@ -162,6 +164,21 @@ window.BooksView = (function () {
       <div class="section-title">All Books (${sorted.length})</div>
       <div class="bk-shelf">${cards || '<div class="empty">Your library is empty</div>'}</div>`;
     root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { libFilter = b.dataset.filt; renderLibrary(); });
+  }
+
+  // ── wishlist (เล่มที่อยากอ่านแต่ยังไม่มี — status=want) ──
+  function renderWishlist() {
+    const list = BOOKS.filter(b => b.status === 'want');
+    const sorted = [...list].sort((a, b) => (b.dateAdded || '').localeCompare(a.dateAdded || ''));
+    const cards = sorted.map(b => `
+      <div class="bk-cover-card" data-id="${esc(b.id)}">
+        ${coverArt(b)}
+        <div class="bk-cover-title">${esc(b.title)}</div>
+        <div class="bk-cover-author">${esc(b.author)}</div>
+      </div>`).join('');
+    $('bk-wishlist').innerHTML = `
+      <div class="section-title">Wishlist (${sorted.length})</div>
+      <div class="bk-shelf">${cards || '<div class="empty">No books on your wishlist</div>'}</div>`;
   }
 
   // ── reviews ──
@@ -207,6 +224,7 @@ window.BooksView = (function () {
     root.querySelectorAll('.bk-pane').forEach(p => p.classList.toggle('active', p.id === 'bk-' + tab));
     if (tab === 'overview') renderOverview();
     else if (tab === 'library') renderLibrary();
+    else if (tab === 'wishlist') renderWishlist();
     else if (tab === 'reviews') renderReviews();
   }
 
