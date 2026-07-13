@@ -51,11 +51,13 @@ window.BooksView = (function () {
   }
   // ปกใหญ่แบบชั้นหนังสือ (คลัง) — สัดส่วนปกจริง 2:3 + badge สถานะซ้อนมุมล่างซ้าย
   function coverArt(b) {
+    return `<div class="bk-cover-wrap">${coverArtInner(b)}</div>`;
+  }
+  function statusChip(b) {
     const pctB = progressPct(b);
-    let badge = '';
-    if (b.status === 'done') badge = `<span class="bk-cover-badge done">Finished</span>`;
-    else if (b.status === 'reading') badge = `<span class="bk-cover-badge">${pctB}%</span>`;
-    return `<div class="bk-cover-wrap">${coverArtInner(b)}${badge}</div>`;
+    if (b.status === 'done') return `<span class="bk-cover-badge done">Finished</span>`;
+    if (b.status === 'reading') return `<span class="bk-cover-badge">${pctB}%</span>`;
+    return '';
   }
   // ปกเล็กในฮีโร่ (แถบ "Recently Read") — badge = คะแนนดาวถ้ามี ไม่มีก็ไม่ต้องมี badge
   function heroCoverThumb(b) {
@@ -144,6 +146,7 @@ window.BooksView = (function () {
     const cards = sorted.map(b => `
       <div class="bk-cover-card" data-id="${esc(b.id)}">
         ${coverArt(b)}
+        ${statusChip(b)}
         <div class="bk-cover-title">${esc(b.title)}</div>
         <div class="bk-cover-author">${esc(b.author)}</div>
       </div>`).join('');
