@@ -42,22 +42,24 @@ window.BooksView = (function () {
     const img = b.cover ? `<img src="${esc(b.cover)}" alt="" onerror="this.remove()">` : '';
     return `<div class="bk-tile ${cls || ''}">${img}<span>${initials(b.title)}</span></div>`;
   }
-  // ปกใหญ่แบบชั้นหนังสือ (คลัง) — สัดส่วนปกจริง 2:3 + badge สถานะซ้อนมุมล่างซ้าย
+  // เนื้อในปก (fallback อักษรย่อ + img ถ้ามี) — parent ต้อง position:relative;overflow:hidden เอง
   // ลำดับ DOM สำคัญ: fallback ต้องมาก่อน img (positioned element หลังสุดจะทับด้านบน) กัน fallback บังรูปจริง
-  function coverArt(b) {
-    const fallback = `<div class="bk-cover-fallback">${initials(b.title)}</div>`;
+  function coverArtInner(b, fallbackSize) {
+    const fallback = `<div class="bk-cover-fallback"${fallbackSize ? ` style="font-size:${fallbackSize}"` : ''}>${initials(b.title)}</div>`;
     const img = b.cover ? `<img src="${esc(b.cover)}" alt="" onerror="this.remove()">` : '';
+    return `${fallback}${img}`;
+  }
+  // ปกใหญ่แบบชั้นหนังสือ (คลัง) — สัดส่วนปกจริง 2:3 + badge สถานะซ้อนมุมล่างซ้าย
+  function coverArt(b) {
     const pctB = progressPct(b);
     let badge = '';
     if (b.status === 'done') badge = `<span class="bk-cover-badge done">อ่านจบ</span>`;
     else if (b.status === 'reading') badge = `<span class="bk-cover-badge">${pctB}%</span>`;
-    return `<div class="bk-cover-wrap">${fallback}${img}${badge}</div>`;
+    return `<div class="bk-cover-wrap">${coverArtInner(b)}${badge}</div>`;
   }
-  // ปกเล็กในฮีโร่ (แถบ "กำลังอ่านตอนนี้") — ลำดับ DOM เหมือน coverArt: fallback ก่อน img
+  // ปกเล็กในฮีโร่ (แถบ "กำลังอ่านตอนนี้")
   function heroCoverThumb(b) {
-    const fallback = `<div class="bk-cover-fallback" style="font-size:1rem">${initials(b.title)}</div>`;
-    const img = b.cover ? `<img src="${esc(b.cover)}" alt="" onerror="this.remove()">` : '';
-    return `<div class="bk-hero-cover" data-id="${esc(b.id)}">${fallback}${img}<span class="pct">${progressPct(b)}%</span></div>`;
+    return `<div class="bk-hero-cover" data-id="${esc(b.id)}">${coverArtInner(b, '1rem')}<span class="pct">${progressPct(b)}%</span></div>`;
   }
   function stars(n) {
     n = n || 0;
@@ -89,14 +91,14 @@ window.BooksView = (function () {
 
     const readingRows = reading.map(b => {
       const pctB = progressPct(b);
-      return `<div class="bk-prow" data-id="${esc(b.id)}">
-        ${coverTile(b, 'bk-tile-lg')}
-        <div class="bk-prow-body">
-          <div class="bk-prow-title">${esc(b.title)}</div>
-          <div class="bk-prow-sub">${esc(b.author)}${progressLabel(b) ? ' · ' + progressLabel(b) : ''}</div>
+      return `<div class="bk-spot" data-id="${esc(b.id)}">
+        <div class="bk-spot-cover">${coverArtInner(b, '1.4rem')}</div>
+        <div class="bk-spot-body">
+          <div class="bk-spot-title">${esc(b.title)}</div>
+          <div class="bk-spot-sub">${esc(b.author)}${progressLabel(b) ? ' · ' + progressLabel(b) : ''}</div>
+          <div class="bk-spot-pct">${pctB}%</div>
           <div class="bk-bar"><div class="bk-bar-fill" style="width:${pctB}%"></div></div>
         </div>
-        <div class="bk-prow-pct">${pctB}%</div>
       </div>`;
     }).join('');
 
