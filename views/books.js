@@ -48,7 +48,16 @@ window.BooksView = (function () {
     for (let i = 1; i <= 5; i++) out += `<span class="bk-star${i <= n ? ' on' : ''}">&#9733;</span>`;
     return `<span class="bk-stars">${out}</span>`;
   }
-  function progressPct(b) { return b.totalPages > 0 ? Math.min(100, Math.round((b.currentPage || 0) / b.totalPages * 100)) : 0; }
+  // format: "ebook" (progressPct ตรงๆ ไม่มีเลขหน้า) | "physical" (คำนวณจาก currentPage/totalPages)
+  function progressPct(b) {
+    if (b.format === 'ebook') return Math.max(0, Math.min(100, b.progressPct || 0));
+    return b.totalPages > 0 ? Math.min(100, Math.round((b.currentPage || 0) / b.totalPages * 100)) : 0;
+  }
+  function progressLabel(b) {
+    if (b.format === 'ebook') return 'e-book';
+    if (b.totalPages) return `หน้า ${b.currentPage || 0}/${b.totalPages}`;
+    return '';
+  }
 
   // ── overview ──
   function renderOverview() {
@@ -67,7 +76,7 @@ window.BooksView = (function () {
         ${coverTile(b)}
         <div class="bk-prow-body">
           <div class="bk-prow-title">${esc(b.title)}</div>
-          <div class="bk-prow-sub">${esc(b.author)} · หน้า ${b.currentPage || 0}/${b.totalPages || 0}</div>
+          <div class="bk-prow-sub">${esc(b.author)}${progressLabel(b) ? ' · ' + progressLabel(b) : ''}</div>
           <div class="bk-bar"><div class="bk-bar-fill" style="width:${pctB}%"></div></div>
         </div>
         <div class="bk-prow-pct">${pctB}%</div>
@@ -104,7 +113,7 @@ window.BooksView = (function () {
         ${coverTile(b, 'bk-tile-lg')}
         <div class="bk-row-body">
           <div class="bk-row-title">${esc(b.title)}</div>
-          <div class="bk-row-sub">${esc(b.author)}</div>
+          <div class="bk-row-sub">${esc(b.author)}${b.status === 'reading' && progressLabel(b) ? ' · ' + progressLabel(b) : ''}</div>
           <span class="chip bk-chip-${b.status}">${STATUS_LABEL[b.status] || b.status}</span>
           ${pctB != null ? `<div class="bk-bar"><div class="bk-bar-fill" style="width:${pctB}%"></div></div>` : ''}
         </div>
@@ -145,7 +154,7 @@ window.BooksView = (function () {
     const pctB = progressPct(b);
     $('bkMBody').innerHTML = `
       <span class="chip bk-chip-${b.status}">${STATUS_LABEL[b.status] || b.status}</span>
-      ${b.status !== 'want' ? `<div class="bk-bar" style="margin-top:12px"><div class="bk-bar-fill" style="width:${pctB}%"></div></div><div class="bk-msub">หน้า ${b.currentPage || 0}/${b.totalPages || 0} · ${pctB}%</div>` : ''}
+      ${b.status !== 'want' ? `<div class="bk-bar" style="margin-top:12px"><div class="bk-bar-fill" style="width:${pctB}%"></div></div><div class="bk-msub">${progressLabel(b) ? progressLabel(b) + ' · ' : ''}${pctB}%</div>` : ''}
       <div class="modal-sec-title">กำหนดเวลา</div>
       <div class="bk-msub">${b.startDate ? 'เริ่มอ่าน ' + fmtDate(b.startDate) : 'ยังไม่เริ่มอ่าน'}${b.finishDate ? ' · อ่านจบ ' + fmtDate(b.finishDate) : ''}</div>
       ${b.status === 'done' ? `<div class="modal-sec-title">คะแนน &amp; รีวิว</div>${stars(b.rating)}${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : '<div class="empty">ยังไม่มีรีวิว</div>'}` : ''}`;
