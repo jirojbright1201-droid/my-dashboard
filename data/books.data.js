@@ -12,7 +12,7 @@ window.BOOKS_DATA = {
   "books": [
     {"id":"b0001","title":"อย่าโกหก (Never Lie)","author":"Freida McFadden","status":"reading",
      "genre":"ระทึกขวัญ","format":"ebook","totalPages":null,"currentPage":null,"progressPct":31,
-     "dateAdded":"2026-07-13","startDate":"2026-07-13","finishDate":null,
+     "dateAdded":"2026-07-13","startDate":null,"finishDate":null,
      "rating":null,"review":"","cover":"https://api.chulabook.com/images/pid-232368.JPG",
      "synopsis":"ทริเซียกับอีธาน คู่แต่งงานใหม่ ไปพบบ้านหลังหนึ่งที่เคยเป็นของนักจิตบำบัดชื่อดัง ดร.เอเดรียน เฮล ผู้หายตัวไปอย่างลึกลับเมื่อหลายปีก่อน ระหว่างติดอยู่ในบ้านเพราะพายุหิมะ ทริเซียพบเทปบันทึกเสียงบำบัดของคนไข้เก่า และเมื่อฟังไปเรื่อยๆ ก็เริ่มขุดพบความจริงที่ซ่อนอยู่เบื้องหลังการหายตัวไปของหมอเฮล"},
     {"id":"b0002","title":"จวบระพีอัสดง","author":"Jacaranda K.","status":"done",
