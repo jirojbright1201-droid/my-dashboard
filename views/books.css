@@ -3,9 +3,25 @@
 .bk-pane { display: none; }
 .bk-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
 
-/* ── hero: เป้าหมายการอ่านปีนี้ ── */
-.bk-goalbar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.14); margin-top: 12px; overflow: hidden; }
-.bk-goalbar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg,var(--accent-bright),#fff2e8); transition: width .6s cubic-bezier(.4,0,.2,1); }
+/* ── hero: เป้าหมายการอ่านปีนี้ — วงแหวน progress ── */
+.hero-eyebrow.center, .hero-cap.center { text-align: center; }
+.bk-goal-ring-wrap { position: relative; width: 132px; height: 132px; margin: 14px auto 4px; }
+.bk-goal-ring { width: 132px; height: 132px; display: block; }
+.bk-goal-ring circle { transition: stroke-dashoffset .6s cubic-bezier(.4,0,.2,1); }
+.bk-goal-ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.bk-goal-ring-center b { font-family: var(--mono); font-size: 1.75rem; font-weight: 700; color: #fff; line-height: 1; }
+.bk-goal-ring-center span { font-size: 0.6875rem; color: rgba(255,255,255,.6); margin-top: 4px; }
+
+/* ── hero: แถบปกเล่มที่กำลังอ่าน ── */
+.bk-hero-shelf-wrap { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.13); }
+.bk-hero-shelf-lab { font-size: 0.75rem; color: rgba(255,255,255,.55); font-weight: 500; margin-bottom: 10px; }
+.bk-hero-shelf { display: flex; gap: 10px; overflow-x: auto; }
+.bk-hero-cover { position: relative; flex: 0 0 auto; width: 52px; height: 74px; border-radius: 8px; overflow: hidden;
+  background: rgba(255,255,255,.08); cursor: pointer; }
+.bk-hero-cover:active { opacity: .7; }
+.bk-hero-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bk-hero-cover .pct { position: absolute; left: 3px; bottom: 3px; font-family: var(--mono); font-size: 0.5625rem; font-weight: 700;
+  color: #fff; background: rgba(0,0,0,.55); padding: 1px 4px; border-radius: 4px; }
 
 /* ── generic progress bar (การ์ดพื้นขาว) ── */
 .bk-bar { height: 6px; border-radius: 99px; background: var(--surface-3); margin-top: 8px; overflow: hidden; }

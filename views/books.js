@@ -53,6 +53,12 @@ window.BooksView = (function () {
     else if (b.status === 'reading') badge = `<span class="bk-cover-badge">${pctB}%</span>`;
     return `<div class="bk-cover-wrap">${fallback}${img}${badge}</div>`;
   }
+  // ปกเล็กในฮีโร่ (แถบ "กำลังอ่านตอนนี้") — ลำดับ DOM เหมือน coverArt: fallback ก่อน img
+  function heroCoverThumb(b) {
+    const fallback = `<div class="bk-cover-fallback" style="font-size:1rem">${initials(b.title)}</div>`;
+    const img = b.cover ? `<img src="${esc(b.cover)}" alt="" onerror="this.remove()">` : '';
+    return `<div class="bk-hero-cover" data-id="${esc(b.id)}">${fallback}${img}<span class="pct">${progressPct(b)}%</span></div>`;
+  }
   function stars(n) {
     n = n || 0;
     let out = '';
@@ -94,17 +100,30 @@ window.BooksView = (function () {
       </div>`;
     }).join('');
 
+    const RC = 42, RCIRC = 2 * Math.PI * RC;
+    const ringOff = target > 0 ? RCIRC * (1 - pct / 100) : RCIRC;
+
     $('bk-overview').innerHTML = `
       <div class="hero bk-hero">
-        <div class="hero-eyebrow">เป้าหมายปี ${year}</div>
-        <div class="hero-figure" data-count="${doneThisYear}" data-cdec="0">${doneThisYear}</div>
-        <div class="hero-cap">${target > 0 ? `จากเป้า ${target} เล่ม · ${pct}%` : 'เล่มที่อ่านจบปีนี้ · ยังไม่ได้ตั้งเป้าหมาย'}</div>
-        ${target > 0 ? `<div class="bk-goalbar"><div class="bk-goalbar-fill" style="width:${pct}%"></div></div>` : ''}
+        <div class="hero-eyebrow center">เป้าหมายปี ${year}</div>
+        <div class="bk-goal-ring-wrap">
+          <svg viewBox="0 0 100 100" class="bk-goal-ring">
+            <circle cx="50" cy="50" r="${RC}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="8"/>
+            <circle cx="50" cy="50" r="${RC}" fill="none" stroke="var(--accent-bright)" stroke-width="8" stroke-linecap="round"
+              stroke-dasharray="${RCIRC.toFixed(1)}" stroke-dashoffset="${ringOff.toFixed(1)}" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="bk-goal-ring-center"><b data-count="${doneThisYear}" data-cdec="0">${doneThisYear}</b><span>/ ${target || '–'} เล่ม</span></div>
+        </div>
+        <div class="hero-cap center">${target > 0 ? `${pct}% ของเป้าหมาย` : 'เล่มที่อ่านจบปีนี้ · ยังไม่ได้ตั้งเป้าหมาย'}</div>
         <div class="hero-split">
           <div class="hero-cell"><div class="hero-cell-lab">กำลังอ่าน</div><div class="hero-cell-val">${reading.length}</div></div>
           <div class="hero-cell"><div class="hero-cell-lab">อ่านจบทั้งหมด</div><div class="hero-cell-val">${doneAll.length}</div></div>
           <div class="hero-cell"><div class="hero-cell-lab">คะแนนเฉลี่ย</div><div class="hero-cell-val">${avgRating ? avgRating.toFixed(1) : '–'}</div></div>
         </div>
+        ${reading.length ? `<div class="bk-hero-shelf-wrap">
+          <div class="bk-hero-shelf-lab">กำลังอ่านตอนนี้</div>
+          <div class="bk-hero-shelf">${reading.map(heroCoverThumb).join('')}</div>
+        </div>` : ''}
       </div>
 
       <div class="card">
