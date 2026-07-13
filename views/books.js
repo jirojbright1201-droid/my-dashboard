@@ -42,6 +42,17 @@ window.BooksView = (function () {
     const img = b.cover ? `<img src="${esc(b.cover)}" alt="" onerror="this.remove()">` : '';
     return `<div class="bk-tile ${cls || ''}">${img}<span>${initials(b.title)}</span></div>`;
   }
+  // ปกใหญ่แบบชั้นหนังสือ (คลัง) — สัดส่วนปกจริง 2:3 + badge สถานะซ้อนมุมล่างซ้าย
+  // ลำดับ DOM สำคัญ: fallback ต้องมาก่อน img (positioned element หลังสุดจะทับด้านบน) กัน fallback บังรูปจริง
+  function coverArt(b) {
+    const fallback = `<div class="bk-cover-fallback">${initials(b.title)}</div>`;
+    const img = b.cover ? `<img src="${esc(b.cover)}" alt="" onerror="this.remove()">` : '';
+    const pctB = progressPct(b);
+    let badge = '';
+    if (b.status === 'done') badge = `<span class="bk-cover-badge done">อ่านจบ</span>`;
+    else if (b.status === 'reading') badge = `<span class="bk-cover-badge">${pctB}%</span>`;
+    return `<div class="bk-cover-wrap">${fallback}${img}${badge}</div>`;
+  }
   function stars(n) {
     n = n || 0;
     let out = '';
@@ -103,22 +114,16 @@ window.BooksView = (function () {
     if (window.UIFX) window.UIFX.countAll($('bk-overview'));
   }
 
-  // ── library ──
+  // ── library (ชั้นหนังสือ — grid ปกใหญ่) ──
   function renderLibrary() {
     const list = libFilter === 'all' ? BOOKS : BOOKS.filter(b => b.status === libFilter);
     const sorted = [...list].sort((a, b) => (b.dateAdded || '').localeCompare(a.dateAdded || ''));
-    const rows = sorted.map(b => {
-      const pctB = b.status === 'reading' ? progressPct(b) : null;
-      return `<div class="bk-row" data-id="${esc(b.id)}">
-        ${coverTile(b, 'bk-tile-lg')}
-        <div class="bk-row-body">
-          <div class="bk-row-title">${esc(b.title)}</div>
-          <div class="bk-row-sub">${esc(b.author)}${b.status === 'reading' && progressLabel(b) ? ' · ' + progressLabel(b) : ''}</div>
-          <span class="chip bk-chip-${b.status}">${STATUS_LABEL[b.status] || b.status}</span>
-          ${pctB != null ? `<div class="bk-bar"><div class="bk-bar-fill" style="width:${pctB}%"></div></div>` : ''}
-        </div>
-      </div>`;
-    }).join('');
+    const cards = sorted.map(b => `
+      <div class="bk-cover-card" data-id="${esc(b.id)}">
+        ${coverArt(b)}
+        <div class="bk-cover-title">${esc(b.title)}</div>
+        <div class="bk-cover-author">${esc(b.author)}</div>
+      </div>`).join('');
     $('bk-library').innerHTML = `
       <div class="bk-filters">
         <button class="bk-chipbtn${libFilter === 'all' ? ' on' : ''}" data-filt="all">ทั้งหมด</button>
@@ -126,7 +131,8 @@ window.BooksView = (function () {
         <button class="bk-chipbtn${libFilter === 'reading' ? ' on' : ''}" data-filt="reading">กำลังอ่าน</button>
         <button class="bk-chipbtn${libFilter === 'done' ? ' on' : ''}" data-filt="done">อ่านจบ</button>
       </div>
-      <div class="card bk-list">${rows || '<div class="empty">ยังไม่มีหนังสือในคลัง</div>'}</div>`;
+      <div class="section-title">ทั้งหมดในคลัง (${sorted.length} เล่ม)</div>
+      <div class="bk-shelf">${cards || '<div class="empty">ยังไม่มีหนังสือในคลัง</div>'}</div>`;
     root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { libFilter = b.dataset.filt; renderLibrary(); });
   }
 
