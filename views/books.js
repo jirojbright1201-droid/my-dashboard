@@ -186,7 +186,7 @@ window.BooksView = (function () {
       ${b.status !== 'want' ? `<div class="bk-bar" style="margin-top:12px"><div class="bk-bar-fill" style="width:${pctB}%"></div></div><div class="bk-msub">${progressLabel(b) ? progressLabel(b) + ' · ' : ''}${pctB}%</div>` : ''}
       ${b.synopsis ? `<div class="modal-sec-title">Synopsis</div><div class="bk-review-text">${esc(b.synopsis)}</div>` : ''}
       <div class="modal-sec-title">Timeline</div>
-      <div class="bk-msub">${b.startDate ? 'Started ' + fmtDate(b.startDate) : 'Not started yet'}${b.finishDate ? ' · Finished ' + fmtDate(b.finishDate) : ''}</div>
+      <div class="bk-msub">${[b.startDate ? 'Started ' + fmtDate(b.startDate) : '', b.finishDate ? 'Finished ' + fmtDate(b.finishDate) : ''].filter(Boolean).join(' · ') || 'Not started yet'}</div>
       ${b.status === 'done' ? `<div class="modal-sec-title">Rating &amp; Review</div>${stars(b.rating)}${b.review ? `<div class="bk-review-text">${esc(b.review)}</div>` : ''}` : ''}`;
     $('bkOverlay').classList.add('active');
   }
