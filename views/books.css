@@ -65,7 +65,7 @@
 .bk-cover-badge { display: inline-block; margin-top: 8px; font-family: var(--mono); font-size: 0.6875rem; font-weight: 700;
   padding: 3px 7px; border-radius: 6px; color: #fff; background: var(--accent); box-shadow: 0 2px 6px rgba(20,20,19,.35); }
 .bk-cover-badge.done { background: var(--green); }
-.bk-cover-badge.tbr { background: var(--orange); }
+.bk-cover-badge.notstarted { background: var(--orange); }
 .bk-cover-title { font-size: 0.8125rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.35; margin-top: 6px;
   overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .bk-cover-author { font-size: 0.75rem; color: var(--silver); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -75,7 +75,7 @@
 .bk-row-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; }
 .bk-row-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
 .chip.bk-chip-want { background: var(--surface-3); color: var(--silver); margin-top: 6px; display: inline-block; }
-.chip.bk-chip-tbr { background: rgba(212,160,23,.12); color: var(--orange); margin-top: 6px; display: inline-block; }
+.chip.bk-chip-notstarted { background: rgba(212,160,23,.12); color: var(--orange); margin-top: 6px; display: inline-block; }
 .chip.bk-chip-reading { background: var(--accent-soft); color: var(--accent); margin-top: 6px; display: inline-block; }
 .chip.bk-chip-done { background: rgba(58,143,82,.12); color: var(--green); margin-top: 6px; display: inline-block; }
 
