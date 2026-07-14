@@ -53,7 +53,10 @@ window.MONEY_DATA = {
       {"date":"2026-07-13","amount":50,"category":"Restaurant","name":"Grilled pork rice","name_th":"ข้าวหมูย่าง","notes":""},
       {"date":"2026-07-13","amount":20,"category":"Restaurant","name":"Green tea","name_th":"ชาเขียว","notes":""},
       {"date":"2026-07-13","amount":40,"category":"Restaurant","name":"Nam tok salad","name_th":"น้ำตก","notes":""},
-      {"date":"2026-07-13","amount":10,"category":"Restaurant","name":"Sticky rice","name_th":"ข้าวเหนียว","notes":""}
+      {"date":"2026-07-13","amount":10,"category":"Restaurant","name":"Sticky rice","name_th":"ข้าวเหนียว","notes":""},
+      {"date":"2026-07-14","amount":50,"category":"Restaurant","name":"Dry wonton noodles","name_th":"บะหมี่เกี๊ยวแห้ง","notes":""},
+      {"date":"2026-07-14","amount":25,"category":"Restaurant","name":"Sticky rice with salt & pepper fried chicken","name_th":"ข้าวเหนียวไก่คั่วพริกเกลือ","notes":""},
+      {"date":"2026-07-14","amount":35,"category":"Restaurant","name":"Drunken stir-fried instant noodles","name_th":"มาม่าผัดขี้เมา","notes":""}
     ]
   }
 };
