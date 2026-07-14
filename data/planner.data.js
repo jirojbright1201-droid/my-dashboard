@@ -6,10 +6,11 @@
 window.PLANNER_DATA = {
   "2026-07": {
     "events": [
-      {"date":"2026-07-13","title":"ทำงาน","time":"07:00","end_time":"","notes":""}
+      {"date":"2026-07-13","title":"ทำงาน","time":"07:00","end_time":"","notes":""},
+      {"date":"2026-07-14","title":"เข้างาน","time":"22:00","end_time":"","notes":""}
     ],
     "habits": []
   }
 };
 window.PLANNER_KEYS = ["2026-07"];
-window.PLANNER_UPDATED = "13/07/2026";
+window.PLANNER_UPDATED = "14/07/2026";
