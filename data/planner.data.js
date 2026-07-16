@@ -6,8 +6,6 @@
 window.PLANNER_DATA = {
   "2026-07": {
     "events": [
-      {"date":"2026-07-13","title":"ทำงาน","time":"07:00","end_time":"","notes":""},
-      {"date":"2026-07-14","title":"เข้างาน","time":"22:00","end_time":"","notes":""},
       {"date":"2026-07-16","title":"กินข้าว","time":"08:00","end_time":"08:30","notes":""},
       {"date":"2026-07-16","title":"เล่นเกม","time":"08:30","end_time":"09:30","notes":""},
       {"date":"2026-07-16","title":"อาบน้ำ","time":"09:30","end_time":"09:40","notes":""},
