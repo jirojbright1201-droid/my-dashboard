@@ -13,7 +13,7 @@ window.PLANNER_DATA = {
       {"date":"2026-07-16","title":"นอน","time":"10:00","end_time":"18:00","notes":""},
       {"date":"2026-07-16","title":"อาบน้ำ","time":"19:00","end_time":"19:10","notes":""},
       {"date":"2026-07-16","title":"กินข้าว","time":"21:30","end_time":"22:00","notes":""},
-      {"date":"2026-07-16","title":"ทำงาน","time":"22:00","end_time":"07:00","notes":""}
+      {"date":"2026-07-16","title":"Work at McDonald's","time":"22:00","end_time":"07:00","notes":""}
     ],
     "habits": [
       {"habit":"read","done_dates":["2026-07-16"]},
