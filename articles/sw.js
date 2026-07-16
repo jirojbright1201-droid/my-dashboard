@@ -1,5 +1,5 @@
 // Articles PWA service worker (scope: /articles/)
-const CACHE = 'articles-v1';
+const CACHE = 'articles-v2';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
