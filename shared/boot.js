@@ -20,7 +20,7 @@
   window.UIFX = { countAll(scope) { (scope || document).querySelectorAll('[data-count]').forEach(countUp); } };
 
   // ── mount view เดียวของแอปนี้ ──
-  const MAP = { planner: 'PlannerView', money: 'MoneyView', investment: 'InvestmentView', books: 'BooksView' };
+  const MAP = { planner: 'PlannerView', money: 'MoneyView', investment: 'InvestmentView', books: 'BooksView', articles: 'ArticlesView' };
   const view = window[MAP[window.APP_VIEW]];
   const root = document.getElementById('view-root');
   if (view && root) view.mount(root);

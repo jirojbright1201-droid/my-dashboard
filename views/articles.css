@@ -1,0 +1,31 @@
+/* ===== Article Tracker hub ===== */
+.art { padding-top: 16px; }
+.art-pane { display: none; }
+.art-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── library: filter chips (tags) ── */
+.art-filters { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+.art-chipbtn { flex: 0 0 auto; border: 1px solid var(--border-soft); background: var(--surface); cursor: pointer; font-family: inherit;
+  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; transition: all .15s; white-space: nowrap; }
+.art-chipbtn.on { background: var(--text); border-color: var(--text); color: #fff; }
+
+/* ── row list (overview "Recently Added" + library "All Articles") ── */
+.art-list { padding: 6px 16px; }
+.art-row { display: flex; align-items: center; gap: 10px; padding: 14px 0; cursor: pointer; }
+.art-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.art-row:active { opacity: .55; }
+.art-row-body { flex: 1; min-width: 0; }
+.art-row-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.35;
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.art-row-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 3px; }
+.art-domain { color: var(--accent); font-weight: 600; }
+.art-row-arrow { flex-shrink: 0; color: var(--silver); }
+
+/* ── modal detail ── */
+.art-msub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; }
+.art-desc { font-size: 0.8438rem; color: var(--text); line-height: 1.6; margin-top: 8px; }
+.art-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip.art-chip-tag { background: var(--accent-soft); color: var(--accent); }
+.art-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 20px; background: var(--accent); color: #fff;
+  font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
+.art-open-btn:active { transform: scale(.97); }
