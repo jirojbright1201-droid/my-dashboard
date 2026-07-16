@@ -29,6 +29,23 @@
 .art-insight li::before { content: ''; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
 .art-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .chip.art-chip-tag { background: var(--accent-soft); color: var(--accent); }
-.art-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 20px; background: var(--accent); color: #fff;
-  font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
-.art-open-btn:active { transform: scale(.97); }
+
+/* ── modal actions: primary read-in-app + secondary source link ── */
+.art-actions { margin-top: 20px; }
+.art-read-btn { display: block; width: 100%; text-align: center; border: none; cursor: pointer; font-family: inherit;
+  background: var(--accent); color: #fff; font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
+.art-read-btn:active { transform: scale(.97); }
+.art-source-link { display: block; text-align: center; text-decoration: none; margin-top: 10px;
+  color: var(--silver); font-size: 0.8125rem; font-weight: 600; }
+
+/* ── in-app reader (full content, markdown-lite) ── */
+.art-reader-modal { max-height: 94vh; }
+.art-reader-body { padding: 18px 22px 32px; }
+.art-reader-body p { font-family: var(--serif); font-size: 1.0625rem; line-height: 1.75; color: var(--text); margin-bottom: 18px; }
+.art-reader-h { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; letter-spacing: -.01em; margin: 26px 0 12px; color: var(--text); }
+.art-reader-h:first-child { margin-top: 0; }
+.art-reader-img { display: block; width: 100%; border-radius: 12px; margin: 8px 0 18px; }
+.art-reader-list { margin: 0 0 18px 0; padding-left: 20px; }
+.art-reader-list li { font-family: var(--serif); font-size: 1.0625rem; line-height: 1.75; color: var(--text); margin-bottom: 6px; }
+.art-reader-body strong { font-weight: 700; color: var(--accent); }
+.art-reader-body a { color: var(--accent); }

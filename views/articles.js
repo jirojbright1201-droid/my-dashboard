@@ -32,7 +32,41 @@ window.ArticlesView = (function () {
       </div>
       <div class="modal-body" id="artMBody"></div>
     </div>
+  </div>
+
+  <div class="overlay" id="artReaderOverlay">
+    <div class="modal art-reader-modal">
+      <div class="sheet-handle"></div>
+      <div class="modal-head">
+        <div><div class="modal-title" id="artRTitle"></div><div class="modal-sub" id="artRSub"></div></div>
+        <button class="modal-close" id="artRClose"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="modal-body art-reader-body" id="artRBody"></div>
+    </div>
   </div>`;
+
+  // ── markdown-lite renderer for in-app reading (## headers, **bold**, [text](url), ![](img), "- " lists) ──
+  function escInline(s) {
+    let out = esc(s);
+    out = out.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    out = out.replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    return out;
+  }
+  function renderContent(md) {
+    if (!md) return '';
+    return md.split(/\n{2,}/).map(block => {
+      block = block.trim(); if (!block) return '';
+      const h = block.match(/^(#{2,3})\s+(.*)$/);
+      if (h) return `<h4 class="art-reader-h">${escInline(h[2])}</h4>`;
+      const img = block.match(/^!\[.*?\]\((.*?)\)$/);
+      if (img) return `<img class="art-reader-img" src="${esc(img[1])}" alt="">`;
+      const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
+      if (lines.length > 1 && lines.every(l => /^-\s+/.test(l))) {
+        return `<ul class="art-reader-list">${lines.map(l => `<li>${escInline(l.replace(/^-\s+/, ''))}</li>`).join('')}</ul>`;
+      }
+      return `<p>${escInline(lines.join(' '))}</p>`;
+    }).join('');
+  }
 
   function rowItem(a) {
     return `<div class="art-row" data-id="${esc(a.id)}">
@@ -96,11 +130,29 @@ window.ArticlesView = (function () {
       <div class="art-msub">${[a.published ? 'Published ' + fmtDate(a.published) : '', 'Saved ' + fmtDate(a.created)].filter(Boolean).join(' · ')}</div>
       ${(a.insight && a.insight.length) ? `<div class="modal-sec-title">Insight</div><ul class="art-insight">${a.insight.map(pt => `<li>${esc(pt)}</li>`).join('')}</ul>` : (a.description ? `<div class="modal-sec-title">Description</div><div class="art-desc">${esc(a.description)}</div>` : '')}
       ${(a.tags && a.tags.length) ? `<div class="modal-sec-title">Tags</div><div class="art-tags">${a.tags.map(t => `<span class="chip art-chip-tag">${esc(t)}</span>`).join('')}</div>` : ''}
-      <a class="art-open-btn" href="${esc(a.source)}" target="_blank" rel="noopener">Open Original &#8599;</a>`;
+      <div class="art-actions">
+        <button class="art-read-btn" id="artReadBtn">Read Article</button>
+        <a class="art-source-link" href="${esc(a.source)}" target="_blank" rel="noopener">View original source &#8599;</a>
+      </div>`;
+    $('artReadBtn').onclick = () => openReader(id);
     $('artOverlay').classList.add('active');
   }
   function closeModal() {
     const o = $('artOverlay'); o.classList.add('closing');
+    setTimeout(() => o.classList.remove('active', 'closing'), 300);
+  }
+
+  // ── in-app reader ──
+  function openReader(id) {
+    const a = articleById(id); if (!a) return;
+    $('artRTitle').textContent = a.title;
+    $('artRSub').textContent = [domain(a.source), a.author].filter(Boolean).join(' · ');
+    $('artRBody').innerHTML = renderContent(a.content) || '<div class="modal-empty">No content synced yet — use "View original source" instead</div>';
+    closeModal();
+    $('artReaderOverlay').classList.add('active');
+  }
+  function closeReader() {
+    const o = $('artReaderOverlay'); o.classList.add('closing');
     setTimeout(() => o.classList.remove('active', 'closing'), 300);
   }
 
@@ -120,6 +172,8 @@ window.ArticlesView = (function () {
     });
     $('artMClose').onclick = closeModal;
     $('artOverlay').onclick = e => { if (e.target === $('artOverlay')) closeModal(); };
+    $('artRClose').onclick = closeReader;
+    $('artReaderOverlay').onclick = e => { if (e.target === $('artReaderOverlay')) closeReader(); };
   }
 
   function mount(el) {
