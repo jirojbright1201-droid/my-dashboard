@@ -164,14 +164,22 @@ window.PlannerView = (function () {
     // timeline — events of the day, sorted by time
     const dayEvents = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === selDay)
       .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-    $('agTimeline').innerHTML = dayEvents.length ? `<div class="tl">${dayEvents.map(renderTimelineItem).join('')}</div>`
+    $('agTimeline').innerHTML = dayEvents.length ? `<div class="tl">${dayEvents.map(e => renderTimelineItem(e, isT)).join('')}</div>`
       : '<div class="empty">No events today</div>';
 
     renderTodaySummary();
   }
 
-  function renderTimelineItem(e) {
-    return `<div class="tl-item">
+  function nowHM() { const n = new Date(); return `${p2(n.getHours())}:${p2(n.getMinutes())}`; }
+  function isEventNow(e, isToday) {
+    if (!isToday || !e.time || !e.end_time) return false;
+    const now = nowHM();
+    return e.end_time < e.time ? (now >= e.time || now < e.end_time) : (now >= e.time && now < e.end_time);
+  }
+
+  function renderTimelineItem(e, isT) {
+    const isNow = isEventNow(e, isT);
+    return `<div class="tl-item${isNow ? ' now' : ''}">
       <div class="tl-time">${esc(e.time || '–')}</div>
       <div class="tl-node"></div>
       <div class="tl-card">
@@ -179,6 +187,7 @@ window.PlannerView = (function () {
         <div class="tl-card-main">
           <div class="tl-title">${esc(e.title)}</div>
         </div>
+        ${isNow ? '<span class="now-badge">Now</span>' : ''}
       </div>
     </div>`;
   }
