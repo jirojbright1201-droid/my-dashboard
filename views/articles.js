@@ -94,7 +94,7 @@ window.ArticlesView = (function () {
     $('artMSub').textContent = [domain(a.source), a.author].filter(Boolean).join(' · ');
     $('artMBody').innerHTML = `
       <div class="art-msub">${[a.published ? 'Published ' + fmtDate(a.published) : '', 'Saved ' + fmtDate(a.created)].filter(Boolean).join(' · ')}</div>
-      ${a.description ? `<div class="modal-sec-title">Description</div><div class="art-desc">${esc(a.description)}</div>` : ''}
+      ${(a.insight && a.insight.length) ? `<div class="modal-sec-title">Insight</div><ul class="art-insight">${a.insight.map(pt => `<li>${esc(pt)}</li>`).join('')}</ul>` : (a.description ? `<div class="modal-sec-title">Description</div><div class="art-desc">${esc(a.description)}</div>` : '')}
       ${(a.tags && a.tags.length) ? `<div class="modal-sec-title">Tags</div><div class="art-tags">${a.tags.map(t => `<span class="chip art-chip-tag">${esc(t)}</span>`).join('')}</div>` : ''}
       <a class="art-open-btn" href="${esc(a.source)}" target="_blank" rel="noopener">Open Original &#8599;</a>`;
     $('artOverlay').classList.add('active');

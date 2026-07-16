@@ -24,6 +24,9 @@
 /* ── modal detail ── */
 .art-msub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; }
 .art-desc { font-size: 0.8438rem; color: var(--text); line-height: 1.6; margin-top: 8px; }
+.art-insight { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 10px; }
+.art-insight li { position: relative; padding-left: 16px; font-size: 0.8438rem; color: var(--text); line-height: 1.55; }
+.art-insight li::before { content: ''; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
 .art-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .chip.art-chip-tag { background: var(--accent-soft); color: var(--accent); }
 .art-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 20px; background: var(--accent); color: #fff;
