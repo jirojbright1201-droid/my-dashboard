@@ -56,9 +56,12 @@ window.MONEY_DATA = {
       {"date":"2026-07-13","amount":10,"category":"Restaurant","name":"Sticky rice","name_th":"ข้าวเหนียว","notes":""},
       {"date":"2026-07-14","amount":50,"category":"Restaurant","name":"Dry wonton noodles","name_th":"บะหมี่เกี๊ยวแห้ง","notes":""},
       {"date":"2026-07-14","amount":25,"category":"Restaurant","name":"Sticky rice with salt & pepper fried chicken","name_th":"ข้าวเหนียวไก่คั่วพริกเกลือ","notes":""},
-      {"date":"2026-07-14","amount":35,"category":"Restaurant","name":"Drunken stir-fried instant noodles","name_th":"มาม่าผัดขี้เมา","notes":""}
+      {"date":"2026-07-14","amount":35,"category":"Restaurant","name":"Drunken stir-fried instant noodles","name_th":"มาม่าผัดขี้เมา","notes":""},
+      {"date":"2026-07-15","amount":60,"category":"Restaurant","name":"Sticky rice with nam tok","name_th":"ข้าวเหนียวน้ำตก","notes":""},
+      {"date":"2026-07-15","amount":55,"category":"Restaurant","name":"Sticky rice with fried chicken","name_th":"ข้าวเหนียวไก่ทอด","notes":""},
+      {"date":"2026-07-16","amount":35,"category":"Restaurant","name":"Macaroni","name_th":"มักกะโรนี","notes":""}
     ]
   }
 };
 window.MONEY_KEYS = ["2026-07"];
-window.MONEY_UPDATED = "14/07/2026";
+window.MONEY_UPDATED = "16/07/2026";
