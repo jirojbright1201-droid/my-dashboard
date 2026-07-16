@@ -22,6 +22,9 @@ window.PlannerView = (function () {
     clean:    S('<path d="M12 3l1.5 4L18 8.5 13.5 10 12 14l-1.5-4L6 8.5 10.5 7z"/><path d="M18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>'),
     doc:      S('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M13 9.5h5M13 12.5h5M5.5 15h7"/>'),
     video:    S('<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>'),
+    food:     S('<path d="M7 2v6a2 2 0 1 0 4 0V2"/><path d="M9 8v14"/><path d="M17 2c-2 1-3 3-3 5s1 3 3 3"/><path d="M17 10v12"/>'),
+    game:     S('<rect x="2" y="7" width="20" height="11" rx="5.5"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="15.5" cy="11.5" r="1"/><circle cx="18" cy="13.5" r="1"/>'),
+    shower:   S('<path d="M12 3c3 3.5 6 7.2 6 10.5a6 6 0 0 1-12 0C6 10.2 9 6.5 12 3z"/>'),
     default:  S('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>')
   };
   function eventIcon(title) {
@@ -29,6 +32,9 @@ window.PlannerView = (function () {
     const has = (...ks) => ks.some(k => t.includes(k));
     if (has("mcdonald", "แมค")) return ICONS.mcdonalds;
     if (has("sleep", "นอน")) return ICONS.sleep;
+    if (has("อาบน้ำ", "shower", "bath", "อาบ")) return ICONS.shower;
+    if (has("กินข้าว", "กิน", "ข้าว", "อาหาร", "มื้อ", "food", "eat", "dinner", "lunch", "breakfast")) return ICONS.food;
+    if (has("เกม", "game")) return ICONS.game;
     if (has("ออกกำลัง", "วิ่ง", "ยิม", "exercise", "gym", "เวท", "workout", "run")) return ICONS.exercise;
     if (has("อ่าน", "read", "หนังสือ", "book", "เรียน", "study")) return ICONS.read;
     if (has("ทำความสะอาด", "clean", "ล้าง", "เก็บกวาด", "ซัก", "กวาด")) return ICONS.clean;
