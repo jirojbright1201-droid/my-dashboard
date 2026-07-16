@@ -1,0 +1,35 @@
+/* ===== Left Hand Tracker ===== */
+.lh { padding-top: 16px; }
+.lh-pane { display: none; }
+.lh-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── hero: streak ── */
+.lh-streak-num { font-family: var(--mono); font-size: 3.25rem; font-weight: 700; color: #fff; text-align: center; line-height: 1; margin-top: 6px; }
+.lh-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.14); margin: 14px 0 0; overflow: hidden; }
+.lh-bar .lh-bar-fill { height: 100%; border-radius: 99px; background: var(--accent-bright); transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── fluency dots (1-5) ── */
+.lh-dots { display: inline-flex; gap: 4px; align-items: center; }
+.lh-dot { width: 7px; height: 7px; border-radius: 99px; background: var(--surface-3); display: inline-block; }
+.lh-dot.on { background: var(--accent); }
+
+/* ── activity chips ── */
+.lh-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.lh-chip { font-size: 0.75rem; font-weight: 600; color: var(--silver); background: var(--surface-3); padding: 4px 10px; border-radius: 99px; }
+
+/* ── status chip ── */
+.chip.lh-chip-done { background: rgba(58,143,82,.12); color: var(--green); }
+.chip.lh-chip-skip { background: var(--surface-3); color: var(--silver); }
+
+/* ── list rows (overview recent + history) ── */
+.lh-list { padding: 6px 16px; }
+.lh-row { display: flex; gap: 14px; padding: 14px 0; cursor: pointer; }
+.lh-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.lh-row:active { opacity: .55; }
+.lh-row-date { flex: 0 0 auto; width: 52px; font-family: var(--mono); font-size: 0.8125rem; font-weight: 700; color: var(--text); padding-top: 2px; }
+.lh-row-body { flex: 1; min-width: 0; }
+.lh-row-top { display: flex; align-items: center; gap: 10px; }
+.lh-note-preview { font-size: 0.8125rem; color: var(--silver); margin-top: 8px; line-height: 1.5; }
+
+/* ── modal detail ── */
+.lh-review-text { font-size: 0.8438rem; color: var(--text); line-height: 1.6; margin-top: 6px; }
