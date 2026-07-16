@@ -27,7 +27,10 @@ window.PlannerView = (function () {
     shower:   S('<path d="M12 3c3 3.5 6 7.2 6 10.5a6 6 0 0 1-12 0C6 10.2 9 6.5 12 3z"/>'),
     default:  S('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>')
   };
-  function eventIcon(title) {
+  function eventIcon(e) {
+    const title = typeof e === 'string' ? e : (e && e.title) || '';
+    const cat = typeof e === 'object' && e && e.icon;
+    if (cat && ICONS[cat]) return ICONS[cat];
     const t = (title || '').toLowerCase();
     const has = (...ks) => ks.some(k => t.includes(k));
     if (has("mcdonald", "แมค")) return ICONS.mcdonalds;
@@ -172,7 +175,7 @@ window.PlannerView = (function () {
       <div class="tl-time">${esc(e.time || '–')}</div>
       <div class="tl-node"></div>
       <div class="tl-card">
-        <div class="tl-ic">${eventIcon(e.title)}</div>
+        <div class="tl-ic">${eventIcon(e)}</div>
         <div class="tl-card-main">
           <div class="tl-title">${esc(e.title)}</div>
         </div>
