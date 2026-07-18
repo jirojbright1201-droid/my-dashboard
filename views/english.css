@@ -1,0 +1,33 @@
+/* ===== English Tracker hub ===== */
+.en { padding-top: 16px; }
+.en-pane { display: none; }
+.en-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── hero: practice streak ── */
+.hero-eyebrow.center, .hero-cap.center { text-align: center; }
+.en-streak-wrap { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 14px 0 4px; }
+.en-streak-wrap svg { width: 30px; height: 30px; color: var(--accent-bright); }
+.en-streak-wrap b { font-family: var(--mono); font-size: 2.5rem; font-weight: 700; color: #fff; line-height: 1; }
+/* "Intermediate" ยาวกว่าค่าอื่นๆ ที่ hero-split เคยรองรับ (ตัวเลข/คำสั้น) — กันล้นทับคอลัมน์ถัดไป */
+.en-hero .hero-cell-val { word-break: break-word; font-size: 1rem; }
+
+/* ── overview: recent sessions ── */
+.en-sess { display: flex; gap: 14px; padding: 12px 2px; }
+.en-sess + .en-sess { border-top: 1px solid var(--border-soft); }
+.en-sess-date { flex: 0 0 auto; width: 52px; font-family: var(--mono); font-size: 0.75rem; color: var(--silver); padding-top: 1px; }
+.en-sess-body { flex: 1; min-width: 0; }
+.en-sess-topic { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; }
+.en-sess-note { font-size: 0.8125rem; color: var(--silver); margin-top: 3px; line-height: 1.5; }
+
+/* ── row list (vocab / mistakes) ── */
+.en-list { padding: 6px 16px; }
+.en-row { padding: 13px 0; cursor: pointer; }
+.en-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.en-row:active { opacity: .55; }
+.en-row-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; }
+.en-row-title.en-strike { text-decoration: line-through; text-decoration-color: var(--silver); }
+.en-row-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
+
+/* ── modal detail ── */
+.en-review-text { font-size: 0.8438rem; color: var(--text); line-height: 1.6; }
+.en-example { color: var(--silver); font-style: italic; }
