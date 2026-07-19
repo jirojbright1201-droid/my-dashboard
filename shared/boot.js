@@ -1,7 +1,7 @@
 // ===== shared per-app bootstrap (1 view = 1 PWA) =====
 // แต่ละแอปตั้ง window.APP_VIEW ก่อนโหลดไฟล์นี้ → boot จะ mount view เดียว + UIFX + install + SW
 (function () {
-  // ── UIFX: ตัวเลขวิ่งนับขึ้น (count-up) — money/investment เรียก window.UIFX.countAll ──
+  // ── UIFX: ตัวเลขวิ่งนับขึ้น (count-up) — money เรียก window.UIFX.countAll ──
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function countUp(el) {
     const to = parseFloat(el.dataset.count);
@@ -20,7 +20,7 @@
   window.UIFX = { countAll(scope) { (scope || document).querySelectorAll('[data-count]').forEach(countUp); } };
 
   // ── mount view เดียวของแอปนี้ ──
-  const MAP = { planner: 'PlannerView', money: 'MoneyView', investment: 'InvestmentView', books: 'BooksView', articles: 'ArticlesView', english: 'EnglishView' };
+  const MAP = { planner: 'PlannerView', money: 'MoneyView', books: 'BooksView', articles: 'ArticlesView', english: 'EnglishView' };
   const view = window[MAP[window.APP_VIEW]];
   const root = document.getElementById('view-root');
   if (view && root) view.mount(root);
