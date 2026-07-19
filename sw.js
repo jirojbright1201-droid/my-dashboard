@@ -1,5 +1,5 @@
 // Retired monolith SW → self-destruct.
-// แอปแยกเป็น /planner/ /money/ /invest/ แล้ว (แต่ละตัวมี SW ของตัวเอง)
+// แอปแยกเป็น /planner/ /money/ /books/ /articles/ /english/ แล้ว (แต่ละตัวมี SW ของตัวเอง)
 // ตัวนี้เคยคุม scope ราก ขอ unregister + ล้าง cache เก่าให้ผู้ใช้ที่เคยติดตั้ง shell รวม
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => {
