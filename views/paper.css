@@ -1,0 +1,42 @@
+/* ===== Paper Trade — paper.css ===== */
+.pt-pane { display: none; }
+.pt-pane.active { display: block; }
+
+/* ── position/journal rows (mirror .mny-row) ── */
+.pt-list { padding: 6px 16px; }
+.pt-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; cursor: pointer; }
+.pt-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.pt-row-lead { flex: 1; min-width: 0; }
+.pt-row-title { font-size: 0.9375rem; font-weight: 600; font-family: var(--mono); display: flex; align-items: center; gap: 6px; }
+.pt-row-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pt-row-right { text-align: right; flex-shrink: 0; }
+.pt-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; }
+.pt-amt-sub { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; margin-top: 2px; }
+.pt-amt-sub.pos { color: var(--green); }
+.pt-amt-sub.neg { color: var(--red); }
+
+.pt-empty { padding: 28px 4px; text-align: center; color: var(--silver); font-size: 0.875rem; }
+
+/* ── chips ── */
+.pt-chip-buy { background: rgba(58,143,82,.12); color: var(--green); }
+.pt-chip-sell { background: rgba(198,69,69,.12); color: var(--red); }
+
+/* ── modal detail grid ── */
+.pt-detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; margin-bottom: 4px; }
+.pt-detail-cell { min-width: 0; }
+.pt-detail-lab { font-size: 0.6875rem; color: var(--silver); font-weight: 600; }
+.pt-detail-val { font-family: var(--mono); font-size: 1rem; font-weight: 600; margin-top: 2px; }
+.pt-detail-val.pos { color: var(--green); }
+.pt-detail-val.neg { color: var(--red); }
+.pt-detail-sub { font-size: 0.75rem; color: var(--silver); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+
+/* ── thesis blocks ── */
+.pt-thesis { padding: 12px 0; }
+.pt-thesis:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.pt-thesis-head { display: flex; align-items: center; gap: 8px; }
+.pt-thesis-meta { font-size: 0.75rem; color: var(--silver); }
+.pt-thesis-text { font-size: 0.875rem; line-height: 1.55; margin-top: 6px; color: var(--text); }
+
+@media (max-width: 480px) {
+  .pt-detail-grid { grid-template-columns: repeat(2, 1fr); }
+}
