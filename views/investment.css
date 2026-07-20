@@ -1,71 +1,64 @@
-/* ===== Investment Tracker hub ===== */
-.inv { padding-top: 16px; }
+/* ===== Investment Tracker hub — Editorial look (jiroj เลือก 21 ก.ค. 2026) =====
+   ไม่มี hero การ์ดเข้ม/ไม่มี chips/ไม่มี accordion — masthead + พาดหัว serif + เส้นบางคั่น */
+.inv { padding-top: 10px; }
 .inv-pane { display: none; }
 .inv-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
 
-/* ── section label (นอกการ์ด — Latest / Earlier / History) ── */
-.inv-sec-lab { display: flex; align-items: center; justify-content: space-between; margin: 0 2px 8px;
-  font-size: 0.8125rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: .04em; }
-.inv-sec-lab span:last-child:not(:first-child) { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; text-transform: none; }
+/* ── masthead (หัวหนังสือพิมพ์แทน hero) ── */
+.inv-mast { text-align: center; padding: 8px 0 0; }
+.inv-mast-kicker { font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .14em;
+  color: var(--silver); text-transform: uppercase; }
+.inv-mast-rule { height: 4px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); margin-top: 13px; }
 
-/* ── filter chips ── */
-.inv-filters { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
-.inv-chipbtn { flex: 0 0 auto; border: 1px solid var(--border-soft); background: var(--surface); cursor: pointer; font-family: inherit;
-  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; transition: all .15s; white-space: nowrap; }
-.inv-chipbtn.on { background: var(--text); border-color: var(--text); color: #fff; }
-.inv-chipbtn:active { transform: scale(.95); }
+/* ── filter: แท็บขีดเส้นใต้ ── */
+.inv-ftabs { display: flex; justify-content: center; gap: 24px; padding: 11px 0 12px; border-bottom: 1px solid var(--border-soft); }
+.inv-ftab { border: none; background: none; cursor: pointer; font-family: inherit; font-size: 0.8125rem; font-weight: 600;
+  color: var(--silver); padding: 0 1px 4px; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; }
+.inv-ftab.on { color: var(--text); border-bottom-color: var(--accent); }
+.inv-ftab:active { opacity: .6; }
 
-/* ── month accordion (Earlier) ── */
-.inv-monthgroup { margin-bottom: 12px; }
-.inv-month-head { width: 100%; display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border-soft);
-  border-radius: 14px; padding: 14px 16px; cursor: pointer; font-family: inherit; text-align: left; transition: transform .1s ease; }
-.inv-month-head:active { transform: scale(.985); }
-.inv-month-head span:first-child { font-size: 0.9375rem; font-weight: 700; }
-.inv-month-meta { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
-.inv-month-count { font-family: var(--mono); font-size: 0.75rem; background: var(--surface-2); border-radius: 99px; padding: 2px 9px; }
-.inv-month-chev { transition: transform .2s; }
-.inv-month-chev.open { transform: rotate(180deg); }
-.inv-month-body { padding-top: 12px; }
-.inv-month-body[hidden] { display: none; }
+/* ── lead story (ข่าวแรกของวันล่าสุด) ── */
+.inv-ed-lead { padding: 20px 0 22px; border-bottom: 1px solid var(--border-soft); cursor: pointer; transition: opacity .15s ease; }
+.inv-ed-lead:active { opacity: .6; }
+.inv-ed-lead-h { font-family: var(--serif); font-size: 1.75rem; font-weight: 700; line-height: 1.16; letter-spacing: -.01em; }
+.inv-ed-lead-sum { font-size: 0.8438rem; color: var(--silver); line-height: 1.6; margin-top: 10px;
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
 
-/* ── date groups ── */
-.inv-daygroup { margin-bottom: 18px; }
-.inv-day-head { font-size: 0.8125rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: .04em; margin: 0 2px 8px; }
+/* ── story item ── */
+.inv-ed-item { padding: 16px 0; border-bottom: 1px solid var(--border-soft); cursor: pointer; transition: opacity .15s ease; }
+.inv-ed-item:active { opacity: .6; }
+.inv-ed-h { font-family: var(--serif); font-size: 1.22rem; font-weight: 700; line-height: 1.22; letter-spacing: -.005em; }
 
-/* ── row list ── */
-.inv-list { padding: 6px 16px; }
-.inv-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; cursor: pointer; }
-.inv-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
-.inv-row:active { opacity: .55; }
-.inv-row-body { flex: 1; min-width: 0; }
-.inv-row-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.35;
-  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.inv-row-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 5px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.inv-source { color: var(--accent); font-weight: 600; }
-.inv-row-arrow { flex-shrink: 0; color: var(--silver); }
+/* ── meta line ── */
+.inv-ed-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+  font-size: 0.71rem; color: var(--silver); }
+.inv-ed-src { color: var(--accent); font-weight: 600; }
+.inv-tag-txt { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.inv-tag-txt.m { color: var(--accent); }
+.inv-tag-txt.c { color: var(--silver); }
 
-/* ── featured list (Latest — ข่าววันล่าสุด แถวใหญ่ขึ้นนิด) ── */
-.inv-feat { margin-bottom: 22px; }
-.inv-feat .inv-row { padding: 15px 0; }
-.inv-feat .inv-row-title { font-size: 1rem; }
+/* ── day breaks (Earlier) ── */
+.inv-ed-day { display: flex; align-items: center; gap: 12px; padding: 24px 0 2px;
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .13em;
+  color: var(--silver); text-transform: uppercase; }
+.inv-ed-day::after { content: ''; flex: 1; border-top: 1px solid var(--border); }
+.inv-ed-earlier { color: var(--accent); padding-top: 30px; }
 
-/* ── macro/company tag ── */
-.inv-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; }
-.inv-tag.macro { background: var(--accent-soft); color: var(--accent); }
-.inv-tag.company { background: var(--border-soft); color: var(--silver); }
+/* ── show more (ประวัติวันเก่ากว่าที่ยุบไว้) ── */
+.inv-ed-more { display: block; margin: 22px auto 0; border: 1px solid var(--border); background: none; cursor: pointer;
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--silver); padding: 10px 22px; border-radius: 99px; transition: opacity .15s; }
+.inv-ed-more:active { opacity: .55; }
 
-/* ── modal detail ── */
-.inv-summary { font-size: 0.875rem; color: var(--text); line-height: 1.65; margin-top: 10px; }
-.inv-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 20px; background: var(--accent); color: #fff;
-  font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
-.inv-open-btn:active { transform: scale(.97); }
+/* ── empty state ── */
+.inv-ed-empty { text-align: center; padding: 56px 24px; }
+.inv-ed-empty .t { font-family: var(--serif); font-size: 1.375rem; font-weight: 700; }
+.inv-ed-empty .s { font-size: 0.8125rem; color: var(--silver); margin-top: 6px; line-height: 1.5; }
 
-/* ── portfolio: latest review spotlight ── */
-.inv-spot { cursor: pointer; margin-bottom: 22px; transition: opacity .15s ease; }
-.inv-spot:active { opacity: .7; }
-.inv-spot-snap { font-size: 0.875rem; color: var(--text); line-height: 1.65;
-  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
-.inv-abars { margin-top: 14px; }
+/* ── portfolio: latest review lead ── */
+.inv-ed-readmore { margin-top: 14px; font-size: 0.75rem; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: .08em; }
+.inv-abars { margin-top: 16px; }
 .inv-abar-row { display: flex; align-items: center; gap: 10px; }
 .inv-abar-row + .inv-abar-row { margin-top: 9px; }
 .inv-abar-lab { flex: 0 0 auto; width: 32%; font-size: 0.8125rem; font-weight: 600;
@@ -73,13 +66,16 @@
 .inv-abar { flex: 1; height: 6px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
 .inv-abar-fill { height: 100%; border-radius: 99px; transition: width .6s cubic-bezier(.4,0,.2,1); }
 .inv-abar-pct { flex: 0 0 auto; width: 42px; text-align: right; font-family: var(--mono); font-size: 0.75rem; color: var(--silver); }
-.inv-spot-more { margin-top: 14px; font-size: 0.8125rem; font-weight: 600; color: var(--accent); }
 
-/* ── portfolio: empty state ── */
-.inv-empty { text-align: center; padding: 36px 24px; }
-.inv-empty svg { width: 40px; height: 40px; color: #cfc8bd; margin: 0 auto 12px; display: block; }
-.inv-empty .t { font-family: var(--serif); font-size: 1.125rem; font-weight: 600; }
-.inv-empty .s { font-size: 0.8125rem; color: var(--silver); margin-top: 5px; line-height: 1.5; }
+/* ── modal detail ── */
+.inv-summary { font-size: 0.875rem; color: var(--text); line-height: 1.65; margin-top: 10px; }
+.inv-source { color: var(--accent); font-weight: 600; }
+.inv-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; margin-right: 6px; }
+.inv-tag.macro { background: var(--accent-soft); color: var(--accent); }
+.inv-tag.company { background: var(--border-soft); color: var(--silver); }
+.inv-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 20px; background: var(--accent); color: #fff;
+  font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
+.inv-open-btn:active { transform: scale(.97); }
 
 /* ── portfolio review modal ── */
 .inv-pr-section { margin-bottom: 18px; }
