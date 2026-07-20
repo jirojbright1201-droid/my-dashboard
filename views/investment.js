@@ -1,9 +1,8 @@
 // ===== Investment Tracker hub — สรุปข่าวการลงทุน/การเงินโลกรายวัน (data: data/investment.data.js) =====
 window.InvestmentView = (function () {
-  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [], dcfModels: [] };
+  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [] };
   const BRIEFS = DATA.briefs || [];
   const REVIEWS = DATA.portfolioReviews || [];
-  const DCFS = DATA.dcfModels || [];
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
@@ -17,22 +16,17 @@ window.InvestmentView = (function () {
   const $ = id => root.querySelector('#' + id);
   const briefById = id => BRIEFS.find(b => b.id === id);
   const reviewById = id => REVIEWS.find(r => r.id === id);
-  const dcfById = id => DCFS.find(d => d.id === id);
   const latestDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
-  const fmtPrice = n => (n == null ? '—' : '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-  const fmtPct = n => (n == null ? '—' : (n > 0 ? '+' : '') + Number(n).toFixed(1) + '%');
 
   const TEMPLATE = `
   <div class="container inv">
     <div id="inv-overview" class="inv-pane active"></div>
     <div id="inv-archive" class="inv-pane"></div>
     <div id="inv-portfolio" class="inv-pane"></div>
-    <div id="inv-dcf" class="inv-pane"></div>
     <nav class="tabbar">
       <button class="inv-tabbtn tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>Overview</span></button>
       <button class="inv-tabbtn tab-item" data-tab="archive">${S('<path d="M4 6h16M4 12h16M4 18h10"/>')}<span>Archive</span></button>
       <button class="inv-tabbtn tab-item" data-tab="portfolio">${S('<path d="M3 3v18h18"/><path d="M7 14l4-5 3 3 5-7"/>')}<span>Portfolio</span></button>
-      <button class="inv-tabbtn tab-item" data-tab="dcf">${S('<rect x="4" y="10" width="4" height="10"/><rect x="10" y="6" width="4" height="14"/><rect x="16" y="2" width="4" height="18"/>')}<span>DCF</span></button>
     </nav>
   </div>
 
@@ -197,114 +191,6 @@ window.InvestmentView = (function () {
     $('invOverlay').classList.add('active');
   }
 
-  // ── DCF valuation ──
-  const CASE_LABELS = { bear: 'Bear', base: 'Base', bull: 'Bull' };
-
-  function dcfRow(d) {
-    const base = (d.cases || {}).base || {};
-    const cls = base.upsidePct > 0 ? 'inv-pos' : (base.upsidePct < 0 ? 'inv-neg' : '');
-    return `<div class="inv-row" data-dcf-id="${esc(d.id)}">
-      <div class="inv-row-body">
-        <div class="inv-row-title">${esc(d.ticker)} — ${esc(d.companyName)}</div>
-        <div class="inv-row-sub">Base case ${fmtPrice(base.impliedPrice)} <span class="inv-dcf-chip ${cls}">${fmtPct(base.upsidePct)}</span> · ${fmtDate(d.date)}</div>
-      </div>
-      <svg class="inv-row-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-    </div>`;
-  }
-
-  function renderDCF() {
-    const sorted = [...DCFS].sort((a, b) => b.date.localeCompare(a.date));
-    const latest = sorted[0];
-    $('inv-dcf').innerHTML = `
-      <div class="hero inv-hero">
-        <div class="hero-eyebrow">DCF Valuations</div>
-        <div class="hero-figure" data-count="${sorted.length}" data-cdec="0">${sorted.length}</div>
-        <div class="hero-cap">${latest ? 'Latest: ' + esc(latest.ticker) + ' · ' + fmtDate(latest.date) : 'No models yet'}</div>
-      </div>
-      <div class="card inv-list">
-        <div class="section-title">Valuation History</div>
-        ${sorted.map(dcfRow).join('') || '<div class="empty">ยังไม่มีโมเดล DCF — ขอให้ Jarvis ทำ DCF ให้หุ้นตัวไหนก็ได้</div>'}
-      </div>`;
-    if (window.UIFX) window.UIFX.countAll($('inv-dcf'));
-  }
-
-  function caseTable(cases) {
-    const keys = ['bear', 'base', 'bull'];
-    const rows = [
-      ['Revenue Growth', c => esc(c.revenueGrowth)],
-      ['EBIT Margin', c => esc(c.ebitMargin)],
-      ['Terminal Growth', c => esc(c.terminalGrowth) + '%'],
-      ['WACC', c => esc(c.wacc) + '%'],
-      ['Implied Price', c => fmtPrice(c.impliedPrice)],
-      ['Upside/Downside', c => `<span class="${c.upsidePct > 0 ? 'inv-pos' : (c.upsidePct < 0 ? 'inv-neg' : '')}">${fmtPct(c.upsidePct)}</span>`]
-    ];
-    return `<div class="inv-tbl-wrap"><table class="inv-casetbl">
-      <thead><tr><th></th>${keys.map(k => `<th>${CASE_LABELS[k]}</th>`).join('')}</tr></thead>
-      <tbody>${rows.map(([label, fn]) => `<tr><td>${label}</td>${keys.map(k => `<td>${fn(cases[k] || {})}</td>`).join('')}</tr>`).join('')}</tbody>
-    </table></div>`;
-  }
-
-  function waccList(w) {
-    if (!w) return '';
-    const rows = [
-      ['Risk-Free Rate', w.riskFreeRate + '%'], ['Beta', w.beta], ['Equity Risk Premium', w.equityRiskPremium + '%'],
-      ['Cost of Equity', w.costOfEquity + '%'], ['Pre-Tax Cost of Debt', w.preTaxCostOfDebt + '%'], ['Tax Rate', w.taxRate + '%'],
-      ['After-Tax Cost of Debt', w.afterTaxCostOfDebt + '%'], ['Equity Weight', w.equityWeight + '%'], ['Debt Weight', w.debtWeight + '%'],
-      ['WACC', w.wacc + '%']
-    ];
-    return `<ul class="inv-bullets inv-wacc">${rows.map(([l, v]) => `<li><strong>${l}:</strong> ${esc(v)}</li>`).join('')}</ul>`;
-  }
-
-  function projTable(rows) {
-    if (!rows || !rows.length) return '';
-    return `<div class="inv-tbl-wrap"><table class="inv-projtbl">
-      <thead><tr><th></th>${rows.map(r => `<th>${esc(r.year)}</th>`).join('')}</tr></thead>
-      <tbody>
-        <tr><td>Revenue</td>${rows.map(r => `<td>${esc(r.revenue)}</td>`).join('')}</tr>
-        <tr><td>FCF</td>${rows.map(r => `<td>${esc(r.fcf)}</td>`).join('')}</tr>
-      </tbody>
-    </table></div>`;
-  }
-
-  function sensGrid(s) {
-    if (!s || !s.grid) return '';
-    const mid = 2;
-    const head = `<tr><th></th>${(s.termGrowthAxis || []).map(g => `<th>${esc(g)}%</th>`).join('')}</tr>`;
-    const body = (s.grid || []).map((row, ri) => `<tr><th>${esc((s.waccAxis || [])[ri])}%</th>${row.map((v, ci) => `<td class="${ri === mid && ci === mid ? 'inv-sens-mid' : ''}">${fmtPrice(v)}</td>`).join('')}</tr>`).join('');
-    return `<div class="inv-sens-wrap"><table class="inv-sens"><thead>${head}</thead><tbody>${body}</tbody></table></div>
-      <div class="inv-sens-axis">Rows: WACC · Columns: Terminal Growth</div>`;
-  }
-
-  function openDCF(id) {
-    const d = dcfById(id); if (!d) return;
-    $('invMTitle').textContent = `${d.ticker} — DCF Valuation`;
-    $('invMSub').textContent = `${d.companyName} · Current ${fmtPrice(d.currentPrice)} · ${fmtDate(d.date)}`;
-    $('invMBody').innerHTML = `
-      <div class="inv-pr-section">
-        <div class="section-title">Historical Summary</div>
-        <div class="inv-summary">${esc(d.historicalSummary)}</div>
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Scenarios</div>
-        ${caseTable(d.cases || {})}
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">WACC Breakdown (Base Case)</div>
-        ${waccList(d.waccBreakdown)}
-      </div>
-      ${d.projection && d.projection.length ? `<div class="inv-pr-section"><div class="section-title">Base Case Projection</div>${projTable(d.projection)}<div class="inv-tv-note">Terminal value: ${esc(d.terminalValuePctOfEV)}% of Enterprise Value</div></div>` : ''}
-      <div class="inv-pr-section">
-        <div class="section-title">Sensitivity — WACC vs Terminal Growth</div>
-        ${sensGrid(d.sensitivity)}
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Analysis</div>
-        <div class="inv-summary">${esc(d.narrative)}</div>
-      </div>
-      <div class="inv-pr-caveats">${esc(d.caveats)}</div>`;
-    $('invOverlay').classList.add('active');
-  }
-
   // ── detail modal ──
   function openBrief(id) {
     const b = briefById(id); if (!b) return;
@@ -328,14 +214,12 @@ window.InvestmentView = (function () {
     if (tab === 'overview') renderOverview();
     else if (tab === 'archive') renderArchive();
     else if (tab === 'portfolio') renderPortfolio();
-    else if (tab === 'dcf') renderDCF();
   }
 
   function wire() {
     root.querySelectorAll('.inv-tabbtn').forEach(b => b.onclick = () => switchTab(b.dataset.tab));
     root.addEventListener('click', e => {
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
-      const dcf = e.target.closest('[data-dcf-id]'); if (dcf) { openDCF(dcf.dataset.dcfId); return; }
       const c = e.target.closest('[data-id]'); if (c) openBrief(c.dataset.id);
     });
     $('invMClose').onclick = closeModal;

@@ -62,29 +62,3 @@
 .inv-pr-neg .section-title { color: var(--red); }
 .inv-pr-caveats { font-size: 0.75rem; color: var(--silver); font-style: italic; line-height: 1.55; padding-top: 12px; border-top: 1px solid var(--border-soft); }
 @media (max-width: 480px) { .inv-pr-twocol { grid-template-columns: 1fr; gap: 14px; } }
-
-/* ── DCF valuation ── */
-.inv-dcf-chip { font-size: 0.75rem; font-weight: 700; }
-.inv-pos { color: var(--green); }
-.inv-neg { color: var(--red); }
-
-.inv-tbl-wrap { overflow-x: auto; margin-top: 10px; }
-.inv-casetbl, .inv-projtbl { border-collapse: collapse; font-size: 0.8125rem; width: 100%; min-width: 340px; }
-.inv-casetbl th, .inv-casetbl td, .inv-projtbl th, .inv-projtbl td { padding: 7px 10px; border-bottom: 1px solid var(--border-soft); text-align: right; white-space: nowrap; }
-.inv-casetbl th:first-child, .inv-casetbl td:first-child, .inv-projtbl th:first-child, .inv-projtbl td:first-child { text-align: left; color: var(--silver); font-weight: 600; white-space: normal; }
-.inv-casetbl thead th, .inv-projtbl thead th { font-weight: 700; color: var(--text); border-bottom: 2px solid var(--border-soft); }
-
-.inv-wacc { columns: 2; column-gap: 20px; }
-.inv-wacc li { break-inside: avoid; }
-@media (max-width: 480px) { .inv-wacc { columns: 1; } }
-
-.inv-tv-note { font-size: 0.75rem; color: var(--silver); margin-top: 8px; }
-
-.inv-sens-wrap { overflow-x: auto; margin-top: 10px; }
-.inv-sens { border-collapse: collapse; font-size: 0.75rem; width: 100%; min-width: 380px; }
-.inv-sens th, .inv-sens td { padding: 7px 8px; text-align: center; border: 1px solid var(--border-soft); white-space: nowrap; }
-.inv-sens thead th { color: var(--silver); font-weight: 700; }
-.inv-sens tbody th { color: var(--silver); font-weight: 700; text-align: right; }
-.inv-sens td { font-family: var(--mono); color: var(--text); }
-.inv-sens td.inv-sens-mid { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
-.inv-sens-axis { font-size: 0.6875rem; color: var(--silver); margin-top: 6px; text-transform: uppercase; letter-spacing: .03em; }
