@@ -49,13 +49,9 @@ window.InvestmentView = (function () {
   function tagChip(macro) {
     return `<span class="inv-tag ${macro ? 'macro' : 'company'}">${macro ? 'Macro' : 'Company'}</span>`;
   }
-  function srcTile(name) {
-    return `<div class="inv-tile"><span>${esc((name || '?').charAt(0).toUpperCase())}</span></div>`;
-  }
 
   function rowItem(b) {
     return `<div class="inv-row" data-id="${esc(b.id)}">
-      ${srcTile(b.sourceName)}
       <div class="inv-row-body">
         <div class="inv-row-title">${esc(b.title)}</div>
         <div class="inv-row-sub">${tagChip(b.macro)}<span class="inv-source">${esc(b.sourceName)}</span> · ${fmtDate(b.date)}</div>
@@ -135,7 +131,6 @@ window.InvestmentView = (function () {
     const snap = (r.snapshot || '').replace(/\s+/g, ' ').trim();
     const excerpt = snap.length > 90 ? snap.slice(0, 90) + '…' : snap;
     return `<div class="inv-row" data-pr-id="${esc(r.id)}">
-      <div class="inv-tile">${S(CHART_ICON)}</div>
       <div class="inv-row-body">
         <div class="inv-row-title">Portfolio Review — ${fmtDate(r.date)}</div>
         <div class="inv-row-sub">${excerpt}</div>

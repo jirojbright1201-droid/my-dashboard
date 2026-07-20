@@ -32,12 +32,6 @@
 .inv-daygroup { margin-bottom: 18px; }
 .inv-day-head { font-size: 0.8125rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: .04em; margin: 0 2px 8px; }
 
-/* ── source monogram tile (ไม่ดึง favicon ภายนอก — กันกับดักลูกโลก) ── */
-.inv-tile { width: 36px; height: 36px; border-radius: 11px; flex-shrink: 0; background: var(--accent-soft);
-  display: flex; align-items: center; justify-content: center; }
-.inv-tile span { font-family: var(--serif); font-weight: 700; font-size: 16px; color: var(--accent); }
-.inv-tile svg { width: 18px; height: 18px; color: var(--accent); }
-
 /* ── row list ── */
 .inv-list { padding: 6px 16px; }
 .inv-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; cursor: pointer; }
@@ -54,8 +48,6 @@
 .inv-feat { margin-bottom: 22px; }
 .inv-feat .inv-row { padding: 15px 0; }
 .inv-feat .inv-row-title { font-size: 1rem; }
-.inv-feat .inv-tile { width: 40px; height: 40px; border-radius: 12px; }
-.inv-feat .inv-tile span { font-size: 17px; }
 
 /* ── macro/company tag ── */
 .inv-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; }

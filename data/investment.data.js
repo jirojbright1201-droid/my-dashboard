@@ -92,8 +92,98 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Fortune",
       "url": "https://fortune.com/2026/07/17/china-moonshot-kimi-k3-markets-china-ai/"
+    },
+    {
+      "id": "nw0011",
+      "date": "2026-07-21",
+      "title": "หุ้นสหรัฐฯ ปิดลบเบาๆ Dow -0.6% ตลาดชั่งใจระหว่างสงครามอิหร่านกับสัปดาห์ผลประกอบการ Big Tech",
+      "summary": "วันจันทร์ Dow Jones ลดลงราว 0.6% S&P 500 ลบราว 0.2% ส่วน Nasdaq ปิดแทบไม่เปลี่ยนแปลง นักลงทุนเล่นเกมรอก่อนสัปดาห์ผลประกอบการชุดใหญ่ (Alphabet, Tesla, Intel, IBM) ที่ตลาดอยากเห็นหลักฐานว่าเงินลงทุน AI เริ่มแปลงเป็นกำไรจริง ขณะเดียวกันราคาน้ำมันที่ขยับขึ้นระหว่างวันจากการโจมตีตอบโต้กันระหว่างสหรัฐฯ-อิหร่านยังกดบรรยากาศ หลัง Trump ประกาศว่าอิหร่าน \"จะต้องชดใช้\"",
+      "macro": true,
+      "sourceName": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-july-20-dow-sp-500-nasdaq-111429441.html"
+    },
+    {
+      "id": "nw0012",
+      "date": "2026-07-21",
+      "title": "Brent ทะลุ $90 สูงสุดตั้งแต่กลางมิถุนายน อิหร่านสกัดเรือใน Hormuz ซ้ำถล่มโรงน้ำมันคูเวต",
+      "summary": "Brent พุ่งเกือบ 4% ขึ้นไปแตะราว $90-91 ต่อบาร์เรล สูงสุดนับตั้งแต่กลางมิถุนายน ก่อนย่อลงมาเล็กน้อย ส่วน WTI ยืนเหนือ $84 หลังกองทัพเรืออิหร่านสกัด \"เรือไม่ระบุสัญชาติ 4 ลำ\" ที่พยายามผ่าน Strait of Hormuz และโรงงานน้ำมันของ Kuwait Petroleum โดนโจมตีเสียหายหนักเมื่อวันเสาร์ นับจากจุดต่ำต้นเดือนราคาน้ำมันบวกมาแล้วราว 30% ตลาดยังแกว่งแรงตามข่าวสงครามสลับข่าวความพยายามหยุดยิง",
+      "macro": true,
+      "sourceName": "Energy Connects",
+      "url": "https://www.energyconnects.com/news/oil/2026/july/brent-oil-tops-90-as-middle-east-attacks-threaten-hormuz-flows/"
+    },
+    {
+      "id": "nw0013",
+      "date": "2026-07-21",
+      "title": "ตัวกลางยื่นข้อเสนอหยุดยิง 10 วัน หวังฟื้นข้อตกลงชั่วคราวสหรัฐฯ-อิหร่าน",
+      "summary": "เจ้าหน้าที่อาวุโสอิหร่านเผยกับ Reuters ว่าตัวกลางส่งข้อเสนอหยุดยิง 10 วันให้เตหะราน เพื่อเปิดทางฟื้น interim deal (ข้อตกลงชั่วคราว) ที่เพิ่งล่มไป โฆษกกระทรวงการต่างประเทศอิหร่าน Baghaei ยืนยันว่า \"ตัวกลางกำลังทำงานเพื่อกันไม่ให้ความตึงเครียดบานปลาย\" แต่ยังไม่ชัดว่าอิหร่านจะรับข้อเสนอหรือไม่ ขณะที่สหรัฐฯ ยังเดินหน้าโจมตีต่อเนื่องเป็นวันที่ 9 ติดต่อกัน",
+      "macro": true,
+      "sourceName": "The Jerusalem Post",
+      "url": "https://www.jpost.com/middle-east/iran-news/article-903074"
+    },
+    {
+      "id": "nw0014",
+      "date": "2026-07-21",
+      "title": "ทองคำทรงตัวเหนือ $4,000 — safe haven จากสงคราม ชนกับแรงกด Fed คงดอกเบี้ยสูงนาน",
+      "summary": "ทองคำแกว่งแถว $4,000-4,030 ต่อออนซ์ (-0.2%) แรงซื้อ safe haven (สินทรัพย์ปลอดภัย) จากสงครามสหรัฐฯ-อิหร่าน ถูกถ่วงด้วยอีกด้าน: น้ำมันแพงจุดความกังวลเงินเฟ้อ ทำให้ตลาดคาดว่า Federal Reserve จะตรึงดอกเบี้ยสูงนานขึ้น (higher-for-longer) ซึ่งปกติกดราคาทอง เดือนนี้ทองย่อแล้วราว 4.4% แต่ยังบวกราว 18% จากปีก่อน หลังเคยทำ all-time high ที่ $5,608 เมื่อมกราคม",
+      "macro": true,
+      "sourceName": "Trading Economics",
+      "url": "https://tradingeconomics.com/commodity/gold"
+    },
+    {
+      "id": "nw0015",
+      "date": "2026-07-21",
+      "title": "สัปดาห์วัดใจ Wall Street: 70+ บริษัท S&P 500 รายงานงบ, Fed เข้า blackout ก่อนประชุม 28-29 ก.ค., ECB ตัดสินดอกเบี้ยพฤหัสนี้",
+      "summary": "สัปดาห์นี้บริษัทใน S&P 500 กว่า 70 แห่งทยอยรายงานผลประกอบการ นำโดย Alphabet กับ Tesla ที่ถูกมองเป็นบททดสอบสำคัญของ AI rally หลัง Nasdaq 100 เพิ่งร่วงเกือบ 3.5% เมื่อสัปดาห์ก่อนจากแรงเทขายหุ้นชิป ฝั่งนโยบายการเงิน Fed เข้าช่วง blackout (งดให้สัมภาษณ์) ก่อนประชุม FOMC วันที่ 28-29 ก.ค. ส่วน ECB มีนัดตัดสินดอกเบี้ยวันพฤหัส ทั้งหมดเกิดขึ้นบนฉากหลังน้ำมันเหนือ $90 ที่คอยจุดความกังวลเงินเฟ้อ",
+      "macro": true,
+      "sourceName": "Proactive Investors",
+      "url": "https://www.proactiveinvestors.com/companies/news/1095711/week-ahead-wall-street-gears-up-for-volatility-as-big-tech-earnings-kick-into-high-gear-1095711.html"
+    },
+    {
+      "id": "nw0016",
+      "date": "2026-07-21",
+      "title": "หุ้นชิปฟื้นจากตลาดหมี — Microsoft จะติดตั้ง Helios rack ของ AMD บน Azure ท้าชน Nvidia",
+      "summary": "หุ้นชิปเด้งกลับหลังสัปดาห์เลวร้าย โดย Philadelphia Semiconductor Index บวกเล็กน้อย ตัวจุดพลุคือ AMD ที่ประกาศดีลให้ Microsoft นำ Helios rack (ระบบ AI ทั้งตู้ รวม GPU MI455X + ซีพียู EPYC Venice) ไปใช้งาน inference บน Azure ถือเป็นคู่แข่งจริงจังรายแรกของระบบ NVL72 ของ Nvidia ดันหุ้น AMD ปิดบวกราว 1.6% ด้าน Google ก็มีข่าวซุ่มพัฒนาชิปใหม่ Frozen v2 ไว้ขับเคลื่อน Gemini เอง",
+      "macro": false,
+      "sourceName": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/news/live/tech-stocks-live-chip-stocks-recover-from-last-weeks-losses-on-google-amd-news-164334720.html"
+    },
+    {
+      "id": "nw0017",
+      "date": "2026-07-21",
+      "title": "GM รายงานงบ Q2 เช้านี้ — ตลาดคาดกำไรโต 22% จับตากระบะ, รายได้ software และภาระ tariff",
+      "summary": "General Motors รายงานผลประกอบการ Q2 ก่อนตลาดเปิดวันนี้ (21 ก.ค.) ตลาดคาด EPS ราว $3.11-3.13 โตราว 22-23% จากปีก่อน บนรายได้ราว $46-47 พันล้านดอลลาร์ โดย GM ชนะคาดการณ์มา 4 ไตรมาสติด จุดที่ต้องดู: margin ในอเมริกาเหนือท่ามกลางยอดขายรถที่หด 4.2%, ความแข็งแรงของกระบะ GMC Sierra, รายได้ digital/software ที่โต 20%, และต้นทุน tariff ทั้งปีที่ลดเหลือ $2.5-3.5 พันล้านหลังคำตัดสิน Supreme Court",
+      "macro": false,
+      "sourceName": "TradingKey",
+      "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/262041142-general-motors-gm-q2-2026-earnings-preview-july-21-trucks-software-tradingkey"
+    },
+    {
+      "id": "nw0018",
+      "date": "2026-07-21",
+      "title": "Alphabet-Tesla รายงานงบพุธนี้ บททดสอบว่าเงิน AI คืนกำไรจริงไหม — Tesla โดน Wells Fargo ให้เป้าแค่ $130",
+      "summary": "Alphabet และ Tesla จะรายงานผลประกอบการหลังปิดตลาดวันพุธนี้ (22 ก.ค.) ตลาดจับตาเป็นพิเศษว่าการลงทุน AI มหาศาลเริ่มสะท้อนกลับมาเป็นรายได้หรือยัง ฝั่ง IBM คาด EPS ราว $3.02 (+8%) บนรายได้ราว $17.85 พันล้าน ส่วน Tesla ที่ราคาหุ้นย่อมาแล้วเกือบ 22% จากจุดสูงสุดในรอบปี โดนนักวิเคราะห์ Wells Fargo มองลบหนัก ให้เป้า 12 เดือนที่ $130 จากราคาปัจจุบันราว $382 อ้างแรงกดดัน margin ต่อคันที่ลดลง",
+      "macro": false,
+      "sourceName": "FX Leaders",
+      "url": "https://www.fxleaders.com/news/2026/07/20/tesla-tsla-and-alphabet-googl-earnings-expected-to-lift-market-this-week/"
+    },
+    {
+      "id": "nw0019",
+      "date": "2026-07-21",
+      "title": "หุ้นเด่น-หุ้นดับวันจันทร์: Teradyne +8.4% แรงสุดใน S&P 500, Chipotle ร่วงต่อจากเหตุ outbreak",
+      "summary": "Teradyne พุ่ง 8.4% ขึ้นแท่นหุ้นแรงสุดใน S&P 500 ดัน YTD (ตั้งแต่ต้นปี) เป็น +80.5% ตามด้วย Honeywell +7.5% ฝั่งขาลง Intuit ลบ 3.4% ตอกย้ำปีที่เลวร้าย (-57.5% YTD), Chipotle ร่วง 4.1% มูลค่าหายราว $1.84 พันล้านจากเหตุ outbreak (การระบาดเชื้อในร้านอาหาร) และ Enphase ลบ 4.1% หลัง TD Cowen หั่นเป้าจาก $70 เหลือ $48 ด้าน bond yield 10 ปีขยับขึ้นแตะ 4.60% สะท้อนความกังวลเงินเฟ้อจากน้ำมัน",
+      "macro": false,
+      "sourceName": "TS2 Tech",
+      "url": "https://ts2.tech/en/stock-market-today-20-07-2026/"
+    },
+    {
+      "id": "nw0020",
+      "date": "2026-07-21",
+      "title": "Archer จับมือ Anduril เปิดตัวโดรนโจมตี \"Thunder\" ที่งาน Farnborough — หุ้นพุ่งเกือบ 20%",
+      "summary": "Archer Aviation กับ Anduril เปิดตัวแพลตฟอร์ม VTOL (อากาศยานขึ้นลงแนวดิ่ง) แบบ hybrid-electric ที่พัฒนาร่วมกันมาเกือบ 2 ปี ในงาน Farnborough Airshow โดยรุ่น defense ชื่อ Thunder เป็นอากาศยานโจมตีไร้คนขับ Group 5 ออกแบบให้บินเคียงเฮลิคอปเตอร์โจมตีอย่าง Apache หุ้น ACHR ทะยานเกือบ 20% รับข่าว แผนถัดไป: บินจริงครั้งแรกปี 2027 และจะประกาศลูกค้าฝั่ง commercial รายแรกภายในสัปดาห์นี้",
+      "macro": false,
+      "sourceName": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/archer-aviation-stock-rises-anduril-123147999.html"
     }
   ],
   "portfolioReviews": []
 };
-window.INVESTMENT_UPDATED = "20/07/2026";
+window.INVESTMENT_UPDATED = "21/07/2026";
