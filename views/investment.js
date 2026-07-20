@@ -12,7 +12,7 @@ window.InvestmentView = (function () {
   const chevron = open => `<svg class="inv-month-chev${open ? ' open' : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
 
   // ── state ──
-  let root, activeTab = 'overview', archFilter = 'all', expandedMonths = null;
+  let root, activeTab = 'news', archFilter = 'all', expandedMonths = null;
   const $ = id => root.querySelector('#' + id);
   const briefById = id => BRIEFS.find(b => b.id === id);
   const reviewById = id => REVIEWS.find(r => r.id === id);
@@ -20,12 +20,10 @@ window.InvestmentView = (function () {
 
   const TEMPLATE = `
   <div class="container inv">
-    <div id="inv-overview" class="inv-pane active"></div>
-    <div id="inv-archive" class="inv-pane"></div>
+    <div id="inv-news" class="inv-pane active"></div>
     <div id="inv-portfolio" class="inv-pane"></div>
     <nav class="tabbar">
-      <button class="inv-tabbtn tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>Overview</span></button>
-      <button class="inv-tabbtn tab-item" data-tab="archive">${S('<path d="M4 6h16M4 12h16M4 18h10"/>')}<span>Archive</span></button>
+      <button class="inv-tabbtn tab-item active" data-tab="news">${S('<path d="M4 6h16M4 12h16M4 18h10"/>')}<span>News</span></button>
       <button class="inv-tabbtn tab-item" data-tab="portfolio">${S('<path d="M3 3v18h18"/><path d="M7 14l4-5 3 3 5-7"/>')}<span>Portfolio</span></button>
     </nav>
   </div>
@@ -55,34 +53,13 @@ window.InvestmentView = (function () {
     </div>`;
   }
 
-  // ── overview ──
-  function renderOverview() {
+  // ── news: hero summary + full history grouped by month (collapsed except the newest month) ──
+  function renderNews() {
     const ld = latestDate();
     const total = BRIEFS.length;
-    const latest = BRIEFS.filter(b => b.date === ld);
+    const latestCount = BRIEFS.filter(b => b.date === ld).length;
     const sources = new Set(BRIEFS.map(b => b.sourceName).filter(Boolean)).size;
 
-    $('inv-overview').innerHTML = `
-      <div class="hero inv-hero">
-        <div class="hero-eyebrow">Investment Briefs</div>
-        <div class="hero-figure" data-count="${total}" data-cdec="0">${total}</div>
-        <div class="hero-cap">${ld ? 'Latest: ' + fmtDate(ld) : 'No briefs yet'}</div>
-        <div class="hero-split">
-          <div class="hero-cell"><div class="hero-cell-lab">Latest Day</div><div class="hero-cell-val">${latest.length}</div></div>
-          <div class="hero-cell"><div class="hero-cell-lab">Sources</div><div class="hero-cell-val">${sources}</div></div>
-          <div class="hero-cell"><div class="hero-cell-lab">Total</div><div class="hero-cell-val">${total}</div></div>
-        </div>
-      </div>
-
-      <div class="card inv-list">
-        <div class="section-title">Latest Briefs</div>
-        ${latest.map(rowItem).join('') || '<div class="empty">No briefs yet</div>'}
-      </div>`;
-    if (window.UIFX) window.UIFX.countAll($('inv-overview'));
-  }
-
-  // ── archive (grouped by month, collapsed except the newest month) ──
-  function renderArchive() {
     const list = archFilter === 'all' ? BRIEFS : BRIEFS.filter(b => (archFilter === 'macro' ? b.macro : !b.macro));
     const months = [...new Set(list.map(b => b.date.slice(0, 7)))].sort((a, b) => b.localeCompare(a));
     if (expandedMonths === null) expandedMonths = new Set(months.slice(0, 1));
@@ -111,14 +88,25 @@ window.InvestmentView = (function () {
       </div>`;
     }).join('');
 
-    $('inv-archive').innerHTML = `
+    $('inv-news').innerHTML = `
+      <div class="hero inv-hero">
+        <div class="hero-eyebrow">Investment Briefs</div>
+        <div class="hero-figure" data-count="${total}" data-cdec="0">${total}</div>
+        <div class="hero-cap">${ld ? 'Latest: ' + fmtDate(ld) : 'No briefs yet'}</div>
+        <div class="hero-split">
+          <div class="hero-cell"><div class="hero-cell-lab">Latest Day</div><div class="hero-cell-val">${latestCount}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">Sources</div><div class="hero-cell-val">${sources}</div></div>
+          <div class="hero-cell"><div class="hero-cell-lab">Total</div><div class="hero-cell-val">${total}</div></div>
+        </div>
+      </div>
       <div class="inv-filters">${chips}</div>
       ${groups || '<div class="empty">No briefs yet</div>'}`;
-    root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { archFilter = b.dataset.filt; renderArchive(); });
+    if (window.UIFX) window.UIFX.countAll($('inv-news'));
+    root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { archFilter = b.dataset.filt; renderNews(); });
     root.querySelectorAll('[data-month]').forEach(b => b.onclick = () => {
       const ym = b.dataset.month;
       if (expandedMonths.has(ym)) expandedMonths.delete(ym); else expandedMonths.add(ym);
-      renderArchive();
+      renderNews();
     });
   }
 
@@ -211,8 +199,7 @@ window.InvestmentView = (function () {
     activeTab = tab;
     root.querySelectorAll('.inv-tabbtn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     root.querySelectorAll('.inv-pane').forEach(p => p.classList.toggle('active', p.id === 'inv-' + tab));
-    if (tab === 'overview') renderOverview();
-    else if (tab === 'archive') renderArchive();
+    if (tab === 'news') renderNews();
     else if (tab === 'portfolio') renderPortfolio();
   }
 
@@ -229,7 +216,7 @@ window.InvestmentView = (function () {
   function mount(el) {
     if (el.dataset.mounted) return;
     root = el; el.innerHTML = TEMPLATE; el.dataset.mounted = '1';
-    wire(); switchTab('overview');
+    wire(); switchTab('news');
   }
   return { mount };
 })();
