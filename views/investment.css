@@ -9,6 +9,17 @@
   color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; transition: all .15s; white-space: nowrap; }
 .inv-chipbtn.on { background: var(--text); border-color: var(--text); color: #fff; }
 
+/* ── archive: month accordion ── */
+.inv-monthgroup { margin-bottom: 12px; }
+.inv-month-head { width: 100%; display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border-soft);
+  border-radius: 14px; padding: 14px 16px; cursor: pointer; font-family: inherit; text-align: left; }
+.inv-month-head span:first-child { font-size: 0.9375rem; font-weight: 700; }
+.inv-month-meta { display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
+.inv-month-chev { transition: transform .2s; }
+.inv-month-chev.open { transform: rotate(180deg); }
+.inv-month-body { padding-top: 12px; }
+.inv-month-body[hidden] { display: none; }
+
 /* ── archive: date groups ── */
 .inv-daygroup { margin-bottom: 18px; }
 .inv-day-head { font-size: 0.8125rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: .04em; margin: 0 2px 8px; }

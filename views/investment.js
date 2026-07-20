@@ -5,10 +5,13 @@ window.InvestmentView = (function () {
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
+  const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const fmtMonth = ym => { const [y, m] = ym.split('-'); return `${MONTH_NAMES[parseInt(m, 10) - 1]} ${y}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+  const chevron = open => `<svg class="inv-month-chev${open ? ' open' : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
 
   // ── state ──
-  let root, activeTab = 'overview', archFilter = 'all';
+  let root, activeTab = 'overview', archFilter = 'all', expandedMonths = null;
   const $ = id => root.querySelector('#' + id);
   const briefById = id => BRIEFS.find(b => b.id === id);
   const latestDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
@@ -74,19 +77,33 @@ window.InvestmentView = (function () {
     if (window.UIFX) window.UIFX.countAll($('inv-overview'));
   }
 
-  // ── archive ──
+  // ── archive (grouped by month, collapsed except the newest month) ──
   function renderArchive() {
     const list = archFilter === 'all' ? BRIEFS : BRIEFS.filter(b => (archFilter === 'macro' ? b.macro : !b.macro));
-    const dates = [...new Set(list.map(b => b.date))].sort((a, b) => b.localeCompare(a));
+    const months = [...new Set(list.map(b => b.date.slice(0, 7)))].sort((a, b) => b.localeCompare(a));
+    if (expandedMonths === null) expandedMonths = new Set(months.slice(0, 1));
+
     const chips = [
       { k: 'all', l: 'All' }, { k: 'macro', l: 'Macro' }, { k: 'company', l: 'Company' }
     ].map(c => `<button class="inv-chipbtn${archFilter === c.k ? ' on' : ''}" data-filt="${c.k}">${c.l}</button>`).join('');
 
-    const groups = dates.map(d => {
-      const items = list.filter(b => b.date === d);
-      return `<div class="inv-daygroup">
-        <div class="inv-day-head">${fmtDate(d)}</div>
-        <div class="card inv-list">${items.map(rowItem).join('')}</div>
+    const groups = months.map(ym => {
+      const monthItems = list.filter(b => b.date.slice(0, 7) === ym);
+      const open = expandedMonths.has(ym);
+      const dates = [...new Set(monthItems.map(b => b.date))].sort((a, b) => b.localeCompare(a));
+      const days = dates.map(d => {
+        const items = monthItems.filter(b => b.date === d);
+        return `<div class="inv-daygroup">
+          <div class="inv-day-head">${fmtDate(d)}</div>
+          <div class="card inv-list">${items.map(rowItem).join('')}</div>
+        </div>`;
+      }).join('');
+      return `<div class="inv-monthgroup">
+        <button class="inv-month-head" data-month="${ym}">
+          <span>${fmtMonth(ym)}</span>
+          <span class="inv-month-meta">${monthItems.length}${chevron(open)}</span>
+        </button>
+        <div class="inv-month-body"${open ? '' : ' hidden'}>${days}</div>
       </div>`;
     }).join('');
 
@@ -94,6 +111,11 @@ window.InvestmentView = (function () {
       <div class="inv-filters">${chips}</div>
       ${groups || '<div class="empty">No briefs yet</div>'}`;
     root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { archFilter = b.dataset.filt; renderArchive(); });
+    root.querySelectorAll('[data-month]').forEach(b => b.onclick = () => {
+      const ym = b.dataset.month;
+      if (expandedMonths.has(ym)) expandedMonths.delete(ym); else expandedMonths.add(ym);
+      renderArchive();
+    });
   }
 
   // ── detail modal ──
