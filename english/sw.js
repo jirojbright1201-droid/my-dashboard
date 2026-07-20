@@ -1,5 +1,5 @@
 // English PWA service worker (scope: /english/)
-const CACHE = 'english-v1';
+const CACHE = 'english-v2';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
