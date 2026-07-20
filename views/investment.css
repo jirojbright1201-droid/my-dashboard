@@ -46,3 +46,19 @@
 .inv-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 20px; background: var(--accent); color: #fff;
   font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
 .inv-open-btn:active { transform: scale(.97); }
+
+/* ── portfolio review ── */
+.inv-pr-section { margin-bottom: 18px; }
+.inv-pr-section:last-of-type { margin-bottom: 0; }
+.inv-alloc { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8125rem; }
+.inv-alloc td { padding: 6px 0; border-bottom: 1px solid var(--border-soft); }
+.inv-alloc td.num { text-align: right; font-family: var(--mono); color: var(--silver); }
+.inv-bullets { font-size: 0.8125rem; color: var(--text); line-height: 1.6; margin-top: 8px; padding-left: 18px; }
+.inv-bullets li { margin-bottom: 6px; }
+.inv-bullets li:last-child { margin-bottom: 0; }
+.inv-pr-twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+.inv-pr-pos .section-title, .inv-pr-neg .section-title { margin-bottom: 6px; }
+.inv-pr-pos .section-title { color: var(--green); }
+.inv-pr-neg .section-title { color: var(--red); }
+.inv-pr-caveats { font-size: 0.75rem; color: var(--silver); font-style: italic; line-height: 1.55; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+@media (max-width: 480px) { .inv-pr-twocol { grid-template-columns: 1fr; gap: 14px; } }
