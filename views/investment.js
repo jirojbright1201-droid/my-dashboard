@@ -102,7 +102,8 @@ window.InvestmentView = (function () {
       : '';
 
     const earlierDates = [...new Set(earlier.map(b => b.date))].sort((a, b) => b.localeCompare(a));
-    if (expandedDays === null) expandedDays = new Set(earlierDates.slice(0, 1));
+    // default = พับทุกวัน/ทุกเดือน (jiroj สั่ง 21 ก.ค. 2026 — ไม่กางวันล่าสุดให้อัตโนมัติแล้ว)
+    if (expandedDays === null) expandedDays = new Set();
     if (expandedMonths === null) expandedMonths = new Set();
 
     const nBriefs = n => `${n} ${n === 1 ? 'brief' : 'briefs'}`;
