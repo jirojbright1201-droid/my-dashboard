@@ -17,6 +17,7 @@ window.InvestmentView = (function () {
     const [y, m, day] = d.split('-');
     return `${parseInt(day, 10)} ${MONTH_NAMES[parseInt(m, 10) - 1]}${y !== refYear ? ' ' + y : ''}`;
   };
+  const fmtMonth = ym => { const [y, m] = ym.split('-'); return `${MONTH_NAMES[parseInt(m, 10) - 1]} ${y}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
   // เฉด coral เข้ม→อ่อนตามลำดับ (ภาษาเดียวกับโดนัท Money — ห้ามกลับไปหลายสี)
   const ramp = (i, n) => {
@@ -26,8 +27,7 @@ window.InvestmentView = (function () {
   };
 
   // ── state ──
-  let root, activeTab = 'news', archFilter = 'all', showAllEarlier = false;
-  const EARLIER_DAYS_VISIBLE = 5;
+  let root, activeTab = 'news', archFilter = 'all', expandedDays = null, expandedMonths = null;
   const $ = id => root.querySelector('#' + id);
   const briefById = id => BRIEFS.find(b => b.id === id);
   const reviewById = id => REVIEWS.find(r => r.id === id);
@@ -102,13 +102,38 @@ window.InvestmentView = (function () {
       : '';
 
     const earlierDates = [...new Set(earlier.map(b => b.date))].sort((a, b) => b.localeCompare(a));
-    const visibleDates = showAllEarlier ? earlierDates : earlierDates.slice(0, EARLIER_DAYS_VISIBLE);
-    const earlierSec = visibleDates.map(d => {
+    if (expandedDays === null) expandedDays = new Set(earlierDates.slice(0, 1));
+    if (expandedMonths === null) expandedMonths = new Set();
+
+    const nBriefs = n => `${n} ${n === 1 ? 'brief' : 'briefs'}`;
+    const chev = cls => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
+    const dayRow = (d, yearRef, indent) => {
       const items = earlier.filter(b => b.date === d);
-      return `<div class="inv-ed-day">${fmtDayLabel(d, refYear)}</div>${items.map(b => edItem(b, false)).join('')}`;
+      const open = expandedDays.has(d);
+      return `<button class="inv-ed-dtog${open ? ' open' : ''}${indent ? ' in-month' : ''}" data-day="${d}">
+        <span>${fmtDayLabel(d, yearRef)}</span>
+        <span class="inv-ed-dtog-rule"></span>
+        <span class="inv-ed-dtog-r">${nBriefs(items.length)}${chev('inv-ed-chev')}</span>
+      </button>${open ? items.map(b => edItem(b, false)).join('') : ''}`;
+    };
+
+    // วันในเดือนเดียวกับข่าวล่าสุด = แถววันตรงๆ · เดือนเก่ากว่า = ยุบเป็นแถวเดือน กดกางออกเป็นแถววันข้างใน
+    const curMonth = ld ? ld.slice(0, 7) : '';
+    const sameMonthSec = earlierDates.filter(d => d.slice(0, 7) === curMonth)
+      .map(d => dayRow(d, refYear, false)).join('');
+    const olderMonths = [...new Set(earlierDates.filter(d => d.slice(0, 7) !== curMonth).map(d => d.slice(0, 7)))]
+      .sort((a, b) => b.localeCompare(a));
+    const olderSec = olderMonths.map(ym => {
+      const mDates = earlierDates.filter(d => d.slice(0, 7) === ym);
+      const mCount = earlier.filter(b => b.date.slice(0, 7) === ym).length;
+      const open = expandedMonths.has(ym);
+      return `<button class="inv-ed-mtog${open ? ' open' : ''}" data-emonth="${ym}">
+        <span>${fmtMonth(ym)}</span>
+        <span class="inv-ed-dtog-rule"></span>
+        <span class="inv-ed-dtog-r">${nBriefs(mCount)}${chev('inv-ed-chev')}</span>
+      </button>${open ? mDates.map(d => dayRow(d, ym.slice(0, 4), true)).join('') : ''}`;
     }).join('');
-    const moreBtn = earlierDates.length > visibleDates.length
-      ? `<button class="inv-ed-more" id="invMoreBtn">Show earlier briefs</button>` : '';
+    const earlierSec = sameMonthSec + olderSec;
 
     const total = BRIEFS.length;
     const kicker = ld
@@ -120,11 +145,18 @@ window.InvestmentView = (function () {
       <div class="inv-ftabs">${tabs}</div>
       ${todaySec}
       ${earlierSec ? `<div class="inv-ed-day inv-ed-earlier">Earlier</div>` : ''}${earlierSec}
-      ${moreBtn}
       ${total && (todaySec || earlierSec) ? '' : '<div class="inv-ed-empty"><div class="t">Nothing here</div><div class="s">No briefs match this filter yet</div></div>'}`;
     root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { archFilter = b.dataset.filt; renderNews(); });
-    const mb = root.querySelector('#invMoreBtn');
-    if (mb) mb.onclick = () => { showAllEarlier = true; renderNews(); };
+    root.querySelectorAll('[data-day]').forEach(b => b.onclick = () => {
+      const d = b.dataset.day;
+      if (expandedDays.has(d)) expandedDays.delete(d); else expandedDays.add(d);
+      renderNews();
+    });
+    root.querySelectorAll('[data-emonth]').forEach(b => b.onclick = () => {
+      const ym = b.dataset.emonth;
+      if (expandedMonths.has(ym)) expandedMonths.delete(ym); else expandedMonths.add(ym);
+      renderNews();
+    });
   }
 
   // ── portfolio review ──

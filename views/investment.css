@@ -44,11 +44,24 @@
 .inv-ed-day::after { content: ''; flex: 1; border-top: 1px solid var(--border); }
 .inv-ed-earlier { color: var(--accent); padding-top: 30px; }
 
-/* ── show more (ประวัติวันเก่ากว่าที่ยุบไว้) ── */
-.inv-ed-more { display: block; margin: 22px auto 0; border: 1px solid var(--border); background: none; cursor: pointer;
-  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--silver); padding: 10px 22px; border-radius: 99px; transition: opacity .15s; }
-.inv-ed-more:active { opacity: .55; }
+/* ── day toggle (วันเก่าใน Earlier พับเป็นหัววันที่ — jiroj เลือกแบบ A 21 ก.ค. 2026) ── */
+.inv-ed-dtog { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: none; cursor: pointer;
+  padding: 17px 0; font-family: var(--mono); font-size: 0.71rem; font-weight: 600; letter-spacing: .13em;
+  color: var(--text); text-transform: uppercase; text-align: left; border-bottom: 1px solid var(--border-soft);
+  transition: opacity .15s; }
+.inv-ed-dtog:active { opacity: .55; }
+.inv-ed-dtog-rule { flex: 1; border-top: 1px solid var(--border); }
+.inv-ed-dtog-r { display: flex; align-items: center; gap: 10px; color: var(--silver); letter-spacing: 0; }
+.inv-ed-chev { width: 14px; height: 14px; transition: transform .2s; }
+.inv-ed-dtog.open .inv-ed-chev, .inv-ed-mtog.open .inv-ed-chev { transform: rotate(180deg); }
+
+/* ── month toggle (เดือนเก่ากว่าเดือนปัจจุบัน ยุบเป็นแถวเดือน — กันแถววันกองยาวข้ามเดือน) ── */
+.inv-ed-mtog { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: none; cursor: pointer;
+  padding: 17px 0; font-family: var(--mono); font-size: 0.71rem; font-weight: 700; letter-spacing: .13em;
+  color: var(--text); text-transform: uppercase; text-align: left; border-bottom: 1px solid var(--border-soft);
+  transition: opacity .15s; }
+.inv-ed-mtog:active { opacity: .55; }
+.inv-ed-dtog.in-month { padding-left: 16px; }
 
 /* ── empty state ── */
 .inv-ed-empty { text-align: center; padding: 56px 24px; }
