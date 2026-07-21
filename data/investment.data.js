@@ -10,7 +10,8 @@ window.INVESTMENT_DATA = {
       "summary": "สงครามยืดเยื้อเข้าคืนที่ 8 แล้ว กองทัพสหรัฐฯ ยังโจมตีต่อเนื่อง ล่าสุด CENTCOM ยืนยันมีทหารสหรัฐฯ เสียชีวิตเพิ่มในอิรัก ซ้ำรอยเหตุการณ์ที่จอร์แดนเมื่อไม่กี่วันก่อน ฝั่งอิหร่านตอบโต้ด้วยการประกาศฉีก MoU (บันทึกข้อตกลง) สงบศึกที่เคยเซ็นไว้ทันที นักลงทุนต้องอยู่กับความไม่แน่นอนด้าน geopolitics ไปอีกพักใหญ่",
       "macro": true,
       "sourceName": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/liveblog/2026/7/19/iran-war-live-us-launches-new-strikes-trump-mourns-killed-soldiers"
+      "url": "https://www.aljazeera.com/news/liveblog/2026/7/19/iran-war-live-us-launches-new-strikes-trump-mourns-killed-soldiers",
+      "image": ""
     },
     {
       "id": "nw0002",
@@ -19,7 +20,8 @@ window.INVESTMENT_DATA = {
       "summary": "Brent และ WTI บวกแรงราว 3-4% ในรอบสัปดาห์ หลังคูเวตออกมาแฉว่าโรงไฟฟ้าและโรงกลั่นน้ำโดนอิหร่านถล่มซ้ำเป็นครั้งที่ 2 ภายในสองวัน ตลาดเริ่มหวั่นว่าไฟสงครามจะลามมาปิดเส้นทางขนน้ำมันผ่าน Strait of Hormuz ซึ่งแบกรับซัพพลายน้ำมันโลกอยู่ราว 20%",
       "macro": true,
       "sourceName": "CNBC",
-      "url": "https://www.cnbc.com/2026/07/17/oil-price-today-brent-wti.html"
+      "url": "https://www.cnbc.com/2026/07/17/oil-price-today-brent-wti.html",
+      "image": ""
     },
     {
       "id": "nw0003",
@@ -28,7 +30,8 @@ window.INVESTMENT_DATA = {
       "summary": "แม้ Fed จะยังยืนกรานท่าที hawkish (เอียงไปทางคุมเข้มดอกเบี้ย) และส่งสัญญาณคงดอกเบี้ยสูงยาว (higher-for-longer) ซึ่งปกติจะกดทองคำผ่าน real yield ที่พุ่งและดอลลาร์ที่แข็ง แต่ราคาทองก็ยังหยัดอยู่เหนือแนวรับ 4,000 ดอลลาร์ได้ เพราะแรงหนุนจากความเสี่ยงสงครามในตะวันออกกลางเข้ามาช่วยพยุงไว้พอดี",
       "macro": true,
       "sourceName": "FX Leaders",
-      "url": "https://www.fxleaders.com/news/2026/07/19/gold-price-forecast-positive-signals-as-xau-usd-holds-above-4000-despite-hawkish-fed-and-strait-of-hormuz-tensions/"
+      "url": "https://www.fxleaders.com/news/2026/07/19/gold-price-forecast-positive-signals-as-xau-usd-holds-above-4000-despite-hawkish-fed-and-strait-of-hormuz-tensions/",
+      "image": ""
     },
     {
       "id": "nw0004",
@@ -37,7 +40,8 @@ window.INVESTMENT_DATA = {
       "summary": "ดัชนีดอลลาร์ (DXY) โดนเทขายหลังทำแท่งเทียนกลับตัวขาลง (bearish engulfing) เมื่อสัปดาห์ก่อน สาเหตุหลักมาจากตัวเลข CPI และ PPI ที่ออกมาต่ำกว่าคาด ทำให้ตลาดเริ่มมองว่า Fed ไม่จำเป็นต้องรีบขึ้นดอกเบี้ยเร็วๆ นี้ นักวิเคราะห์เชื่อดอลลาร์มีลุ้นอ่อนค่าต่ออีก โดยเฉพาะเมื่อเทียบกับเยนญี่ปุ่น",
       "macro": true,
       "sourceName": "DailyForex",
-      "url": "https://www.dailyforex.com/forex-technical-analysis/2026/07/weekly-forex-forecast-20th-to-24th-july-2026/247749"
+      "url": "https://www.dailyforex.com/forex-technical-analysis/2026/07/weekly-forex-forecast-20th-to-24th-july-2026/247749",
+      "image": ""
     },
     {
       "id": "nw0005",
@@ -46,7 +50,8 @@ window.INVESTMENT_DATA = {
       "summary": "ก่อนประชุม FOMC วันที่ 28-29 กรกฎาคมนี้ เริ่มมีเสียงเก็งว่า Fed อาจขึ้นดอกเบี้ย 0.25% หลัง Christopher Waller ผู้ว่าการ Fed ส่งสัญญาณชัดว่าโฟกัสของธนาคารกลางเปลี่ยนจากเรื่องตลาดแรงงานมาเป็นการเบรกเงินเฟ้อที่คาดจะขยับแตะ 3.6% ในปีนี้แทน ล่าสุดข้อมูลจาก CME FedWatch ให้โอกาสขึ้นดอกเบี้ยรอบนี้ไว้ที่ราว 46.5%",
       "macro": true,
       "sourceName": "CNBC",
-      "url": "https://www.cnbc.com/2026/07/13/-a-july-rate-hike-from-the-fed-the-odds-are-rising.html"
+      "url": "https://www.cnbc.com/2026/07/13/-a-july-rate-hike-from-the-fed-the-odds-are-rising.html",
+      "image": ""
     },
     {
       "id": "nw0006",
@@ -55,7 +60,8 @@ window.INVESTMENT_DATA = {
       "summary": "เศรษฐกิจจีนไตรมาส 2 ปี 2026 โตแค่ 4.3% เทียบปีก่อน หลุดกรอบเป้าหมายทางการที่วางไว้ 4.5-5% และต่ำกว่าที่นักเศรษฐศาสตร์คาดไว้ด้วย ตัวฉุดหลักคือการลงทุนในสินทรัพย์ถาวรภาคเมืองที่หดตัวเกินคาดถึง 5.7% แม้ยอดค้าปลีกกับส่งออกจะยังพอประคองได้บ้าง แรงกดดันแบบนี้ทำให้ผู้กำหนดนโยบายต้องเร่งอัดเม็ดเงินภาครัฐเพิ่ม",
       "macro": true,
       "sourceName": "CNBC",
-      "url": "https://www.cnbc.com/2026/07/15/china-gdp-retail-sales-investment-june-.html"
+      "url": "https://www.cnbc.com/2026/07/15/china-gdp-retail-sales-investment-june-.html",
+      "image": ""
     },
     {
       "id": "nw0007",
@@ -64,7 +70,8 @@ window.INVESTMENT_DATA = {
       "summary": "ดัชนีหลักทั้ง 3 ตัวปิดสัปดาห์ที่แล้วร่วงพร้อมกัน S&P 500 ลบ 1.6% Nasdaq Composite ร่วงแรง 2.9% ส่วน Dow Jones ลบ 0.9% โดยตัวฉุดหลักคือกลุ่มเซมิคอนดักเตอร์ที่โดนเทขายหนัก สัปดาห์นี้ต้องจับตาผลประกอบการจาก Tesla, Alphabet และ Intel ว่าจะพลิกบรรยากาศตลาดได้หรือไม่",
       "macro": true,
       "sourceName": "CNBC",
-      "url": "https://www.cnbc.com/2026/07/17/stock-market-next-week-outlook-for-july-20-24-2026.html"
+      "url": "https://www.cnbc.com/2026/07/17/stock-market-next-week-outlook-for-july-20-24-2026.html",
+      "image": ""
     },
     {
       "id": "nw0008",
@@ -73,7 +80,8 @@ window.INVESTMENT_DATA = {
       "summary": "รายได้ไตรมาส 2 ของ Netflix ออกมาตรงเป้าที่ 1.256 หมื่นล้านดอลลาร์ กำไรต่อหุ้นก็ดีกว่าคาดนิดหน่อยที่ 0.80 ดอลลาร์ แต่หุ้นกลับเทขายแรงถึง 9% เพราะนักลงทุนตีความว่าบริษัทกำลัง \"ปิดบังอะไรบางอย่าง\" หลังประกาศลดความถี่รายงานข้อมูล engagement (การมีส่วนร่วมของผู้ชม) เหลือปีละครั้ง ซ้ำด้วยชั่วโมงรับชมที่โตแค่ 2% ตามหลังจำนวนสมาชิกใหม่ และ guidance ไตรมาส 3 ที่หย่อนกว่าที่ Wall Street คาดไว้เล็กน้อย",
       "macro": false,
       "sourceName": "The Motley Fool",
-      "url": "https://www.fool.com/investing/2026/07/17/netflix-beat-estimates-but-the-stock-dropped/"
+      "url": "https://www.fool.com/investing/2026/07/17/netflix-beat-estimates-but-the-stock-dropped/",
+      "image": ""
     },
     {
       "id": "nw0009",
@@ -82,7 +90,8 @@ window.INVESTMENT_DATA = {
       "summary": "หุ้น IBM ดิ่งทีเดียว 25.2% ในวันเดียว แรงที่สุดเท่าที่บริษัทเคยเจอมา เงินหายไปจากมูลค่าตลาดกว่า 6.7 หมื่นล้านดอลลาร์ Arvind Krishna ซีอีโอออกมายอมรับว่าลูกค้าองค์กรพากันเทงบไปกว้านซื้อฮาร์ดแวร์อย่างเซิร์ฟเวอร์และหน่วยความจำแทน เพราะกลัวราคาชิปหน่วยความจำที่พุ่งขึ้นไปแล้วกว่า 100% ผลคือธุรกิจซอฟต์แวร์และที่ปรึกษาซึ่งเป็นเส้นเลือดใหญ่ของ IBM โตช้ากว่าที่ใครคาดไว้มาก",
       "macro": false,
       "sourceName": "Forbes",
-      "url": "https://www.forbes.com/sites/petercohan/2026/07/15/ibm-stock-loses-67-billion--causes-and-recovery-outlook/"
+      "url": "https://www.forbes.com/sites/petercohan/2026/07/15/ibm-stock-loses-67-billion--causes-and-recovery-outlook/",
+      "image": ""
     },
     {
       "id": "nw0010",
@@ -91,7 +100,8 @@ window.INVESTMENT_DATA = {
       "summary": "Philadelphia Semiconductor Index ร่วงจนเข้าเกณฑ์ bear market (ตลาดหมี) ทรุดกว่า 20% จากจุดสูงสุดเมื่อเดือนมิถุนายน ต้นเหตุคือสตาร์ทอัพจีน Moonshot ปล่อยโมเดล Kimi K3 ขนาด 2.8 ล้านล้านพารามิเตอร์ออกมาแรง เก่งเทียบเท่าหรือดีกว่าโมเดลชั้นนำของสหรัฐฯ หลายตัว คนในตลาดรีบเทียบกับเหตุการณ์ DeepSeek shock เมื่อปีก่อนทันที พร้อมเริ่มตั้งคำถามว่าเงินมหาศาลที่ทุ่มไปกับ AI capex ของบริษัทเทคฯ สหรัฐฯ ยังคุ้มอยู่จริงไหม ด้าน TSMC โดนหางเลขร่วงไป 7% ทั้งที่กำไรรายไตรมาสเพิ่งพุ่งขึ้น 77%",
       "macro": false,
       "sourceName": "Fortune",
-      "url": "https://fortune.com/2026/07/17/china-moonshot-kimi-k3-markets-china-ai/"
+      "url": "https://fortune.com/2026/07/17/china-moonshot-kimi-k3-markets-china-ai/",
+      "image": ""
     },
     {
       "id": "nw0011",
@@ -100,7 +110,8 @@ window.INVESTMENT_DATA = {
       "summary": "วันจันทร์ Dow Jones ลดลงราว 0.6% S&P 500 ลบราว 0.2% ส่วน Nasdaq ปิดแทบไม่เปลี่ยนแปลง นักลงทุนเล่นเกมรอก่อนสัปดาห์ผลประกอบการชุดใหญ่ (Alphabet, Tesla, Intel, IBM) ที่ตลาดอยากเห็นหลักฐานว่าเงินลงทุน AI เริ่มแปลงเป็นกำไรจริง ขณะเดียวกันราคาน้ำมันที่ขยับขึ้นระหว่างวันจากการโจมตีตอบโต้กันระหว่างสหรัฐฯ-อิหร่านยังกดบรรยากาศ หลัง Trump ประกาศว่าอิหร่าน \"จะต้องชดใช้\"",
       "macro": true,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-july-20-dow-sp-500-nasdaq-111429441.html"
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-july-20-dow-sp-500-nasdaq-111429441.html",
+      "image": ""
     },
     {
       "id": "nw0012",
@@ -109,7 +120,8 @@ window.INVESTMENT_DATA = {
       "summary": "Brent พุ่งเกือบ 4% ขึ้นไปแตะราว $90-91 ต่อบาร์เรล สูงสุดนับตั้งแต่กลางมิถุนายน ก่อนย่อลงมาเล็กน้อย ส่วน WTI ยืนเหนือ $84 หลังกองทัพเรืออิหร่านสกัด \"เรือไม่ระบุสัญชาติ 4 ลำ\" ที่พยายามผ่าน Strait of Hormuz และโรงงานน้ำมันของ Kuwait Petroleum โดนโจมตีเสียหายหนักเมื่อวันเสาร์ นับจากจุดต่ำต้นเดือนราคาน้ำมันบวกมาแล้วราว 30% ตลาดยังแกว่งแรงตามข่าวสงครามสลับข่าวความพยายามหยุดยิง",
       "macro": true,
       "sourceName": "Energy Connects",
-      "url": "https://www.energyconnects.com/news/oil/2026/july/brent-oil-tops-90-as-middle-east-attacks-threaten-hormuz-flows/"
+      "url": "https://www.energyconnects.com/news/oil/2026/july/brent-oil-tops-90-as-middle-east-attacks-threaten-hormuz-flows/",
+      "image": ""
     },
     {
       "id": "nw0013",
@@ -118,7 +130,8 @@ window.INVESTMENT_DATA = {
       "summary": "เจ้าหน้าที่อาวุโสอิหร่านเผยกับ Reuters ว่าตัวกลางส่งข้อเสนอหยุดยิง 10 วันให้เตหะราน เพื่อเปิดทางฟื้น interim deal (ข้อตกลงชั่วคราว) ที่เพิ่งล่มไป โฆษกกระทรวงการต่างประเทศอิหร่าน Baghaei ยืนยันว่า \"ตัวกลางกำลังทำงานเพื่อกันไม่ให้ความตึงเครียดบานปลาย\" แต่ยังไม่ชัดว่าอิหร่านจะรับข้อเสนอหรือไม่ ขณะที่สหรัฐฯ ยังเดินหน้าโจมตีต่อเนื่องเป็นวันที่ 9 ติดต่อกัน",
       "macro": true,
       "sourceName": "The Jerusalem Post",
-      "url": "https://www.jpost.com/middle-east/iran-news/article-903074"
+      "url": "https://www.jpost.com/middle-east/iran-news/article-903074",
+      "image": ""
     },
     {
       "id": "nw0014",
@@ -127,7 +140,8 @@ window.INVESTMENT_DATA = {
       "summary": "ทองคำแกว่งแถว $4,000-4,030 ต่อออนซ์ (-0.2%) แรงซื้อ safe haven (สินทรัพย์ปลอดภัย) จากสงครามสหรัฐฯ-อิหร่าน ถูกถ่วงด้วยอีกด้าน: น้ำมันแพงจุดความกังวลเงินเฟ้อ ทำให้ตลาดคาดว่า Federal Reserve จะตรึงดอกเบี้ยสูงนานขึ้น (higher-for-longer) ซึ่งปกติกดราคาทอง เดือนนี้ทองย่อแล้วราว 4.4% แต่ยังบวกราว 18% จากปีก่อน หลังเคยทำ all-time high ที่ $5,608 เมื่อมกราคม",
       "macro": true,
       "sourceName": "Trading Economics",
-      "url": "https://tradingeconomics.com/commodity/gold"
+      "url": "https://tradingeconomics.com/commodity/gold",
+      "image": ""
     },
     {
       "id": "nw0015",
@@ -136,7 +150,8 @@ window.INVESTMENT_DATA = {
       "summary": "สัปดาห์นี้บริษัทใน S&P 500 กว่า 70 แห่งทยอยรายงานผลประกอบการ นำโดย Alphabet กับ Tesla ที่ถูกมองเป็นบททดสอบสำคัญของ AI rally หลัง Nasdaq 100 เพิ่งร่วงเกือบ 3.5% เมื่อสัปดาห์ก่อนจากแรงเทขายหุ้นชิป ฝั่งนโยบายการเงิน Fed เข้าช่วง blackout (งดให้สัมภาษณ์) ก่อนประชุม FOMC วันที่ 28-29 ก.ค. ส่วน ECB มีนัดตัดสินดอกเบี้ยวันพฤหัส ทั้งหมดเกิดขึ้นบนฉากหลังน้ำมันเหนือ $90 ที่คอยจุดความกังวลเงินเฟ้อ",
       "macro": true,
       "sourceName": "Proactive Investors",
-      "url": "https://www.proactiveinvestors.com/companies/news/1095711/week-ahead-wall-street-gears-up-for-volatility-as-big-tech-earnings-kick-into-high-gear-1095711.html"
+      "url": "https://www.proactiveinvestors.com/companies/news/1095711/week-ahead-wall-street-gears-up-for-volatility-as-big-tech-earnings-kick-into-high-gear-1095711.html",
+      "image": ""
     },
     {
       "id": "nw0016",
@@ -145,7 +160,8 @@ window.INVESTMENT_DATA = {
       "summary": "หุ้นชิปเด้งกลับหลังสัปดาห์เลวร้าย โดย Philadelphia Semiconductor Index บวกเล็กน้อย ตัวจุดพลุคือ AMD ที่ประกาศดีลให้ Microsoft นำ Helios rack (ระบบ AI ทั้งตู้ รวม GPU MI455X + ซีพียู EPYC Venice) ไปใช้งาน inference บน Azure ถือเป็นคู่แข่งจริงจังรายแรกของระบบ NVL72 ของ Nvidia ดันหุ้น AMD ปิดบวกราว 1.6% ด้าน Google ก็มีข่าวซุ่มพัฒนาชิปใหม่ Frozen v2 ไว้ขับเคลื่อน Gemini เอง",
       "macro": false,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/news/live/tech-stocks-live-chip-stocks-recover-from-last-weeks-losses-on-google-amd-news-164334720.html"
+      "url": "https://finance.yahoo.com/news/live/tech-stocks-live-chip-stocks-recover-from-last-weeks-losses-on-google-amd-news-164334720.html",
+      "image": ""
     },
     {
       "id": "nw0017",
@@ -154,7 +170,8 @@ window.INVESTMENT_DATA = {
       "summary": "General Motors รายงานผลประกอบการ Q2 ก่อนตลาดเปิดวันนี้ (21 ก.ค.) ตลาดคาด EPS ราว $3.11-3.13 โตราว 22-23% จากปีก่อน บนรายได้ราว $46-47 พันล้านดอลลาร์ โดย GM ชนะคาดการณ์มา 4 ไตรมาสติด จุดที่ต้องดู: margin ในอเมริกาเหนือท่ามกลางยอดขายรถที่หด 4.2%, ความแข็งแรงของกระบะ GMC Sierra, รายได้ digital/software ที่โต 20%, และต้นทุน tariff ทั้งปีที่ลดเหลือ $2.5-3.5 พันล้านหลังคำตัดสิน Supreme Court",
       "macro": false,
       "sourceName": "TradingKey",
-      "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/262041142-general-motors-gm-q2-2026-earnings-preview-july-21-trucks-software-tradingkey"
+      "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/262041142-general-motors-gm-q2-2026-earnings-preview-july-21-trucks-software-tradingkey",
+      "image": ""
     },
     {
       "id": "nw0018",
@@ -163,7 +180,8 @@ window.INVESTMENT_DATA = {
       "summary": "Alphabet และ Tesla จะรายงานผลประกอบการหลังปิดตลาดวันพุธนี้ (22 ก.ค.) ตลาดจับตาเป็นพิเศษว่าการลงทุน AI มหาศาลเริ่มสะท้อนกลับมาเป็นรายได้หรือยัง ฝั่ง IBM คาด EPS ราว $3.02 (+8%) บนรายได้ราว $17.85 พันล้าน ส่วน Tesla ที่ราคาหุ้นย่อมาแล้วเกือบ 22% จากจุดสูงสุดในรอบปี โดนนักวิเคราะห์ Wells Fargo มองลบหนัก ให้เป้า 12 เดือนที่ $130 จากราคาปัจจุบันราว $382 อ้างแรงกดดัน margin ต่อคันที่ลดลง",
       "macro": false,
       "sourceName": "FX Leaders",
-      "url": "https://www.fxleaders.com/news/2026/07/20/tesla-tsla-and-alphabet-googl-earnings-expected-to-lift-market-this-week/"
+      "url": "https://www.fxleaders.com/news/2026/07/20/tesla-tsla-and-alphabet-googl-earnings-expected-to-lift-market-this-week/",
+      "image": ""
     },
     {
       "id": "nw0019",
@@ -172,7 +190,8 @@ window.INVESTMENT_DATA = {
       "summary": "Teradyne พุ่ง 8.4% ขึ้นแท่นหุ้นแรงสุดใน S&P 500 ดัน YTD (ตั้งแต่ต้นปี) เป็น +80.5% ตามด้วย Honeywell +7.5% ฝั่งขาลง Intuit ลบ 3.4% ตอกย้ำปีที่เลวร้าย (-57.5% YTD), Chipotle ร่วง 4.1% มูลค่าหายราว $1.84 พันล้านจากเหตุ outbreak (การระบาดเชื้อในร้านอาหาร) และ Enphase ลบ 4.1% หลัง TD Cowen หั่นเป้าจาก $70 เหลือ $48 ด้าน bond yield 10 ปีขยับขึ้นแตะ 4.60% สะท้อนความกังวลเงินเฟ้อจากน้ำมัน",
       "macro": false,
       "sourceName": "TS2 Tech",
-      "url": "https://ts2.tech/en/stock-market-today-20-07-2026/"
+      "url": "https://ts2.tech/en/stock-market-today-20-07-2026/",
+      "image": ""
     },
     {
       "id": "nw0020",
@@ -181,7 +200,8 @@ window.INVESTMENT_DATA = {
       "summary": "Archer Aviation กับ Anduril เปิดตัวแพลตฟอร์ม VTOL (อากาศยานขึ้นลงแนวดิ่ง) แบบ hybrid-electric ที่พัฒนาร่วมกันมาเกือบ 2 ปี ในงาน Farnborough Airshow โดยรุ่น defense ชื่อ Thunder เป็นอากาศยานโจมตีไร้คนขับ Group 5 ออกแบบให้บินเคียงเฮลิคอปเตอร์โจมตีอย่าง Apache หุ้น ACHR ทะยานเกือบ 20% รับข่าว แผนถัดไป: บินจริงครั้งแรกปี 2027 และจะประกาศลูกค้าฝั่ง commercial รายแรกภายในสัปดาห์นี้",
       "macro": false,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/archer-aviation-stock-rises-anduril-123147999.html"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/archer-aviation-stock-rises-anduril-123147999.html",
+      "image": ""
     },
     {
       "id": "nw0021",
@@ -190,7 +210,8 @@ window.INVESTMENT_DATA = {
       "summary": "สหรัฐฯ โจมตีอิหร่านต่อเนื่องเป็นวันที่ 9 หลังทรัมป์ขู่อิหร่านต้อง \"ชดใช้\" การเสียชีวิตของทหารสหรัฐฯ ขณะกลุ่มฮูตีในเยเมนขู่ปิดกั้นเส้นทางส่งออกน้ำมันซาอุดีอาระเบีย ดันราคาน้ำมันขยับขึ้น แต่ Brent ยังต่ำกว่าจุดสูงสุดช่วงเม.ย.-พ.ค.มาก สะท้อนตลาดเริ่มหาเส้นทางขนส่งทางเลือก ด้านทองคำขยับขึ้นแตะ $4,082.20 ต่อออนซ์ (+0.14%) สะท้อนความกังวลเงินเฟ้อจากความตึงเครียดในภูมิภาค",
       "macro": true,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-july-20-dow-sp-500-nasdaq-111429441.html"
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-july-20-dow-sp-500-nasdaq-111429441.html",
+      "image": ""
     },
     {
       "id": "nw0022",
@@ -199,7 +220,8 @@ window.INVESTMENT_DATA = {
       "summary": "ทำเนียบขาวประกาศภาษีนำเข้า 50% กับสินค้าแคนาดาหลายรายการ อ้างมาตรา 338 ของ Tariff Act ปี 1930 ที่ไม่เคยใช้จริงมาก่อน หลังศาลสูงสุดสหรัฐฯ เคยท้าทายคำสั่งภาษีชุดก่อน โดยกล่าวหาแคนาดาเลือกปฏิบัติกับสินค้าเหล้า รถยนต์ และนมสหรัฐฯ ที่สำคัญคือครอบคลุมสินค้าที่เคยได้รับการคุ้มครองภายใต้ USMCA ด้วย นายกฯ แคนาดา Mark Carney เรียกมาตรการนี้ว่าละเมิด USMCA โดยตรง แต่พร้อมเจรจาต่อ",
       "macro": true,
       "sourceName": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/7/21/trump-imposes-50-us-tariffs-on-some-canadian-goods-citing-discrimination"
+      "url": "https://www.aljazeera.com/news/2026/7/21/trump-imposes-50-us-tariffs-on-some-canadian-goods-citing-discrimination",
+      "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/reuters_6a0b93ea-1779143658.jpg?resize=770%2C513&quality=80"
     },
     {
       "id": "nw0023",
@@ -208,7 +230,8 @@ window.INVESTMENT_DATA = {
       "summary": "3M รายงานกำไรต่อหุ้นปรับปรุงไตรมาส 2 ที่ $2.40 โต 11% เทียบปีก่อน ยอดขาย organic (ยอดขายจากธุรกิจเดิมไม่รวมซื้อ-ขายกิจการ) โต 5.4% margin ขยับขึ้น 40 basis point เป็น 24.9% ซีอีโอ William Brown ระบุไตรมาสนี้แข็งแกร่งทั้งยอดขายและกำไร บริษัทปรับเพิ่มเป้ากำไรต่อหุ้นทั้งปี 2026 เป็น $8.80-8.95 จากเดิม $8.50-8.70 พร้อมขยายความร่วมมือกับ Microsoft ด้าน AI data center และ Airbus ด้านฉนวนกันความร้อน",
       "macro": false,
       "sourceName": "3M (PR Newswire)",
-      "url": "https://www.prnewswire.com/news-releases/3m-reports-second-quarter-2026-results-increases-full-year-guidance-302830119.html"
+      "url": "https://www.prnewswire.com/news-releases/3m-reports-second-quarter-2026-results-increases-full-year-guidance-302830119.html",
+      "image": ""
     },
     {
       "id": "nw0024",
@@ -217,7 +240,8 @@ window.INVESTMENT_DATA = {
       "summary": "General Motors รายงานกำไรต่อหุ้นปรับปรุงไตรมาส 2 ที่ $3.57 สูงกว่าคาดการณ์ $3.13 ถึง 14% รายได้ $48.03 พันล้านดอลลาร์ เกินคาด 3.15% หนุนจากการตั้งราคาที่แข็งแกร่งและต้นทุน tariff ที่ลดลง โดยเฉพาะโซนอเมริกาเหนือที่ EBIT (กำไรก่อนหักดอกเบี้ยและภาษี) พุ่ง 42.7% บริษัทปรับเพิ่มเป้า EBIT ทั้งปีเป็น $14-16 พันล้าน และกำไรต่อหุ้นเป็น $12-14 จากเดิม $11.50-13.50",
       "macro": false,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/gm-q2-earnings-beat-pricing-142400631.html"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/gm-q2-earnings-beat-pricing-142400631.html",
+      "image": ""
     },
     {
       "id": "nw0025",
@@ -226,7 +250,8 @@ window.INVESTMENT_DATA = {
       "summary": "Alphabet และ Tesla รายงานผลประกอบการ Q2 หลังปิดตลาดวันนี้ (22 ก.ค.) พร้อมกัน โดย Alphabet เพิ่งประกาศขายหุ้นเพื่อระดมทุนสร้างศูนย์ข้อมูล AI ทำให้นักลงทุนแบ่งความเห็น ด้าน Gemini chatbot ได้รับการตอบรับดีแต่มีรายงานว่ารุ่น Gemini 3.5 Pro อาจล่าช้า ฝั่ง Tesla ซีอีโอเดินหน้าปรับทิศทางบริษัทไปทาง AI และหุ่นยนต์ พร้อมเพิ่มงบลงทุนเป็น 3 เท่า แม้ไตรมาสก่อนหน้ายอดส่งมอบจะดีกว่าคาด",
       "macro": false,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/expect-markets-week-alphabet-tesla-110000980.html"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/expect-markets-week-alphabet-tesla-110000980.html",
+      "image": ""
     },
     {
       "id": "nw0026",
@@ -235,7 +260,8 @@ window.INVESTMENT_DATA = {
       "summary": "ซีอีโอ JPMorgan Chase Jamie Dimon กล่าวว่าจะไม่ซื้อพันธบัตรรัฐบาลสหรัฐฯ ระยะยาวหรือดัชนี S&P 500 ในราคาปัจจุบัน โดยมอง yield (อัตราผลตอบแทน) พันธบัตร 10 ปีที่เหมาะสมควรอยู่ราว 4-4.5% เขาอ้างเหตุผลจากความขัดแย้งในยูเครนและตะวันออกกลาง ความตึงเครียดสหรัฐฯ-จีน งบประมาณรัฐบาลที่ขยายตัว และเงินเฟ้อที่สูงเหนือ 3% มานานเกือบ 5 ปี แม้จะไม่ได้มองว่าทุกบริษัทแพงเกินไป แต่เลือกเจาะจงหุ้นรายตัวมากกว่าซื้อทั้งดัชนี",
       "macro": false,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/jamie-dimon-warns-market-risks-112521178.html"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jamie-dimon-warns-market-risks-112521178.html",
+      "image": ""
     },
     {
       "id": "nw0027",
@@ -244,7 +270,8 @@ window.INVESTMENT_DATA = {
       "summary": "Intel จะรายงานผลประกอบการ Q2 2026 หลังปิดตลาดวันพรุ่งนี้ (23 ก.ค.) ตลาดคาดกำไรต่อหุ้น $0.10 พลิกจากขาดทุน $0.26 ในไตรมาสเดียวกันปีก่อน บริษัททำได้ดีกว่าคาดการณ์ของ Wall Street มาแล้ว 3 ใน 4 ไตรมาสล่าสุด หุ้น Intel พุ่งขึ้น 455.9% ในรอบ 52 สัปดาห์ ทิ้งห่าง S&P 500 ที่ +20.7% และ ETF กลุ่มเซมิคอนดักเตอร์ที่ +132.6% นักวิเคราะห์ 46 รายให้เรตติ้งเฉลี่ย Moderate Buy ราคาเป้าหมายเฉลี่ย $100.31",
       "macro": false,
       "sourceName": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/earnings-preview-expect-intels-report-131017775.html"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/earnings-preview-expect-intels-report-131017775.html",
+      "image": ""
     },
     {
       "id": "nw0028",
@@ -253,7 +280,8 @@ window.INVESTMENT_DATA = {
       "summary": "AMD เริ่มงาน Advancing AI 2026 งาน AI ประจำปีที่ Moscone Center ซานฟรานซิสโก วันที่ 22-23 ก.ค. โดยซีอีโอ Lisa Su จะขึ้นคีย์โน้ตเช้าวันที่สอง ตลาดคาดเปิดตัวตัวอย่างการใช้งานจริงของแร็ค Helios ผ่านพันธมิตร HPE และ Oracle รวมถึงชิป MI450 (โค้ดเนม Altair) ที่ Oracle ประกาศแล้วว่าจะนำไปใช้ใน cloud ของตัวเอง (OCI) พร้อมโชว์ความร่วมมือกับ Anthropic, OpenAI และชุมชนโอเพนซอร์สอย่าง Hugging Face และ PyTorch",
       "macro": false,
       "sourceName": "IT Pro",
-      "url": "https://www.itpro.com/infrastructure/what-to-expect-at-amd-advancing-ai-2026"
+      "url": "https://www.itpro.com/infrastructure/what-to-expect-at-amd-advancing-ai-2026",
+      "image": ""
     }
   ],
   "portfolioReviews": []

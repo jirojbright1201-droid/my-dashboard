@@ -92,6 +92,32 @@
   font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
 .inv-open-btn:active { transform: scale(.97); }
 
+/* ── news detail: หน้าอ่านเต็มจอ (แทน bottom sheet เดิม — jiroj เลือกจาก mockup 3 แบบ 22 ก.ค. 2026) ── */
+.inv-article { position: fixed; inset: 0; z-index: 120; background: var(--surface);
+  display: flex; flex-direction: column; transform: translateX(100%);
+  transition: transform .32s cubic-bezier(.32,.72,0,1); }
+.inv-article.open { transform: translateX(0); }
+.inv-art-hero { position: relative; aspect-ratio: 16 / 9; flex-shrink: 0; padding-top: env(safe-area-inset-top); }
+.inv-art-media { position: absolute; inset: 0; top: env(safe-area-inset-top); overflow: hidden; background: var(--surface-2); }
+.inv-art-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.inv-art-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%); color: #fff; }
+.inv-art-fallback svg { width: 25%; height: 25%; min-width: 40px; min-height: 40px; }
+.inv-art-back { position: absolute; top: calc(14px + env(safe-area-inset-top)); left: 14px; width: 34px; height: 34px;
+  border-radius: 9999px; border: none; cursor: pointer; background: rgba(20,20,19,.45); color: #fff;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 2; }
+.inv-art-back:active { opacity: .7; }
+.inv-art-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.inv-art-body { padding: 22px 22px 28px; max-width: 640px; margin: 0 auto; }
+.inv-art-h { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; line-height: 1.2; text-wrap: balance; }
+.inv-art-rule { height: 4px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); margin: 16px 0 12px; }
+.inv-art-byline { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; }
+.inv-art-p { font-size: 0.9375rem; line-height: 1.8; color: var(--text); margin-top: 16px; }
+.inv-art-footer { flex-shrink: 0; padding: 12px 22px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border-soft); background: var(--surface); }
+.inv-art-footer .inv-open-btn { margin-top: 0; max-width: 640px; margin-left: auto; margin-right: auto; }
+@media (prefers-reduced-motion: reduce) { .inv-article { transition: none; } }
+
 /* ── portfolio review modal ── */
 .inv-pr-section { margin-bottom: 18px; }
 .inv-pr-section:last-of-type { margin-bottom: 0; }

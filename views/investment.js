@@ -52,10 +52,46 @@ window.InvestmentView = (function () {
       </div>
       <div class="modal-body" id="invMBody"></div>
     </div>
+  </div>
+
+  <div class="inv-article" id="invArticle">
+    <div class="inv-art-hero">
+      <div class="inv-art-media" id="invArtMedia"></div>
+      <button class="inv-art-back" id="invArtBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    </div>
+    <div class="inv-art-scroll" id="invArtScroll">
+      <div class="inv-art-body">
+        <div class="inv-art-h" id="invArtH"></div>
+        <div class="inv-art-rule"></div>
+        <div class="inv-art-byline" id="invArtByline"></div>
+        <div class="inv-art-p" id="invArtP"></div>
+      </div>
+    </div>
+    <div class="inv-art-footer"><a class="inv-open-btn" id="invArtLink" href="#" target="_blank" rel="noopener">Open Original &#8599;</a></div>
   </div>`;
 
   function tagChip(macro) {
     return `<span class="inv-tag ${macro ? 'macro' : 'company'}">${macro ? 'Macro' : 'Company'}</span>`;
+  }
+  // ไอคอน fallback ตามหมวด — ใช้เวลาไม่มี image หรือดึง og:image ไม่ได้ (ห้าม hotlink favicon/tile แบบเดิมที่เคยลองแล้วไม่สวย)
+  const ICON_MACRO = S('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>');
+  const ICON_COMPANY = S('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M2 20h20"/>');
+  function fallbackMediaHtml(macro) {
+    return `<div class="inv-art-fallback">${macro ? ICON_MACRO : ICON_COMPANY}</div>`;
+  }
+  function renderArtMedia(b) {
+    const media = $('invArtMedia');
+    if (b.image) {
+      media.innerHTML = '';
+      const img = document.createElement('img');
+      img.alt = '';
+      img.referrerPolicy = 'no-referrer';
+      img.onerror = () => { media.innerHTML = fallbackMediaHtml(b.macro); };
+      img.src = b.image;
+      media.appendChild(img);
+    } else {
+      media.innerHTML = fallbackMediaHtml(b.macro);
+    }
   }
 
   // ── editorial building blocks ──
@@ -240,15 +276,19 @@ window.InvestmentView = (function () {
     $('invOverlay').classList.add('active');
   }
 
-  // ── detail modal ──
+  // ── detail: หน้าอ่านเต็มจอ (เปลี่ยนจาก bottom sheet มาเป็นแบบนี้ 22 ก.ค. 2026 — jiroj เลือกจาก mockup 3 แบบ, ชอบ full-screen article) ──
   function openBrief(id) {
     const b = briefById(id); if (!b) return;
-    $('invMTitle').textContent = b.title;
-    $('invMSub').innerHTML = `${tagChip(b.macro)}<span class="inv-source">${esc(b.sourceName)}</span> · ${fmtDate(b.date)}`;
-    $('invMBody').innerHTML = `
-      <div class="inv-summary">${esc(b.summary)}</div>
-      <a class="inv-open-btn" href="${esc(b.url)}" target="_blank" rel="noopener">Open Original &#8599;</a>`;
-    $('invOverlay').classList.add('active');
+    $('invArtH').textContent = b.title;
+    $('invArtByline').innerHTML = `${tagChip(b.macro)}<span class="inv-source">${esc(b.sourceName)}</span> · ${fmtDate(b.date)}`;
+    $('invArtP').textContent = b.summary;
+    $('invArtLink').href = b.url;
+    renderArtMedia(b);
+    $('invArticle').classList.add('open');
+    $('invArtScroll') && ($('invArtScroll').scrollTop = 0);
+  }
+  function closeArticle() {
+    $('invArticle').classList.remove('open');
   }
   function closeModal() {
     const o = $('invOverlay'); o.classList.add('closing');
@@ -272,6 +312,7 @@ window.InvestmentView = (function () {
     });
     $('invMClose').onclick = closeModal;
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) closeModal(); };
+    $('invArtBack').onclick = closeArticle;
   }
 
   function mount(el) {
