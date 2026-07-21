@@ -81,16 +81,15 @@
 .inv-abar-pct { flex: 0 0 auto; width: 42px; text-align: right; font-family: var(--mono); font-size: 0.75rem; color: var(--silver); }
 
 /* ── modal detail ── */
-/* jiroj บอก modal ข่าวเตี้ยคับแคบไป อ่านอึดอัด (22 ก.ค. 2026) — บังคับความสูงขั้นต่ำให้เป็นหน้าอ่านจริงจัง ไม่ผูกกับความยาวเนื้อหาสั้น/ยาว */
-#invOverlay .modal { min-height: 58vh; }
-#invOverlay .modal-body { display: flex; flex-direction: column; flex: 1; }
+/* jiroj บอก modal ข่าวอ่านอึดอัด (22 ก.ค. 2026) — เคยลอง min-height 58vh บังคับความสูงตายตัว แต่ข่าวสั้นแล้วเหลือที่ว่างล่างเยอะเกิน ไม่สวย (revert แล้ว) → แก้ที่ font/line-height/padding ให้อ่านสบายแทน ปล่อยความสูง modal สูง-ต่ำตามเนื้อหาจริงเหมือนเดิม */
+#invOverlay .modal-body { padding: 18px 22px 26px; }
 .inv-summary { font-size: 0.95rem; color: var(--text); line-height: 1.85; margin-top: 14px; }
 .inv-source { color: var(--accent); font-weight: 600; }
 .inv-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; margin-right: 6px; }
 .inv-tag.macro { background: var(--accent-soft); color: var(--accent); }
 .inv-tag.company { background: var(--border-soft); color: var(--silver); }
-.inv-open-btn { display: block; text-align: center; text-decoration: none; margin-top: auto; background: var(--accent); color: #fff;
-  font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; flex-shrink: 0; }
+.inv-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 24px; background: var(--accent); color: #fff;
+  font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
 .inv-open-btn:active { transform: scale(.97); }
 
 /* ── portfolio review modal ── */
