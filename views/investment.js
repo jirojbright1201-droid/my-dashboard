@@ -91,7 +91,6 @@ window.InvestmentView = (function () {
     const list = archFilter === 'all' ? BRIEFS : BRIEFS.filter(b => (archFilter === 'macro' ? b.macro : !b.macro));
     const latestItems = list.filter(b => b.date === ld);
     const earlier = list.filter(b => b.date !== ld);
-    const refYear = ld ? ld.slice(0, 4) : '';
 
     const tabs = [
       { k: 'all', l: 'All' }, { k: 'macro', l: 'Macro' }, { k: 'company', l: 'Company' }
@@ -118,13 +117,9 @@ window.InvestmentView = (function () {
       </button>${open ? items.map(b => edItem(b, false)).join('') : ''}`;
     };
 
-    // วันในเดือนเดียวกับข่าวล่าสุด = แถววันตรงๆ · เดือนเก่ากว่า = ยุบเป็นแถวเดือน กดกางออกเป็นแถววันข้างใน
-    const curMonth = ld ? ld.slice(0, 7) : '';
-    const sameMonthSec = earlierDates.filter(d => d.slice(0, 7) === curMonth)
-      .map(d => dayRow(d, refYear, false)).join('');
-    const olderMonths = [...new Set(earlierDates.filter(d => d.slice(0, 7) !== curMonth).map(d => d.slice(0, 7)))]
-      .sort((a, b) => b.localeCompare(a));
-    const olderSec = olderMonths.map(ym => {
+    // ทุกเดือนที่มีข่าว (รวมเดือนปัจจุบัน) ยุบเป็นแถวเดือนเสมอ กดกางออกเป็นแถววันข้างใน (jiroj ขอเพิ่มเลเยอร์เดือนแม้อยู่เดือนปัจจุบัน 22 ก.ค. 2026)
+    const allMonths = [...new Set(earlierDates.map(d => d.slice(0, 7)))].sort((a, b) => b.localeCompare(a));
+    const earlierSec = allMonths.map(ym => {
       const mDates = earlierDates.filter(d => d.slice(0, 7) === ym);
       const mCount = earlier.filter(b => b.date.slice(0, 7) === ym).length;
       const open = expandedMonths.has(ym);
@@ -134,7 +129,6 @@ window.InvestmentView = (function () {
         <span class="inv-ed-dtog-r">${nBriefs(mCount)}${chev('inv-ed-chev')}</span>
       </button>${open ? mDates.map(d => dayRow(d, ym.slice(0, 4), true)).join('') : ''}`;
     }).join('');
-    const earlierSec = sameMonthSec + olderSec;
 
     const total = BRIEFS.length;
     const kicker = ld
