@@ -335,41 +335,6 @@ window.InvestmentView = (function () {
     });
   }
 
-  // ── swipe-to-back: ปัดขวาที่ไหนก็ได้ในหน้าอ่านเต็มจอเพื่อย้อนกลับ (ท่าคุ้นแบบแอปข่าว) ──
-  // (เดิมจำกัดแค่ 28px จากขอบซ้ายแล้วปัดไม่ติด — น่าจะโดน OS ดักท่าที่ขอบจอก่อนถึง JS
-  //  เปลี่ยนมาเช็คทิศทางจากระยะที่ขยับจริงแทน ไม่ผูกกับตำแหน่งเริ่มปัด)
-  function wireSwipeBack() {
-    const el = $('invArticle');
-    let startX = 0, startY = 0, dx = 0, tracking = false, dragging = false;
-    el.addEventListener('touchstart', e => {
-      const t = e.touches[0];
-      startX = t.clientX; startY = t.clientY; dx = 0; tracking = true; dragging = false;
-    }, { passive: true });
-    el.addEventListener('touchmove', e => {
-      if (!tracking) return;
-      const t = e.touches[0];
-      dx = t.clientX - startX;
-      const dy = t.clientY - startY;
-      if (!dragging) {
-        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return; // ยังขยับน้อยไป ตัดสินทิศทางไม่ได้
-        if (Math.abs(dy) >= Math.abs(dx) || dx <= 0) { tracking = false; return; } // แนวตั้ง/ปัดซ้าย ปล่อยให้สโครลปกติ
-        dragging = true;
-        el.style.transition = 'none';
-      }
-      el.style.transform = `translateX(${dx}px)`;
-    }, { passive: true });
-    const release = () => {
-      tracking = false;
-      if (!dragging) return;
-      dragging = false;
-      el.style.transition = '';
-      el.style.transform = '';
-      if (dx > 80) goBackIfOverlay();
-    };
-    el.addEventListener('touchend', release);
-    el.addEventListener('touchcancel', release);
-  }
-
   // ── tabs ──
   function switchTab(tab) {
     activeTab = tab;
@@ -388,7 +353,6 @@ window.InvestmentView = (function () {
     $('invMClose').onclick = goBackIfOverlay;
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) goBackIfOverlay(); };
     $('invArtBack').onclick = goBackIfOverlay;
-    wireSwipeBack();
     wirePopstate();
   }
 
