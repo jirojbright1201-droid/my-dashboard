@@ -10,6 +10,19 @@
   color: var(--silver); text-transform: uppercase; }
 .inv-mast-rule { height: 4px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); margin-top: 13px; }
 
+/* ── current holdings card (บนสุดของแท็บ Portfolio) ── */
+.inv-hold-card { padding: 16px 0 20px; border-bottom: 1px solid var(--border-soft); }
+.inv-hold-kicker { font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .1em;
+  color: var(--silver); text-transform: uppercase; margin-bottom: 12px; }
+.inv-hold-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; }
+.inv-hold-row + .inv-hold-row { border-top: 1px solid var(--border-soft); }
+.inv-hold-name { flex: 0 0 auto; font-weight: 700; font-size: 0.875rem; }
+.inv-hold-detail { flex: 1; font-size: 0.75rem; color: var(--silver); }
+.inv-hold-amt { flex: 0 0 auto; font-family: var(--mono); font-size: 0.8125rem; font-weight: 600; }
+.inv-hold-total { display: flex; justify-content: space-between; padding-top: 10px; margin-top: 4px;
+  border-top: 1px solid var(--text); font-family: var(--mono); font-size: 0.8125rem; font-weight: 700; }
+.inv-hold-empty-txt { font-size: 0.8125rem; color: var(--silver); line-height: 1.5; }
+
 /* ── filter: แท็บขีดเส้นใต้ ── */
 .inv-ftabs { display: flex; justify-content: center; gap: 24px; padding: 11px 0 12px; border-bottom: 1px solid var(--border-soft); }
 .inv-ftab { border: none; background: none; cursor: pointer; font-family: inherit; font-size: 0.8125rem; font-weight: 600;

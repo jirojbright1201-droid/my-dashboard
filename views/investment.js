@@ -211,6 +211,35 @@ window.InvestmentView = (function () {
     });
   }
 
+  // ── current holdings (data/holdings.data.js — snapshot ที่ Jarvis อัปเดตทุกครั้งที่ jiroj แจ้งซื้อ-ขาย ใช้ทั้ง UI นี้และ cloud routine รีวิวพอร์ตวันศุกร์) ──
+  function holdingsCard() {
+    const H = window.HOLDINGS_DATA || { asOf: '', items: [], notes: '' };
+    const items = H.items || [];
+    const asOfTxt = H.asOf ? ` · as of ${fmtDate(H.asOf)}` : '';
+    if (!items.length) {
+      return `<div class="inv-hold-card inv-hold-empty">
+        <div class="inv-hold-kicker">Current Holdings${asOfTxt}</div>
+        <div class="inv-hold-empty-txt">${esc(H.notes || 'No holdings right now')}</div>
+      </div>`;
+    }
+    const total = items.reduce((s, it) => s + (parseFloat(it.amountTHB) || 0), 0);
+    const rows = items.map(it => {
+      const detail = it.type === 'stock'
+        ? `${esc(it.shares)} หุ้น · ต้นทุน ${esc(it.avgCost)} ${esc(it.currency || 'USD')}`
+        : esc(it.note || '');
+      return `<div class="inv-hold-row">
+        <div class="inv-hold-name">${esc(it.name || it.symbol || '')}</div>
+        <div class="inv-hold-detail">${detail}</div>
+        <div class="inv-hold-amt">฿${Math.round(parseFloat(it.amountTHB) || 0).toLocaleString()}</div>
+      </div>`;
+    }).join('');
+    return `<div class="inv-hold-card">
+      <div class="inv-hold-kicker">Current Holdings${asOfTxt}</div>
+      ${rows}
+      <div class="inv-hold-total"><span>Total</span><span>฿${Math.round(total).toLocaleString()}</span></div>
+    </div>`;
+  }
+
   // ── portfolio review ──
   function allocBars(rows) {
     const alloc = (rows || []).slice(0, 5);
@@ -253,6 +282,7 @@ window.InvestmentView = (function () {
         ${history ? `<div class="inv-ed-day inv-ed-earlier">Earlier</div>${history}` : ''}`;
     }
     $('inv-portfolio').innerHTML = `
+      ${holdingsCard()}
       ${masthead(`Portfolio Reviews · ${sorted.length}`)}
       ${body}`;
   }
