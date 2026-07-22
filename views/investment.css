@@ -29,12 +29,6 @@
 .inv-ed-item:active { opacity: .6; }
 .inv-ed-h { font-family: var(--serif); font-size: 1.22rem; font-weight: 700; line-height: 1.22; letter-spacing: -.005em; }
 
-/* ── read/unread (เก็บใน localStorage เครื่องผู้ใช้เอง — ไม่ใช่ content เลยไม่อยู่ใน data file) ── */
-.inv-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-  margin-right: 8px; margin-bottom: 2px; vertical-align: middle; flex-shrink: 0; }
-.inv-ed-lead:not(.unread) .inv-ed-lead-h,
-.inv-ed-item:not(.unread) .inv-ed-h { color: var(--silver); }
-
 /* ── meta line ── */
 .inv-ed-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px;
   font-size: 0.71rem; color: var(--silver); }
