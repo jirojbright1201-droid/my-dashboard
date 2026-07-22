@@ -295,6 +295,7 @@ window.InvestmentView = (function () {
       </div>
       <div class="inv-pr-caveats">${esc(r.caveats)}</div>`;
     $('invOverlay').classList.add('active');
+    pushOverlayState('review');
   }
 
   // ── detail: หน้าอ่านเต็มจอ (เปลี่ยนจาก bottom sheet มาเป็นแบบนี้ 22 ก.ค. 2026 — jiroj เลือกจาก mockup 3 แบบ, ชอบ full-screen article) ──
@@ -307,6 +308,7 @@ window.InvestmentView = (function () {
     renderArtMedia(b);
     $('invArticle').classList.add('open');
     $('invArtScroll') && ($('invArtScroll').scrollTop = 0);
+    pushOverlayState('article');
   }
   function closeArticle() {
     $('invArticle').classList.remove('open');
@@ -314,6 +316,23 @@ window.InvestmentView = (function () {
   function closeModal() {
     const o = $('invOverlay'); o.classList.add('closing');
     setTimeout(() => o.classList.remove('active', 'closing'), 300);
+  }
+
+  // ── ผูก overlay (หน้าอ่านข่าว/modal รีวิวพอร์ต) เข้ากับ browser history ──
+  // ปุ่ม/ท่า back ของระบบ (Android) เป็นคนละกลไกกับปัดในแอป — ถ้าไม่ผูก history กด back เครื่องจะข้ามออกจากแอปทั้งที เลยต้องปิด overlay ก่อนเสมอ (22 ก.ค. 2026 jiroj ทักว่า back ของเครื่อง Android ไม่ย้อนกลับให้)
+  function pushOverlayState(kind) {
+    history.pushState({ invOverlay: kind }, '');
+  }
+  // ใช้แทนการปิด overlay ตรงๆ ทุกจุดที่ผู้ใช้กดปิดเอง (ปุ่ม X/back, แตะพื้นหลัง, ปัด) — ให้ history.back()
+  // เป็นคนสั่งจริง แล้ว popstate ด้านล่างเป็นคนปิด DOM ให้ ทาง history จะได้ตรงกับ state บนจอเสมอ
+  function goBackIfOverlay() {
+    if (history.state && history.state.invOverlay) history.back();
+  }
+  function wirePopstate() {
+    window.addEventListener('popstate', () => {
+      if ($('invArticle').classList.contains('open')) closeArticle();
+      if ($('invOverlay').classList.contains('active')) closeModal();
+    });
   }
 
   // ── swipe-to-back: ปัดขวาที่ไหนก็ได้ในหน้าอ่านเต็มจอเพื่อย้อนกลับ (ท่าคุ้นแบบแอปข่าว) ──
@@ -345,7 +364,7 @@ window.InvestmentView = (function () {
       dragging = false;
       el.style.transition = '';
       el.style.transform = '';
-      if (dx > 80) closeArticle();
+      if (dx > 80) goBackIfOverlay();
     };
     el.addEventListener('touchend', release);
     el.addEventListener('touchcancel', release);
@@ -366,10 +385,11 @@ window.InvestmentView = (function () {
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
       const c = e.target.closest('[data-id]'); if (c) openBrief(c.dataset.id);
     });
-    $('invMClose').onclick = closeModal;
-    $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) closeModal(); };
-    $('invArtBack').onclick = closeArticle;
+    $('invMClose').onclick = goBackIfOverlay;
+    $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) goBackIfOverlay(); };
+    $('invArtBack').onclick = goBackIfOverlay;
     wireSwipeBack();
+    wirePopstate();
   }
 
   function mount(el) {
