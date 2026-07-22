@@ -332,6 +332,34 @@ window.InvestmentView = (function () {
     setTimeout(() => o.classList.remove('active', 'closing'), 300);
   }
 
+  // ── swipe-to-back: ปัดจากขอบซ้ายของหน้าอ่านเต็มจอเพื่อย้อนกลับ (ท่าคุ้นแบบแอปข่าว/iOS) ──
+  function wireSwipeBack() {
+    const el = $('invArticle');
+    const EDGE = 28; // จับ swipe เฉพาะเริ่มใกล้ขอบซ้าย กันชนกับสไครอลเนื้อหาปกติ
+    let startX = 0, startY = 0, dx = 0, dragging = false;
+    el.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      if (t.clientX > EDGE) return;
+      startX = t.clientX; startY = t.clientY; dx = 0; dragging = true;
+      el.style.transition = 'none';
+    }, { passive: true });
+    el.addEventListener('touchmove', e => {
+      if (!dragging) return;
+      const t = e.touches[0];
+      dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      if (Math.abs(dy) > Math.abs(dx) + 10) { dragging = false; el.style.transition = ''; el.style.transform = ''; return; }
+      if (dx > 0) el.style.transform = `translateX(${dx}px)`;
+    }, { passive: true });
+    el.addEventListener('touchend', () => {
+      if (!dragging) return;
+      dragging = false;
+      el.style.transition = '';
+      el.style.transform = '';
+      if (dx > 90) closeArticle();
+    });
+  }
+
   // ── tabs ──
   function switchTab(tab) {
     activeTab = tab;
@@ -350,6 +378,7 @@ window.InvestmentView = (function () {
     $('invMClose').onclick = closeModal;
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) closeModal(); };
     $('invArtBack').onclick = closeArticle;
+    wireSwipeBack();
   }
 
   function mount(el) {
