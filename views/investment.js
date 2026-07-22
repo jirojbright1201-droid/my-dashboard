@@ -33,6 +33,16 @@ window.InvestmentView = (function () {
   const reviewById = id => REVIEWS.find(r => r.id === id);
   const latestDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
 
+  // ── read tracking (เครื่องนี้เท่านั้น เหมือน quick capture — ไม่ใช่ content เลยไม่เก็บใน data file) ──
+  const READ_KEY = 'jarvis_inv_read';
+  const readIds = new Set(JSON.parse(localStorage.getItem(READ_KEY) || '[]'));
+  const isRead = id => readIds.has(id);
+  function markRead(id) {
+    if (readIds.has(id)) return;
+    readIds.add(id);
+    localStorage.setItem(READ_KEY, JSON.stringify([...readIds]));
+  }
+
   const TEMPLATE = `
   <div class="container inv">
     <div id="inv-news" class="inv-pane active"></div>
@@ -128,16 +138,19 @@ window.InvestmentView = (function () {
       <span class="inv-ed-src">${esc(b.sourceName)}</span>${withDate ? `<span>· ${fmtDate(b.date)}</span>` : ''}
     </div>`;
   }
+  const dot = unread => unread ? '<span class="inv-dot" aria-hidden="true"></span>' : '';
   function edLead(b) {
-    return `<div class="inv-ed-lead" data-id="${esc(b.id)}">
-      <div class="inv-ed-lead-h">${esc(b.title)}</div>
+    const unread = !isRead(b.id);
+    return `<div class="inv-ed-lead${unread ? ' unread' : ''}" data-id="${esc(b.id)}">
+      <div class="inv-ed-lead-h">${dot(unread)}${esc(b.title)}</div>
       <div class="inv-ed-lead-sum">${esc(b.summary)}</div>
       ${edMeta(b, false)}
     </div>`;
   }
   function edItem(b, withDate) {
-    return `<div class="inv-ed-item" data-id="${esc(b.id)}">
-      <div class="inv-ed-h">${esc(b.title)}</div>
+    const unread = !isRead(b.id);
+    return `<div class="inv-ed-item${unread ? ' unread' : ''}" data-id="${esc(b.id)}">
+      <div class="inv-ed-h">${dot(unread)}${esc(b.title)}</div>
       ${edMeta(b, withDate)}
     </div>`;
   }
@@ -307,6 +320,9 @@ window.InvestmentView = (function () {
     renderArtMedia(b);
     $('invArticle').classList.add('open');
     $('invArtScroll') && ($('invArtScroll').scrollTop = 0);
+    const wasUnread = !isRead(id);
+    markRead(id);
+    if (wasUnread) renderNews(); // อัปเดตจุดใต้ overlay เงียบๆ ให้พอกดย้อนกลับแล้วจุดหายเลย
   }
   function closeArticle() {
     $('invArticle').classList.remove('open');
