@@ -5,14 +5,10 @@
 //     icon keys: mcdonalds|work|sleep|exercise|read|clean|doc|video|food|game|shower|default (ดู ICONS ใน planner.js)
 //   habits: {habit:"exercise"|"read"|"water"|"sleep_early", done_dates:["YYYY-MM-DD", ...]}
 window.PLANNER_DATA = {
-  "2026-07": {
-    "events": [],
-    "habits": []
-  },
   "2026-08": {
     "events": [],
     "habits": []
   }
 };
-window.PLANNER_KEYS = ["2026-07", "2026-08"];
+window.PLANNER_KEYS = ["2026-08"];
 window.PLANNER_UPDATED = "22/07/2026";
