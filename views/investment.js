@@ -212,31 +212,41 @@ window.InvestmentView = (function () {
   }
 
   // ── current holdings (data/holdings.data.js — snapshot ที่ Jarvis อัปเดตทุกครั้งที่ jiroj แจ้งซื้อ-ขาย ใช้ทั้ง UI นี้และ cloud routine รีวิวพอร์ตวันศุกร์) ──
+  // ลุค watchlist ยืมจาก TradingView (jiroj เลือกเองหลังลองมา 7 รอบ 22 ก.ค. 2026) — ขาว/ดำ/เทาล้วน ไม่มีสี ไม่มีรายละเอียดรอง แค่ Symbol/Value/Alloc
   function holdingsCard() {
     const H = window.HOLDINGS_DATA || { asOf: '', items: [], notes: '' };
     const items = H.items || [];
     const asOfTxt = H.asOf ? ` · as of ${fmtDate(H.asOf)}` : '';
     if (!items.length) {
-      return `<div class="inv-hold-card inv-hold-empty">
-        <div class="inv-hold-kicker">Current Holdings${asOfTxt}</div>
+      return `<div class="inv-hold-card">
+        <div class="inv-hold-head">
+          <div class="inv-hold-kicker">Current Holdings${asOfTxt}</div>
+        </div>
         <div class="inv-hold-empty-txt">${esc(H.notes || 'No holdings right now')}</div>
       </div>`;
     }
     const total = items.reduce((s, it) => s + (parseFloat(it.amountTHB) || 0), 0);
-    const rows = items.map(it => {
-      const detail = it.type === 'stock'
-        ? `${esc(it.shares)} หุ้น · ต้นทุน ${esc(it.avgCost)} ${esc(it.currency || 'USD')}`
-        : esc(it.note || '');
+    const sorted = [...items].sort((a, b) => (parseFloat(b.amountTHB) || 0) - (parseFloat(a.amountTHB) || 0));
+    const rows = sorted.map(it => {
+      const amt = parseFloat(it.amountTHB) || 0;
+      const pct = total > 0 ? (amt / total * 100).toFixed(1) : '0.0';
       return `<div class="inv-hold-row">
-        <div class="inv-hold-name">${esc(it.name || it.symbol || '')}</div>
-        <div class="inv-hold-detail">${detail}</div>
-        <div class="inv-hold-amt">฿${Math.round(parseFloat(it.amountTHB) || 0).toLocaleString()}</div>
+        <div class="inv-hold-sym-wrap"><div class="inv-hold-sym">${esc((it.symbol || it.name || '').toUpperCase())}</div></div>
+        <div class="inv-hold-val">฿${Math.round(amt).toLocaleString()}</div>
+        <div class="inv-hold-pct-wrap"><span class="inv-hold-pct">${pct}%</span></div>
       </div>`;
     }).join('');
     return `<div class="inv-hold-card">
-      <div class="inv-hold-kicker">Current Holdings${asOfTxt}</div>
+      <div class="inv-hold-head">
+        <div class="inv-hold-kicker">Current Holdings${asOfTxt}</div>
+        <div class="inv-hold-total"><span class="cur">฿</span>${Math.round(total).toLocaleString()}</div>
+      </div>
+      <div class="inv-hold-colhead">
+        <div class="inv-hold-col-sym">Symbol</div>
+        <div class="inv-hold-col-val">Value</div>
+        <div class="inv-hold-col-pct">Alloc</div>
+      </div>
       ${rows}
-      <div class="inv-hold-total"><span>Total</span><span>฿${Math.round(total).toLocaleString()}</span></div>
     </div>`;
   }
 

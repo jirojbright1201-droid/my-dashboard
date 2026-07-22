@@ -10,18 +10,27 @@
   color: var(--silver); text-transform: uppercase; }
 .inv-mast-rule { height: 4px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); margin-top: 13px; }
 
-/* ── current holdings card (บนสุดของแท็บ Portfolio) ── */
-.inv-hold-card { padding: 16px 0 20px; border-bottom: 1px solid var(--border-soft); }
-.inv-hold-kicker { font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .1em;
-  color: var(--silver); text-transform: uppercase; margin-bottom: 12px; }
-.inv-hold-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; }
-.inv-hold-row + .inv-hold-row { border-top: 1px solid var(--border-soft); }
-.inv-hold-name { flex: 0 0 auto; font-weight: 700; font-size: 0.875rem; }
-.inv-hold-detail { flex: 1; font-size: 0.75rem; color: var(--silver); }
-.inv-hold-amt { flex: 0 0 auto; font-family: var(--mono); font-size: 0.8125rem; font-weight: 600; }
-.inv-hold-total { display: flex; justify-content: space-between; padding-top: 10px; margin-top: 4px;
-  border-top: 1px solid var(--text); font-family: var(--mono); font-size: 0.8125rem; font-weight: 700; }
-.inv-hold-empty-txt { font-size: 0.8125rem; color: var(--silver); line-height: 1.5; }
+/* ── current holdings card (บนสุดของแท็บ Portfolio — สไตล์ watchlist ยืมจาก TradingView, jiroj เลือกเองหลังลอง 7 รอบ 22 ก.ค. 2026: การ์ดขาวขอบบาง มอโนสเปซ ไม่มีสีเลย) ── */
+.inv-hold-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 8px; overflow: hidden;
+  margin: 6px 0 24px; box-shadow: 0 1px 2px rgba(20,20,19,.04), 0 6px 20px rgba(20,20,19,.05); }
+.inv-hold-head { padding: 16px 16px 14px; border-bottom: 1px solid var(--border-soft); }
+.inv-hold-kicker { font-size: 0.6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--silver); }
+.inv-hold-total { font-family: var(--mono); font-size: 1.75rem; font-weight: 700; color: var(--text); margin-top: 4px; letter-spacing: -.01em; }
+.inv-hold-total .cur { color: var(--silver); font-weight: 400; font-size: 1.1rem; margin-right: 2px; }
+.inv-hold-colhead { display: flex; align-items: center; padding: 8px 16px; gap: 10px;
+  font-family: var(--mono); font-size: 0.625rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--silver);
+  border-bottom: 1px solid var(--border-soft); }
+.inv-hold-col-sym { flex: 1; }
+.inv-hold-col-val { width: 74px; text-align: right; }
+.inv-hold-col-pct { width: 54px; text-align: right; }
+.inv-hold-row { display: flex; align-items: center; padding: 12px 16px; gap: 10px; border-bottom: 1px solid var(--border-soft); }
+.inv-hold-row:last-child { border-bottom: none; }
+.inv-hold-sym-wrap { flex: 1; min-width: 0; }
+.inv-hold-sym { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+.inv-hold-val { width: 74px; text-align: right; font-family: var(--mono); font-size: 0.8125rem; color: var(--text); }
+.inv-hold-pct-wrap { width: 54px; text-align: right; }
+.inv-hold-pct { display: inline-block; font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; color: var(--silver); }
+.inv-hold-empty-txt { font-size: 0.8125rem; color: var(--silver); line-height: 1.5; padding: 16px; }
 
 /* ── filter: แท็บขีดเส้นใต้ ── */
 .inv-ftabs { display: flex; justify-content: center; gap: 24px; padding: 11px 0 12px; border-bottom: 1px solid var(--border-soft); }
