@@ -73,21 +73,42 @@ window.InvestmentView = (function () {
   function tagChip(macro) {
     return `<span class="inv-tag ${macro ? 'macro' : 'company'}">${macro ? 'Macro' : 'Company'}</span>`;
   }
-  // ไอคอน fallback ตามหมวด — ใช้เวลาไม่มี image หรือดึง og:image ไม่ได้ (ห้าม hotlink favicon/tile แบบเดิมที่เคยลองแล้วไม่สวย)
+  // ไอคอน fallback สุดท้าย ตามหมวด macro/company — ใช้เมื่อไม่มีทั้ง image จริงและรูปหมวด topic (ห้าม hotlink favicon/tile แบบเดิมที่เคยลองแล้วไม่สวย)
   const ICON_MACRO = S('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>');
   const ICON_COMPANY = S('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M2 20h20"/>');
   function fallbackMediaHtml(macro) {
     return `<div class="inv-art-fallback">${macro ? ICON_MACRO : ICON_COMPANY}</div>`;
   }
+  // รูปเชิงหมวด (จำลอง/ใกล้เคียง ไม่ใช่รูปข่าวนั้นจริง) — ใช้เมื่อ brief ไม่มี og:image จริง แต่มีการเดา topic ไว้
+  // ทุกไฟล์โฮสต์ที่ Wikimedia Commons (ลิงก์ถาวร เหมือนโลโก้ Money — ดู CLAUDE.md ข้อ 8.5) เพิ่ม 22 ก.ค. 2026
+  const WM = f => `https://commons.wikimedia.org/wiki/Special:FilePath/${f}?width=1200`;
+  const TOPIC_IMAGES = {
+    oil: WM('Neste_Oil_Porvoo_refinery.jpg'),
+    gold: WM('400-oz-Gold-Bars-AB-01.jpg'),
+    fx: WM('Stack_of_100_dollar_bills.jpg'),
+    fed: WM('Marriner_S._Eccles_Federal_Reserve_Board_Building.jpg'),
+    china: WM('Shanghai_-_Skyline_Sunset_0057.jpg'),
+    market: WM('NYSE-floor.jpg'),
+    chips: WM('Semiconductor_Wafer_of_Microelectronics.jpg'),
+    bigtech: WM('Datacenter_Server_Racks_(22370909788).jpg'),
+    auto: WM('Hyundai_car_assembly_line.jpg'),
+    aerospace: WM('Antonov_An-225_at_Farnborough_1990_airshow.jpg')
+  };
   function renderArtMedia(b) {
     const media = $('invArtMedia');
-    if (b.image) {
+    const topicUrl = b.topic ? TOPIC_IMAGES[b.topic] : '';
+    const src = b.image || topicUrl;
+    if (src) {
       media.innerHTML = '';
       const img = document.createElement('img');
       img.alt = '';
       img.referrerPolicy = 'no-referrer';
-      img.onerror = () => { media.innerHTML = fallbackMediaHtml(b.macro); };
-      img.src = b.image;
+      // รูปจริงพังก่อน → ลองรูป topic (ถ้ายังไม่ได้ลอง) → ถึงจะตกไปไอคอน
+      img.onerror = () => {
+        if (b.image && topicUrl && img.src !== topicUrl) { img.src = topicUrl; }
+        else { media.innerHTML = fallbackMediaHtml(b.macro); }
+      };
+      img.src = src;
       media.appendChild(img);
     } else {
       media.innerHTML = fallbackMediaHtml(b.macro);

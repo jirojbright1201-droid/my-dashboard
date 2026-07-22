@@ -11,7 +11,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Al Jazeera",
       "url": "https://www.aljazeera.com/news/liveblog/2026/7/19/iran-war-live-us-launches-new-strikes-trump-mourns-killed-soldiers",
-      "image": "https://www.aljazeera.com/wp-content/uploads/2026/07/AFP__20260718__C2JR9DW__v1__HighRes__IranUsIsraelWar-1784440612.jpg?resize=730%2C410&quality=80"
+      "image": "https://www.aljazeera.com/wp-content/uploads/2026/07/AFP__20260718__C2JR9DW__v1__HighRes__IranUsIsraelWar-1784440612.jpg?resize=730%2C410&quality=80",
+      "topic": "oil"
     },
     {
       "id": "nw0002",
@@ -21,7 +22,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "CNBC",
       "url": "https://www.cnbc.com/2026/07/17/oil-price-today-brent-wti.html",
-      "image": ""
+      "image": "",
+      "topic": "oil"
     },
     {
       "id": "nw0003",
@@ -31,7 +33,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "FX Leaders",
       "url": "https://www.fxleaders.com/news/2026/07/19/gold-price-forecast-positive-signals-as-xau-usd-holds-above-4000-despite-hawkish-fed-and-strait-of-hormuz-tensions/",
-      "image": ""
+      "image": "",
+      "topic": "gold"
     },
     {
       "id": "nw0004",
@@ -41,7 +44,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "DailyForex",
       "url": "https://www.dailyforex.com/forex-technical-analysis/2026/07/weekly-forex-forecast-20th-to-24th-july-2026/247749",
-      "image": ""
+      "image": "",
+      "topic": "fx"
     },
     {
       "id": "nw0005",
@@ -51,7 +55,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "CNBC",
       "url": "https://www.cnbc.com/2026/07/13/-a-july-rate-hike-from-the-fed-the-odds-are-rising.html",
-      "image": ""
+      "image": "",
+      "topic": "fed"
     },
     {
       "id": "nw0006",
@@ -61,7 +66,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "CNBC",
       "url": "https://www.cnbc.com/2026/07/15/china-gdp-retail-sales-investment-june-.html",
-      "image": ""
+      "image": "",
+      "topic": "china"
     },
     {
       "id": "nw0007",
@@ -71,7 +77,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "CNBC",
       "url": "https://www.cnbc.com/2026/07/17/stock-market-next-week-outlook-for-july-20-24-2026.html",
-      "image": ""
+      "image": "",
+      "topic": "market"
     },
     {
       "id": "nw0008",
@@ -81,7 +88,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "The Motley Fool",
       "url": "https://www.fool.com/investing/2026/07/17/netflix-beat-estimates-but-the-stock-dropped/",
-      "image": "https://g.foolcdn.com/editorial/images/879427/nflx-netflix-logo-red.png"
+      "image": "https://g.foolcdn.com/editorial/images/879427/nflx-netflix-logo-red.png",
+      "topic": ""
     },
     {
       "id": "nw0009",
@@ -91,7 +99,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Forbes",
       "url": "https://www.forbes.com/sites/petercohan/2026/07/15/ibm-stock-loses-67-billion--causes-and-recovery-outlook/",
-      "image": "https://imageio.forbes.com/specials-images/imageserve/6a570a74dc6278cfd45a6ba7/CHINA-US-COMPUTERS-IBM/0x0.jpg?width=960"
+      "image": "https://imageio.forbes.com/specials-images/imageserve/6a570a74dc6278cfd45a6ba7/CHINA-US-COMPUTERS-IBM/0x0.jpg?width=960",
+      "topic": "chips"
     },
     {
       "id": "nw0010",
@@ -101,7 +110,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Fortune",
       "url": "https://fortune.com/2026/07/17/china-moonshot-kimi-k3-markets-china-ai/",
-      "image": "https://fortune.com/img-assets/wp-content/uploads/2026/07/GettyImages-2285809054.jpg?format=webp&w=1440&q=100"
+      "image": "https://fortune.com/img-assets/wp-content/uploads/2026/07/GettyImages-2285809054.jpg?format=webp&w=1440&q=100",
+      "topic": "chips"
     },
     {
       "id": "nw0011",
@@ -111,7 +121,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-july-20-dow-sp-500-nasdaq-111429441.html",
-      "image": ""
+      "image": "",
+      "topic": "market"
     },
     {
       "id": "nw0012",
@@ -121,7 +132,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Energy Connects",
       "url": "https://www.energyconnects.com/news/oil/2026/july/brent-oil-tops-90-as-middle-east-attacks-threaten-hormuz-flows/",
-      "image": ""
+      "image": "",
+      "topic": "oil"
     },
     {
       "id": "nw0013",
@@ -131,7 +143,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "The Jerusalem Post",
       "url": "https://www.jpost.com/middle-east/iran-news/article-903074",
-      "image": "https://images.jpost.com/image/upload/f_auto,fl_lossy/q_auto/c_fill,g_faces:center,h_720,w_1280/730658"
+      "image": "https://images.jpost.com/image/upload/f_auto,fl_lossy/q_auto/c_fill,g_faces:center,h_720,w_1280/730658",
+      "topic": ""
     },
     {
       "id": "nw0014",
@@ -141,7 +154,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Trading Economics",
       "url": "https://tradingeconomics.com/commodity/gold",
-      "image": ""
+      "image": "",
+      "topic": "gold"
     },
     {
       "id": "nw0015",
@@ -151,7 +165,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Proactive Investors",
       "url": "https://www.proactiveinvestors.com/companies/news/1095711/week-ahead-wall-street-gears-up-for-volatility-as-big-tech-earnings-kick-into-high-gear-1095711.html",
-      "image": "https://cdn.proactiveinvestors.com/eyJidWNrZXQiOiJwYS1jZG4iLCJrZXkiOiJ1cGxvYWRcL05ld3NcL0ltYWdlXC8yMDI2XzA3XC8yMDIyLTEwLTI1LTEwLTQ4LTE1LWY2YmEwNGI2YjMxMGYwNjgyZmU2OTgxYmI4ZjVjYWNkXzZhNWUzNWE4MTE5NGQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjoxMjgwLCJoZWlnaHQiOjcyMCwiZml0IjoiY292ZXIifX19"
+      "image": "https://cdn.proactiveinvestors.com/eyJidWNrZXQiOiJwYS1jZG4iLCJrZXkiOiJ1cGxvYWRcL05ld3NcL0ltYWdlXC8yMDI2XzA3XC8yMDIyLTEwLTI1LTEwLTQ4LTE1LWY2YmEwNGI2YjMxMGYwNjgyZmU2OTgxYmI4ZjVjYWNkXzZhNWUzNWE4MTE5NGQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjoxMjgwLCJoZWlnaHQiOjcyMCwiZml0IjoiY292ZXIifX19",
+      "topic": "market"
     },
     {
       "id": "nw0016",
@@ -161,7 +176,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/news/live/tech-stocks-live-chip-stocks-recover-from-last-weeks-losses-on-google-amd-news-164334720.html",
-      "image": ""
+      "image": "",
+      "topic": "chips"
     },
     {
       "id": "nw0017",
@@ -171,7 +187,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "TradingKey",
       "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/262041142-general-motors-gm-q2-2026-earnings-preview-july-21-trucks-software-tradingkey",
-      "image": "https://resource.tradingkey.com/uploads/20260720/GMM-1fbdf52fd5ec49af94e102eb8701d3d4.jpg"
+      "image": "https://resource.tradingkey.com/uploads/20260720/GMM-1fbdf52fd5ec49af94e102eb8701d3d4.jpg",
+      "topic": "auto"
     },
     {
       "id": "nw0018",
@@ -181,7 +198,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "FX Leaders",
       "url": "https://www.fxleaders.com/news/2026/07/20/tesla-tsla-and-alphabet-googl-earnings-expected-to-lift-market-this-week/",
-      "image": ""
+      "image": "",
+      "topic": "bigtech"
     },
     {
       "id": "nw0019",
@@ -191,7 +209,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "TS2 Tech",
       "url": "https://ts2.tech/en/stock-market-today-20-07-2026/",
-      "image": ""
+      "image": "",
+      "topic": "market"
     },
     {
       "id": "nw0020",
@@ -201,7 +220,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/archer-aviation-stock-rises-anduril-123147999.html",
-      "image": ""
+      "image": "",
+      "topic": "aerospace"
     },
     {
       "id": "nw0021",
@@ -211,7 +231,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-july-20-dow-sp-500-nasdaq-111429441.html",
-      "image": ""
+      "image": "",
+      "topic": "oil"
     },
     {
       "id": "nw0022",
@@ -221,7 +242,8 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Al Jazeera",
       "url": "https://www.aljazeera.com/news/2026/7/21/trump-imposes-50-us-tariffs-on-some-canadian-goods-citing-discrimination",
-      "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/reuters_6a0b93ea-1779143658.jpg?resize=770%2C513&quality=80"
+      "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/reuters_6a0b93ea-1779143658.jpg?resize=770%2C513&quality=80",
+      "topic": ""
     },
     {
       "id": "nw0023",
@@ -231,7 +253,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "3M (PR Newswire)",
       "url": "https://www.prnewswire.com/news-releases/3m-reports-second-quarter-2026-results-increases-full-year-guidance-302830119.html",
-      "image": ""
+      "image": "",
+      "topic": "auto"
     },
     {
       "id": "nw0024",
@@ -241,7 +264,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/gm-q2-earnings-beat-pricing-142400631.html",
-      "image": ""
+      "image": "",
+      "topic": "auto"
     },
     {
       "id": "nw0025",
@@ -251,7 +275,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/expect-markets-week-alphabet-tesla-110000980.html",
-      "image": "https://s.yimg.com/lo/mysterio/api/88B51671875FA42BE067FD0B977BA7ABE5175DFCF4AFB479778F29F755ECC57E/subgraphmysterio/resizefit_w960;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Finvestopedia_245%2Fb32020082c07d42840c7f4164471fbcc"
+      "image": "https://s.yimg.com/lo/mysterio/api/88B51671875FA42BE067FD0B977BA7ABE5175DFCF4AFB479778F29F755ECC57E/subgraphmysterio/resizefit_w960;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Finvestopedia_245%2Fb32020082c07d42840c7f4164471fbcc",
+      "topic": "bigtech"
     },
     {
       "id": "nw0026",
@@ -261,7 +286,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/jamie-dimon-warns-market-risks-112521178.html",
-      "image": "https://s.yimg.com/lo/mysterio/api/B399772A03959F3DA7DF7C9519FDD2BF60EC5A59544BE0112C455AE788837013/subgraphmysterio/resizefit_w960_h540;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fquartz_855%2Fbd0c2b7a473a24fc4ac9f881179315fd"
+      "image": "https://s.yimg.com/lo/mysterio/api/B399772A03959F3DA7DF7C9519FDD2BF60EC5A59544BE0112C455AE788837013/subgraphmysterio/resizefit_w960_h540;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fquartz_855%2Fbd0c2b7a473a24fc4ac9f881179315fd",
+      "topic": "market"
     },
     {
       "id": "nw0027",
@@ -271,7 +297,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/earnings-preview-expect-intels-report-131017775.html",
-      "image": "https://s.yimg.com/lo/mysterio/api/4FF323C0DCA004913E987FEB8EA0BDE1E13FD4AE3C22E6B70515BDADCCEBBEC2/subgraphmysterio/resizefit_w960;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fbarchart_com_477%2Fe1ba282fa6bef4759ec1fdc0d4620664"
+      "image": "https://s.yimg.com/lo/mysterio/api/4FF323C0DCA004913E987FEB8EA0BDE1E13FD4AE3C22E6B70515BDADCCEBBEC2/subgraphmysterio/resizefit_w960;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fbarchart_com_477%2Fe1ba282fa6bef4759ec1fdc0d4620664",
+      "topic": "chips"
     },
     {
       "id": "nw0028",
@@ -281,7 +308,8 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "IT Pro",
       "url": "https://www.itpro.com/infrastructure/what-to-expect-at-amd-advancing-ai-2026",
-      "image": "https://cdn.mos.cms.futurecdn.net/kLnviFBTMkqbE45gfRYfkY.jpg"
+      "image": "https://cdn.mos.cms.futurecdn.net/kLnviFBTMkqbE45gfRYfkY.jpg",
+      "topic": "chips"
     }
   ],
   "portfolioReviews": []
