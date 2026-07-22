@@ -6,21 +6,13 @@
 //   habits: {habit:"exercise"|"read"|"water"|"sleep_early", done_dates:["YYYY-MM-DD", ...]}
 window.PLANNER_DATA = {
   "2026-07": {
-    "events": [
-      {"date":"2026-07-16","title":"กินข้าว","time":"08:00","end_time":"08:30","icon":"food","notes":""},
-      {"date":"2026-07-16","title":"เล่นเกม","time":"08:30","end_time":"09:30","icon":"game","notes":""},
-      {"date":"2026-07-16","title":"อาบน้ำ","time":"09:30","end_time":"09:40","icon":"shower","notes":""},
-      {"date":"2026-07-16","title":"อ่านหนังสือ","time":"09:40","end_time":"10:00","icon":"read","notes":""},
-      {"date":"2026-07-16","title":"นอน","time":"10:00","end_time":"18:00","icon":"sleep","notes":""},
-      {"date":"2026-07-16","title":"อาบน้ำ","time":"19:00","end_time":"19:10","icon":"shower","notes":""},
-      {"date":"2026-07-16","title":"กินข้าว","time":"21:30","end_time":"22:00","icon":"food","notes":""},
-      {"date":"2026-07-16","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""}
-    ],
-    "habits": [
-      {"habit":"read","done_dates":["2026-07-16"]},
-      {"habit":"sleep_early","done_dates":["2026-07-16"]}
-    ]
+    "events": [],
+    "habits": []
+  },
+  "2026-08": {
+    "events": [],
+    "habits": []
   }
 };
-window.PLANNER_KEYS = ["2026-07"];
-window.PLANNER_UPDATED = "16/07/2026";
+window.PLANNER_KEYS = ["2026-07", "2026-08"];
+window.PLANNER_UPDATED = "22/07/2026";
