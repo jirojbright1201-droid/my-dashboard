@@ -316,32 +316,39 @@ window.InvestmentView = (function () {
     setTimeout(() => o.classList.remove('active', 'closing'), 300);
   }
 
-  // ── swipe-to-back: ปัดจากขอบซ้ายของหน้าอ่านเต็มจอเพื่อย้อนกลับ (ท่าคุ้นแบบแอปข่าว/iOS) ──
+  // ── swipe-to-back: ปัดขวาที่ไหนก็ได้ในหน้าอ่านเต็มจอเพื่อย้อนกลับ (ท่าคุ้นแบบแอปข่าว) ──
+  // (เดิมจำกัดแค่ 28px จากขอบซ้ายแล้วปัดไม่ติด — น่าจะโดน OS ดักท่าที่ขอบจอก่อนถึง JS
+  //  เปลี่ยนมาเช็คทิศทางจากระยะที่ขยับจริงแทน ไม่ผูกกับตำแหน่งเริ่มปัด)
   function wireSwipeBack() {
     const el = $('invArticle');
-    const EDGE = 28; // จับ swipe เฉพาะเริ่มใกล้ขอบซ้าย กันชนกับสไครอลเนื้อหาปกติ
-    let startX = 0, startY = 0, dx = 0, dragging = false;
+    let startX = 0, startY = 0, dx = 0, tracking = false, dragging = false;
     el.addEventListener('touchstart', e => {
       const t = e.touches[0];
-      if (t.clientX > EDGE) return;
-      startX = t.clientX; startY = t.clientY; dx = 0; dragging = true;
-      el.style.transition = 'none';
+      startX = t.clientX; startY = t.clientY; dx = 0; tracking = true; dragging = false;
     }, { passive: true });
     el.addEventListener('touchmove', e => {
-      if (!dragging) return;
+      if (!tracking) return;
       const t = e.touches[0];
       dx = t.clientX - startX;
       const dy = t.clientY - startY;
-      if (Math.abs(dy) > Math.abs(dx) + 10) { dragging = false; el.style.transition = ''; el.style.transform = ''; return; }
-      if (dx > 0) el.style.transform = `translateX(${dx}px)`;
+      if (!dragging) {
+        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return; // ยังขยับน้อยไป ตัดสินทิศทางไม่ได้
+        if (Math.abs(dy) >= Math.abs(dx) || dx <= 0) { tracking = false; return; } // แนวตั้ง/ปัดซ้าย ปล่อยให้สโครลปกติ
+        dragging = true;
+        el.style.transition = 'none';
+      }
+      el.style.transform = `translateX(${dx}px)`;
     }, { passive: true });
-    el.addEventListener('touchend', () => {
+    const release = () => {
+      tracking = false;
       if (!dragging) return;
       dragging = false;
       el.style.transition = '';
       el.style.transform = '';
-      if (dx > 90) closeArticle();
-    });
+      if (dx > 80) closeArticle();
+    };
+    el.addEventListener('touchend', release);
+    el.addEventListener('touchcancel', release);
   }
 
   // ── tabs ──
