@@ -406,9 +406,10 @@ window.InvestmentView = (function () {
 
   function guidanceBox(g) {
     if (!g) return '';
+    const delta = g.deltaPct ? `<div class="n">vs prior · <span class="d ${g.dir === 'neg' ? 'neg' : 'pos'}">${esc(g.deltaPct)}</span></div>` : '';
     return `<div class="inv-stat-tiles">
       <div class="inv-stat-tile"><div class="l">${esc(g.priorLabel || 'Prior guide')}</div><div class="v">${esc(g.priorVal)}</div></div>
-      <div class="inv-stat-tile"><div class="l">${esc(g.newLabel || 'New guide')}</div><div class="v">${esc(g.newVal)}</div></div>
+      <div class="inv-stat-tile"><div class="l">${esc(g.newLabel || 'New guide')}</div><div class="v">${esc(g.newVal)}</div>${delta}</div>
     </div>`;
   }
 

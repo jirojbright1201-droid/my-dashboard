@@ -30,7 +30,9 @@ window.INVESTMENT_DATA = {
         "priorLabel": "Street est. (FY27 revenue)",
         "priorVal": "~$85M",
         "newLabel": "New guide (FY27 revenue)",
-        "newVal": "$130M–150M"
+        "newVal": "$130M–150M",
+        "deltaPct": "~+65%",
+        "dir": "pos"
       },
       "positives": [
         { "label": "Demand", "note": "ดีมานด์เร่งตัวชัดเจนในกลุ่มชิปประมวลผล AI, silicon photonics (เทคโนโลยีรับส่งข้อมูลด้วยแสงในดาต้าเซ็นเตอร์) และ power semiconductor (ชิปกำลังไฟฟ้าตระกูล SiC/GaN สำหรับรถยนต์ไฟฟ้า) ซึ่งทั้งสามกลุ่มนี้กลายเป็นสัดส่วนหลักของธุรกิจไปแล้ว" },
