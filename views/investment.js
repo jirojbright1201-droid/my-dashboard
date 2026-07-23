@@ -77,6 +77,15 @@ window.InvestmentView = (function () {
       </div>
     </div>
     <div class="inv-art-footer"><a class="inv-open-btn" id="invArtLink" href="#" target="_blank" rel="noopener">Open Original &#8599;</a></div>
+  </div>
+
+  <div class="inv-article" id="invDeepArticle">
+    <div class="inv-dd-full-topbar">
+      <button class="inv-dd-backbtn" id="invDDBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    </div>
+    <div class="inv-art-scroll" id="invDDScroll">
+      <div class="inv-art-body" id="invDDBody"></div>
+    </div>
   </div>`;
 
   function tagChip(macro) {
@@ -521,12 +530,11 @@ window.InvestmentView = (function () {
 
   function openDeepDive(id) {
     const d = deepDiveById(id); if (!d) return;
-    $('invMTitle').textContent = d.ticker ? `${d.ticker} — ${d.company}` : d.company;
-    $('invMSub').textContent = `${d.sector ? d.sector + ' · ' : ''}${fmtDate(d.date)}`;
-    $('invMBody').innerHTML = `
-      <div class="inv-pr-section">
-        <div class="inv-summary">${esc(d.tagline)}</div>
-      </div>
+    $('invDDBody').innerHTML = `
+      <div class="inv-art-h">${esc(d.ticker ? d.ticker + ' — ' + d.company : d.company)}</div>
+      <div class="inv-art-rule"></div>
+      <div class="inv-art-byline">${d.sector ? esc(d.sector) + ' · ' : ''}${fmtDate(d.date)}</div>
+      <div class="inv-summary">${esc(d.tagline)}</div>
       <div class="inv-pr-section">
         <div class="section-title">Business Overview</div>
         <div class="inv-summary">${esc(d.overview)}</div>
@@ -566,8 +574,12 @@ window.InvestmentView = (function () {
         ${sourcesList(d.sources)}
       </div>
       <div class="inv-pr-caveats">${esc(d.caveats)}</div>`;
-    $('invOverlay').classList.add('active');
+    $('invDeepArticle').classList.add('open');
+    $('invDDScroll') && ($('invDDScroll').scrollTop = 0);
     pushOverlayState('deepdive');
+  }
+  function closeDeepArticle() {
+    $('invDeepArticle').classList.remove('open');
   }
 
   // ── detail: หน้าอ่านเต็มจอ (เปลี่ยนจาก bottom sheet มาเป็นแบบนี้ 22 ก.ค. 2026 — jiroj เลือกจาก mockup 3 แบบ, ชอบ full-screen article) ──
@@ -603,6 +615,7 @@ window.InvestmentView = (function () {
   function wirePopstate() {
     window.addEventListener('popstate', () => {
       if ($('invArticle').classList.contains('open')) closeArticle();
+      if ($('invDeepArticle').classList.contains('open')) closeDeepArticle();
       if ($('invOverlay').classList.contains('active')) closeModal();
     });
   }
@@ -629,6 +642,7 @@ window.InvestmentView = (function () {
     $('invMClose').onclick = goBackIfOverlay;
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) goBackIfOverlay(); };
     $('invArtBack').onclick = goBackIfOverlay;
+    $('invDDBack').onclick = goBackIfOverlay;
     wirePopstate();
   }
 
