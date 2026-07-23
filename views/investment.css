@@ -203,11 +203,12 @@ table.inv-metrics td.d.neg { color: var(--red); }
 @media (max-width: 480px) { .inv-gbox { grid-template-columns: 1fr; } }
 
 /* ── company deep-dive (เพิ่ม 24 ก.ค. 2026 — ใช้โทเคนสีเดียวกับทั้งแอป ไม่มีธีมแยกต่อบริษัท) ── */
-table.inv-dd-stats { width: 100%; border-collapse: collapse; font-size: 0.8125rem; margin-top: 2px; }
-table.inv-dd-stats td { padding: 8px 0; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
-table.inv-dd-stats td:first-child { font-weight: 600; width: 38%; }
-table.inv-dd-stats td.v { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; width: 1%; padding-right: 12px; }
-table.inv-dd-stats td.n { color: var(--silver); font-size: 0.75rem; }
+.inv-dd-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-soft); border: 1px solid var(--border-soft); border-radius: 12px; overflow: hidden; margin-top: 12px; }
+.inv-dd-stat-tile { background: var(--surface); padding: 12px 14px; }
+.inv-dd-stat-tile .l { font-size: 0.6875rem; color: var(--silver); line-height: 1.35; }
+.inv-dd-stat-tile .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.05rem; font-weight: 700; color: var(--text); margin-top: 3px; }
+.inv-dd-stat-tile .n { font-size: 0.6875rem; color: var(--silver); line-height: 1.45; margin-top: 4px; }
+@media (max-width: 400px) { .inv-dd-stats { grid-template-columns: 1fr; } }
 
 .inv-dd-comp { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
 .inv-dd-comp-row { padding-bottom: 14px; border-bottom: 1px solid var(--border-soft); }
@@ -233,5 +234,10 @@ table.inv-dd-stats td.n { color: var(--silver); font-size: 0.75rem; }
 .inv-dd-backbtn { width: 34px; height: 34px; border-radius: 9999px; border: none; cursor: pointer; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; }
 .inv-dd-backbtn:active { opacity: .7; }
 #invDeepArticle .inv-art-byline { color: var(--silver); font-size: 0.75rem; }
-#invDeepArticle .inv-summary { margin-top: 14px; }
-#invDeepArticle .inv-pr-section { margin-top: 22px; }
+#invDeepArticle .inv-summary { margin-top: 14px; font-size: 0.975rem; }
+/* เอกสารยาว 8 หัวข้อ ต้องแยกจังหวะให้ชัดกว่าโมดัลสั้นๆ ของ Portfolio/Earnings — jiroj บอกอ่านยาก
+   (1) หัวข้อใหญ่ขึ้น เป็น serif แทน mono caps จิ๋ว (2) เส้นคั่น+ระยะห่างก่อนแต่ละหัวข้อ */
+#invDeepArticle .inv-pr-section,
+#invDeepArticle .inv-pr-twocol { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-soft); }
+#invDeepArticle .inv-pr-section:first-of-type { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border-soft); }
+#invDeepArticle .section-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--text); text-transform: none; letter-spacing: 0; margin-bottom: 12px; }

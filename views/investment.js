@@ -417,8 +417,12 @@ window.InvestmentView = (function () {
   }
   function statTable(rows) {
     if (!rows || !rows.length) return '';
-    return `<table class="inv-dd-stats"><tbody>${rows.map(m => `
-      <tr><td>${esc(m.label)}</td><td class="v">${esc(m.value)}</td><td class="n">${esc(m.note || '')}</td></tr>`).join('')}</tbody></table>`;
+    return `<div class="inv-dd-stats">${rows.map(m => `
+      <div class="inv-dd-stat-tile">
+        <div class="l">${esc(m.label)}</div>
+        <div class="v">${esc(m.value)}</div>
+        ${m.note ? `<div class="n">${esc(m.note)}</div>` : ''}
+      </div>`).join('')}</div>`;
   }
   function compTable(rows) {
     if (!rows || !rows.length) return '';
