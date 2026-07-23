@@ -155,3 +155,42 @@
 .inv-pr-neg .section-title { color: var(--red); }
 .inv-pr-caveats { font-size: 0.75rem; color: var(--silver); font-style: italic; line-height: 1.55; padding-top: 12px; border-top: 1px solid var(--border-soft); }
 @media (max-width: 480px) { .inv-pr-twocol { grid-template-columns: 1fr; gap: 14px; } }
+
+/* ── earnings analysis — Light + Trend (jiroj เลือกจากพรีวิว 23 ก.ค. 2026) ── */
+.inv-er-row-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.inv-badge { font-family: var(--mono); font-size: 0.625rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 9999px; border: 1px solid currentColor; flex-shrink: 0; }
+.inv-badge.beat { color: var(--green); }
+.inv-badge.miss { color: var(--red); }
+.inv-badge.inline { color: var(--silver); }
+
+.inv-er-verdict { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 18px; }
+.inv-er-vline { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+
+table.inv-metrics { width: 100%; border-collapse: collapse; font-size: 0.8125rem; margin-top: 2px; font-variant-numeric: tabular-nums; }
+table.inv-metrics th { text-align: right; font-size: 0.65rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 0 0 7px; }
+table.inv-metrics th:first-child { text-align: left; }
+table.inv-metrics td { padding: 7px 0; border-bottom: 1px solid var(--border-soft); text-align: right; font-family: var(--mono); }
+table.inv-metrics td:first-child { text-align: left; font-family: inherit; font-weight: 600; }
+table.inv-metrics td.d.pos { color: var(--green); }
+table.inv-metrics td.d.neg { color: var(--red); }
+
+.inv-gbox { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 2px; }
+.inv-gcell { background: var(--surface-2); border-radius: 12px; padding: 11px 13px; }
+.inv-gcell .l { font-size: 0.65rem; color: var(--silver); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+.inv-gcell .v { font-family: var(--mono); font-size: 0.9rem; font-weight: 700; margin-top: 4px; }
+.inv-gcell.new { outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
+
+.inv-trend { display: flex; align-items: flex-end; gap: 10px; margin-top: 2px; }
+.inv-trend-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.inv-trend-bar { width: 100%; height: 56px; border-radius: 5px 5px 2px 2px; background: var(--surface-3); position: relative; }
+.inv-trend-fill { position: absolute; bottom: 0; left: 0; right: 0; border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, var(--accent-bright), var(--accent)); }
+.inv-trend-lab { font-size: 0.625rem; color: var(--silver); font-family: var(--mono); }
+
+.inv-srclist { margin-top: 2px; }
+.inv-src-item { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 0.75rem; padding: 7px 0; border-bottom: 1px solid var(--border-soft); }
+.inv-src-item:last-child { border-bottom: none; }
+.inv-src-item a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.inv-src-item .d { color: var(--silver); flex-shrink: 0; }
+
+@media (max-width: 480px) { .inv-gbox { grid-template-columns: 1fr; } }

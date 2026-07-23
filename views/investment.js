@@ -1,9 +1,11 @@
 // ===== Investment Tracker hub — สรุปข่าวการลงทุน/การเงินโลกรายวัน (data: data/investment.data.js) =====
 // ลุค Editorial (หนังสือพิมพ์/Apple News) — jiroj เลือกเอง 21 ก.ค. 2026: masthead แทน hero เข้ม, พาดหัว serif, filter แท็บขีดเส้นใต้
 window.InvestmentView = (function () {
-  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [] };
+  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [], earningsReviews: [] };
   const BRIEFS = DATA.briefs || [];
   const REVIEWS = DATA.portfolioReviews || [];
+  const EARNINGS = DATA.earningsReviews || [];
+  const VERDICT_LABEL = { beat: 'Beat', miss: 'Miss', inline: 'In-line' };
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
@@ -31,15 +33,18 @@ window.InvestmentView = (function () {
   const $ = id => root.querySelector('#' + id);
   const briefById = id => BRIEFS.find(b => b.id === id);
   const reviewById = id => REVIEWS.find(r => r.id === id);
+  const earningsById = id => EARNINGS.find(e => e.id === id);
   const latestDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
 
   const TEMPLATE = `
   <div class="container inv">
     <div id="inv-news" class="inv-pane active"></div>
     <div id="inv-portfolio" class="inv-pane"></div>
+    <div id="inv-earnings" class="inv-pane"></div>
     <nav class="tabbar">
       <button class="inv-tabbtn tab-item active" data-tab="news">${S('<path d="M4 6h16M4 12h16M4 18h10"/>')}<span>News</span></button>
       <button class="inv-tabbtn tab-item" data-tab="portfolio">${S('<path d="M3 3v18h18"/><path d="M7 14l4-5 3 3 5-7"/>')}<span>Portfolio</span></button>
+      <button class="inv-tabbtn tab-item" data-tab="earnings">${S('<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')}<span>Earnings</span></button>
     </nav>
   </div>
 
@@ -305,6 +310,95 @@ window.InvestmentView = (function () {
     return `<ul class="inv-bullets">${(items || []).map(m => `<li><strong>${esc(m.label)}:</strong> ${esc(m.note)}</li>`).join('')}</ul>`;
   }
 
+  // ── earnings analysis (Light + Trend — jiroj เลือกจากพรีวิว 23 ก.ค. 2026) ──
+  function erow(e) {
+    const rev = (e.metrics || []).find(m => /revenue/i.test(m.label));
+    const eps = (e.metrics || []).find(m => /eps/i.test(m.label));
+    const bits = [];
+    if (rev) bits.push(`Revenue ${rev.deltaPct}`);
+    if (eps) bits.push(`EPS ${eps.deltaPct}`);
+    return `<div class="inv-ed-item" data-er-id="${esc(e.id)}">
+      <div class="inv-er-row-top">
+        <div class="inv-ed-h">${esc(e.ticker)} — ${esc(e.quarter)}</div>
+        <span class="inv-badge ${esc(e.verdict)}">${esc(VERDICT_LABEL[e.verdict] || e.verdict)}</span>
+      </div>
+      <div class="inv-ed-meta">${bits.length ? esc(bits.join(' · ')) + ' · ' : ''}${fmtDate(e.reportDate || e.date)}</div>
+    </div>`;
+  }
+
+  function renderEarnings() {
+    const sorted = [...EARNINGS].sort((a, b) => (b.reportDate || b.date).localeCompare(a.reportDate || a.date));
+    const body = sorted.length
+      ? sorted.map(erow).join('')
+      : `<div class="inv-ed-empty"><div class="t">No earnings reviews yet</div><div class="s">Ask Jarvis to analyze a stock's latest quarterly results</div></div>`;
+    $('inv-earnings').innerHTML = `${masthead(`Earnings Reviews · ${sorted.length}`)}${body}`;
+  }
+
+  function metricsTable(rows) {
+    if (!rows || !rows.length) return '';
+    return `<table class="inv-metrics"><thead><tr><th>Metric</th><th>Actual</th><th>Est.</th><th>&#916;</th></tr></thead><tbody>${rows.map(m => `
+      <tr><td>${esc(m.label)}</td><td>${esc(m.actual)}</td><td>${esc(m.est)}</td><td class="d ${m.dir === 'neg' ? 'neg' : 'pos'}">${esc(m.deltaPct)}</td></tr>`).join('')}</tbody></table>`;
+  }
+
+  function trendBars(rows) {
+    if (!rows || rows.length < 2) return '';
+    const max = Math.max(...rows.map(r => parseFloat(r.value) || 0));
+    return `<div class="inv-trend">${rows.map(r => {
+      const h = max > 0 ? Math.max(4, Math.round((parseFloat(r.value) || 0) / max * 56)) : 0;
+      return `<div class="inv-trend-col">
+        <div class="inv-trend-bar"><div class="inv-trend-fill" style="height:${h}px"></div></div>
+        <div class="inv-trend-lab">${esc(r.label)}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+
+  function guidanceBox(g) {
+    if (!g) return '';
+    return `<div class="inv-gbox">
+      <div class="inv-gcell"><div class="l">${esc(g.priorLabel || 'Prior guide')}</div><div class="v">${esc(g.priorVal)}</div></div>
+      <div class="inv-gcell new"><div class="l">${esc(g.newLabel || 'New guide')}</div><div class="v">${esc(g.newVal)}</div></div>
+    </div>`;
+  }
+
+  function sourcesList(rows) {
+    if (!rows || !rows.length) return '<div class="empty">No sources logged</div>';
+    return `<div class="inv-srclist">${rows.map(s => `<div class="inv-src-item"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a><span class="d">${esc(s.domain || '')}</span></div>`).join('')}</div>`;
+  }
+
+  function openEarnings(id) {
+    const e = earningsById(id); if (!e) return;
+    $('invMTitle').textContent = `${e.ticker} — ${e.quarter}`;
+    $('invMSub').textContent = fmtDate(e.reportDate || e.date);
+    const trend = trendBars(e.trend);
+    const guide = guidanceBox(e.guidance);
+    $('invMBody').innerHTML = `
+      <div class="inv-er-verdict">
+        <span class="inv-badge ${esc(e.verdict)}">${esc(VERDICT_LABEL[e.verdict] || e.verdict)}</span>
+        <div class="inv-er-vline">${esc(e.verdictLine)}</div>
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Key Metrics</div>
+        ${metricsTable(e.metrics)}
+      </div>
+      ${trend ? `<div class="inv-pr-section"><div class="section-title">Quarterly Revenue Trend</div>${trend}</div>` : ''}
+      ${guide ? `<div class="inv-pr-section"><div class="section-title">Guidance</div>${guide}</div>` : ''}
+      <div class="inv-pr-twocol">
+        <div class="inv-pr-pos"><div class="section-title">What's Working</div>${bulletList(e.positives)}</div>
+        <div class="inv-pr-neg"><div class="section-title">What Concerns Me</div>${bulletList(e.concerns)}</div>
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Discussion Points</div>
+        <ol class="inv-bullets">${(e.discussion || []).map(d => `<li>${esc(d)}</li>`).join('')}</ol>
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Sources</div>
+        ${sourcesList(e.sources)}
+      </div>
+      <div class="inv-pr-caveats">${esc(e.caveats)}</div>`;
+    $('invOverlay').classList.add('active');
+    pushOverlayState('earnings');
+  }
+
   function openReview(id) {
     const r = reviewById(id); if (!r) return;
     $('invMTitle').textContent = 'Portfolio Review';
@@ -382,12 +476,14 @@ window.InvestmentView = (function () {
     root.querySelectorAll('.inv-pane').forEach(p => p.classList.toggle('active', p.id === 'inv-' + tab));
     if (tab === 'news') renderNews();
     else if (tab === 'portfolio') renderPortfolio();
+    else if (tab === 'earnings') renderEarnings();
   }
 
   function wire() {
     root.querySelectorAll('.inv-tabbtn').forEach(b => b.onclick = () => switchTab(b.dataset.tab));
     root.addEventListener('click', e => {
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
+      const er = e.target.closest('[data-er-id]'); if (er) { openEarnings(er.dataset.erId); return; }
       const c = e.target.closest('[data-id]'); if (c) openBrief(c.dataset.id);
     });
     $('invMClose').onclick = goBackIfOverlay;
