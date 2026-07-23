@@ -541,6 +541,10 @@ window.InvestmentView = (function () {
         <div class="inv-pr-pos"><div class="section-title">Catalysts</div>${bulletList(d.catalysts)}</div>
         <div class="inv-pr-neg"><div class="section-title">Risks</div>${bulletList(d.risks)}</div>
       </div>
+      ${(d.discussion || []).length ? `<div class="inv-pr-section">
+        <div class="section-title">Discussion</div>
+        <ol class="inv-bullets">${d.discussion.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+      </div>` : ''}
       <div class="inv-pr-caveats">${esc(d.caveats)}</div>`;
     $('invDeepArticle').classList.add('open');
     $('invDDScroll') && ($('invDDScroll').scrollTop = 0);
