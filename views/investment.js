@@ -391,17 +391,29 @@ window.InvestmentView = (function () {
     return `<div class="inv-srclist">${rows.map(s => `<div class="inv-src-item"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a><span class="d">${esc(s.domain || '')}</span></div>`).join('')}</div>`;
   }
 
-  // ── company deep-dive (เพิ่ม 24 ก.ค. 2026 — ใช้คอมโพเนนต์ Editorial เดิมของแอปทั้งหมด ไม่มีธีมแยกต่อบริษัท) ──
-  function ddrow(d) {
+  // ── company deep-dive (เพิ่ม 24 ก.ค. 2026, ปรับลุคให้ตรงกับ News lead+earlier 24 ก.ค. 2026 — jiroj บอกลุคเดิม (ลิสต์แถวเล็กล้วน) ไม่สวย ใช้คอมโพเนนต์ Editorial เดิมของแอปทั้งหมด ไม่มีธีมแยกต่อบริษัท) ──
+  function ddMeta(d) {
+    return `<div class="inv-ed-meta">${d.sector ? `<span class="inv-tag-txt c">${esc(d.sector)}</span>` : ''}<span>· ${fmtDate(d.date)}</span></div>`;
+  }
+  function ddLead(d) {
+    return `<div class="inv-ed-lead" data-dd-id="${esc(d.id)}">
+      <div class="inv-ed-lead-h">${esc(d.ticker ? d.ticker + ' — ' + d.company : d.company)}</div>
+      <div class="inv-ed-lead-sum">${esc(d.tagline)}</div>
+      ${ddMeta(d)}
+    </div>`;
+  }
+  function ddItem(d) {
     return `<div class="inv-ed-item" data-dd-id="${esc(d.id)}">
       <div class="inv-ed-h">${esc(d.ticker ? d.ticker + ' — ' + d.company : d.company)}</div>
-      <div class="inv-ed-meta"><span>${esc(d.sector || '')}</span>${d.sector ? '<span>·</span>' : ''}<span>${fmtDate(d.date)}</span></div>
+      ${ddMeta(d)}
     </div>`;
   }
   function renderDeepDive() {
     const sorted = [...DEEPDIVES].sort((a, b) => b.date.localeCompare(a.date));
-    const body = sorted.length
-      ? sorted.map(ddrow).join('')
+    const lead = sorted[0];
+    const rest = sorted.slice(1);
+    const body = lead
+      ? ddLead(lead) + (rest.length ? `<div class="inv-ed-day inv-ed-earlier">Earlier</div>${rest.map(ddItem).join('')}` : '')
       : `<div class="inv-ed-empty"><div class="t">No deep-dives yet</div><div class="s">Ask Jarvis to research a company for you</div></div>`;
     $('inv-deepdive').innerHTML = `${masthead(`Company Deep-Dives · ${sorted.length}`)}${body}`;
   }
