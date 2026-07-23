@@ -485,10 +485,8 @@ window.InvestmentView = (function () {
     $('invEarnBody').innerHTML = `
       <div class="inv-art-h">${esc(e.ticker)} — ${esc(e.quarter)}</div>
       <div class="inv-art-rule"></div>
-      <div class="inv-art-byline">
-        <span><span class="inv-source">Reported</span> ${fmtDate(e.reportDate || e.date)}</span>
-        <span class="inv-badge ${esc(e.verdict)}">${esc(VERDICT_LABEL[e.verdict] || e.verdict)}</span>
-      </div>
+      <div class="inv-art-badge-row"><span class="inv-badge ${esc(e.verdict)}">${esc(VERDICT_LABEL[e.verdict] || e.verdict)}</span></div>
+      <div class="inv-art-byline"><span class="inv-source">Reported</span> ${fmtDate(e.reportDate || e.date)}</div>
       <div class="inv-er-vline">${esc(e.verdictLine)}</div>
       <div class="inv-pr-section">
         <div class="section-title">Key Metrics</div>
