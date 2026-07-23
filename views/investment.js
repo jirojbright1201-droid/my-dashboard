@@ -79,12 +79,21 @@ window.InvestmentView = (function () {
     <div class="inv-art-footer"><a class="inv-open-btn" id="invArtLink" href="#" target="_blank" rel="noopener">Open Original &#8599;</a></div>
   </div>
 
-  <div class="inv-article" id="invDeepArticle">
-    <div class="inv-dd-full-topbar">
-      <button class="inv-dd-backbtn" id="invDDBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div class="inv-article inv-full-reader" id="invDeepArticle">
+    <div class="inv-full-topbar">
+      <button class="inv-full-backbtn" id="invDDBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     </div>
     <div class="inv-art-scroll" id="invDDScroll">
       <div class="inv-art-body" id="invDDBody"></div>
+    </div>
+  </div>
+
+  <div class="inv-article inv-full-reader" id="invEarnArticle">
+    <div class="inv-full-topbar">
+      <button class="inv-full-backbtn" id="invEarnBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    </div>
+    <div class="inv-art-scroll" id="invEarnScroll">
+      <div class="inv-art-body" id="invEarnBody"></div>
     </div>
   </div>`;
 
@@ -349,8 +358,12 @@ window.InvestmentView = (function () {
 
   function metricsTable(rows) {
     if (!rows || !rows.length) return '';
-    return `<table class="inv-metrics"><thead><tr><th>Metric</th><th>Actual</th><th>Est.</th><th>&#916;</th></tr></thead><tbody>${rows.map(m => `
-      <tr><td>${esc(m.label)}</td><td>${esc(m.actual)}</td><td>${esc(m.est)}</td><td class="d ${m.dir === 'neg' ? 'neg' : 'pos'}">${esc(m.deltaPct)}</td></tr>`).join('')}</tbody></table>`;
+    return `<div class="inv-stat-tiles">${rows.map(m => `
+      <div class="inv-stat-tile">
+        <div class="l">${esc(m.label)}</div>
+        <div class="v">${esc(m.actual)}</div>
+        <div class="n">est ${esc(m.est)} · <span class="d ${m.dir === 'neg' ? 'neg' : 'pos'}">${esc(m.deltaPct)}</span></div>
+      </div>`).join('')}</div>`;
   }
 
   function trendBars(rows, unit) {
@@ -417,8 +430,8 @@ window.InvestmentView = (function () {
   }
   function statTable(rows) {
     if (!rows || !rows.length) return '';
-    return `<div class="inv-dd-stats">${rows.map(m => `
-      <div class="inv-dd-stat-tile">
+    return `<div class="inv-stat-tiles">${rows.map(m => `
+      <div class="inv-stat-tile">
         <div class="l">${esc(m.label)}</div>
         <div class="v">${esc(m.value)}</div>
         ${m.note ? `<div class="n">${esc(m.note)}</div>` : ''}
@@ -439,13 +452,14 @@ window.InvestmentView = (function () {
   }
   function openEarnings(id) {
     const e = earningsById(id); if (!e) return;
-    $('invMTitle').textContent = `${e.ticker} — ${e.quarter}`;
-    $('invMSub').textContent = fmtDate(e.reportDate || e.date);
     const revMetric = (e.metrics || []).find(m => /revenue/i.test(m.label));
     const unitMatch = revMetric && /([A-Z])\s*$/.exec(String(revMetric.actual || '').trim());
     const trend = trendBars(e.trend, unitMatch ? unitMatch[1] : '');
     const guide = guidanceBox(e.guidance);
-    $('invMBody').innerHTML = `
+    $('invEarnBody').innerHTML = `
+      <div class="inv-art-h">${esc(e.ticker)} — ${esc(e.quarter)}</div>
+      <div class="inv-art-rule"></div>
+      <div class="inv-art-byline">Reported ${fmtDate(e.reportDate || e.date)}</div>
       <div class="inv-er-verdict">
         <span class="inv-badge ${esc(e.verdict)}">${esc(VERDICT_LABEL[e.verdict] || e.verdict)}</span>
         <div class="inv-er-vline">${esc(e.verdictLine)}</div>
@@ -469,8 +483,12 @@ window.InvestmentView = (function () {
         ${sourcesList(e.sources)}
       </div>
       <div class="inv-pr-caveats">${esc(e.caveats)}</div>`;
-    $('invOverlay').classList.add('active');
+    $('invEarnArticle').classList.add('open');
+    $('invEarnScroll') && ($('invEarnScroll').scrollTop = 0);
     pushOverlayState('earnings');
+  }
+  function closeEarnArticle() {
+    $('invEarnArticle').classList.remove('open');
   }
 
   function openReview(id) {
@@ -588,6 +606,7 @@ window.InvestmentView = (function () {
     window.addEventListener('popstate', () => {
       if ($('invArticle').classList.contains('open')) closeArticle();
       if ($('invDeepArticle').classList.contains('open')) closeDeepArticle();
+      if ($('invEarnArticle').classList.contains('open')) closeEarnArticle();
       if ($('invOverlay').classList.contains('active')) closeModal();
     });
   }
@@ -615,6 +634,7 @@ window.InvestmentView = (function () {
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) goBackIfOverlay(); };
     $('invArtBack').onclick = goBackIfOverlay;
     $('invDDBack').onclick = goBackIfOverlay;
+    $('invEarnBack').onclick = goBackIfOverlay;
     wirePopstate();
   }
 
