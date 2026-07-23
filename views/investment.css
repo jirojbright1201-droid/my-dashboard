@@ -231,7 +231,7 @@
 .inv-full-topbar { display: flex; align-items: center; padding: calc(14px + env(safe-area-inset-top)) 14px 8px; flex-shrink: 0; border-bottom: 1px solid var(--border-soft); }
 .inv-full-backbtn { width: 34px; height: 34px; border-radius: 9999px; border: none; cursor: pointer; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; }
 .inv-full-backbtn:active { opacity: .7; }
-.inv-full-reader .inv-art-byline { color: var(--silver); font-size: 0.75rem; }
+.inv-full-reader .inv-art-byline { color: var(--silver); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
 .inv-full-reader .inv-summary { margin-top: 14px; font-size: 0.975rem; }
 /* เอกสารเต็มจอยาวกว่าโมดัลสั้นๆ ของ Portfolio — jiroj บอกอ่านยาก (deep-dive 24 ก.ค. 2026)
    (1) หัวข้อใหญ่ขึ้น เป็น serif แทน mono caps จิ๋ว (2) เส้นคั่น+ระยะห่างก่อนแต่ละหัวข้อ — ใช้กฎเดียวกันกับ Earnings full-screen */
