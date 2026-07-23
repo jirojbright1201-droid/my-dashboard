@@ -486,7 +486,7 @@ window.InvestmentView = (function () {
       <div class="inv-art-h">${esc(e.ticker)} — ${esc(e.quarter)}</div>
       <div class="inv-art-rule"></div>
       <div class="inv-art-byline">
-        <span>Reported ${fmtDate(e.reportDate || e.date)}</span>
+        <span><span class="inv-source">Reported</span> ${fmtDate(e.reportDate || e.date)}</span>
         <span class="inv-badge ${esc(e.verdict)}">${esc(VERDICT_LABEL[e.verdict] || e.verdict)}</span>
       </div>
       <div class="inv-er-vline">${esc(e.verdictLine)}</div>
