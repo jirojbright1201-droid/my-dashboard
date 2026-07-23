@@ -437,21 +437,6 @@ window.InvestmentView = (function () {
     if (!items || !items.length) return '';
     return `<div class="inv-dd-chips">${items.map(t => `<span class="inv-dd-chip">${esc(t)}</span>`).join('')}</div>`;
   }
-  function ratingTally(buy, hold, sell) {
-    const total = (buy || 0) + (hold || 0) + (sell || 0);
-    if (!total) return '';
-    return `<div class="inv-dd-ratings">
-      <div class="inv-dd-rcell buy"><b>${buy || 0}</b><span>Buy</span></div>
-      <div class="inv-dd-rcell hold"><b>${hold || 0}</b><span>Hold</span></div>
-      <div class="inv-dd-rcell sell"><b>${sell || 0}</b><span>Sell</span></div>
-    </div>`;
-  }
-  function priceTargetRow(low, median, high, current) {
-    if (!low && !median && !high && !current) return '';
-    const cell = (l, v) => v ? `<div class="inv-dd-rcell"><b>$${esc(String(v))}</b><span>${l}</span></div>` : '';
-    return `<div class="inv-dd-ratings">${cell('Low', low)}${cell('Median', median)}${cell('High', high)}${cell('Current', current)}</div>`;
-  }
-
   function openEarnings(id) {
     const e = earningsById(id); if (!e) return;
     $('invMTitle').textContent = `${e.ticker} — ${e.quarter}`;
@@ -555,16 +540,6 @@ window.InvestmentView = (function () {
       <div class="inv-pr-twocol">
         <div class="inv-pr-pos"><div class="section-title">Catalysts</div>${bulletList(d.catalysts)}</div>
         <div class="inv-pr-neg"><div class="section-title">Risks</div>${bulletList(d.risks)}</div>
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Analyst Sentiment</div>
-        <div class="inv-summary">${esc(d.analystSummary)}</div>
-        ${ratingTally(d.ratingBuy, d.ratingHold, d.ratingSell)}
-        ${priceTargetRow(d.priceTargetLow, d.priceTargetMedian, d.priceTargetHigh, d.priceTargetCurrent)}
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Sources</div>
-        ${sourcesList(d.sources)}
       </div>
       <div class="inv-pr-caveats">${esc(d.caveats)}</div>`;
     $('invDeepArticle').classList.add('open');

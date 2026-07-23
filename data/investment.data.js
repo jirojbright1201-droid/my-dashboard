@@ -2,7 +2,7 @@
 // schema briefs: id/date/title/summary/macro/sourceName/url — append-only ต่อท้ายของเดิมทุกครั้งที่ sync ไม่ full-rebuild
 // schema portfolioReviews: id/date/holdingsRaw/snapshot/allocation/macroLens/positives/concerns/discussion/caveats — append-only ต่อท้ายทุกครั้งที่รีวิวพอร์ตใหม่
 // schema earningsReviews: id/date/ticker/company/quarter/reportDate/verdict/verdictLine/metrics/trend/guidance/positives/concerns/discussion/sources/caveats — append-only ต่อท้ายทุกครั้งที่รีวิวงบใหม่ (เพิ่ม 23 ก.ค. 2026)
-// schema companyDeepDives: id/date/ticker/company/sector/tagline/overview/technology/marketSummary/competitors/financialsSummary/financialMetrics/financialTrend/leadership/investors/catalysts/risks/analystSummary/ratingBuy/ratingHold/ratingSell/priceTargetLow/priceTargetMedian/priceTargetHigh/priceTargetCurrent/sources/caveats — append-only ต่อท้ายทุกครั้งที่รีเสิร์ชบริษัทใหม่ (เพิ่ม 24 ก.ค. 2026)
+// schema companyDeepDives: id/date/ticker/company/sector/tagline/overview/technology/marketSummary/competitors/financialsSummary/financialMetrics/financialTrend/leadership/investors/catalysts/risks/caveats — append-only ต่อท้ายทุกครั้งที่รีเสิร์ชบริษัทใหม่ (เพิ่ม 24 ก.ค. 2026, ตัด analystSummary/ratingBuy/ratingHold/ratingSell/priceTarget*/sources ออก 24 ก.ค. 2026 — jiroj ขอเอา Analyst Sentiment กับ Sources ออกจาก dashboard)
 window.INVESTMENT_DATA = {
   "briefs": [],
   "portfolioReviews": [],
@@ -100,29 +100,6 @@ window.INVESTMENT_DATA = {
         { "label": "ขาดทุนและเผาเงินสดต่อเนื่อง", "note": "ผลประกอบการพลาดเป้าติดต่อกันหลายไตรมาส อัตราเผาเงินสดยังขยายตัว" },
         { "label": "ความกังวลเรื่อง dilution", "note": "จากการออกหุ้นกู้แปลงสภาพมูลค่า $1 พันล้านล่าสุด ที่ราคาแปลงสภาพ $79.57/หุ้น" },
         { "label": "แรงกดดันจากคู่แข่งและภาวะตลาด", "note": "SpaceX Starlink ปล่อยดาวเทียมได้เร็วกว่ามาก และหุ้นกลุ่มอวกาศทั้งกลุ่มเผชิญแรงเทขายรุนแรงช่วงกรกฎาคม 2026 หุ้น ASTS ร่วงราว 32% ในหนึ่งเดือน และราว 60% จากจุดสูงสุดของปี" }
-      ],
-      "analystSummary": "ความเห็นนักวิเคราะห์วอลล์สตรีทต่อ ASTS อยู่ในโซนกลางๆ — มองบวกต่อโอกาสตลาดระยะยาวและฐานสัญญาที่มีอยู่ แต่ยังระมัดระวังเรื่องความเสี่ยงด้านการดำเนินงานและอัตราการเผาเงินสด ทำให้เรตติ้งโดยรวมออกมาเป็น \"Hold\" (ถือ) ไม่สุดโต่งไปทางใดทางหนึ่ง ราคาเป้าหมายเฉลี่ยรวมจากหลายสำนักอยู่ที่ประมาณ $84-88",
-      "ratingBuy": 3,
-      "ratingHold": 5,
-      "ratingSell": 2,
-      "priceTargetLow": 41.20,
-      "priceTargetMedian": 90.00,
-      "priceTargetHigh": 108.00,
-      "priceTargetCurrent": 62.29,
-      "sources": [
-        { "label": "AST SpaceMobile Targets $1B Revenue Run Rate", "url": "https://www.foreignpolicyjournal.com/2026/07/19/ast-spacemobile-nasdaq-asts-targets-1-billion-revenue-run-rate-as-commercial-satellite-launch-approaches/", "domain": "foreignpolicyjournal.com" },
-        { "label": "Next-Generation BlueBird", "url": "https://ast-science.com/next-gen-bluebird/", "domain": "ast-science.com" },
-        { "label": "BlueWalker 3", "url": "https://ast-science.com/bluewalker-3/", "domain": "ast-science.com" },
-        { "label": "Direct Satellite-to-Phone Cellular Market Size", "url": "https://www.fortunebusinessinsights.com/direct-satellite-to-phone-cellular-market-115878", "domain": "fortunebusinessinsights.com" },
-        { "label": "AST SpaceMobile Eyes Commercial Liftoff", "url": "https://www.abiresearch.com/market-research/insight/7787819-ast-spacemobile-eyes-commercial-liftoffbut", "domain": "abiresearch.com" },
-        { "label": "Q1 2026 Earnings Call Transcript", "url": "https://www.investing.com/news/transcripts/earnings-call-transcript-ast-spacemobile-q1-2026-misses-forecasts-stock-rises-93CH-4678715", "domain": "investing.com" },
-        { "label": "ASTS Earnings Miss Analysis", "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/261885217-asts-earnings-miss-revenue-shortfall-losses-satellite-launch-risks-cash-burn-competition-spacex-starlink-tradingkey", "domain": "tradingkey.com" },
-        { "label": "AT&T, Google, Vodafone Strategic Investment", "url": "https://www.businesswire.com/news/home/20240118463570/en/AST-SpaceMobile-Secures-Strategic-Investment-From-ATT-Google-and-Vodafone", "domain": "businesswire.com" },
-        { "label": "FCC Grants Commercial Authorization", "url": "https://www.satellitetoday.com/connectivity/2026/04/22/fcc-grants-ast-spacemobile-commercial-authorization-for-direct-to-device-service/", "domain": "satellitetoday.com" },
-        { "label": "Block 2 BlueBird Launch Coverage", "url": "https://spaceflightnow.com/2026/06/16/live-coverage-spacex-to-launch-3-block-2-bluebird-satellites-for-ast-spacemobile/", "domain": "spaceflightnow.com" },
-        { "label": "Space Stocks Sector Selloff", "url": "https://247wallst.com/investing/2026/07/17/ast-spacemobile-is-down-32-in-a-month-and-spacex-is-down-34-are-space-stocks-doomed/", "domain": "247wallst.com" },
-        { "label": "ASTS Analyst Forecast", "url": "https://www.tipranks.com/stocks/asts/forecast", "domain": "tipranks.com" },
-        { "label": "AST SpaceMobile Market Cap", "url": "https://companiesmarketcap.com/ast-spacemobile/marketcap/", "domain": "companiesmarketcap.com" }
       ],
       "caveats": "เนื้อหาทั้งหมดในรีเสิร์ชนี้รวบรวมจากแหล่งข้อมูลสาธารณะ ณ วันที่ 24 กรกฎาคม 2026 จัดทำขึ้นเพื่อวัตถุประสงค์ทางการศึกษาเท่านั้น ไม่ใช่คำแนะนำในการซื้อ ขาย หรือถือครองหลักทรัพย์ใดๆ ตัวเลขราคาหุ้น มูลค่าตลาด และราคาเป้าหมายเปลี่ยนแปลงได้ตลอดเวลา โปรดตรวจสอบข้อมูลล่าสุดก่อนตัดสินใจลงทุนทุกครั้ง"
     }

@@ -222,13 +222,6 @@ table.inv-metrics td.d.neg { color: var(--red); }
 .inv-dd-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .inv-dd-chip { font-family: var(--mono); font-size: 0.71rem; color: var(--silver); border: 1px solid var(--border); border-radius: 9999px; padding: 4px 11px; }
 
-.inv-dd-ratings { display: flex; gap: 10px; margin-top: 14px; }
-.inv-dd-rcell { flex: 1; text-align: center; background: var(--surface-2); border-radius: 12px; padding: 10px 6px; }
-.inv-dd-rcell b { display: block; font-family: var(--mono); font-size: 1.05rem; font-weight: 700; }
-.inv-dd-rcell span { font-size: 0.65rem; color: var(--silver); text-transform: uppercase; letter-spacing: .05em; }
-.inv-dd-rcell.buy b { color: var(--green); }
-.inv-dd-rcell.sell b { color: var(--red); }
-
 /* ── deep-dive full-screen reader (เปลี่ยนจาก modal มาเป็นเต็มจอ 24 ก.ค. 2026 — jiroj ขอ, ใช้ shell .inv-article เดียวกับ News แต่ไม่มีรูปหัว ) ── */
 .inv-dd-full-topbar { display: flex; align-items: center; padding: calc(14px + env(safe-area-inset-top)) 14px 8px; flex-shrink: 0; border-bottom: 1px solid var(--border-soft); }
 .inv-dd-backbtn { width: 34px; height: 34px; border-radius: 9999px; border: none; cursor: pointer; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; }
