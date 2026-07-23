@@ -34,6 +34,13 @@ window.INVESTMENT_DATA = {
         "deltaPct": "~+65%",
         "dir": "pos"
       },
+      "managementQuotes": [
+        { "quote": "Reliability and production wafer-level burn-in and screening for AI accelerators, CPUs, and network processors were our fastest growing markets this year, representing approximately 71% of our total annual revenue.", "speaker": "Gayn Erickson", "title": "CEO", "topic": "ตลาด AI โตเร็วที่สุดของบริษัท" },
+        { "quote": "Bookings in the fourth quarter of fiscal 26 were $60.7 million, up more than 500% from $11.1 million in the prior year quarter.", "speaker": "Chris Siu", "title": "CFO", "topic": "ยอดคำสั่งซื้อพุ่งแรง" },
+        { "quote": "We are seeing the population of our installed base be at pretty well at full capacity, so it does feel more real this year.", "speaker": "Gayn Erickson", "title": "CEO", "topic": "ที่มาความมั่นใจใน guidance ปีงบ 2027" },
+        { "quote": "Just 2 years ago, over 95% of our business was tied to silicon carbide for electric vehicles. Whereas today, almost 95% of our fiscal year revenue came from markets other than electric vehicle silicon carbide.", "speaker": "Gayn Erickson", "title": "CEO", "topic": "กระจายฐานธุรกิจออกจากรถ EV" },
+        { "quote": "Some of the power supply manufacturers that we use in Sonoma are supplying to NVIDIA and others. And they have come back, they have raised their prices 40%.", "speaker": "Gayn Erickson", "title": "CEO", "topic": "ความเสี่ยงต้นทุนซัพพลายเชน" }
+      ],
       "positives": [
         { "label": "Demand", "note": "ดีมานด์เร่งตัวชัดเจนในกลุ่มชิปประมวลผล AI, silicon photonics (เทคโนโลยีรับส่งข้อมูลด้วยแสงในดาต้าเซ็นเตอร์) และ power semiconductor (ชิปกำลังไฟฟ้าตระกูล SiC/GaN สำหรับรถยนต์ไฟฟ้า) ซึ่งทั้งสามกลุ่มนี้กลายเป็นสัดส่วนหลักของธุรกิจไปแล้ว" },
         { "label": "Bookings", "note": "ยอดคำสั่งซื้อ (bookings) ทำสถิติใหม่ที่ $60.7 ล้าน มากกว่า 5 เท่าของปีก่อน ขณะที่งานในมือ (backlog) แตะระดับสูงสุดที่ $80.6 ล้าน (นับรวม effective backlog แล้วอยู่ที่ $100.6 ล้าน) ทำให้มองเห็นรายได้ล่วงหน้าชัดเจนขึ้นมาก" }

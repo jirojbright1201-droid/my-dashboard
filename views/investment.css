@@ -199,6 +199,12 @@
 .inv-stat-tile .n .d.neg { color: var(--red); }
 @media (max-width: 400px) { .inv-stat-tiles { grid-template-columns: 1fr; } }
 
+/* Management Commentary — คำพูดตรงจาก earnings call (เพิ่ม 24 ก.ค. 2026) */
+.inv-quotes { display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
+.inv-quote { border-left: 2px solid var(--accent); padding-left: 14px; }
+.inv-quote .q { font-family: var(--serif); font-style: italic; font-size: 0.9375rem; line-height: 1.55; color: var(--text); }
+.inv-quote .attr { font-size: 0.6875rem; color: var(--silver); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; margin-top: 6px; }
+
 .inv-dd-comp { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
 .inv-dd-comp-row { padding-bottom: 14px; border-bottom: 1px solid var(--border-soft); }
 .inv-dd-comp-row:last-child { border-bottom: none; padding-bottom: 0; }

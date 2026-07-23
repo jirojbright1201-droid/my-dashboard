@@ -413,6 +413,15 @@ window.InvestmentView = (function () {
     </div>`;
   }
 
+  function quoteList(rows) {
+    if (!rows || !rows.length) return '';
+    return `<div class="inv-quotes">${rows.map(q => `
+      <blockquote class="inv-quote">
+        <div class="q">&#8220;${esc(q.quote)}&#8221;</div>
+        <div class="attr">${esc(q.speaker)}${q.title ? ', ' + esc(q.title) : ''}${q.topic ? ' · ' + esc(q.topic) : ''}</div>
+      </blockquote>`).join('')}</div>`;
+  }
+
   function sourcesList(rows) {
     if (!rows || !rows.length) return '<div class="empty">No sources logged</div>';
     return `<div class="inv-srclist">${rows.map(s => `<div class="inv-src-item"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a><span class="d">${esc(s.domain || '')}</span></div>`).join('')}</div>`;
@@ -461,6 +470,7 @@ window.InvestmentView = (function () {
     const unitMatch = revMetric && /([A-Z])\s*$/.exec(String(revMetric.actual || '').trim());
     const trend = trendBars(e.trend, unitMatch ? unitMatch[1] : '');
     const guide = guidanceBox(e.guidance);
+    const quotes = quoteList(e.managementQuotes);
     $('invEarnBody').innerHTML = `
       <div class="inv-art-h">${esc(e.ticker)} — ${esc(e.quarter)}</div>
       <div class="inv-art-rule"></div>
@@ -475,6 +485,7 @@ window.InvestmentView = (function () {
       </div>
       ${trend ? `<div class="inv-pr-section"><div class="section-title">Quarterly Revenue Trend</div>${trend}</div>` : ''}
       ${guide ? `<div class="inv-pr-section"><div class="section-title">Guidance</div>${guide}</div>` : ''}
+      ${quotes ? `<div class="inv-pr-section"><div class="section-title">Management Commentary</div>${quotes}</div>` : ''}
       <div class="inv-pr-twocol">
         <div class="inv-pr-pos"><div class="section-title">What's Working</div>${bulletList(e.positives)}</div>
         <div class="inv-pr-neg"><div class="section-title">What Concerns Me</div>${bulletList(e.concerns)}</div>
