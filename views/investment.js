@@ -406,9 +406,9 @@ window.InvestmentView = (function () {
 
   function guidanceBox(g) {
     if (!g) return '';
-    return `<div class="inv-gbox">
-      <div class="inv-gcell"><div class="l">${esc(g.priorLabel || 'Prior guide')}</div><div class="v">${esc(g.priorVal)}</div></div>
-      <div class="inv-gcell new"><div class="l">${esc(g.newLabel || 'New guide')}</div><div class="v">${esc(g.newVal)}</div></div>
+    return `<div class="inv-stat-tiles">
+      <div class="inv-stat-tile"><div class="l">${esc(g.priorLabel || 'Prior guide')}</div><div class="v">${esc(g.priorVal)}</div></div>
+      <div class="inv-stat-tile"><div class="l">${esc(g.newLabel || 'New guide')}</div><div class="v">${esc(g.newVal)}</div></div>
     </div>`;
   }
 

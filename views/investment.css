@@ -167,13 +167,8 @@
 .inv-er-verdict { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 18px; }
 .inv-er-vline { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
 
-/* Key Metrics = stat tile grid (เปลี่ยนจากตาราง 4 คอลัมน์แน่นๆ 24 ก.ค. 2026 ให้อ่านง่ายขึ้นแบบเดียวกับ Deep-Dive Financials, ใช้คลาสร่วม .inv-stat-tiles) */
-
-.inv-gbox { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 2px; }
-.inv-gcell { background: var(--surface-2); border-radius: 12px; padding: 11px 13px; }
-.inv-gcell .l { font-size: 0.65rem; color: var(--silver); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
-.inv-gcell .v { font-family: var(--mono); font-size: 0.9rem; font-weight: 700; margin-top: 4px; }
-.inv-gcell.new { outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
+/* Key Metrics = stat tile grid (เปลี่ยนจากตาราง 4 คอลัมน์แน่นๆ 24 ก.ค. 2026 ให้อ่านง่ายขึ้นแบบเดียวกับ Deep-Dive Financials, ใช้คลาสร่วม .inv-stat-tiles)
+   Guidance ใช้คลาสเดียวกันนี้ด้วย (24 ก.ค. 2026 jiroj ขอให้เหมือน Key Metrics — เลิกใช้ .inv-gbox/.inv-gcell การ์ดแยกลอย) */
 
 .inv-trend { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
 .inv-trend-row { display: flex; }
@@ -193,8 +188,6 @@
 .inv-src-item:last-child { border-bottom: none; }
 .inv-src-item a { color: var(--accent); font-weight: 600; text-decoration: none; }
 .inv-src-item .d { color: var(--silver); flex-shrink: 0; }
-
-@media (max-width: 480px) { .inv-gbox { grid-template-columns: 1fr; } }
 
 /* stat tile grid — ใช้ร่วมกัน Deep-Dive Financials + Earnings Key Metrics (เพิ่ม 24 ก.ค. 2026, ใช้โทเคนสีเดียวกับทั้งแอป ไม่มีธีมแยกต่อบริษัท) */
 .inv-stat-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-soft); border: 1px solid var(--border-soft); border-radius: 12px; overflow: hidden; margin-top: 12px; }
