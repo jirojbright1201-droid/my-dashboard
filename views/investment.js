@@ -342,17 +342,36 @@ window.InvestmentView = (function () {
 
   function trendBars(rows, unit) {
     if (!rows || rows.length < 2) return '';
-    const max = Math.max(...rows.map(r => parseFloat(r.value) || 0));
-    return `<div class="inv-trend">${rows.map((r, i) => {
-      const v = parseFloat(r.value) || 0;
-      const h = max > 0 ? Math.max(4, Math.round(v / max * 64)) : 0;
-      const last = i === rows.length - 1;
-      return `<div class="inv-trend-col">
-        <div class="inv-trend-val${last ? ' cur' : ''}">${unit ? '$' + v.toFixed(1) + unit : esc(r.value)}</div>
-        <div class="inv-trend-bar"><div class="inv-trend-fill${last ? ' cur' : ''}" style="height:${h}px"></div></div>
-        <div class="inv-trend-lab">${esc(r.label)}</div>
-      </div>`;
-    }).join('')}</div>`;
+    const n = rows.length;
+    const vals = rows.map(r => parseFloat(r.value) || 0);
+    const min = Math.min(...vals), max = Math.max(...vals);
+    const pad = (max - min) * 0.2 || Math.abs(max) * 0.2 || 1;
+    const lo = min - pad, hi = max + pad;
+    const yTop = 8, yBot = 56;
+    const yFor = v => hi > lo ? yBot - ((v - lo) / (hi - lo)) * (yBot - yTop) : (yTop + yBot) / 2;
+    const pts = vals.map((v, i) => [i * 100 + 50, yFor(v)]);
+    const linePath = pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1].toFixed(1)).join(' ');
+    const areaPath = `M${pts[0][0]} ${yBot} ` + pts.map(p => `L${p[0]} ${p[1].toFixed(1)}`).join(' ') + ` L${pts[n - 1][0]} ${yBot} Z`;
+    const dots = pts.map((p, i) => {
+      const last = i === n - 1;
+      return `<circle cx="${p[0]}" cy="${p[1].toFixed(1)}" r="${last ? 5 : 3.5}" class="inv-trend-dot${last ? ' cur' : ''}" vector-effect="non-scaling-stroke" />`;
+    }).join('');
+    const valRow = rows.map((r, i) => {
+      const last = i === n - 1;
+      return `<div class="inv-trend-val${last ? ' cur' : ''}">${unit ? '$' + vals[i].toFixed(1) + unit : esc(r.value)}</div>`;
+    }).join('');
+    const labRow = rows.map(r => `<div class="inv-trend-lab">${esc(r.label)}</div>`).join('');
+    return `<div class="inv-trend">
+      <div class="inv-trend-row">${valRow}</div>
+      <div class="inv-trend-plot">
+        <svg viewBox="0 0 ${n * 100} 64" preserveAspectRatio="none">
+          <path class="inv-trend-area" d="${areaPath}"></path>
+          <path class="inv-trend-line" d="${linePath}" vector-effect="non-scaling-stroke"></path>
+          ${dots}
+        </svg>
+      </div>
+      <div class="inv-trend-row">${labRow}</div>
+    </div>`;
   }
 
   function guidanceBox(g) {
