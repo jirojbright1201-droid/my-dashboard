@@ -340,13 +340,16 @@ window.InvestmentView = (function () {
       <tr><td>${esc(m.label)}</td><td>${esc(m.actual)}</td><td>${esc(m.est)}</td><td class="d ${m.dir === 'neg' ? 'neg' : 'pos'}">${esc(m.deltaPct)}</td></tr>`).join('')}</tbody></table>`;
   }
 
-  function trendBars(rows) {
+  function trendBars(rows, unit) {
     if (!rows || rows.length < 2) return '';
     const max = Math.max(...rows.map(r => parseFloat(r.value) || 0));
-    return `<div class="inv-trend">${rows.map(r => {
-      const h = max > 0 ? Math.max(4, Math.round((parseFloat(r.value) || 0) / max * 56)) : 0;
+    return `<div class="inv-trend">${rows.map((r, i) => {
+      const v = parseFloat(r.value) || 0;
+      const h = max > 0 ? Math.max(4, Math.round(v / max * 64)) : 0;
+      const last = i === rows.length - 1;
       return `<div class="inv-trend-col">
-        <div class="inv-trend-bar"><div class="inv-trend-fill" style="height:${h}px"></div></div>
+        <div class="inv-trend-val${last ? ' cur' : ''}">${unit ? '$' + v.toFixed(1) + unit : esc(r.value)}</div>
+        <div class="inv-trend-bar"><div class="inv-trend-fill${last ? ' cur' : ''}" style="height:${h}px"></div></div>
         <div class="inv-trend-lab">${esc(r.label)}</div>
       </div>`;
     }).join('')}</div>`;
@@ -369,7 +372,9 @@ window.InvestmentView = (function () {
     const e = earningsById(id); if (!e) return;
     $('invMTitle').textContent = `${e.ticker} — ${e.quarter}`;
     $('invMSub').textContent = fmtDate(e.reportDate || e.date);
-    const trend = trendBars(e.trend);
+    const revMetric = (e.metrics || []).find(m => /revenue/i.test(m.label));
+    const unitMatch = revMetric && /([A-Z])\s*$/.exec(String(revMetric.actual || '').trim());
+    const trend = trendBars(e.trend, unitMatch ? unitMatch[1] : '');
     const guide = guidanceBox(e.guidance);
     $('invMBody').innerHTML = `
       <div class="inv-er-verdict">
