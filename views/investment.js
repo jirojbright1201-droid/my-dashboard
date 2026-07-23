@@ -418,8 +418,23 @@ window.InvestmentView = (function () {
     return `<div class="inv-quotes">${rows.map(q => `
       <blockquote class="inv-quote">
         <div class="q">&#8220;${esc(q.quote)}&#8221;</div>
+        ${q.translation ? `<div class="tr">${esc(q.translation)}</div>` : ''}
         <div class="attr">${esc(q.speaker)}${q.title ? ', ' + esc(q.title) : ''}${q.topic ? ' · ' + esc(q.topic) : ''}</div>
       </blockquote>`).join('')}</div>`;
+  }
+
+  const TRACK_CLS = { hit: 'beat', miss: 'miss', partial: 'inline' };
+  const TRACK_LABEL = { hit: 'Delivered', miss: 'Missed', partial: 'Partial' };
+  function trackRecordList(rows) {
+    if (!rows || !rows.length) return '';
+    return `<div class="inv-track">${rows.map(r => `
+      <div class="inv-track-item">
+        <div class="inv-track-top">
+          <span class="inv-badge ${TRACK_CLS[r.verdict] || 'inline'}">${TRACK_LABEL[r.verdict] || r.verdict}</span>
+          <div class="inv-track-claim">${esc(r.claim)}</div>
+        </div>
+        <div class="inv-track-note">${esc(r.note)}</div>
+      </div>`).join('')}</div>`;
   }
 
   function sourcesList(rows) {
@@ -471,6 +486,7 @@ window.InvestmentView = (function () {
     const trend = trendBars(e.trend, unitMatch ? unitMatch[1] : '');
     const guide = guidanceBox(e.guidance);
     const quotes = quoteList(e.managementQuotes);
+    const track = trackRecordList(e.trackRecord);
     $('invEarnBody').innerHTML = `
       <div class="inv-art-h">${esc(e.ticker)} — ${esc(e.quarter)}</div>
       <div class="inv-art-rule"></div>
@@ -486,6 +502,7 @@ window.InvestmentView = (function () {
       ${trend ? `<div class="inv-pr-section"><div class="section-title">Quarterly Revenue Trend</div>${trend}</div>` : ''}
       ${guide ? `<div class="inv-pr-section"><div class="section-title">Guidance</div>${guide}</div>` : ''}
       ${quotes ? `<div class="inv-pr-section"><div class="section-title">Management Commentary</div>${quotes}</div>` : ''}
+      ${track ? `<div class="inv-pr-section"><div class="section-title">Track Record</div>${track}</div>` : ''}
       <div class="inv-pr-twocol">
         <div class="inv-pr-pos"><div class="section-title">What's Working</div>${bulletList(e.positives)}</div>
         <div class="inv-pr-neg"><div class="section-title">What Concerns Me</div>${bulletList(e.concerns)}</div>
