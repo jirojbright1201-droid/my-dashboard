@@ -164,7 +164,7 @@
 .inv-badge.miss { color: var(--red); }
 .inv-badge.inline { color: var(--silver); }
 
-.inv-er-vline { font-size: 1.05rem; font-weight: 600; line-height: 1.6; margin-top: 14px; margin-bottom: 18px; }
+.inv-er-vline { font-size: 1.05rem; font-weight: 400; line-height: 1.7; margin-top: 14px; margin-bottom: 18px; }
 
 /* Key Metrics = stat tile grid (เปลี่ยนจากตาราง 4 คอลัมน์แน่นๆ 24 ก.ค. 2026 ให้อ่านง่ายขึ้นแบบเดียวกับ Deep-Dive Financials, ใช้คลาสร่วม .inv-stat-tiles)
    Guidance ใช้คลาสเดียวกันนี้ด้วย (24 ก.ค. 2026 jiroj ขอให้เหมือน Key Metrics — เลิกใช้ .inv-gbox/.inv-gcell การ์ดแยกลอย) */
