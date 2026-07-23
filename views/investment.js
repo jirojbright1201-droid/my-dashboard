@@ -1,10 +1,11 @@
 // ===== Investment Tracker hub — สรุปข่าวการลงทุน/การเงินโลกรายวัน (data: data/investment.data.js) =====
 // ลุค Editorial (หนังสือพิมพ์/Apple News) — jiroj เลือกเอง 21 ก.ค. 2026: masthead แทน hero เข้ม, พาดหัว serif, filter แท็บขีดเส้นใต้
 window.InvestmentView = (function () {
-  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [], earningsReviews: [] };
+  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [], earningsReviews: [], companyDeepDives: [] };
   const BRIEFS = DATA.briefs || [];
   const REVIEWS = DATA.portfolioReviews || [];
   const EARNINGS = DATA.earningsReviews || [];
+  const DEEPDIVES = DATA.companyDeepDives || [];
   const VERDICT_LABEL = { beat: 'Beat', miss: 'Miss', inline: 'In-line' };
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -34,6 +35,7 @@ window.InvestmentView = (function () {
   const briefById = id => BRIEFS.find(b => b.id === id);
   const reviewById = id => REVIEWS.find(r => r.id === id);
   const earningsById = id => EARNINGS.find(e => e.id === id);
+  const deepDiveById = id => DEEPDIVES.find(d => d.id === id);
   const latestDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
 
   const TEMPLATE = `
@@ -41,10 +43,12 @@ window.InvestmentView = (function () {
     <div id="inv-news" class="inv-pane active"></div>
     <div id="inv-portfolio" class="inv-pane"></div>
     <div id="inv-earnings" class="inv-pane"></div>
+    <div id="inv-deepdive" class="inv-pane"></div>
     <nav class="tabbar">
       <button class="inv-tabbtn tab-item active" data-tab="news">${S('<path d="M4 6h16M4 12h16M4 18h10"/>')}<span>News</span></button>
       <button class="inv-tabbtn tab-item" data-tab="portfolio">${S('<path d="M3 3v18h18"/><path d="M7 14l4-5 3 3 5-7"/>')}<span>Portfolio</span></button>
       <button class="inv-tabbtn tab-item" data-tab="earnings">${S('<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')}<span>Earnings</span></button>
+      <button class="inv-tabbtn tab-item" data-tab="deepdive">${S('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>')}<span>Deep-Dive</span></button>
     </nav>
   </div>
 
@@ -387,6 +391,53 @@ window.InvestmentView = (function () {
     return `<div class="inv-srclist">${rows.map(s => `<div class="inv-src-item"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a><span class="d">${esc(s.domain || '')}</span></div>`).join('')}</div>`;
   }
 
+  // ── company deep-dive (เพิ่ม 24 ก.ค. 2026 — ใช้คอมโพเนนต์ Editorial เดิมของแอปทั้งหมด ไม่มีธีมแยกต่อบริษัท) ──
+  function ddrow(d) {
+    return `<div class="inv-ed-item" data-dd-id="${esc(d.id)}">
+      <div class="inv-ed-h">${esc(d.ticker ? d.ticker + ' — ' + d.company : d.company)}</div>
+      <div class="inv-ed-meta"><span>${esc(d.sector || '')}</span>${d.sector ? '<span>·</span>' : ''}<span>${fmtDate(d.date)}</span></div>
+    </div>`;
+  }
+  function renderDeepDive() {
+    const sorted = [...DEEPDIVES].sort((a, b) => b.date.localeCompare(a.date));
+    const body = sorted.length
+      ? sorted.map(ddrow).join('')
+      : `<div class="inv-ed-empty"><div class="t">No deep-dives yet</div><div class="s">Ask Jarvis to research a company for you</div></div>`;
+    $('inv-deepdive').innerHTML = `${masthead(`Company Deep-Dives · ${sorted.length}`)}${body}`;
+  }
+  function statTable(rows) {
+    if (!rows || !rows.length) return '';
+    return `<table class="inv-dd-stats"><tbody>${rows.map(m => `
+      <tr><td>${esc(m.label)}</td><td class="v">${esc(m.value)}</td><td class="n">${esc(m.note || '')}</td></tr>`).join('')}</tbody></table>`;
+  }
+  function compTable(rows) {
+    if (!rows || !rows.length) return '';
+    return `<div class="inv-dd-comp">${rows.map(c => `
+      <div class="inv-dd-comp-row">
+        <div class="inv-dd-comp-name">${esc(c.name)}</div>
+        <div class="inv-dd-comp-line"><span class="l good">Strength</span>${esc(c.strength)}</div>
+        <div class="inv-dd-comp-line"><span class="l bad">Weakness</span>${esc(c.weakness)}</div>
+      </div>`).join('')}</div>`;
+  }
+  function chipRow(items) {
+    if (!items || !items.length) return '';
+    return `<div class="inv-dd-chips">${items.map(t => `<span class="inv-dd-chip">${esc(t)}</span>`).join('')}</div>`;
+  }
+  function ratingTally(buy, hold, sell) {
+    const total = (buy || 0) + (hold || 0) + (sell || 0);
+    if (!total) return '';
+    return `<div class="inv-dd-ratings">
+      <div class="inv-dd-rcell buy"><b>${buy || 0}</b><span>Buy</span></div>
+      <div class="inv-dd-rcell hold"><b>${hold || 0}</b><span>Hold</span></div>
+      <div class="inv-dd-rcell sell"><b>${sell || 0}</b><span>Sell</span></div>
+    </div>`;
+  }
+  function priceTargetRow(low, median, high, current) {
+    if (!low && !median && !high && !current) return '';
+    const cell = (l, v) => v ? `<div class="inv-dd-rcell"><b>$${esc(String(v))}</b><span>${l}</span></div>` : '';
+    return `<div class="inv-dd-ratings">${cell('Low', low)}${cell('Median', median)}${cell('High', high)}${cell('Current', current)}</div>`;
+  }
+
   function openEarnings(id) {
     const e = earningsById(id); if (!e) return;
     $('invMTitle').textContent = `${e.ticker} — ${e.quarter}`;
@@ -456,6 +507,57 @@ window.InvestmentView = (function () {
     pushOverlayState('review');
   }
 
+  function openDeepDive(id) {
+    const d = deepDiveById(id); if (!d) return;
+    $('invMTitle').textContent = d.ticker ? `${d.ticker} — ${d.company}` : d.company;
+    $('invMSub').textContent = `${d.sector ? d.sector + ' · ' : ''}${fmtDate(d.date)}`;
+    $('invMBody').innerHTML = `
+      <div class="inv-pr-section">
+        <div class="inv-summary">${esc(d.tagline)}</div>
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Business Overview</div>
+        <div class="inv-summary">${esc(d.overview)}</div>
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Technology &amp; Products</div>
+        ${bulletList(d.technology)}
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Market &amp; Competition</div>
+        <div class="inv-summary">${esc(d.marketSummary)}</div>
+        ${compTable(d.competitors)}
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Financials</div>
+        <div class="inv-summary">${esc(d.financialsSummary)}</div>
+        ${statTable(d.financialMetrics)}
+        ${trendBars(d.financialTrend, '')}
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Management &amp; Investors</div>
+        ${bulletList((d.leadership || []).map(p => ({ label: `${p.name} — ${p.role}`, note: p.note })))}
+        ${chipRow(d.investors)}
+      </div>
+      <div class="inv-pr-twocol">
+        <div class="inv-pr-pos"><div class="section-title">Catalysts</div>${bulletList(d.catalysts)}</div>
+        <div class="inv-pr-neg"><div class="section-title">Risks</div>${bulletList(d.risks)}</div>
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Analyst Sentiment</div>
+        <div class="inv-summary">${esc(d.analystSummary)}</div>
+        ${ratingTally(d.ratingBuy, d.ratingHold, d.ratingSell)}
+        ${priceTargetRow(d.priceTargetLow, d.priceTargetMedian, d.priceTargetHigh, d.priceTargetCurrent)}
+      </div>
+      <div class="inv-pr-section">
+        <div class="section-title">Sources</div>
+        ${sourcesList(d.sources)}
+      </div>
+      <div class="inv-pr-caveats">${esc(d.caveats)}</div>`;
+    $('invOverlay').classList.add('active');
+    pushOverlayState('deepdive');
+  }
+
   // ── detail: หน้าอ่านเต็มจอ (เปลี่ยนจาก bottom sheet มาเป็นแบบนี้ 22 ก.ค. 2026 — jiroj เลือกจาก mockup 3 แบบ, ชอบ full-screen article) ──
   function openBrief(id) {
     const b = briefById(id); if (!b) return;
@@ -501,6 +603,7 @@ window.InvestmentView = (function () {
     if (tab === 'news') renderNews();
     else if (tab === 'portfolio') renderPortfolio();
     else if (tab === 'earnings') renderEarnings();
+    else if (tab === 'deepdive') renderDeepDive();
   }
 
   function wire() {
@@ -508,6 +611,7 @@ window.InvestmentView = (function () {
     root.addEventListener('click', e => {
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
       const er = e.target.closest('[data-er-id]'); if (er) { openEarnings(er.dataset.erId); return; }
+      const dd = e.target.closest('[data-dd-id]'); if (dd) { openDeepDive(dd.dataset.ddId); return; }
       const c = e.target.closest('[data-id]'); if (c) openBrief(c.dataset.id);
     });
     $('invMClose').onclick = goBackIfOverlay;

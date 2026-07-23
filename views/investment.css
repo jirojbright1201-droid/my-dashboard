@@ -201,3 +201,29 @@ table.inv-metrics td.d.neg { color: var(--red); }
 .inv-src-item .d { color: var(--silver); flex-shrink: 0; }
 
 @media (max-width: 480px) { .inv-gbox { grid-template-columns: 1fr; } }
+
+/* ── company deep-dive (เพิ่ม 24 ก.ค. 2026 — ใช้โทเคนสีเดียวกับทั้งแอป ไม่มีธีมแยกต่อบริษัท) ── */
+table.inv-dd-stats { width: 100%; border-collapse: collapse; font-size: 0.8125rem; margin-top: 2px; }
+table.inv-dd-stats td { padding: 8px 0; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+table.inv-dd-stats td:first-child { font-weight: 600; width: 38%; }
+table.inv-dd-stats td.v { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; width: 1%; padding-right: 12px; }
+table.inv-dd-stats td.n { color: var(--silver); font-size: 0.75rem; }
+
+.inv-dd-comp { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
+.inv-dd-comp-row { padding-bottom: 14px; border-bottom: 1px solid var(--border-soft); }
+.inv-dd-comp-row:last-child { border-bottom: none; padding-bottom: 0; }
+.inv-dd-comp-name { font-weight: 700; font-size: 0.875rem; margin-bottom: 6px; }
+.inv-dd-comp-line { font-size: 0.78125rem; color: var(--silver); line-height: 1.55; margin-top: 3px; }
+.inv-dd-comp-line .l { display: inline-block; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+.inv-dd-comp-line .l.good { color: var(--green); }
+.inv-dd-comp-line .l.bad { color: var(--red); }
+
+.inv-dd-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.inv-dd-chip { font-family: var(--mono); font-size: 0.71rem; color: var(--silver); border: 1px solid var(--border); border-radius: 9999px; padding: 4px 11px; }
+
+.inv-dd-ratings { display: flex; gap: 10px; margin-top: 14px; }
+.inv-dd-rcell { flex: 1; text-align: center; background: var(--surface-2); border-radius: 12px; padding: 10px 6px; }
+.inv-dd-rcell b { display: block; font-family: var(--mono); font-size: 1.05rem; font-weight: 700; }
+.inv-dd-rcell span { font-size: 0.65rem; color: var(--silver); text-transform: uppercase; letter-spacing: .05em; }
+.inv-dd-rcell.buy b { color: var(--green); }
+.inv-dd-rcell.sell b { color: var(--red); }

@@ -2,6 +2,7 @@
 // schema briefs: id/date/title/summary/macro/sourceName/url — append-only ต่อท้ายของเดิมทุกครั้งที่ sync ไม่ full-rebuild
 // schema portfolioReviews: id/date/holdingsRaw/snapshot/allocation/macroLens/positives/concerns/discussion/caveats — append-only ต่อท้ายทุกครั้งที่รีวิวพอร์ตใหม่
 // schema earningsReviews: id/date/ticker/company/quarter/reportDate/verdict/verdictLine/metrics/trend/guidance/positives/concerns/discussion/sources/caveats — append-only ต่อท้ายทุกครั้งที่รีวิวงบใหม่ (เพิ่ม 23 ก.ค. 2026)
+// schema companyDeepDives: id/date/ticker/company/sector/tagline/overview/technology/marketSummary/competitors/financialsSummary/financialMetrics/financialTrend/leadership/investors/catalysts/risks/analystSummary/ratingBuy/ratingHold/ratingSell/priceTargetLow/priceTargetMedian/priceTargetHigh/priceTargetCurrent/sources/caveats — append-only ต่อท้ายทุกครั้งที่รีเสิร์ชบริษัทใหม่ (เพิ่ม 24 ก.ค. 2026)
 window.INVESTMENT_DATA = {
   "briefs": [],
   "portfolioReviews": [],
@@ -49,6 +50,82 @@ window.INVESTMENT_DATA = {
       ],
       "caveats": "ข้อมูลนี้ใช้ประกอบการตัดสินใจเท่านั้น ไม่ใช่คำแนะนำการลงทุนโดยตรง ตัวเลขอ้างอิงจากรายงานผลประกอบการ (earnings release) และแหล่งข่าวสาธารณะ ณ วันที่ 23 ก.ค. 2026 — ตัวเลขคาดการณ์ (consensus) ของ Revenue และ EPS มาจาก Zacks Consensus Estimate ที่ระบุไว้ในรายงาน ไม่ใช่ตัวเลขที่คำนวณขึ้นเอง"
     }
+  ],
+  "companyDeepDives": [
+    {
+      "id": "cd0001",
+      "date": "2026-07-24",
+      "ticker": "ASTS",
+      "company": "AST SpaceMobile, Inc.",
+      "sector": "Satellite Communications — Direct-to-Cell",
+      "tagline": "เครือข่ายมือถือจากอวกาศเครือข่ายแรกของโลก ที่เชื่อมสัญญาณตรงถึงมือถือทั่วไปโดยไม่ต้องเปลี่ยนเครื่องหรือใช้อุปกรณ์เสริมใดๆ",
+      "overview": "AST SpaceMobile ก่อตั้งขึ้นในปี 2017 โดย Abel Avellan ด้วยพันธกิจสร้างโครงข่ายบรอดแบนด์เซลลูลาร์บนอวกาศเครือข่ายแรกและเครือข่ายเดียวที่เชื่อมต่อกับโทรศัพท์มือถือทั่วไปได้โดยตรง ไม่ต้องเปลี่ยนเครื่อง ไม่ต้องติดตั้งอุปกรณ์เสริม ไม่ต้องดาวน์โหลดแอปพิเศษใดๆ หัวใจของบริษัทคือดาวเทียมที่กางแผงเสาอากาศขนาดยักษ์แล้วยิงสัญญาณลงมาคุยกับมือถือโดยตรงผ่านคลื่นความถี่มาตรฐานเดียวกับที่เครือข่ายภาคพื้นดินใช้อยู่แล้ว โมเดลธุรกิจเป็นแบบ B2B2C — ไม่ขายบริการตรงถึงผู้บริโภค แต่ส่งผ่านพันธมิตรค่ายมือถือกว่า 50 รายทั่วโลกที่ครอบคลุมผู้ใช้งานรวมกันเกือบ 3 พันล้านราย ทำให้พันธมิตรค่ายมือถือกลายเป็นทั้งแหล่งเงินทุนและฐานลูกค้าสำเร็จรูปในตัว",
+      "technology": [
+        { "label": "BlueWalker 3 (ต้นแบบ · 2022)", "note": "ดาวเทียมทดสอบดวงแรก ปล่อยขึ้นวงโคจรกันยายน 2022 กางแผงเสาอากาศ 693 ตร.ฟุต พิสูจน์ว่ามือถือทั่วไปที่ไม่ได้ดัดแปลงเชื่อมต่อบรอดแบนด์กับดาวเทียมได้จริงผ่านคลื่นมาตรฐาน 3GPP" },
+        { "label": "BlueBird Block 1", "note": "ดาวเทียมเชิงพาณิชย์ 5 ดวงแรก ทำความเร็วดาวน์โหลดสูงสุดที่ทดสอบได้จริงถึง 98.9 Mbps พิสูจน์ว่าโครงข่ายนี้ใช้งานได้ระดับบรอดแบนด์จริง ไม่ใช่แค่ข้อความหรือเสียง" },
+        { "label": "BlueBird Block 2 (2025-2026)", "note": "รุ่นล่าสุด กางแผงเสาอากาศใหญ่ขึ้นเป็น 2,400 ตร.ฟุต ใช้ชิปประมวลผลเฉพาะทาง AST5000 ความเร็วดาวน์โหลดคาดว่าเพิ่มขึ้นเกือบเท่าตัวจากรุ่นก่อน เริ่มปล่อยธันวาคม 2025 และเพิ่มอีก 3 ดวง (BlueBird 8-10) มิถุนายน 2026" },
+        { "label": "สิทธิบัตรและคลื่นความถี่", "note": "ถือสิทธิบัตรที่จดและอยู่ระหว่างพิจารณารวมกว่า 2,400 รายการ พร้อมสิทธิ์คลื่นความถี่ S-band ระดับโลกผ่าน ITU ที่นักวิเคราะห์บางรายมองว่ามีมูลค่าเพียงลำพังสูงกว่ามูลค่าตลาดปัจจุบันของทั้งบริษัท" }
+      ],
+      "marketSummary": "ตลาด Direct-to-Cell (D2C — บริการเชื่อมสัญญาณดาวเทียมตรงเข้ามือถือทั่วไป) ถูกจัดว่าเป็นกลุ่มที่โตเร็วที่สุดในเศรษฐกิจอวกาศทั้งหมด จากขนาดตลาดทั่วโลกที่ประเมินไว้ $3.56 พันล้านในปี 2026 จะโตแตะ $26.57 พันล้านภายในปี 2034 อัตราเติบโตทบต้น (CAGR) ราว 28.5% ต่อปี",
+      "competitors": [
+        { "name": "AST SpaceMobile", "strength": "แผงเสาอากาศใหญ่ที่สุดในกลุ่ม เน้นความเร็วระดับบรอดแบนด์ ผูกสัญญากับค่ายมือถือรายใหญ่ทั่วโลกกว่า 45-50 ราย", "weakness": "จำนวนดาวเทียมในวงโคจรยังน้อย ต้นทุนปล่อยดาวเทียมต่อดวงสูงกว่า" },
+        { "name": "SpaceX Starlink D2C", "strength": "จังหวะปล่อยดาวเทียมเร็วกว่ามาก พันธมิตร T-Mobile ผู้ใช้ทะลุ 10 ล้านคนต่อเดือนแล้ว", "weakness": "เดิมเน้นบริการข้อความ/เสียงก่อน เพิ่งขยับสู่มาตรฐาน NTN รุ่นใหม่เป้าหมายปี 2027" },
+        { "name": "Lynk Global", "strength": "เริ่มให้บริการจริงแล้วในบางตลาดเกาะและประเทศกำลังพัฒนา", "weakness": "เน้นข้อความแบบไม่ต่อเนื่อง เพิ่งควบรวมกับ Omnispace โดยมี SES หนุนหลังเพื่อรวมพลังแข่งขัน" },
+        { "name": "Amazon", "strength": "มีข่าวสนใจซื้อ Globalstar เพื่อคลื่น S-band เงินทุนหนามาก", "weakness": "ยังอยู่ระยะเริ่มต้น เป้าหมายแข่งตลาดพรีเมียมราวปี 2027" }
+      ],
+      "financialsSummary": "ผลประกอบการไตรมาส 1 ปี 2026 สะท้อนภาพบริษัทที่ยังอยู่ในช่วงก่อนสร้างรายได้เต็มรูปแบบ — รายจ่ายด้านวิศวกรรมและสร้างโครงข่ายพุ่งสูงกว่ารายได้มาก ขณะที่เงินสดในมือยังหนาแน่นพอรองรับแผนขยายตัวไปอีกหลายปี บริษัทออกหุ้นกู้แปลงสภาพมูลค่า $1 พันล้านล่าสุดซึ่งเป็นชนวนให้หุ้นร่วงแรงในเดือนกรกฎาคม 2026 จากความกังวลเรื่อง dilution",
+      "financialMetrics": [
+        { "label": "Revenue (Q1 2026)", "value": "$14.7M", "note": "ต่ำกว่าคาดการณ์ที่ ~$37M" },
+        { "label": "Net loss (Q1 2026)", "value": "$191M", "note": "-$0.66 ต่อหุ้น ราว 3 เท่าของปีก่อน" },
+        { "label": "Operating expenses", "value": "$164.1M", "note": "+158% เทียบปีก่อน (วิศวกรรม $84.1M + บริหาร $43.7M)" },
+        { "label": "Cash on hand", "value": "$3.5B", "note": "ณ 31 มี.ค. 2026" },
+        { "label": "2026 revenue guidance", "value": "$150–200M", "note": "ราวครึ่งหนึ่งมาจาก backlog สัญญาที่มีอยู่แล้ว" },
+        { "label": "Est. cash burn 2026 / 2027", "value": "~$1.6B / ~$800M", "note": "กระแสเงินสดอิสระเป็นบวกคาดว่าเริ่มปี 2028" },
+        { "label": "Market cap", "value": "~$24B", "note": "ราคาหุ้น $62.29 ณ 23 ก.ค. 2026 · หุ้นหมุนเวียน ~298.75M หุ้น" }
+      ],
+      "financialTrend": [],
+      "leadership": [
+        { "name": "Abel Avellan", "role": "Chairman & CEO", "note": "ผู้ก่อตั้งและผู้ออกแบบเทคโนโลยีหลักของเครือข่ายทั้งหมดด้วยตัวเอง ก่อนตั้ง AST SpaceMobile เคยก่อตั้งและขาย Emerging Markets Communications (EMC) ไปในราคา $550 ล้าน เมื่อปี 2016" },
+        { "name": "Andrew Johnson", "role": "CFO & CLO", "note": "หัวหน้าฝ่ายการเงินและกฎหมาย ดูแลโครงสร้างเงินทุนและการเจรจาสัญญาพันธมิตรระดับโลก บริษัทมีพนักงานรวมเกือบ 2,000 คน กระจายอยู่ใน 5 ประเทศ" }
+      ],
+      "investors": ["AT&T", "Verizon", "Google", "Vodafone", "Rakuten", "American Tower", "Bell Canada"],
+      "catalysts": [
+        { "label": "แผนปล่อยดาวเทียมเพิ่มเติม", "note": "BlueBird Block 2 อีกชุดในเดือนสิงหาคม 2026 เดินหน้าตามเป้าหมายจำนวนดาวเทียมขั้นต่ำ 45 ดวงที่ต้องมีก่อนเปิดบริการเชิงพาณิชย์" },
+        { "label": "ใบอนุญาตพาณิชย์จาก FCC", "note": "อนุมัติเมษายน 2026 ให้ปล่อยดาวเทียมได้สูงสุด 248 ดวง เปิดทางให้บริการในสหรัฐฯ ร่วมกับ Verizon, AT&T และ FirstNet อย่างเป็นทางการ" },
+        { "label": "กิจการร่วมค้ากับ Rakuten ในญี่ปุ่น", "note": "ยื่นขอใบอนุญาต Direct-to-Device ตั้งเป้าเริ่มบริการบางส่วนช่วงปลายปี 2026" },
+        { "label": "ฐานสัญญาที่ผูกไว้แล้ว", "note": "พันธมิตรค่ายมือถือเกือบ 60 รายทั่วโลก ผูกมูลค่าสัญญารวมกว่า $1.2 พันล้าน" }
+      ],
+      "risks": [
+        { "label": "เหตุขัดข้องด้านการปล่อยดาวเทียม", "note": "BlueBird 7 ที่ปล่อยผ่าน Blue Origin เมื่อเมษายน 2026 เข้าสู่วงโคจรต่ำกว่าแผน อาจกระทบกำหนดการปล่อยดาวเทียมให้ครบเป้าปลายปี" },
+        { "label": "ขาดทุนและเผาเงินสดต่อเนื่อง", "note": "ผลประกอบการพลาดเป้าติดต่อกันหลายไตรมาส อัตราเผาเงินสดยังขยายตัว" },
+        { "label": "ความกังวลเรื่อง dilution", "note": "จากการออกหุ้นกู้แปลงสภาพมูลค่า $1 พันล้านล่าสุด ที่ราคาแปลงสภาพ $79.57/หุ้น" },
+        { "label": "แรงกดดันจากคู่แข่งและภาวะตลาด", "note": "SpaceX Starlink ปล่อยดาวเทียมได้เร็วกว่ามาก และหุ้นกลุ่มอวกาศทั้งกลุ่มเผชิญแรงเทขายรุนแรงช่วงกรกฎาคม 2026 หุ้น ASTS ร่วงราว 32% ในหนึ่งเดือน และราว 60% จากจุดสูงสุดของปี" }
+      ],
+      "analystSummary": "ความเห็นนักวิเคราะห์วอลล์สตรีทต่อ ASTS อยู่ในโซนกลางๆ — มองบวกต่อโอกาสตลาดระยะยาวและฐานสัญญาที่มีอยู่ แต่ยังระมัดระวังเรื่องความเสี่ยงด้านการดำเนินงานและอัตราการเผาเงินสด ทำให้เรตติ้งโดยรวมออกมาเป็น \"Hold\" (ถือ) ไม่สุดโต่งไปทางใดทางหนึ่ง ราคาเป้าหมายเฉลี่ยรวมจากหลายสำนักอยู่ที่ประมาณ $84-88",
+      "ratingBuy": 3,
+      "ratingHold": 5,
+      "ratingSell": 2,
+      "priceTargetLow": 41.20,
+      "priceTargetMedian": 90.00,
+      "priceTargetHigh": 108.00,
+      "priceTargetCurrent": 62.29,
+      "sources": [
+        { "label": "AST SpaceMobile Targets $1B Revenue Run Rate", "url": "https://www.foreignpolicyjournal.com/2026/07/19/ast-spacemobile-nasdaq-asts-targets-1-billion-revenue-run-rate-as-commercial-satellite-launch-approaches/", "domain": "foreignpolicyjournal.com" },
+        { "label": "Next-Generation BlueBird", "url": "https://ast-science.com/next-gen-bluebird/", "domain": "ast-science.com" },
+        { "label": "BlueWalker 3", "url": "https://ast-science.com/bluewalker-3/", "domain": "ast-science.com" },
+        { "label": "Direct Satellite-to-Phone Cellular Market Size", "url": "https://www.fortunebusinessinsights.com/direct-satellite-to-phone-cellular-market-115878", "domain": "fortunebusinessinsights.com" },
+        { "label": "AST SpaceMobile Eyes Commercial Liftoff", "url": "https://www.abiresearch.com/market-research/insight/7787819-ast-spacemobile-eyes-commercial-liftoffbut", "domain": "abiresearch.com" },
+        { "label": "Q1 2026 Earnings Call Transcript", "url": "https://www.investing.com/news/transcripts/earnings-call-transcript-ast-spacemobile-q1-2026-misses-forecasts-stock-rises-93CH-4678715", "domain": "investing.com" },
+        { "label": "ASTS Earnings Miss Analysis", "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/261885217-asts-earnings-miss-revenue-shortfall-losses-satellite-launch-risks-cash-burn-competition-spacex-starlink-tradingkey", "domain": "tradingkey.com" },
+        { "label": "AT&T, Google, Vodafone Strategic Investment", "url": "https://www.businesswire.com/news/home/20240118463570/en/AST-SpaceMobile-Secures-Strategic-Investment-From-ATT-Google-and-Vodafone", "domain": "businesswire.com" },
+        { "label": "FCC Grants Commercial Authorization", "url": "https://www.satellitetoday.com/connectivity/2026/04/22/fcc-grants-ast-spacemobile-commercial-authorization-for-direct-to-device-service/", "domain": "satellitetoday.com" },
+        { "label": "Block 2 BlueBird Launch Coverage", "url": "https://spaceflightnow.com/2026/06/16/live-coverage-spacex-to-launch-3-block-2-bluebird-satellites-for-ast-spacemobile/", "domain": "spaceflightnow.com" },
+        { "label": "Space Stocks Sector Selloff", "url": "https://247wallst.com/investing/2026/07/17/ast-spacemobile-is-down-32-in-a-month-and-spacex-is-down-34-are-space-stocks-doomed/", "domain": "247wallst.com" },
+        { "label": "ASTS Analyst Forecast", "url": "https://www.tipranks.com/stocks/asts/forecast", "domain": "tipranks.com" },
+        { "label": "AST SpaceMobile Market Cap", "url": "https://companiesmarketcap.com/ast-spacemobile/marketcap/", "domain": "companiesmarketcap.com" }
+      ],
+      "caveats": "เนื้อหาทั้งหมดในรีเสิร์ชนี้รวบรวมจากแหล่งข้อมูลสาธารณะ ณ วันที่ 24 กรกฎาคม 2026 จัดทำขึ้นเพื่อวัตถุประสงค์ทางการศึกษาเท่านั้น ไม่ใช่คำแนะนำในการซื้อ ขาย หรือถือครองหลักทรัพย์ใดๆ ตัวเลขราคาหุ้น มูลค่าตลาด และราคาเป้าหมายเปลี่ยนแปลงได้ตลอดเวลา โปรดตรวจสอบข้อมูลล่าสุดก่อนตัดสินใจลงทุนทุกครั้ง"
+    }
   ]
 };
-window.INVESTMENT_UPDATED = "23/07/2026";
+window.INVESTMENT_UPDATED = "24/07/2026";
