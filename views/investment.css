@@ -202,7 +202,7 @@
 /* Management Commentary — คำพูดตรงจาก earnings call (เพิ่ม 24 ก.ค. 2026) */
 .inv-quotes { display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
 .inv-quote { border-left: 2px solid var(--accent); padding-left: 14px; }
-.inv-quote .q { font-family: var(--serif); font-style: italic; font-size: 0.9375rem; line-height: 1.55; color: var(--text); }
+.inv-quote .q { font-size: 0.9375rem; line-height: 1.6; color: var(--text); }
 .inv-quote .tr { font-size: 0.8125rem; color: var(--silver); line-height: 1.5; margin-top: 6px; }
 .inv-quote .attr { font-size: 0.6875rem; color: var(--silver); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; margin-top: 6px; }
 
