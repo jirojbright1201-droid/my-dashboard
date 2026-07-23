@@ -366,21 +366,33 @@ window.InvestmentView = (function () {
       </div>`).join('')}</div>`;
   }
 
+  // Catmull-Rom → cubic bezier: เส้นโค้งลื่นแทนเส้นตรงหักมุม (24 ก.ค. 2026 jiroj บอกกราฟไม่สวย — เพิ่มความสูง plot + เส้นโค้ง + baseline hairline)
+  function smoothPath(pts) {
+    if (pts.length < 3) return pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1].toFixed(1)).join(' ');
+    let d = `M${pts[0][0]} ${pts[0][1].toFixed(1)}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ` C${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0]} ${p2[1].toFixed(1)}`;
+    }
+    return d;
+  }
   function trendBars(rows, unit) {
     if (!rows || rows.length < 2) return '';
     const n = rows.length;
     const vals = rows.map(r => parseFloat(r.value) || 0);
     const min = Math.min(...vals), max = Math.max(...vals);
-    const pad = (max - min) * 0.2 || Math.abs(max) * 0.2 || 1;
+    const pad = (max - min) * 0.3 || Math.abs(max) * 0.3 || 1;
     const lo = min - pad, hi = max + pad;
-    const yTop = 8, yBot = 56;
+    const yTop = 14, yBot = 108;
     const yFor = v => hi > lo ? yBot - ((v - lo) / (hi - lo)) * (yBot - yTop) : (yTop + yBot) / 2;
     const pts = vals.map((v, i) => [i * 100 + 50, yFor(v)]);
-    const linePath = pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1].toFixed(1)).join(' ');
-    const areaPath = `M${pts[0][0]} ${yBot} ` + pts.map(p => `L${p[0]} ${p[1].toFixed(1)}`).join(' ') + ` L${pts[n - 1][0]} ${yBot} Z`;
+    const linePath = smoothPath(pts);
+    const areaPath = `${linePath} L${pts[n - 1][0]} ${yBot} L${pts[0][0]} ${yBot} Z`;
     const dots = pts.map((p, i) => {
       const last = i === n - 1;
-      return `<circle cx="${p[0]}" cy="${p[1].toFixed(1)}" r="${last ? 5 : 3.5}" class="inv-trend-dot${last ? ' cur' : ''}" vector-effect="non-scaling-stroke" />`;
+      return `<circle cx="${p[0]}" cy="${p[1].toFixed(1)}" r="${last ? 5 : 4}" class="inv-trend-dot${last ? ' cur' : ''}" vector-effect="non-scaling-stroke" />`;
     }).join('');
     const valRow = rows.map((r, i) => {
       const last = i === n - 1;
@@ -390,7 +402,8 @@ window.InvestmentView = (function () {
     return `<div class="inv-trend">
       <div class="inv-trend-row">${valRow}</div>
       <div class="inv-trend-plot">
-        <svg viewBox="0 0 ${n * 100} 64" preserveAspectRatio="none">
+        <svg viewBox="0 0 ${n * 100} 122" preserveAspectRatio="none">
+          <line class="inv-trend-baseline" x1="0" y1="${yBot}" x2="${n * 100}" y2="${yBot}" vector-effect="non-scaling-stroke" />
           <path class="inv-trend-area" d="${areaPath}"></path>
           <path class="inv-trend-line" d="${linePath}" vector-effect="non-scaling-stroke"></path>
           ${dots}
