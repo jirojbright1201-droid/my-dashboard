@@ -419,7 +419,7 @@ window.InvestmentView = (function () {
       <blockquote class="inv-quote">
         <div class="q">&#8220;${esc(q.quote)}&#8221;</div>
         ${q.translation ? `<div class="tr">${esc(q.translation)}</div>` : ''}
-        <div class="attr">${esc(q.speaker)}${q.title ? ', ' + esc(q.title) : ''}${q.topic ? ' · ' + esc(q.topic) : ''}</div>
+        <div class="attr">${esc(q.speaker)}${q.title ? ', ' + esc(q.title) : ''}</div>
       </blockquote>`).join('')}</div>`;
   }
 
