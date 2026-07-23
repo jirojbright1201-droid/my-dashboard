@@ -437,11 +437,6 @@ window.InvestmentView = (function () {
       </div>`).join('')}</div>`;
   }
 
-  function sourcesList(rows) {
-    if (!rows || !rows.length) return '<div class="empty">No sources logged</div>';
-    return `<div class="inv-srclist">${rows.map(s => `<div class="inv-src-item"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a><span class="d">${esc(s.domain || '')}</span></div>`).join('')}</div>`;
-  }
-
   // ── company deep-dive (เพิ่ม 24 ก.ค. 2026 — ใช้คอมโพเนนต์ Editorial เดิมของแอปทั้งหมด ไม่มีธีมแยกต่อบริษัท) ──
   // ลิสต์เป็นแถวเล็กล้วน (jiroj ลองสไตล์ News แบบ lead+earlier แล้วขอย้อนกลับมาแบบนี้ 24 ก.ค. 2026)
   function ddrow(d) {
@@ -510,10 +505,6 @@ window.InvestmentView = (function () {
       <div class="inv-pr-section">
         <div class="section-title">Discussion Points</div>
         <ol class="inv-bullets">${(e.discussion || []).map(d => `<li>${esc(d)}</li>`).join('')}</ol>
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Sources</div>
-        ${sourcesList(e.sources)}
       </div>
       <div class="inv-pr-caveats">${esc(e.caveats)}</div>`;
     $('invEarnArticle').classList.add('open');

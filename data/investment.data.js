@@ -59,10 +59,6 @@ window.INVESTMENT_DATA = {
         "งานในมือรวม (backlog และ effective backlog) มูลค่า $100.6 ล้าน จะแปลงเป็นรายได้จริงตามจังหวะที่บริษัทวางแผนไว้หรือไม่",
         "หากประมาณการปีงบ 2027 พลาดเป้าแม้เพียงบางส่วน หุ้นที่เพิ่งปรับขึ้นแรงจากตัวเลขรอบนี้จะถูกกดดันมากแค่ไหน"
       ],
-      "sources": [
-        { "label": "Fiscal 2026 Q4 & full year earnings release (Jul 14, 2026)", "url": "https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/", "domain": "aehr.com" },
-        { "label": "AEHR beats Q4 earnings and revenue estimates", "url": "https://finance.yahoo.com/markets/stocks/articles/aehr-test-systems-aehr-beats-212001018.html", "domain": "finance.yahoo.com" }
-      ],
       "caveats": "ข้อมูลนี้ใช้ประกอบการตัดสินใจเท่านั้น ไม่ใช่คำแนะนำการลงทุนโดยตรง ตัวเลขอ้างอิงจากรายงานผลประกอบการ (earnings release) และแหล่งข่าวสาธารณะ ณ วันที่ 23 ก.ค. 2026 — ตัวเลขคาดการณ์ (consensus) ของ Revenue และ EPS มาจาก Zacks Consensus Estimate ที่ระบุไว้ในรายงาน ไม่ใช่ตัวเลขที่คำนวณขึ้นเอง"
     }
   ],
