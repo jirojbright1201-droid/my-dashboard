@@ -366,33 +366,26 @@ window.InvestmentView = (function () {
       </div>`).join('')}</div>`;
   }
 
-  // Catmull-Rom → cubic bezier: เส้นโค้งลื่นแทนเส้นตรงหักมุม (24 ก.ค. 2026 jiroj บอกกราฟไม่สวย — เพิ่มความสูง plot + เส้นโค้ง + baseline hairline)
-  function smoothPath(pts) {
-    if (pts.length < 3) return pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1].toFixed(1)).join(' ');
-    let d = `M${pts[0][0]} ${pts[0][1].toFixed(1)}`;
-    for (let i = 0; i < pts.length - 1; i++) {
-      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
-      const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
-      const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
-      d += ` C${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0]} ${p2[1].toFixed(1)}`;
-    }
-    return d;
-  }
+  // column chart แทนเส้น/พื้นที่ (24 ก.ค. 2026 — jiroj บอกกราฟเส้นเดิม "แบน": ไตรมาสใกล้เคียงกัน 3 ตัวบีบอัดอยู่ปลายล่างเพราะ scale ซูมตาม min-max
+  // แท่งเริ่มจาก 0 เสมอ (baseline จริง) ทำให้สัดส่วนจริงของตัวเลขเห็นชัดกว่าเส้นที่ถูกซูม — ไตรมาสเก่าสีเทาจาง ไตรมาสล่าสุดสี accent เด่น
   function trendBars(rows, unit) {
     if (!rows || rows.length < 2) return '';
     const n = rows.length;
     const vals = rows.map(r => parseFloat(r.value) || 0);
-    const min = Math.min(...vals), max = Math.max(...vals);
-    const pad = (max - min) * 0.3 || Math.abs(max) * 0.3 || 1;
-    const lo = min - pad, hi = max + pad;
+    const hi = Math.max(...vals, 0), lo = Math.min(...vals, 0);
+    const span = (hi - lo) || Math.abs(hi) || 1;
+    const hiPadded = hi + span * 0.14;
+    const totalSpan = (hiPadded - lo) || 1;
     const yTop = 14, yBot = 108;
-    const yFor = v => hi > lo ? yBot - ((v - lo) / (hi - lo)) * (yBot - yTop) : (yTop + yBot) / 2;
-    const pts = vals.map((v, i) => [i * 100 + 50, yFor(v)]);
-    const linePath = smoothPath(pts);
-    const areaPath = `${linePath} L${pts[n - 1][0]} ${yBot} L${pts[0][0]} ${yBot} Z`;
-    const dots = pts.map((p, i) => {
+    const scale = v => yBot - ((v - lo) / totalSpan) * (yBot - yTop);
+    const y0 = scale(0);
+    const barW = 38;
+    const bars = vals.map((v, i) => {
+      const cx = i * 100 + 50;
+      const y = scale(v);
+      const top = Math.min(y, y0), h = Math.max(Math.abs(y0 - y), 2);
       const last = i === n - 1;
-      return `<circle cx="${p[0]}" cy="${p[1].toFixed(1)}" r="${last ? 5 : 4}" class="inv-trend-dot${last ? ' cur' : ''}" vector-effect="non-scaling-stroke" />`;
+      return `<rect x="${(cx - barW / 2).toFixed(1)}" y="${top.toFixed(1)}" width="${barW}" height="${h.toFixed(1)}" rx="4" class="inv-trend-bar${last ? ' cur' : ''}" />`;
     }).join('');
     const valRow = rows.map((r, i) => {
       const last = i === n - 1;
@@ -403,10 +396,8 @@ window.InvestmentView = (function () {
       <div class="inv-trend-row">${valRow}</div>
       <div class="inv-trend-plot">
         <svg viewBox="0 0 ${n * 100} 122" preserveAspectRatio="none">
-          <line class="inv-trend-baseline" x1="0" y1="${yBot}" x2="${n * 100}" y2="${yBot}" vector-effect="non-scaling-stroke" />
-          <path class="inv-trend-area" d="${areaPath}"></path>
-          <path class="inv-trend-line" d="${linePath}" vector-effect="non-scaling-stroke"></path>
-          ${dots}
+          <line class="inv-trend-baseline" x1="0" y1="${y0.toFixed(1)}" x2="${n * 100}" y2="${y0.toFixed(1)}" vector-effect="non-scaling-stroke" />
+          ${bars}
         </svg>
       </div>
       <div class="inv-trend-row">${labRow}</div>
