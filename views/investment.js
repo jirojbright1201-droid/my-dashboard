@@ -442,7 +442,7 @@ window.InvestmentView = (function () {
   function ddrow(d) {
     return `<div class="inv-ed-item" data-dd-id="${esc(d.id)}">
       <div class="inv-ed-h">${esc(d.ticker ? d.ticker + ' — ' + d.company : d.company)}</div>
-      <div class="inv-ed-meta"><span>${esc(d.sector || '')}</span>${d.sector ? '<span>·</span>' : ''}<span>${fmtDate(d.date)}</span></div>
+      <div class="inv-ed-meta"><span>${fmtDate(d.date)}</span></div>
     </div>`;
   }
   function renderDeepDive() {
