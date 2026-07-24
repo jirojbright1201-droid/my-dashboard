@@ -554,7 +554,6 @@ window.InvestmentView = (function () {
       <div class="inv-art-h">${esc(d.ticker ? d.ticker + ' — ' + d.company : d.company)}</div>
       <div class="inv-art-rule"></div>
       <div class="inv-art-byline">${d.sector ? esc(d.sector) + ' · ' : ''}${fmtDate(d.date)}</div>
-      <div class="inv-summary">${esc(d.tagline)}</div>
       <div class="inv-pr-section">
         <div class="section-title">Business Overview</div>
         <div class="inv-summary">${esc(d.overview)}</div>
