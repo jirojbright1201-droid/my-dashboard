@@ -220,6 +220,27 @@
 .inv-dd-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .inv-dd-chip { font-family: var(--mono); font-size: 0.71rem; color: var(--silver); border: 1px solid var(--border); border-radius: 9999px; padding: 4px 11px; }
 
+/* ── peer comparison (เพิ่ม 25 ก.ค. 2026) — เทียบหุ้น 2-4 ตัวข้างกัน ใช้คอมโพเนนต์ Editorial เดิม
+   ระบุตัวตนหุ้นด้วยลำดับสีคงที่ (accent → text → silver → accent-hover) แทนการเปิดธีมสีสันแยก ── */
+.inv-cmp-legend { display: flex; gap: 16px; margin: 8px 0 12px; flex-wrap: wrap; }
+.inv-cmp-lg-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--silver); font-weight: 600; }
+.inv-cmp-lg-item .sw { width: 9px; height: 9px; border-radius: 2px; display: inline-block; flex-shrink: 0; }
+.inv-cmp-trend { margin-top: 2px; }
+.inv-cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+@media (max-width: 480px) { .inv-cmp-grid { grid-template-columns: 1fr; } }
+.inv-cmp-card { background: var(--surface); border: 1px solid var(--border-soft); border-top: 3px solid var(--cclr, var(--accent)); border-radius: 12px; padding: 14px 16px; }
+.inv-cmp-card-head { margin-bottom: 8px; }
+.inv-cmp-kv { display: flex; justify-content: space-between; gap: 10px; font-size: 0.8125rem; padding: 7px 0; border-bottom: 1px solid var(--border-soft); }
+.inv-cmp-kv:last-child { border-bottom: none; }
+.inv-cmp-kv .k { color: var(--silver); flex-shrink: 0; }
+.inv-cmp-kv .v { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.inv-cmp-verdict { font-size: 0.8125rem; color: var(--text); line-height: 1.6; margin-top: 8px; }
+.inv-cmp-note { font-size: 0.75rem; color: var(--silver); font-style: italic; line-height: 1.55; margin-top: 12px; }
+.inv-cmp-news-block { margin-bottom: 22px; }
+.inv-cmp-news-block:last-child { margin-bottom: 0; }
+.inv-cmp-news-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.inv-cmp-news-tag { font-size: 0.71rem; color: var(--silver); }
+
 /* ── full-screen reader — ใช้ร่วมกัน Deep-Dive + Earnings (Earnings เปลี่ยนจาก modal มาเต็มจอ 24 ก.ค. 2026 ตามที่ jiroj ขอ, ใช้ shell .inv-article เดียวกับ News แต่ไม่มีรูปหัว) ── */
 .inv-full-topbar { display: flex; align-items: center; padding: calc(14px + env(safe-area-inset-top)) 14px 8px; flex-shrink: 0; border-bottom: 1px solid var(--border-soft); }
 .inv-full-backbtn { width: 34px; height: 34px; border-radius: 9999px; border: none; cursor: pointer; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; }
