@@ -9,8 +9,9 @@ window.InvestmentView = (function () {
   const PEERS = DATA.peerComparisons || [];
   const VERDICT_LABEL = { beat: 'Beat', miss: 'Miss', inline: 'In-line' };
   // สีประจำตัวหุ้นตามลำดับใน tickers[] คงที่ทุก chart/badge ในรายงานเดียวกัน (ไม่ใช่ธีมแยก แค่ระบุตัวตนใน comparison เดียว)
-  // ลองมาแล้ว 3 รอบ: coral+ดำ (ไม่ได้เลย) → coral+silver (จืดไป) → coral 2 เฉด กลาง+เข้ม (ใกล้กันเกิน แยกไม่ออก) — รอบนี้ขยับไปใช้ var(--orange) (โทนทอง/อำพัน #d4a017 มีอยู่แล้วใน app.css ปัจจุบันใช้เป็น badge "not started" ในแอป Books) จับคู่กับ coral แทน ให้ hue ต่างกันจริงๆ (ทับศัพท์-เหลืองทอง vs ส้มอิฐ) ไม่ใช่แค่ปรับความสว่าง/ความจางเหมือน 3 รอบก่อน ยังอยู่ในโทนอุ่นเดียวกับธีมทั้งแอป ไม่ใช่สีเย็นที่จะโดดออกมา (25/26 ก.ค. 2026)
-  const CMP_COLORS = ['var(--accent)', 'var(--orange)', 'var(--text)', 'var(--silver)'];
+  // ลองปรับสี 4 รอบไม่ผ่านสักที (ดำ/silver/coral 2 เฉด/ทอง) — เปลี่ยนวิธีคิดใหม่ทั้งหมดแทนตามที่ jiroj เลือกจาก 5 mockup 26 ก.ค. 2026:
+  // "Small Multiples" แยกกราฟคนละแผงต่อ ticker ไม่ต้องพึ่งสีที่สองเลย ทุก ticker ใช้ accent coral สีเดียวทั้งหมด (เข้ากับกฎสีเดียวทั้งแอปแบบไม่มีข้อยกเว้น) ระบุตัวตนด้วย label/ตำแหน่งแทน
+  const CMP_COLORS = ['var(--accent)'];
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
@@ -507,10 +508,6 @@ window.InvestmentView = (function () {
     (companies || []).forEach((co, i) => { m[co.ticker] = CMP_COLORS[i % CMP_COLORS.length]; });
     return m;
   }
-  function cmpLegend(companies) {
-    if (!companies || !companies.length) return '';
-    return `<div class="inv-cmp-legend">${companies.map((c, i) => `<span class="inv-cmp-lg-item"><span class="sw" style="background:${CMP_COLORS[i % CMP_COLORS.length]}"></span>${esc(c.ticker)}</span>`).join('')}</div>`;
-  }
   function cmpBadge(ticker, color) {
     return `<span class="inv-badge" style="color:${color}">${esc(ticker)}</span>`;
   }
@@ -552,6 +549,15 @@ window.InvestmentView = (function () {
       </div>
       <div class="inv-trend-row">${labRow}</div>
     </div>`;
+  }
+  // Small Multiples (เลือกจาก 5 mockup 26 ก.ค. 2026) — แยกกราฟคนละแผงต่อ ticker แทนซ้อนกราฟเดียวกัน
+  // แต่ละแผง scale อิสระของตัวเอง (เรียก cmpTrendChart ทีละ 1 series ทำให้ scale ไม่ปนกัน) ใช้ accent สีเดียวทุกแผง ระบุตัวตนด้วย label หัวแผงแทนสี
+  function cmpMiniCharts(quarters, series, fmt) {
+    if (!quarters || !quarters.length || !series || !series.length) return '';
+    return series.map(s => {
+      const chart = cmpTrendChart(quarters, [s], fmt);
+      return chart ? `<div class="inv-cmp-minichart"><div class="inv-cmp-mini-label">${esc(s.ticker)}</div>${chart}</div>` : '';
+    }).join('');
   }
   function cmpProfileGrid(rows, fieldDefs, colorMap) {
     if (!rows || !rows.length) return '';
@@ -607,9 +613,9 @@ window.InvestmentView = (function () {
     const colorMap = cmpColorMap(companies);
     const fmtM = v => { const sign = v < 0 ? '-' : ''; const a = Math.abs(v); return a >= 1000 ? sign + '$' + (a / 1000).toFixed(2) + 'B' : sign + '$' + a.toFixed(0) + 'M'; };
     const fmtEps = v => (v < 0 ? '-' : '') + '$' + Math.abs(v).toFixed(2);
-    const revChart = cmpTrendChart(c.quarters, c.revenueTrend, fmtM);
-    const niChart = cmpTrendChart(c.quarters, c.netIncomeTrend, fmtM);
-    const epsChart = cmpTrendChart(c.quarters, c.epsTrend, fmtEps);
+    const revPanels = cmpMiniCharts(c.quarters, c.revenueTrend, fmtM);
+    const niPanels = cmpMiniCharts(c.quarters, c.netIncomeTrend, fmtM);
+    const epsPanels = cmpMiniCharts(c.quarters, c.epsTrend, fmtEps);
     const newsBlocks = (c.news || []).map(nw => `
       <div class="inv-cmp-news-block">
         <div class="inv-cmp-news-head">${cmpBadge(nw.ticker, colorMap[nw.ticker] || 'var(--accent)')}<span class="inv-cmp-news-tag">${esc(nw.tag || '')}</span></div>
@@ -623,11 +629,11 @@ window.InvestmentView = (function () {
         <div class="section-title">Snapshot</div>
         ${cmpProfileGrid(c.snapshot, SNAPSHOT_FIELDS, colorMap)}
       </div>
-      ${revChart ? `<div class="inv-pr-section"><div class="section-title">Revenue Trend</div>${cmpLegend(companies)}${revChart}</div>` : ''}
-      ${niChart ? `<div class="inv-pr-section"><div class="section-title">Net Income Trend</div>${cmpLegend(companies)}${niChart}</div>` : ''}
+      ${revPanels ? `<div class="inv-pr-section"><div class="section-title">Revenue Trend</div>${revPanels}</div>` : ''}
+      ${niPanels ? `<div class="inv-pr-section"><div class="section-title">Net Income Trend</div>${niPanels}</div>` : ''}
       <div class="inv-pr-section">
         <div class="section-title">EPS</div>
-        ${epsChart ? `${cmpLegend(companies)}${epsChart}` : ''}
+        ${epsPanels}
         ${cmpEpsStatsGrid(c.epsStats, colorMap)}
         ${c.epsNarrative ? `<div class="inv-summary">${esc(c.epsNarrative)}</div>` : ''}
       </div>

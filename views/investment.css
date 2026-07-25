@@ -222,9 +222,9 @@
 
 /* ── peer comparison (เพิ่ม 25 ก.ค. 2026) — เทียบหุ้น 2-4 ตัวข้างกัน ใช้คอมโพเนนต์ Editorial เดิม
    ระบุตัวตนหุ้นด้วยลำดับสีคงที่ (accent → text → silver → accent-hover) แทนการเปิดธีมสีสันแยก ── */
-.inv-cmp-legend { display: flex; gap: 16px; margin: 8px 0 12px; flex-wrap: wrap; }
-.inv-cmp-lg-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--silver); font-weight: 600; }
-.inv-cmp-lg-item .sw { width: 9px; height: 9px; border-radius: 2px; display: inline-block; flex-shrink: 0; }
+.inv-cmp-minichart { margin-bottom: 20px; }
+.inv-cmp-minichart:last-child { margin-bottom: 0; }
+.inv-cmp-mini-label { font-family: var(--mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--silver); margin-bottom: 8px; }
 .inv-cmp-trend { margin-top: 2px; }
 .inv-cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
 @media (max-width: 480px) { .inv-cmp-grid { grid-template-columns: 1fr; } }
