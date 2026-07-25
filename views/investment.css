@@ -105,7 +105,8 @@
 /* ── modal detail ── */
 /* jiroj บอก modal ข่าวอ่านอึดอัด (22 ก.ค. 2026) — เคยลอง min-height 58vh บังคับความสูงตายตัว แต่ข่าวสั้นแล้วเหลือที่ว่างล่างเยอะเกิน ไม่สวย (revert แล้ว) → แก้ที่ font/line-height/padding ให้อ่านสบายแทน ปล่อยความสูง modal สูง-ต่ำตามเนื้อหาจริงเหมือนเดิม */
 #invOverlay .modal-body { padding: 18px 22px 26px; }
-.inv-summary { font-size: 0.95rem; color: var(--text); line-height: 1.85; margin-top: 14px; }
+.inv-summary { font-size: 0.95rem; color: var(--text); line-height: 1.85; margin-top: 14px; white-space: pre-line; }
+/* pre-line เพิ่ม 25 ก.ค. 2026 — jiroj บ่นย่อหน้ายาวอ่านหนักตา รองรับ \n\n คั่นย่อหน้าในข้อมูล (overview/marketSummary/financialsSummary/snapshot) โดยไม่กระทบ field เดิมที่เป็นบรรทัดเดียว */
 .inv-source { color: var(--accent); font-weight: 600; }
 .inv-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; margin-right: 6px; }
 .inv-tag.macro { background: var(--accent-soft); color: var(--accent); }
