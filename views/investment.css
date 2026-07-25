@@ -222,9 +222,10 @@
 
 /* ── peer comparison (เพิ่ม 25 ก.ค. 2026) — เทียบหุ้น 2-4 ตัวข้างกัน ใช้คอมโพเนนต์ Editorial เดิม
    ระบุตัวตนหุ้นด้วยลำดับสีคงที่ (accent → text → silver → accent-hover) แทนการเปิดธีมสีสันแยก ── */
-.inv-cmp-minichart { margin-bottom: 20px; }
+/* jiroj บอก 26 ก.ค. 2026 ว่าแผงกราฟ CRWV/NBIS ที่วางต่อกันตรงๆ ดู "ปนกันรกไปหมด" ไม่มีกรอบแยก — ใส่การ์ดขาวขอบบางล้อมแต่ละแผง (เหมือน .chartcard ใน preview) ให้แยกตัวชัดเจน */
+.inv-cmp-minichart { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
 .inv-cmp-minichart:last-child { margin-bottom: 0; }
-.inv-cmp-mini-label { font-family: var(--mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--silver); margin-bottom: 8px; }
+.inv-cmp-mini-label { font-family: var(--mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--silver); margin-bottom: 10px; }
 .inv-cmp-trend { margin-top: 2px; }
 .inv-cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
 @media (max-width: 480px) { .inv-cmp-grid { grid-template-columns: 1fr; } }
