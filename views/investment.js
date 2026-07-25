@@ -9,7 +9,8 @@ window.InvestmentView = (function () {
   const PEERS = DATA.peerComparisons || [];
   const VERDICT_LABEL = { beat: 'Beat', miss: 'Miss', inline: 'In-line' };
   // สีประจำตัวหุ้นตามลำดับใน tickers[] คงที่ทุก chart/badge ในรายงานเดียวกัน (ไม่ใช่ธีมแยก แค่ระบุตัวตนใน comparison เดียว)
-  const CMP_COLORS = ['var(--accent)', 'var(--text)', 'var(--silver)', 'var(--accent-hover)'];
+  // ตัวที่ 2 เดิมใช้ var(--text) (เกือบดำ) คู่กับ coral แล้ว jiroj บอกสีกราฟแท่งดูไม่ได้เลย (25 ก.ค. 2026) — เปลี่ยนเป็น coral คู่ silver (โทนเดียวกับการ์ด holdings watchlist) นุ่มกว่า เข้ากับพาเลตต์แอปที่มีสีจริงแค่ coral สีเดียว
+  const CMP_COLORS = ['var(--accent)', 'var(--silver)', 'var(--accent-hover)', 'var(--text)'];
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
