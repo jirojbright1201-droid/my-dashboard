@@ -556,7 +556,7 @@ window.InvestmentView = (function () {
     if (!quarters || !quarters.length || !series || !series.length) return '';
     return series.map(s => {
       const chart = cmpTrendChart(quarters, [s], fmt);
-      return chart ? `<div class="inv-cmp-minichart"><div class="inv-cmp-mini-label">${esc(s.ticker)}</div>${chart}</div>` : '';
+      return chart ? `<div class="inv-cmp-minichart"><div class="inv-cmp-mini-label">${cmpBadge(s.ticker, 'var(--accent)')}</div>${chart}</div>` : '';
     }).join('');
   }
   function cmpProfileGrid(rows, fieldDefs, colorMap) {
