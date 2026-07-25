@@ -9,8 +9,8 @@ window.InvestmentView = (function () {
   const PEERS = DATA.peerComparisons || [];
   const VERDICT_LABEL = { beat: 'Beat', miss: 'Miss', inline: 'In-line' };
   // สีประจำตัวหุ้นตามลำดับใน tickers[] คงที่ทุก chart/badge ในรายงานเดียวกัน (ไม่ใช่ธีมแยก แค่ระบุตัวตนใน comparison เดียว)
-  // ลองมาแล้ว 2 รอบ: coral+ดำ (jiroj บอกไม่ได้เลย) แล้ว coral+silver (jiroj บอกจืดเกินไป) — รอบนี้ใช้ coral 2 เฉด (กลาง+เข้ม) แทน เพราะแอปนี้มีสีจริงแค่ coral สีเดียวตามกฎ ห้ามเติมสีอื่น แต่ 2 เฉดให้ contrast/ความอิ่มตัวมากกว่าจับคู่กับเทาที่จืด (25 ก.ค. 2026)
-  const CMP_COLORS = ['var(--accent)', 'var(--accent-hover)', 'var(--text)', 'var(--silver)'];
+  // ลองมาแล้ว 3 รอบ: coral+ดำ (ไม่ได้เลย) → coral+silver (จืดไป) → coral 2 เฉด กลาง+เข้ม (ใกล้กันเกิน แยกไม่ออก) — รอบนี้ขยับไปใช้ var(--orange) (โทนทอง/อำพัน #d4a017 มีอยู่แล้วใน app.css ปัจจุบันใช้เป็น badge "not started" ในแอป Books) จับคู่กับ coral แทน ให้ hue ต่างกันจริงๆ (ทับศัพท์-เหลืองทอง vs ส้มอิฐ) ไม่ใช่แค่ปรับความสว่าง/ความจางเหมือน 3 รอบก่อน ยังอยู่ในโทนอุ่นเดียวกับธีมทั้งแอป ไม่ใช่สีเย็นที่จะโดดออกมา (25/26 ก.ค. 2026)
+  const CMP_COLORS = ['var(--accent)', 'var(--orange)', 'var(--text)', 'var(--silver)'];
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
