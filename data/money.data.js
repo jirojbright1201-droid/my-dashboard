@@ -5,8 +5,11 @@ window.MONEY_DATA = {
   "2026-08": {
     "budget": {},
     "income": [],
-    "expenses": []
+    "expenses": [
+      {"date":"2026-08-01","amount":3500,"category":"Rent","name":"Security deposit","name_th":"มัดจำ","notes":"ห้องใหม่"},
+      {"date":"2026-08-01","amount":3500,"category":"Rent","name":"First month rent","name_th":"ค่าห้องเช่า","notes":"เดือนแรก ห้องใหม่"}
+    ]
   }
 };
 window.MONEY_KEYS = ["2026-08"];
-window.MONEY_UPDATED = "22/07/2026";
+window.MONEY_UPDATED = "26/07/2026";

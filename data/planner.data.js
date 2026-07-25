@@ -6,9 +6,11 @@
 //   habits: {habit:"exercise"|"read"|"water"|"sleep_early", done_dates:["YYYY-MM-DD", ...]}
 window.PLANNER_DATA = {
   "2026-08": {
-    "events": [],
+    "events": [
+      {"date":"2026-08-01","title":"ย้ายห้อง","time":"09:00","end_time":"","icon":"default","notes":""}
+    ],
     "habits": []
   }
 };
 window.PLANNER_KEYS = ["2026-08"];
-window.PLANNER_UPDATED = "22/07/2026";
+window.PLANNER_UPDATED = "26/07/2026";
