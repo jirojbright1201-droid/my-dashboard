@@ -570,7 +570,6 @@ window.InvestmentView = (function () {
         <div class="section-title">Financials</div>
         <div class="inv-summary">${esc(d.financialsSummary)}</div>
         ${statTable(d.financialMetrics)}
-        ${trendBars(d.financialTrend, '')}
       </div>
       <div class="inv-pr-section">
         <div class="section-title">Management &amp; Investors</div>
