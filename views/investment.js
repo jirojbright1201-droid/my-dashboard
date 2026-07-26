@@ -1,15 +1,12 @@
 // ===== Investment Tracker hub — สรุปข่าวการลงทุน/การเงินโลกรายวัน (data: data/investment.data.js) =====
 // ลุค Editorial (หนังสือพิมพ์/Apple News) — jiroj เลือกเอง 21 ก.ค. 2026: masthead แทน hero เข้ม, พาดหัว serif, filter แท็บขีดเส้นใต้
 window.InvestmentView = (function () {
-  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [], earningsReviews: [], companyDeepDives: [], peerComparisons: [] };
+  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [], earningsReviews: [], companyDeepDives: [] };
   const BRIEFS = DATA.briefs || [];
   const REVIEWS = DATA.portfolioReviews || [];
   const EARNINGS = DATA.earningsReviews || [];
   const DEEPDIVES = DATA.companyDeepDives || [];
-  const PEERS = DATA.peerComparisons || [];
   const VERDICT_LABEL = { beat: 'Beat', miss: 'Miss', inline: 'In-line' };
-  // สีประจำตัวหุ้นตามลำดับใน tickers[] คงที่ทุก chart/badge ในรายงานเดียวกัน (ไม่ใช่ธีมแยก แค่ระบุตัวตนใน comparison เดียว)
-  const CMP_COLORS = ['var(--accent)', 'var(--text)', 'var(--silver)', 'var(--accent-hover)'];
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
@@ -39,7 +36,6 @@ window.InvestmentView = (function () {
   const reviewById = id => REVIEWS.find(r => r.id === id);
   const earningsById = id => EARNINGS.find(e => e.id === id);
   const deepDiveById = id => DEEPDIVES.find(d => d.id === id);
-  const peerById = id => PEERS.find(p => p.id === id);
   const latestDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
 
   const TEMPLATE = `
@@ -48,13 +44,11 @@ window.InvestmentView = (function () {
     <div id="inv-portfolio" class="inv-pane"></div>
     <div id="inv-earnings" class="inv-pane"></div>
     <div id="inv-deepdive" class="inv-pane"></div>
-    <div id="inv-compare" class="inv-pane"></div>
     <nav class="tabbar">
       <button class="inv-tabbtn tab-item active" data-tab="news">${S('<path d="M4 6h16M4 12h16M4 18h10"/>')}<span>News</span></button>
       <button class="inv-tabbtn tab-item" data-tab="portfolio">${S('<path d="M3 3v18h18"/><path d="M7 14l4-5 3 3 5-7"/>')}<span>Portfolio</span></button>
       <button class="inv-tabbtn tab-item" data-tab="earnings">${S('<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')}<span>Earnings</span></button>
       <button class="inv-tabbtn tab-item" data-tab="deepdive">${S('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>')}<span>Deep-Dive</span></button>
-      <button class="inv-tabbtn tab-item" data-tab="compare">${S('<circle cx="9" cy="12" r="7"/><circle cx="15" cy="12" r="7"/>')}<span>Compare</span></button>
     </nav>
   </div>
 
@@ -100,15 +94,6 @@ window.InvestmentView = (function () {
     </div>
     <div class="inv-art-scroll" id="invEarnScroll">
       <div class="inv-art-body" id="invEarnBody"></div>
-    </div>
-  </div>
-
-  <div class="inv-article inv-full-reader" id="invCmpArticle">
-    <div class="inv-full-topbar">
-      <button class="inv-full-backbtn" id="invCmpBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-    </div>
-    <div class="inv-art-scroll" id="invCmpScroll">
-      <div class="inv-art-body" id="invCmpBody"></div>
     </div>
   </div>`;
 
@@ -488,174 +473,6 @@ window.InvestmentView = (function () {
     if (!items || !items.length) return '';
     return `<div class="inv-dd-chips">${items.map(t => `<span class="inv-dd-chip">${esc(t)}</span>`).join('')}</div>`;
   }
-  // ── peer comparison (เพิ่ม 25 ก.ค. 2026) — เทียบหุ้น 2-4 ตัวข้างกัน ใช้คอมโพเนนต์ Editorial เดิม
-  // สีระบุตัวตนหุ้นตามลำดับใน tickers[] (CMP_COLORS) คงที่ทุก chart/badge ในรายงานเดียวกัน ไม่ใช่ธีมแยกต่อบริษัท ──
-  const SNAPSHOT_FIELDS = [
-    { key: 'marketCap', label: 'Market Cap' },
-    { key: 'revenue', label: 'Revenue' },
-    { key: 'revenueYoY', label: 'Revenue YoY' },
-    { key: 'netIncome', label: 'Net Income' },
-    { key: 'eps', label: 'EPS' },
-    { key: 'epsYoY', label: 'EPS YoY' },
-    { key: 'trailingPE', label: 'Trailing P/E' },
-    { key: 'forwardPE', label: 'Forward P/E' },
-    { key: 'divYield', label: 'Dividend Yield' }
-  ];
-  function cmpColorMap(companies) {
-    const m = {};
-    (companies || []).forEach((co, i) => { m[co.ticker] = CMP_COLORS[i % CMP_COLORS.length]; });
-    return m;
-  }
-  function cmpLegend(companies) {
-    if (!companies || !companies.length) return '';
-    return `<div class="inv-cmp-legend">${companies.map((c, i) => `<span class="inv-cmp-lg-item"><span class="sw" style="background:${CMP_COLORS[i % CMP_COLORS.length]}"></span>${esc(c.ticker)}</span>`).join('')}</div>`;
-  }
-  function cmpBadge(ticker, color) {
-    return `<span class="inv-badge" style="color:${color}">${esc(ticker)}</span>`;
-  }
-  // column chart เทียบหลายตัว ต่อไตรมาส (ภาษาเดียวกับ trendBars ของ Earnings — แท่งเริ่มจาก 0 เสมอ ไม่ใช้เส้น/พื้นที่)
-  function cmpTrendChart(quarters, series, fmt) {
-    if (!quarters || !quarters.length || !series || !series.length) return '';
-    const n = quarters.length, m = series.length;
-    const allVals = series.flatMap(s => s.values || []).filter(v => v != null);
-    if (!allVals.length) return '';
-    const hi = Math.max(...allVals, 0), lo = Math.min(...allVals, 0);
-    const span = (hi - lo) || Math.abs(hi) || 1;
-    const hiPadded = hi + span * 0.16;
-    const loPadded = lo - (lo < 0 ? span * 0.16 : 0);
-    const totalSpan = (hiPadded - loPadded) || 1;
-    const yTop = 14, yBot = 118;
-    const scaleY = v => yBot - ((v - loPadded) / totalSpan) * (yBot - yTop);
-    const y0 = scaleY(0);
-    const groupW = 100, barGap = 6;
-    const barW = Math.min(30, (groupW - 20 - (m - 1) * barGap) / m);
-    let bars = '';
-    quarters.forEach((q, qi) => {
-      const groupStart = qi * groupW + (groupW - (m * barW + (m - 1) * barGap)) / 2;
-      series.forEach((s, si) => {
-        const v = (s.values || [])[qi];
-        if (v == null) return;
-        const y = scaleY(v);
-        const top = Math.min(y, y0), h = Math.max(Math.abs(y0 - y), 2);
-        const x = groupStart + si * (barW + barGap);
-        bars += `<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${CMP_COLORS[si % CMP_COLORS.length]}"><title>${esc(s.ticker)} · ${esc(q)}: ${esc(fmt ? fmt(v) : String(v))}</title></rect>`;
-      });
-    });
-    const labRow = quarters.map(q => `<div class="inv-trend-lab">${esc(q)}</div>`).join('');
-    return `<div class="inv-cmp-trend">
-      <div class="inv-trend-plot">
-        <svg viewBox="0 0 ${n * groupW} 132" preserveAspectRatio="none">
-          <line class="inv-trend-baseline" x1="0" y1="${y0.toFixed(1)}" x2="${n * groupW}" y2="${y0.toFixed(1)}" vector-effect="non-scaling-stroke" />
-          ${bars}
-        </svg>
-      </div>
-      <div class="inv-trend-row">${labRow}</div>
-    </div>`;
-  }
-  function cmpProfileGrid(rows, fieldDefs, colorMap) {
-    if (!rows || !rows.length) return '';
-    return `<div class="inv-cmp-grid">${rows.map(r => `
-      <div class="inv-cmp-card" style="--cclr:${colorMap[r.ticker] || 'var(--accent)'}">
-        <div class="inv-cmp-card-head">${cmpBadge(r.ticker, colorMap[r.ticker] || 'var(--accent)')}</div>
-        ${fieldDefs.map(f => r[f.key] ? `<div class="inv-cmp-kv"><span class="k">${esc(f.label)}</span><span class="v">${esc(r[f.key])}</span></div>` : '').join('')}
-      </div>`).join('')}</div>`;
-  }
-  function cmpEpsStatsGrid(rows, colorMap) {
-    return cmpProfileGrid(rows, [
-      { key: 'slope', label: 'QoQ Slope' },
-      { key: 'stddev', label: 'QoQ Std. Dev' },
-      { key: 'momentum', label: 'Momentum' },
-      { key: 'consistency', label: 'Consistency' }
-    ], colorMap);
-  }
-  function cmpVerdictGrid(rows, colorMap) {
-    if (!rows || !rows.length) return '';
-    return `<div class="inv-cmp-grid">${rows.map(r => `
-      <div class="inv-cmp-card" style="--cclr:${colorMap[r.ticker] || 'var(--accent)'}">
-        <div class="inv-cmp-card-head">${cmpBadge(r.ticker, colorMap[r.ticker] || 'var(--accent)')}</div>
-        ${r.trailingPE ? `<div class="inv-cmp-kv"><span class="k">Trailing P/E</span><span class="v">${esc(r.trailingPE)}</span></div>` : ''}
-        ${r.forwardPE ? `<div class="inv-cmp-kv"><span class="k">Forward P/E</span><span class="v">${esc(r.forwardPE)}</span></div>` : ''}
-        ${r.vsSector ? `<div class="inv-cmp-kv"><span class="k">vs Sector</span><span class="v">${esc(r.vsSector)}</span></div>` : ''}
-        ${r.verdict ? `<div class="inv-cmp-verdict">${esc(r.verdict)}</div>` : ''}
-      </div>`).join('')}</div>`;
-  }
-  function cmpDividendGrid(rows, colorMap) {
-    if (!rows || !rows.length) return '';
-    return `<div class="inv-cmp-grid">${rows.map(r => `
-      <div class="inv-cmp-card" style="--cclr:${colorMap[r.ticker] || 'var(--accent)'}">
-        <div class="inv-cmp-card-head">${cmpBadge(r.ticker, colorMap[r.ticker] || 'var(--accent)')}</div>
-        <div class="inv-cmp-verdict">${esc(r.text || '')}</div>
-      </div>`).join('')}</div>`;
-  }
-  function cmprow(c) {
-    return `<div class="inv-ed-item" data-cmp-id="${esc(c.id)}">
-      <div class="inv-ed-h">${esc((c.tickers || []).join(' vs '))}</div>
-      <div class="inv-ed-meta"><span>${esc((c.companies || []).map(x => x.name).join(' · '))}</span><span>· ${fmtDate(c.date)}</span></div>
-    </div>`;
-  }
-  function renderCompare() {
-    const sorted = [...PEERS].sort((a, b) => b.date.localeCompare(a.date));
-    const body = sorted.length
-      ? sorted.map(cmprow).join('')
-      : `<div class="inv-ed-empty"><div class="t">No comparisons yet</div><div class="s">Ask Jarvis to compare two or more stocks for you</div></div>`;
-    $('inv-compare').innerHTML = `${masthead(`Peer Comparisons · ${sorted.length}`)}${body}`;
-  }
-  function openCompare(id) {
-    const c = peerById(id); if (!c) return;
-    const companies = c.companies || [];
-    const colorMap = cmpColorMap(companies);
-    const fmtM = v => { const sign = v < 0 ? '-' : ''; const a = Math.abs(v); return a >= 1000 ? sign + '$' + (a / 1000).toFixed(2) + 'B' : sign + '$' + a.toFixed(0) + 'M'; };
-    const fmtEps = v => (v < 0 ? '-' : '') + '$' + Math.abs(v).toFixed(2);
-    const revChart = cmpTrendChart(c.quarters, c.revenueTrend, fmtM);
-    const niChart = cmpTrendChart(c.quarters, c.netIncomeTrend, fmtM);
-    const epsChart = cmpTrendChart(c.quarters, c.epsTrend, fmtEps);
-    const newsBlocks = (c.news || []).map(nw => `
-      <div class="inv-cmp-news-block">
-        <div class="inv-cmp-news-head">${cmpBadge(nw.ticker, colorMap[nw.ticker] || 'var(--accent)')}<span class="inv-cmp-news-tag">${esc(nw.tag || '')}</span></div>
-        <ul class="inv-bullets">${(nw.bullets || []).map(b => `<li>${esc(b)}</li>`).join('')}</ul>
-      </div>`).join('');
-    $('invCmpBody').innerHTML = `
-      <div class="inv-art-h">${esc((c.tickers || []).join(' vs '))}</div>
-      <div class="inv-art-rule"></div>
-      <div class="inv-art-byline"><span>${esc(companies.map(x => x.name).join(' · '))} · ${fmtDate(c.date)}</span></div>
-      <div class="inv-pr-section">
-        <div class="section-title">Snapshot</div>
-        ${cmpProfileGrid(c.snapshot, SNAPSHOT_FIELDS, colorMap)}
-      </div>
-      ${revChart ? `<div class="inv-pr-section"><div class="section-title">Revenue Trend</div>${cmpLegend(companies)}${revChart}</div>` : ''}
-      ${niChart ? `<div class="inv-pr-section"><div class="section-title">Net Income Trend</div>${cmpLegend(companies)}${niChart}</div>` : ''}
-      <div class="inv-pr-section">
-        <div class="section-title">EPS</div>
-        ${epsChart ? `${cmpLegend(companies)}${epsChart}` : ''}
-        ${cmpEpsStatsGrid(c.epsStats, colorMap)}
-        ${c.epsNarrative ? `<div class="inv-summary">${esc(c.epsNarrative)}</div>` : ''}
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Valuation</div>
-        ${cmpVerdictGrid(c.valuation, colorMap)}
-        ${c.valuationNote ? `<div class="inv-cmp-note">${esc(c.valuationNote)}</div>` : ''}
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Dividend</div>
-        ${cmpDividendGrid(c.dividends, colorMap)}
-      </div>
-      ${newsBlocks ? `<div class="inv-pr-section"><div class="section-title">News &amp; Guidance</div>${newsBlocks}</div>` : ''}
-      <div class="inv-pr-section">
-        <div class="section-title">Synthesis</div>
-        <div class="inv-summary">${esc(c.synthesis)}</div>
-      </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Discussion</div>
-        <ol class="inv-bullets">${(c.conclusion || []).map(x => `<li>${esc(x)}</li>`).join('')}</ol>
-      </div>
-      <div class="inv-pr-caveats">${esc(c.caveats)}</div>`;
-    $('invCmpArticle').classList.add('open');
-    $('invCmpScroll') && ($('invCmpScroll').scrollTop = 0);
-    pushOverlayState('compare');
-  }
-  function closeCmpArticle() {
-    $('invCmpArticle').classList.remove('open');
-  }
 
   function openEarnings(id) {
     const e = earningsById(id); if (!e) return;
@@ -812,7 +629,6 @@ window.InvestmentView = (function () {
       if ($('invArticle').classList.contains('open')) closeArticle();
       if ($('invDeepArticle').classList.contains('open')) closeDeepArticle();
       if ($('invEarnArticle').classList.contains('open')) closeEarnArticle();
-      if ($('invCmpArticle').classList.contains('open')) closeCmpArticle();
       if ($('invOverlay').classList.contains('active')) closeModal();
     });
   }
@@ -826,7 +642,6 @@ window.InvestmentView = (function () {
     else if (tab === 'portfolio') renderPortfolio();
     else if (tab === 'earnings') renderEarnings();
     else if (tab === 'deepdive') renderDeepDive();
-    else if (tab === 'compare') renderCompare();
   }
 
   function wire() {
@@ -835,7 +650,6 @@ window.InvestmentView = (function () {
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
       const er = e.target.closest('[data-er-id]'); if (er) { openEarnings(er.dataset.erId); return; }
       const dd = e.target.closest('[data-dd-id]'); if (dd) { openDeepDive(dd.dataset.ddId); return; }
-      const cmp = e.target.closest('[data-cmp-id]'); if (cmp) { openCompare(cmp.dataset.cmpId); return; }
       const c = e.target.closest('[data-id]'); if (c) openBrief(c.dataset.id);
     });
     $('invMClose').onclick = goBackIfOverlay;
@@ -843,7 +657,6 @@ window.InvestmentView = (function () {
     $('invArtBack').onclick = goBackIfOverlay;
     $('invDDBack').onclick = goBackIfOverlay;
     $('invEarnBack').onclick = goBackIfOverlay;
-    $('invCmpBack').onclick = goBackIfOverlay;
     wirePopstate();
   }
 
