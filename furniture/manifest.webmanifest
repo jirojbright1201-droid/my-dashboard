@@ -1,0 +1,18 @@
+{
+  "name": "Furniture",
+  "short_name": "Furniture",
+  "description": "เช็คลิสต์เฟอร์นิเจอร์และของตกแต่ง · ราคา/งบรวม · ลำดับความสำคัญ · ลิงก์ร้าน",
+  "lang": "th",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#cf7050",
+  "theme_color": "#fbfaf8",
+  "icons": [
+    { "src": "../icons/furniture-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "../icons/furniture-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "../icons/furniture-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "../icons/furniture-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

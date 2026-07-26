@@ -1,0 +1,84 @@
+/* ===== Furniture & Decor checklist ===== */
+.fn { padding-top: 16px; }
+.fn-pane { display: none; }
+.fn-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── hero: แถบความคืบหน้าใต้ยอดคงเหลือ ── */
+.fn-hero-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.14); margin-top: 16px; overflow: hidden; }
+.fn-hero-bar-fill { height: 100%; border-radius: 99px; background: var(--accent-bright); transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── progress bar บนพื้นขาว ── */
+.fn-bar { position: relative; height: 8px; border-radius: 99px; background: var(--surface-3); margin-top: 10px; overflow: hidden; }
+.fn-bar.sm { height: 5px; margin-top: 7px; }
+.fn-bar-fill { position: absolute; left: 0; top: 0; height: 100%; border-radius: 99px; background: var(--accent); transition: width .6s cubic-bezier(.4,0,.2,1); }
+.fn-bar-plan { position: absolute; left: 0; top: 0; height: 100%; border-radius: 99px; background: var(--accent-soft); }
+
+/* ── budget card ── */
+.fn-budget-top { display: flex; align-items: baseline; gap: 8px; }
+.fn-budget-spent { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; letter-spacing: -.02em; }
+.fn-budget-of { font-size: 0.8125rem; color: var(--silver); }
+.fn-budget-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 0.75rem; color: var(--silver); }
+.fn-budget-legend span { display: flex; align-items: center; gap: 6px; }
+.fn-budget-legend .dot { width: 8px; height: 8px; border-radius: 99px; display: inline-block; }
+.fn-budget-legend .dot.solid { background: var(--accent); }
+.fn-budget-legend .dot.ghost { background: var(--accent-soft); }
+.fn-budget-note { font-size: 0.8125rem; color: var(--silver); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+.fn-budget-note.over { color: var(--red); font-weight: 600; }
+
+/* ── group head (ชื่อกลุ่ม + ยอดรวมกลุ่ม) ── */
+.fn-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.fn-group-sum { font-family: var(--mono); font-size: 0.875rem; font-weight: 600; color: var(--text); }
+
+/* ── แถวรายการ ── */
+.fn-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; cursor: pointer; min-width: 0; }
+.fn-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.fn-row:active { opacity: .55; }
+.fn-check { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 99px; border: 1.8px solid var(--border);
+  display: flex; align-items: center; justify-content: center; color: #fff; }
+.fn-check svg { width: 13px; height: 13px; }
+.fn-row.done .fn-check { background: var(--green); border-color: var(--green); }
+.fn-row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.fn-row-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fn-row.done .fn-row-title { color: var(--silver); text-decoration: line-through; text-decoration-color: var(--border); }
+.fn-row-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fn-row-price { flex: 0 0 auto; font-family: var(--mono); font-size: 0.875rem; font-weight: 600; letter-spacing: -.02em; }
+.fn-row.done .fn-row-price { color: var(--silver); }
+
+/* ── up next (overview) ── */
+.fn-next { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 13px 0; cursor: pointer; }
+.fn-next:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.fn-next:active { opacity: .55; }
+.fn-next-body { flex: 1; min-width: 0; }
+.fn-next-body .fn-row-sub { white-space: normal; }
+.fn-next-right { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+/* ── by category ── */
+.fn-cat + .fn-cat { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-soft); }
+.fn-cat-head { display: flex; align-items: baseline; justify-content: space-between; font-size: 0.875rem; font-weight: 600; }
+.fn-cat-num { font-family: var(--mono); font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
+.fn-cat-sub { font-size: 0.75rem; color: var(--silver); margin-top: 6px; }
+
+/* ── filter chips ── */
+.fn-filters { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+.fn-chipbtn { flex: 0 0 auto; border: 1px solid var(--border-soft); background: var(--surface); cursor: pointer; font-family: inherit;
+  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; transition: all .15s; white-space: nowrap; }
+.fn-chipbtn.on { background: var(--text); border-color: var(--text); color: #fff; }
+
+/* ── chips สถานะ/ลำดับความสำคัญ ── */
+.chip.fn-chip-must { background: var(--accent-soft); color: var(--accent); }
+.chip.fn-chip-nice { background: rgba(212,160,23,.12); color: var(--orange); }
+.chip.fn-chip-later { background: var(--surface-3); color: var(--silver); }
+.chip.fn-chip-bought { background: rgba(58,143,82,.12); color: var(--green); margin-right: 6px; }
+.chip.fn-chip-todo { background: var(--accent-soft); color: var(--accent); margin-right: 6px; }
+
+/* ── modal ── */
+.fn-price-block { display: flex; gap: 28px; margin-top: 16px; }
+.fn-price-lab { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 1px; color: var(--silver); font-weight: 700; }
+.fn-price-val { font-family: var(--mono); font-size: 1.375rem; font-weight: 600; letter-spacing: -.02em; margin-top: 3px; }
+.fn-price-val.muted { color: var(--silver); font-size: 1.125rem; }
+.fn-msub { font-size: 0.8125rem; color: var(--silver); }
+.fn-note { font-size: 0.875rem; line-height: 1.6; }
+.fn-link { display: block; text-align: center; margin-top: 20px; background: var(--accent); color: #fff; text-decoration: none;
+  font-size: 0.875rem; font-weight: 700; padding: 13px; border-radius: 12px; }
+.fn-link:active { transform: scale(.97); }
