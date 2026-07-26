@@ -254,14 +254,3 @@
 .inv-full-reader .inv-pr-twocol { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-soft); }
 .inv-full-reader .inv-pr-section:first-of-type { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border-soft); }
 .inv-full-reader .section-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--text); text-transform: none; letter-spacing: 0; margin-bottom: 12px; }
-
-/* กรอบครอบทั้ง Section เฉพาะแท็บ Compare (เพิ่ม 27 ก.ค. 2026 ตามที่ jiroj ขอ) — สโคปเฉพาะ #invCmpArticle
-   ไม่กระทบ Deep-Dive/Earnings ที่ยังใช้เส้นคั่นบนแบบเดิมร่วมกันผ่าน .inv-full-reader */
-#invCmpArticle .inv-pr-section {
-  border: 1px solid var(--border-soft);
-  border-radius: 12px;
-  padding: 18px 18px 20px;
-  margin-top: 18px;
-  background: var(--surface);
-}
-#invCmpArticle .inv-pr-section:first-of-type { margin-top: 20px; }
