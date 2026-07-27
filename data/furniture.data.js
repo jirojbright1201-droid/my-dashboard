@@ -36,8 +36,8 @@ window.FURNITURE_DATA = {
     { id: 'fn0013', name: 'โปสเตอร์ / กรอบรูป + เทปไม่ทิ้งรอย', category: 'decor', priority: 'later', price: 600, paid: 0, status: 'todo', shop: '', url: '', note: 'ใช้เทปกาวสองหน้าแบบลอกออกได้ ห้ามตอกตะปูผนังห้องเช่า', dateAdded: '2026-07-27', dateBought: '' },
 
     // ── ของใช้จำเป็น ──
-    { id: 'fn0015', name: 'ชุดเครื่องนอน (ผ้าปู/หมอน/ปลอก)', category: 'essentials', priority: 'must', price: 1200, paid: 0, status: 'todo', shop: '', url: '', note: 'ผ้าปูต้องเป็นขนาด 5 ฟุตให้พอดีท็อปเปอร์ ซื้อสำรองอีกชุดไว้สลับซัก', dateAdded: '2026-07-27', dateBought: '' },
-    { id: 'fn0016', name: 'ผ้าห่ม', category: 'essentials', priority: 'must', price: 700, paid: 0, status: 'todo', shop: '', url: '', note: '', dateAdded: '2026-07-27', dateBought: '' },
+    { id: 'fn0015', name: 'ชุดเครื่องนอน (ผ้าปู/หมอน/ปลอก)', category: 'essentials', priority: 'must', price: 1200, paid: 0, status: 'todo', shop: '', url: '', note: 'ผ้าปูต้องเป็นขนาด 5 ฟุตให้พอดีท็อปเปอร์ ซื้อสำรองอีกชุดไว้สลับซัก — เลือกสีเบจ', dateAdded: '2026-07-27', dateBought: '' },
+    { id: 'fn0016', name: 'ผ้าห่ม', category: 'essentials', priority: 'must', price: 700, paid: 0, status: 'todo', shop: '', url: '', note: 'เลือกสีเบจ', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0017', name: 'ราวตากผ้าแบบพับได้', category: 'essentials', priority: 'must', price: 600, paid: 0, status: 'todo', shop: '', url: '', note: 'พับเก็บได้ ใช้ในห้อง/ระเบียงเล็ก', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0018', name: 'ถังขยะ', category: 'essentials', priority: 'must', price: 207, paid: 207, status: 'bought', shop: 'Shopee', url: 'https://th.shp.ee/criPrDip', note: '', dateAdded: '2026-07-27', dateBought: '2026-07-27' },
     { id: 'fn0029', name: 'เตารีดไอน้ำแบบตั้งพื้น', category: 'essentials', priority: 'nice', price: 600, paid: 0, status: 'todo', next: true, shop: '', url: '', note: 'รีดตอนแขวนอยู่ ไม่ต้องมีโต๊ะรีด — เช็คความจุถังน้ำ ตัวถูกมากมักถังเล็กเติมบ่อย', dateAdded: '2026-07-27', dateBought: '' },
