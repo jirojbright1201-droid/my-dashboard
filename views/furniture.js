@@ -71,8 +71,6 @@ window.FurnitureView = (function () {
     const totalPlan = spent + estLeft;
     const pctDone = ITEMS.length ? Math.round(got.length / ITEMS.length * 100) : 0;
 
-    const upNext = [...left].sort((a, b) => PRIO_ORDER.indexOf(a.priority) - PRIO_ORDER.indexOf(b.priority) || cost(b) - cost(a)).slice(0, 5);
-
     const budgetCard = BUDGET > 0 ? (() => {
       const usedPct = Math.min(100, Math.round(spent / BUDGET * 100));
       const planPct = Math.min(100, Math.round(totalPlan / BUDGET * 100));
@@ -105,17 +103,6 @@ window.FurnitureView = (function () {
       </div>
 
       ${budgetCard}
-
-      <div class="card">
-        <div class="section-title">Up Next</div>
-        ${upNext.length ? upNext.map(it => `<div class="fn-next" data-id="${esc(it.id)}">
-            <div class="fn-next-body">
-              <div class="fn-row-title">${esc(it.name)}</div>
-              <div class="fn-row-sub">${esc(CAT_LABEL[it.category] || it.category)}${it.note ? ' · ' + esc(it.note) : ''}</div>
-            </div>
-            <div class="fn-next-right">${prioChip(it.priority)}<div class="fn-row-price">${money(cost(it))}</div></div>
-          </div>`).join('') : '<div class="empty">Nothing left to buy</div>'}
-      </div>
 
       <div class="card">
         <div class="section-title">By Category</div>
