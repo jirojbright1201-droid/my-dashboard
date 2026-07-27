@@ -11,7 +11,9 @@
 //   items[]  : { id, name, category:'furniture'|'decor'|'essentials',
 //                priority:'must'|'nice'|'later', price (ราคาประมาณการ),
 //                paid (ราคาจ่ายจริง — ใส่ตอนซื้อแล้ว), status:'todo'|'bought',
-//                shop, url, note, dateAdded, dateBought }
+//                shop, url, note, dateAdded, dateBought,
+//                next (true = ปักไว้ในการ์ด Up Next บนแท็บ Overview — Bright เลือกเอง
+//                      ว่าจะซื้ออะไรถัดไป ใส่/ถอดตามที่ Bright สั่งเท่านั้น ห้ามปักให้เอง) }
 window.FURNITURE_DATA = {
   budget: 0,
   currency: 'THB',

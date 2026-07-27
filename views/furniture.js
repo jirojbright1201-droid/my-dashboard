@@ -71,6 +71,10 @@ window.FurnitureView = (function () {
     const totalPlan = spent + estLeft;
     const pctDone = ITEMS.length ? Math.round(got.length / ITEMS.length * 100) : 0;
 
+    // Up Next = ของที่ Bright ปักเองว่าจะซื้อถัดไป (ฟิลด์ next:true ในข้อมูล)
+    // ห้ามเปลี่ยนกลับไปให้แอปจัดอันดับให้อัตโนมัติ — Bright เลือกเอง (27 ก.ค. 2026)
+    const upNext = left.filter(i => i.next === true);
+
     const budgetCard = BUDGET > 0 ? (() => {
       const usedPct = Math.min(100, Math.round(spent / BUDGET * 100));
       const planPct = Math.min(100, Math.round(totalPlan / BUDGET * 100));
@@ -103,6 +107,17 @@ window.FurnitureView = (function () {
       </div>
 
       ${budgetCard}
+
+      <div class="card">
+        <div class="section-title">Up Next</div>
+        ${upNext.length ? upNext.map(it => `<div class="fn-next" data-id="${esc(it.id)}">
+            <div class="fn-next-body">
+              <div class="fn-row-title">${esc(it.name)}</div>
+              <div class="fn-row-sub">${esc(CAT_LABEL[it.category] || it.category)}${it.shop ? ' · ' + esc(it.shop) : ''}</div>
+            </div>
+            <div class="fn-next-right">${prioChip(it.priority)}<div class="fn-row-price">${money(cost(it))}</div></div>
+          </div>`).join('') : '<div class="empty">Nothing picked yet</div>'}
+      </div>
 
       <div class="card">
         <div class="section-title">By Category</div>
