@@ -5,6 +5,7 @@
 //   - นอนบนท็อปเปอร์วางพื้น ไม่มีเตียง/ที่นอน/ฐานเตียง (ตัดออกแล้ว)
 //   - ไม่มีโต๊ะทำงาน/เก้าอี้ทำงาน/โต๊ะกินข้าว/โซฟา (ตัดออกแล้ว)
 //   - ไม่มีพัดลม (ห้องมีแอร์), ไม่มีไฟเส้น LED, ไม่มีนาฬิกาแขวน, ต้นไม้ใช้แบบปลอม
+//   - ไม่มีเครื่องทำน้ำอุ่น + ไม่มีตู้เสื้อผ้า (Bright ตัดออกเอง 27 ก.ค. 2026 หลังคัดลิสต์รอบแรก)
 // schema: flat list ไม่ key ด้วยเดือน (เหมือน books/articles)
 //   budget   : งบรวมที่ตั้งไว้ (0 = ยังไม่ตั้ง)
 //   items[]  : { id, name, category:'furniture'|'decor'|'essentials',
@@ -17,7 +18,6 @@ window.FURNITURE_DATA = {
   items: [
     // ── เฟอร์นิเจอร์ ──
     { id: 'fn0001', name: 'ท็อปเปอร์ 5 ฟุต', category: 'furniture', priority: 'must', price: 600, paid: 600, status: 'bought', shop: 'TikTok Shop', url: 'https://vt.tiktok.com/ZS9rndw1D67FS-cnTQN/', note: 'ใช้อยู่แล้ว วางกับพื้น ไม่ซื้อเตียง/ฐานเตียง', dateAdded: '2026-07-27', dateBought: '' },
-    { id: 'fn0002', name: 'ตู้เสื้อผ้าถอดประกอบ', category: 'furniture', priority: 'must', price: 1800, paid: 0, status: 'todo', shop: '', url: '', note: 'แบบโครงเหล็กคลุมผ้า หรือพลาสติกประกอบ — เบา ย้ายง่าย', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0003', name: 'ชั้นวางของเอนกประสงค์', category: 'furniture', priority: 'nice', price: 1200, paid: 0, status: 'todo', shop: '', url: '', note: 'ตั้งพื้น ไม่ต้องเจาะผนัง', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0004', name: 'เก้าอี้นั่งเล่น / พัฟ', category: 'furniture', priority: 'nice', price: 1500, paid: 0, status: 'todo', shop: '', url: '', note: 'ที่นั่งอื่นนอกจากพื้น — แทนโซฟาที่กินพื้นที่และขนย้ายลำบาก', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0005', name: 'โต๊ะข้างเตียง', category: 'furniture', priority: 'nice', price: 700, paid: 0, status: 'todo', shop: '', url: '', note: 'นอนกับพื้น เลือกตัวเตี้ยจะได้ระดับพอดี', dateAdded: '2026-07-27', dateBought: '' },
@@ -33,7 +33,6 @@ window.FURNITURE_DATA = {
     { id: 'fn0013', name: 'โปสเตอร์ / กรอบรูป + เทปไม่ทิ้งรอย', category: 'decor', priority: 'later', price: 600, paid: 0, status: 'todo', shop: '', url: '', note: 'ใช้เทปกาวสองหน้าแบบลอกออกได้ ห้ามตอกตะปูผนังห้องเช่า', dateAdded: '2026-07-27', dateBought: '' },
 
     // ── ของใช้จำเป็น ──
-    { id: 'fn0014', name: 'เครื่องทำน้ำอุ่น', category: 'essentials', priority: 'must', price: 2800, paid: 0, status: 'todo', shop: '', url: '', note: 'ห้องไม่มีให้ ต้องซื้อเอง — ขออนุญาตเจ้าของห้องก่อนติดตั้ง และให้ช่างเดินสายกราวด์ให้', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0015', name: 'ชุดเครื่องนอน (ผ้าปู/หมอน/ปลอก)', category: 'essentials', priority: 'must', price: 1200, paid: 0, status: 'todo', shop: '', url: '', note: 'ผ้าปูต้องเป็นขนาด 5 ฟุตให้พอดีท็อปเปอร์ ซื้อสำรองอีกชุดไว้สลับซัก', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0016', name: 'ผ้าห่ม', category: 'essentials', priority: 'must', price: 700, paid: 0, status: 'todo', shop: '', url: '', note: '', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0017', name: 'ราวตากผ้าแบบพับได้', category: 'essentials', priority: 'must', price: 600, paid: 0, status: 'todo', shop: '', url: '', note: 'พับเก็บได้ ใช้ในห้อง/ระเบียงเล็ก', dateAdded: '2026-07-27', dateBought: '' },
