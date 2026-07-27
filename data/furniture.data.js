@@ -19,7 +19,7 @@ window.FURNITURE_DATA = {
     // ── เฟอร์นิเจอร์ ──
     { id: 'fn0001', name: 'ท็อปเปอร์ 5 ฟุต', category: 'furniture', priority: 'must', price: 600, paid: 600, status: 'bought', shop: 'TikTok Shop', url: 'https://vt.tiktok.com/ZS9rndw1D67FS-cnTQN/', note: 'ใช้อยู่แล้ว วางกับพื้น ไม่ซื้อเตียง/ฐานเตียง', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0003', name: 'ชั้นวางของเอนกประสงค์', category: 'furniture', priority: 'nice', price: 1200, paid: 0, status: 'todo', shop: '', url: '', note: 'ตั้งพื้น ไม่ต้องเจาะผนัง', dateAdded: '2026-07-27', dateBought: '' },
-    { id: 'fn0004', name: 'เก้าอี้นั่งเล่น / พัฟ', category: 'furniture', priority: 'nice', price: 1500, paid: 0, status: 'todo', shop: '', url: '', note: 'ที่นั่งอื่นนอกจากพื้น — แทนโซฟาที่กินพื้นที่และขนย้ายลำบาก', dateAdded: '2026-07-27', dateBought: '' },
+    { id: 'fn0004', name: 'บีนแบ็ก', category: 'furniture', priority: 'nice', price: 1800, paid: 0, status: 'todo', shop: '', url: '', note: 'ที่นั่งเอนหลักของห้อง แทนโซฟา — เช็คก่อนซื้อว่ามีเม็ดโฟมข้างในมาให้แล้ว บางร้านขายแต่ปลอก และเลือกแบบถอดปลอกซักได้', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0005', name: 'โต๊ะข้างเตียง', category: 'furniture', priority: 'nice', price: 700, paid: 0, status: 'todo', shop: '', url: '', note: 'นอนกับพื้น เลือกตัวเตี้ยจะได้ระดับพอดี', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0006', name: 'ชั้นวางรองเท้า', category: 'furniture', priority: 'nice', price: 600, paid: 0, status: 'todo', shop: '', url: '', note: '', dateAdded: '2026-07-27', dateBought: '' },
 
