@@ -15,7 +15,10 @@ html, body { overscroll-behavior-y: none; overflow-x: hidden; }
 body {
   font-family: 'Inter',-apple-system,system-ui,'Helvetica Neue',Arial,sans-serif;
   background: var(--bg); color: var(--text); min-height: 100vh; min-height: 100dvh;
-  -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none;
+  -webkit-font-smoothing: antialiased;
+  /* เปิดให้คัดลอกข้อความได้ทุกจุด (Bright ขอ 27 ก.ค. 2026) — เดิมตั้ง user-select:none
+     ทั้ง body เพื่อฟีลแอปเนทีฟ แต่ทำให้เลือกข้อความอ่านไม่ได้ ห้ามใส่กลับ */
+  -webkit-user-select: text; user-select: text;
 }
 
 /* ── scroll + views ── */
