@@ -24,7 +24,6 @@ window.FURNITURE_DATA = {
     { id: 'fn0006', name: 'ชั้นวางรองเท้า', category: 'furniture', priority: 'nice', price: 600, paid: 0, status: 'todo', shop: '', url: '', note: '', dateAdded: '2026-07-27', dateBought: '' },
 
     // ── ของตกแต่ง ──
-    { id: 'fn0007', name: 'ผ้าม่านสำเร็จรูป + ราวแบบไม่เจาะ', category: 'decor', priority: 'must', price: 1200, paid: 0, status: 'todo', shop: '', url: '', note: 'วัดหน้าต่างก่อนสั่ง ใช้ราวสปริง/ขอเกี่ยวแบบไม่เจาะผนัง เจ้าของห้องไม่ว่า', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0008', name: 'โคมไฟหัวเตียง', category: 'decor', priority: 'must', price: 500, paid: 0, status: 'todo', shop: '', url: '', note: 'ไฟห้องเช่ามักขาวจ้าดวงเดียว มีไฟวอร์มช่วยได้เยอะ', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0009', name: 'พรมผืนเล็ก', category: 'decor', priority: 'nice', price: 900, paid: 0, status: 'todo', shop: '', url: '', note: 'นอนกับพื้นอยู่แล้ว มีพรมช่วยทั้งเรื่องสัมผัสและกลบพื้นเดิมของห้อง', dateAdded: '2026-07-27', dateBought: '' },
     { id: 'fn0010', name: 'กระจกเต็มตัวแบบพิงผนัง', category: 'decor', priority: 'nice', price: 900, paid: 0, status: 'todo', shop: '', url: '', note: 'แบบพิง ไม่ต้องยึดผนัง ช่วยให้ห้องดูกว้างขึ้น', dateAdded: '2026-07-27', dateBought: '' },
