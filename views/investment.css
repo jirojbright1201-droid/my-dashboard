@@ -207,6 +207,12 @@
 .inv-xcpt > summary::before { content: '+ '; }
 .inv-xcpt[open] > summary::before { content: '\2013 '; }
 .inv-xcpt-en { margin-top: 10px; font-size: 0.875rem; line-height: 1.75; color: var(--text); white-space: pre-line; font-style: italic; }
+.inv-xcpt-body { margin-top: 10px; display: flex; flex-direction: column; gap: 18px; }
+.inv-xcpt-seg { padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); }
+.inv-xcpt-seg:last-child { border-bottom: none; padding-bottom: 0; }
+.inv-xcpt-heading { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; color: var(--silver); margin-bottom: 8px; }
+.inv-xcpt-seg .inv-xcpt-en { margin-top: 0; }
+.inv-xcpt-th { margin-top: 8px; font-size: 0.875rem; line-height: 1.75; color: var(--text); white-space: pre-line; font-style: normal; }
 
 /* Track Record — เทียบสิ่งที่ผู้บริหารเคยพูด/guidance ไว้กับผลจริง (เพิ่ม 24 ก.ค. 2026) */
 .inv-track { display: flex; flex-direction: column; gap: 14px; margin-top: 2px; }
