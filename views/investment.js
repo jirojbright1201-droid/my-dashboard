@@ -417,12 +417,21 @@ window.InvestmentView = (function () {
     if (!t || (!t.text && !(t.segments && t.segments.length))) return '';
     const summary = t.summaryTh ? `<div class="inv-summary">${esc(t.summaryTh)}</div>` : '';
     if (t.segments && t.segments.length) {
-      const body = t.segments.map(s => `
+      const body = t.segments.map(s => {
+        const enP = s.en.split(/\n\n+/).filter(x => x.trim());
+        const thP = s.th.split(/\n\n+/).filter(x => x.trim());
+        const paras = enP.length === thP.length ? enP.map((en, i) => ({ en, th: thP[i] })) : [{ en: s.en, th: s.th }];
+        const rows = paras.map(p => `
+          <div class="inv-xcpt-para">
+            <div class="inv-xcpt-en">${esc(p.en)}</div>
+            <div class="inv-xcpt-th">${esc(p.th)}</div>
+          </div>`).join('');
+        return `
         <div class="inv-xcpt-seg">
           <div class="inv-xcpt-heading">${esc(s.heading)}</div>
-          <div class="inv-xcpt-en">${esc(s.en)}</div>
-          <div class="inv-xcpt-th">${esc(s.th)}</div>
-        </div>`).join('');
+          ${rows}
+        </div>`;
+      }).join('');
       return `${summary}
         <details class="inv-xcpt">
           <summary>Read full call transcript</summary>
