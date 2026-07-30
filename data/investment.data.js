@@ -242,6 +242,596 @@ window.INVESTMENT_DATA = {
       ],
       "caveats": "ข้อมูลนี้ใช้ประกอบการตัดสินใจเท่านั้น ไม่ใช่คำแนะนำการลงทุนโดยตรง ตัวเลขอ้างอิงจากรายงานผลประกอบการ (earnings release) และรายงานข่าวสาธารณะ ณ วันที่ 29-30 กรกฎาคม 2026 ตัวเลขคาดการณ์ (consensus) ของ Revenue และ EPS อ้างอิงจากรายงานของ Investing.com"
     }
+,
+    {
+      "id": "er0002",
+      "date": "2026-07-31",
+      "ticker": "FICO",
+      "company": "Fair Isaac Corporation",
+      "quarter": "Q1 FY26",
+      "reportDate": "2026-01-28",
+      "verdict": "beat",
+      "verdictLine": "รายได้และกำไรต่อหุ้นปรับปรุง (non-GAAP EPS) สูงกว่าประมาณการนักวิเคราะห์ทั้งคู่ โดยได้แรงหนุนหลักจากธุรกิจ Scores ที่เติบโต 29% เทียบปีก่อน ขณะที่ราคาหุ้นกลับปรับตัวลงหลังประกาศผลแม้ผลประกอบการจะออกมาดีกว่าคาด",
+      "metrics": [
+        {
+          "label": "Revenue",
+          "actual": "$512M",
+          "est": "$511M",
+          "deltaPct": "+0.1%",
+          "dir": "pos"
+        },
+        {
+          "label": "Non-GAAP EPS",
+          "actual": "$7.33",
+          "est": "$7.20",
+          "deltaPct": "+1.8%",
+          "dir": "pos"
+        }
+      ],
+      "trend": [
+        {
+          "label": "Q2'25",
+          "value": 499
+        },
+        {
+          "label": "Q3'25",
+          "value": 536
+        },
+        {
+          "label": "Q4'25",
+          "value": 516
+        },
+        {
+          "label": "Q1'26",
+          "value": 512
+        }
+      ],
+      "guidance": null,
+      "trackRecord": [
+        {
+          "claim": "ตอนประกาศงบไตรมาส 4 ปีงบ 2025 (พ.ย. 2025) ผู้บริหารให้เป้าปีงบ 2026 แบบที่มีการเผื่อความไม่แน่นอนของตลาดจำนองไว้ล่วงหน้า และบอกว่าอาจปรับเป้าขึ้นได้ถ้าสถานการณ์ตลาดดีกว่าคาด",
+          "verdict": "partial",
+          "note": "ผลไตรมาส 1 ออกมาดีกว่าประมาณการทั้งรายได้และกำไรต่อหุ้นจริง สอดคล้องกับที่เผื่อไว้ แต่ฝ่ายบริหารเลือกยังไม่ปรับเป้าทั้งปีขึ้นในรอบนี้ โดยให้เหตุผลว่าต้องการข้อมูลอีกอย่างน้อยหนึ่งไตรมาสก่อนตัดสินใจ"
+        },
+        {
+          "claim": "ตอนไตรมาส 4 ปีงบ 2025 บริษัทเริ่มโครงการ direct licensing กับพันธมิตรผู้ให้บริการข้อมูลเครดิตในตลาดจำนอง (mortgage reseller) โดยตั้งเป้าขยายจำนวนพันธมิตรต่อเนื่องในปีงบ 2026",
+          "verdict": "hit",
+          "note": "ไตรมาส 1 เพิ่มพันธมิตรใหม่ 4 ราย (Zaktis, Kotality, Ascend Companies, CIC Credit) และเซ็นข้อตกลงเพิ่มกับ MeridianLink อีกหนึ่งราย ถือว่าขยายได้ตามแผนที่วางไว้"
+        },
+        {
+          "claim": "กำหนดเวลาที่ FICO Score 10T จะได้รับการอนุมัติให้ใช้ในตลาดจำนองมาตรฐาน (conforming) ยังไม่ชัดเจนตอนพูดในไตรมาส 4 ปีงบ 2025",
+          "verdict": "hit",
+          "note": "ไตรมาส 1 ผู้บริหารยังคงยืนยันว่ายังไม่มีกำหนดเวลาที่แน่นอนจากหน่วยงานกำกับดูแล สอดคล้องกับความไม่แน่นอนที่เคยแจ้งไว้ ไม่ได้มั่นใจเกินจริง"
+        }
+      ],
+      "positives": [
+        {
+          "label": "ธุรกิจ Scores เร่งตัวแรง",
+          "note": "รายได้กลุ่ม Scores โต 29% เทียบปีก่อน จากทั้งฝั่ง B2B (นำโดยการให้คะแนนสินเชื่อจำนอง) และ B2C ที่ยังโตต่อเนื่อง"
+        },
+        {
+          "label": "กระแสเงินสดและการคืนเงินผู้ถือหุ้นแข็งแกร่ง",
+          "note": "กระแสเงินสดอิสระ (free cash flow) 4 ไตรมาสล่าสุดรวม 718 ล้านดอลลาร์ เพิ่มขึ้น 7% และยังซื้อหุ้นคืนต่อเนื่อง"
+        },
+        {
+          "label": "ได้รับการยอมรับจาก Gartner ว่าเป็นผู้นำ",
+          "note": "FICO Platform ได้รับเลือกเป็น Leader ใน Gartner Magic Quadrant สำหรับ Decision Intelligence Platforms ประจำเดือนมกราคม 2026 สะท้อนความคืบหน้าของกลยุทธ์ปรับเป็นธุรกิจแพลตฟอร์ม"
+        }
+      ],
+      "concerns": [
+        {
+          "label": "ราคาหุ้นปรับตัวลงแม้ผลประกอบการดีกว่าคาด",
+          "note": "หุ้นร่วง 2.8% ในการซื้อขายนอกเวลาหลังประกาศผล สะท้อนว่านักลงทุนบางส่วนกังวลประเด็นอื่นมากกว่าตัวเลขไตรมาสนี้ เช่นการแข่งขันจาก VantageScore"
+        },
+        {
+          "label": "ธุรกิจ Software เติบโตช้ากว่า Scores มาก",
+          "note": "รายได้ซอฟต์แวร์โตเพียง 2% เทียบปีก่อน ขณะที่รายได้ที่ไม่ใช่แพลตฟอร์ม (non-platform) ลดลง 13% แสดงว่าการเติบโตของบริษัทตอนนี้พึ่งพาธุรกิจ Scores เป็นหลัก"
+        },
+        {
+          "label": "ยังไม่ปรับเป้าทั้งปีขึ้นทั้งที่ทำได้ดีกว่าคาด",
+          "note": "ฝ่ายบริหารเลือกรอดูข้อมูลเพิ่มเติมก่อนปรับเป้า อาจสะท้อนความกังวลต่อความไม่แน่นอนของตลาดจำนองและแรงกดดันด้านราคาจากคู่แข่ง"
+        }
+      ],
+      "discussion": [
+        "การที่ฝ่ายบริหารยังไม่ปรับเป้าทั้งปีขึ้นทั้งที่ผลไตรมาสนี้ดีกว่าคาด เป็นความระมัดระวังตามปกติ หรือสะท้อนความกังวลเรื่องการแข่งขันจาก VantageScore ที่เริ่มมีน้ำหนักมากขึ้น",
+        "รายได้กลุ่ม Scores ที่พึ่งพาตลาดจำนองเป็นหลักในตอนนี้ จะยังโตต่อเนื่องในระดับนี้ได้อีกกี่ไตรมาส หากอัตราดอกเบี้ยหรือปริมาณการขอสินเชื่อบ้านเปลี่ยนทิศทาง"
+      ],
+      "caveats": "ข้อมูลนี้ไม่ใช่คำแนะนำการลงทุน จัดทำเพื่อการศึกษาและประกอบการตัดสินใจส่วนบุคคลเท่านั้น ตัวเลขอ้างอิงรายงานผลประกอบการอย่างเป็นทางการของ Fair Isaac Corporation และรายงานข่าวสาธารณะ ณ วันที่ 31 กรกฎาคม 2026 ตัวเลขประมาณการ (consensus) ของนักวิเคราะห์อ้างอิงจากรายงานรวบรวมของสำนักข่าวการเงินสาธารณะ",
+      "transcriptExcerpt": {
+        "summaryTh": "คอลนี้เริ่มด้วยคำแถลงของ Will Lansing (CEO) สรุปผลประกอบการไตรมาส 1 ปีงบ 2026 ที่รายได้และกำไรโตดีกว่าคาด ตามด้วยอัปเดตความคืบหน้าโครงการ direct licensing ในตลาดจำนอง สถานะ FICO Score 10T ความร่วมมือกับ Plaid สำหรับ UltraFICO Score รุ่นใหม่ การขยาย FICO Score Mortgage Simulator และการได้รับยกย่องจาก Gartner ว่าเป็นผู้นำด้าน Decision Intelligence Platforms จากนั้น Steven Weber (CFO) ให้รายละเอียดการเงินเชิงลึกทั้งรายได้แยกเซกเมนต์ ARR แพลตฟอร์ม อัตรารักษาลูกค้า มาร์จิ้น และภาษี ช่วงถาม-ตอบนักวิเคราะห์ถามครบ 6 คำถาม เน้นไปที่ความไม่แน่นอนของกำหนดเวลาอนุมัติ FICO Score 10T ในตลาดจำนองมาตรฐาน ตาราง LLPA ความคืบหน้าการใช้งานจริงของพันธมิตร reseller กลยุทธ์แพลตฟอร์ม และความแตกต่างระหว่าง FICO Score กับ VantageScore โดยฝ่ายบริหารเลือกยังไม่ปรับเป้าทั้งปีขึ้นในรอบนี้ ระบุว่าต้องการรอข้อมูลเพิ่มอีกอย่างน้อยหนึ่งไตรมาสก่อนตัดสินใจ",
+        "segments": [
+          {
+            "heading": "Opening remarks — Will Lansing (CEO), financial highlights",
+            "en": "Thanks, Dave, and thank you, everyone, for joining us for our first quarter earnings call. We had another strong quarter and are reiterating our fiscal 2026 guidance. We reported Q1 revenues of $512 million, up 16% over last year, as you can see on Page five of our investor presentation. For the quarter, we reported $158 million in GAAP net income, up 4%, and GAAP earnings of $6.61 per share, up 8% from the prior year. We reported $176 million in non-GAAP net income, up 22%, and non-GAAP earnings of $7.33 per share, up 27% from the prior year. We delivered free cash flow of $165 million in our first quarter.\n\nOver the last four quarters, we delivered $718 million in free cash flow, an increase of 7% year over year. We continue to return capital to our shareholders through buybacks by repurchasing 95,000 shares in Q1 at an average price of $1,707 per share. At the segment level, on Page six, you can see our first quarter SCORED segment revenues were $305 million, up 29% versus the prior year. While B2B scores were the key driver of growth, we also saw continued growth in B2C scores. In our software segment, we delivered $207 million in Q1 revenues, up 2% over last year. Results included 37% platform revenue growth and a 13% decline in non-platform revenue.",
+            "th": "ขอบคุณเดฟ และขอบคุณทุกท่านที่เข้าร่วมฟังผลประกอบการไตรมาสแรกของเรา ไตรมาสนี้เราทำผลงานได้แข็งแกร่งอีกครั้งและยังคงยืนยันเป้าหมายทั้งปีงบ 2026 ตามเดิม เรารายงานรายได้ไตรมาส 1 ที่ 512 ล้านดอลลาร์ เพิ่มขึ้น 16% จากปีก่อน ตามที่แสดงในหน้า 5 ของเอกสารนำเสนอนักลงทุน สำหรับไตรมาสนี้ เรารายงานกำไรสุทธิตามบัญชี (GAAP net income) 158 ล้านดอลลาร์ เพิ่มขึ้น 4% และกำไรต่อหุ้นตามบัญชี (GAAP EPS) 6.61 ดอลลาร์ เพิ่มขึ้น 8% จากปีก่อน เรารายงานกำไรสุทธิปรับปรุง (non-GAAP net income) 176 ล้านดอลลาร์ เพิ่มขึ้น 22% และกำไรต่อหุ้นปรับปรุง (non-GAAP EPS) 7.33 ดอลลาร์ เพิ่มขึ้น 27% จากปีก่อน เราทำกระแสเงินสดอิสระ (free cash flow) ได้ 165 ล้านดอลลาร์ในไตรมาสแรกนี้\n\nตลอด 4 ไตรมาสที่ผ่านมา เราทำกระแสเงินสดอิสระรวม 718 ล้านดอลลาร์ เพิ่มขึ้น 7% เทียบปีก่อน เรายังคงคืนเงินทุนให้ผู้ถือหุ้นผ่านการซื้อหุ้นคืนต่อเนื่อง โดยซื้อคืน 95,000 หุ้นในไตรมาส 1 ที่ราคาเฉลี่ย 1,707 ดอลลาร์ต่อหุ้น ในระดับเซกเมนต์ตามหน้า 6 รายได้กลุ่ม Scores ในไตรมาสแรกอยู่ที่ 305 ล้านดอลลาร์ เพิ่มขึ้น 29% เทียบปีก่อน แม้สกอร์ฝั่ง B2B จะเป็นตัวขับเคลื่อนหลักของการเติบโต แต่เราก็ยังเห็นการเติบโตต่อเนื่องของฝั่ง B2C ด้วยเช่นกัน ในกลุ่มซอฟต์แวร์ เราทำรายได้ไตรมาส 1 ได้ 207 ล้านดอลลาร์ เพิ่มขึ้น 2% จากปีก่อน ผลลัพธ์นี้รวมถึงรายได้ฝั่งแพลตฟอร์ม (platform) ที่โต 37% ขณะที่รายได้ฝั่งที่ไม่ใช่แพลตฟอร์ม (non-platform) ลดลง 13%"
+          },
+          {
+            "heading": "CEO update — Mortgage direct licensing & FICO Score 10T",
+            "en": "The FICO mortgage direct licensing program allows resellers the ability to streamline score access, enhance price transparency, and provide cost savings to lenders to reduce breakage fees. This quarter, we announced the addition of four new strategic resellers to the FICO Mortgage Direct Licensing program: Zaktis, Kotality, Ascend Companies, and CIC Credit. Additionally, we signed a DLP agreement to add another participant, MeridianLink, a key platform provider to the mortgage industry. We'll be releasing a press release on that soon. With strong demand from lenders, FICO is actively working alongside participants to support testing.\n\nOne large reseller is close to completing production integration testing. Another large reseller has completed that testing and is now testing system integration downstream. While we expect to go live soon with multiple partners, we also continue to work on finalizing agreements with additional reseller participants. The direct license program currently supports classic FICO. The conforming market is anticipating the general availability of FICO Score 10 T. We expect FICO Score 10 T to be available for direct licensing in both conforming and nonconforming in 2026.",
+            "th": "โครงการให้สิทธิ์ใช้สกอร์โดยตรงสำหรับตลาดจำนอง (FICO mortgage direct licensing) ช่วยให้ผู้ให้บริการข้อมูลเครดิต (reseller) เข้าถึงสกอร์ได้คล่องตัวขึ้น เพิ่มความโปร่งใสด้านราคา และช่วยผู้ให้กู้ประหยัดค่าธรรมเนียมที่เกิดจากการทำธุรกรรมไม่สำเร็จ (breakage fee) ไตรมาสนี้เราประกาศเพิ่มพันธมิตร reseller เชิงกลยุทธ์ใหม่ 4 ราย เข้าโครงการ FICO Mortgage Direct Licensing ได้แก่ Zaktis, Kotality, Ascend Companies และ CIC Credit นอกจากนี้เรายังเซ็นข้อตกลง DLP เพื่อเพิ่มผู้เข้าร่วมอีกราย คือ MeridianLink ซึ่งเป็นผู้ให้บริการแพลตฟอร์มสำคัญของอุตสาหกรรมจำนอง เราจะออกข่าวประชาสัมพันธ์เรื่องนี้เร็วๆ นี้ ด้วยความต้องการที่แข็งแกร่งจากผู้ให้กู้ FICO กำลังทำงานร่วมกับผู้เข้าร่วมอย่างใกล้ชิดเพื่อสนับสนุนการทดสอบระบบ\n\nreseller รายใหญ่รายหนึ่งใกล้เสร็จสิ้นการทดสอบระบบในสภาพแวดล้อมจริง (production integration testing) แล้ว ส่วนอีกรายทดสอบขั้นนั้นเสร็จแล้วและกำลังทดสอบการเชื่อมต่อระบบขั้นถัดไป แม้เราคาดว่าจะเริ่มใช้งานจริง (go live) กับพันธมิตรหลายรายในเร็วๆ นี้ เราก็ยังคงเดินหน้าปิดข้อตกลงกับ reseller รายอื่นเพิ่มเติมต่อไป ปัจจุบันโครงการ direct license รองรับเฉพาะ FICO Score รุ่นคลาสสิก ขณะที่ตลาดจำนองมาตรฐาน (conforming) กำลังรอการเปิดใช้งานทั่วไป (general availability) ของ FICO Score 10T เราคาดว่า FICO Score 10T จะพร้อมให้ใช้สิทธิ์โดยตรงทั้งในตลาด conforming และ nonconforming ภายในปี 2026"
+          },
+          {
+            "heading": "CEO update — UltraFICO/Plaid partnership",
+            "en": "This quarter, we also announced a strategic partnership with Plaid to deliver the next generation of UltraFICO Score. The score combines the proven reliability of the FICO Score with real-time cash flow data from Plaid to provide lenders with a single enhanced credit score that delivers superior consumer risk assessment without operational complexity. The enhanced UltraFICO Score solution is credit bureau agnostic and will leverage cash flow data, historical and current information about the money flowing into and out of a consumer's transaction accounts, that's checking, savings, money market, accessed through Plaid's Open Finance network of consumer-permissioned data.\n\nPlaid powers nearly 1 million secure financial connections each day and has helped more than half of Americans with a bank account securely move more of their financial life online. We see growing demand for the score, which will launch for distribution with Plaid in 2026.",
+            "th": "ไตรมาสนี้เรายังประกาศความร่วมมือเชิงกลยุทธ์กับ Plaid เพื่อพัฒนา UltraFICO Score รุ่นใหม่ สกอร์นี้ผสมความน่าเชื่อถือที่พิสูจน์แล้วของ FICO Score เข้ากับข้อมูลกระแสเงินสด (cash flow data) แบบเรียลไทม์จาก Plaid เพื่อมอบสกอร์เครดิตที่ยกระดับขึ้นตัวเดียวให้ผู้ให้กู้ ประเมินความเสี่ยงผู้บริโภคได้แม่นยำขึ้นโดยไม่เพิ่มความซับซ้อนในการดำเนินงาน โซลูชัน UltraFICO Score รุ่นปรับปรุงนี้ไม่ผูกติดกับบริษัทข้อมูลเครดิตรายใดรายหนึ่ง (credit bureau agnostic) และจะใช้ข้อมูลกระแสเงินสด ทั้งข้อมูลย้อนหลังและปัจจุบันเกี่ยวกับเงินที่ไหลเข้า-ออกบัญชีธุรกรรมของผู้บริโภค ไม่ว่าจะเป็นบัญชีเดินสะพัด บัญชีออมทรัพย์ หรือบัญชีตลาดเงิน ผ่านเครือข่าย Open Finance ของ Plaid ที่ผู้บริโภคยินยอมให้เข้าถึงข้อมูลเอง\n\nPlaid รองรับการเชื่อมต่อข้อมูลการเงินที่ปลอดภัยเกือบ 1 ล้านครั้งต่อวัน และช่วยให้ชาวอเมริกันกว่าครึ่งที่มีบัญชีธนาคารย้ายชีวิตทางการเงินของตัวเองไปออนไลน์ได้อย่างปลอดภัยมากขึ้น เราเห็นความต้องการสกอร์นี้เพิ่มขึ้นเรื่อยๆ และจะเริ่มจัดจำหน่ายร่วมกับ Plaid ในปี 2026"
+          },
+          {
+            "heading": "CEO update — FICO Score Mortgage Simulator",
+            "en": "Within the quarter, we continued to expand adoption of FICO Score Mortgage Simulator by partnering with Sharper Lending Solutions, Credit Interlink, and Ascend Partners. Including Zaktis and MeridianLink announced in fiscal 2025, five resellers have adopted the simulator, and we're expecting another large reseller to sign shortly. The FICO Score Mortgage Simulator is the only simulation tool available to mortgage professionals that use the FICO Score algorithm.\n\nIt enables mortgage professionals to run credit event scenarios by applying mock changes in an applicant's credit report data to simulate potential changes to the applicant's FICO Score. The FICO Score Mortgage Simulator supports simulations on all three credit bureaus and models potential changes to several FICO Score versions used in mortgage lending. More mortgage professionals can leverage valuable insight from the simulator to help drive smarter decisions that can present more loan options and favorable interest rates for customers.",
+            "th": "ในไตรมาสนี้เรายังคงขยายการใช้งาน FICO Score Mortgage Simulator ต่อเนื่อง โดยจับมือกับ Sharper Lending Solutions, Credit Interlink และ Ascend Partners เพิ่มเติม รวมกับ Zaktis และ MeridianLink ที่ประกาศไปแล้วในปีงบ 2025 ทำให้ตอนนี้มี reseller ทั้งหมด 5 รายที่นำเครื่องมือนี้ไปใช้ และเราคาดว่าจะมี reseller รายใหญ่อีกรายเซ็นสัญญาเร็วๆ นี้ FICO Score Mortgage Simulator เป็นเครื่องมือจำลองสถานการณ์เพียงตัวเดียวในตลาดสำหรับผู้เชี่ยวชาญด้านสินเชื่อจำนองที่ใช้อัลกอริทึมของ FICO Score โดยตรง\n\nเครื่องมือนี้ช่วยให้ผู้เชี่ยวชาญด้านสินเชื่อจำนองจำลองสถานการณ์เหตุการณ์ด้านเครดิตต่างๆ ได้ ด้วยการปรับเปลี่ยนข้อมูลรายงานเครดิตของผู้สมัครสมมติ เพื่อดูว่า FICO Score ของผู้สมัครอาจเปลี่ยนแปลงไปอย่างไร เครื่องมือนี้รองรับการจำลองข้อมูลจากทั้ง 3 บริษัทข้อมูลเครดิต และจำลองการเปลี่ยนแปลงที่อาจเกิดขึ้นกับ FICO Score หลายเวอร์ชันที่ใช้ในสินเชื่อจำนอง ทำให้ผู้เชี่ยวชาญด้านสินเชื่อจำนองจำนวนมากขึ้นสามารถใช้ข้อมูลเชิงลึกที่มีค่าจากเครื่องมือนี้ เพื่อช่วยตัดสินใจได้ฉลาดขึ้น และนำเสนอทางเลือกสินเชื่อพร้อมอัตราดอกเบี้ยที่ดีกว่าให้ลูกค้าได้มากขึ้น"
+          },
+          {
+            "heading": "CEO update — Gartner recognition & FICO World 2026",
+            "en": "In our software business, we're thrilled to be recognized by Gartner as a leader in the January 2026 Gartner Magic Quadrant for decision intelligence platforms. We are positioned the highest for our ability to execute. We believe this recognition is a landmark moment for FICO. Further, we feel it reflects our commitments to empowering customers and delivering lasting impact worldwide. As a market leader in decision intelligence, FICO enables businesses to make real-time decisions at scale. The core of our strategy is to empower customers with always-on real-time customer insights that deliver connected decisions and continuous learning throughout the entire customer life cycle.\n\nOur innovations will be on display at FICO World 2026, which is going to happen May 22 in Orlando, Florida. FICO World brings together customers and partners from around the world, allowing participants to collaborate on how FICO platform makes real-time decisions at scale and optimize interactions with consumers.",
+            "th": "ในธุรกิจซอฟต์แวร์ เรารู้สึกยินดีอย่างยิ่งที่ได้รับการยอมรับจาก Gartner ให้เป็นผู้นำ (Leader) ใน Gartner Magic Quadrant สำหรับ Decision Intelligence Platforms ประจำเดือนมกราคม 2026 โดยเราได้คะแนนความสามารถในการดำเนินการ (ability to execute) สูงที่สุด เราเชื่อว่าการยอมรับครั้งนี้เป็นจุดเปลี่ยนสำคัญของ FICO และยังสะท้อนความมุ่งมั่นของเราในการส่งเสริมศักยภาพลูกค้าและสร้างผลกระทบที่ยั่งยืนไปทั่วโลก ในฐานะผู้นำตลาดด้าน decision intelligence (การตัดสินใจเชิงข้อมูลอัจฉริยะ) FICO ช่วยให้ธุรกิจตัดสินใจแบบเรียลไทม์ได้ในระดับขนาดใหญ่ แก่นกลยุทธ์ของเราคือการส่งเสริมให้ลูกค้าใช้ข้อมูลเชิงลึกลูกค้าแบบเรียลไทม์ตลอดเวลา เพื่อสร้างการตัดสินใจที่เชื่อมโยงกันและการเรียนรู้ต่อเนื่องตลอดวงจรชีวิตของลูกค้า\n\nนวัตกรรมของเราจะจัดแสดงในงาน FICO World 2026 ซึ่งจะจัดขึ้นวันที่ 22 พฤษภาคม ที่เมืองออร์แลนโด รัฐฟลอริดา งาน FICO World รวบรวมลูกค้าและพันธมิตรจากทั่วโลก เปิดโอกาสให้ผู้เข้าร่วมได้ร่วมมือกันว่าแพลตฟอร์มของ FICO จะช่วยตัดสินใจแบบเรียลไทม์ในระดับขนาดใหญ่ และเพิ่มประสิทธิภาพการปฏิสัมพันธ์กับผู้บริโภคได้อย่างไร"
+          },
+          {
+            "heading": "CFO Steven Weber — Segment & ARR detail",
+            "en": "Our SCORE segment revenues for the quarter were $305 million, up 29% from the prior year. Our software ACV bookings for the quarter were a record $38 million. Our total software ARR was $766 million, a 5% increase over the prior year. Platform ARR was $303 million, representing 40% of our total Q1 2026 ARR. Platform ARR grew 33% versus the prior year. Our dollar-based net retention rate in the quarter was 103%. Platform NRR was 122%, while our non-NRR was 91%.",
+            "th": "รายได้กลุ่ม Scores ของเราในไตรมาสนี้อยู่ที่ 305 ล้านดอลลาร์ เพิ่มขึ้น 29% จากปีก่อน ยอดสั่งซื้อซอฟต์แวร์ประจำปี (ACV bookings) ของเราในไตรมาสนี้ทำสถิติสูงสุดที่ 38 ล้านดอลลาร์ รายได้ประจำต่อปีของซอฟต์แวร์รวม (total software ARR) อยู่ที่ 766 ล้านดอลลาร์ เพิ่มขึ้น 5% จากปีก่อน โดย Platform ARR อยู่ที่ 303 ล้านดอลลาร์ คิดเป็น 40% ของ ARR รวมในไตรมาส 1 ปีงบ 2026 และ Platform ARR เติบโต 33% เทียบปีก่อน อัตราการรักษารายได้ลูกค้าเดิมแบบคิดเป็นมูลค่า (dollar-based net retention rate) ในไตรมาสนี้อยู่ที่ 103% โดยฝั่งแพลตฟอร์ม (Platform NRR) อยู่ที่ 122% ขณะที่ฝั่งที่ไม่ใช่แพลตฟอร์มอยู่ที่ 91%"
+          },
+          {
+            "heading": "CFO Steven Weber — Margins & opex",
+            "en": "Operating expenses for the quarter were $278 million this quarter versus $279 million in the prior quarter. Our non-GAAP operating margin was 54% for the quarter compared with 50% in the same quarter last year. The effective tax rate for the quarter was 17.5%. The operating tax rate was 25.7%.",
+            "th": "ค่าใช้จ่ายในการดำเนินงานของไตรมาสนี้อยู่ที่ 278 ล้านดอลลาร์ เทียบกับ 279 ล้านดอลลาร์ในไตรมาสก่อนหน้า มาร์จิ้นกำไรจากการดำเนินงานปรับปรุง (non-GAAP operating margin) ของเราอยู่ที่ 54% เทียบกับ 50% ในไตรมาสเดียวกันของปีก่อน อัตราภาษีที่แท้จริง (effective tax rate) ของไตรมาสนี้อยู่ที่ 17.5% ส่วนอัตราภาษีจากการดำเนินงาน (operating tax rate) อยู่ที่ 25.7%"
+          },
+          {
+            "heading": "Guidance Q&A — เหตุผลที่ยังไม่ปรับเป้าทั้งปีขึ้น",
+            "en": "We had another strong quarter and are reiterating our fiscal 2026 guidance.\n\nWe're pretty confident we're going to be able to beat our guidance... At this point, we're only three months in. There's just a lot of questions out in the macro environment... we don't know what numbers we would move to. So I think by next quarter, we'll have a much better idea. There's just a lot of uncertainty in the marketplace... If we were to take a guess now, we would probably... still think we were being too conservative. So at this point, three months, we're gonna know a lot more.",
+            "th": "ไตรมาสนี้เราทำผลงานได้แข็งแกร่งอีกครั้ง และยังคงยืนยันเป้าหมายทั้งปีงบ 2026 ตามเดิม\n\nเรามั่นใจพอสมควรว่าจะทำได้ดีกว่าเป้าที่วางไว้ แต่ตอนนี้เพิ่งผ่านไปแค่ 3 เดือนเท่านั้น ยังมีคำถามเยอะมากในภาพรวมเศรษฐกิจมหภาค เรายังไม่รู้ว่าถ้าจะปรับตัวเลขเป้าใหม่ ควรปรับไปที่เท่าไหร่ ดังนั้นคิดว่าไตรมาสหน้าเราจะเห็นภาพชัดเจนกว่านี้มาก ตลาดตอนนี้ยังมีความไม่แน่นอนอยู่มาก ถ้าให้เดาตอนนี้ เราคงคิดว่าเป้าที่ตั้งไว้ยังระมัดระวังเกินไปด้วยซ้ำ ดังนั้น ณ จุดนี้ที่เพิ่งผ่านไป 3 เดือน เราจะรู้ข้อมูลมากขึ้นอีกเยอะในไตรมาสถัดไป"
+          },
+          {
+            "heading": "Q&A — กำหนดเวลาการอนุมัติ FICO Score 10T (Manav Patnaik, Barclays)",
+            "en": "They're still doing a lot of testing. We don't really have a timeline. They haven't published any kind of a timeline yet.",
+            "th": "พวกเขา (หน่วยงานกำกับดูแล/GSE) ยังอยู่ระหว่างทดสอบอีกมาก เรายังไม่มีกำหนดเวลาที่แน่นอน และยังไม่มีการประกาศไทม์ไลน์ใดๆ ออกมา"
+          },
+          {
+            "heading": "Q&A — จังหวะเวลาของ LLPA grids (Jason Haas, Wells Fargo)",
+            "en": "The short answer to that is no. I don't think anyone knows what the timeline for the LLPA grids looks like.",
+            "th": "คำตอบสั้นๆ คือไม่ ผมไม่คิดว่าจะมีใครรู้ว่าไทม์ไลน์ของตาราง LLPA (Loan-Level Price Adjustment — ตารางปรับราคาตามความเสี่ยงระดับสินเชื่อรายตัว) จะเป็นอย่างไร"
+          },
+          {
+            "heading": "Q&A — การเริ่มใช้งานจริงของ reseller และการสื่อสารกับโบรกเกอร์ (Ashish Sabadra, RBC)",
+            "en": "This is the mortgage market, and we don't do anything without having everything extremely buttoned up.",
+            "th": "นี่คือตลาดจำนอง และเราจะไม่ทำอะไรเลยจนกว่าทุกอย่างจะเรียบร้อยรัดกุมที่สุดแล้ว"
+          },
+          {
+            "heading": "Q&A — กลยุทธ์แพลตฟอร์มกับเป้าหมาย 500 บัญชีลูกค้าหลักทั่วโลก (Surinder Thind, Jefferies)",
+            "en": "We're in the beginning of that phase two...the platform is very much designed to be horizontal.",
+            "th": "เรายังอยู่ในช่วงเริ่มต้นของเฟสที่สอง แพลตฟอร์มของเราถูกออกแบบมาให้ใช้งานได้ข้ามหลายกลุ่มธุรกิจ (horizontal) เป็นหลัก"
+          },
+          {
+            "heading": "Q&A — ความต่างระหว่าง FICO กับ VantageScore (Jeffrey Meuler, Baird)",
+            "en": "Our research suggests that the FICO score and the Vantage score are more than 20 points different 30% of the time.",
+            "th": "งานวิจัยของเราชี้ว่า FICO Score กับ VantageScore ให้ผลต่างกันมากกว่า 20 คะแนน ในสัดส่วนถึง 30% ของกรณีทั้งหมด"
+          },
+          {
+            "heading": "Q&A — ความจำเป็นของ LLPA grid สำหรับการยอมรับ 10T ในตลาด conforming (Faiza Alwy, Deutsche Bank)",
+            "en": "When 10 T is made available, there'll probably be an adjustment to the grid for that.",
+            "th": "เมื่อ 10T พร้อมใช้งานจริง น่าจะมีการปรับตารางราคา (grid) ให้สอดคล้องกันด้วย"
+          }
+        ]
+      }
+    },
+    {
+      "id": "er0003",
+      "date": "2026-07-31",
+      "ticker": "FICO",
+      "company": "Fair Isaac Corporation",
+      "quarter": "Q2 FY26",
+      "reportDate": "2026-04-28",
+      "verdict": "beat",
+      "verdictLine": "รายได้และกำไรต่อหุ้นปรับปรุงสูงกว่าประมาณการนักวิเคราะห์ทั้งคู่ค่อนข้างมาก โดยรายได้เติบโตถึง 39% เทียบปีก่อน ได้แรงหนุนหลักจากรายได้สินเชื่อจำนองในกลุ่ม Scores ที่พุ่งขึ้น 127%",
+      "metrics": [
+        {
+          "label": "Revenue",
+          "actual": "$692M",
+          "est": "$642M",
+          "deltaPct": "+7.7%",
+          "dir": "pos"
+        },
+        {
+          "label": "Non-GAAP EPS",
+          "actual": "$12.50",
+          "est": "$10.91",
+          "deltaPct": "+14.6%",
+          "dir": "pos"
+        }
+      ],
+      "trend": [
+        {
+          "label": "Q3'25",
+          "value": 536
+        },
+        {
+          "label": "Q4'25",
+          "value": 516
+        },
+        {
+          "label": "Q1'26",
+          "value": 512
+        },
+        {
+          "label": "Q2'26",
+          "value": 692
+        }
+      ],
+      "guidance": {
+        "priorLabel": "FY26 Revenue Guidance (ให้ไว้ตอนประชุม Q1 2026)",
+        "priorVal": "$2.35B",
+        "newLabel": "FY26 Revenue Guidance (ปรับใหม่รอบนี้)",
+        "newVal": "$2.45B",
+        "deltaPct": "+4.3%",
+        "dir": "pos"
+      },
+      "trackRecord": [
+        {
+          "claim": "ตอนประชุมไตรมาส 1 ปีงบ 2026 (ม.ค. 2026) ผู้บริหารบอกว่ายังไม่ปรับเป้าทั้งปีขึ้นตอนนั้น เพราะอยากรอดูข้อมูลอีกอย่างน้อยหนึ่งไตรมาสก่อนตัดสินใจ",
+          "verdict": "hit",
+          "note": "พอถึงไตรมาส 2 บริษัทปรับเป้ารายได้ทั้งปีขึ้นจาก 2.35 พันล้านดอลลาร์ เป็น 2.45 พันล้านดอลลาร์ และปรับเป้ากำไรต่อหุ้นปรับปรุงขึ้นจาก 38.17 ดอลลาร์ เป็น 40.45 ดอลลาร์ ตรงตามที่เคยส่งสัญญาณไว้"
+        },
+        {
+          "claim": "ตอนไตรมาส 1 ผู้บริหารบอกว่า reseller รายใหญ่หนึ่งรายใกล้เสร็จการทดสอบระบบในสภาพแวดล้อมจริง อีกรายทดสอบเสร็จแล้วและกำลังทดสอบขั้นถัดไป และคาดว่าจะเริ่มใช้งานจริงกับหลายพันธมิตรเร็วๆ นี้",
+          "verdict": "partial",
+          "note": "ไตรมาส 2 มีความคืบหน้าเป็นการเซ็นสัญญาอย่างเป็นทางการกับ reseller รายใหญ่ 3 ใน 5 ราย และเจรจาอีก 2 รายที่เหลือ แต่ยังไม่มีการยืนยันชัดเจนว่าเริ่มใช้งานจริง (go live) กับรายใดแล้วตามที่เคยคาดไว้ว่าจะ 'เร็วๆ นี้'"
+        },
+        {
+          "claim": "ตอนไตรมาส 1 UltraFICO ร่วมกับ Plaid ยังอยู่ระหว่างพัฒนา คาดว่าจะเปิดตัวจัดจำหน่ายภายในปี 2026",
+          "verdict": "partial",
+          "note": "ไตรมาส 2 ยืนยันว่ากำลังเข้าใกล้วันเริ่มใช้งานจริงมากขึ้น แต่ยังไม่ได้เปิดตัวจริง ยังอยู่ในขั้นตอนทดสอบเช่นเดิม สอดคล้องกับกรอบเวลาเดิมที่เคยให้ไว้"
+        }
+      ],
+      "positives": [
+        {
+          "label": "รายได้มอร์เกจโตร้อนแรงเป็นประวัติการณ์",
+          "note": "รายได้จากสินเชื่อจำนองในกลุ่ม Scores เพิ่มขึ้น 127% เทียบปีก่อน คิดเป็นสัดส่วนถึง 63% ของรายได้กลุ่ม Scores ทั้งหมด"
+        },
+        {
+          "label": "มาร์จิ้นขยายตัวชัดเจน",
+          "note": "มาร์จิ้นกำไรจากการดำเนินงานปรับปรุงขยายตัวถึง 712 basis point (bps, 1bps เท่ากับ 0.01%) เป็น 65% จาก 58% ในปีก่อน"
+        },
+        {
+          "label": "ซื้อหุ้นคืนครั้งใหญ่ที่สุดในประวัติศาสตร์บริษัท",
+          "note": "ซื้อหุ้นคืนมูลค่า 605 ล้านดอลลาร์ในไตรมาสเดียว และยังซื้อเพิ่มอีกหลังสิ้นไตรมาสภายใต้วงเงินอนุมัติใหม่ 1.5 พันล้านดอลลาร์"
+        }
+      ],
+      "concerns": [
+        {
+          "label": "การเติบโตยังกระจุกตัวในธุรกิจมอร์เกจ",
+          "note": "รายได้ที่โตแรงส่วนใหญ่มาจากราคาต่อหน่วยและปริมาณสินเชื่อจำนองที่เพิ่มขึ้น หากตลาดจำนองชะลอตัวหรือดอกเบี้ยเปลี่ยนทิศทาง การเติบโตระดับนี้อาจไม่ยั่งยืน"
+        },
+        {
+          "label": "รายได้ฝั่งที่ไม่ใช่แพลตฟอร์มยังหดตัวต่อเนื่อง",
+          "note": "รายได้ซอฟต์แวร์ฝั่งที่ไม่ใช่แพลตฟอร์มลดลง 8-12% ต่อเนื่องหลายไตรมาส สะท้อนว่าธุรกิจเก่ากำลังถูกแทนที่ด้วยแพลตฟอร์มใหม่ ซึ่งยังไม่ชัดว่าจะชดเชยกันได้สมบูรณ์เมื่อไหร่"
+        },
+        {
+          "label": "หนี้สินเพิ่มขึ้นจากการออกหุ้นกู้ใหม่",
+          "note": "หนี้สินรวมอยู่ที่ 3.64 พันล้านดอลลาร์ หลังออกหุ้นกู้ใหม่มูลค่า 1 พันล้านดอลลาร์ ต้นทุนดอกเบี้ยเฉลี่ย 5.5% ต้องติดตามว่าจะกระทบกระแสเงินสดในระยะยาวแค่ไหน"
+        }
+      ],
+      "discussion": [
+        "การปรับราคา FICO Score 10T ลงอย่างมาก (จาก 4.95 ดอลลาร์ เหลือ 0.99 ดอลลาร์ต่อสกอร์) เป็นการยอมเสียมาร์จิ้นต่อหน่วยเพื่อรักษาปริมาณการใช้งานและส่วนแบ่งตลาดไว้ในระยะยาว หรือเป็นสัญญาณว่าฝ่ายบริหารเริ่มยอมรับว่าอำนาจต่อรองด้านราคาสู้ VantageScore ไม่ได้อีกต่อไป",
+        "รายได้กลุ่ม Scores ที่พึ่งพาวัฏจักรตลาดจำนองสูงขนาดนี้ เมื่อเทียบกับรายได้ธุรกิจ Software/Platform ที่โตช้ากว่ามาก จะทำให้ผลประกอบการทั้งบริษัทผันผวนตามวัฏจักรอสังหาริมทรัพย์มากขึ้นในระยะยาวหรือไม่"
+      ],
+      "caveats": "ข้อมูลนี้ไม่ใช่คำแนะนำการลงทุน จัดทำเพื่อการศึกษาและประกอบการตัดสินใจส่วนบุคคลเท่านั้น ตัวเลขอ้างอิงรายงานผลประกอบการอย่างเป็นทางการของ Fair Isaac Corporation และรายงานข่าวสาธารณะ ณ วันที่ 31 กรกฎาคม 2026 ตัวเลขประมาณการ (consensus) ของนักวิเคราะห์อ้างอิงจากรายงานรวบรวมของสำนักข่าวการเงินสาธารณะ",
+      "transcriptExcerpt": {
+        "summaryTh": "คอลนี้เริ่มด้วยคำแถลงของ Will Lansing (CEO) สรุปผลประกอบการไตรมาส 2 ปีงบ 2026 ที่เติบโตแรงในทุกตัวเลขหลักและปรับเป้าทั้งปีขึ้น ตามด้วยรายละเอียดผลงานแยกเซกเมนต์ Scores/Software การประกาศปรับราคาใหม่ของ FICO Score 10T แบบ performance pricing ความคืบหน้าโครงการ early adopter ของ 10T ความร่วมมือกับ Plaid สำหรับ UltraFICO Score และสิทธิบัตร AI ของบริษัท จากนั้น Steven Weber (CFO) ให้รายละเอียดการเงินเชิงลึกครบทุกด้าน ทั้งรายได้แยกย่อยของ Scores (B2B/B2C/มอร์เกจ/รถยนต์/บัตรเครดิต) ตัวเลข ACV/ARR/NRR ของซอฟต์แวร์ สัดส่วนรายได้ตามภูมิภาค ค่าใช้จ่ายดำเนินงาน มาร์จิ้น ภาษี งบดุลและหนี้สิน การซื้อหุ้นคืนครั้งใหญ่ที่สุดในประวัติศาสตร์บริษัท และปิดท้ายด้วยตัวเลขเป้าทั้งปีที่ปรับขึ้นใหม่ ช่วงถาม-ตอบนักวิเคราะห์ถามครบ 7 คำถาม ครอบคลุมปรัชญาการปรับราคาแบบ performance model ความคืบหน้าการเซ็นสัญญากับ reseller รายใหญ่ โครงสร้างค่าธรรมเนียมเทียบกับ VantageScore เงื่อนไขที่ GSE ต้องผ่านก่อนยอมรับ 10T สาเหตุที่รายได้มอร์เกจโตแรงถึง 127% การยอมรับหลายโมเดลสกอร์พร้อมกันของผู้ให้กู้ และกลยุทธ์การปรับราคาระยะกลาง",
+        "segments": [
+          {
+            "heading": "Opening remarks — Will Lansing (CEO), financial highlights",
+            "en": "Thanks, Dave, and thank you, everyone, for joining us for our second quarter earnings call. We had a very strong quarter and a great start to the first half of our fiscal year. Based on our results and outlook, we are increasing our fiscal 2026 guidance.\n\nWe reported Q2 revenues of $692 million, up 39% over last year. We reported $264 million in GAAP net income in the quarter, up 63%, and GAAP earnings of $11.14 per share, up 69%. We delivered free cash flow of $214 million in our second quarter. Over the last 4 quarters, we delivered $867 million in free cash flow, an increase of 28%.",
+            "th": "ขอบคุณเดฟ และขอบคุณทุกท่านที่เข้าร่วมฟังผลประกอบการไตรมาสที่สองของเรา ไตรมาสนี้เราทำผลงานได้แข็งแกร่งมาก และเป็นการเริ่มต้นครึ่งปีแรกของปีงบการเงินที่ดีเยี่ยม จากผลประกอบการและแนวโน้มที่เราเห็น เรากำลังปรับเป้าหมายทั้งปีงบ 2026 ขึ้น\n\nเรารายงานรายได้ไตรมาส 2 ที่ 692 ล้านดอลลาร์ เพิ่มขึ้น 39% จากปีก่อน เรารายงานกำไรสุทธิตามบัญชี 264 ล้านดอลลาร์ในไตรมาสนี้ เพิ่มขึ้น 63% และกำไรต่อหุ้นตามบัญชี 11.14 ดอลลาร์ เพิ่มขึ้น 69% เราทำกระแสเงินสดอิสระได้ 214 ล้านดอลลาร์ในไตรมาสที่สองนี้ ตลอด 4 ไตรมาสที่ผ่านมา เราทำกระแสเงินสดอิสระรวม 867 ล้านดอลลาร์ เพิ่มขึ้น 28%"
+          },
+          {
+            "heading": "CEO update — Scores and Software segment performance",
+            "en": "Our second quarter score segment revenues were $475 million, up 60% versus the prior year. While B2B scores were the key driver of growth, we also experienced the sixth straight quarter of growth in B2C scores.\n\nIn our Software segment, we delivered $217 million in Q2 revenues, up 7% over last year. Results included 54% platform revenue growth and a 12% decline in non-platform revenue.",
+            "th": "รายได้กลุ่ม Scores ของเราในไตรมาสที่สองอยู่ที่ 475 ล้านดอลลาร์ เพิ่มขึ้น 60% เทียบปีก่อน แม้สกอร์ฝั่ง B2B จะเป็นตัวขับเคลื่อนหลักของการเติบโต แต่เรายังเห็นการเติบโตของฝั่ง B2C ต่อเนื่องเป็นไตรมาสที่ 6 ติดต่อกันด้วย\n\nในกลุ่มซอฟต์แวร์ เราทำรายได้ไตรมาส 2 ได้ 217 ล้านดอลลาร์ เพิ่มขึ้น 7% จากปีก่อน ผลลัพธ์นี้รวมถึงรายได้ฝั่งแพลตฟอร์มที่โต 54% ขณะที่รายได้ฝั่งที่ไม่ใช่แพลตฟอร์มลดลง 12%"
+          },
+          {
+            "heading": "CEO update — FICO Score 10T pricing strategy",
+            "en": "To support the goal of increased homeownership and bring the benefits of increased competition to the marketplace, we updated our FICO Score 10T performance model pricing from $4.95 per score plus $33 funding fee to $0.99 per score plus $65 funding fee.",
+            "th": "เพื่อสนับสนุนเป้าหมายการเพิ่มอัตราการเป็นเจ้าของบ้าน และนำประโยชน์จากการแข่งขันที่มากขึ้นมาสู่ตลาด เราปรับโครงสร้างราคาแบบ performance model ของ FICO Score 10T จากเดิม 4.95 ดอลลาร์ต่อสกอร์บวกค่าธรรมเนียมการจัดหาเงินทุน (funding fee) 33 ดอลลาร์ เป็น 0.99 ดอลลาร์ต่อสกอร์บวกค่าธรรมเนียมการจัดหาเงินทุน 65 ดอลลาร์"
+          },
+          {
+            "heading": "CEO update — FICO Score 10T early adopter program & homeownership goal",
+            "en": "The 55 lenders in the program account for more than $495 billion in annual serviceable originations when evaluated using 2025 HMDA data and more than $1.6 trillion in eligible servicing. FICO Score 10T incorporates rental and utility payment history, enabling more consumers to qualify for mortgages.",
+            "th": "ผู้ให้กู้ 55 รายในโครงการนี้ คิดเป็นมูลค่าการปล่อยสินเชื่อที่รองรับได้ต่อปีกว่า 4.95 แสนล้านดอลลาร์ (ประเมินจากข้อมูล HMDA ปี 2025) และมูลค่าพอร์ตที่มีสิทธิ์ให้บริการ (eligible servicing) กว่า 1.6 ล้านล้านดอลลาร์ FICO Score 10T นำประวัติการจ่ายค่าเช่าและค่าสาธารณูปโภคมารวมในการคำนวณด้วย ทำให้ผู้บริโภคมีโอกาสผ่านคุณสมบัติขอสินเชื่อบ้านได้มากขึ้น"
+          },
+          {
+            "heading": "CEO update — UltraFICO/Plaid partnership progress",
+            "en": "We're moving closer to the go-live dates of our next-generation Cash Flow UltraFICO Score with our strategic partner, Plaid and the FICO mortgage direct licensing our reseller partners. We continue to actively work alongside participants to support testing on both initiatives.",
+            "th": "เรากำลังเข้าใกล้วันเริ่มใช้งานจริงของ UltraFICO Score รุ่นใหม่ที่ใช้ข้อมูลกระแสเงินสด ทั้งกับพันธมิตรเชิงกลยุทธ์อย่าง Plaid และโครงการให้สิทธิ์ใช้สกอร์โดยตรงกับพันธมิตร reseller ในตลาดจำนอง เรายังคงทำงานร่วมกับผู้เข้าร่วมอย่างใกล้ชิดเพื่อสนับสนุนการทดสอบทั้งสองโครงการนี้ต่อไป"
+          },
+          {
+            "heading": "CEO update — AI patents & FICO Platform positioning",
+            "en": "FICO has been issued 137 AI-based patents, which include patents and blockchain technology that are helpful for traceable and explainable decision-making...FICO Platform is architected from the ground up to be agentic-by-design.",
+            "th": "FICO ได้รับสิทธิบัตรด้าน AI แล้ว 137 ฉบับ ซึ่งรวมถึงสิทธิบัตรด้านเทคโนโลยีบล็อกเชน (blockchain) ที่ช่วยให้การตัดสินใจสามารถตรวจสอบย้อนกลับได้และอธิบายได้ชัดเจน FICO Platform ถูกออกแบบมาตั้งแต่ต้นให้เป็นระบบที่ขับเคลื่อนด้วย AI agent (agentic-by-design) โดยเฉพาะ"
+          },
+          {
+            "heading": "CFO Steven Weber — Scores segment detail",
+            "en": "Thanks, and good afternoon, everyone. As Will mentioned, our Scores segment revenues for the quarter were $475 million, up 60% from the prior year.\n\nB2B revenues were up 72%, primarily attributable to higher mortgage origination scores unit price and an increase in volume of mortgage origination. Our B2C revenues were up 5% versus the prior year, driven mainly by our indirect channel partners.\n\nSecond quarter mortgage originations revenues were up 127% versus the prior year. Mortgage originations revenues accounted for 72% of B2B revenue and 63% of total Scores revenue. Auto originations revenues were up 13%, while credit card, personal loan and other originations revenues were up 6% versus the prior year.",
+            "th": "ขอบคุณครับ และสวัสดีตอนบ่ายทุกท่าน ตามที่วิลกล่าวไปแล้ว รายได้กลุ่ม Scores ของเราในไตรมาสนี้อยู่ที่ 475 ล้านดอลลาร์ เพิ่มขึ้น 60% จากปีก่อน\n\nรายได้ฝั่ง B2B เพิ่มขึ้น 72% ส่วนใหญ่มาจากราคาต่อหน่วยของสกอร์สินเชื่อจำนองที่สูงขึ้นและปริมาณการปล่อยสินเชื่อจำนองที่เพิ่มขึ้น รายได้ฝั่ง B2C เพิ่มขึ้น 5% เทียบปีก่อน โดยขับเคลื่อนหลักจากพันธมิตรช่องทางจัดจำหน่ายทางอ้อม (indirect channel)\n\nรายได้จากสินเชื่อจำนองในไตรมาสที่สองเพิ่มขึ้น 127% เทียบปีก่อน คิดเป็น 72% ของรายได้ฝั่ง B2B และ 63% ของรายได้กลุ่ม Scores ทั้งหมด รายได้จากสินเชื่อรถยนต์เพิ่มขึ้น 13% ส่วนรายได้จากบัตรเครดิต สินเชื่อส่วนบุคคล และสินเชื่ออื่นๆ เพิ่มขึ้น 6% เทียบปีก่อน"
+          },
+          {
+            "heading": "CFO Steven Weber — Software, ACV, ARR, NRR",
+            "en": "Our software ACV bookings for the quarter were $28 million. On a trailing 12-month basis, ACV bookings reached $126 million this quarter, an increase of 36% from the same period last year.\n\nOur total software ARR was $789 million, a 10% increase over the prior year. Platform ARR was $349 million, representing 44% of our total Q2 '26 ARR. Platform ARR grew 49% versus the prior year, while nonplatform declined 8% to $440 million this quarter.\n\nOur dollar-based net retention rate in the quarter was 109%. Platform NRR was 136%, while our non-platform NRR was 90%.\n\nSecond quarter software segment revenues were $217 million, up 7% from the prior year. Within this segment, our SaaS revenues grew by 19%, driven by FICO Platform. Our on-premises revenue declined 4%.",
+            "th": "ยอดสั่งซื้อซอฟต์แวร์ประจำปี (ACV bookings) ของเราในไตรมาสนี้อยู่ที่ 28 ล้านดอลลาร์ หากคิดแบบสะสม 12 เดือนย้อนหลัง ยอด ACV bookings อยู่ที่ 126 ล้านดอลลาร์ในไตรมาสนี้ เพิ่มขึ้น 36% จากช่วงเดียวกันของปีก่อน\n\nรายได้ประจำต่อปีของซอฟต์แวร์รวม (total software ARR) อยู่ที่ 789 ล้านดอลลาร์ เพิ่มขึ้น 10% จากปีก่อน โดย Platform ARR อยู่ที่ 349 ล้านดอลลาร์ คิดเป็น 44% ของ ARR รวมในไตรมาส 2 ปีงบ 2026 Platform ARR เติบโต 49% เทียบปีก่อน ขณะที่ฝั่งที่ไม่ใช่แพลตฟอร์มลดลง 8% เหลือ 440 ล้านดอลลาร์ในไตรมาสนี้\n\nอัตราการรักษารายได้ลูกค้าเดิมแบบคิดเป็นมูลค่าในไตรมาสนี้อยู่ที่ 109% โดยฝั่งแพลตฟอร์มอยู่ที่ 136% ขณะที่ฝั่งที่ไม่ใช่แพลตฟอร์มอยู่ที่ 90%\n\nรายได้กลุ่มซอฟต์แวร์ในไตรมาสที่สองอยู่ที่ 217 ล้านดอลลาร์ เพิ่มขึ้น 7% จากปีก่อน ภายในกลุ่มนี้ รายได้ฝั่ง SaaS โต 19% ขับเคลื่อนโดย FICO Platform ขณะที่รายได้ฝั่งติดตั้งในสถานที่ลูกค้า (on-premises) ลดลง 4%"
+          },
+          {
+            "heading": "CFO Steven Weber — Geographic mix & operating expenses",
+            "en": "90% of total company revenues this quarter were derived from our Americas region. Our EMEA region generated 7% of revenues and the Asia Pacific region delivered 3%.\n\nOperating expenses for the quarter were $289 million this quarter versus $278 million in the prior quarter, an increase of 4% quarter-over-quarter, driven by personnel expenses. We expect operating expense dollars to trend modestly upward from the Q2 run rate into the back half of the fiscal year, driven mainly by personnel expenses and marketing for both FICO World and our Scores business.",
+            "th": "90% ของรายได้รวมทั้งบริษัทในไตรมาสนี้มาจากภูมิภาคอเมริกา ภูมิภาค EMEA (ยุโรป ตะวันออกกลาง แอฟริกา) สร้างรายได้ 7% และภูมิภาคเอเชียแปซิฟิกสร้างรายได้ 3%\n\nค่าใช้จ่ายในการดำเนินงานของไตรมาสนี้อยู่ที่ 289 ล้านดอลลาร์ เทียบกับ 278 ล้านดอลลาร์ในไตรมาสก่อนหน้า เพิ่มขึ้น 4% จากไตรมาสก่อน ขับเคลื่อนโดยค่าใช้จ่ายด้านบุคลากร เราคาดว่าค่าใช้จ่ายในการดำเนินงานจะปรับตัวขึ้นเล็กน้อยจากระดับไตรมาส 2 ต่อเนื่องไปในครึ่งปีหลังของปีงบการเงิน ขับเคลื่อนหลักจากค่าใช้จ่ายด้านบุคลากรและการตลาดสำหรับทั้งงาน FICO World และธุรกิจ Scores"
+          },
+          {
+            "heading": "CFO Steven Weber — Margins & tax",
+            "en": "Our non-GAAP operating margin was 65% for the quarter compared with 58% in the same quarter last year. We delivered year-over-year non-GAAP operating margin expansion of 712 basis points. The effective tax rate for the quarter was 25.7%, and we expect a full year operating tax rate of 25% to 26% and an effective tax rate of around 24%.",
+            "th": "มาร์จิ้นกำไรจากการดำเนินงานปรับปรุงของเราอยู่ที่ 65% ในไตรมาสนี้ เทียบกับ 58% ในไตรมาสเดียวกันของปีก่อน คิดเป็นการขยายตัวของมาร์จิ้น 712 basis point (bps, 1bps เท่ากับ 0.01%) เทียบปีก่อน อัตราภาษีที่แท้จริงของไตรมาสนี้อยู่ที่ 25.7% และเราคาดว่าอัตราภาษีจากการดำเนินงานทั้งปีจะอยู่ที่ 25-26% และอัตราภาษีที่แท้จริงจะอยู่ที่ราว 24%"
+          },
+          {
+            "heading": "CFO Steven Weber — Balance sheet & debt",
+            "en": "At the end of the quarter, we had $272 million in cash and marketable investments. Our total debt at quarter end was $3.64 billion with a weighted average interest rate of 5.5%. This includes the March issuance of $1 billion in senior notes due 2034, which used some proceeds to fund the redemption of $400 million in senior notes that were due in May. As of March 31, 2026, 93% of our debt was held in senior notes. We had $265 million balance on our revolving line of credit, which is repayable at any time. We anticipate interest rate expense dollars to trend modestly upward from the Q2 run rate into the back half of the fiscal year.",
+            "th": "ณ สิ้นไตรมาส เรามีเงินสดและเงินลงทุนระยะสั้นที่ซื้อขายได้ 272 ล้านดอลลาร์ หนี้สินรวม ณ สิ้นไตรมาสอยู่ที่ 3.64 พันล้านดอลลาร์ ด้วยอัตราดอกเบี้ยถัวเฉลี่ยถ่วงน้ำหนัก 5.5% ตัวเลขนี้รวมการออกหุ้นกู้ไม่มีหลักประกัน (senior notes) มูลค่า 1 พันล้านดอลลาร์ครบกำหนดปี 2034 เมื่อเดือนมีนาคม ซึ่งบางส่วนของเงินที่ได้นำไปไถ่ถอนหุ้นกู้เดิมมูลค่า 400 ล้านดอลลาร์ที่ครบกำหนดเดือนพฤษภาคม ณ วันที่ 31 มีนาคม 2026 หนี้สิน 93% ของเราอยู่ในรูปหุ้นกู้ไม่มีหลักประกัน เรามียอดคงค้างวงเงินสินเชื่อหมุนเวียน (revolving line of credit) 265 ล้านดอลลาร์ ซึ่งสามารถชำระคืนได้ตลอดเวลา เราคาดว่าค่าใช้จ่ายดอกเบี้ยจะปรับตัวขึ้นเล็กน้อยจากระดับไตรมาส 2 ต่อเนื่องไปในครึ่งปีหลังของปีงบการเงิน"
+          },
+          {
+            "heading": "CFO Steven Weber — Capital returns / share buybacks",
+            "en": "In Q2, we repurchased 484,000 shares for a total cost of $605 million, representing the single largest quarterly repurchase in dollars in FICO history. We continue to view share repurchases as an attractive use of cash. With our recent $1.5 billion Board authorization, strong free cash flow and unutilized revolver, since April 1, we have bought an additional $170 million or 164,000 shares at an average price of $1,040 per share.",
+            "th": "ในไตรมาส 2 เราซื้อหุ้นคืน 484,000 หุ้น รวมมูลค่า 605 ล้านดอลลาร์ ถือเป็นการซื้อหุ้นคืนรายไตรมาสที่มีมูลค่าสูงสุดในประวัติศาสตร์ของ FICO เรายังคงมองว่าการซื้อหุ้นคืนเป็นการใช้เงินสดที่คุ้มค่า ด้วยวงเงินที่คณะกรรมการเพิ่งอนุมัติใหม่ 1.5 พันล้านดอลลาร์ กระแสเงินสดอิสระที่แข็งแกร่ง และวงเงินสินเชื่อหมุนเวียนที่ยังไม่ได้ใช้ นับตั้งแต่วันที่ 1 เมษายน เราซื้อหุ้นคืนเพิ่มอีก 170 ล้านดอลลาร์ หรือ 164,000 หุ้น ที่ราคาเฉลี่ย 1,040 ดอลลาร์ต่อหุ้น"
+          },
+          {
+            "heading": "CFO Steven Weber — Updated FY2026 guidance",
+            "en": "Revenue guidance is now $2.45 billion, an increase of 23% versus prior year. GAAP net income guidance is now $825 million with GAAP earnings per share of $35.60, an increase of 27% and 34%, respectively. Non-GAAP net income guidance is now $946 million with non-GAAP earnings per share of $40.45, an increase of 29% and 35%, respectively.",
+            "th": "เป้ารายได้ทั้งปีตอนนี้อยู่ที่ 2.45 พันล้านดอลลาร์ เพิ่มขึ้น 23% เทียบปีก่อน เป้ากำไรสุทธิตามบัญชีตอนนี้อยู่ที่ 825 ล้านดอลลาร์ พร้อมกำไรต่อหุ้นตามบัญชี 35.60 ดอลลาร์ เพิ่มขึ้น 27% และ 34% ตามลำดับ เป้ากำไรสุทธิปรับปรุงตอนนี้อยู่ที่ 946 ล้านดอลลาร์ พร้อมกำไรต่อหุ้นปรับปรุง 40.45 ดอลลาร์ เพิ่มขึ้น 29% และ 35% ตามลำดับ"
+          },
+          {
+            "heading": "Transition to Q&A",
+            "en": "With that, I'm going to turn it back to Dave, and we'll open up for Q&A.",
+            "th": "เอาล่ะครับ ผมขอส่งไมค์กลับไปให้เดฟ แล้วเราจะเปิดช่วงถาม-ตอบกันต่อ"
+          },
+          {
+            "heading": "Q&A — ปรัชญาเบื้องหลังราคาแบบ performance model $0.99 (Jason Haas, Wells Fargo)",
+            "en": "The whole idea behind moving to the performance model was to give us more flexibility so that we could distribute the value -- the monetization of that IP over more players across the chain.",
+            "th": "แนวคิดหลักเบื้องหลังการเปลี่ยนมาใช้โมเดลราคาแบบ performance คือการให้เรามีความยืดหยุ่นมากขึ้น เพื่อกระจายมูลค่า หรือการสร้างรายได้จากทรัพย์สินทางปัญญา (IP) นั้นไปยังผู้เล่นหลายรายมากขึ้นตลอดทั้งห่วงโซ่"
+          },
+          {
+            "heading": "Q&A — ความคืบหน้าการรับ 10T และกำหนดเวลาโครงการ direct licensing (Manav Patnaik, Barclays)",
+            "en": "We have 3 of the top 5 major resellers signed up. We are in deep discussion with the other 2 and fully anticipate that all 5 of the big resellers will be able to provide the direct license program.",
+            "th": "ตอนนี้เรามี 3 ใน 5 reseller รายใหญ่สุดเซ็นสัญญาเข้าร่วมแล้ว และกำลังเจรจาเชิงลึกกับอีก 2 รายที่เหลือ เราคาดหวังเต็มที่ว่าทั้ง 5 รายจะสามารถให้บริการโครงการ direct license ได้ในที่สุด"
+          },
+          {
+            "heading": "Q&A — โครงสร้างค่าธรรมเนียมเทียบกับ VantageScore (Simon Clinch, Rothschild & Co Redburn)",
+            "en": "The beauty of the way we've structured this is that mortgage originators and lenders have a choice...it's about revenue neutral for us either way.",
+            "th": "จุดที่ดีของโครงสร้างที่เราวางไว้คือผู้ปล่อยสินเชื่อและผู้ให้กู้จำนองมีทางเลือก ไม่ว่าจะเลือกทางไหนก็แทบไม่กระทบรายได้ของเราอยู่ดี"
+          },
+          {
+            "heading": "Q&A — เงื่อนไขที่ FHFA ต้องผ่านก่อนยอมรับ 10T (Surinder Thind, Jefferies)",
+            "en": "There are not a bunch of additional things that no one knows about. I think we have to get the 10T data out so that people can test it and then the GSEs have to accept 10T, and that's it.",
+            "th": "ไม่มีเงื่อนไขอื่นที่ซ่อนอยู่ที่ไม่มีใครรู้แล้ว ผมคิดว่าสิ่งที่ต้องทำคือเผยแพร่ข้อมูล 10T ออกไปให้คนทดสอบได้ก่อน จากนั้น GSE (Fannie Mae/Freddie Mac) ต้องยอมรับ 10T แค่นั้นเอง"
+          },
+          {
+            "heading": "Q&A — สาเหตุที่รายได้มอร์เกจโต 127% (Faiza Alwy, Deutsche Bank)",
+            "en": "We had decent volume growth...There was a period of time where interest rates dropped a little bit. We saw a little bit of an uptick here.",
+            "th": "เรามีการเติบโตของปริมาณที่ดีพอสมควร มีช่วงหนึ่งที่อัตราดอกเบี้ยลดลงเล็กน้อย ซึ่งเราเห็นการกระเตื้องขึ้นบ้างในช่วงนั้น"
+          },
+          {
+            "heading": "Q&A — การยอมรับหลายโมเดลสกอร์พร้อมกันของผู้ให้กู้ (Jeff Meuler, Baird)",
+            "en": "I think that's waiting on the selling guidelines. I mean I can't speak for the GSEs on that.",
+            "th": "ผมคิดว่าเรื่องนี้ต้องรอแนวปฏิบัติการขาย (selling guidelines) ก่อน ผมพูดแทน GSE ในเรื่องนี้ไม่ได้"
+          },
+          {
+            "heading": "Q&A — กลยุทธ์การปรับราคาระยะกลาง (Ashish Sabadra, RBC Capital Markets)",
+            "en": "The balancing act is, we don't want to shock the market...we're always evaluating those kinds of things.",
+            "th": "สิ่งที่เราต้องรักษาสมดุลคือ เราไม่อยากสร้างแรงกระแทกให้ตลาดมากเกินไป และเรายังคงประเมินแนวทางแบบนี้อยู่ตลอดเวลา"
+          }
+        ]
+      }
+    },
+    {
+      "id": "er0004",
+      "date": "2026-07-31",
+      "ticker": "FICO",
+      "company": "Fair Isaac Corporation",
+      "quarter": "Q3 FY26",
+      "reportDate": "2026-07-29",
+      "verdict": "inline",
+      "verdictLine": "รายได้ต่ำกว่าประมาณการนักวิเคราะห์เล็กน้อย ขณะที่กำไรต่อหุ้นปรับปรุงสูงกว่าประมาณการ ผลลัพธ์จึงถือว่าใกล้เคียงประมาณการ (inline) แม้ตัวเลขทั้งสองจะเติบโตแรงเทียบปีก่อน ราคาหุ้นปรับตัวลงหลังประกาศผลจากความกังวลด้านการแข่งขันกับ VantageScore",
+      "metrics": [
+        {
+          "label": "Revenue",
+          "actual": "$674M",
+          "est": "$692M",
+          "deltaPct": "-2.6%",
+          "dir": "neg"
+        },
+        {
+          "label": "Non-GAAP EPS",
+          "actual": "$12.18",
+          "est": "$11.97",
+          "deltaPct": "+1.8%",
+          "dir": "pos"
+        }
+      ],
+      "trend": [
+        {
+          "label": "Q4'25",
+          "value": 516
+        },
+        {
+          "label": "Q1'26",
+          "value": 512
+        },
+        {
+          "label": "Q2'26",
+          "value": 692
+        },
+        {
+          "label": "Q3'26",
+          "value": 674
+        }
+      ],
+      "guidance": {
+        "priorLabel": "FY26 Revenue Guidance (ให้ไว้ตอนประชุม Q2 2026)",
+        "priorVal": "$2.45B",
+        "newLabel": "FY26 Revenue Guidance (ปรับใหม่รอบนี้)",
+        "newVal": "$2.53B",
+        "deltaPct": "+3.3%",
+        "dir": "pos"
+      },
+      "trackRecord": [
+        {
+          "claim": "ตอนไตรมาส 2 ผู้บริหารมี 3 ใน 5 reseller รายใหญ่เซ็นสัญญาแล้ว และคาดว่าจะปิดดีลกับอีก 2 รายที่เหลือได้ในที่สุด",
+          "verdict": "partial",
+          "note": "ไตรมาส 3 ยังไม่มีการเริ่มใช้งานจริง (go live) ของโครงการ direct license เพราะยังรอการรับรอง (certification) จาก GSE รายหนึ่งอยู่ ความคืบหน้าหยุดอยู่ที่ขั้นตอนกำกับดูแลมากกว่าขั้นตอนเจรจาการค้า"
+        },
+        {
+          "claim": "ตอนไตรมาส 2 ผู้บริหารบอกว่าเมื่อ 10T พร้อมใช้งานจริง น่าจะมีการปรับตารางราคา (LLPA grid) ให้สอดคล้องกัน และยังไม่มีการบอกว่าจะคิดราคา 10T แยกจาก Classic",
+          "verdict": "hit",
+          "note": "ไตรมาส 3 ยืนยันชัดเจนว่ายังคงพ่วง 10T ไปกับ Classic ฟรี ไม่ได้แยกคิดราคาต่างหาก สอดคล้องกับแนวทางเดิมที่เคยพูดไว้"
+        },
+        {
+          "claim": "ตอนไตรมาส 2 ผู้บริหารบอกว่ารายได้มอร์เกจโต 127% ส่วนหนึ่งมาจากดอกเบี้ยที่ลดลงเล็กน้อยช่วงหนึ่ง",
+          "verdict": "partial",
+          "note": "ไตรมาส 3 อัตราการเติบโตของรายได้มอร์เกจชะลอลงมาอยู่ที่ 97% (ยังคงสูงมากแต่ต่ำกว่าไตรมาสก่อน) ผู้บริหารยอมรับว่าส่วนหนึ่งของตัวเลข 127% ในไตรมาสก่อนเกิดจากปัจจัยด้านจังหวะเวลาการนับรอบบัญชีเทียบกับรอบของบริษัทข้อมูลเครดิต ไม่ใช่แนวโน้มเติบโตที่ยั่งยืนระดับนั้นตลอดไป"
+        }
+      ],
+      "positives": [
+        {
+          "label": "ยังไม่เห็นสัญญาณเสียส่วนแบ่งตลาดชัดเจน",
+          "note": "ผู้บริหารยืนยันว่ายังไม่เห็นปริมาณการดึงสกอร์ (score pull) ของ FICO ลดลงจากการที่ผู้ให้กู้เริ่มใช้ VantageScore เพิ่ม บ่งชี้ว่าส่วนใหญ่เป็นการดึงสกอร์ทั้งสองตัวควบคู่กันมากกว่าการเปลี่ยนไปใช้ตัวใดตัวหนึ่งแทน"
+        },
+        {
+          "label": "Platform ARR แซงหน้า non-platform เป็นครั้งแรก",
+          "note": "Platform ARR โต 62% เทียบปีก่อน เป็น 413 ล้านดอลลาร์ คิดเป็น 51% ของ ARR รวม ถือเป็นครั้งแรกที่รายได้ฝั่งแพลตฟอร์มมีสัดส่วนเกินครึ่งของธุรกิจซอฟต์แวร์ประจำ"
+        },
+        {
+          "label": "ปรับเป้าทั้งปีขึ้นต่อเนื่องเป็นไตรมาสที่สอง",
+          "note": "ปรับเป้ารายได้ทั้งปีขึ้นจาก 2.45 พันล้านดอลลาร์ เป็น 2.53 พันล้านดอลลาร์ สะท้อนความมั่นใจของฝ่ายบริหารต่อแนวโน้มธุรกิจ แม้ตลาดกำลังกังวลเรื่องการแข่งขัน"
+        }
+      ],
+      "concerns": [
+        {
+          "label": "รายได้พลาดประมาณการเป็นครั้งแรกในรอบหลายไตรมาส",
+          "note": "แม้จะโตแรงเทียบปีก่อน แต่รายได้จริงต่ำกว่าที่นักวิเคราะห์คาดไว้ราว 2.6% หลังจากที่เคยทำได้เกินคาดต่อเนื่องในไตรมาสก่อนหน้า"
+        },
+        {
+          "label": "อัตราเติบโตรายได้มอร์เกจชะลอตัวจากไตรมาสก่อนอย่างมีนัยสำคัญ",
+          "note": "จาก 127% ในไตรมาส 2 เหลือ 97% ในไตรมาสนี้ ผู้บริหารระบุว่าส่วนหนึ่งเป็นผลจากปัจจัยจังหวะเวลาบัญชี ทำให้ตัวเลขไตรมาสก่อนอาจไม่ใช่อัตราการเติบโตปกติที่จะเกิดขึ้นซ้ำได้"
+        },
+        {
+          "label": "ราคาหุ้นร่วงแรงต่อเนื่องหลายวันหลังประกาศงบ",
+          "note": "หุ้นปรับตัวลงทันที 9% หลังตลาดปิดวันประกาศผล และยังคงถูกกดดันต่อเนื่องในวันถัดๆ มาจากความกังวลเรื่องการแข่งขันกับ VantageScore ในตลาดจำนอง สะท้อนว่าตลาดให้น้ำหนักกับความเสี่ยงเชิงโครงสร้างมากกว่าตัวเลขไตรมาสนี้"
+        },
+        {
+          "label": "โครงการ direct license ยังติดขั้นตอนกำกับดูแล",
+          "note": "ยังต้องรอการรับรองจากหน่วยงานกำกับดูแล (GSE) อย่างน้อยหนึ่งแห่งก่อนจะเริ่มใช้งานจริงได้ แม้จะเจรจากับ reseller รายใหญ่คืบหน้าไปมากแล้วก็ตาม"
+        }
+      ],
+      "discussion": [
+        "การที่ปริมาณการดึงสกอร์ FICO ยังไม่ลดลงในตอนนี้ เป็นเพราะผู้ให้กู้ยังต้องใช้ทั้งสองสกอร์คู่ขนานกันในช่วงเปลี่ยนผ่านเท่านั้น หรือเป็นสัญญาณว่า FICO จะรักษาความเป็นสกอร์หลักไว้ได้ในระยะยาวจริง",
+        "ตลาดตอบสนองเชิงลบรุนแรงต่อการที่รายได้พลาดประมาณการเพียง 2.6% ทั้งที่กำไรต่อหุ้นยังทำได้เกินคาด สะท้อนว่านักลงทุนกำลังประเมินความเสี่ยงระยะยาวจาก VantageScore มากกว่าตัวเลขไตรมาสเดียว ประเด็นนี้จะคลี่คลายไปทางไหนเมื่อ GSE ตัดสินใจเรื่องการรับรอง 10T ในที่สุด",
+        "การชะลอตัวของอัตราเติบโตรายได้มอร์เกจจาก 127% เหลือ 97% เกิดจากปัจจัยจังหวะบัญชีชั่วคราวตามที่ผู้บริหารอธิบาย หรือเป็นสัญญาณเริ่มต้นของการที่แรงหนุนจากราคาต่อหน่วยที่เพิ่มขึ้นมากในปีที่ผ่านมากำลังหมดไป"
+      ],
+      "caveats": "ข้อมูลนี้ไม่ใช่คำแนะนำการลงทุน จัดทำเพื่อการศึกษาและประกอบการตัดสินใจส่วนบุคคลเท่านั้น ตัวเลขอ้างอิงรายงานผลประกอบการอย่างเป็นทางการของ Fair Isaac Corporation และรายงานข่าวสาธารณะ ณ วันที่ 31 กรกฎาคม 2026 ตัวเลขประมาณการ (consensus) ของนักวิเคราะห์อ้างอิงจากรายงานรวบรวมของสำนักข่าวการเงินสาธารณะ ราคาหุ้นและมูลค่าตลาดผันผวนสูงมากในช่วงนี้จากประเด็นการแข่งขันกับ VantageScore",
+      "transcriptExcerpt": {
+        "summaryTh": "คอลนี้เริ่มด้วยคำแถลงของ Will Lansing (CEO) สรุปผลประกอบการไตรมาส 3 ปีงบ 2026 ที่โตแรงในทุกตัวเลขหลักและปรับเป้าทั้งปีขึ้นอีกครั้ง พร้อมระบุว่าตลาดจำนองและปริมาณการใช้งานดีกว่าที่เคยให้แนวทางไว้ ตามด้วย Steven Weber (CFO) ให้รายละเอียดรายได้แยกย่อยกลุ่ม Scores (B2B/มอร์เกจ/รถยนต์/บัตรเครดิต) ตัวเลข ARR ซอฟต์แวร์และแพลตฟอร์ม มาร์จิ้น และเป้าทั้งปีที่ปรับขึ้นใหม่ ช่วงถาม-ตอบเป็นช่วงที่เข้มข้นที่สุดในบรรดา 3 ไตรมาสนี้ นักวิเคราะห์ถามครบถึง 14 คำถาม ส่วนใหญ่เจาะประเด็นการแข่งขันกับ VantageScore โดยตรง ทั้งเรื่องปริมาณการดึงสกอร์ที่ยังไม่ลดลง สถานะการรอรับรองจาก GSE ก่อนเริ่มโครงการ direct license สาเหตุที่อัตราเติบโตรายได้มอร์เกจชะลอจาก 127% เหลือ 97% ส่วนแบ่งตลาดของ VantageScore ที่ขยับขึ้นมาราว 20% กลยุทธ์การพ่วงราคา 10T กับ Classic ความร่วมมือใหม่กับ Accenture เพื่อขยายช่องทางจัดจำหน่าย และความสัมพันธ์กับบริษัทข้อมูลเครดิตที่ตอนนี้กลายเป็นทั้งพันธมิตรและคู่แข่งไปพร้อมกัน",
+        "segments": [
+          {
+            "heading": "Opening remarks — Will Lansing (CEO), financial highlights",
+            "en": "With another strong quarter, we are increasing our fiscal 2026 guidance. We reported Q3 revenues of $674 million, up 26% over last year. We reported $237 million in GAAP net income, up 30%, and GAAP earnings of $10.45 per share, up 41% from the prior year. We reported $277 million in non-GAAP net income, up 31%, and non-GAAP earnings of $12.18 per share, up 42% from the prior year. We delivered free cash flow of $370 million in our third quarter.",
+            "th": "ด้วยผลงานที่แข็งแกร่งอีกไตรมาส เรากำลังปรับเป้าหมายทั้งปีงบ 2026 ขึ้น เรารายงานรายได้ไตรมาส 3 ที่ 674 ล้านดอลลาร์ เพิ่มขึ้น 26% จากปีก่อน เรารายงานกำไรสุทธิตามบัญชี 237 ล้านดอลลาร์ เพิ่มขึ้น 30% และกำไรต่อหุ้นตามบัญชี 10.45 ดอลลาร์ เพิ่มขึ้น 41% จากปีก่อน เรารายงานกำไรสุทธิปรับปรุง 277 ล้านดอลลาร์ เพิ่มขึ้น 31% และกำไรต่อหุ้นปรับปรุง 12.18 ดอลลาร์ เพิ่มขึ้น 42% จากปีก่อน เราทำกระแสเงินสดอิสระได้ 370 ล้านดอลลาร์ในไตรมาสที่สามนี้"
+          },
+          {
+            "heading": "CEO update — มุมมองต่อตลาดจำนองที่ดีกว่าคาด",
+            "en": "The mortgage market has been better than what we had originally guided to, and our volumes are better than what we had originally guided to.",
+            "th": "ตลาดจำนองทำผลงานได้ดีกว่าที่เราเคยให้แนวทางไว้ตอนแรก และปริมาณการใช้งานของเราก็ดีกว่าที่เคยให้แนวทางไว้เช่นกัน"
+          },
+          {
+            "heading": "CFO Steven Weber — รายละเอียดกลุ่ม Scores",
+            "en": "Our Scores segment revenues for the quarter were $459 million, up 41% from the prior year. B2B revenues were up 49%, primarily attributable to a higher mortgage origination score unit price. Our mortgage originations revenues were up 97% from the prior year. Mortgage origination revenues accounted for 71% of B2B revenues and 62% of total Scores revenues. Auto originations revenues were up 15%, while credit card, personal loan, and other originations revenues were up 9%.",
+            "th": "รายได้กลุ่ม Scores ของเราในไตรมาสนี้อยู่ที่ 459 ล้านดอลลาร์ เพิ่มขึ้น 41% จากปีก่อน รายได้ฝั่ง B2B เพิ่มขึ้น 49% ส่วนใหญ่มาจากราคาต่อหน่วยของสกอร์สินเชื่อจำนองที่สูงขึ้น รายได้จากสินเชื่อจำนองเพิ่มขึ้น 97% จากปีก่อน คิดเป็น 71% ของรายได้ฝั่ง B2B และ 62% ของรายได้กลุ่ม Scores ทั้งหมด รายได้จากสินเชื่อรถยนต์เพิ่มขึ้น 15% ส่วนรายได้จากบัตรเครดิต สินเชื่อส่วนบุคคล และสินเชื่ออื่นๆ เพิ่มขึ้น 9%"
+          },
+          {
+            "heading": "CFO Steven Weber — ARR ซอฟต์แวร์และแพลตฟอร์ม",
+            "en": "Our total Software ARR, as shown on page 20, was $816 million, a 10% increase over the prior year. Platform ARR grew 62% versus the prior year to $413 million and represented 51% of our total Q3 2026 ARR.",
+            "th": "รายได้ประจำต่อปีของซอฟต์แวร์รวม ตามหน้า 20 ของเอกสารนำเสนอ อยู่ที่ 816 ล้านดอลลาร์ เพิ่มขึ้น 10% จากปีก่อน Platform ARR เติบโต 62% เทียบปีก่อน เป็น 413 ล้านดอลลาร์ และคิดเป็น 51% ของ ARR รวมในไตรมาส 3 ปีงบ 2026"
+          },
+          {
+            "heading": "CFO Steven Weber — มาร์จิ้นและเป้าทั้งปีที่ปรับใหม่",
+            "en": "Our non-GAAP operating margin, as shown on page 23, was 62% for the quarter, compared with 57% in the same quarter last year. Revenue guidance is now $2.53 billion, an increase of 20% versus prior year. GAAP net income guidance is now $850 million, with GAAP earnings per share of $36.86. Non-GAAP net income guidance is now $979 million, with non-GAAP earnings per share of $42.43.",
+            "th": "มาร์จิ้นกำไรจากการดำเนินงานปรับปรุง ตามหน้า 23 ของเอกสารนำเสนอ อยู่ที่ 62% ในไตรมาสนี้ เทียบกับ 57% ในไตรมาสเดียวกันของปีก่อน เป้ารายได้ทั้งปีตอนนี้อยู่ที่ 2.53 พันล้านดอลลาร์ เพิ่มขึ้น 20% เทียบปีก่อน เป้ากำไรสุทธิตามบัญชีตอนนี้อยู่ที่ 850 ล้านดอลลาร์ พร้อมกำไรต่อหุ้นตามบัญชี 36.86 ดอลลาร์ เป้ากำไรสุทธิปรับปรุงตอนนี้อยู่ที่ 979 ล้านดอลลาร์ พร้อมกำไรต่อหุ้นปรับปรุง 42.43 ดอลลาร์"
+          },
+          {
+            "heading": "Q&A — สถานะการรับรองจาก GSE สำหรับโครงการ DLP (Manav Patnaik, Barclays)",
+            "en": "We're literally waiting on certification from one of the GSEs so that we can go live.",
+            "th": "ตอนนี้เราแค่รอการรับรองจาก GSE (Fannie Mae/Freddie Mac) รายหนึ่งเท่านั้น เพื่อที่จะเริ่มใช้งานจริงได้"
+          },
+          {
+            "heading": "Q&A — ปริมาณการใช้งานที่หายไปจาก VantageScore (Jason Haas, Wells Fargo)",
+            "en": "Are we seeing volume loss? No, we are not, which suggests that they're pulling both scores.",
+            "th": "เราเห็นปริมาณการใช้งานหายไปไหม? ไม่ครับ ไม่เห็น ซึ่งบ่งชี้ว่าผู้ให้กู้กำลังดึงสกอร์ทั้งสองตัวควบคู่กัน"
+          },
+          {
+            "heading": "Q&A — สาเหตุที่อัตราเติบโตรายได้มอร์เกจชะลอตัว (Jeff Meuler, Baird)",
+            "en": "I think there's some of the timing piece, I think there's some of how maybe our quarter cutoff versus what the bureau quarter cutoffs are.",
+            "th": "ผมคิดว่าส่วนหนึ่งเป็นเรื่องจังหวะเวลา และอาจเกี่ยวกับการที่รอบบัญชีของเราตัดต่างจากรอบบัญชีของบริษัทข้อมูลเครดิต (bureau) ด้วย"
+          },
+          {
+            "heading": "Q&A — กลยุทธ์ราคาผลิตภัณฑ์อื่นนอกเหนือจากมอร์เกจ (Simon Clinch, Rothschild & Redburn)",
+            "en": "It's obviously early in the year for us to be suggesting where the pricing will go for next year.",
+            "th": "แน่นอนว่ายังเร็วเกินไปในปีนี้ที่เราจะบอกได้ว่าราคาปีหน้าจะเป็นอย่างไร"
+          },
+          {
+            "heading": "Q&A — อัตราการใช้งาน FICO Platform รุ่นใหม่ (Surinder Thind, Jefferies)",
+            "en": "We've got tremendous interest and tremendous uptake, and you can see in our numbers, tremendous Platform growth.",
+            "th": "เราได้รับความสนใจและอัตราการใช้งานที่สูงมาก และคุณจะเห็นได้จากตัวเลขของเราว่าแพลตฟอร์มเติบโตอย่างมาก"
+          },
+          {
+            "heading": "Q&A — ส่วนแบ่งตลาดของ VantageScore ที่ขยับขึ้น (Ashish Sabadra, RBC)",
+            "en": "When you do the math on what percent of the time a consumer is advantaged... that number... is in the 20s.",
+            "th": "เมื่อคำนวณดูว่าผู้บริโภคได้ประโยชน์จากสกอร์อีกตัวกี่เปอร์เซ็นต์ของเวลาทั้งหมด ตัวเลขนั้นอยู่ที่ราว 20 กว่าเปอร์เซ็นต์"
+          },
+          {
+            "heading": "Q&A — โมเดลราคาของ FICO 10T จะแยกจาก Classic หรือไม่ (Faiza Alwy, Deutsche Bank)",
+            "en": "Today, as you know, we bundle 10T with Classic, and if you pay for Classic, you get 10T free.",
+            "th": "ทุกวันนี้ตามที่ทราบกัน เราพ่วง 10T ไปกับ Classic ถ้าจ่ายค่า Classic ก็ได้ 10T ไปฟรี"
+          },
+          {
+            "heading": "Q&A — ผลต่อส่วนต่างราคาตราสารหนี้ที่มีสินเชื่อจำนองค้ำประกัน (Alexander Hess, JPMorgan)",
+            "en": "I'd refer you back to your own MBS traders to really get the insights there.",
+            "th": "เรื่องนี้ผมขอให้ไปสอบถามทีมเทรดตราสารหนี้ที่มีสินเชื่อจำนองค้ำประกัน (MBS) ของคุณเองน่าจะได้ข้อมูลเชิงลึกกว่า"
+          },
+          {
+            "heading": "Q&A — ผลกระทบของการเลี่ยงกฎต่อการยอมรับ DLP (Kyle Peterson, Needham)",
+            "en": "We don't think so. We think that the benefits of the performance model with DLP are pretty significant from a cost standpoint.",
+            "th": "เราไม่คิดอย่างนั้น เราเชื่อว่าประโยชน์ของโมเดลราคาแบบ performance ร่วมกับโครงการ DLP นั้นมีนัยสำคัญมากในแง่ต้นทุน"
+          },
+          {
+            "heading": "Q&A — อัตราการรักษาลูกค้าและยอดขายซอฟต์แวร์ (Ryan Griffin, BMO)",
+            "en": "146% DBNRR on the FICO Platform business... that's pretty good. We have very low churn.",
+            "th": "อัตราการรักษารายได้ลูกค้าเดิมแบบคิดเป็นมูลค่า (DBNRR) ของธุรกิจ FICO Platform อยู่ที่ 146% ถือว่าดีมาก และเรามีอัตราลูกค้าเลิกใช้บริการ (churn) ต่ำมาก"
+          },
+          {
+            "heading": "Q&A — ความต่างของการเติบโตระหว่างแพลตฟอร์มกับที่ไม่ใช่แพลตฟอร์ม (Owen Lau, Clear Street)",
+            "en": "Yes. The short answer is yes... you will continue to see the divergence that you're seeing right now.",
+            "th": "ใช่ครับ คำตอบสั้นๆ คือใช่ คุณจะยังคงเห็นความแตกต่างที่กำลังเกิดขึ้นตอนนี้ต่อไปอีก"
+          },
+          {
+            "heading": "Q&A — ความร่วมมือกับ Accenture (Sean Kennedy, Mizuho)",
+            "en": "We're IP rich in distribution poor... we're super pleased to now be in this significant strategic partnership.",
+            "th": "เรามีทรัพย์สินทางปัญญาเยอะแต่ช่องทางจัดจำหน่ายยังน้อย เรารู้สึกยินดีมากที่ตอนนี้ได้เข้าสู่ความร่วมมือเชิงกลยุทธ์ที่สำคัญนี้"
+          },
+          {
+            "heading": "Q&A — ราคาแบบ performance model ในตลาด nonconforming (Craig Huber, Huber Research)",
+            "en": "We have not offered it... It is to be offered through the Direct License Program, and that is not live yet.",
+            "th": "เรายังไม่ได้เปิดให้บริการตัวนั้น มันจะถูกเสนอผ่านโครงการ Direct License Program ซึ่งยังไม่เริ่มใช้งานจริง"
+          },
+          {
+            "heading": "Q&A — ความสัมพันธ์กับบริษัทข้อมูลเครดิต (Rayna Kumar, Oppenheimer)",
+            "en": "We get along great with the bureaus... At the same time, we're now competing in mortgage scores.",
+            "th": "เรายังคงมีความสัมพันธ์ที่ดีมากกับบริษัทข้อมูลเครดิต (bureau) แต่ในขณะเดียวกันตอนนี้เราก็กลายเป็นคู่แข่งกันในตลาดสกอร์สินเชื่อจำนองไปด้วย"
+          }
+        ]
+      }
+    }
   ],
   "companyDeepDives": [
 {
@@ -426,6 +1016,195 @@ window.INVESTMENT_DATA = {
       ],
       "caveats": "ข้อมูลนี้จัดทำเพื่อการศึกษาและประกอบการตัดสินใจส่วนบุคคลเท่านั้น ไม่ใช่คำแนะนำการลงทุน ตัวเลขและสถานการณ์บริษัทอ้างอิงข้อมูลสาธารณะ ณ วันที่ 30 กรกฎาคม 2026 (ผลประกอบการ Q2 2026 ประกาศเมื่อ 29 กรกฎาคม 2026) ราคาหุ้น มูลค่าตลาด และตัวเลขคาดการณ์เปลี่ยนแปลงได้ตลอดเวลา"
     }
+,
+    {
+      "id": "cd0002",
+      "date": "2026-07-31",
+      "ticker": "FICO",
+      "company": "Fair Isaac Corporation",
+      "sector": "Credit Scoring & Decision Analytics Software",
+      "tagline": "บริษัทเจ้าของ FICO Score ซึ่งเป็นมาตรฐานการวัดความเสี่ยงเครดิตผู้บริโภคที่ใช้แพร่หลายที่สุดในสหรัฐฯ ควบคู่กับธุรกิจซอฟต์แวร์วิเคราะห์และตัดสินใจสำหรับองค์กร",
+      "overview": "Fair Isaac Corporation ก่อตั้งขึ้นในปี 1956 โดย Bill Fair วิศวกร และ Earl Isaac นักคณิตศาสตร์ ที่เมืองซานราฟาเอล รัฐแคลิฟอร์เนีย บนแนวคิดว่าข้อมูลที่ใช้อย่างชาญฉลาดจะช่วยให้ตัดสินใจทางธุรกิจได้ดีขึ้น บริษัทเริ่มจากการพัฒนาระบบให้คะแนนสินเชื่อในปี 1958 ก่อนเปิดตัว FICO Score เวอร์ชันทั่วไปตัวแรกในปี 1989 ปัจจุบัน FICO Score กลายเป็นมาตรฐานการวัดความเสี่ยงเครดิตผู้บริโภคที่ใช้กันแพร่หลายที่สุดในสหรัฐฯ โดยผู้ให้กู้กว่า 90% ใช้สกอร์นี้ประกอบการตัดสินใจปล่อยสินเชื่อแทบทุกประเภท ทั้งจำนอง รถยนต์ บัตรเครดิต และสินเชื่อส่วนบุคคล\n\nโมเดลธุรกิจของ FICO แบ่งเป็น 2 กลุ่มหลัก คือ (1) Scores — ขาย FICO Score โดยตรง ส่วนใหญ่เป็นรายได้แบบ B2B ที่คิดค่าธรรมเนียมต่อครั้งที่ผู้ให้กู้หรือ reseller ดึงสกอร์ผ่านบริษัทข้อมูลเครดิตทั้งสามราย (Equifax, Experian, TransUnion) บวกกับรายได้ B2C เล็กน้อยผ่านเว็บไซต์ myFICO.com ที่ขายตรงให้ผู้บริโภค และ (2) Software — ขายซอฟต์แวร์วิเคราะห์และตัดสินใจในรูปแบบ SaaS ผ่าน FICO Platform เป็นรายได้ประจำ (ARR) บวกกับใบอนุญาตแบบติดตั้งในสถานที่ลูกค้า (on-premises) รุ่นเก่าและบริการที่ปรึกษาที่กำลังลดความสำคัญลงเรื่อยๆ ปัจจุบันกลุ่ม Scores กลายเป็นตัวขับเคลื่อนการเติบโตหลักของบริษัทอย่างชัดเจน จากอำนาจการตั้งราคาในตลาดจำนองที่แทบไม่มีคู่แข่งมานานหลายสิบปี\n\nตั้งแต่ปี 2023 เป็นต้นมา FICO ผลักดันกลยุทธ์ FICO Platform อย่างหนัก เป็นแพลตฟอร์มตัดสินใจแบบรวมศูนย์ที่ผสานการตรวจจับทุจริต (Falcon) การตลาด และการให้คะแนนเครดิตไว้ในโปรไฟล์ลูกค้าเดียวที่อัปเดตแบบเรียลไทม์ พยายามเปลี่ยนบริษัทจากการขายโซลูชันแยกส่วนไปสู่ธุรกิจแพลตฟอร์มที่มีรายได้ประจำ แข่งขันในตลาดที่เรียกว่า \"decision intelligence\" ซึ่ง Gartner ยกให้ FICO เป็นผู้นำ (Leader) ในรายงาน Magic Quadrant สำหรับ Decision Intelligence Platforms ฉบับเดือนมกราคม 2026",
+      "technology": [
+        {
+          "label": "FICO Score (Classic, 9, 10, 10T)",
+          "note": "ตระกูลโมเดลให้คะแนนเครดิตที่พัฒนาต่อเนื่องมาหลายเวอร์ชัน โดย FICO Score 10T เป็นเวอร์ชันล่าสุดที่ใช้เทคนิคการวิเคราะห์แนวโน้ม (trended data) และนำประวัติการจ่ายค่าเช่า-ค่าสาธารณูปโภคมารวมคำนวณ ช่วยประเมินความเสี่ยงแม่นยำขึ้นและให้ผู้บริโภคกลุ่มที่เคยเข้าถึงสินเชื่อยากมีโอกาสผ่านคุณสมบัติมากขึ้น"
+        },
+        {
+          "label": "FICO Falcon Fraud Manager",
+          "note": "ระบบตรวจจับและป้องกันการทุจริตทางการเงินแบบเรียลไทม์ ขับเคลื่อนด้วยสิทธิบัตร machine learning เฉพาะด้านทุจริตกว่า 120 ฉบับ ปกป้องบัญชีการชำระเงินกว่า 2.6 พันล้านบัญชีทั่วโลก"
+        },
+        {
+          "label": "FICO Platform",
+          "note": "แพลตฟอร์มตัดสินใจแบบรวมศูนย์ (decisioning platform) ที่ออกแบบให้เป็นระบบขับเคลื่อนด้วย AI agent (agentic-by-design) มีลูกค้าองค์กรใช้งานแล้วกว่า 150 รายทั่วโลก หลายรายใช้งานมากกว่าหนึ่งโซลูชันพร้อมกัน"
+        },
+        {
+          "label": "UltraFICO / Cash Flow Score (ร่วมกับ Plaid)",
+          "note": "สกอร์ทางเลือกที่ใช้ข้อมูลกระแสเงินสดจากบัญชีธุรกรรมจริง (ผ่านเครือข่าย Open Finance ของ Plaid) แทนหรือเสริมข้อมูลเครดิตแบบดั้งเดิม ช่วยประเมินผู้บริโภคที่มีประวัติเครดิตบางหรือไม่มีเลย"
+        },
+        {
+          "label": "สิทธิบัตรด้าน AI",
+          "note": "มีสิทธิบัตรที่เกี่ยวข้องกับ AI แล้ว 137 ฉบับ รวมถึงเทคโนโลยีบล็อกเชนที่ช่วยให้การตัดสินใจของ AI ตรวจสอบย้อนกลับได้และอธิบายได้ ซึ่งเป็นจุดขายสำคัญในอุตสาหกรรมการเงินที่ถูกกำกับดูแลเข้มงวด"
+        }
+      ],
+      "marketSummary": "ตลาดให้คะแนนเครดิตในสหรัฐฯ เดิมเป็นตลาดที่ FICO ผูกขาดแทบสมบูรณ์มานานหลายสิบปี โดยเฉพาะในตลาดจำนองมาตรฐาน (conforming) ที่ Fannie Mae และ Freddie Mac (GSE) เคยกำหนดให้ใช้ FICO Score เท่านั้น แต่สถานการณ์เปลี่ยนไปมากในช่วงปี 2025-2026 เมื่อ FHFA (หน่วยงานกำกับดูแล GSE) เปิดทางให้ใช้ VantageScore 4.0 ซึ่งเป็นสกอร์คู่แข่งที่ก่อตั้งโดยบริษัทข้อมูลเครดิตทั้งสามรายร่วมกันในปี 2006 ได้ด้วยเช่นกัน ส่งผลให้เกิดสงครามราคาที่ VantageScore ใช้กลยุทธ์ตั้งราคาต่ำกว่าตลาดอย่างชัดเจนเพื่อแย่งส่วนแบ่ง\n\nนอกเหนือจากธุรกิจให้คะแนนเครดิต ตลาดซอฟต์แวร์ตัดสินใจ/ตรวจจับทุจริต/บริหารความสัมพันธ์ลูกค้ามีขนาดใหญ่กว่ามากและกระจัดกระจายกว่า มีผู้เล่นทั้งบริษัทซอฟต์แวร์วิเคราะห์ขนาดใหญ่และบริษัทข้อมูลเครดิตที่เริ่มขยายมาทำธุรกิจซอฟต์แวร์วิเคราะห์ของตัวเองด้วยเช่นกัน",
+      "competitors": [
+        {
+          "name": "VantageScore",
+          "strength": "เจ้าของร่วมคือบริษัทข้อมูลเครดิตทั้งสามราย (Equifax, Experian, TransUnion) ทำให้มีช่องทางจัดจำหน่ายตรงอยู่แล้ว บวกกับได้รับไฟเขียวจาก FHFA ให้ใช้ในตลาดจำนองมาตรฐานได้ตั้งแต่กลางปี 2025 และใช้กลยุทธ์ราคาต่ำดึงส่วนแบ่งตลาดอย่างจริงจัง",
+          "weakness": "ประวัติการใช้งานในตลาดจำนองยังสั้นกว่า FICO มาก ปัจจุบันสัดส่วนการใช้งานยังอยู่เพียงราว 20-30% ของตลาดจำนอง และยังต้องพิสูจน์ความแม่นยำเชิงพยากรณ์ในระยะยาว"
+        },
+        {
+          "name": "Equifax / Experian / TransUnion",
+          "strength": "เป็นเจ้าของข้อมูลเครดิตดิบที่ทั้ง FICO และ VantageScore ต้องพึ่งพา ทำให้มีอำนาจต่อรองสูงและเป็นทั้งพันธมิตรจัดจำหน่ายและคู่แข่งของ FICO ไปพร้อมกัน",
+          "weakness": "ความสัมพันธ์แบบ co-opetition (แข่งขันและร่วมมือพร้อมกัน) นี้สร้างความซับซ้อนในการบริหารช่องทางจัดจำหน่าย และตัวบริษัทข้อมูลเครดิตเองก็ยังไม่มีสกอร์ของตัวเองที่ได้รับความน่าเชื่อถือเทียบเท่า FICO Score เดี่ยวๆ"
+        },
+        {
+          "name": "SAS Institute",
+          "strength": "บริษัทซอฟต์แวร์วิเคราะห์และตัดสินใจระดับองค์กรที่มีความสัมพันธ์ลูกค้าองค์กรมายาวนาน ครอบคลุมหลายอุตสาหกรรมกว่า FICO",
+          "weakness": "เป็นบริษัทเอกชนที่ไม่เน้นการตัดสินใจสำหรับผู้บริโภคแบบเรียลไทม์และ AI agent เท่า FICO Platform"
+        },
+        {
+          "name": "IBM (decisioning & automation tools)",
+          "strength": "มีช่องทางจัดจำหน่ายและฐานลูกค้าองค์กรขนาดใหญ่มากผ่านผลิตภัณฑ์ไอทีที่หลากหลาย สามารถขายพ่วงกับโซลูชันอื่นได้ง่าย",
+          "weakness": "การตัดสินใจ (decisioning) ไม่ใช่จุดโฟกัสหลักของธุรกิจ เป็นเพียงส่วนหนึ่งของพอร์ตผลิตภัณฑ์ที่กว้างกว่ามาก ทำให้ความลึกเฉพาะทางสู้ FICO ไม่ได้"
+        }
+      ],
+      "financialsSummary": "ปีงบการเงิน 2025 (สิ้นสุดกันยายน 2025) FICO ทำรายได้รวม 1.99 พันล้านดอลลาร์ เพิ่มขึ้น 16% จากปีก่อน เมื่อเข้าสู่ปีงบ 2026 บริษัทปรับเป้ารายได้ทั้งปีขึ้นต่อเนื่องถึง 3 รอบตามผลประกอบการที่ออกมาดีกว่าคาด จากเป้าตั้งต้น 2.35 พันล้านดอลลาร์ เป็น 2.45 พันล้านดอลลาร์ในไตรมาส 2 และล่าสุด 2.53 พันล้านดอลลาร์ในไตรมาส 3 คิดเป็นการเติบโต 20% เทียบปีก่อน\n\nแรงขับเคลื่อนการเติบโตส่วนใหญ่กระจุกตัวอยู่ที่อำนาจการตั้งราคาของกลุ่ม Scores ในตลาดจำนอง (รายได้จากสินเชื่อจำนองในบางไตรมาสโตสูงถึง 97-127% เทียบปีก่อน) มากกว่าการเติบโตของธุรกิจซอฟต์แวร์ในภาพรวมที่ยังโตเพียงหลักเดียวถึงหลักสิบต้นๆ ต่อปี ส่วนที่โดดเด่นในฝั่งซอฟต์แวร์คือ FICO Platform ที่มี ARR โตต่อเนื่อง 33-62% ต่อไตรมาสและเพิ่งแซงหน้ารายได้ฝั่งที่ไม่ใช่แพลตฟอร์มเป็นครั้งแรกในไตรมาส 3 ปีงบ 2026\n\nแม้ผลประกอบการและกระแสเงินสดจะทำสถิติใหม่ต่อเนื่อง ราคาหุ้น FICO กลับผันผวนรุนแรงมากในปี 2026 แกว่งจากจุดสูงสุดในรอบ 52 สัปดาห์ที่ 1,998.01 ดอลลาร์ (ต.ค. 2025) ลงมาต่ำสุดที่ 870.01 ดอลลาร์ (เม.ย. 2026) และร่วงลงอีกครั้งอย่างหนักหลังประกาศผลไตรมาส 3 ปลายเดือนกรกฎาคม 2026 แม้กำไรต่อหุ้นจะทำได้ดีกว่าคาดและมีการปรับเป้าทั้งปีขึ้นอีกครั้งก็ตาม สะท้อนว่าตลาดกำลังให้น้ำหนักกับความเสี่ยงระยะยาวจากการแข่งขันกับ VantageScore มากกว่าตัวเลขผลประกอบการรายไตรมาส",
+      "financialMetrics": [
+        {
+          "label": "Revenue (FY2025)",
+          "value": "$1.99B",
+          "note": "+16% YoY"
+        },
+        {
+          "label": "Revenue Guidance (FY2026, ปรับล่าสุดหลัง Q3)",
+          "value": "$2.53B",
+          "note": "+20% YoY เพิ่มขึ้นจากเป้าตั้งต้น $2.35B"
+        },
+        {
+          "label": "Market Cap",
+          "value": "~$24.6B",
+          "note": "ณ 31 ก.ค. 2026 หลังหุ้นร่วงแรงหลังงบ Q3 — เคยสูงกว่า $34B ในช่วงต้นปีงบ 2026"
+        },
+        {
+          "label": "Trailing P/E",
+          "value": "33.1x",
+          "note": "Forward P/E ราว 22.2x"
+        },
+        {
+          "label": "Total Debt",
+          "value": "$3.64B",
+          "note": "ณ สิ้นไตรมาส 2 ปีงบ 2026 ดอกเบี้ยเฉลี่ย 5.5%"
+        },
+        {
+          "label": "Free Cash Flow (TTM ถึง Q3 FY26)",
+          "value": "~$1.03B",
+          "note": "รวม 4 ไตรมาสล่าสุด (165+214+370+กระแสเงินสด Q4 FY25 ประมาณการ)"
+        },
+        {
+          "label": "Scores vs Software Revenue Mix (Q3 FY26)",
+          "value": "68% / 32%",
+          "note": "$459M กลุ่ม Scores เทียบ $215M กลุ่ม Software — สัดส่วน Scores เพิ่มขึ้นต่อเนื่อง"
+        }
+      ],
+      "financialTrend": [
+        {
+          "label": "Q2'25",
+          "value": 499
+        },
+        {
+          "label": "Q3'25",
+          "value": 536
+        },
+        {
+          "label": "Q4'25",
+          "value": 516
+        },
+        {
+          "label": "Q1'26",
+          "value": 512
+        },
+        {
+          "label": "Q2'26",
+          "value": 692
+        },
+        {
+          "label": "Q3'26",
+          "value": 674
+        }
+      ],
+      "leadership": [
+        {
+          "name": "William J. Lansing",
+          "role": "CEO",
+          "note": "ดำรงตำแหน่ง CEO มาตั้งแต่ปี 2012 จบนิติศาสตร์จาก Georgetown เคยผ่านงานบริหารที่ McKinsey, GE, Prodigy, Fingerhut, NBC Internet และ InfoSpace ภายใต้การนำของเขา รายได้ FICO เติบโตจากราว 620 ล้านดอลลาร์ในปีงบ 2011 เป็นเกือบ 2 พันล้านดอลลาร์ในปีงบ 2025 และผลตอบแทนรวมต่อผู้ถือหุ้นสะสมสูงกว่า 5,333% ตลอดวาระ"
+        },
+        {
+          "name": "Steven P. Weber",
+          "role": "CFO",
+          "note": "ดูแลด้านการเงิน เป็นผู้รายงานตัวเลขผลประกอบการแยกเซกเมนต์และตอบคำถามนักวิเคราะห์เรื่องแนวทางการปรับเป้าและกลยุทธ์ราคาในทุกไตรมาส"
+        }
+      ],
+      "investors": [
+        "Vanguard Group",
+        "BlackRock",
+        "State Street",
+        "Capital World Investors",
+        "Geode Capital Management"
+      ],
+      "catalysts": [
+        {
+          "label": "การรับรอง FICO Score 10T จาก GSE",
+          "note": "เมื่อ Fannie Mae/Freddie Mac รับรองให้ใช้ 10T อย่างเป็นทางการในตลาดจำนองมาตรฐาน อาจเปิดรอบการอัปเกรดครั้งใหญ่จาก FICO Score รุ่นคลาสสิก"
+        },
+        {
+          "label": "ปรับราคา 10T ลงแรงเพื่อรักษาส่วนแบ่งตลาด",
+          "note": "ปรับจาก 4.95 ดอลลาร์ต่อสกอร์ เหลือ 0.99 ดอลลาร์ต่อสกอร์บวกค่าธรรมเนียมใหม่ เพื่อดึงดูดให้ผู้ให้กู้และ reseller เร่งใช้งานเร็วขึ้นแทนที่จะเปลี่ยนไปใช้ VantageScore"
+        },
+        {
+          "label": "FICO Platform เร่งตัวต่อเนื่อง",
+          "note": "Platform ARR โตต่อเนื่อง 33-62% ต่อไตรมาสและได้รับการยอมรับจาก Gartner ว่าเป็นผู้นำ Decision Intelligence Platforms ยืนยันว่ากลยุทธ์ปรับเป็นธุรกิจแพลตฟอร์มเริ่มเห็นผล"
+        },
+        {
+          "label": "UltraFICO / ความร่วมมือกับ Plaid",
+          "note": "สกอร์ทางเลือกที่ใช้ข้อมูลกระแสเงินสด อาจขยายฐานผู้บริโภคที่เข้าถึงสินเชื่อได้ ซึ่งเป็นตลาดใหม่ที่ FICO Score แบบดั้งเดิมเข้าไม่ถึง"
+        },
+        {
+          "label": "คืนเงินผู้ถือหุ้นต่อเนื่องในระดับสูง",
+          "note": "ซื้อหุ้นคืนมูลค่า 605 ล้านดอลลาร์ในไตรมาสเดียว (สูงสุดในประวัติศาสตร์บริษัท) พร้อมวงเงินอนุมัติใหม่ 1.5 พันล้านดอลลาร์ สะท้อนความมั่นใจของฝ่ายบริหาร"
+        }
+      ],
+      "risks": [
+        {
+          "label": "FHFA เปิดทางให้ใช้ VantageScore ในตลาดจำนองมาตรฐาน",
+          "note": "เป็นความเสี่ยงเชิงโครงสร้างที่ใหญ่ที่สุดของ FICO ในรอบหลายสิบปี ทำลายเงื่อนไขที่เคยผูกขาดตลาดจำนองมาตรฐานไว้เกือบสมบูรณ์ แม้ปัจจุบันยังไม่เห็นปริมาณการใช้งาน FICO ลดลงชัดเจน แต่ระยะยาวอำนาจต่อรองด้านราคาอาจถูกกัดกร่อนต่อเนื่อง"
+        },
+        {
+          "label": "แรงกดดันจากการเมืองและหน่วยงานกำกับดูแล",
+          "note": "อัยการสูงสุดรัฐฟลอริดาเปิดการสอบสวนด้านการผูกขาด และวุฒิสมาชิก Josh Hawley เรียกร้องให้ FTC/DOJ สอบสวนการขึ้นราคาสกอร์ต่อครั้งที่มีรายงานว่าเพิ่มขึ้นจากไม่ถึง 1 ดอลลาร์ เป็นสูงสุดถึง 10 ดอลลาร์ อาจนำไปสู่มาตรการทางกฎหมายหรือแรงกดดันให้ปรับโครงสร้างราคาเพิ่มเติม"
+        },
+        {
+          "label": "รายได้กระจุกตัวในวัฏจักรตลาดจำนอง",
+          "note": "การเติบโตส่วนใหญ่ในปัจจุบันมาจากราคาต่อหน่วยและปริมาณสินเชื่อจำนองที่เพิ่มขึ้น ซึ่งอ่อนไหวต่ออัตราดอกเบี้ยและภาวะตลาดที่อยู่อาศัยสูง หากตลาดจำนองชะลอตัว การเติบโตของทั้งบริษัทอาจชะลอตามไปด้วย"
+        },
+        {
+          "label": "ความผันผวนของราคาหุ้นสูงมาก",
+          "note": "หุ้นแกว่งจาก 1,998.01 ดอลลาร์ ลงมาต่ำสุด 870.01 ดอลลาร์ ในรอบ 52 สัปดาห์ และร่วงต่อเนื่องหลายวันแม้ผลประกอบการไตรมาส 3 จะดีกว่าคาดในหลายตัวเลข สะท้อนว่าตลาดกำลังตีราคาความเสี่ยงจากการแข่งขันระยะยาวมากกว่าแค่ตัวเลขรายไตรมาส"
+        },
+        {
+          "label": "ธุรกิจ Software เติบโตช้ากว่าภาพรวมบริษัทมาก",
+          "note": "รายได้ซอฟต์แวร์โตเพียงหลักเดียวถึงต้นหลักสิบต่อปี ขณะที่รายได้ฝั่งที่ไม่ใช่แพลตฟอร์มยังหดตัวต่อเนื่องหลายไตรมาส หากแรงหนุนจากราคาสกอร์จำนองแผ่วลงก่อนที่ Platform จะโตมาทดแทนได้ทัน อัตราเติบโตรวมของบริษัทอาจชะลอตัวลงชัดเจน"
+        }
+      ],
+      "discussion": [
+        "Bull case: แม้ VantageScore เริ่มมีที่ยืนในตลาดจำนอง แต่ FICO ยังคุมปริมาณการใช้งานส่วนใหญ่ของอุตสาหกรรมอยู่ (ผู้บริหารยืนยันว่ายังไม่เห็นปริมาณการดึงสกอร์ลดลง) และกำลังใช้กลยุทธ์ลดราคาต่อสกอร์อย่างจริงจังเพื่อรักษาปริมาณการใช้งานไว้แทนที่จะสู้แพ้ราคาแบบตั้งรับ หากทำสำเร็จ อาจรักษาฐานลูกค้าไว้ได้แม้มาร์จิ้นต่อสกอร์จะลดลง",
+        "Bear case: การที่ FHFA เปิดทางให้ VantageScore ใช้ได้ในตลาดจำนองมาตรฐานถือเป็นการทำลายเงื่อนไขผูกขาดที่ FICO อาศัยมานานหลายสิบปี ต่อให้ตอนนี้ยังไม่เห็นการเปลี่ยนส่วนแบ่งตลาดครั้งใหญ่ แต่เมื่อผู้ให้กู้คุ้นเคยกับ VantageScore มากขึ้นในระยะยาว อำนาจต่อรองด้านราคาของ FICO อาจถูกกัดกร่อนต่อเนื่องจนกระทบมาร์จิ้นของทั้งบริษัท",
+        "ธุรกิจ Software/Platform ซึ่งควรเป็นเครื่องยนต์การเติบโตระยะยาวที่มั่นคงกว่าธุรกิจ Scores ที่ผูกกับวัฏจักรตลาดจำนอง จะสามารถโตเร่งขึ้นทันเวลาก่อนที่ลมส่งจากราคาสกอร์จำนองจะเริ่มแผ่วลงหรือไม่",
+        "แรงกดดันจากฝั่งการเมืองและหน่วยงานกำกับดูแล (Hawley, อัยการสูงสุดรัฐฟลอริดา) จะจบลงด้วยการที่ FICO ต้องยอมปรับโครงสร้างราคาเพิ่มเติม หรือจะเผชิญมาตรการทางกฎหมายที่รุนแรงกว่านี้"
+      ],
+      "caveats": "ข้อมูลนี้จัดทำเพื่อการศึกษาและประกอบการตัดสินใจส่วนบุคคลเท่านั้น ไม่ใช่คำแนะนำการลงทุน ตัวเลขและสถานการณ์บริษัทอ้างอิงข้อมูลสาธารณะ ณ วันที่ 31 กรกฎาคม 2026 ราคาหุ้น มูลค่าตลาด และตัวเลขคาดการณ์เปลี่ยนแปลงได้ตลอดเวลา โดยเฉพาะช่วงนี้ที่หุ้น FICO ผันผวนสูงมากจากประเด็นการแข่งขันด้านราคากับ VantageScore"
+    }
   ]
 };
-window.INVESTMENT_UPDATED = "30/07/2026";
+window.INVESTMENT_UPDATED = "31/07/2026";
