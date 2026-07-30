@@ -413,16 +413,6 @@ window.InvestmentView = (function () {
     </div>`;
   }
 
-  function quoteList(rows) {
-    if (!rows || !rows.length) return '';
-    return `<div class="inv-quotes">${rows.map(q => `
-      <blockquote class="inv-quote">
-        <div class="q">&#8220;${esc(q.quote)}&#8221;</div>
-        ${q.translation ? `<div class="tr">${esc(q.translation)}</div>` : ''}
-        <div class="attr">${esc(q.speaker)}${q.title ? ', ' + esc(q.title) : ''}</div>
-      </blockquote>`).join('')}</div>`;
-  }
-
   function transcriptBox(t) {
     if (!t || (!t.text && !(t.segments && t.segments.length))) return '';
     const summary = t.summaryTh ? `<div class="inv-summary">${esc(t.summaryTh)}</div>` : '';
@@ -503,7 +493,6 @@ window.InvestmentView = (function () {
     const unitMatch = revMetric && /([A-Z])\s*$/.exec(String(revMetric.actual || '').trim());
     const trend = trendBars(e.trend, unitMatch ? unitMatch[1] : '');
     const guide = guidanceBox(e.guidance);
-    const quotes = quoteList(e.managementQuotes);
     const transcript = transcriptBox(e.transcriptExcerpt);
     const track = trackRecordList(e.trackRecord);
     $('invEarnBody').innerHTML = `
@@ -520,7 +509,6 @@ window.InvestmentView = (function () {
       </div>
       ${trend ? `<div class="inv-pr-section"><div class="section-title">Quarterly Revenue Trend</div>${trend}</div>` : ''}
       ${guide ? `<div class="inv-pr-section"><div class="section-title">Guidance</div>${guide}</div>` : ''}
-      ${quotes ? `<div class="inv-pr-section"><div class="section-title">Management Commentary</div>${quotes}</div>` : ''}
       ${transcript ? `<div class="inv-pr-section"><div class="section-title">Call Transcript</div>${transcript}</div>` : ''}
       ${track ? `<div class="inv-pr-section"><div class="section-title">Track Record</div>${track}</div>` : ''}
       <div class="inv-pr-twocol">
