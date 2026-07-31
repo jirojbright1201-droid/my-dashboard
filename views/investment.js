@@ -413,26 +413,31 @@ window.InvestmentView = (function () {
     </div>`;
   }
 
+  function xcptSegMarkup(s) {
+    const enP = s.en.split(/\n\n+/).filter(x => x.trim());
+    const thP = s.th.split(/\n\n+/).filter(x => x.trim());
+    const paras = enP.length === thP.length ? enP.map((en, i) => ({ en, th: thP[i] })) : [{ en: s.en, th: s.th }];
+    const rows = paras.map(p => `
+      <div class="inv-xcpt-para">
+        <div class="inv-xcpt-en">${esc(p.en)}</div>
+        <div class="inv-xcpt-th">${esc(p.th)}</div>
+      </div>`).join('');
+    return `
+    <div class="inv-xcpt-seg">
+      <div class="inv-xcpt-heading">${esc(s.heading)}</div>
+      ${rows}
+    </div>`;
+  }
   function transcriptBox(t) {
     if (!t || (!t.text && !(t.segments && t.segments.length))) return '';
     const summary = t.summaryTh ? `<div class="inv-summary">${esc(t.summaryTh)}</div>` : '';
     if (t.segments && t.segments.length) {
-      const body = t.segments.map(s => {
-        const enP = s.en.split(/\n\n+/).filter(x => x.trim());
-        const thP = s.th.split(/\n\n+/).filter(x => x.trim());
-        const paras = enP.length === thP.length ? enP.map((en, i) => ({ en, th: thP[i] })) : [{ en: s.en, th: s.th }];
-        const rows = paras.map(p => `
-          <div class="inv-xcpt-para">
-            <div class="inv-xcpt-en">${esc(p.en)}</div>
-            <div class="inv-xcpt-th">${esc(p.th)}</div>
-          </div>`).join('');
-        return `
-        <div class="inv-xcpt-seg">
-          <div class="inv-xcpt-heading">${esc(s.heading)}</div>
-          ${rows}
-        </div>`;
-      }).join('');
-      return `${summary}
+      const highlights = t.segments.filter(s => s.highlight);
+      const highlightBlock = highlights.length ? `
+        <div class="inv-xcpt-hl-label">Highlights</div>
+        <div class="inv-xcpt-body">${highlights.map(xcptSegMarkup).join('')}</div>` : '';
+      const body = t.segments.map(xcptSegMarkup).join('');
+      return `${summary}${highlightBlock}
         <details class="inv-xcpt">
           <summary>Read full call transcript</summary>
           <div class="inv-xcpt-body">${body}</div>

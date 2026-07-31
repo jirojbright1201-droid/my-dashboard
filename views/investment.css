@@ -194,6 +194,9 @@
 @media (max-width: 400px) { .inv-stat-tiles { grid-template-columns: 1fr; } }
 
 /* Call Transcript excerpt — เก็บก้อนข้อความยาวไว้เทียบย้อนหลัง (เพิ่ม 30 ก.ค. 2026) */
+/* Highlights — 3-5 ท่อนเด่นโชว์ตรงๆ ไม่ต้องกดขยาย (เพิ่ม 31 ก.ค. 2026) */
+.inv-xcpt-hl-label { margin-top: 18px; font-size: 0.6875rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; }
+.inv-xcpt-hl-label + .inv-xcpt-body { margin-top: 14px; }
 .inv-xcpt { margin-top: 14px; }
 .inv-xcpt > summary { cursor: pointer; font-size: 0.8125rem; font-weight: 600; color: var(--accent); list-style: none; }
 .inv-xcpt > summary::-webkit-details-marker { display: none; }
