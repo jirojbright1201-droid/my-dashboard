@@ -4,7 +4,118 @@
 // schema earningsReviews: id/date/ticker/company/quarter/reportDate/verdict/verdictLine/metrics/trend/guidance/positives/concerns/discussion/sources/caveats — append-only ต่อท้ายทุกครั้งที่รีวิวงบใหม่ (เพิ่ม 23 ก.ค. 2026) — ล้างข้อมูลเป็นค่าว่างแล้ว 30 ก.ค. 2026 ตามที่ jiroj ขอ
 // schema companyDeepDives: id/date/ticker/company/sector/tagline/overview/technology/marketSummary/competitors/financialsSummary/financialMetrics/financialTrend/leadership/investors/catalysts/risks/caveats — append-only ต่อท้ายทุกครั้งที่รีเสิร์ชบริษัทใหม่ (เพิ่ม 24 ก.ค. 2026, ตัด analystSummary/ratingBuy/ratingHold/ratingSell/priceTarget*/sources ออก 24 ก.ค. 2026 — jiroj ขอเอา Analyst Sentiment กับ Sources ออกจาก dashboard) — ล้างข้อมูลเป็นค่าว่างแล้ว 30 ก.ค. 2026 ตามที่ jiroj ขอ
 window.INVESTMENT_DATA = {
-  "briefs": [],
+  "briefs": [
+    {
+      "id": "nw0001",
+      "date": "2026-07-29",
+      "title": "เฟดคงดอกเบี้ยที่ 3.50-3.75% เป็นครั้งที่ 5 ติดต่อกัน แม้เงินเฟ้อยังสูง กรรมการ 3 คนโหวตค้านขอขึ้นดอกเบี้ย",
+      "summary": "คณะกรรมการนโยบายการเงินธนาคารกลางสหรัฐฯ (Federal Reserve) มีมติ 9 ต่อ 3 คงอัตราดอกเบี้ยนโยบายที่ 3.50-3.75% กรรมการ 3 คน (Beth Hammack, Neel Kashkari, Lorie Logan) โหวตค้านต้องการขึ้นดอกเบี้ยแทน เพราะเงินเฟ้อยังสูงกว่าเป้าหมาย 2% มานานกว่า 5 ปี ประธานเฟด Kevin Warsh ระบุกำลังจับตาความขัดแย้งทางทหารและการหยุดชะงักของอุปทานพลังงาน ตลาดหุ้นสหรัฐฯ ปรับตัวลงหลังประกาศ (Nasdaq -0.9%, Dow -1.6%, S&P 500 -0.7%) ขณะที่ทองคำขยับขึ้นรับข่าว",
+      "macro": true,
+      "sourceName": "Al Jazeera",
+      "url": "https://www.aljazeera.com/economy/2026/7/29/us-fed-holds-interest-rates-steady-citing-elevated-inflation",
+      "image": "",
+      "topic": "fed"
+    },
+    {
+      "id": "nw0002",
+      "date": "2026-07-31",
+      "title": "อิหร่านโจมตีฐานทัพสหรัฐฯ ในคูเวตและบาห์เรน หลังสหรัฐฯ ถล่มที่พักอาศัยบนเกาะเกชม์",
+      "summary": "กองทัพอิหร่านแถลงว่าใช้โดรนโจมตีฐานทัพอากาศ Ahmad al-Jaber ในคูเวตและฐานทัพ Sheikh Isa ในบาห์เรน เพื่อตอบโต้การโจมตีของสหรัฐฯ ที่ทำให้ครอบครัวหนึ่งบนเกาะเกชม์เสียชีวิต คูเวตและบาห์เรนระบุว่าสกัดกั้นโดรน-ขีปนาวุธไว้ได้เกือบทั้งหมด ความขัดแย้งที่ลากยาวตั้งแต่ปลายเดือนกุมภาพันธ์ 2026 เริ่มลามไปยังอียิปต์ด้วย กระทบการเดินเรือผ่านช่องแคบฮอร์มุซและทะเลแดงอย่างหนัก",
+      "macro": true,
+      "sourceName": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/7/31/irgc-strikes-us-targets-in-kuwait-a-day-after-us-hits-iran-latest-events",
+      "image": "",
+      "topic": ""
+    },
+    {
+      "id": "nw0003",
+      "date": "2026-07-31",
+      "title": "ราคาน้ำมันดิบพุ่งแตะ 85 ดอลลาร์ต่อบาร์เรล บวกกว่า 20% ในเดือนกรกฎาคม จากความเสี่ยงด้านอุปทานตะวันออกกลาง",
+      "summary": "ราคาน้ำมันดิบขยับขึ้นแตะราว 85 ดอลลาร์สหรัฐต่อบาร์เรล ทำให้เดือนกรกฎาคม 2026 เป็นเดือนที่ราคาน้ำมันบวกแรงที่สุดนับตั้งแต่มีนาคม จากความกังวลเรื่องการขนส่งผ่านช่องแคบฮอร์มุซที่ลดฮวบจากสงครามสหรัฐฯ-อิหร่าน ประกอบกับกลุ่มฮูตีโจมตีเรือในทะเลแดงต่อเนื่อง โพลสำนักข่าว Reuters คาดราคาน้ำมันดิบ Brent เฉลี่ยทั้งปี 2026 จะอยู่ที่ 85.22 ดอลลาร์ นักวิเคราะห์มองความเสี่ยงภูมิรัฐศาสตร์จะยังหนุนราคาไปตลอดครึ่งปีหลัง",
+      "macro": true,
+      "sourceName": "Global Banking & Finance Review (Reuters poll)",
+      "url": "https://www.globalbankingandfinance.com/oil-prices-seen-gaining-middle-east-supply-disruptions/",
+      "image": "",
+      "topic": "oil"
+    },
+    {
+      "id": "nw0004",
+      "date": "2026-07-31",
+      "title": "ดัชนี PMI ภาคการผลิตจีนหดตัวเกินคาดในเดือนกรกฎาคม เหลือ 49.2 จุด ยุติการขยายตัว 4 เดือนติด",
+      "summary": "ดัชนีผู้จัดการฝ่ายจัดซื้อ (PMI) ภาคการผลิตทางการของจีนลดลงมาอยู่ที่ 49.2 จุดในเดือนกรกฎาคม จาก 50.3 จุดในมิถุนายน ต่ำกว่าที่นักเศรษฐศาสตร์คาดไว้ที่ 50.11 จุด ถือเป็นการหดตัว (ต่ำกว่า 50 จุด) ครั้งแรกในรอบ 4 เดือน ดัชนีคำสั่งซื้อใหม่ร่วงลงมาที่ 48.5 จุด สะท้อนดีมานด์ในประเทศที่อ่อนแอ นักวิเคราะห์มองว่าทางการจีนจะเผชิญแรงกดดันให้ออกมาตรการกระตุ้นการคลังเพิ่มเติม",
+      "macro": true,
+      "sourceName": "South China Morning Post",
+      "url": "https://www.scmp.com/economy/economic-indicators/article/3362490/chinas-manufacturing-sector-falters-july-growth-momentum-cools",
+      "image": "",
+      "topic": "china"
+    },
+    {
+      "id": "nw0005",
+      "date": "2026-07-30",
+      "title": "Apple โชว์ผลประกอบการ Q3 ปีงบ 2026 รายได้ทะลุ 109.4 พันล้านดอลลาร์ โต 16% ทำสถิติไตรมาสมิถุนายนสูงสุด",
+      "summary": "Apple รายงานรายได้ไตรมาส 3 ปีงบการเงิน 2026 ที่ 109.4 พันล้านดอลลาร์สหรัฐ เพิ่มขึ้น 16% จากปีก่อน กำไรสุทธิ 29.8 พันล้านดอลลาร์ กำไรต่อหุ้น (EPS) 2.02 ดอลลาร์ ทำสถิติไตรมาสมิถุนายนสูงสุดทุกกลุ่มผลิตภัณฑ์หลัก โดย iPhone ทำรายได้ 54.3 พันล้านดอลลาร์ โต 22% และ Services โต 12% แตะ 30.7 พันล้านดอลลาร์ CEO Tim Cook ระบุว่าเป็นไตรมาสมิถุนายนที่แข็งแกร่งที่สุดเท่าที่เคยมีมา",
+      "macro": false,
+      "sourceName": "9to5Mac",
+      "url": "https://9to5mac.com/2026/07/30/apple-reports-q3-2026-earnings-109-4-billion-in-revenue-up-16/",
+      "image": "",
+      "topic": "bigtech"
+    },
+    {
+      "id": "nw0006",
+      "date": "2026-07-30",
+      "title": "Amazon กำไรพุ่ง รายได้ทะลุ 200 พันล้านดอลลาร์ครั้งแรก AWS โต 37% เร็วสุดในรอบ 18 ไตรมาส",
+      "summary": "Amazon รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 200.6 พันล้านดอลลาร์ โต 20% จากปีก่อน ถือเป็นครั้งแรกที่รายได้รายไตรมาสทะลุ 200 พันล้านดอลลาร์ ธุรกิจคลาวด์ AWS โตถึง 37% เร็วที่สุดในรอบ 18 ไตรมาส รายได้ 42.2 พันล้านดอลลาร์ อัตรากำไรจากการดำเนินงาน 39.4% บริษัทปรับเพิ่มงบลงทุน (capex) ปี 2026 เป็นราว 220 พันล้านดอลลาร์เพื่อรองรับโครงสร้างพื้นฐาน AI หุ้น Amazon พุ่งกว่า 9% หลังตลาดปิด",
+      "macro": false,
+      "sourceName": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/amazon-q2-2026-earnings-aws-204411872.html",
+      "image": "",
+      "topic": "bigtech"
+    },
+    {
+      "id": "nw0007",
+      "date": "2026-07-29",
+      "title": "Microsoft ปิดปีงบ 2026 แกร่ง Azure โตทะลุ 100 พันล้านดอลลาร์เป็นครั้งแรก หุ้นเด้งแรงสุดในประวัติศาสตร์บริษัท",
+      "summary": "Microsoft รายงานรายได้ไตรมาส 4 ปีงบการเงิน 2026 ที่ 90 พันล้านดอลลาร์ โต 18% กำไรสุทธิ 35.8 พันล้านดอลลาร์ โต 31% รายได้ Azure และคลาวด์อื่นโต 43% ทำให้รายได้ Azure ทั้งปีทะลุ 100 พันล้านดอลลาร์เป็นครั้งแรก ผู้ใช้ Microsoft 365 Copilot แบบเสียเงินแตะ 30 ล้านที่นั่ง ผลประกอบการที่แข็งแกร่งกว่าคาดทำให้หุ้น Microsoft พุ่งขึ้น 15.5% ในวันเดียว แรงที่สุดในประวัติศาสตร์บริษัท และดึงหุ้นกลุ่มเซมิคอนดักเตอร์ให้ฟื้นตัวตาม",
+      "macro": false,
+      "sourceName": "Microsoft (Investor Relations)",
+      "url": "https://news.microsoft.com/source/2026/07/29/microsoft-cloud-and-ai-strength-fuels-fourth-quarter-results-4/",
+      "image": "",
+      "topic": "bigtech"
+    },
+    {
+      "id": "nw0008",
+      "date": "2026-07-29",
+      "title": "Meta รายได้โต 28% แตะ 60.8 พันล้านดอลลาร์ แต่กำไรลดจากค่าใช้จ่ายกฎหมายและเลิกจ้างพนักงาน 8,000 คน",
+      "summary": "Meta Platforms รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 60.8 พันล้านดอลลาร์ โต 28% จากแรงหนุนธุรกิจโฆษณา แต่กำไรสุทธิลดลง 14% เหลือ 15.8 พันล้านดอลลาร์ EPS 6.18 ดอลลาร์ ต่ำกว่าคาดที่ 7.22 ดอลลาร์ เพราะมีค่าใช้จ่ายพิเศษจากคดีความ 2.4 พันล้านดอลลาร์ และค่าชดเชยเลิกจ้างพนักงานราว 8,000 คนเมื่อพฤษภาคมอีก 1.18 พันล้านดอลลาร์ บริษัทปรับกรอบงบลงทุนปี 2026 เป็น 130-145 พันล้านดอลลาร์รองรับการลงทุน AI",
+      "macro": false,
+      "sourceName": "StockTitan",
+      "url": "https://www.stocktitan.net/news/META/meta-reports-second-quarter-2026-hkjfhayj8l0v.html",
+      "image": "",
+      "topic": "bigtech"
+    },
+    {
+      "id": "nw0009",
+      "date": "2026-07-30",
+      "title": "หุ้นกลุ่มเซมิคอนดักเตอร์เด้งแรง ดัชนี SOX พุ่ง 8.2% หลัง Microsoft การันตีกระแสเงินสดแกร่งถึงปี 2027",
+      "summary": "ดัชนี PHLX Semiconductor (SOX) ปรับตัวขึ้น 8.2% ยุติการร่วงต่อเนื่อง 5 วัน นำโดยหุ้น Applied Materials ที่พุ่งขึ้น 15% และ Micron Technology ที่พุ่งขึ้น 18.4% แรงหนุนหลักมาจากผลประกอบการแข็งแกร่งของ Microsoft ที่คาดว่าจะสร้างกระแสเงินสดต่อเนื่องถึงปี 2027 ช่วยคลายความกังวลเรื่องการลงทุนโครงสร้างพื้นฐาน AI ของบริษัทเทคโนโลยีรายใหญ่ที่กดดันหุ้นกลุ่มนี้หนักตลอดเดือนกรกฎาคม ดัชนี Dow, S&P 500 และ Nasdaq ปิดบวกพร้อมกันวันเดียวกัน",
+      "macro": false,
+      "sourceName": "The Globe and Mail",
+      "url": "https://www.theglobeandmail.com/investing/markets/stocks/MSFT/pressreleases/3578225/stock-market-news-for-july-31-2026/",
+      "image": "",
+      "topic": "chips"
+    },
+    {
+      "id": "nw0010",
+      "date": "2026-07-31",
+      "title": "Bitcoin ร่วงหลุด 63,000 ดอลลาร์ หุ้น Coinbase ทรุด 10% หลังกำไรพลาดคาด",
+      "summary": "ราคา Bitcoin ปรับตัวลง 2.9% เหลือราว 62,929 ดอลลาร์ หลุดระดับ 63,000 ดอลลาร์ กดดันจากกรรมการเฟด 3 คนที่โหวตต้องการขึ้นดอกเบี้ย ผลประกอบการน่าผิดหวังของ Coinbase ที่หุ้นทรุดกว่า 10% จากปริมาณซื้อขายคริปโทที่ซบเซา และความหวังริบหรี่ลงว่ากฎหมาย Clarity Act จะผ่านสภาทันฤดูร้อนนี้ อย่างไรก็ตาม Bitcoin ยังปิดเดือนกรกฎาคมด้วยผลตอบแทนบวกราว 4.3% ดีกว่าดัชนี Nasdaq ที่ติดลบ 3.2% ในช่วงเวลาเดียวกัน",
+      "macro": false,
+      "sourceName": "The Motley Fool",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/07/31/crypto-market-today-july-31-bitcoin-slides-below-usd63-000-and-coinbase-tumbles-10/",
+      "image": "",
+      "topic": ""
+    }
+  ],
   "portfolioReviews": [],
   "earningsReviews": [
 {
@@ -1219,4 +1330,4 @@ window.INVESTMENT_DATA = {
     }
   ]
 };
-window.INVESTMENT_UPDATED = "31/07/2026";
+window.INVESTMENT_UPDATED = "01/08/2026";
