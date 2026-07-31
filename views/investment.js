@@ -430,20 +430,19 @@ window.InvestmentView = (function () {
   }
   function transcriptBox(t) {
     if (!t || (!t.text && !(t.segments && t.segments.length))) return '';
-    const summary = t.summaryTh ? `<div class="inv-summary">${esc(t.summaryTh)}</div>` : '';
     if (t.segments && t.segments.length) {
       const highlights = t.segments.filter(s => s.highlight);
       const highlightBlock = highlights.length ? `
         <div class="inv-xcpt-hl-label">Highlights</div>
         <div class="inv-xcpt-body">${highlights.map(xcptSegMarkup).join('')}</div>` : '';
       const body = t.segments.map(xcptSegMarkup).join('');
-      return `${summary}${highlightBlock}
+      return `${highlightBlock}
         <details class="inv-xcpt">
           <summary>Read full call transcript</summary>
           <div class="inv-xcpt-body">${body}</div>
         </details>`;
     }
-    return `${summary}
+    return `
       <details class="inv-xcpt">
         <summary>Read full call excerpt (English)</summary>
         <div class="inv-xcpt-en">${esc(t.text)}</div>
