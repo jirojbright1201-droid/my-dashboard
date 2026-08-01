@@ -136,6 +136,17 @@ window.INVESTMENT_DATA = {
       "url": "https://www.aljazeera.com/news/2026/8/1/iran-warns-against-fire-of-war-amid-us-strike-threats-on-energy-sites",
       "image": "",
       "topic": ""
+    },
+    {
+      "id": "nw0013",
+      "date": "2026-08-01",
+      "title": "Berkshire Hathaway เงินสดทะลุ 400,000 ล้านดอลลาร์ ขายหุ้นสุทธิต่อเนื่อง 3 ปี Buffett Indicator พุ่งสูงกว่ายุค dot-com",
+      "summary": "Berkshire Hathaway ของ Warren Buffett ถือเงินสดสะสมใกล้แตะ 400,000 ล้านดอลลาร์ และเป็นผู้ขายหุ้นสุทธิ (net seller) ต่อเนื่องมากว่า 3 ปี ขณะที่ \"Buffett Indicator\" (สัดส่วนมูลค่าตลาดหุ้นรวมต่อ GDP ที่ Buffett ใช้วัดความแพง-ถูกของตลาด) พุ่งแตะระดับสูงสุดเป็นประวัติการณ์ที่ 230% สูงกว่าช่วงฟองสบู่ dot-com ปี 2000 ที่เคยขึ้นไปราว 140% บทวิเคราะห์ชี้ว่า Berkshire เคยสะสมเงินสดลักษณะนี้ก่อนวิกฤต dot-com และปี 2008 มาแล้ว แต่ก็เตือนว่าตลาดอาจอยู่ในภาวะตีราคาแพงเกินจริงได้นานหลายปีก่อนจะปรับฐาน",
+      "macro": true,
+      "sourceName": "The Motley Fool",
+      "url": "https://www.fool.com/investing/2026/08/01/warren-buffetts-berkshire-hathaway-is-sounding-a-w/",
+      "image": "",
+      "topic": "market"
     }
   ],
   "portfolioReviews": [],
