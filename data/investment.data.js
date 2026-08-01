@@ -125,6 +125,17 @@ window.INVESTMENT_DATA = {
       "url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1208/exxonmobil-announces-second-quarter-2026-results",
       "image": "",
       "topic": "oil"
+    },
+    {
+      "id": "nw0012",
+      "date": "2026-08-01",
+      "title": "อิหร่านเตือน \"เปลวไฟสงคราม\" เต็มรูปแบบ หลังสหรัฐฯ-อิสราเอลขู่ถล่มโครงสร้างพลังงานอิหร่าน",
+      "summary": "นายพล Ali Abdollahi ผู้บัญชาการภาวะสงครามของอิหร่าน เตือนว่าสหรัฐฯ กำลังเร่งให้เกิดสงครามระดับภูมิภาคเต็มรูปแบบ หลังมีรายงานว่าสหรัฐฯ และอิสราเอลกำลังพิจารณาโจมตีโครงสร้างพื้นฐานพลังงานของอิหร่าน (โรงไฟฟ้า โรงงานปิโตรเคมี) ประธานาธิบดี Trump ยังไม่อนุมัติปฏิบัติการเพราะกังวลผลกระทบต่อราคาน้ำมันโลก ขณะที่กระทรวงต่างประเทศสหรัฐฯ ออกประกาศเตือนพลเมืองในตะวันออกกลางให้พิจารณาเดินทางออกจากพื้นที่",
+      "macro": true,
+      "sourceName": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/8/1/iran-warns-against-fire-of-war-amid-us-strike-threats-on-energy-sites",
+      "image": "",
+      "topic": ""
     }
   ],
   "portfolioReviews": [],
