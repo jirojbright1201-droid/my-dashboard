@@ -114,6 +114,17 @@ window.INVESTMENT_DATA = {
       "url": "https://www.fool.com/coverage/stock-market-today/2026/07/31/crypto-market-today-july-31-bitcoin-slides-below-usd63-000-and-coinbase-tumbles-10/",
       "image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fcdn.content.foolcdn.com%2Fimages%2F1umn9qeh%2Fproduction%2Ffba1f8637ee52b475744b372db2dad28ef4043f2-200x200.png%3Fw%3D800%26q%3D75%26fit%3Dmax%26auto%3Dformat&w=1200&op=resize",
       "topic": ""
+    },
+    {
+      "id": "nw0011",
+      "date": "2026-07-31",
+      "title": "Exxon และ Chevron กำไรพุ่งทำสถิติจากราคาน้ำมันที่พุ่งสูงในสงครามอิหร่าน — Chevron กำไรโต 384%",
+      "summary": "ExxonMobil รายงานกำไรไตรมาส 2 ปี 2026 ที่ 14.5 พันล้านดอลลาร์ แข็งแกร่งสุดนับตั้งแต่ปี 2022 ขณะที่ Chevron ทำสถิติกำไรไตรมาสสูงสุดที่ 12.1 พันล้านดอลลาร์ โต 384% จากปีก่อน ทั้งสองบริษัทได้แรงหนุนจากราคาน้ำมันที่พุ่งขึ้นจากความขัดแย้งอิหร่าน-สหรัฐฯ กำไรพิเศษด้าน refining margin ที่ดีขึ้น และปริมาณการผลิตที่เพิ่มขึ้น (Chevron โต 20% หลังผนวกสินทรัพย์ Hess)",
+      "macro": false,
+      "sourceName": "Yahoo Finance / ExxonMobil Investor Relations",
+      "url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1208/exxonmobil-announces-second-quarter-2026-results",
+      "image": "",
+      "topic": "oil"
     }
   ],
   "portfolioReviews": [],
@@ -1330,4 +1341,4 @@ window.INVESTMENT_DATA = {
     }
   ]
 };
-window.INVESTMENT_UPDATED = "01/08/2026";
+window.INVESTMENT_UPDATED = "02/08/2026";
