@@ -13,7 +13,7 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Al Jazeera",
       "url": "https://www.aljazeera.com/economy/2026/7/29/us-fed-holds-interest-rates-steady-citing-elevated-inflation",
-      "image": "",
+      "image": "https://www.aljazeera.com/wp-content/uploads/2026/07/reuters_6a6a2dbd-1785343421.jpg?resize=1920%2C1440",
       "topic": "fed"
     },
     {
@@ -24,7 +24,7 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Al Jazeera",
       "url": "https://www.aljazeera.com/news/2026/7/31/irgc-strikes-us-targets-in-kuwait-a-day-after-us-hits-iran-latest-events",
-      "image": "",
+      "image": "https://www.aljazeera.com/wp-content/uploads/2026/07/afp_6a6c41bacc49-1785479610.jpg?resize=1920%2C1440",
       "topic": ""
     },
     {
@@ -35,7 +35,7 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "Global Banking & Finance Review (Reuters poll)",
       "url": "https://www.globalbankingandfinance.com/oil-prices-seen-gaining-middle-east-supply-disruptions/",
-      "image": "",
+      "image": "https://www.globalbankingandfinance.com/i/cloud-b6fca51f-9370-4604-93cd-d87c9f8a6ea2/width=1200,height=630,quality=80,format=auto,fit=cover/",
       "topic": "oil"
     },
     {
@@ -46,7 +46,7 @@ window.INVESTMENT_DATA = {
       "macro": true,
       "sourceName": "South China Morning Post",
       "url": "https://www.scmp.com/economy/economic-indicators/article/3362490/chinas-manufacturing-sector-falters-july-growth-momentum-cools",
-      "image": "",
+      "image": "https://cdn.i-scmp.com/sites/default/files/styles/og_image_scmp_generic/public/d8/images/canvas/2026/07/31/3e953a73-3d95-4aee-8566-6547a2263bd3_b8b80665.jpg",
       "topic": "china"
     },
     {
@@ -68,7 +68,7 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/amazon-q2-2026-earnings-aws-204411872.html",
-      "image": "",
+      "image": "https://s.yimg.com/lo/mysterio/api/AAAA4248C0F3929BD1B194F1705516B5CC2CC0E9CB1C7FE3E2418F5F6AB003D4/subgraphmysterio/resizefill_w1200_h675;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fquartz_855%2Fc3bc78077848bbb4b997a3f0b55d04bd",
       "topic": "bigtech"
     },
     {
@@ -112,7 +112,7 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "The Motley Fool",
       "url": "https://www.fool.com/coverage/stock-market-today/2026/07/31/crypto-market-today-july-31-bitcoin-slides-below-usd63-000-and-coinbase-tumbles-10/",
-      "image": "",
+      "image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fcdn.content.foolcdn.com%2Fimages%2F1umn9qeh%2Fproduction%2Ffba1f8637ee52b475744b372db2dad28ef4043f2-200x200.png%3Fw%3D800%26q%3D75%26fit%3Dmax%26auto%3Dformat&w=1200&op=resize",
       "topic": ""
     }
   ],
