@@ -57,7 +57,7 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "9to5Mac",
       "url": "https://9to5mac.com/2026/07/30/apple-reports-q3-2026-earnings-109-4-billion-in-revenue-up-16/",
-      "image": "",
+      "image": "https://tidbits.com/uploads/2026/07/Q3-2026-iPhone-revenue.png",
       "topic": "bigtech"
     },
     {
@@ -79,7 +79,7 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "Microsoft (Investor Relations)",
       "url": "https://news.microsoft.com/source/2026/07/29/microsoft-cloud-and-ai-strength-fuels-fourth-quarter-results-4/",
-      "image": "",
+      "image": "https://brandclickx.com/wp-content/uploads/2026/07/Microsoft-Profit-Jumps-31-as-Azure-Passes-100-Billion.webp",
       "topic": "bigtech"
     },
     {
@@ -90,7 +90,7 @@ window.INVESTMENT_DATA = {
       "macro": false,
       "sourceName": "StockTitan",
       "url": "https://www.stocktitan.net/news/META/meta-reports-second-quarter-2026-hkjfhayj8l0v.html",
-      "image": "",
+      "image": "https://variety.com/wp-content/uploads/2026/07/Mark-Zuckerberg.png?w=1000&h=563&crop=1",
       "topic": "bigtech"
     },
     {
@@ -99,9 +99,9 @@ window.INVESTMENT_DATA = {
       "title": "หุ้นกลุ่มเซมิคอนดักเตอร์เด้งแรง ดัชนี SOX พุ่ง 8.2% หลัง Microsoft การันตีกระแสเงินสดแกร่งถึงปี 2027",
       "summary": "ดัชนี PHLX Semiconductor (SOX) ปรับตัวขึ้น 8.2% ยุติการร่วงต่อเนื่อง 5 วัน นำโดยหุ้น Applied Materials ที่พุ่งขึ้น 15% และ Micron Technology ที่พุ่งขึ้น 18.4% แรงหนุนหลักมาจากผลประกอบการแข็งแกร่งของ Microsoft ที่คาดว่าจะสร้างกระแสเงินสดต่อเนื่องถึงปี 2027 ช่วยคลายความกังวลเรื่องการลงทุนโครงสร้างพื้นฐาน AI ของบริษัทเทคโนโลยีรายใหญ่ที่กดดันหุ้นกลุ่มนี้หนักตลอดเดือนกรกฎาคม ดัชนี Dow, S&P 500 และ Nasdaq ปิดบวกพร้อมกันวันเดียวกัน",
       "macro": false,
-      "sourceName": "The Globe and Mail",
-      "url": "https://www.theglobeandmail.com/investing/markets/stocks/MSFT/pressreleases/3578225/stock-market-news-for-july-31-2026/",
-      "image": "",
+      "sourceName": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-rally-stellar-microsoft-earnings-152140326.html",
+      "image": "https://s.yimg.com/lo/mysterio/api/49A06B72371880A5B63047AD8D5C2FBA64152D859A2A334724206A9D9113B090/subgraphmysterio/resizefill_w1200_h801;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fbarchart_com_477%2F9a1ff5003151ccd77c6a21a4e3c76ded",
       "topic": "chips"
     },
     {
