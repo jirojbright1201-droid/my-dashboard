@@ -4,8 +4,6 @@
 //   monthly = ตั้งใจเก็บเดือนละเท่าไร → ใช้คำนวณ "อีกกี่เดือนถึงเป้า" (0 = ไม่คำนวณ)
 window.SAVINGS_DATA = {
   "currency": "฿",
-  "jars": [
-    { "id": "emergency", "name": "กองทุนฉุกเฉิน", "goal": 30000, "saved": 1000, "monthly": 1000, "note": "" }
-  ]
+  "jars": []
 };
-window.SAVINGS_UPDATED = "30/06/2026";
+window.SAVINGS_UPDATED = "03/08/2026";
