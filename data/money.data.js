@@ -5,7 +5,7 @@ window.MONEY_DATA = {
   "2026-08": {
     "budget": {},
     "income": [
-      { "date": "2026-08-01", "amount": 14679, "source": "Salary", "name": "Salary", "name_th": "เงินเดือน", "notes": "" },
+      { "date": "2026-08-01", "amount": 11679, "source": "Salary", "name": "Salary", "name_th": "เงินเดือน", "notes": "" },
       { "date": "2026-08-01", "amount": 3000, "source": "Other", "name": "Transfer from family", "name_th": "รับโอนจากครอบครัว", "notes": "" }
     ],
     "expenses": [
