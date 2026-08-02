@@ -29,7 +29,7 @@ window.MONEY_DATA = {
       { "date": "2026-08-01", "amount": 60, "category": "Restaurant", "name": "Grilled pork with sticky rice", "name_th": "ข้าวเหนียวหมูปิ้ง", "notes": "" },
       { "date": "2026-08-01", "amount": 50, "category": "Restaurant", "name": "Fried sausage", "name_th": "ไส้กรอกทอด", "notes": "" },
       { "date": "2026-08-02", "amount": 40, "category": "Transport", "name": "Grab (return missed order)", "name_th": "Grab ส่งคืน Order ผิด", "notes": "" },
-      { "date": "2026-08-02", "amount": 80, "category": "Shopping", "name": "Hot water laundry 14kg", "name_th": "ซักผ้าน้ำร้อน 14 Kg", "notes": "" },
+      { "date": "2026-08-02", "amount": 80, "category": "Laundry", "name": "Hot water laundry 14kg", "name_th": "ซักผ้าน้ำร้อน 14 Kg", "notes": "" },
       { "date": "2026-08-02", "amount": 70, "category": "Restaurant", "name": "Five Star grilled chicken", "name_th": "ไก่ย่างห้าดาว", "notes": "" },
       { "date": "2026-08-02", "amount": 132, "category": "Entertainment", "name": "Blood Strike top-up", "name_th": "เติมเกม Blood Strike", "notes": "" },
       { "date": "2026-08-03", "amount": 2800, "category": "Rent", "name": "Room deposit", "name_th": "ค่ามัดจำห้อง", "notes": "" },
