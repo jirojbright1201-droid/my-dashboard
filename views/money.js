@@ -10,41 +10,43 @@ window.MoneyView = (function () {
   const THMONTH = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const monthLabel = k => { const [y, m] = k.split('-').map(Number); return `${THMONTH[m - 1]} ${y}`; };
 
-  // ── line-icon set (สไตล์เดียวกับ Planner) ──
+  // ── outline icon set (tab bar / chevron / insight / bill alert) ──
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+  // ── filled icon set (category/source tiles — real paths, Material Design Icons, MIT, via cdn.jsdelivr.net/npm/@mdi/svg) ──
+  const svgFill = p => `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none">${p}</svg>`;
   const CAT_ICON = {
-    Restaurant:    S('<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>'),
-    Family:        S('<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
-    Subscriptions: S('<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>'),
-    Rent:          S('<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
-    Investment:    S('<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>'),
-    Shopping:      S('<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>'),
-    Books:         S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>'),
-    Transport:     S('<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>'),
-    Beauty:        S('<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>'),
-    Entertainment: S('<path d="M18 8a2 2 0 0 0 0-4 2.5 2.5 0 0 0-4.5-2 2 2 0 0 0-3.5 2.5A2 2 0 0 0 6 8"/><path d="M6 8a2 2 0 0 0-2 2 2 2 0 0 0 2 2"/><path d="M18 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2"/><path d="M6.5 12h11l-.9 9.1a2 2 0 0 1-2 1.9H9.4a2 2 0 0 1-2-1.9z"/><path d="M12 6v14"/><path d="M9 12v9"/><path d="M15 12v9"/>'),
-    Study:         S('<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/>'),
-    'Emergency Fund': S('<path d="M19 5c-1.5-1.5-3.5-2-5.5-2-4.5 0-8 3.5-8 8v.5c0 1.6.6 3.1 1.7 4.3L6 18v3h3l1-1c.7.2 1.5.3 2.3.3H14c4.5 0 8-3.5 8-8V9l1-1V6z"/><path d="M2 9v3"/><circle cx="16" cy="11" r="1"/>'),
-    default:       S('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>')
+    Restaurant:    '<path d="M11,9H9V2H7V9H5V2H3V9C3,11.12 4.66,12.84 6.75,12.97V22H9.25V12.97C11.34,12.84 13,11.12 13,9V2H11V9M16,6V14H18.5V22H21V2C18.24,2 16,4.24 16,6Z"/>',
+    Family:        '<path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/>',
+    Subscriptions: '<path d="M21 9V6H7V9H21M21 3A2 2 0 0 1 23 5V15A2 2 0 0 1 21 17H7A2 2 0 0 1 5 15V5A2 2 0 0 1 7 3H21M3 19H18V21H3A2 2 0 0 1 1 19V8H3Z"/>',
+    Rent:          '<path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>',
+    Investment:    '<path d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z"/>',
+    Shopping:      '<path d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"/>',
+    Books:         '<path d="M12 21.5C10.65 20.65 8.2 20 6.5 20C4.85 20 3.15 20.3 1.75 21.05C1.65 21.1 1.6 21.1 1.5 21.1C1.25 21.1 1 20.85 1 20.6V6C1.6 5.55 2.25 5.25 3 5C4.11 4.65 5.33 4.5 6.5 4.5C8.45 4.5 10.55 4.9 12 6C13.45 4.9 15.55 4.5 17.5 4.5C18.67 4.5 19.89 4.65 21 5C21.75 5.25 22.4 5.55 23 6V20.6C23 20.85 22.75 21.1 22.5 21.1C22.4 21.1 22.35 21.1 22.25 21.05C20.85 20.3 19.15 20 17.5 20C15.8 20 13.35 20.65 12 21.5M12 8V19.5C13.35 18.65 15.8 18 17.5 18C18.7 18 19.9 18.15 21 18.5V7C19.9 6.65 18.7 6.5 17.5 6.5C15.8 6.5 13.35 7.15 12 8Z"/>',
+    Transport:     '<path d="M5,11L6.5,6.5H17.5L19,11M17.5,16A1.5,1.5 0 0,1 16,14.5A1.5,1.5 0 0,1 17.5,13A1.5,1.5 0 0,1 19,14.5A1.5,1.5 0 0,1 17.5,16M6.5,16A1.5,1.5 0 0,1 5,14.5A1.5,1.5 0 0,1 6.5,13A1.5,1.5 0 0,1 8,14.5A1.5,1.5 0 0,1 6.5,16M18.92,6C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6L3,12V20A1,1 0 0,0 4,21H5A1,1 0 0,0 6,20V19H18V20A1,1 0 0,0 19,21H20A1,1 0 0,0 21,20V12L18.92,6Z"/>',
+    Beauty:        '<path d="M15.5,9.63C15.31,6.84 14.18,4.12 12.06,2C9.92,4.14 8.74,6.86 8.5,9.63C9.79,10.31 10.97,11.19 12,12.26C13.03,11.2 14.21,10.32 15.5,9.63M12,15.45C9.85,12.17 6.18,10 2,10C2,20 11.32,21.89 12,22C12.68,21.88 22,20 22,10C17.82,10 14.15,12.17 12,15.45Z"/>',
+    Entertainment: '<path d="M15.58,16.8L12,14.5L8.42,16.8L9.5,12.68L6.21,10L10.46,9.74L12,5.8L13.54,9.74L17.79,10L14.5,12.68M20,12C20,10.89 20.9,10 22,10V6C22,4.89 21.1,4 20,4H4A2,2 0 0,0 2,6V10C3.11,10 4,10.9 4,12A2,2 0 0,1 2,14V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V14A2,2 0 0,1 20,12Z"/>',
+    Study:         '<path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/>',
+    'Emergency Fund': '<path d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M13 9H8V7H13V9M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"/>',
+    default:       '<path d="M21,18V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V6H12C10.89,6 10,6.9 10,8V16A2,2 0 0,0 12,18M12,16H22V8H12M16,13.5A1.5,1.5 0 0,1 14.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,12A1.5,1.5 0 0,1 16,13.5Z"/>'
   };
   const SRC_ICON = {
-    Salary: S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
-    Other:  S('<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12"/><path d="M12 8C9.5 8 8.5 4.5 10.2 4.5S12 8 12 8s.1-3.5 1.8-3.5S14.5 8 12 8z"/>')
+    Salary: '<path d="M10,2H14A2,2 0 0,1 16,4V6H20A2,2 0 0,1 22,8V19A2,2 0 0,1 20,21H4C2.89,21 2,20.1 2,19V8C2,6.89 2.89,6 4,6H8V4C8,2.89 8.89,2 10,2M14,6V4H10V6H14Z"/>',
+    Other:  '<path d="M9.06,1.93C7.17,1.92 5.33,3.74 6.17,6H3A2,2 0 0,0 1,8V10A1,1 0 0,0 2,11H11V8H13V11H22A1,1 0 0,0 23,10V8A2,2 0 0,0 21,6H17.83C19,2.73 14.6,0.42 12.57,3.24L12,4L11.43,3.22C10.8,2.33 9.93,1.94 9.06,1.93M9,4C9.89,4 10.34,5.08 9.71,5.71C9.08,6.34 8,5.89 8,5A1,1 0 0,1 9,4M15,4C15.89,4 16.34,5.08 15.71,5.71C15.08,6.34 14,5.89 14,5A1,1 0 0,1 15,4M2,12V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V12H13V20H11V12H2Z"/>'
   };
-  // ไล่เฉด coral แบบ gradient (เข้ม → อ่อน) ตามจำนวนหมวด
+  // ไล่เฉด accent blue (เข้ม → อ่อน) ตามจำนวนหมวด — โดนัทเป็นกราฟสัดส่วนจริง ยังคงไล่เฉดได้ต่างจากลิสต์ธรรมดา
   const _lerp = (a, b, t) => Math.round(a + (b - a) * t);
   const _hx = n => n.toString(16).padStart(2, '0');
   function ramp(n) {
-    const c1 = [0xb0, 0x53, 0x39], c2 = [0xf0, 0xcb, 0xb3]; // terracotta เข้ม → พีชอ่อน
-    if (n <= 1) return ['#cc785c'];
+    const c1 = [0x00, 0x22, 0x7a], c2 = [0x93, 0xb3, 0xf2]; // navy เข้ม → ฟ้าอ่อน
+    if (n <= 1) return ['#0052ff'];
     return Array.from({ length: n }, (_, i) => {
       const t = i / (n - 1);
       return '#' + _hx(_lerp(c1[0], c2[0], t)) + _hx(_lerp(c1[1], c2[1], t)) + _hx(_lerp(c1[2], c2[2], t));
     });
   }
-  const catSvg = c => CAT_ICON[c] || CAT_ICON.default;
+  const catSvg = c => svgFill(CAT_ICON[c] || CAT_ICON.default);
   const catTile = c => `<div class="mny-tile">${catSvg(c)}</div>`;
-  const srcTile = s => `<div class="mny-tile">${SRC_ICON[s] || SRC_ICON.Other}</div>`;
+  const srcTile = s => `<div class="mny-tile">${svgFill(SRC_ICON[s] || SRC_ICON.Other)}</div>`;
 
   // ── state ──
   let root, monthIdx = 0, activeTab = 'overview', txKind = 'expense';
@@ -63,6 +65,23 @@ window.MoneyView = (function () {
     <div id="mny-tx" class="mny-pane"></div>
     <div id="mny-subs" class="mny-pane"></div>
     <div id="mny-savings" class="mny-pane"></div>
+
+    <div id="mnyBudgetPage" class="mny-budgetpage">
+      <div class="mny-bp-glow"></div>
+      <div class="mny-bp-head">
+        <button class="mny-bp-back" id="mnyBudgetBack" aria-label="Back">${S('<path d="M15 19l-7-7 7-7"/>')}</button>
+        <div class="mny-bp-title">Budget breakdown</div>
+      </div>
+      <div class="mny-bp-body">
+        <div class="mny-bp-stats" id="mnyBpStats"></div>
+        <div class="mny-bp-barrow">
+          <div class="mny-bp-bar"><i id="mnyBpBar" style="width:0%"></i></div>
+          <span class="mny-bp-barpct" id="mnyBpBarPct"></span>
+        </div>
+        <div class="mny-budget" id="mnyBudgetFullList"></div>
+      </div>
+    </div>
+
     <nav class="tabbar">
       <button class="mny-tab tab-item active" data-tab="overview">${S('<path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/>')}<span>Overview</span></button>
       <button class="mny-tab tab-item" data-tab="tx">${S('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>')}<span>Activity</span></button>
@@ -97,6 +116,36 @@ window.MoneyView = (function () {
     return `conic-gradient(${stops.join(',')})`;
   }
 
+  // เดือนที่เลือก: อดีต/ปัจจุบัน/อนาคต + จำนวนวันในเดือน (ใช้ทั้ง insight และ perDay)
+  function monthMeta(mkey) {
+    const [my, mm] = mkey.split('-').map(Number);
+    const now = new Date();
+    const dim = new Date(my, mm, 0).getDate();
+    const isPast = my < now.getFullYear() || (my === now.getFullYear() && mm < now.getMonth() + 1);
+    const isFuture = my > now.getFullYear() || (my === now.getFullYear() && mm > now.getMonth() + 1);
+    return { my, mm, dim, isPast, isFuture, now };
+  }
+
+  // insight การ์ด — เทียบ pace การใช้เงินจริงเทียบกับงบเฉลี่ยต่อวัน (ไม่ใช่ % คงเหลือแบบเดิมที่โดน cap ที่ 100%)
+  function computeInsight(mkey, totalOut, totalBudget) {
+    if (totalBudget <= 0) return null;
+    const { dim, isPast, isFuture, now } = monthMeta(mkey);
+    const daysElapsed = isPast ? dim : (isFuture ? 0 : now.getDate());
+    if (daysElapsed <= 0) return null;
+    const avgDaily = totalOut / daysElapsed;
+    const budgetDaily = totalBudget / dim;
+    if (budgetDaily <= 0) return null;
+    const overPct = Math.round((avgDaily / budgetDaily - 1) * 100);
+    const good = avgDaily <= budgetDaily * 1.02;
+    return {
+      good,
+      title: good ? 'เดือนนี้คุมได้ดี' : 'เดือนนี้ใช้เกินจังหวะ',
+      avgDaily: Math.round(avgDaily),
+      budgetDaily: Math.round(budgetDaily),
+      tail: good ? 'ยังคุมอยู่' : `เกินจังหวะที่วางไว้ ${overPct}%`
+    };
+  }
+
   function renderOverview() {
     const d = cur();
     const income = d.income || [], expenses = d.expenses || [], budget = d.budget || {};
@@ -107,12 +156,10 @@ window.MoneyView = (function () {
 
     // เหลือใช้ต่อวัน — งบที่ยังไม่ใช้ ÷ วันที่เหลือในเดือนที่เลือก
     const mkey = KEYS[monthIdx] || '';
-    const [my, mm] = mkey.split('-').map(Number);
-    const now = new Date();
-    const dim = new Date(my, mm, 0).getDate();
+    const { dim, isFuture, now } = monthMeta(mkey);
     let daysLeft = 0;
-    if (my === now.getFullYear() && mm === now.getMonth() + 1) daysLeft = dim - now.getDate() + 1;
-    else if (my > now.getFullYear() || (my === now.getFullYear() && mm > now.getMonth() + 1)) daysLeft = dim;
+    if (!isFuture) { const [, mm2] = mkey.split('-').map(Number); if (mm2 === now.getMonth() + 1) daysLeft = dim - now.getDate() + 1; }
+    else daysLeft = dim;
     const perDay = (totalBudget > 0 && daysLeft > 0) ? Math.max(0, Math.floor((totalBudget - totalOut) / daysLeft)) : null;
 
     // donut — รวมหมวดเล็กเป็น "อื่นๆ"
@@ -129,28 +176,16 @@ window.MoneyView = (function () {
       <span class="mny-leg-val">${fmtMoney(val)} · ${totalOut ? Math.round(val / totalOut * 100) : 0}%</span>
     </div>`).join('');
 
-    // budget rows (เรียงงบมาก→น้อย)
-    // ฿ ในฟอนต์ปกติ (sans) เลขใน mono — กันบาทชนเลขบน JetBrains
-    const bAmt = n => `<span class="bt">฿</span>${Number(n || 0).toLocaleString('en-US')}`;
-    const RC = 20, RCIRC = 2 * Math.PI * RC; // ring radius/circumference
-    const brows = Object.entries(budget).sort((a, b) => b[1] - a[1]).map(([cat, alloc]) => {
-      const spent = sc[cat] || 0;
-      const pct = alloc > 0 ? Math.min(100, Math.round(spent / alloc * 100)) : (spent > 0 ? 100 : 0);
-      const over = spent > alloc;
-      const off = RCIRC * (1 - pct / 100);
-      return `<div class="mny-brow${over ? ' over' : ''}" data-cat="${esc(cat)}">
-        ${catTile(cat)}
-        <div class="mny-brow-body">
-          <div class="mny-brow-name">${esc(cat)}</div>
-          <div class="mny-brow-amt"><b>${bAmt(spent)}</b><span class="of">/ ${bAmt(alloc)}</span></div>
-          <div class="mny-brow-sub">${over ? 'Over ' + bAmt(spent - alloc) : 'Left ' + bAmt(alloc - spent)}</div>
+    const insight = computeInsight(mkey, totalOut, totalBudget);
+    const insightIcon = insight ? S(insight.good ? '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>' : '<path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/>') : '';
+    const insightHtml = insight ? `
+      <div class="mny-insight">
+        <div class="mny-insight-ic ${insight.good ? 'pos' : 'neg'}">${insightIcon}</div>
+        <div class="mny-insight-body">
+          <div class="mny-insight-title">${insight.title}</div>
+          <div class="mny-insight-sub">เฉลี่ยใช้วันละ <b class="${insight.good ? 'pos' : 'neg'}">${fmtMoney(insight.avgDaily)}</b> จากงบที่ตั้งไว้วันละ ${fmtMoney(insight.budgetDaily)} — ${insight.tail}</div>
         </div>
-        <div class="mny-ring"><svg viewBox="0 0 46 46">
-          <circle cx="23" cy="23" r="${RC}" fill="none" stroke="var(--surface-3)" stroke-width="4"/>
-          <circle cx="23" cy="23" r="${RC}" fill="none" stroke="${over ? 'var(--red)' : 'var(--accent)'}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${RCIRC.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 23 23)"/>
-        </svg><span class="mny-ring-lbl">${pct}%</span></div>
-      </div>`;
-    }).join('');
+      </div>` : '';
 
     $('mny-overview').innerHTML = `
       <div class="hero mny-hero">
@@ -164,22 +199,72 @@ window.MoneyView = (function () {
         </div>
       </div>
 
-      <div class="card">
-        <div class="section-title">Spending breakdown</div>
+      ${insightHtml}
+
+      <div class="card mny-donutcard" id="mnyOpenBudget">
+        <div class="section-title mny-donutcard-head"><span>Spending breakdown</span>${S('<path d="M9 6l6 6-6 6"/>')}</div>
         <div class="mny-donut-wrap">
           <div class="mny-donut" style="background:${donutCSS(pairs, totalOut, cols)}">
             <div class="mny-donut-hole"><span>${fmtMoney(totalOut)}</span><small>Spent</small></div>
           </div>
           <div class="mny-legend">${legend || '<div class="empty">No expenses</div>'}</div>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title">Budget by category · tap to view</div>
-        <div class="mny-budget">${brows}</div>
       </div>`;
     if (window.UIFX) window.UIFX.countAll($('mny-overview'));
+    renderBudgetPage();
   }
+
+  // ── Budget breakdown — หน้าเต็มจอ เปิดจากการแตะ donut card ──
+  function renderBudgetPage() {
+    const d = cur();
+    const expenses = d.expenses || [], budget = d.budget || {};
+    const sc = spentByCat(expenses);
+    const totalBudget = Object.values(budget).reduce((s, v) => s + v, 0);
+    const totalOut = expenses.reduce((s, e) => s + e.amount, 0);
+    const totalLeft = totalBudget - totalOut;
+    const pctUsed = totalBudget > 0 ? Math.round(totalOut / totalBudget * 100) : 0;
+
+    $('mnyBpStats').innerHTML = `
+      <div class="mny-bp-stat"><div class="lab">Budget</div><div class="val">${fmtMoney(totalBudget)}</div></div>
+      <div class="mny-bp-stat"><div class="lab">Spent</div><div class="val">${fmtMoney(totalOut)}</div></div>
+      <div class="mny-bp-stat"><div class="lab">Left</div><div class="val${totalLeft >= 0 ? ' pos' : ''}">${fmtMoney(totalLeft)}</div></div>`;
+    $('mnyBpBar').style.width = Math.min(100, pctUsed) + '%';
+    $('mnyBpBarPct').textContent = pctUsed + '%';
+
+    const bAmt = n => `<span class="bt">฿</span>${Number(n || 0).toLocaleString('en-US')}`;
+    const RC = 20, RCIRC = 2 * Math.PI * RC;
+    const rowFull = ([cat, alloc]) => {
+      const spent = sc[cat] || 0;
+      const over = spent > alloc;
+      const pct = alloc > 0 ? Math.min(100, Math.round(spent / alloc * 100)) : (spent > 0 ? 100 : 0);
+      const off = RCIRC * (1 - pct / 100);
+      const overPct = over ? Math.round((spent / alloc - 1) * 100) : 0;
+      const endSlot = over
+        ? `<div class="mny-over-badge">+${overPct}%</div>`
+        : `<div class="mny-ring"><svg viewBox="0 0 46 46">
+            <circle cx="23" cy="23" r="${RC}" fill="none" stroke="var(--surface-3)" stroke-width="4"/>
+            <circle cx="23" cy="23" r="${RC}" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${RCIRC.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 23 23)"/>
+          </svg><span class="mny-ring-lbl">${pct}%</span></div>`;
+      return `<div class="mny-brow${over ? ' over' : ''}" data-cat="${esc(cat)}">
+        ${catTile(cat)}
+        <div class="mny-brow-body">
+          <div class="mny-brow-name">${esc(cat)}</div>
+          <div class="mny-brow-amt"><b>${bAmt(spent)}</b><span class="of">/ ${bAmt(alloc)}</span></div>
+          <div class="mny-brow-sub">${over ? 'Over ' + bAmt(spent - alloc) : 'Left ' + bAmt(alloc - spent)}</div>
+        </div>
+        ${endSlot}
+      </div>`;
+    };
+    const sorted = Object.entries(budget).sort((a, b) => b[1] - a[1]);
+    const overs = sorted.filter(([cat, alloc]) => (sc[cat] || 0) > alloc);
+    const rest = sorted.filter(([cat, alloc]) => (sc[cat] || 0) <= alloc);
+    let html = '';
+    if (overs.length) html += `<div class="mny-brow-tag">Over budget</div>` + overs.map(rowFull).join('');
+    if (rest.length) html += `<div class="mny-brow-tag">On track</div>` + rest.map(rowFull).join('');
+    $('mnyBudgetFullList').innerHTML = sorted.length ? html : '<div class="empty">No budget set for this month</div>';
+  }
+  function openBudgetPage() { $('mnyBudgetPage').classList.add('active'); }
+  function closeBudgetPage() { $('mnyBudgetPage').classList.remove('active'); }
 
   // ── transactions ──
   function renderTx() {
@@ -314,10 +399,12 @@ window.MoneyView = (function () {
       renderMonthBar(); switchTab(activeTab);
     });
     root.addEventListener('click', e => {
+      if (e.target.closest('#mnyOpenBudget')) { openBudgetPage(); return; }
       const br = e.target.closest('[data-cat]'); if (br) openCat(br.dataset.cat);
     });
     $('mnyMClose').onclick = closeModal;
     $('mnyOverlay').onclick = e => { if (e.target === $('mnyOverlay')) closeModal(); };
+    $('mnyBudgetBack').onclick = closeBudgetPage;
   }
 
   // ── bill reminder banner (subscription ตัดบิลใน 2 วัน) ──
@@ -334,9 +421,9 @@ window.MoneyView = (function () {
     if (!soon.length) { el.innerHTML = ''; return; }
     const when = d => d === 0 ? 'today' : d === 1 ? 'tomorrow' : `in ${d} days`;
     const items = soon.map(s => `<div><b>${esc(s.name)}</b> bills ${when(s.days)} · ${fmtCur(s.amount, s.cur)}</div>`).join('');
-    el.innerHTML = `<div style="display:flex;gap:10px;align-items:flex-start;background:rgba(204,120,92,.1);border:1px solid rgba(204,120,92,.28);border-radius:14px;padding:11px 14px;margin:0 0 14px">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#cc785c" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;margin-top:2px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-      <div style="font-size:13.5px;line-height:1.55;color:var(--ink)">${items}</div></div>`;
+    el.innerHTML = `<div class="mny-billalert">
+      ${S('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>')}
+      <div>${items}</div></div>`;
   }
 
   function mount(el) {

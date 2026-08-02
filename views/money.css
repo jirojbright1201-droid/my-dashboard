@@ -1,121 +1,195 @@
-/* ===== Money hub ===== */
-.mny { padding-top: 16px; }
+/* ===== Money hub — Apple x Coinbase reskin (scoped under .mny-shell, ไม่แตะ token รวมของแอปอื่น) ===== */
+.mny-shell {
+  --accent: #0052ff; --accent-hover: #003ecc; --accent-soft: rgba(0,82,255,.08);
+  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #eef0f3; --surface-3: #e2e5ea;
+  --text: #0a0b0d; --silver: #5b616e;
+  --border: #dee1e6; --border-soft: #eef0f3;
+  --red: #cf202f; --green: #05b169;
+  --sans: -apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,'Segoe UI',Roboto,sans-serif;
+  --mono: ui-monospace,'SF Mono','SFMono-Regular','JetBrains Mono',Menlo,Consolas,monospace;
+  --r-xl: 24px; --r-lg: 18px; --r-md: 16px; --r-sm: 12px;
+  --shadow-card: 0 4px 12px rgba(10,11,13,.04);
+  background: var(--bg);
+  font-family: var(--sans);
+}
+.mny-shell .app-title { font-family: var(--sans); font-weight: 700; }
+.mny-shell .card { box-shadow: var(--shadow-card); }
+.mny-shell .modal-title { font-family: var(--sans); font-weight: 700; }
+.mny-shell .section-title { font-family: var(--sans); }
+
+.mny { padding-top: 2px; }
 
 /* ── month bar ── */
 .mny-monthbar { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; }
-.mny-month { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; min-width: 150px; text-align: center; letter-spacing: -0.01em; }
-.mny-chev { width: 38px; height: 38px; border-radius: 50%; border: none; background: none; cursor: pointer;
-  color: var(--accent); font-size: 1.5rem; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background .15s, transform .1s; }
+.mny-month { font-family: var(--sans); font-size: 1.0625rem; font-weight: 700; min-width: 150px; text-align: center; letter-spacing: -0.01em; }
+.mny-chev { width: 34px; height: 34px; border-radius: 50%; border: none; background: none; cursor: pointer;
+  color: var(--accent); font-size: 1.375rem; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background .15s, transform .1s; }
 .mny-chev:active { background: var(--surface-2); transform: scale(.92); }
 .mny-chev:disabled { color: var(--border); cursor: default; }
 
-/* ── sub-tabs (segmented) ── */
+/* ── sub-tabs (segmented, ไม่ใช้แล้วแต่เผื่อ markup เก่าหลงเหลือ) ── */
 .mny-tabs { display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border-soft);
   border-radius: 11px; padding: 4px; margin-bottom: 16px; }
 .mny-tab { flex: 1; border: none; background: none; cursor: pointer; font-family: inherit; color: var(--silver);
   font-size: 0.8125rem; font-weight: 600; padding: 8px 4px; border-radius: 8px; transition: all .15s; }
-.mny-tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(20,20,19,.08); }
-.mny-pane { display: none; }
-.mny-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+.mny-tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(10,11,13,.08); }
 
-/* ── hero (พื้นเข้ม — สีลูกในเป็นโทนอ่อนบนมืด) ── */
-.mny-hero-lbl { font-size: 0.8125rem; color: rgba(255,255,255,.6); font-weight: 500; }
-.mny-hero-bal { font-family: var(--mono); font-size: 2.4rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; margin-top: 3px; color: #fff; }
-.mny-hero-bal.neg { color: var(--neg-bright); }
-.mny-hero-sub { font-size: 0.8125rem; color: rgba(255,255,255,.6); margin-top: 5px; }
-.mny-hero-safe { display: inline-flex; align-items: baseline; gap: 7px; margin-top: 12px;
-  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); padding: 7px 13px; border-radius: 99px; }
-.mny-hero-safe b { font-family: var(--mono); font-size: 0.95rem; font-weight: 700; color: var(--accent-bright); }
-.mny-hero-safe span { font-size: 0.72rem; color: rgba(255,255,255,.6); }
-.mny-hero-split { display: flex; margin-top: 18px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,.13); }
-.mny-hs { flex: 1; padding: 14px 4px 2px; }
-.mny-hs + .mny-hs { border-left: 1px solid rgba(255,255,255,.13); padding-left: 18px; }
-.mny-hs-lab { font-size: 0.75rem; color: rgba(255,255,255,.55); font-weight: 500; }
-.mny-hs-val { font-family: var(--mono); font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; margin-top: 3px; color: #fff; }
-.mny-hs-val.up { color: var(--pos-bright); }
-.mny-hs-val.down { color: var(--neg-bright); }
-.mny-hs-cnt { font-size: 0.6875rem; color: rgba(255,255,255,.5); margin-top: 3px; }
+/* ── hero (พื้นอ่อน Apple x Coinbase — ไม่ใช้การ์ดเข้มแบบแอปอื่น) ── */
+.mny-hero { background: linear-gradient(160deg,var(--surface-2),var(--surface)); border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card); color: var(--text); }
+.mny-hero::before { background: radial-gradient(circle,var(--accent-soft),transparent 70%); animation: none; }
+.mny-hero-lbl { font-size: 0.75rem; color: var(--silver); font-weight: 600; }
+.mny-hero-bal { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 2.25rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin-top: 5px; color: var(--text); }
+.mny-hero-bal.neg { color: var(--red); }
+.mny-hero-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 5px; }
+.mny-hero-safe { display: inline-flex; align-items: baseline; gap: 7px; margin-top: 14px;
+  background: var(--surface-2); border: 1px solid var(--border-soft); padding: 7px 13px; border-radius: 9999px; }
+.mny-hero-safe b { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.95rem; font-weight: 700; color: var(--accent); }
+.mny-hero-safe span { font-size: 0.72rem; color: var(--silver); }
+.mny-hero-split { display: flex; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border-soft); }
+.mny-hs { flex: 1; padding: 0 4px 0 0; }
+.mny-hs + .mny-hs { border-left: 1px solid var(--border-soft); padding-left: 18px; }
+.mny-hs-lab { font-size: 0.75rem; color: var(--silver); font-weight: 500; }
+.mny-hs-val { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; margin-top: 4px; color: var(--text); }
+.mny-hs-val.up { color: var(--green); }
+.mny-hs-val.down { color: var(--red); }
+.mny-hs-cnt { font-size: 0.6875rem; color: var(--silver); margin-top: 3px; }
 
-/* ── donut ── */
+/* ── insight card (data-driven — แทนที่ลิสต์ budget เดิมบน Overview) ── */
+.mny-insight { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border-soft);
+  border-radius: var(--r-md); padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow-card); }
+.mny-insight-ic { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; background: var(--surface-2); display: flex; align-items: center; justify-content: center; }
+.mny-insight-ic svg { width: 18px; height: 18px; }
+.mny-insight-ic.pos svg { color: var(--green); }
+.mny-insight-ic.neg svg { color: var(--red); }
+.mny-insight-body { flex: 1; min-width: 0; padding-top: 1px; }
+.mny-insight-title { font-size: 0.875rem; font-weight: 700; color: var(--text); }
+.mny-insight-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 3px; line-height: 1.5; }
+.mny-insight-sub b { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 700; }
+.mny-insight-sub b.pos { color: var(--green); }
+.mny-insight-sub b.neg { color: var(--red); }
+
+/* ── donut card → เปิด Budget breakdown แบบเต็มจอ ── */
+.mny-donutcard { cursor: pointer; transition: transform .1s, opacity .15s; }
+.mny-donutcard:active { transform: scale(.98); opacity: .88; }
+.mny-donutcard-head { display: flex; align-items: center; justify-content: space-between; }
+.mny-donutcard-head svg { width: 14px; height: 14px; color: var(--silver); flex-shrink: 0; }
+
 .mny-donut-wrap { display: flex; gap: 18px; align-items: center; }
-.mny-donut { position: relative; width: 148px; height: 148px; border-radius: 50%; flex-shrink: 0; }
-.mny-donut-hole { position: absolute; inset: 27px; background: var(--surface); border-radius: 50%;
+.mny-donut { position: relative; width: 140px; height: 140px; border-radius: 50%; flex-shrink: 0; }
+.mny-donut-hole { position: absolute; inset: 26px; background: var(--surface); border-radius: 50%;
   display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.mny-donut-hole span { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; color: var(--text); }
+.mny-donut-hole span { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.9375rem; font-weight: 600; color: var(--text); }
 .mny-donut-hole small { font-size: 0.6875rem; color: var(--silver); margin-top: 2px; }
 .mny-legend { flex: 1; display: flex; flex-direction: column; gap: 9px; min-width: 0; }
 .mny-leg { display: flex; align-items: center; gap: 8px; }
-.mny-leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.mny-leg-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
 .mny-leg-name { flex: 1; font-size: 0.8125rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mny-leg-val { font-family: var(--mono); font-size: 0.6875rem; color: var(--silver); white-space: nowrap; }
+.mny-leg-val { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.6875rem; color: var(--silver); white-space: nowrap; }
 
-/* ── budget (flush list + % ring · Apple × Dime) ── */
+/* ── budget rows (ใช้ในหน้า Budget breakdown เต็มจอ — minimal, สีเดียว) ── */
 .mny-budget { display: flex; flex-direction: column; }
-.mny-brow { display: flex; align-items: center; gap: 13px; padding: 14px 2px; cursor: pointer; min-width: 0;
-  transition: opacity .15s ease; }
+.mny-brow { display: flex; align-items: center; gap: 13px; padding: 13px 2px; cursor: pointer; min-width: 0; transition: opacity .15s; }
 .mny-brow + .mny-brow { border-top: 1px solid var(--border-soft); }
 .mny-brow:active { opacity: .55; }
-.mny-tile { width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0; background: var(--accent-soft);
-  display: flex; align-items: center; justify-content: center; }
-.mny-tile svg { width: 19px; height: 19px; color: var(--accent); }
+.mny-tile { width: 36px; height: 36px; border-radius: var(--r-sm); flex-shrink: 0; background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+.mny-tile svg { width: 19px; height: 19px; color: inherit; }
 .mny-mtitle-ic { display: inline-flex; vertical-align: -4px; margin-right: 7px; }
 .mny-mtitle-ic svg { width: 19px; height: 19px; color: var(--accent); }
 .mny-brow-body { flex: 1; min-width: 0; }
-.mny-brow-name { font-size: 0.95rem; font-weight: 600; letter-spacing: -.01em;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mny-brow-amt { display: flex; align-items: baseline; gap: 5px; font-family: var(--mono); margin-top: 3px; min-width: 0; }
-.mny-brow-amt b { font-size: 0.95rem; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
+.mny-brow-name { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mny-brow-amt { display: flex; align-items: baseline; gap: 5px; font-family: var(--mono); font-variant-numeric: tabular-nums; margin-top: 3px; min-width: 0; }
+.mny-brow-amt b { font-size: 0.9375rem; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
 .mny-brow-amt .of { font-size: 0.8rem; font-weight: 400; color: var(--silver); }
-.mny-brow-amt .bt { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 600; margin-right: 1px; }
+.mny-brow-amt .bt { font-family: var(--sans); font-weight: 600; margin-right: 1px; }
 .mny-brow-sub { font-size: 0.74rem; color: var(--silver); margin-top: 3px; }
-.mny-ring { position: relative; width: 46px; height: 46px; flex-shrink: 0; }
-.mny-ring svg { display: block; width: 46px; height: 46px; }
+.mny-ring { position: relative; width: 44px; height: 44px; flex-shrink: 0; }
+.mny-ring svg { display: block; width: 44px; height: 44px; }
 .mny-ring svg circle { transition: stroke-dashoffset .6s cubic-bezier(.4,0,.2,1); }
 .mny-ring-lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 0.66rem; font-weight: 600; color: var(--text); }
-/* over budget */
-.mny-brow.over .mny-tile { background: rgba(198,69,69,.10); }
-.mny-brow.over .mny-tile svg { color: var(--red); }
-.mny-brow.over .mny-brow-sub, .mny-brow.over .mny-ring-lbl { color: var(--red); }
+  font-family: var(--mono); font-size: 0.64rem; font-weight: 600; color: var(--text); }
+.mny-brow.over .mny-tile { background: rgba(207,32,47,.12); color: var(--red); }
+.mny-over-badge { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.75rem; font-weight: 700;
+  color: var(--red); background: rgba(207,32,47,.10); border-radius: 9999px; padding: 5px 11px; white-space: nowrap; flex-shrink: 0; }
+.mny-brow.over .mny-brow-sub { color: var(--red); }
+.mny-brow-tag { font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: .05em; padding: 14px 2px 4px; }
+.mny-brow-tag:first-child { padding-top: 2px; }
+
+/* ── Budget breakdown — หน้าเต็มจอ (เปิดจากการแตะ donut card) ── */
+.mny-budgetpage { position: fixed; inset: 0; z-index: 90; background: var(--surface); overflow: hidden;
+  transform: translateX(100%); transition: transform .28s cubic-bezier(.32,.72,0,1); display: flex; flex-direction: column; }
+.mny-budgetpage.active { transform: translateX(0); }
+.mny-bp-glow { position: absolute; top: -120px; right: -80px; width: 320px; height: 320px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle,var(--accent-soft),transparent 70%); }
+.mny-bp-head { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px;
+  padding: calc(env(safe-area-inset-top) + 16px) 16px 10px; flex-shrink: 0; }
+.mny-bp-back { width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.mny-bp-back svg { width: 20px; height: 20px; }
+.mny-bp-back:active { transform: scale(.92); }
+.mny-bp-title { font-family: var(--sans); font-size: 1.125rem; font-weight: 700; letter-spacing: -.01em; color: var(--text); }
+.mny-bp-body { position: relative; z-index: 1; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 4px 18px calc(env(safe-area-inset-bottom) + 24px); }
+.mny-bp-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
+.mny-bp-stat { background: var(--surface-2); border-radius: var(--r-sm); padding: 12px 10px; }
+.mny-bp-stat .lab { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--silver); }
+.mny-bp-stat .val { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.0625rem; font-weight: 700; margin-top: 5px; color: var(--text); }
+.mny-bp-stat .val.pos { color: var(--green); }
+.mny-bp-barrow { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.mny-bp-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden; }
+.mny-bp-bar i { display: block; height: 100%; border-radius: 4px; background: var(--accent); transition: width .5s cubic-bezier(.4,0,.2,1); }
+.mny-bp-barpct { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.75rem; font-weight: 700; color: var(--text); flex-shrink: 0; }
 
 /* ── transactions ── */
-.mny-txtoggle { display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border-soft);
-  border-radius: 10px; padding: 4px; margin-bottom: 14px; }
-.mny-txtoggle button { flex: 1; border: none; background: none; cursor: pointer; font-family: inherit;
-  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px; border-radius: 7px; transition: all .15s; }
-.mny-txtoggle button.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(20,20,19,.08); }
-.mny-list-head { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--silver);
-  font-weight: 600; padding: 0 4px 8px; }
+.mny-txtoggle { display: flex; gap: 2px; background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 11px; padding: 3px; margin-bottom: 14px; }
+.mny-txtoggle button { flex: 1; border: none; background: none; cursor: pointer; font-family: var(--sans); color: var(--silver);
+  font-size: 0.8125rem; font-weight: 600; padding: 7px; border-radius: 8px; transition: all .15s; }
+.mny-txtoggle button.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(10,11,13,.10); }
+.mny-list-head { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--silver); font-weight: 600; padding: 0 4px 8px; }
 .mny-list { padding: 6px 16px; }
 .mny-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; }
 .mny-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
 .mny-row-lead { flex: 1; min-width: 0; }
-.mny-row-title { font-size: 0.9375rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mny-row-title { font-size: 0.9375rem; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mny-row-th { font-size: 0.75rem; color: var(--silver); opacity: .8; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mny-row-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
-.mny-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; flex-shrink: 0; }
+.mny-amt { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.9375rem; font-weight: 600; flex-shrink: 0; }
 .mny-amt.neg { color: var(--text); }
 .mny-amt.pos { color: var(--green); }
 
 /* ── subscriptions ── */
 .mny-sub-row { display: flex; gap: 12px; align-items: center; padding: 12px 0; }
 .mny-sub-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
-.mny-sub-row .mny-tile { font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--accent); }
+.mny-sub-row .mny-tile { font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--accent); }
 .mny-sub-ic { position: relative; overflow: hidden; }
 .mny-sub-ic > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 3px; background: #fff; }
 .mny-sub-body { flex: 1; min-width: 0; }
-.mny-sub-name { font-size: 0.9375rem; font-weight: 600; }
+.mny-sub-name { font-size: 0.9375rem; font-weight: 600; color: var(--text); }
 .mny-sub-right { text-align: right; white-space: nowrap; }
-.mny-sub-amt { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; }
+.mny-sub-amt { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.9375rem; font-weight: 600; color: var(--text); }
 .mny-sub-cyc { font-size: 0.6875rem; color: var(--silver); font-weight: 500; margin-left: 2px; }
 .mny-sub-foot { display: flex; margin-top: 4px; }
 .mny-sub-next { font-size: 0.75rem; color: var(--silver); }
 .mny-sub-next.soon { color: var(--accent); font-weight: 600; }
 .mny-sub-eq { font-size: 0.75rem; color: var(--silver); margin-top: 2px; }
 
+/* ── bill alert banner ── */
+.mny-billalert { display: flex; gap: 10px; align-items: flex-start; background: var(--accent-soft); border: 1px solid rgba(0,82,255,.20);
+  border-radius: var(--r-sm); padding: 11px 14px; margin: 0 0 14px; }
+.mny-billalert svg { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 2px; color: var(--accent); }
+.mny-billalert div { font-size: 13.5px; line-height: 1.55; color: var(--text); }
+.mny-billalert b { font-weight: 700; }
+
 /* ── savings sub-tab: strip nested container padding ── */
 #mny-savings .container { padding: 0; max-width: none; }
 #mny-savings .sav-head { margin-top: 0; }
+
+/* ── tab bar — Apple minimal frosted (แทนที่พิลเข้มแบบ Dime เฉพาะแอปนี้) ── */
+.mny-shell .tabbar { background: rgba(255,255,255,.72); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-soft); border-radius: var(--r-lg); box-shadow: 0 8px 20px -6px rgba(10,11,13,.14); }
+.mny-shell .tabbar .tab-item { color: var(--silver); border-radius: 11px; }
+.mny-shell .tabbar .tab-item.active { background: transparent; color: var(--accent); box-shadow: none; }
+.mny-shell .tabbar .tab-item.active svg { transform: none; }
 
 @media (max-width: 560px) {
   .mny-donut-wrap { flex-direction: column; }
