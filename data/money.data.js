@@ -4,9 +4,11 @@
 window.MONEY_DATA = {
   "2026-08": {
     "budget": {},
-    "income": [],
+    "income": [
+      { "date": "2026-08-03", "amount": 14679, "source": "Salary", "name": "Salary", "name_th": "เงินเดือน", "notes": "" }
+    ],
     "expenses": []
   }
 };
 window.MONEY_KEYS = ["2026-08"];
-window.MONEY_UPDATED = "22/07/2026";
+window.MONEY_UPDATED = "03/08/2026";
