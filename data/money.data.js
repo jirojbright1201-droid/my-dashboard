@@ -30,7 +30,9 @@ window.MONEY_DATA = {
       { "date": "2026-08-03", "amount": 43, "category": "Shopping", "name": "Fertilizer sack bag 50g (installment 1/5)", "name_th": "กระสอบถุงปุ๋ย 50 กรัม (ผ่อนงวด 1/5)", "notes": "" },
       { "date": "2026-08-03", "amount": 64, "category": "Shopping", "name": "Kiprun stopwatch (installment 1/5)", "name_th": "นาฬิกาจับเวลา Kiprun (ผ่อนงวด 1/5)", "notes": "" },
       { "date": "2026-08-03", "amount": 28, "category": "Beauty", "name": "Janua Perfume (installment 1/5)", "name_th": "น้ำหอม Janua (ผ่อนงวด 1/5)", "notes": "" },
-      { "date": "2026-08-03", "amount": 114, "category": "Restaurant", "name": "Bonchon", "name_th": "", "notes": "" }
+      { "date": "2026-08-03", "amount": 114, "category": "Restaurant", "name": "Bonchon", "name_th": "", "notes": "" },
+      { "date": "2026-08-03", "amount": 78, "category": "Restaurant", "name": "Missed order", "name_th": "ส่งออเดอร์ผิด", "notes": "" },
+      { "date": "2026-08-03", "amount": 49, "category": "Restaurant", "name": "Missed order", "name_th": "ส่งออเดอร์ผิด", "notes": "" }
     ]
   }
 };
