@@ -25,7 +25,11 @@ window.MONEY_DATA = {
       { "date": "2026-08-01", "amount": 762, "category": "Subscriptions", "name": "Adobe Creative Cloud", "name_th": "", "notes": "" },
       { "date": "2026-08-01", "amount": 79, "category": "Subscriptions", "name": "Spotify Premium", "name_th": "", "notes": "" },
       { "date": "2026-08-03", "amount": 2800, "category": "Rent", "name": "Room deposit", "name_th": "ค่ามัดจำห้อง", "notes": "" },
-      { "date": "2026-08-03", "amount": 2800, "category": "Rent", "name": "Monthly rent", "name_th": "ค่าเช่าห้อง", "notes": "" }
+      { "date": "2026-08-03", "amount": 2800, "category": "Rent", "name": "Monthly rent", "name_th": "ค่าเช่าห้อง", "notes": "" },
+      { "date": "2026-08-03", "amount": 30, "category": "Shopping", "name": "Lenuo phone case stand (installment 1/5)", "name_th": "ที่ตั้งเคสโทรศัพท์ Lenuo (ผ่อนงวด 1/5)", "notes": "" },
+      { "date": "2026-08-03", "amount": 43, "category": "Shopping", "name": "Fertilizer sack bag 50g (installment 1/5)", "name_th": "กระสอบถุงปุ๋ย 50 กรัม (ผ่อนงวด 1/5)", "notes": "" },
+      { "date": "2026-08-03", "amount": 64, "category": "Shopping", "name": "Kiprun stopwatch (installment 1/5)", "name_th": "นาฬิกาจับเวลา Kiprun (ผ่อนงวด 1/5)", "notes": "" },
+      { "date": "2026-08-03", "amount": 28, "category": "Beauty", "name": "Janua Perfume (installment 1/5)", "name_th": "น้ำหอม Janua (ผ่อนงวด 1/5)", "notes": "" }
     ]
   }
 };
