@@ -6,7 +6,7 @@ window.MONEY_DATA = {
     "budget": {
       "Restaurant": 3000,
       "Transport": 300,
-      "Family": 500,
+      "Family": 0,
       "Shopping": 500,
       "Investment": 500,
       "Study": 300,
