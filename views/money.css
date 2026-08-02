@@ -18,6 +18,8 @@
 .mny-shell .section-title { font-family: var(--sans); }
 
 .mny { padding-top: 2px; }
+.mny-pane { display: none; }
+.mny-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
 
 /* ── month bar ── */
 .mny-monthbar { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; }
