@@ -263,7 +263,7 @@ window.MoneyView = (function () {
     if (rest.length) html += `<div class="mny-brow-tag">On track</div>` + rest.map(rowFull).join('');
     $('mnyBudgetFullList').innerHTML = sorted.length ? html : '<div class="empty">No budget set for this month</div>';
   }
-  function openBudgetPage() { $('mnyBudgetPage').classList.add('active'); }
+  function openBudgetPage() { $('mnyBudgetPage').classList.add('active'); pushOverlayState('budget'); }
   function closeBudgetPage() { $('mnyBudgetPage').classList.remove('active'); }
 
   // ── transactions ──
@@ -369,10 +369,27 @@ window.MoneyView = (function () {
           <span class="mny-amt neg">-${fmtMoney(e.amount)}</span></div>`).join('')}</div>`
       : '<div class="empty">No expenses in this category</div>';
     $('mnyOverlay').classList.add('active');
+    pushOverlayState('cat');
   }
   function closeModal() {
     const o = $('mnyOverlay'); o.classList.add('closing');
     setTimeout(() => o.classList.remove('active', 'closing'), 300);
+  }
+
+  // ── ผูก overlay (modal หมวด / หน้า Budget breakdown) เข้ากับ browser history ──
+  // ปุ่ม/ท่า back ของระบบ (Android) เป็นคนละกลไกกับปัดในแอป — ถ้าไม่ผูก history กด back เครื่องจะข้ามออกจากแอปทั้งที
+  function pushOverlayState(kind) {
+    history.pushState({ mnyOverlay: kind }, '');
+  }
+  // ใช้แทนการปิด overlay ตรงๆ ทุกจุดที่ผู้ใช้กดปิดเอง — ให้ history.back() เป็นคนสั่งจริง แล้ว popstate ด้านล่างปิด DOM ให้
+  function goBackIfOverlay() {
+    if (history.state && history.state.mnyOverlay) history.back();
+  }
+  function wirePopstate() {
+    window.addEventListener('popstate', () => {
+      if ($('mnyBudgetPage').classList.contains('active')) closeBudgetPage();
+      if ($('mnyOverlay').classList.contains('active')) closeModal();
+    });
   }
 
   // ── tabs ──
@@ -402,9 +419,10 @@ window.MoneyView = (function () {
       if (e.target.closest('#mnyOpenBudget')) { openBudgetPage(); return; }
       const br = e.target.closest('[data-cat]'); if (br) openCat(br.dataset.cat);
     });
-    $('mnyMClose').onclick = closeModal;
-    $('mnyOverlay').onclick = e => { if (e.target === $('mnyOverlay')) closeModal(); };
-    $('mnyBudgetBack').onclick = closeBudgetPage;
+    $('mnyMClose').onclick = goBackIfOverlay;
+    $('mnyOverlay').onclick = e => { if (e.target === $('mnyOverlay')) goBackIfOverlay(); };
+    $('mnyBudgetBack').onclick = goBackIfOverlay;
+    wirePopstate();
   }
 
   // ── bill reminder banner (subscription ตัดบิลใน 2 วัน) ──
