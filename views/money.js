@@ -127,7 +127,15 @@ window.MoneyView = (function () {
     return { my, mm, dim, isPast, isFuture, now };
   }
 
-  // insight การ์ด — เทียบ pace การใช้เงินจริงเทียบกับงบเฉลี่ยต่อวัน (ไม่ใช่ % คงเหลือแบบเดิมที่โดน cap ที่ 100%)
+  // หมวดรายจ่ายคงที่ต้นเดือน (จ่ายก้อนเดียว/กันเงินไว้ ไม่ใช่ใช้กระจายทุกวัน) — กันออกจากการคำนวณ pace เพื่อไม่ให้ต้นเดือนฟันธง "เกินจังหวะ" ผิดๆ
+  const FIXED_PACE_CATS = ['Rent', 'Subscriptions', 'Family', 'Investment', 'Emergency Fund'];
+  function variableTotals(expenses, budget) {
+    const out = expenses.filter(e => !FIXED_PACE_CATS.includes(e.category)).reduce((s, e) => s + e.amount, 0);
+    const bud = Object.entries(budget).filter(([cat]) => !FIXED_PACE_CATS.includes(cat)).reduce((s, [, v]) => s + v, 0);
+    return { out, bud };
+  }
+
+  // insight การ์ด — เทียบ pace การใช้เงินจริงเทียบกับงบเฉลี่ยต่อวัน เฉพาะหมวดรายจ่ายผันแปร (ไม่ใช่ % คงเหลือแบบเดิมที่โดน cap ที่ 100%)
   function computeInsight(mkey, totalOut, totalBudget) {
     if (totalBudget <= 0) return null;
     const { dim, isPast, isFuture, now } = monthMeta(mkey);
@@ -177,7 +185,8 @@ window.MoneyView = (function () {
       <span class="mny-leg-val">${fmtMoney(val)} · ${totalOut ? Math.round(val / totalOut * 100) : 0}%</span>
     </div>`).join('');
 
-    const insight = computeInsight(mkey, totalOut, totalBudget);
+    const variable = variableTotals(expenses, budget);
+    const insight = computeInsight(mkey, variable.out, variable.bud);
     const insightIcon = insight ? S(insight.good ? '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>' : '<path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/>') : '';
     const insightHtml = insight ? `
       <div class="mny-insight">
