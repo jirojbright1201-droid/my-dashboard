@@ -28,6 +28,7 @@ window.MoneyView = (function () {
     Study:         '<path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/>',
     'Emergency Fund': '<path d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M13 9H8V7H13V9M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"/>',
     Laundry:       '<path d="M14.83,11.17C16.39,12.73 16.39,15.27 14.83,16.83C13.27,18.39 10.73,18.39 9.17,16.83L14.83,11.17M6,2H18A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2M7,4A1,1 0 0,0 6,5A1,1 0 0,0 7,6A1,1 0 0,0 8,5A1,1 0 0,0 7,4M10,4A1,1 0 0,0 9,5A1,1 0 0,0 10,6A1,1 0 0,0 11,5A1,1 0 0,0 10,4M12,8A6,6 0 0,0 6,14A6,6 0 0,0 12,20A6,6 0 0,0 18,14A6,6 0 0,0 12,8Z"/>',
+    Utilities:     '<path d="M7,2V13H10V22L17,10H13L17,2H7Z"/>',
     default:       '<path d="M21,18V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V6H12C10.89,6 10,6.9 10,8V16A2,2 0 0,0 12,18M12,16H22V8H12M16,13.5A1.5,1.5 0 0,1 14.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,12A1.5,1.5 0 0,1 16,13.5Z"/>'
   };
   const SRC_ICON = {
@@ -128,7 +129,7 @@ window.MoneyView = (function () {
   }
 
   // หมวดรายจ่ายคงที่ต้นเดือน (จ่ายก้อนเดียว/กันเงินไว้ ไม่ใช่ใช้กระจายทุกวัน) — กันออกจากการคำนวณ pace เพื่อไม่ให้ต้นเดือนฟันธง "เกินจังหวะ" ผิดๆ
-  const FIXED_PACE_CATS = ['Rent', 'Subscriptions', 'Family', 'Investment', 'Emergency Fund'];
+  const FIXED_PACE_CATS = ['Rent', 'Subscriptions', 'Family', 'Investment', 'Emergency Fund', 'Utilities'];
   function variableTotals(expenses, budget) {
     const out = expenses.filter(e => !FIXED_PACE_CATS.includes(e.category)).reduce((s, e) => s + e.amount, 0);
     const bud = Object.entries(budget).filter(([cat]) => !FIXED_PACE_CATS.includes(cat)).reduce((s, [, v]) => s + v, 0);
