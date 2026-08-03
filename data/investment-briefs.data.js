@@ -53,6 +53,17 @@ window.INVESTMENT_BRIEFS = [
     "url": "https://www.thenationalnews.com/business/energy/2026/08/02/opec-agrees-output-rise-in-september-but-pauses-increase-from-fourth-quarter/",
     "image": "",
     "topic": "oil"
+  },
+  {
+    "id": "nw0017",
+    "date": "2026-08-03",
+    "title": "น้ำมันดิ่งกว่า 4% หุ้นสหรัฐฯ พุ่งรับข่าวเจรจาอิหร่าน จับตาสัปดาห์งบ-ตัวเลขจ้างงาน",
+    "summary": "ราคาน้ำมัน WTI ร่วง 5.3% หลังทรัมป์ยกเลิกแผนโจมตีอิหร่านและเตรียมเจรจาข้อตกลงเปิดช่องแคบฮอร์มุซ ฟิวเจอร์สหุ้นสหรัฐฯ ปรับขึ้นทั้งกระดาน S&P500 futures +0.4% Nasdaq 100 futures +0.65% Dow futures +0.39% นักลงทุนจับตาสัปดาห์นี้ที่มีผลประกอบการไตรมาส 2 จาก Palantir, AMD, SpaceX, Caterpillar, Merck และ McDonald's รวมถึงตัวเลขจ้างงานนอกภาคเกษตรเดือนก.ค. ที่จะประกาศวันศุกร์ หลัง Nasdaq Composite ร่วง 3.2% ในเดือนกรกฎาคม",
+    "macro": true,
+    "sourceName": "Investing.com (Reuters)",
+    "url": "https://uk.investing.com/news/stock-market-news/us-stock-futures-rise-as-trump-touts-iran-negotiations-4804067",
+    "image": "",
+    "topic": "market"
   }
 ];
 window.INVESTMENT_UPDATED = "03/08/2026";
