@@ -399,7 +399,12 @@ window.MoneyView = (function () {
 
   // ── ผูก overlay (modal หมวด / หน้า Budget breakdown) เข้ากับ browser history ──
   // ปุ่ม/ท่า back ของระบบ (Android) เป็นคนละกลไกกับปัดในแอป — ถ้าไม่ผูก history กด back เครื่องจะข้ามออกจากแอปทั้งที
+  // overlayStack เก็บลำดับชั้นที่เปิดจริง (LIFO) — กันบัค "เปิด category modal จากใน Budget breakdown แล้วกด back
+  // ครั้งเดียวปิดทั้งสองชั้นพร้อมกัน" (เจอจริง 3 ส.ค. 2026): เดิม popstate เช็คว่าชั้นไหน "active" อยู่แล้วปิดทุกชั้นที่ active
+  // พร้อมกันหมด ทั้งที่ back ควรปิดแค่ชั้นบนสุดที่เพิ่งถูก pop — ตอนนี้ปิดเฉพาะชั้นที่ pop ออกมาจาก stack เท่านั้น
+  let overlayStack = [];
   function pushOverlayState(kind) {
+    overlayStack.push(kind);
     history.pushState({ mnyOverlay: kind }, '');
   }
   // ใช้แทนการปิด overlay ตรงๆ ทุกจุดที่ผู้ใช้กดปิดเอง — ให้ history.back() เป็นคนสั่งจริง แล้ว popstate ด้านล่างปิด DOM ให้
@@ -408,8 +413,9 @@ window.MoneyView = (function () {
   }
   function wirePopstate() {
     window.addEventListener('popstate', () => {
-      if ($('mnyBudgetPage').classList.contains('active')) closeBudgetPage();
-      if ($('mnyOverlay').classList.contains('active')) closeModal();
+      const kind = overlayStack.pop();
+      if (kind === 'cat') closeModal();
+      else if (kind === 'budget') closeBudgetPage();
     });
   }
 
