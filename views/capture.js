@@ -92,20 +92,35 @@
     document.body.removeChild(ta);
   }
 
-  function open() { renderTypes(); renderList(); $('capOverlay').classList.add('active'); setTimeout(() => $('capText').focus(), 60); }
-  function close() { const o = $('capOverlay'); o.classList.add('closing'); setTimeout(() => o.classList.remove('active', 'closing'), 300); }
+  // ── ผูกเข้ากับ browser history กัน Android back ข้ามออกจากแอปทั้งที่แค่อยากปิดกล่อง (ดูข้อ 8.6 ของ CLAUDE.md) ──
+  let capOpen = false;
+  function open() {
+    renderTypes(); renderList();
+    $('capOverlay').classList.add('active');
+    capOpen = true;
+    history.pushState({ capOverlay: true }, '');
+    setTimeout(() => $('capText').focus(), 60);
+  }
+  function closeDom() {
+    if (!capOpen) return;
+    capOpen = false;
+    const o = $('capOverlay'); o.classList.add('closing');
+    setTimeout(() => o.classList.remove('active', 'closing'), 300);
+  }
+  function goBack() { if (history.state && history.state.capOverlay) history.back(); else closeDom(); }
 
   function init() {
     if (!$('fab')) return;
     $('fab').onclick = () => { haptic(); open(); };
-    $('capClose').onclick = close;
-    $('capOverlay').onclick = e => { if (e.target === $('capOverlay')) close(); };
+    $('capClose').onclick = goBack;
+    $('capOverlay').onclick = e => { if (e.target === $('capOverlay')) goBack(); };
     $('capAdd').onclick = add;
     $('capText').addEventListener('keydown', e => { if (e.key === 'Enter') add(); });
     $('capList').addEventListener('click', e => {
       const d = e.target.closest('.cap-del'); if (!d) return;
       save(load().filter(it => it.id !== d.dataset.id)); renderList();
     });
+    window.addEventListener('popstate', () => { if (capOpen) closeDom(); });
     updateBadge();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
