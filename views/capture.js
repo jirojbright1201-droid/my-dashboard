@@ -7,13 +7,14 @@
     { k: 'income', l: 'Income', amt: true },
     { k: 'event', l: 'Event' },
     { k: 'habit', l: 'Habit' },
+    { k: 'todo', l: 'Todo' },
     { k: 'book', l: 'Book' },
     { k: 'vocab', l: 'Vocab' },
     { k: 'furniture', l: 'Item', amt: true }
   ];
   const TLAB = Object.fromEntries(ALL_TYPES.map(t => [t.k, t.l]));
   // จดเร็วแยกตามแอป — โชว์เฉพาะประเภทของ dashboard นั้น ไม่ขึ้นข้ามโดเมน
-  const SCOPE = { money: ['expense', 'income'], planner: ['event', 'habit'], books: ['book'], english: ['vocab'], furniture: ['furniture'] };
+  const SCOPE = { money: ['expense', 'income'], planner: ['event', 'habit', 'todo'], books: ['book'], english: ['vocab'], furniture: ['furniture'] };
   const allow = SCOPE[window.APP_VIEW] || ALL_TYPES.map(t => t.k);
   const TYPES = ALL_TYPES.filter(t => allow.includes(t.k));
   const inScope = it => allow.includes(it.type); // กล่องแต่ละแอปเห็นเฉพาะของตัวเอง

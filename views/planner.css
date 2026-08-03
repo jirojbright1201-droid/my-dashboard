@@ -1,13 +1,41 @@
-/* ===== Planner view ===== */
-#view-planner .container { padding-top: 16px; }
+/* ===== Planner view — Apple x Coinbase reskin (scoped under .pln-shell, ไม่แตะ token รวมของแอปอื่น) ===== */
+.pln-shell {
+  --accent: #0052ff; --accent-hover: #003ecc; --accent-soft: rgba(0,82,255,.08);
+  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #eef0f3; --surface-3: #e2e5ea;
+  --text: #0a0b0d; --silver: #5b616e;
+  --border: #dee1e6; --border-soft: #eef0f3;
+  --red: #cf202f; --green: #05b169;
+  --sans: -apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,'Segoe UI',Roboto,sans-serif;
+  --mono: ui-monospace,'SF Mono','SFMono-Regular','JetBrains Mono',Menlo,Consolas,monospace;
+  --r-xl: 24px; --r-lg: 18px; --r-md: 16px; --r-sm: 12px;
+  --shadow-card: 0 4px 12px rgba(10,11,13,.04);
+  background: var(--bg);
+  font-family: var(--sans);
+}
+.pln-shell .app-title { font-family: var(--sans); font-weight: 700; }
+.pln-shell .card { box-shadow: var(--shadow-card); }
+.pln-shell .modal-title { font-family: var(--sans); font-weight: 700; }
+.pln-shell .section-title { font-family: var(--sans); }
 
-/* ── sub-tabs ── */
-.pl-tabs { display: flex; gap: 2px; overflow-x: auto; margin-bottom: 18px; }
-.pl-tabs::-webkit-scrollbar { display: none; }
-.pl-tab { background: none; border: none; cursor: pointer; padding: 7px 15px; border-radius: 9999px;
-  font-size: 0.8125rem; font-weight: 600; color: var(--silver); white-space: nowrap; transition: all .15s; font-family: inherit; }
-.pl-tab:hover { color: var(--text); background: var(--surface-2); }
-.pl-tab.active { color: var(--text); background: var(--surface-3); }
+/* ── hero (พื้นอ่อนไล่เฉด Apple x Coinbase — เหมือน Money ไม่ใช้การ์ดเข้มแบบแอปที่ยังไม่ reskin) ── */
+.pln-shell .hero { background: linear-gradient(160deg,var(--surface-2),var(--surface)); border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card); color: var(--text); }
+.pln-shell .hero::before { background: radial-gradient(circle,var(--accent-soft),transparent 70%); animation: none; }
+.pln-shell .hero-eyebrow { color: var(--accent); }
+.pln-shell .hero-split { border-top: 1px solid var(--border-soft); }
+.pln-shell .hero-cell + .hero-cell { border-left: 1px solid var(--border-soft); }
+.pln-shell .hero-cell-lab { color: var(--silver); }
+.pln-shell .hero-cell-val { color: var(--text); }
+.pln-shell .hero-cell-val.up, .pln-shell .hero-cell-val.pos { color: var(--green); }
+.pln-shell .hero-cell-val.down, .pln-shell .hero-cell-val.neg { color: var(--red); }
+
+/* ── tabbar — โปร่งแสงบาง ไม่มี pill พื้นตอน active (แค่เปลี่ยนสี), FAB ฝังกลางดูข้อ fab--dock ใน capture.css ── */
+.pln-shell .tabbar { background: rgba(255,255,255,.78); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--border-soft); border-radius: var(--r-xl); box-shadow: 0 12px 30px -10px rgba(10,11,13,.16); }
+.pln-shell .tabbar .tab-item { color: var(--silver); border-radius: 14px; }
+.pln-shell .tabbar .tab-item.active { background: none; color: var(--accent); box-shadow: none; }
+
+#view-planner .container { padding-top: 16px; }
 
 /* ── month/day controls ── */
 .pl-ctl { display: flex; align-items: center; gap: 8px; }
@@ -22,127 +50,135 @@
 .pl-pane { display: none; }
 .pl-pane.active { display: block; animation: viewIn .2s cubic-bezier(.32,.72,0,1); }
 
-/* ── today summary (หน้าแรก) — ใช้ .hero primitive (พื้นเข้ม) จาก app.css ── */
-.tsum-date { font-size: 0.8125rem; color: rgba(255,255,255,.6); font-weight: 600; margin-top: 3px; }
+.tsum-date { font-size: 0.8125rem; color: var(--silver); font-weight: 600; margin-top: 3px; }
 
 /* ── agenda: week strip ── */
 .wk-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
-.wk-month { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; letter-spacing: -0.3px; }
+.wk-month { font-family: var(--sans); font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; }
 .wk { display: flex; gap: 6px; margin-bottom: 18px; }
 .wk-day { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 0 7px;
-  border-radius: 12px; cursor: pointer; border: 1px solid transparent; transition: background .15s; }
+  border-radius: var(--r-sm); cursor: pointer; border: 1px solid transparent; transition: background .15s; }
 .wk-day:hover { background: var(--surface-2); }
 .wk-day.today { border-color: var(--border); }
 .wk-day.sel { background: var(--accent); border-color: var(--accent); }
 .wk-dow { font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 0.5px; }
-.wk-num { font-family: var(--mono); font-size: 1rem; font-weight: 600; color: var(--text); }
+.wk-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1rem; font-weight: 600; color: var(--text); }
 .wk-day.sel .wk-dow, .wk-day.sel .wk-num { color: #fff; }
 .wk-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 .wk-day.sel .wk-dot { background: #fff; }
 
-/* ── agenda: day heading + timeline ── */
-.ag-dayhead { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 14px; }
-.ag-dayhead .td { font-family: 'Inter',sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--accent);
+/* ── agenda: day heading + timeline (จัดกลุ่มตามช่วงเวลา Morning/Afternoon/Evening) ── */
+.ag-dayhead { font-family: var(--sans); font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 14px; }
+.ag-dayhead .td { font-family: var(--sans); font-size: 0.72rem; font-weight: 700; color: var(--accent);
   background: var(--accent-soft); padding: 2px 9px; border-radius: 9999px; margin-left: 10px; vertical-align: middle; letter-spacing: 0; }
-.tl { position: relative; padding-left: 56px; }
-.tl::before { content: ''; position: absolute; left: 52px; top: 8px; bottom: 8px; width: 2px; background: var(--border-soft); }
-.tl-item { position: relative; margin-bottom: 10px; }
-.tl-item:last-child { margin-bottom: 0; }
-.tl-time { position: absolute; left: -56px; width: 44px; text-align: right; top: 13px;
-  font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--silver); }
-.tl-node { position: absolute; left: -8px; top: 15px; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--accent); border: 2px solid var(--surface); z-index: 1; }
-.tl-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 11px 13px;
-  display: flex; align-items: center; gap: 12px;
-  box-shadow: 0 1px 2px rgba(20,20,19,.03), 0 2px 8px rgba(20,20,19,.03); }
-.tl-ic { width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-  background: var(--accent); color: #fff; box-shadow: 0 3px 8px -2px rgba(204,120,92,.55); }
-.tl-ic svg { width: 24px; height: 24px; }
-.tl-card-main { flex: 1; min-width: 0; }
-.tl-title { font-size: 0.9375rem; font-weight: 600; }
-.tl-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.tl-sub .dot-sep { color: var(--border); }
-.tl-item.now .tl-card { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), 0 4px 14px rgba(204,120,92,.16); }
-.tl-item.now .tl-node { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-.now-badge { margin-left: auto; flex-shrink: 0; font-family: var(--mono); font-size: 0.5625rem; font-weight: 700; letter-spacing: .5px;
-  color: var(--accent-hover); background: var(--accent-soft); padding: 2px 6px; border-radius: 9999px; text-transform: uppercase; }
 
-.event-time { font-size: 0.8125rem; font-weight: 600; color: var(--near-white); flex-shrink: 0; padding-top: 2px; white-space: nowrap; }
+.tlg-group { margin-bottom: 16px; }
+.tlg-group:last-child { margin-bottom: 0; }
+.tlg-label { font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.tlg-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-soft); }
+.tlg-row:last-child { border-bottom: none; }
+.tlg-ic { width: 26px; height: 26px; flex-shrink: 0; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
+  background: var(--accent-soft); color: var(--accent); }
+.tlg-ic svg { width: 14px; height: 14px; }
+.tlg-title { flex: 1; min-width: 0; font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.tlg-time { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.72rem; color: var(--silver); flex-shrink: 0; }
+.tlg-row.now .tlg-time { color: var(--accent); font-weight: 700; }
+.tlg-row.now .tlg-ic { background: var(--accent); color: #fff; }
+
 .habits-today { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-.habit-today-item { background: var(--surface-2); border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; gap: 9px; }
+.habit-today-item { background: var(--surface-2); border-radius: var(--r-sm); padding: 12px 14px; display: flex; align-items: center; gap: 9px; }
 .habit-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .habit-dot.done { background: var(--green); }
 .habit-dot.no-log { background: transparent; border: 2px solid var(--border); }
-.habit-name { font-size: 0.8125rem; font-weight: 500; color: var(--near-white); }
+.habit-name { font-size: 0.8125rem; font-weight: 500; color: var(--text); }
 
-/* ── todo / event items ── */
-.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
-.todo-item:last-child { border-bottom: none; }
-.todo-bar { width: 3px; min-height: 18px; border-radius: 9999px; flex-shrink: 0; margin-top: 3px; }
-.todo-content { flex: 1; min-width: 0; }
-.todo-title { font-size: 0.9rem; font-weight: 500; word-break: break-word; }
+/* ── day detail — หน้าเต็มจอ (แทน bottom-sheet เดิมที่รู้สึกจิ๋วไป), ผูก browser history ดู wire()/wirePopstate ใน planner.js ── */
+.dp-page { position: fixed; inset: 0; z-index: 90; background: var(--surface); overflow: hidden;
+  transform: translateX(100%); transition: transform .28s cubic-bezier(.32,.72,0,1); display: flex; flex-direction: column; }
+.dp-page.active { transform: translateX(0); }
+.dp-head { display: flex; align-items: center; gap: 12px; padding: calc(env(safe-area-inset-top) + 16px) 18px 14px; flex-shrink: 0; border-bottom: 1px solid var(--border-soft); }
+.dp-back { width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.dp-back:active { transform: scale(.92); }
+.dp-titlewrap { min-width: 0; }
+.dp-title { font-family: var(--sans); font-size: 1.15rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+.dp-sub { font-size: 0.8rem; color: var(--silver); margin-top: 2px; }
+.dp-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 18px calc(env(safe-area-inset-bottom) + 24px); }
+.dp-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; }
+.dp-time { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.72rem; color: var(--silver); width: 38px; flex-shrink: 0; }
+.dp-evtitle { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+/* ── todo tab ── */
+.todo-row { display: flex; align-items: flex-start; gap: 11px; padding: 11px 0; border-bottom: 1px solid var(--border-soft); }
+.todo-row:last-child { border-bottom: none; }
+.todo-check { width: 21px; height: 21px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; }
+.todo-check.done { background: var(--accent); border-color: var(--accent); }
+.todo-body { flex: 1; min-width: 0; }
+.todo-title { font-size: 0.875rem; font-weight: 600; color: var(--text); word-break: break-word; }
 .todo-title.done { text-decoration: line-through; color: var(--silver); }
-.todo-meta { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
-.chip-cat { background: rgba(204,120,92,.10); color: var(--accent); }
+.todo-meta { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; align-items: center; }
+.todo-due { font-size: 0.7rem; color: var(--silver); }
+.todo-due.overdue { color: var(--red); font-weight: 600; }
+.chip-outline { background: transparent; border: 1px solid var(--border); color: var(--silver); }
 
 /* ── calendar ── */
-.cal-toggle { display: flex; gap: 4px; background: var(--surface-2); border-radius: 9999px; padding: 3px; }
-.cal-toggle button { background: none; border: none; cursor: pointer; padding: 5px 14px; border-radius: 9999px;
-  font-size: 0.75rem; font-weight: 700; color: var(--silver); font-family: inherit; transition: all .15s; }
-.cal-toggle button.on { background: var(--surface); color: var(--accent); box-shadow: 0 1px 2px rgba(10,11,13,.06); }
-.cal-wrap { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 20px 22px; }
-.cal-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 3px; }
-.cal-head { text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 1px; padding: 6px 0 10px; }
-.cal-day { background: var(--surface-2); border-radius: 6px; min-height: 78px; padding: 7px 6px; cursor: pointer; transition: background .15s; }
-.cal-day:hover { background: var(--surface-3); }
-.cal-day.empty { background: transparent; cursor: default; pointer-events: none; }
-.cal-day.today-day { background: var(--accent-soft); }
-.cal-num { font-size: 0.8125rem; font-weight: 600; color: var(--near-white); margin-bottom: 5px; }
-.cal-day.today-day .cal-num { color: var(--accent); font-weight: 700; }
-.cal-todo-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; }
-.cal-dot { width: 5px; height: 5px; border-radius: 50%; }
-/* week view */
-.calw-day { background: var(--surface-2); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: background .15s; }
-.calw-day:hover { background: var(--surface-3); }
-.calw-day.today-day { background: var(--accent-soft); }
-.calw-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
-.calw-dow { font-size: 0.75rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 0.5px; }
-.calw-num { font-family: var(--mono); font-size: 1.0625rem; font-weight: 600; }
-.calw-day.today-day .calw-num, .calw-day.today-day .calw-dow { color: var(--accent); }
-.calw-ev { font-size: 0.8125rem; color: var(--near-white); padding: 2px 0; display: flex; gap: 8px; }
-.calw-ev-time { color: var(--silver); font-weight: 600; flex-shrink: 0; min-width: 42px; }
-.calw-empty { font-size: 0.8125rem; color: #b3ada2; }
+.cal-summary { font-size: 0.8rem; color: var(--silver); margin-bottom: 14px; }
+.cal-summary b { color: var(--text); font-weight: 700; }
+.cal-toggle { display: flex; gap: 4px; background: var(--surface-2); border-radius: 9999px; padding: 4px; flex-shrink: 0; }
+.cal-toggle button { background: none; border: none; cursor: pointer; padding: 7px 16px; border-radius: 9999px;
+  font-size: 0.75rem; font-weight: 700; color: var(--silver); font-family: var(--sans); white-space: nowrap; transition: background .15s, color .15s; }
+.cal-toggle button.on { background: var(--surface); color: var(--accent); box-shadow: 0 1px 3px rgba(10,11,13,.10); }
 
-/* ── habits tab ── */
+/* month view — พื้นผิวขาวต่อเนื่องคลุมทุกสัปดาห์ (ไม่ใช่การ์ดแยกทีละสัปดาห์ กันขอบขาวโผล่แทรก) */
+.calw-headrow { display: flex; margin-bottom: 8px; }
+.calw-headrow span { flex: 1; text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 0.5px; }
+.calw-wrap { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-md); box-shadow: var(--shadow-card); padding: 4px 10px; }
+.calw-week { display: flex; gap: 3px; padding: 9px 0; }
+.calw-week + .calw-week { border-top: 1px solid var(--border-soft); }
+.calw-cell { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 6px 2px; border-radius: var(--r-sm); cursor: pointer; }
+.calw-cell.empty { visibility: hidden; pointer-events: none; }
+.calw-cell.today { background: var(--accent-soft); }
+.calw-cell-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.calw-cell.today .calw-cell-num { color: var(--accent); font-weight: 700; }
+.calw-cell-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.calw-cell-dot.none { background: transparent; }
+
+/* week mode — วันของสัปดาห์นั้นเป็นแถวในพื้นผิวเดียวกัน โชว์ event จริง (เวลา+ชื่อ) ไม่ใช่แค่จุด */
+.calwk-wrap { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-md); box-shadow: var(--shadow-card); padding: 2px 16px; }
+.calwk-row { display: flex; gap: 14px; padding: 13px 0; align-items: flex-start; }
+.calwk-row + .calwk-row { border-top: 1px solid var(--border-soft); }
+.calwk-day { width: 42px; flex-shrink: 0; text-align: center; padding-top: 1px; }
+.calwk-dow { font-size: 0.6rem; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: 0.4px; }
+.calwk-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.05rem; font-weight: 600; color: var(--text); margin-top: 2px; }
+.calwk-row.today .calwk-num { color: var(--accent); }
+.calwk-evlist { flex: 1; min-width: 0; padding-top: 1px; }
+.calwk-ev { display: flex; gap: 9px; padding: 3px 0; font-size: 0.82rem; }
+.calwk-ev-time { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--silver); font-size: 0.72rem; flex-shrink: 0; width: 38px; padding-top: 1px; }
+.calwk-ev-title { color: var(--text); font-weight: 600; }
+.calwk-empty { font-size: 0.78rem; color: var(--silver); padding-top: 2px; }
+
+/* ── habits tab (วงแหวนความคืบหน้าสไตล์ Apple Activity แทนตารางเดือนเต็มเดิม) ── */
 .habit-overview { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 16px; }
-.ho-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px 14px; text-align: center; }
-.ho-num { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+.ho-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-md); padding: 16px 14px; text-align: center; box-shadow: var(--shadow-card); }
+.ho-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
 .ho-num .ic-flame { width: 16px; height: 16px; vertical-align: -2px; }
 .ho-lbl { font-size: 0.6375rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 3px; }
-#habitTracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.habit-track-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px 18px; }
-.habit-track-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 6px; }
-.habit-track-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
-.habit-track-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.habit-streak { font-size: 0.8125rem; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 3px; }
-.habit-streak .ic-flame { width: 13px; height: 13px; }
-.habit-pct { font-size: 0.6875rem; font-weight: 700; color: var(--silver); background: var(--surface-2); padding: 2px 9px; border-radius: 9999px; }
-.habit-cal-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 4px; }
-.habit-cal-head { text-align: center; font-size: 0.5625rem; font-weight: 700; color: var(--silver); padding: 4px 0 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.habit-cal-day { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; font-weight: 500; color: #a8a59d; }
-.habit-cal-day.empty { background: transparent; }
-.habit-cal-day.done { background: rgba(93,184,114,0.18); color: var(--green); font-weight: 700; }
-.habit-cal-day.nodata { background: var(--surface-2); }
-.habit-cal-day.future { background: transparent; color: #ddd6cb; }
-.habit-cal-day.today-day { outline: 1.5px solid var(--accent); outline-offset: -1.5px; color: var(--accent); }
 
-/* modal/overlay = shared แล้ว (ย้ายไป app.css) */
+.hbring-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hbring-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-md); padding: 18px 12px 16px;
+  box-shadow: var(--shadow-card); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.hbring-ring { position: relative; width: 78px; height: 78px; margin-bottom: 10px; }
+.hbring-ring svg { width: 78px; height: 78px; display: block; transform: rotate(-90deg); }
+.hbring-bg { fill: none; stroke: var(--surface-2); stroke-width: 7; }
+.hbring-val { fill: none; stroke: var(--accent); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset .6s cubic-bezier(.4,0,.2,1); }
+.hbring-pct { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 700; font-size: 1rem; color: var(--text); }
+.hbring-name { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+.hbring-streak { margin-top: 6px; font-size: 0.65rem; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 3px;
+  background: var(--accent-soft); padding: 2px 9px; border-radius: 9999px; }
+.hbring-streak .ic-flame { width: 10px; height: 10px; }
 
 @media (max-width: 768px) {
   .habit-overview { gap: 10px; }
-  #habitTracks { grid-template-columns: 1fr; }
-  .cal-wrap { padding: 12px 10px; }
-  .cal-day { min-height: 46px; padding: 4px 3px; }
-  .cal-num { font-size: 0.75rem; }
-  .habit-track-card { padding: 12px 14px; }
+  .hbring-grid { grid-template-columns: 1fr; }
 }

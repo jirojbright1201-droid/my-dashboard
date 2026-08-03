@@ -2,6 +2,7 @@
 window.PlannerView = (function () {
   const DATA = window.PLANNER_DATA || {};
   const KEYS = window.PLANNER_KEYS || [];
+  const TODOS_DATA = window.PLANNER_TODOS_DATA || { todos: [] };
   const HABITS = ['exercise', 'read', 'water', 'sleep_early'];
   const HABIT_LABELS = { exercise: 'Exercise', read: 'Read', water: 'Water', sleep_early: 'Sleep early' };
 
@@ -50,6 +51,7 @@ window.PlannerView = (function () {
   // ── state ──
   let root, curMonth = '', selDay = '', activeTab = 'agenda';
   let calMode = 'month', calAnchor = '';
+  let overlayStack = [];
 
   // ── utils ──
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -60,6 +62,7 @@ window.PlannerView = (function () {
   const getMonthData = m => DATA[m] || { events: [], habits: [] };
   const allMonthsData = () => KEYS.map(getMonthData);
   const $ = id => root.querySelector('#' + id);
+  const fmtDDMon = ds => { const d = new Date(ds + 'T00:00:00'); return `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`; };
 
   function habitDoneMap() {
     const map = {}; HABITS.forEach(h => map[h] = new Set());
@@ -88,6 +91,10 @@ window.PlannerView = (function () {
       <div class="card"><div class="section-title">Timeline</div><div id="agTimeline"></div></div>
     </div>
 
+    <div id="pl-todo" class="pl-pane">
+      <div id="todoList"></div>
+    </div>
+
     <div id="pl-calendar" class="pl-pane">
       <div class="pl-ctl" style="justify-content:space-between;margin-bottom:14px">
         <div class="pl-ctl">
@@ -100,6 +107,7 @@ window.PlannerView = (function () {
           <button data-cmode="week">Week</button>
         </div>
       </div>
+      <div class="cal-summary" id="calSummary"></div>
       <div id="calWrap"></div>
     </div>
 
@@ -114,31 +122,26 @@ window.PlannerView = (function () {
     </div>
     <nav class="tabbar">
       <button class="pl-tab tab-item active" data-tab="agenda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Agenda</span></button>
-      <button class="pl-tab tab-item" data-tab="calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><span>Calendar</span></button>
-      <button class="pl-tab tab-item" data-tab="habits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 7-7"/><path d="M20 12a8 8 0 1 1-3.5-6.6"/></svg><span>Habits</span></button>
+      <button class="pl-tab tab-item" data-tab="todo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3,4H7V8H3V4M9,5V7H21V5H9M3,10H7V14H3V10M9,11V13H21V11H9M3,16H7V20H3V16M9,17V19H21V17H9"/></svg><span>Todo</span></button>
+      <button class="fab fab--dock" id="fab" aria-label="Quick capture">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        <span class="fab-badge" id="fabBadge"></span>
+      </button>
+      <button class="pl-tab tab-item" data-tab="calendar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/></svg><span>Calendar</span></button>
+      <button class="pl-tab tab-item" data-tab="habits"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.66 11.2C17.43 10.9 17.15 10.64 16.89 10.38C16.22 9.78 15.46 9.35 14.82 8.72C13.33 7.26 13 4.85 13.95 3C13 3.23 12.17 3.75 11.46 4.32C8.87 6.4 7.85 10.07 9.07 13.22C9.11 13.32 9.15 13.42 9.15 13.55C9.15 13.77 9 13.97 8.8 14.05C8.57 14.15 8.33 14.09 8.14 13.93C8.08 13.88 8.04 13.83 8 13.76C6.87 12.33 6.69 10.28 7.45 8.64C5.78 10 4.87 12.3 5 14.47C5.06 14.97 5.12 15.47 5.29 15.97C5.43 16.57 5.7 17.17 6 17.7C7.08 19.43 8.95 20.67 10.96 20.92C13.1 21.19 15.39 20.8 17.03 19.32C18.86 17.66 19.5 15 18.56 12.72L18.43 12.46C18.22 12 17.66 11.2 17.66 11.2M14.5 17.5C14.22 17.74 13.76 18 13.4 18.1C12.28 18.5 11.16 17.94 10.5 17.28C11.69 17 12.4 16.12 12.61 15.23C12.78 14.43 12.46 13.77 12.33 13C12.21 12.26 12.23 11.63 12.5 10.94C12.69 11.32 12.89 11.7 13.13 12C13.9 13 15.11 13.44 15.37 14.8C15.41 14.94 15.43 15.08 15.43 15.23C15.46 16.05 15.1 16.95 14.5 17.5H14.5Z"/></svg><span>Habits</span></button>
     </nav>
   </div>
 
-  <div class="overlay" id="plOverlay">
-    <div class="modal">
-      <div class="sheet-handle"></div>
-      <div class="modal-head">
-        <div><div class="modal-title" id="mTitle"></div><div class="modal-sub" id="mSub"></div></div>
-        <button class="modal-close" id="mClose"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-      </div>
-      <div class="modal-body" id="mBody"></div>
+  <div class="dp-page" id="dpPage">
+    <div class="dp-head">
+      <button class="dp-back" id="dpBack"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="dp-titlewrap"><div class="dp-title" id="dpTitle"></div><div class="dp-sub" id="dpSub"></div></div>
+    </div>
+    <div class="dp-body">
+      <div class="modal-sec-title">Events</div>
+      <div id="dpEvents"></div>
     </div>
   </div>`;
-
-  // ── render: shared item builders ──
-  function renderEventItem(e) {
-    const time = e.time || '';
-    const tags = ['Planner'];
-    return `<div class="todo-item">${time ? `<div class="event-time">${esc(time)}</div>` : ''}
-      <div class="todo-bar" style="background:var(--accent)"></div>
-      <div class="todo-content"><div class="todo-title">${esc(e.title)}</div>
-      <div class="todo-meta">${tags.map(t => `<span class="chip chip-cat">${esc(t)}</span>`).join('')}</div></div></div>`;
-  }
 
   // ── agenda ──
   function renderAgenda() {
@@ -161,11 +164,10 @@ window.PlannerView = (function () {
 
     $('agDayHead').innerHTML = `${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}${isT ? '<span class="td">Today</span>' : ''}`;
 
-    // timeline — events of the day, sorted by time
+    // timeline — events of the day, จัดกลุ่มตามช่วงเวลา (Morning/Afternoon/Evening/Anytime)
     const dayEvents = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === selDay)
       .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-    $('agTimeline').innerHTML = dayEvents.length ? `<div class="tl">${dayEvents.map(e => renderTimelineItem(e, isT)).join('')}</div>`
-      : '<div class="empty">No events today</div>';
+    $('agTimeline').innerHTML = dayEvents.length ? renderTimelineGrouped(dayEvents, isT) : '<div class="empty">No events today</div>';
 
     renderTodaySummary();
   }
@@ -177,19 +179,29 @@ window.PlannerView = (function () {
     return e.end_time < e.time ? (now >= e.time || now < e.end_time) : (now >= e.time && now < e.end_time);
   }
 
-  function renderTimelineItem(e, isT) {
-    const isNow = isEventNow(e, isT);
-    return `<div class="tl-item${isNow ? ' now' : ''}">
-      <div class="tl-time">${esc(e.time || '–')}</div>
-      <div class="tl-node"></div>
-      <div class="tl-card">
-        <div class="tl-ic">${eventIcon(e)}</div>
-        <div class="tl-card-main">
-          <div class="tl-title">${esc(e.title)}</div>
-        </div>
-        ${isNow ? '<span class="now-badge">Now</span>' : ''}
-      </div>
-    </div>`;
+  function periodOf(time) {
+    if (!time) return 'Anytime';
+    const h = parseInt(time.slice(0, 2), 10);
+    if (h < 12) return 'Morning';
+    if (h < 17) return 'Afternoon';
+    return 'Evening';
+  }
+  function renderTimelineGrouped(dayEvents, isT) {
+    const order = ['Morning', 'Afternoon', 'Evening', 'Anytime'];
+    const groups = {};
+    dayEvents.forEach(e => { const p = periodOf(e.time); (groups[p] ??= []).push(e); });
+    return order.filter(p => groups[p] && groups[p].length).map(p => `
+      <div class="tlg-group">
+        <div class="tlg-label">${p}</div>
+        ${groups[p].map(e => {
+          const isNow = isEventNow(e, isT);
+          return `<div class="tlg-row${isNow ? ' now' : ''}">
+            <div class="tlg-ic">${eventIcon(e)}</div>
+            <div class="tlg-title">${esc(e.title)}</div>
+            <div class="tlg-time">${esc(e.time || '')}</div>
+          </div>`;
+        }).join('')}
+      </div>`).join('');
   }
 
   function renderTodaySummary() {
@@ -201,9 +213,36 @@ window.PlannerView = (function () {
       <div class="hero-eyebrow">Today</div>
       <div class="tsum-date">${DAYS_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</div>
       <div class="hero-split">
-        <div class="hero-cell"><div class="hero-cell-lab">Events</div><div class="hero-cell-val" style="color:var(--accent-bright)">${evToday}</div></div>
+        <div class="hero-cell"><div class="hero-cell-lab">Events</div><div class="hero-cell-val">${evToday}</div></div>
         <div class="hero-cell"><div class="hero-cell-lab">Habits today</div><div class="hero-cell-val up">${hDone}/${HABITS.length}</div></div>
       </div>`;
+  }
+
+  // ── todo ──
+  function renderTodos() {
+    const td = today();
+    const items = (TODOS_DATA.todos || []).filter(t => t.status !== 'done');
+    const todoRow = t => {
+      let dueHtml = '';
+      if (t.due) {
+        if (t.due < td) dueHtml = `<span class="todo-due overdue">Overdue · ${fmtDDMon(t.due)}</span>`;
+        else if (t.due === td) dueHtml = `<span class="todo-due">Due today</span>`;
+        else dueHtml = `<span class="todo-due">${fmtDDMon(t.due)}</span>`;
+      }
+      return `<div class="todo-row">
+        <div class="todo-check"></div>
+        <div class="todo-body">
+          <div class="todo-title">${esc(t.title)}</div>
+          <div class="todo-meta">${t.category ? `<span class="chip chip-outline">${esc(t.category)}</span>` : ''}${dueHtml}</div>
+        </div>
+      </div>`;
+    };
+    const dueSoon = items.filter(t => t.due && t.due <= td).sort((a, b) => a.due.localeCompare(b.due));
+    const upcoming = items.filter(t => !t.due || t.due > td).sort((a, b) => (a.due || '').localeCompare(b.due || ''));
+    let html = '';
+    if (dueSoon.length) html += `<div class="card"><div class="section-title">Today</div>${dueSoon.map(todoRow).join('')}</div>`;
+    if (upcoming.length) html += `<div class="card"><div class="section-title">Upcoming</div>${upcoming.map(todoRow).join('')}</div>`;
+    $('todoList').innerHTML = html || '<div class="empty">No to-dos</div>';
   }
 
   // ── calendar ──
@@ -214,35 +253,51 @@ window.PlannerView = (function () {
     if (calMode === 'week') {
       const ws = startOfWeek(calAnchor), we = new Date(ws); we.setDate(we.getDate() + 6);
       $('calLabel').textContent = `${ws.getDate()} ${MONTHS_SHORT[ws.getMonth()]} – ${we.getDate()} ${MONTHS_SHORT[we.getMonth()]}`;
+      $('calSummary').innerHTML = '';
       const evByDate = {}; allMonthsData().flatMap(m => m.events || []).forEach(e => (evByDate[e.date] ??= []).push(e));
       let rows = '';
       for (let i = 0; i < 7; i++) {
         const d = new Date(ws); d.setDate(d.getDate() + i); const ds = fmtDate(d), isT = ds === td;
         const evs = (evByDate[ds] || []).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-        const body = evs.length ? evs.map(e => `<div class="calw-ev"><span class="calw-ev-time">${esc(e.time || '–')}</span><span>${esc(e.title)}</span></div>`).join('')
-          : '<div class="calw-empty">No events</div>';
-        rows += `<div class="calw-day${isT ? ' today-day' : ''}" data-open="${ds}">
-          <div class="calw-head"><span class="calw-dow">${DAYS_SHORT[d.getDay()]}</span><span class="calw-num">${d.getDate()}</span></div>${body}</div>`;
+        const body = evs.length ? evs.map(e => `<div class="calwk-ev"><span class="calwk-ev-time">${esc(e.time || '–')}</span><span class="calwk-ev-title">${esc(e.title)}</span></div>`).join('')
+          : '<div class="calwk-empty">No events</div>';
+        rows += `<div class="calwk-row${isT ? ' today' : ''}">
+          <div class="calwk-day"><span class="calwk-dow">${DAYS_SHORT[d.getDay()]}</span><span class="calwk-num">${d.getDate()}</span></div>
+          <div class="calwk-evlist">${body}</div>
+        </div>`;
       }
-      $('calWrap').innerHTML = `<div class="cal-wrap">${rows}</div>`;
+      $('calWrap').innerHTML = `<div class="calwk-wrap">${rows}</div>`;
     } else {
       const [y, m] = monthOf(calAnchor).split('-').map(Number);
       $('calLabel').textContent = `${MONTHS[m - 1]} ${y}`;
       const days = new Date(y, m, 0).getDate(), startDow = new Date(y, m - 1, 1).getDay();
-      const evByDate = {}; getMonthData(`${y}-${p2(m)}`).events.forEach(e => (evByDate[e.date] ??= []).push(e));
-      const heads = DAYS_SHORT.map(d => `<div class="cal-head">${d}</div>`).join('');
-      let cells = '';
-      for (let i = 0; i < startDow; i++) cells += `<div class="cal-day empty"></div>`;
-      for (let day = 1; day <= days; day++) {
-        const ds = `${y}-${p2(m)}-${p2(day)}`, isT = ds === td, ev = evByDate[ds] || [];
-        const dots = ev.slice(0, 8).map(e => `<div class="cal-dot" style="background:var(--accent)" title="${esc(e.title)}"></div>`).join('');
-        cells += `<div class="cal-day${isT ? ' today-day' : ''}" data-open="${ds}"><div class="cal-num">${day}</div>${dots ? `<div class="cal-todo-dots">${dots}</div>` : ''}</div>`;
+      const monthEvents = getMonthData(`${y}-${p2(m)}`).events || [];
+      const evByDate = {}; monthEvents.forEach(e => (evByDate[e.date] ??= []).push(e));
+      $('calSummary').innerHTML = monthEvents.length
+        ? `<b>${monthEvents.length}</b> event${monthEvents.length === 1 ? '' : 's'} in ${MONTHS[m - 1]}`
+        : `No events in ${MONTHS[m - 1]}`;
+      const heads = DAYS_SHORT.map(d => `<span>${d}</span>`).join('');
+      const cells = [];
+      for (let i = 0; i < startDow; i++) cells.push(null);
+      for (let day = 1; day <= days; day++) cells.push(day);
+      while (cells.length % 7 !== 0) cells.push(null);
+      let weeksHtml = '';
+      for (let w = 0; w < cells.length; w += 7) {
+        const week = cells.slice(w, w + 7);
+        weeksHtml += `<div class="calw-week">${week.map(day => {
+          if (day === null) return '<div class="calw-cell empty"></div>';
+          const ds = `${y}-${p2(m)}-${p2(day)}`, isT = ds === td, ev = evByDate[ds] || [];
+          return `<div class="calw-cell${isT ? ' today' : ''}" data-open="${ds}">
+            <span class="calw-cell-num">${day}</span>
+            <span class="calw-cell-dot${ev.length ? '' : ' none'}"></span>
+          </div>`;
+        }).join('')}</div>`;
       }
-      $('calWrap').innerHTML = `<div class="cal-wrap"><div class="cal-grid">${heads}${cells}</div></div>`;
+      $('calWrap').innerHTML = `<div class="calw-headrow">${heads}</div><div class="calw-wrap">${weeksHtml}</div>`;
     }
   }
 
-  // ── habits ──
+  // ── habits (วงแหวนความคืบหน้าสไตล์ Apple Activity) ──
   function streakOf(set) {
     let s = 0, d = new Date(today() + 'T00:00:00');
     for (let i = 0; i < 366; i++) { if (set.has(fmtDate(d))) { s++; d.setDate(d.getDate() - 1); } else break; }
@@ -253,29 +308,31 @@ window.PlannerView = (function () {
     const [y, m] = curMonth.split('-').map(Number);
     $('habLabel').textContent = `${MONTHS[m - 1]} ${y}`;
     const days = new Date(y, m, 0).getDate(), td = today(), done = habitDoneMap();
-    const startDow = new Date(y, m - 1, 1).getDay();
-    const dayHeaders = DAYS_SHORT.map(d => `<div class="habit-cal-head">${d}</div>`).join('');
+    const R = 32, C = 2 * Math.PI * R;
 
     let bestStreak = 0, totalDone = 0, totalElapsed = 0;
     const cards = HABITS.map(h => {
-      let doneCount = 0, elapsed = 0, cells = '';
-      for (let i = 0; i < startDow; i++) cells += `<div class="habit-cal-day empty"></div>`;
+      let doneCount = 0, elapsed = 0;
       for (let d = 1; d <= days; d++) {
-        const ds = `${y}-${p2(m)}-${p2(d)}`, isFuture = ds > td, isToday = ds === td;
-        let cls;
-        if (isFuture) cls = 'future';
-        else if (done[h].has(ds)) { cls = 'done'; doneCount++; elapsed++; }
-        else { cls = 'nodata'; elapsed++; }
-        cells += `<div class="habit-cal-day ${cls}${isToday ? ' today-day' : ''}">${d}</div>`;
+        const ds = `${y}-${p2(m)}-${p2(d)}`;
+        if (ds > td) continue;
+        elapsed++; if (done[h].has(ds)) doneCount++;
       }
       const pct = elapsed > 0 ? Math.round(doneCount / elapsed * 100) : 0;
       const streak = streakOf(done[h]);
       bestStreak = Math.max(bestStreak, streak); totalDone += doneCount; totalElapsed += elapsed;
-      return `<div class="habit-track-card"><div class="habit-track-header">
-        <span class="habit-track-name">${HABIT_LABELS[h]}</span>
-        <div class="habit-track-meta">${streak > 0 ? `<span class="habit-streak">${FLAME} ${streak}d</span>` : ''}
-        <span class="habit-pct">${doneCount}d · ${pct}%</span></div></div>
-        <div class="habit-cal-grid">${dayHeaders}${cells}</div></div>`;
+      const off = (C * (1 - pct / 100)).toFixed(1);
+      return `<div class="hbring-card">
+        <div class="hbring-ring">
+          <svg viewBox="0 0 78 78">
+            <circle class="hbring-bg" cx="39" cy="39" r="${R}"/>
+            <circle class="hbring-val" cx="39" cy="39" r="${R}" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off}"/>
+          </svg>
+          <div class="hbring-pct">${pct}%</div>
+        </div>
+        <div class="hbring-name">${HABIT_LABELS[h]}</div>
+        ${streak > 0 ? `<div class="hbring-streak">${FLAME} ${streak}d</div>` : ''}
+      </div>`;
     }).join('');
 
     const avgPct = totalElapsed > 0 ? Math.round(totalDone / totalElapsed * 100) : 0;
@@ -284,24 +341,36 @@ window.PlannerView = (function () {
       <div class="ho-card"><div class="ho-num" style="color:var(--accent)">${FLAME} ${bestStreak}</div><div class="ho-lbl">Best streak</div></div>
       <div class="ho-card"><div class="ho-num">${avgPct}%</div><div class="ho-lbl">This month</div></div>
       <div class="ho-card"><div class="ho-num" style="color:var(--green)">${tdDone}/${HABITS.length}</div><div class="ho-lbl">Today</div></div>`;
-    $('habitTracks').innerHTML = cards;
+    $('habitTracks').innerHTML = `<div class="hbring-grid">${cards}</div>`;
   }
 
-  // ── modal ──
-  function openModal(ds) {
+  // ── day detail — หน้าเต็มจอ ──
+  function openDayPage(ds) {
     const d = new Date(ds + 'T00:00:00');
     const evs = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === ds).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-    $('mTitle').textContent = `${d.getDate()} ${MONTHS[d.getMonth()]}`;
-    $('mSub').textContent = DAYS_FULL[d.getDay()];
-    let html = '';
-    if (evs.length) html += `<div class="modal-sec-title">Events</div>` + evs.map(renderEventItem).join('');
-    $('mBody').innerHTML = html || `<div class="modal-empty">No events</div>`;
-    $('plOverlay').classList.add('active');
+    $('dpTitle').textContent = `${d.getDate()} ${MONTHS[d.getMonth()]}`;
+    $('dpSub').textContent = `${DAYS_FULL[d.getDay()]} · ${evs.length} event${evs.length === 1 ? '' : 's'}`;
+    $('dpEvents').innerHTML = evs.length
+      ? evs.map(e => `<div class="dp-row"><div class="dp-time">${esc(e.time || '–')}</div><div class="dp-evtitle">${esc(e.title)}</div></div>`).join('')
+      : '<div class="empty">No events</div>';
+    $('dpPage').classList.add('active');
+    pushOverlayState('day');
   }
-  function closeModal() {
-    const o = $('plOverlay');
-    o.classList.add('closing');
-    setTimeout(() => o.classList.remove('active', 'closing'), 300);
+  function closeDayPage() { $('dpPage').classList.remove('active'); }
+
+  // ── ผูกหน้าเต็มจอเข้ากับ browser history (ดูเหตุผลในข้อ 8.6 ของ CLAUDE.md — กัน Android back ข้ามออกจากแอป) ──
+  function pushOverlayState(kind) {
+    overlayStack.push(kind);
+    history.pushState({ plOverlay: kind }, '');
+  }
+  function goBackIfOverlay() {
+    if (history.state && history.state.plOverlay) history.back();
+  }
+  function wirePopstate() {
+    window.addEventListener('popstate', () => {
+      const kind = overlayStack.pop();
+      if (kind === 'day') closeDayPage();
+    });
   }
 
   // ── tab switching ──
@@ -313,6 +382,7 @@ window.PlannerView = (function () {
   }
   function renderTab(tab) {
     if (tab === 'agenda') renderAgenda();
+    else if (tab === 'todo') renderTodos();
     else if (tab === 'calendar') renderCalendar();
     else if (tab === 'habits') renderHabits();
   }
@@ -343,28 +413,10 @@ window.PlannerView = (function () {
     root.addEventListener('click', e => {
       const sd = e.target.closest('[data-selday]');
       if (sd) { selDay = sd.dataset.selday; renderAgenda(); return; }
-      const o = e.target.closest('[data-open]'); if (o) openModal(o.dataset.open);
+      const o = e.target.closest('[data-open]'); if (o) openDayPage(o.dataset.open);
     });
-    $('mClose').onclick = closeModal;
-    $('plOverlay').onclick = e => { if (e.target === $('plOverlay')) closeModal(); };
-
-    // drag-to-dismiss bottom sheet (จับจาก handle/head)
-    const sheet = $('plOverlay').querySelector('.modal');
-    let sy = 0, dragging = false;
-    sheet.addEventListener('touchstart', e => {
-      if (!e.target.closest('.sheet-handle, .modal-head')) return;
-      sy = e.touches[0].clientY; dragging = true; sheet.style.transition = 'none';
-    }, { passive: true });
-    sheet.addEventListener('touchmove', e => {
-      if (!dragging) return;
-      const dy = e.touches[0].clientY - sy;
-      if (dy > 0) sheet.style.transform = `translateY(${dy}px)`;
-    }, { passive: true });
-    sheet.addEventListener('touchend', e => {
-      if (!dragging) return;
-      dragging = false; sheet.style.transition = ''; sheet.style.transform = '';
-      if (e.changedTouches[0].clientY - sy > 90) closeModal();
-    }, { passive: true });
+    $('dpBack').onclick = goBackIfOverlay;
+    wirePopstate();
   }
 
   // ── public ──
