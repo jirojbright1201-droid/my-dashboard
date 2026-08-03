@@ -14,10 +14,12 @@ window.PlannerView = (function () {
 
   // ── contextual stickers (inline SVG เส้น สีเดียวตามธีม — รูปทรงต่างตามบริบท) ──
   const S = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+  // ── filled icon (Material Design Icons, MIT, via cdn.jsdelivr.net/npm/@mdi/svg — real path data, ห้ามเดา) ──
+  const F = (p) => `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${p}</svg>`;
   const ICONS = {
     mcdonalds: S('<path d="M4 10a8 8 0 0 1 16 0z"/><path d="M3 13.5h18"/><path d="M5 16.5h14a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 16.5z"/>'),
     work:     S('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
-    sleep:    S('<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/>'),
+    sleep:    F('<path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z"/>'), // mdi-bed
     exercise: S('<path d="M2.5 12h2M19.5 12h2"/><rect x="4.5" y="8.5" width="3" height="7" rx="1"/><rect x="16.5" y="8.5" width="3" height="7" rx="1"/><path d="M7.5 12h9"/>'),
     read:     S('<path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/>'),
     clean:    S('<path d="M12 3l1.5 4L18 8.5 13.5 10 12 14l-1.5-4L6 8.5 10.5 7z"/><path d="M18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>'),
