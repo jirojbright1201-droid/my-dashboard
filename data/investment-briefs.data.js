@@ -20,6 +20,17 @@ window.INVESTMENT_BRIEFS = [
     "url": "https://www.fool.com/investing/2026/08/01/warren-buffetts-berkshire-hathaway-is-sounding-a-w/",
     "image": "",
     "topic": "market"
+  },
+  {
+    "id": "nw0014",
+    "date": "2026-08-02",
+    "title": "ตลาดหุ้นสหรัฐฯ ยังผันผวนรอตัวเลขจ้างงาน จับตาสัปดาห์งบไตรมาส 2 คึกคักที่สุดของปี",
+    "summary": "ดัชนี S&P 500 บวกกว่า 9% ตั้งแต่ต้นปี แต่ยังต่ำกว่าจุดสูงสุด 2 มิ.ย. ราว 1.6% ตลาดจับตารายงานจ้างงานนอกภาคเกษตรวันที่ 7 ส.ค. คาดเพิ่ม 83,000 ตำแหน่ง อัตราว่างงาน 4.3% พร้อมสัปดาห์งบไตรมาส 2 คึกคักกว่า 1 ใน 4 ของ S&P 500 รวมถึง SpaceX, Eli Lilly, AMD, Caterpillar, Palantir และ Merck ท่ามกลางความกังวล AI ร้อนแรงเกินไป หุ้นชิปร่วงในเดือนก.ค. และท่าที \"hawkish hold\" ของประธานเฟดคนใหม่ Kevin Warsh ที่ตลาดให้น้ำหนักโอกาสขึ้นดอกเบี้ยเดือนก.ย. ที่ 64%",
+    "macro": true,
+    "sourceName": "Investing.com (Reuters)",
+    "url": "https://www.investing.com/news/economy-news/teetering-us-stock-market-faces-jobs-report-big-earnings-week-4829696",
+    "image": "",
+    "topic": "market"
   }
 ];
-window.INVESTMENT_UPDATED = "02/08/2026";
+window.INVESTMENT_UPDATED = "03/08/2026";
