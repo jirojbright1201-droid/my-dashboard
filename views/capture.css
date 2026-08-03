@@ -5,10 +5,18 @@
   box-shadow: 0 12px 26px -8px rgba(26,22,19,.55); display: flex; align-items: center; justify-content: center;
   cursor: pointer; transition: transform .12s, box-shadow .15s; }
 .fab:active { transform: scale(.9); }
-.fab svg { width: 26px; height: 26px; }
+.fab svg { width: 26px; height: 26px; transform: translate(1px, 1.5px); }
 .fab-badge { position: absolute; top: -3px; right: -3px; min-width: 20px; height: 20px; padding: 0 5px;
   border-radius: 9999px; background: var(--text); color: #fff; font-size: 0.6875rem; font-weight: 700;
   display: none; align-items: center; justify-content: center; border: 2px solid #fff; }
+
+/* ── docked variant — ฝังกลาง tabbar ยกตัวขึ้น (Money, 3 ส.ค. 2026) แทนลอยมุมขวาล่าง
+   ใช้ var(--accent)/var(--bg) ที่ .mny-shell override ไว้แล้ว ไม่ hardcode สี กันแอปอื่นที่ยังไม่ reskin */
+.fab.fab--dock { position: relative; right: auto; bottom: auto; z-index: 1;
+  flex: 0 0 50px; width: 50px; height: 50px; margin-top: -24px;
+  background: var(--accent); color: #fff; border: 3px solid var(--bg);
+  box-shadow: 0 4px 14px rgba(0,82,255,.28); }
+.fab--dock svg { transform: none; }
 
 .cap-types { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
 .cap-type { border: 1px solid var(--border); background: var(--surface); color: var(--silver); font-family: inherit;
