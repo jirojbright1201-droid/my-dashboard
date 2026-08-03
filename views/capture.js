@@ -94,16 +94,32 @@
 
   // ── ผูกเข้ากับ browser history กัน Android back ข้ามออกจากแอปทั้งที่แค่อยากปิดกล่อง (ดูข้อ 8.6 ของ CLAUDE.md) ──
   let capOpen = false;
+
+  // ── กันคีย์บอร์ดบัง popup (เพิ่ม 4 ส.ค. 2026): Android Chrome ไม่ resize fixed/inset:0 ตาม visible area
+  // เวลาคีย์บอร์ดเปิดโดย default (ต้อง visualViewport เอง) — ไม่งั้น popup ที่จัดกลางจอ (Money) จะโดนคีย์บอร์ดบังครึ่งล่าง
+  function fitViewport() {
+    if (!capOpen || !window.visualViewport) return;
+    const vv = window.visualViewport, o = $('capOverlay');
+    o.style.height = vv.height + 'px';
+    o.style.top = vv.offsetTop + 'px';
+  }
+  function clearViewportFit() {
+    const o = $('capOverlay');
+    if (o) { o.style.height = ''; o.style.top = ''; }
+  }
+
   function open() {
     renderTypes(); renderList();
     $('capOverlay').classList.add('active');
     capOpen = true;
     history.pushState({ capOverlay: true }, '');
+    fitViewport();
     setTimeout(() => $('capText').focus(), 60);
   }
   function closeDom() {
     if (!capOpen) return;
     capOpen = false;
+    clearViewportFit();
     const o = $('capOverlay'); o.classList.add('closing');
     setTimeout(() => o.classList.remove('active', 'closing'), 300);
   }
@@ -121,6 +137,10 @@
       save(load().filter(it => it.id !== d.dataset.id)); renderList();
     });
     window.addEventListener('popstate', () => { if (capOpen) closeDom(); });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', fitViewport);
+      window.visualViewport.addEventListener('scroll', fitViewport);
+    }
     updateBadge();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
