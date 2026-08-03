@@ -1,9 +1,10 @@
 // Investment PWA service worker (scope: /investment/)
-const CACHE = 'investment-v2';
+const CACHE = 'investment-v3';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
-  '../data/investment.data.js', '../views/investment.js', '../views/investment.css',
+  '../data/investment-briefs.data.js', '../data/investment-portfolio.data.js', '../data/investment-earnings.data.js', '../data/investment-deepdives.data.js',
+  '../views/investment.js', '../views/investment.css',
   '../icons/investment-192.png', '../icons/investment-512.png'
 ];
 self.addEventListener('install', e => {

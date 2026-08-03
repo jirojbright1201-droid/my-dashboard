@@ -1,11 +1,10 @@
-// ===== Investment Tracker hub — สรุปข่าวการลงทุน/การเงินโลกรายวัน (data: data/investment.data.js) =====
+// ===== Investment Tracker hub — สรุปข่าวการลงทุน/การเงินโลกรายวัน (data: data/investment-briefs.data.js + investment-portfolio.data.js + investment-earnings.data.js + investment-deepdives.data.js — แยกไฟล์ตามประเภท 3 ส.ค. 2026 กันไฟล์รวมเกิน 256KB) =====
 // ลุค Editorial (หนังสือพิมพ์/Apple News) — jiroj เลือกเอง 21 ก.ค. 2026: masthead แทน hero เข้ม, พาดหัว serif, filter แท็บขีดเส้นใต้
 window.InvestmentView = (function () {
-  const DATA = window.INVESTMENT_DATA || { briefs: [], portfolioReviews: [], earningsReviews: [], companyDeepDives: [] };
-  const BRIEFS = DATA.briefs || [];
-  const REVIEWS = DATA.portfolioReviews || [];
-  const EARNINGS = DATA.earningsReviews || [];
-  const DEEPDIVES = DATA.companyDeepDives || [];
+  const BRIEFS = window.INVESTMENT_BRIEFS || [];
+  const REVIEWS = window.INVESTMENT_PORTFOLIO_REVIEWS || [];
+  const EARNINGS = window.INVESTMENT_EARNINGS_REVIEWS || [];
+  const DEEPDIVES = window.INVESTMENT_DEEP_DIVES || [];
   const VERDICT_LABEL = { beat: 'Beat', miss: 'Miss', inline: 'In-line' };
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
