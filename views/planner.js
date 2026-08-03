@@ -28,24 +28,86 @@ window.PlannerView = (function () {
     shower:   S('<path d="M12 3c3 3.5 6 7.2 6 10.5a6 6 0 0 1-12 0C6 10.2 9 6.5 12 3z"/>'),
     default:  S('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>')
   };
-  function eventIcon(e) {
+  const ICON_LABELS = {
+    mcdonalds: 'Fast food', work: 'Work', sleep: 'Sleep', exercise: 'Exercise', read: 'Reading',
+    clean: 'Cleaning', doc: 'Errands', video: 'Content', food: 'Food', game: 'Gaming', shower: 'Shower', default: 'Other'
+  };
+  function eventIconKey(e) {
     const title = typeof e === 'string' ? e : (e && e.title) || '';
     const cat = typeof e === 'object' && e && e.icon;
-    if (cat && ICONS[cat]) return ICONS[cat];
+    if (cat && ICONS[cat]) return cat;
     const t = (title || '').toLowerCase();
     const has = (...ks) => ks.some(k => t.includes(k));
-    if (has("mcdonald", "แมค")) return ICONS.mcdonalds;
-    if (has("sleep", "นอน")) return ICONS.sleep;
-    if (has("อาบน้ำ", "shower", "bath", "อาบ")) return ICONS.shower;
-    if (has("กินข้าว", "กิน", "ข้าว", "อาหาร", "มื้อ", "food", "eat", "dinner", "lunch", "breakfast")) return ICONS.food;
-    if (has("เกม", "game")) return ICONS.game;
-    if (has("ออกกำลัง", "วิ่ง", "ยิม", "exercise", "gym", "เวท", "workout", "run")) return ICONS.exercise;
-    if (has("อ่าน", "read", "หนังสือ", "book", "เรียน", "study")) return ICONS.read;
-    if (has("ทำความสะอาด", "clean", "ล้าง", "เก็บกวาด", "ซัก", "กวาด")) return ICONS.clean;
-    if (has("บัตร", "เอกสาร", "ธุระ", "ราชการ", "ธนาคาร", "id", "document", "passport")) return ICONS.doc;
-    if (has("youtube", "วิดีโอ", "video", "agent", "content", "อัด", "ถ่าย", "คลิป", "stream", "live")) return ICONS.video;
-    if (has("work", "งาน", "ทำงาน", "ประชุม", "meeting")) return ICONS.work;
-    return ICONS.default;
+    if (has("mcdonald", "แมค")) return 'mcdonalds';
+    if (has("sleep", "นอน")) return 'sleep';
+    if (has("อาบน้ำ", "shower", "bath", "อาบ")) return 'shower';
+    if (has("กินข้าว", "กิน", "ข้าว", "อาหาร", "มื้อ", "food", "eat", "dinner", "lunch", "breakfast")) return 'food';
+    if (has("เกม", "game")) return 'game';
+    if (has("ออกกำลัง", "วิ่ง", "ยิม", "exercise", "gym", "เวท", "workout", "run")) return 'exercise';
+    if (has("อ่าน", "read", "หนังสือ", "book", "เรียน", "study")) return 'read';
+    if (has("ทำความสะอาด", "clean", "ล้าง", "เก็บกวาด", "ซัก", "กวาด")) return 'clean';
+    if (has("บัตร", "เอกสาร", "ธุระ", "ราชการ", "ธนาคาร", "id", "document", "passport")) return 'doc';
+    if (has("youtube", "วิดีโอ", "video", "agent", "content", "อัด", "ถ่าย", "คลิป", "stream", "live")) return 'video';
+    if (has("work", "งาน", "ทำงาน", "ประชุม", "meeting")) return 'work';
+    return 'default';
+  }
+  function eventIcon(e) { return ICONS[eventIconKey(e)]; }
+
+  // ── time breakdown donut (Calendar tab) — นับเฉพาะ event ที่มี time+end_time ครบ ──
+  function toMin(hhmm) {
+    const m = /^(\d{1,2}):(\d{2})$/.exec(String(hhmm || '').trim());
+    return m ? Number(m[1]) * 60 + Number(m[2]) : null;
+  }
+  function eventDuration(e) {
+    const s = toMin(e.time), en = toMin(e.end_time);
+    if (s == null || en == null) return null;
+    let diff = en - s; if (diff <= 0) diff += 24 * 60;
+    return diff;
+  }
+  function timeBreakdown(events) {
+    const m = {};
+    events.forEach(e => { const d = eventDuration(e); if (d == null) return; const k = eventIconKey(e); m[k] = (m[k] || 0) + d; });
+    return Object.entries(m).sort((a, b) => b[1] - a[1]);
+  }
+  function fmtDur(min) {
+    const h = Math.floor(min / 60), m = min % 60;
+    return h ? (m ? `${h}h ${m}m` : `${h}h`) : `${m}m`;
+  }
+  const _clerp = (a, b, t) => Math.round(a + (b - a) * t);
+  const _chx = n => n.toString(16).padStart(2, '0');
+  function calRamp(n) {
+    const c1 = [0x00, 0x22, 0x7a], c2 = [0x93, 0xb3, 0xf2]; // navy เข้ม → ฟ้าอ่อน (เฉดเดียวกับ accent)
+    if (n <= 1) return ['#0052ff'];
+    return Array.from({ length: n }, (_, i) => {
+      const t = i / (n - 1);
+      return '#' + _chx(_clerp(c1[0], c2[0], t)) + _chx(_clerp(c1[1], c2[1], t)) + _chx(_clerp(c1[2], c2[2], t));
+    });
+  }
+  function donutCSS(pairs, total, cols) {
+    if (!total) return 'conic-gradient(var(--surface-3) 0 100%)';
+    let acc = 0;
+    const stops = pairs.map(([, val], i) => {
+      const a = acc / total * 100; acc += val; const b = acc / total * 100;
+      return `${cols[i]} ${a.toFixed(2)}% ${b.toFixed(2)}%`;
+    });
+    return `conic-gradient(${stops.join(',')})`;
+  }
+  function renderCalDonut(events) {
+    const pairs = timeBreakdown(events);
+    const total = pairs.reduce((s, [, v]) => s + v, 0);
+    const cols = calRamp(pairs.length || 1);
+    const body = pairs.length ? `
+      <div class="cal-donut-wrap">
+        <div class="cal-donut" style="background:${donutCSS(pairs, total, cols)}">
+          <div class="cal-donut-hole"><span>${fmtDur(total)}</span><small>Tracked</small></div>
+        </div>
+        <div class="cal-donut-leg">${pairs.map(([k, v], i) => `<div class="cal-donut-leg-row">
+          <span class="cal-donut-dot" style="background:${cols[i]}"></span>
+          <span class="cal-donut-leg-lbl">${esc(ICON_LABELS[k] || 'Other')}</span>
+          <span class="cal-donut-leg-val">${fmtDur(v)} · ${total ? Math.round(v / total * 100) : 0}%</span>
+        </div>`).join('')}</div>
+      </div>` : `<div class="empty">No timed events yet — add an end time when logging an event to see your breakdown</div>`;
+    $('calDonut').innerHTML = `<div class="card"><div class="section-title">Time breakdown</div>${body}</div>`;
   }
 
   // ── state ──
@@ -109,6 +171,7 @@ window.PlannerView = (function () {
       </div>
       <div class="cal-summary" id="calSummary"></div>
       <div id="calWrap"></div>
+      <div id="calDonut"></div>
     </div>
 
     <div id="pl-habits" class="pl-pane">
@@ -255,10 +318,11 @@ window.PlannerView = (function () {
       $('calLabel').textContent = `${ws.getDate()} ${MONTHS_SHORT[ws.getMonth()]} – ${we.getDate()} ${MONTHS_SHORT[we.getMonth()]}`;
       $('calSummary').innerHTML = '';
       const evByDate = {}; allMonthsData().flatMap(m => m.events || []).forEach(e => (evByDate[e.date] ??= []).push(e));
-      let rows = '';
+      let rows = '', weekEvents = [];
       for (let i = 0; i < 7; i++) {
         const d = new Date(ws); d.setDate(d.getDate() + i); const ds = fmtDate(d), isT = ds === td;
         const evs = (evByDate[ds] || []).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+        weekEvents = weekEvents.concat(evs);
         const body = evs.length ? evs.map(e => `<div class="calwk-ev"><span class="calwk-ev-time">${esc(e.time || '–')}</span><span class="calwk-ev-title">${esc(e.title)}</span></div>`).join('')
           : '<div class="calwk-empty">No events</div>';
         rows += `<div class="calwk-row${isT ? ' today' : ''}">
@@ -267,6 +331,7 @@ window.PlannerView = (function () {
         </div>`;
       }
       $('calWrap').innerHTML = `<div class="calwk-wrap">${rows}</div>`;
+      renderCalDonut(weekEvents);
     } else {
       const [y, m] = monthOf(calAnchor).split('-').map(Number);
       $('calLabel').textContent = `${MONTHS[m - 1]} ${y}`;
@@ -294,6 +359,7 @@ window.PlannerView = (function () {
         }).join('')}</div>`;
       }
       $('calWrap').innerHTML = `<div class="calw-headrow">${heads}</div><div class="calw-wrap">${weeksHtml}</div>`;
+      renderCalDonut(monthEvents);
     }
   }
 
