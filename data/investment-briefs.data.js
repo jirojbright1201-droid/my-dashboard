@@ -64,6 +64,39 @@ window.INVESTMENT_BRIEFS = [
     "url": "https://uk.investing.com/news/stock-market-news/us-stock-futures-rise-as-trump-touts-iran-negotiations-4804067",
     "image": "",
     "topic": "market"
+  },
+  {
+    "id": "nw0018",
+    "date": "2026-08-04",
+    "title": "Palantir โชว์งบ Q2 2026 เทพ รายได้พุ่ง 93% ปรับเป้าทั้งปีขึ้นยกแผง",
+    "summary": "Palantir รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 1.935 พันล้านดอลลาร์ โต 93% เทียบปีก่อน นำโดยรายได้ฝั่งลูกค้าองค์กรสหรัฐฯ ที่โต 149% กำไรต่อหุ้น (EPS) ปรับปรุงอยู่ที่ 0.41 ดอลลาร์ พร้อม Rule of 40 (เกณฑ์รวมอัตราการเติบโตกับมาร์จิ้นกำไรต้องได้อย่างน้อย 40) แตะ 155% บริษัทปรับเป้ารายได้ทั้งปีขึ้นเป็น 8.15-8.16 พันล้านดอลลาร์ (โต 82%) สะท้อนดีมานด์ AI สำหรับองค์กรที่ยังแรงต่อเนื่อง",
+    "macro": false,
+    "sourceName": "Palantir Technologies (earnings release)",
+    "url": "https://lasvegassun.com/news/2026/aug/03/palantir-reports-q2-2026-us-comm-revenue-growth-of/",
+    "image": "",
+    "topic": "bigtech"
+  },
+  {
+    "id": "nw0019",
+    "date": "2026-08-04",
+    "title": "ตลาดหุ้นสหรัฐฯ ปิดพุ่งแรงรับข่าวดีอิหร่าน-หุ้นเทคใหญ่ Dow ทำสถิติใหม่",
+    "summary": "ตลาดหุ้นสหรัฐฯ ปิดวันจันทร์บวกทั้งกระดาน S&P 500 +1.48% ปิดที่ 7,600.50 จุด Dow Jones +1.32% ปิดทำสถิติสูงสุดใหม่ที่ 53,178.41 จุด ส่วน Nasdaq +2.13% ปิดที่ 25,913.90 จุด แรงหนุนจากหุ้นเทคใหญ่และท่าทีผ่อนคลายในสงครามอิหร่าน-สหรัฐฯ หลังทรัมป์ยกเลิกแผนโจมตี ฤดูกาลรายงานผลประกอบการไตรมาส 2 ที่ราว 61% ของบริษัทใน S&P 500 รายงานแล้วในตอนนี้ 86% ทำกำไรต่อหุ้นเหนือประมาณการนักวิเคราะห์",
+    "macro": true,
+    "sourceName": "Yahoo Finance",
+    "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-august-3-dow-sp-500-nasdaq-big-tech-oil-092516872.html",
+    "image": "",
+    "topic": "market"
+  },
+  {
+    "id": "nw0020",
+    "date": "2026-08-04",
+    "title": "อิหร่านปฏิเสธเจรจาตรงกับสหรัฐฯ ยันคุยแค่โอมานเรื่องเปิดช่องแคบฮอร์มุซ",
+    "summary": "กระทรวงต่างประเทศอิหร่านแถลงว่าไม่ได้เจรจาโดยตรงกับสหรัฐฯ ตามที่ทรัมป์เคยกล่าวอ้าง มีเพียงการเจรจากับโอมานเรื่องเส้นทางเดินเรือชั่วคราวผ่านช่องแคบฮอร์มุซที่ใกล้ได้ข้อสรุปแล้ว ราคาน้ำมัน Brent ร่วงต่อเนื่องกว่า 4.6% เหลือราว 83 ดอลลาร์ต่อบาร์เรล ขณะทรัมป์ยังคงเรียกร้องให้เปิดช่องแคบอย่างสมบูรณ์และให้อิหร่านยุติกิจกรรมนิวเคลียร์ควบคู่กัน",
+    "macro": true,
+    "sourceName": "The Spokesman-Review (Bloomberg)",
+    "url": "https://www.spokesman.com/stories/2026/aug/03/iran-says-hormuz-talks-ongoing-after-trump-calls-o/",
+    "image": "",
+    "topic": "oil"
   }
 ];
-window.INVESTMENT_UPDATED = "03/08/2026";
+window.INVESTMENT_UPDATED = "04/08/2026";
