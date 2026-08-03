@@ -16,8 +16,8 @@ window.INVESTMENT_BRIEFS = [
     title: "ราคาน้ำมันดิบทรุดกว่า 6% รับสัญญาณเจรจาสหรัฐฯ-อิหร่านคลี่คลายความเสี่ยงช่องแคบฮอร์มุซ",
     summary: "ราคาน้ำมันดิบเวสต์เทกซัส (WTI) ร่วงลงมาอยู่ที่ราว 79.62 ดอลลาร์สหรัฐต่อบาร์เรล ลดลงเกือบ 6% ส่วนเบรนท์ (Brent) ก็ปรับลงในทิศทางเดียวกัน หลังทรัมป์ประกาศเลื่อนแผนโจมตีอิหร่านออกไปเพื่อเปิดทางเจรจา ทำให้ความเสี่ยงที่ช่องแคบฮอร์มุซ (เส้นทางขนส่งน้ำมันสำคัญของโลก) จะถูกปิดกั้นลดลงทันที แม้ฝั่งอิหร่านจะระบุว่ายังไม่ได้เจรจาตรงกับสหรัฐฯ มีเพียงการคุยผ่านโอมานเท่านั้น",
     macro: true,
-    sourceName: "Trading Economics",
-    url: "https://tradingeconomics.com/commodity/crude-oil",
+    sourceName: "CNBC",
+    url: "https://www.cnbc.com/2026/08/03/gold-firms-as-oil-prices-slump-after-trump-holds-off-on-iran-attack.html",
     image: "",
     topic: "oil"
   },
@@ -97,6 +97,17 @@ window.INVESTMENT_BRIEFS = [
     url: "https://www.forbes.com/sites/petercohan/2026/07/08/intel-stock-down-21-inside-the-july-2026-semiconductor-selloff/",
     image: "",
     topic: "chips"
+  },
+  {
+    id: "nw0010",
+    date: "2026-08-04",
+    title: "Sterling Infrastructure โชว์งบไตรมาส 2 ทำสถิติสูงสุด รายได้พุ่ง 90% หนุนจากงานสร้างศูนย์ข้อมูล AI",
+    summary: "Sterling Infrastructure (STRL) บริษัทรับเหมาก่อสร้างโครงสร้างพื้นฐาน รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 1.17 พันล้านดอลลาร์สหรัฐ เพิ่มขึ้น 90% จากปีก่อน (ส่วนหนึ่งมาจากการเข้าซื้อกิจการ CEC และ Stone Ridge) กำไรต่อหุ้นปรับปรุง (adjusted EPS) อยู่ที่ 5.80 ดอลลาร์ สูงกว่าที่นักวิเคราะห์คาดไว้ที่ 5.01 ดอลลาร์ชัดเจน งานในมือ (backlog) ณ สิ้นไตรมาสพุ่งขึ้น 116% เป็น 4.33 พันล้านดอลลาร์ ได้แรงหนุนจากงานก่อสร้างศูนย์ข้อมูล (data center) รองรับ AI และเซมิคอนดักเตอร์ที่เพิ่มขึ้นต่อเนื่อง บริษัทจึงปรับเพิ่มเป้ากำไรต่อหุ้นปรับปรุงทั้งปี 2026 เป็นช่วง 19.70-20.30 ดอลลาร์",
+    macro: false,
+    sourceName: "StockTitan",
+    url: "https://www.stocktitan.net/news/STRL/sterling-reports-record-second-quarter-results-and-raises-full-year-gwj4bq38afrk.html",
+    image: "",
+    topic: ""
   }
 ];
 window.INVESTMENT_UPDATED = "04/08/2026";
