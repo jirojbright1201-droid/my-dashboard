@@ -7,10 +7,17 @@
 window.PLANNER_DATA = {
   "2026-08": {
     "events": [
-      {"date":"2026-08-04","title":"นอน","time":"10:00","end_time":"18:00","icon":"sleep","notes":""}
+      {"date":"2026-08-03","title":"ทำงาน (Crew FT)","time":"22:00","end_time":"07:00","icon":"work","notes":""},
+      {"date":"2026-08-04","title":"นอน","time":"10:00","end_time":"18:00","icon":"sleep","notes":""},
+      {"date":"2026-08-04","title":"ทำงาน (Crew FT)","time":"22:00","end_time":"07:00","icon":"work","notes":""},
+      {"date":"2026-08-05","title":"ทำงาน (Crew FT)","time":"23:00","end_time":"08:00","icon":"work","notes":""},
+      {"date":"2026-08-06","title":"ทำงาน (Crew FT)","time":"22:00","end_time":"07:00","icon":"work","notes":""},
+      {"date":"2026-08-07","title":"ทำงาน (Crew FT)","time":"22:00","end_time":"07:00","icon":"work","notes":""},
+      {"date":"2026-08-08","title":"ทำงาน (Crew FT)","time":"22:00","end_time":"07:00","icon":"work","notes":""}
     ],
     "habits": []
   }
 };
 window.PLANNER_KEYS = ["2026-08"];
 window.PLANNER_UPDATED = "04/08/2026";
+
