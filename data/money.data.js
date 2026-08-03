@@ -32,16 +32,16 @@ window.MONEY_DATA = {
       { "date": "2026-08-02", "amount": 80, "category": "Laundry", "name": "Hot water laundry 14kg", "name_th": "ซักผ้าน้ำร้อน 14 Kg", "notes": "" },
       { "date": "2026-08-02", "amount": 70, "category": "Restaurant", "name": "Five Star grilled chicken", "name_th": "ไก่ย่างห้าดาว", "notes": "" },
       { "date": "2026-08-02", "amount": 132, "category": "Entertainment", "name": "Blood Strike top-up", "name_th": "เติมเกม Blood Strike", "notes": "" },
-      { "date": "2026-08-03", "amount": 2800, "category": "Rent", "name": "Room deposit", "name_th": "ค่ามัดจำห้อง", "notes": "" },
-      { "date": "2026-08-03", "amount": 2800, "category": "Rent", "name": "Monthly rent", "name_th": "ค่าเช่าห้อง", "notes": "" },
-      { "date": "2026-08-03", "amount": 30, "category": "Shopping", "name": "Lenuo phone case with stand (installment 1/5)", "name_th": "เคสโทรศัพท์ Lenuo พร้อมที่ตั้งโทรศัพท์ (ผ่อนงวด 1/5)", "notes": "" },
-      { "date": "2026-08-03", "amount": 43, "category": "Shopping", "name": "Fertilizer sack bag 50g (installment 1/5)", "name_th": "กระสอบถุงปุ๋ย 50 กรัม (ผ่อนงวด 1/5)", "notes": "" },
-      { "date": "2026-08-03", "amount": 64, "category": "Shopping", "name": "Kiprun stopwatch (installment 1/5)", "name_th": "นาฬิกาจับเวลา Kiprun (ผ่อนงวด 1/5)", "notes": "" },
+      { "date": "2026-08-01", "amount": 2800, "category": "Rent", "name": "Room deposit", "name_th": "ค่ามัดจำห้อง", "notes": "" },
+      { "date": "2026-08-01", "amount": 2800, "category": "Rent", "name": "Monthly rent", "name_th": "ค่าเช่าห้อง", "notes": "" },
+      { "date": "2026-08-01", "amount": 30, "category": "Shopping", "name": "Lenuo phone case with stand (installment 1/5)", "name_th": "เคสโทรศัพท์ Lenuo พร้อมที่ตั้งโทรศัพท์ (ผ่อนงวด 1/5)", "notes": "" },
+      { "date": "2026-08-01", "amount": 43, "category": "Shopping", "name": "Fertilizer sack bag 50g (installment 1/5)", "name_th": "กระสอบถุงปุ๋ย 50 กรัม (ผ่อนงวด 1/5)", "notes": "" },
+      { "date": "2026-08-01", "amount": 64, "category": "Shopping", "name": "Kiprun stopwatch (installment 1/5)", "name_th": "นาฬิกาจับเวลา Kiprun (ผ่อนงวด 1/5)", "notes": "" },
       { "date": "2026-08-01", "amount": 28, "category": "Beauty", "name": "Janua Perfume (installment 1/5)", "name_th": "น้ำหอม Janua (ผ่อนงวด 1/5)", "notes": "" },
       { "date": "2026-08-01", "amount": 114, "category": "Restaurant", "name": "Bonchon", "name_th": "", "notes": "" },
       { "date": "2026-08-01", "amount": 78, "category": "Transport", "name": "Grab (return missed order)", "name_th": "Grab ส่งคืน Order ผิด", "notes": "" },
-      { "date": "2026-08-03", "amount": 49, "category": "Transport", "name": "Grab (return missed order)", "name_th": "Grab ส่งคืน Order ผิด", "notes": "" },
-      { "date": "2026-08-03", "amount": 61, "category": "Transport", "name": "Grab (return missed order)", "name_th": "Grab ส่งคืน Order ผิด", "notes": "" }
+      { "date": "2026-08-02", "amount": 49, "category": "Transport", "name": "Grab (return missed order)", "name_th": "Grab ส่งคืน Order ผิด", "notes": "" },
+      { "date": "2026-08-01", "amount": 61, "category": "Transport", "name": "Grab (return missed order)", "name_th": "Grab ส่งคืน Order ผิด", "notes": "" }
     ]
   }
 };
