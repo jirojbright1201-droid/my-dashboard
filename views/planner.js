@@ -250,6 +250,13 @@ window.PlannerView = (function () {
     // ข้ามเที่ยงคืน: event ของ "วันนี้" active ได้แค่ตั้งแต่เริ่มจนเที่ยงคืน — ช่วงหลังเที่ยงคืนถึงเลิกงานเป็นของ event เมื่อวาน (ดู spilloverFromYesterday)
     return e.end_time < e.time ? now >= e.time : (now >= e.time && now < e.end_time);
   }
+  // event ที่จบไปแล้ว (ไม่ใช่ now, ไม่ใช่ spillover ที่ยังดำเนินอยู่) — ข้ามเที่ยงคืนของวันนี้ยังไม่นับว่าจบ เพราะจะไปจบเอาพรุ่งนี้
+  function isEventPast(e, isToday) {
+    if (e._spillover || !isToday || !e.time) return false;
+    const now = nowHM();
+    if (e.end_time) return e.end_time < e.time ? false : now >= e.end_time;
+    return now >= e.time;
+  }
   // เช็คว่ากะเมื่อวานที่ข้ามเที่ยงคืนยังไม่จบ (ตอนนี้ < เวลาเลิกของเมื่อวาน) — ถ้าใช่ ต้องโผล่เป็น "now" ในไทม์ไลน์วันนี้ด้วย ไม่งั้นกะที่กำลังทำอยู่จะไม่โชว์เลย (event ตัวจริงถูก key ไว้ที่วันที่เมื่อวาน)
   function spilloverFromYesterday(ds) {
     const d = new Date(ds + 'T00:00:00'); d.setDate(d.getDate() - 1);
@@ -275,8 +282,9 @@ window.PlannerView = (function () {
         <div class="tlg-label">${p}</div>
         ${groups[p].map(e => {
           const isNow = isEventNow(e, isT);
+          const isPast = !isNow && isEventPast(e, isT);
           const timeTxt = e._spillover ? `Since ${e.time}` : (e.time || '');
-          return `<div class="tlg-row${isNow ? ' now' : ''}">
+          return `<div class="tlg-row${isNow ? ' now' : ''}${isPast ? ' past' : ''}">
             <div class="tlg-ic">${eventIcon(e)}</div>
             <div style="flex:1;min-width:0">
               <div class="tlg-title">${esc(e.title)}</div>

@@ -89,6 +89,8 @@
 .tlg-row.now .now-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--accent); color: #fff;
   font-size: 0.6rem; font-weight: 700; letter-spacing: 0.03em; padding: 2px 7px; border-radius: 9999px; margin-top: 3px; }
 .now-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: #fff; animation: tlgPulse 1.4s ease-in-out infinite; }
+.tlg-row.past { opacity: 0.5; }
+.tlg-row.past .tlg-title { text-decoration: line-through; }
 @media (prefers-reduced-motion: reduce) { .now-badge .dot { animation: none; } }
 @keyframes tlgPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
