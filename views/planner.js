@@ -278,7 +278,10 @@ window.PlannerView = (function () {
           const timeTxt = e._spillover ? `Since ${e.time}` : (e.time || '');
           return `<div class="tlg-row${isNow ? ' now' : ''}">
             <div class="tlg-ic">${eventIcon(e)}</div>
-            <div class="tlg-title">${esc(e.title)}</div>
+            <div style="flex:1;min-width:0">
+              <div class="tlg-title">${esc(e.title)}</div>
+              <span class="now-badge"><span class="dot"></span>NOW</span>
+            </div>
             <div class="tlg-time">${esc(timeTxt)}</div>
           </div>`;
         }).join('')}
