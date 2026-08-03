@@ -1,5 +1,5 @@
 // ===== Investment Tracker hub — สรุปข่าวการลงทุน/การเงินโลกรายวัน (data: data/investment-briefs.data.js + investment-portfolio.data.js + investment-earnings.data.js + investment-deepdives.data.js — แยกไฟล์ตามประเภท 3 ส.ค. 2026 กันไฟล์รวมเกิน 256KB) =====
-// ลุค Editorial (หนังสือพิมพ์/Apple News) — jiroj เลือกเอง 21 ก.ค. 2026: masthead แทน hero เข้ม, พาดหัว serif, filter แท็บขีดเส้นใต้
+// รื้อลุคเป็น Apple x Coinbase reskin 4 ส.ค. 2026 (เดิม Editorial หนังสือพิมพ์เลือกไว้ 21 ก.ค. 2026) — masthead เหลือ header เรียบ, filter เป็น segmented pill, ลิสต์เป็นการ์ดฟีด, accent น้ำเงิน Coinbase เดียว. token อยู่ investment.css scope ใต้ .inv-shell
 window.InvestmentView = (function () {
   const BRIEFS = window.INVESTMENT_BRIEFS || [];
   const REVIEWS = window.INVESTMENT_PORTFOLIO_REVIEWS || [];
@@ -21,11 +21,18 @@ window.InvestmentView = (function () {
   };
   const fmtMonth = ym => { const [y, m] = ym.split('-'); return `${MONTH_NAMES[parseInt(m, 10) - 1]} ${y}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-  // เฉด coral เข้ม→อ่อนตามลำดับ (ภาษาเดียวกับโดนัท Money — ห้ามกลับไปหลายสี)
+  // ไอคอนทึบ MDI (earth/domain) สำหรับ badge หมวด Macro/Company ในลิสต์ข่าว — ทึบ = เนื้อหา/หมวด ตามมาตรฐาน reskin (ต่างจาก S() ที่เป็นเส้น outline สำหรับ nav/chrome)
+  const F = p => `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${p}</svg>`;
+  const ICON_EARTH_FILL = F('<path d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>'); // mdi-earth
+  const ICON_DOMAIN_FILL = F('<path d="M18,15H16V17H18M18,11H16V13H18M20,19H12V17H14V15H12V13H14V11H12V9H20M10,7H8V5H10M10,11H8V9H10M10,15H8V13H10M10,19H8V17H10M6,7H4V5H6M6,11H4V9H6M6,15H4V13H6M6,19H4V17H6M12,7V3H2V21H22V7H12Z"/>'); // mdi-domain
+  function bicon(macro) {
+    return `<div class="inv-bicon${macro ? ' macro' : ''}">${macro ? ICON_EARTH_FILL : ICON_DOMAIN_FILL}</div>`;
+  }
+  // เฉดน้ำเงิน Coinbase เข้ม→อ่อนตามลำดับ (เปลี่ยนจากคอรัลตอน reskin 4 ส.ค. 2026 — accent เดียวห้ามมีสีที่สอง)
   const ramp = (i, n) => {
     const t = n <= 1 ? 0 : i / (n - 1);
     const mix = (a, b) => Math.round(a + (b - a) * t);
-    return `rgb(${mix(181, 238)},${mix(97, 196)},${mix(63, 176)})`;
+    return `rgb(${mix(0, 168)},${mix(82, 196)},${mix(255, 255)})`;
   };
 
   // ── state ──
@@ -142,29 +149,32 @@ window.InvestmentView = (function () {
   }
 
   // ── editorial building blocks ──
-  function masthead(kicker) {
+  // masthead(eyebrow, title, sub) — เปลี่ยนจาก kicker บรรทัดเดียวเป็น 3 ชั้น (เพิ่ม 4 ส.ค. 2026 ตอน reskin)
+  function masthead(eyebrow, title, sub) {
     return `<div class="inv-mast">
-      <div class="inv-mast-kicker">${kicker}</div>
-      <div class="inv-mast-rule"></div>
+      <div class="inv-mast-eyebrow">${eyebrow}</div>
+      <div class="inv-mast-title">${title}</div>
+      ${sub ? `<div class="inv-mast-sub">${sub}</div>` : ''}
     </div>`;
   }
-  function edMeta(b, withDate) {
+  function edMeta(b) {
     return `<div class="inv-ed-meta">
-      <span class="inv-tag-txt ${b.macro ? 'm' : 'c'}">${b.macro ? 'Macro' : 'Company'}</span>
-      <span class="inv-ed-src">${esc(b.sourceName)}</span>${withDate ? `<span>· ${fmtDate(b.date)}</span>` : ''}
+      <span class="inv-ed-src">${esc(b.sourceName)}</span><span>· ${fmtDate(b.date)}</span>
     </div>`;
   }
   function edLead(b) {
     return `<div class="inv-ed-lead" data-id="${esc(b.id)}">
+      <div class="inv-ed-icontop">${bicon(b.macro)}<span class="inv-tag-txt ${b.macro ? 'm' : 'c'}">${b.macro ? 'Macro' : 'Company'}</span></div>
       <div class="inv-ed-lead-h">${esc(b.title)}</div>
       <div class="inv-ed-lead-sum">${esc(b.summary)}</div>
-      ${edMeta(b, false)}
+      ${edMeta(b)}
     </div>`;
   }
-  function edItem(b, withDate) {
+  function edItem(b) {
     return `<div class="inv-ed-item" data-id="${esc(b.id)}">
+      <div class="inv-ed-icontop">${bicon(b.macro)}<span class="inv-tag-txt ${b.macro ? 'm' : 'c'}">${b.macro ? 'Macro' : 'Company'}</span></div>
       <div class="inv-ed-h">${esc(b.title)}</div>
-      ${edMeta(b, withDate)}
+      ${edMeta(b)}
     </div>`;
   }
 
@@ -180,7 +190,7 @@ window.InvestmentView = (function () {
     ].map(c => `<button class="inv-ftab${archFilter === c.k ? ' on' : ''}" data-filt="${c.k}">${c.l}</button>`).join('');
 
     const todaySec = latestItems.length
-      ? edLead(latestItems[0]) + latestItems.slice(1).map(b => edItem(b, false)).join('')
+      ? edLead(latestItems[0]) + latestItems.slice(1).map(b => edItem(b)).join('')
       : '';
 
     const earlierDates = [...new Set(earlier.map(b => b.date))].sort((a, b) => b.localeCompare(a));
@@ -197,7 +207,7 @@ window.InvestmentView = (function () {
         <span>${fmtDayLabel(d, yearRef)}</span>
         <span class="inv-ed-dtog-rule"></span>
         <span class="inv-ed-dtog-r">${nBriefs(items.length)}${chev('inv-ed-chev')}</span>
-      </button>${open ? items.map(b => edItem(b, false)).join('') : ''}`;
+      </button>${open ? items.map(b => edItem(b)).join('') : ''}`;
     };
 
     // ทุกเดือนที่มีข่าว (รวมเดือนปัจจุบัน) ยุบเป็นแถวเดือนเสมอ กดกางออกเป็นแถววันข้างใน (jiroj ขอเพิ่มเลเยอร์เดือนแม้อยู่เดือนปัจจุบัน 22 ก.ค. 2026)
@@ -214,12 +224,10 @@ window.InvestmentView = (function () {
     }).join('');
 
     const total = BRIEFS.length;
-    const kicker = ld
-      ? `${fmtLong(ld)} · ${BRIEFS.filter(b => b.date === ld).length} briefs`
-      : 'No briefs yet';
+    const ldCount = ld ? BRIEFS.filter(b => b.date === ld).length : 0;
 
     $('inv-news').innerHTML = `
-      ${masthead(kicker)}
+      ${masthead('News', ld ? fmtLong(ld) : 'No briefs yet', ld ? `${ldCount} ${ldCount === 1 ? 'brief' : 'briefs'} today` : '')}
       <div class="inv-ftabs">${tabs}</div>
       ${todaySec}
       ${earlierSec ? `<div class="inv-ed-day inv-ed-earlier">Earlier</div>` : ''}${earlierSec}
@@ -319,7 +327,7 @@ window.InvestmentView = (function () {
     }
     $('inv-portfolio').innerHTML = `
       ${holdingsCard()}
-      ${masthead(`Portfolio Reviews · ${sorted.length}`)}
+      ${masthead(`Portfolio Reviews · ${sorted.length}`, 'Latest review')}
       ${body}`;
   }
 
@@ -352,7 +360,7 @@ window.InvestmentView = (function () {
     const body = sorted.length
       ? sorted.map(erow).join('')
       : `<div class="inv-ed-empty"><div class="t">No earnings reviews yet</div><div class="s">Ask Jarvis to analyze a stock's latest quarterly results</div></div>`;
-    $('inv-earnings').innerHTML = `${masthead(`Earnings Reviews · ${sorted.length}`)}${body}`;
+    $('inv-earnings').innerHTML = `${masthead(`Earnings Reviews · ${sorted.length}`, 'All reviews')}${body}`;
   }
 
   function metricsTable(rows) {
@@ -474,7 +482,7 @@ window.InvestmentView = (function () {
     const body = sorted.length
       ? sorted.map(ddrow).join('')
       : `<div class="inv-ed-empty"><div class="t">No deep-dives yet</div><div class="s">Ask Jarvis to research a company for you</div></div>`;
-    $('inv-deepdive').innerHTML = `${masthead(`Company Deep-Dives · ${sorted.length}`)}${body}`;
+    $('inv-deepdive').innerHTML = `${masthead(`Company Deep-Dives · ${sorted.length}`, 'All companies')}${body}`;
   }
   function statTable(rows) {
     if (!rows || !rows.length) return '';

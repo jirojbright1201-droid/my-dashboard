@@ -1,18 +1,37 @@
-/* ===== Investment Tracker hub — Editorial look (jiroj เลือก 21 ก.ค. 2026) =====
-   ไม่มี hero การ์ดเข้ม/ไม่มี chips/ไม่มี accordion — masthead + พาดหัว serif + เส้นบางคั่น */
+/* ===== Investment Tracker hub — Apple x Coinbase reskin (scoped under .inv-shell, ไม่แตะ token รวมของแอปอื่น, เพิ่ม 4 ส.ค. 2026) =====
+   หมายเหตุ: override ชื่อ --serif เดิมให้ชี้ไป sans stack แทน (ไม่ rename ทุกจุดที่ใช้ var(--serif) ทั่วไฟล์นี้ — เหตุผลเดียวกับที่ Money/Planner override --accent/--silver ฯลฯ ใต้ wrapper ของตัวเอง) */
+.inv-shell {
+  --accent: #0052ff; --accent-hover: #003ecc; --accent-soft: rgba(0,82,255,.08);
+  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #eef0f3; --surface-3: #e2e5ea;
+  --text: #0a0b0d; --silver: #5b616e;
+  --border: #dee1e6; --border-soft: #eef0f3;
+  --red: #cf202f; --green: #05b169;
+  --serif: -apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,'Segoe UI',Roboto,sans-serif;
+  --mono: ui-monospace,'SF Mono','SFMono-Regular','JetBrains Mono',Menlo,Consolas,monospace;
+  --shadow-card: 0 4px 12px rgba(10,11,13,.04);
+}
+.inv-shell .app-title { font-family: var(--serif); font-weight: 700; }
+.inv-shell .modal-title { font-family: var(--serif); font-weight: 700; }
+.inv-shell .section-title { font-family: var(--serif); }
+.inv-shell .tabbar { background: rgba(255,255,255,.72); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-soft); border-radius: 18px; box-shadow: 0 8px 20px -6px rgba(10,11,13,.14); }
+.inv-shell .tabbar .tab-item { color: var(--silver); border-radius: 11px; }
+.inv-shell .tabbar .tab-item.active { background: transparent; color: var(--accent); box-shadow: none; }
+
 .inv { padding-top: 10px; }
 .inv-pane { display: none; }
 .inv-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
 
-/* ── masthead (หัวหนังสือพิมพ์แทน hero) ── */
-.inv-mast { text-align: center; padding: 8px 0 0; }
-.inv-mast-kicker { font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .14em;
+/* ── masthead → header เรียบแบบ Apple (เลิกเส้นคู่หนังสือพิมพ์เดิม) ── */
+.inv-mast { padding: 4px 2px 16px; }
+.inv-mast-eyebrow { font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .09em;
   color: var(--silver); text-transform: uppercase; }
-.inv-mast-rule { height: 4px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); margin-top: 13px; }
+.inv-mast-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; letter-spacing: -.015em; margin-top: 4px; }
+.inv-mast-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 2px; }
 
 /* ── current holdings card (บนสุดของแท็บ Portfolio — สไตล์ watchlist ยืมจาก TradingView, jiroj เลือกเองหลังลอง 7 รอบ 22 ก.ค. 2026: การ์ดขาวขอบบาง มอโนสเปซ ไม่มีสีเลย) ── */
 .inv-hold-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 8px; overflow: hidden;
-  margin: 6px 0 24px; box-shadow: 0 1px 2px rgba(20,20,19,.04), 0 6px 20px rgba(20,20,19,.05); }
+  margin: 6px 0 24px; box-shadow: var(--shadow-card); }
 .inv-hold-head { padding: 16px 16px 14px; border-bottom: 1px solid var(--border-soft); }
 .inv-hold-kicker { font-size: 0.6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--silver); }
 .inv-hold-total { font-family: var(--mono); font-size: 1.75rem; font-weight: 700; color: var(--text); margin-top: 4px; letter-spacing: -.01em; }
@@ -32,57 +51,62 @@
 .inv-hold-pct { display: inline-block; font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; color: var(--silver); }
 .inv-hold-empty-txt { font-size: 0.8125rem; color: var(--silver); line-height: 1.5; padding: 16px; }
 
-/* ── filter: แท็บขีดเส้นใต้ ── */
-.inv-ftabs { display: flex; justify-content: center; gap: 24px; padding: 11px 0 12px; border-bottom: 1px solid var(--border-soft); }
-.inv-ftab { border: none; background: none; cursor: pointer; font-family: inherit; font-size: 0.8125rem; font-weight: 600;
-  color: var(--silver); padding: 0 1px 4px; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; }
-.inv-ftab.on { color: var(--text); border-bottom-color: var(--accent); }
-.inv-ftab:active { opacity: .6; }
+/* ── filter: segmented pill control (Coinbase button-secondary-light group) ── */
+.inv-ftabs { display: flex; gap: 4px; background: var(--surface-2); border-radius: 9999px; padding: 3px; margin: 0 0 18px; }
+.inv-ftab { flex: 1; border: none; background: transparent; cursor: pointer; font-family: var(--serif); font-size: 0.8125rem; font-weight: 600;
+  color: var(--silver); padding: 8px 0; border-radius: 9999px; transition: background .15s, color .15s; }
+.inv-ftab.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(10,11,13,.08); }
+.inv-ftab:active { opacity: .7; }
 
-/* ── lead story (ข่าวแรกของวันล่าสุด) ── */
-.inv-ed-lead { padding: 20px 0 22px; border-bottom: 1px solid var(--border-soft); cursor: pointer; transition: opacity .15s ease; }
-.inv-ed-lead:active { opacity: .6; }
-.inv-ed-lead-h { font-family: var(--serif); font-size: 1.75rem; font-weight: 700; line-height: 1.16; letter-spacing: -.01em; }
+/* ── icon plate + tag (หมวด Macro/Company — ไอคอนทึบ MDI ตามมาตรฐานไอคอนหมวดเนื้อหาทั้งชุด) ── */
+.inv-ed-icontop { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.inv-bicon { width: 26px; height: 26px; border-radius: 9999px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.inv-bicon svg { width: 14px; height: 14px; }
+.inv-bicon.macro svg { color: var(--accent); }
+.inv-bicon:not(.macro) svg { color: var(--silver); }
+
+/* ── lead story (การ์ดฟีด — เลือกแบบ B จาก preview 4 ส.ค. 2026) ── */
+.inv-ed-lead { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 24px; box-shadow: var(--shadow-card);
+  padding: 20px; margin-bottom: 12px; cursor: pointer; transition: opacity .15s ease; }
+.inv-ed-lead:active { opacity: .7; }
+.inv-ed-lead-h { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; line-height: 1.28; letter-spacing: -.01em; }
 .inv-ed-lead-sum { font-size: 0.8438rem; color: var(--silver); line-height: 1.6; margin-top: 10px;
   overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
 
-/* ── story item ── */
-.inv-ed-item { padding: 16px 0; border-bottom: 1px solid var(--border-soft); cursor: pointer; transition: opacity .15s ease; }
-.inv-ed-item:active { opacity: .6; }
-.inv-ed-h { font-family: var(--serif); font-size: 1.22rem; font-weight: 700; line-height: 1.22; letter-spacing: -.005em; }
+/* ── story item (การ์ดเดี่ยว ใช้ร่วมกับ Earnings/Deep-Dive/Portfolio ผ่านคลาสเดียวกันนี้) ── */
+.inv-ed-item { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 16px;
+  padding: 16px; margin-bottom: 10px; cursor: pointer; transition: opacity .15s ease; }
+.inv-ed-item:active { opacity: .7; }
+.inv-ed-h { font-family: var(--serif); font-size: 0.95rem; font-weight: 700; line-height: 1.32; letter-spacing: -.005em; }
 
 /* ── meta line ── */
-.inv-ed-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px;
-  font-size: 0.71rem; color: var(--silver); }
+.inv-ed-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px;
+  font-size: 0.75rem; color: var(--silver); }
 .inv-ed-src { color: var(--accent); font-weight: 600; }
-.inv-tag-txt { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.inv-tag-txt { font-family: var(--mono); font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
 .inv-tag-txt.m { color: var(--accent); }
 .inv-tag-txt.c { color: var(--silver); }
 
 /* ── day breaks (Earlier) ── */
-.inv-ed-day { display: flex; align-items: center; gap: 12px; padding: 24px 0 2px;
-  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .13em;
+.inv-ed-day { padding: 24px 0 2px; font-size: 0.6875rem; font-weight: 700; letter-spacing: .06em;
   color: var(--silver); text-transform: uppercase; }
-.inv-ed-day::after { content: ''; flex: 1; border-top: 1px solid var(--border); }
-.inv-ed-earlier { color: var(--accent); padding-top: 30px; }
+.inv-ed-earlier { color: var(--accent); padding-top: 26px; }
 
-/* ── day toggle (วันเก่าใน Earlier พับเป็นหัววันที่ — jiroj เลือกแบบ A 21 ก.ค. 2026) ── */
-.inv-ed-dtog { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: none; cursor: pointer;
-  padding: 17px 0; font-family: var(--mono); font-size: 0.71rem; font-weight: 600; letter-spacing: .13em;
-  color: var(--text); text-transform: uppercase; text-align: left;
-  transition: opacity .15s; }
-.inv-ed-dtog:active { opacity: .55; }
-.inv-ed-dtog-rule { flex: 1; border-top: 1px solid var(--border); }
-.inv-ed-dtog-r { display: flex; align-items: center; gap: 10px; color: var(--silver); letter-spacing: 0; }
-.inv-ed-chev { width: 14px; height: 14px; transition: transform .2s; }
+/* ── day toggle (วันเก่าใน Earlier พับเป็นหัววันที่) — reskin เป็น sans เรียบ ไม่ใช้ mono caps แน่นแบบเดิม ── */
+.inv-ed-dtog { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; cursor: pointer;
+  padding: 14px 2px; font-family: var(--serif); font-size: 0.8125rem; font-weight: 600;
+  color: var(--text); text-align: left; transition: opacity .15s; }
+.inv-ed-dtog:active { opacity: .6; }
+.inv-ed-dtog-rule { display: none; }
+.inv-ed-dtog-r { display: flex; align-items: center; gap: 8px; color: var(--silver); font-size: 0.75rem; font-weight: 500; }
+.inv-ed-chev { width: 13px; height: 13px; transition: transform .2s; stroke: var(--silver); }
 .inv-ed-dtog.open .inv-ed-chev, .inv-ed-mtog.open .inv-ed-chev { transform: rotate(180deg); }
 
-/* ── month toggle (เดือนเก่ากว่าเดือนปัจจุบัน ยุบเป็นแถวเดือน — กันแถววันกองยาวข้ามเดือน) ── */
-.inv-ed-mtog { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: none; cursor: pointer;
-  padding: 17px 0; font-family: var(--mono); font-size: 0.71rem; font-weight: 700; letter-spacing: .13em;
-  color: var(--text); text-transform: uppercase; text-align: left;
-  transition: opacity .15s; }
-.inv-ed-mtog:active { opacity: .55; }
+/* ── month toggle (เดือนเก่ากว่าเดือนปัจจุบัน ยุบเป็นแถวเดือน) ── */
+.inv-ed-mtog { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; cursor: pointer;
+  padding: 14px 2px; font-family: var(--serif); font-size: 0.8125rem; font-weight: 700;
+  color: var(--text); text-align: left; transition: opacity .15s; }
+.inv-ed-mtog:active { opacity: .6; }
 .inv-ed-dtog.in-month { padding-left: 16px; }
 
 /* ── empty state ── */
@@ -91,8 +115,7 @@
 .inv-ed-empty .s { font-size: 0.8125rem; color: var(--silver); margin-top: 6px; line-height: 1.5; }
 
 /* ── portfolio: latest review lead ── */
-.inv-ed-readmore { margin-top: 14px; font-size: 0.75rem; font-weight: 700; color: var(--accent);
-  text-transform: uppercase; letter-spacing: .08em; }
+.inv-ed-readmore { margin-top: 14px; font-size: 0.8125rem; font-weight: 600; color: var(--accent); }
 .inv-abars { margin-top: 16px; }
 .inv-abar-row { display: flex; align-items: center; gap: 10px; }
 .inv-abar-row + .inv-abar-row { margin-top: 9px; }
@@ -112,8 +135,8 @@
 .inv-tag.macro { background: var(--accent-soft); color: var(--accent); }
 .inv-tag.company { background: var(--border-soft); color: var(--silver); }
 .inv-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 24px; background: var(--accent); color: #fff;
-  font-weight: 700; font-size: 0.875rem; padding: 13px; border-radius: 12px; transition: transform .1s; }
-.inv-open-btn:active { transform: scale(.97); }
+  font-weight: 600; font-size: 0.875rem; padding: 13px; border-radius: 9999px; transition: transform .1s, background .15s; }
+.inv-open-btn:active { background: var(--accent-hover); transform: scale(.97); }
 
 /* ── news detail: หน้าอ่านเต็มจอ (แทน bottom sheet เดิม — jiroj เลือกจาก mockup 3 แบบ 22 ก.ค. 2026) ── */
 .inv-article { position: fixed; inset: 0; z-index: 120; background: var(--surface);
@@ -124,16 +147,16 @@
 .inv-art-media { position: absolute; inset: 0; top: env(safe-area-inset-top); overflow: hidden; background: var(--surface-2); }
 .inv-art-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .inv-art-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%); color: #fff; }
+  background: var(--accent-soft); color: var(--accent); }
 .inv-art-fallback svg { width: 25%; height: 25%; min-width: 40px; min-height: 40px; }
 .inv-art-back { position: absolute; top: calc(14px + env(safe-area-inset-top)); left: 14px; width: 34px; height: 34px;
-  border-radius: 9999px; border: none; cursor: pointer; background: rgba(20,20,19,.45); color: #fff;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 2; }
+  border-radius: 9999px; border: none; cursor: pointer; background: rgba(210,210,215,.64); color: var(--text);
+  -webkit-backdrop-filter: blur(8px) saturate(180%); backdrop-filter: blur(8px) saturate(180%); display: flex; align-items: center; justify-content: center; z-index: 2; }
 .inv-art-back:active { opacity: .7; }
 .inv-art-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .inv-art-body { padding: 22px 22px 28px; max-width: 640px; margin: 0 auto; }
-.inv-art-h { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; line-height: 1.2; text-wrap: balance; }
-.inv-art-rule { height: 4px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); margin: 16px 0 12px; }
+.inv-art-h { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; line-height: 1.24; letter-spacing: -.015em; text-wrap: balance; }
+.inv-art-rule { height: 1px; background: var(--border-soft); margin: 16px 0 12px; }
 .inv-art-byline { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; }
 .inv-art-p { font-size: 0.9375rem; line-height: 1.8; color: var(--text); margin-top: 16px; }
 .inv-art-footer { flex-shrink: 0; padding: 12px 22px calc(12px + env(safe-area-inset-bottom));
