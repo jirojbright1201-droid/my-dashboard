@@ -48,3 +48,20 @@
 .cap-copy:active { transform: scale(.98); }
 .cap-clear { background: var(--surface-2); color: var(--silver); border: 1px solid var(--border-soft);
   font-family: inherit; font-size: 0.875rem; font-weight: 600; padding: 11px 16px; border-radius: 10px; cursor: pointer; }
+
+/* ── Money-only redesign (4 ส.ค. 2026, preview approved): popup กลางจอ auto-height + scale/fade
+   สโคปด้วย .mny-shell #capOverlay เท่านั้น — Planner/Books/English/Furniture ยังใช้ bottom-sheet เดิม
+   จนกว่าจะ approve แยกทีหลัง (ดู CLAUDE.md ข้อ 6.10) ──*/
+.mny-shell #capOverlay { align-items: center; padding: 24px; }
+.mny-shell #capOverlay .modal { border-radius: var(--r-xl); max-height: min(600px, calc(100vh - 48px));
+  box-shadow: 0 20px 60px rgba(10,11,13,.28); transform: none; }
+.mny-shell #capOverlay.active .modal { animation: capPop .22s cubic-bezier(.2,.8,.2,1); }
+.mny-shell #capOverlay.active.closing .modal { transform: none; }
+.mny-shell #capOverlay .sheet-handle { display: none; }
+.mny-shell #capOverlay .modal-head { padding-top: 20px; }
+@keyframes capPop { from { opacity: 0; transform: scale(.94) translateY(4px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+.mny-shell .cap-types { flex-wrap: nowrap; gap: 2px; background: var(--surface-2); border-radius: var(--r-md); padding: 4px; margin-bottom: 16px; }
+.mny-shell .cap-type { flex: 1; border: none; background: none; border-radius: calc(var(--r-md) - 4px); padding: 8px 10px; }
+.mny-shell .cap-type.on { background: var(--surface); color: var(--accent); box-shadow: 0 2px 6px rgba(10,11,13,.08); }
+.mny-shell .cap-item { background: var(--surface-2); border-radius: var(--r-sm); padding: 10px 12px; border-bottom: none; margin-bottom: 6px; }
