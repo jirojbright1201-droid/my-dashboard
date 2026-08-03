@@ -149,10 +149,10 @@ window.MoneyView = (function () {
     const good = avgDaily <= budgetDaily * 1.02;
     return {
       good,
-      title: good ? 'เดือนนี้คุมได้ดี' : 'เดือนนี้ใช้เกินจังหวะ',
+      title: good ? 'เดือนนี้คุมได้ดี' : 'เดือนนี้ใช้เงินเร็วกว่าที่ตั้งไว้',
       avgDaily: Math.round(avgDaily),
       budgetDaily: Math.round(budgetDaily),
-      tail: good ? 'ยังคุมอยู่' : `เกินจังหวะที่วางไว้ ${overPct}%`
+      tail: good ? 'ยังคุมอยู่' : `เกินอัตราเฉลี่ยที่ตั้งไว้ ${overPct}%`
     };
   }
 
