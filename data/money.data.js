@@ -7,14 +7,16 @@ window.MONEY_DATA = {
       "Restaurant": 3000,
       "Transport": 300,
       "Family": 3000,
-      "Shopping": 500,
+      "Shopping": 300,
       "Investment": 500,
-      "Study": 300,
-      "Entertainment": 200,
+      "Study": 0,
+      "Entertainment": 132,
       "Emergency Fund": 500,
       "Beauty": 300,
       "Rent": 5600,
-      "Subscriptions": 2050
+      "Subscriptions": 2000,
+      "Laundry": 300,
+      "Utilities": 0
     },
     "income": [
       { "date": "2026-08-01", "amount": 14435, "source": "Salary", "name": "Salary", "name_th": "เงินเดือน", "notes": "" },
