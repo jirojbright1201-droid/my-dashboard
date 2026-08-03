@@ -46,7 +46,8 @@ window.MONEY_DATA = {
       { "date": "2026-08-01", "amount": 61, "category": "Transport", "name": "Grab (return missed order)", "name_th": "Grab ส่งคืน Order ผิด", "notes": "" },
       { "date": "2026-08-03", "amount": 40, "category": "Restaurant", "name": "Rice with curry", "name_th": "ข้าวราดแกง", "notes": "" },
       { "date": "2026-08-03", "amount": 25, "category": "Restaurant", "name": "Kanom krok", "name_th": "ขนมครก", "notes": "" },
-      { "date": "2026-08-03", "amount": 25, "category": "Restaurant", "name": "Thai tea", "name_th": "ชาไทย", "notes": "" }
+      { "date": "2026-08-03", "amount": 25, "category": "Restaurant", "name": "Thai tea", "name_th": "ชาไทย", "notes": "" },
+      { "date": "2026-08-03", "amount": 225, "category": "Shopping", "name": "Insulated tumbler", "name_th": "แก้วเก็บความเย็น", "notes": "" }
     ]
   }
 };
