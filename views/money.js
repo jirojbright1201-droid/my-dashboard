@@ -75,11 +75,7 @@ window.MoneyView = (function () {
         <div class="mny-bp-title">Budget breakdown</div>
       </div>
       <div class="mny-bp-body">
-        <div class="mny-bp-stats" id="mnyBpStats"></div>
-        <div class="mny-bp-barrow">
-          <div class="mny-bp-bar"><i id="mnyBpBar" style="width:0%"></i></div>
-          <span class="mny-bp-barpct" id="mnyBpBarPct"></span>
-        </div>
+        <div id="mnyBpStats"></div>
         <div class="mny-budget" id="mnyBudgetFullList"></div>
       </div>
     </div>
@@ -235,12 +231,26 @@ window.MoneyView = (function () {
     const totalLeft = totalBudget - totalOut;
     const pctUsed = totalBudget > 0 ? Math.round(totalOut / totalBudget * 100) : 0;
 
+    const HR = 56, HRCIRC = 2 * Math.PI * HR;
+    const hOff = HRCIRC * (1 - Math.min(100, pctUsed) / 100);
     $('mnyBpStats').innerHTML = `
-      <div class="mny-bp-stat"><div class="lab">Budget</div><div class="val">${fmtMoney(totalBudget)}</div></div>
-      <div class="mny-bp-stat"><div class="lab">Spent</div><div class="val">${fmtMoney(totalOut)}</div></div>
-      <div class="mny-bp-stat"><div class="lab">Left</div><div class="val${totalLeft >= 0 ? ' pos' : ''}">${fmtMoney(totalLeft)}</div></div>`;
-    $('mnyBpBar').style.width = Math.min(100, pctUsed) + '%';
-    $('mnyBpBarPct').textContent = pctUsed + '%';
+      <div class="mny-bp-ringwrap">
+        <div class="mny-bp-ring">
+          <svg viewBox="0 0 132 132">
+            <circle cx="66" cy="66" r="${HR}" fill="none" stroke="var(--surface-3)" stroke-width="10"/>
+            <circle cx="66" cy="66" r="${HR}" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round"
+              stroke-dasharray="${HRCIRC.toFixed(1)}" stroke-dashoffset="${hOff.toFixed(1)}" transform="rotate(-90 66 66)"/>
+          </svg>
+          <div class="mny-bp-ringhole"><b>${pctUsed}%</b><span>used</span></div>
+        </div>
+        <div class="mny-bp-side">
+          <div class="mny-bp-row"><span class="k">Budget</span><span class="v">${fmtMoney(totalBudget)}</span></div>
+          <div class="mny-bp-div"></div>
+          <div class="mny-bp-row"><span class="k">Spent</span><span class="v">${fmtMoney(totalOut)}</span></div>
+          <div class="mny-bp-div"></div>
+          <div class="mny-bp-row"><span class="k">Left</span><span class="v${totalLeft >= 0 ? ' pos' : ''}">${fmtMoney(totalLeft)}</span></div>
+        </div>
+      </div>`;
 
     const bAmt = n => `<span class="bt">฿</span>${Number(n || 0).toLocaleString('en-US')}`;
     const RC = 20, RCIRC = 2 * Math.PI * RC;
