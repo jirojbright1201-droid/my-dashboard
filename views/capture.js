@@ -108,7 +108,18 @@
     if (o) { o.style.height = ''; o.style.top = ''; }
   }
 
+  function detectDefaultType() {
+    if (window.APP_VIEW === 'planner') {
+      const t = document.querySelector('.pl-tab.active');
+      const tab = t && t.dataset.tab;
+      if (tab === 'todo') return 'todo';
+      if (tab === 'habits') return 'habit';
+    }
+    return (TYPES[0] && TYPES[0].k) || 'expense';
+  }
+
   function open() {
+    sel = detectDefaultType();
     renderTypes(); renderList();
     $('capOverlay').classList.add('active');
     capOpen = true;
