@@ -92,11 +92,11 @@ window.PlannerView = (function () {
     });
     return `conic-gradient(${stops.join(',')})`;
   }
-  function renderCalDonut(events) {
+  function calDonutBody(events) {
     const pairs = timeBreakdown(events);
     const total = pairs.reduce((s, [, v]) => s + v, 0);
     const cols = calRamp(pairs.length || 1);
-    const body = pairs.length ? `
+    return pairs.length ? `
       <div class="cal-donut-wrap">
         <div class="cal-donut" style="background:${donutCSS(pairs, total, cols)}">
           <div class="cal-donut-hole"><span>${fmtDur(total)}</span><small>Tracked</small></div>
@@ -107,7 +107,9 @@ window.PlannerView = (function () {
           <span class="cal-donut-leg-val">${fmtDur(v)} · ${total ? Math.round(v / total * 100) : 0}%</span>
         </div>`).join('')}</div>
       </div>` : `<div class="empty">No timed events yet — add an end time when logging an event to see your breakdown</div>`;
-    $('calDonut').innerHTML = `<div class="card"><div class="section-title">Time breakdown</div>${body}</div>`;
+  }
+  function renderCalDonut(events) {
+    $('calDonut').innerHTML = `<div class="card"><div class="section-title">Time breakdown</div>${calDonutBody(events)}</div>`;
   }
 
   // ── state ──
@@ -201,6 +203,8 @@ window.PlannerView = (function () {
       <div class="dp-titlewrap"><div class="dp-title" id="dpTitle"></div><div class="dp-sub" id="dpSub"></div></div>
     </div>
     <div class="dp-body">
+      <div class="modal-sec-title">Time breakdown</div>
+      <div id="dpDonut"></div>
       <div class="modal-sec-title">Events</div>
       <div id="dpEvents"></div>
     </div>
@@ -416,6 +420,7 @@ window.PlannerView = (function () {
     const evs = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === ds).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
     $('dpTitle').textContent = `${d.getDate()} ${MONTHS[d.getMonth()]}`;
     $('dpSub').textContent = `${DAYS_FULL[d.getDay()]} · ${evs.length} event${evs.length === 1 ? '' : 's'}`;
+    $('dpDonut').innerHTML = calDonutBody(evs);
     $('dpEvents').innerHTML = evs.length
       ? evs.map(e => `<div class="dp-row"><div class="dp-time">${esc(e.time || '–')}</div><div class="dp-evtitle">${esc(e.title)}</div></div>`).join('')
       : '<div class="empty">No events</div>';
