@@ -42,6 +42,17 @@ window.INVESTMENT_BRIEFS = [
     "url": "https://www.al-monitor.com/originals/2026/08/trump-says-iran-talks-take-place-monday-sets-no-deadline-deal",
     "image": "",
     "topic": "oil"
+  },
+  {
+    "id": "nw0016",
+    "date": "2026-08-02",
+    "title": "OPEC+ ไฟเขียวเพิ่มกำลังผลิตน้ำมัน 188,000 บาร์เรล/วันเดือนก.ย. ก่อนหยุดพักไตรมาส 4",
+    "summary": "ชาติแกนนำ OPEC+ 7 ประเทศ (ซาอุดีอาระเบีย รัสเซีย อิรัก คูเวต คาซัคสถาน แอลจีเรีย โอมาน) มีมติเพิ่มกำลังผลิตรวม 188,000 บาร์เรล/วันเดือนกันยายน เพิ่มติดต่อกันเดือนที่ 6 และคืนโควตาลดกำลังผลิตสมัครใจ 1.65 ล้านบาร์เรล/วันที่ตกลงไว้ตั้งแต่ปี 2023 จนครบ กลุ่มจะหยุดเพิ่มกำลังผลิตตั้งแต่ไตรมาส 4 คงลดกำลังผลิตค้างไว้ราว 2 ล้านบาร์เรล/วัน มติเกิดขึ้นท่ามกลางภาวะสงบศึกชั่วคราวสหรัฐฯ-อิหร่าน หลังราคาน้ำมัน Brent พุ่ง 24% และ WTI 21% ตลอดเดือนกรกฎาคม",
+    "macro": true,
+    "sourceName": "The National",
+    "url": "https://www.thenationalnews.com/business/energy/2026/08/02/opec-agrees-output-rise-in-september-but-pauses-increase-from-fourth-quarter/",
+    "image": "",
+    "topic": "oil"
   }
 ];
 window.INVESTMENT_UPDATED = "03/08/2026";
