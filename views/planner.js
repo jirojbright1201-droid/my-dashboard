@@ -236,6 +236,7 @@ window.PlannerView = (function () {
     // timeline — events of the day, จัดกลุ่มตามช่วงเวลา (Morning/Afternoon/Evening/Anytime)
     const dayEvents = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === selDay)
       .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+    if (isT) { const spill = spilloverFromYesterday(selDay); if (spill) dayEvents.unshift(spill); }
     $('agTimeline').innerHTML = dayEvents.length ? renderTimelineGrouped(dayEvents, isT) : '<div class="empty">No events today</div>';
 
     renderTodaySummary();
@@ -243,9 +244,19 @@ window.PlannerView = (function () {
 
   function nowHM() { const n = new Date(); return `${p2(n.getHours())}:${p2(n.getMinutes())}`; }
   function isEventNow(e, isToday) {
+    if (e._spillover) return true;
     if (!isToday || !e.time || !e.end_time) return false;
     const now = nowHM();
-    return e.end_time < e.time ? (now >= e.time || now < e.end_time) : (now >= e.time && now < e.end_time);
+    // ข้ามเที่ยงคืน: event ของ "วันนี้" active ได้แค่ตั้งแต่เริ่มจนเที่ยงคืน — ช่วงหลังเที่ยงคืนถึงเลิกงานเป็นของ event เมื่อวาน (ดู spilloverFromYesterday)
+    return e.end_time < e.time ? now >= e.time : (now >= e.time && now < e.end_time);
+  }
+  // เช็คว่ากะเมื่อวานที่ข้ามเที่ยงคืนยังไม่จบ (ตอนนี้ < เวลาเลิกของเมื่อวาน) — ถ้าใช่ ต้องโผล่เป็น "now" ในไทม์ไลน์วันนี้ด้วย ไม่งั้นกะที่กำลังทำอยู่จะไม่โชว์เลย (event ตัวจริงถูก key ไว้ที่วันที่เมื่อวาน)
+  function spilloverFromYesterday(ds) {
+    const d = new Date(ds + 'T00:00:00'); d.setDate(d.getDate() - 1);
+    const yds = fmtDate(d), now = nowHM();
+    const yEvents = allMonthsData().flatMap(m => m.events || []).filter(e => e.date === yds);
+    const active = yEvents.find(e => e.time && e.end_time && e.end_time < e.time && now < e.end_time);
+    return active ? Object.assign({}, active, { _spillover: true }) : null;
   }
 
   function periodOf(time) {
@@ -258,16 +269,17 @@ window.PlannerView = (function () {
   function renderTimelineGrouped(dayEvents, isT) {
     const order = ['Morning', 'Afternoon', 'Evening', 'Anytime'];
     const groups = {};
-    dayEvents.forEach(e => { const p = periodOf(e.time); (groups[p] ??= []).push(e); });
+    dayEvents.forEach(e => { const p = e._spillover ? 'Morning' : periodOf(e.time); (groups[p] ??= []).push(e); });
     return order.filter(p => groups[p] && groups[p].length).map(p => `
       <div class="tlg-group">
         <div class="tlg-label">${p}</div>
         ${groups[p].map(e => {
           const isNow = isEventNow(e, isT);
+          const timeTxt = e._spillover ? `Since ${e.time}` : (e.time || '');
           return `<div class="tlg-row${isNow ? ' now' : ''}">
             <div class="tlg-ic">${eventIcon(e)}</div>
             <div class="tlg-title">${esc(e.title)}</div>
-            <div class="tlg-time">${esc(e.time || '')}</div>
+            <div class="tlg-time">${esc(timeTxt)}</div>
           </div>`;
         }).join('')}
       </div>`).join('');
