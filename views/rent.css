@@ -1,0 +1,125 @@
+/* ===== Rent — Apple x Coinbase theme (scoped under .rnt-shell, ไม่แตะ token รวมของแอปอื่น) ===== */
+.rnt-shell {
+  --accent: #0052ff; --accent-hover: #003ecc; --accent-soft: rgba(0,82,255,.08);
+  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #eef0f3; --surface-3: #e2e5ea;
+  --text: #0a0b0d; --silver: #5b616e;
+  --border: #dee1e6; --border-soft: #eef0f3;
+  --red: #cf202f; --green: #05b169; --orange: #b8860b;
+  --sans: -apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,'Segoe UI',Roboto,sans-serif;
+  --mono: ui-monospace,'SF Mono','SFMono-Regular','JetBrains Mono',Menlo,Consolas,monospace;
+  --r-xl: 24px; --r-lg: 18px; --r-md: 16px; --r-sm: 12px;
+  --shadow-card: 0 4px 12px rgba(10,11,13,.04);
+  background: var(--bg);
+  font-family: var(--sans);
+}
+.rnt-shell .app-title { font-family: var(--sans); font-weight: 700; }
+.rnt-shell .card { box-shadow: var(--shadow-card); }
+.rnt-shell .modal-title { font-family: var(--sans); font-weight: 700; }
+.rnt-shell .section-title { font-family: var(--sans); }
+
+.rnt-shell .hero { background: linear-gradient(160deg,var(--surface-2),var(--surface)); border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card); color: var(--text); }
+.rnt-shell .hero::before { background: radial-gradient(circle,var(--accent-soft),transparent 70%); animation: none; }
+.rnt-shell .hero-eyebrow { color: var(--accent); display: flex; align-items: center; gap: 8px; }
+.rnt-shell .hero-figure { color: var(--text); font-variant-numeric: tabular-nums; }
+.rnt-shell .hero-cap { color: var(--silver); }
+.rnt-shell .hero-split { border-top: 1px solid var(--border-soft); }
+.rnt-shell .hero-cell + .hero-cell { border-left: 1px solid var(--border-soft); }
+.rnt-shell .hero-cell-lab { color: var(--silver); }
+.rnt-shell .hero-cell-val { color: var(--text); font-variant-numeric: tabular-nums; }
+
+.rnt-shell .tabbar { background: rgba(255,255,255,.72); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-soft); border-radius: var(--r-lg); box-shadow: 0 8px 20px -6px rgba(10,11,13,.14); }
+.rnt-shell .tabbar .tab-item { color: var(--silver); border-radius: 11px; }
+.rnt-shell .tabbar .tab-item.active { background: transparent; color: var(--accent); box-shadow: none; }
+.rnt-shell .tabbar .tab-item.active svg { transform: none; }
+
+.rnt { padding-top: 16px; }
+.rnt-pane { display: none; }
+.rnt-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── progress bar ── */
+.rnt-bar { position: relative; height: 8px; border-radius: 99px; background: var(--surface-3); margin-top: 10px; overflow: hidden; }
+.rnt-bar.sm { height: 5px; margin-top: 7px; }
+.rnt-bar-fill { position: absolute; left: 0; top: 0; height: 100%; border-radius: 99px; background: var(--accent); transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── budget/rent config block ── */
+.rnt-budget-top { display: flex; align-items: baseline; gap: 8px; }
+.rnt-budget-spent { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.5rem; font-weight: 600; letter-spacing: -.02em; }
+.rnt-budget-of { font-size: 0.8125rem; color: var(--silver); }
+.rnt-budget-note { font-size: 0.8125rem; color: var(--silver); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+.rnt-budget-note.over { color: var(--red); font-weight: 600; }
+.rnt-note { font-size: 0.875rem; line-height: 1.6; color: var(--text); margin-top: 8px; }
+
+/* ── group head ── */
+.rnt-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.rnt-group-sum { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.875rem; font-weight: 600; color: var(--text); }
+
+/* ── row (furniture / payment / deposit) ── */
+.rnt-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; cursor: pointer; min-width: 0; }
+.rnt-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.rnt-row:active { opacity: .55; }
+.rnt-check { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 99px; border: 1.8px solid var(--border);
+  display: flex; align-items: center; justify-content: center; color: #fff; }
+.rnt-check svg { width: 13px; height: 13px; }
+.rnt-check.done { background: var(--green); border-color: var(--green); }
+.rnt-row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.rnt-row-title { font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rnt-row-title.done { color: var(--silver); text-decoration: line-through; text-decoration-color: var(--border); }
+.rnt-row-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rnt-row-amt { flex: 0 0 auto; font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.875rem; font-weight: 600; letter-spacing: -.02em; }
+.rnt-pay-month { flex: 0 0 auto; font-family: var(--mono); font-size: 0.75rem; color: var(--silver); font-weight: 600; width: 58px; }
+
+/* ── up next (overview) ── */
+.rnt-next { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 13px 0; cursor: pointer; }
+.rnt-next:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.rnt-next:active { opacity: .55; }
+.rnt-next-body { flex: 1; min-width: 0; }
+.rnt-next-body .rnt-row-sub { white-space: normal; }
+.rnt-next-right { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+/* ── by category ── */
+.rnt-cat + .rnt-cat { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-soft); }
+.rnt-cat-head { display: flex; align-items: baseline; justify-content: space-between; font-size: 0.875rem; font-weight: 600; }
+.rnt-cat-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
+
+/* ── filter chips + furniture/bought toggle ── */
+.rnt-filters { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+.rnt-chipbtn { flex: 0 0 auto; border: 1px solid var(--border-soft); background: var(--surface); cursor: pointer; font-family: inherit;
+  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; transition: all .15s; white-space: nowrap; }
+.rnt-chipbtn.on { background: var(--text); border-color: var(--text); color: #fff; }
+
+.rnt-toggle { display: flex; gap: 2px; background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 11px; padding: 3px; margin-bottom: 16px; }
+.rnt-toggle button { flex: 1; border: none; background: none; cursor: pointer; font-family: var(--sans); color: var(--silver);
+  font-size: 0.8125rem; font-weight: 600; padding: 8px; border-radius: 8px; transition: all .15s; }
+.rnt-toggle button.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(10,11,13,.10); }
+
+/* ── status chips ── */
+.chip.rnt-chip-must { background: var(--accent-soft); color: var(--accent); }
+.chip.rnt-chip-nice { background: rgba(184,134,11,.12); color: var(--orange); }
+.chip.rnt-chip-later { background: var(--surface-3); color: var(--silver); }
+.chip.rnt-chip-paid { background: rgba(5,177,105,.12); color: var(--green); }
+.chip.rnt-chip-pending { background: var(--accent-soft); color: var(--accent); }
+.chip.rnt-chip-late { background: rgba(207,32,47,.12); color: var(--red); }
+
+/* ── landlord call log (ตั้งใจไม่เด่น — พับเก็บ default, กดขยายเอง) ── */
+.rnt-calls-wrap { margin-top: 6px; }
+.rnt-calls-toggle { display: flex; align-items: center; gap: 6px; padding: 10px 4px; font-size: 0.75rem; color: var(--silver);
+  cursor: pointer; user-select: none; }
+.rnt-calls-toggle svg { transition: transform .2s; flex-shrink: 0; }
+.rnt-calls-list { padding: 4px 4px 8px; }
+.rnt-call-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; font-size: 0.8125rem; }
+.rnt-call-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.rnt-call-date { flex: 0 0 auto; font-family: var(--mono); color: var(--silver); font-size: 0.75rem; }
+.rnt-call-topic { flex: 1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── modal ── */
+.rnt-price-block { display: flex; gap: 28px; margin-top: 16px; }
+.rnt-price-lab { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 1px; color: var(--silver); font-weight: 700; }
+.rnt-price-val { font-family: var(--mono); font-size: 1.375rem; font-weight: 600; letter-spacing: -.02em; margin-top: 3px; }
+.rnt-price-val.muted { color: var(--silver); font-size: 1.125rem; }
+.rnt-msub { font-size: 0.8125rem; color: var(--silver); }
+.rnt-link { display: block; text-align: center; margin-top: 20px; background: var(--accent); color: #fff; text-decoration: none;
+  font-size: 0.875rem; font-weight: 700; padding: 13px; border-radius: 9999px; }
+.rnt-link:active { transform: scale(.97); }

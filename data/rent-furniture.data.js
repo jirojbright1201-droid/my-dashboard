@@ -1,4 +1,5 @@
-// ===== Furniture & Decor checklist — ของที่ต้องซื้อเข้าห้องเช่า (Jarvis แก้ไฟล์นี้เท่านั้น) =====
+// ===== Rent > Furniture module — ของที่ต้องซื้อเข้าห้องเช่า (Jarvis แก้ไฟล์นี้เท่านั้น) =====
+// เดิมเป็นแอปแยก "Furniture" — รีเป็นแอป "Rent" (ครอบเฟอร์นิเจอร์+ค่าเช่า+มัดจำ+บันทึกโทรเจ้าของห้อง) 5 ส.ค. 2026
 // บริบท: Bright เช่าห้องอยู่ และเป็น "ห้องเปล่า" (มีแค่ผนัง-พื้น-ห้องน้ำ + แอร์ ไม่มีเครื่องทำน้ำอุ่น)
 // หลักเลือกของ: ถอดประกอบ/ขนย้ายได้ตอนย้ายออก, เลี่ยงของที่ต้องเจาะผนัง, ไม่เอาชิ้นใหญ่เกินห้อง
 // ลิสต์นี้ผ่านการคัดทีละรายการกับ Bright แล้ว 27 ก.ค. 2026 (ไม่ใช่ลิสต์ที่ Jarvis เดาให้)
@@ -14,7 +15,7 @@
 //                shop, url, note, dateAdded, dateBought,
 //                next (true = ปักไว้ในการ์ด Up Next บนแท็บ Overview — Bright เลือกเอง
 //                      ว่าจะซื้ออะไรถัดไป ใส่/ถอดตามที่ Bright สั่งเท่านั้น ห้ามปักให้เอง) }
-window.FURNITURE_DATA = {
+window.RENT_FURNITURE_DATA = {
   budget: 0,
   currency: 'THB',
   items: [
@@ -53,4 +54,4 @@ window.FURNITURE_DATA = {
     { id: 'fn0023', name: 'ไมโครเวฟ', category: 'essentials', priority: 'later', price: 2500, paid: 0, status: 'todo', shop: '', url: '', note: 'เช็คกฎหอก่อน บางที่ห้ามเครื่องใช้ไฟฟ้ากินไฟสูง', dateAdded: '2026-07-27', dateBought: '' }
   ]
 };
-window.FURNITURE_UPDATED = '2026-07-27';
+window.RENT_FURNITURE_UPDATED = '2026-07-27';

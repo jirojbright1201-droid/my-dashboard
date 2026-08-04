@@ -1,11 +1,12 @@
-// Furniture PWA service worker (scope: /furniture/)
-const CACHE = 'furniture-v1';
+// Rent PWA service worker (scope: /rent/)
+const CACHE = 'rent-v1';
 const CORE = [
   './', './index.html', './manifest.webmanifest',
   '../app.css', '../shared/boot.js',
-  '../data/furniture.data.js', '../views/furniture.js', '../views/furniture.css',
+  '../data/rent-furniture.data.js', '../data/rent-payments.data.js', '../data/rent-deposits.data.js', '../data/rent-calls.data.js',
+  '../views/rent.js', '../views/rent.css',
   '../views/capture.js', '../views/capture.css',
-  '../icons/furniture-192.png', '../icons/furniture-512.png'
+  '../icons/rent-192.png', '../icons/rent-512.png'
 ];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting()));

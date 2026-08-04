@@ -1,0 +1,18 @@
+{
+  "name": "Rent",
+  "short_name": "Rent",
+  "description": "เช็คลิสต์เฟอร์นิเจอร์ · ค่าเช่ารายเดือน · เงินมัดจำ · บันทึกคุยกับเจ้าของห้อง",
+  "lang": "th",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0052ff",
+  "theme_color": "#f5f5f7",
+  "icons": [
+    { "src": "../icons/rent-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "../icons/rent-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "../icons/rent-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "../icons/rent-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
