@@ -1,0 +1,98 @@
+/* ===== University — Apple x Coinbase theme (scoped under .uni-shell, ไม่แตะ token รวมของแอปอื่น) ===== */
+.uni-shell {
+  --accent: #0052ff; --accent-hover: #003ecc; --accent-soft: rgba(0,82,255,.08);
+  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #eef0f3; --surface-3: #e2e5ea;
+  --text: #0a0b0d; --silver: #5b616e;
+  --border: #dee1e6; --border-soft: #eef0f3;
+  --red: #cf202f; --green: #05b169;
+  --sans: -apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,'Segoe UI',Roboto,sans-serif;
+  --mono: ui-monospace,'SF Mono','SFMono-Regular','JetBrains Mono',Menlo,Consolas,monospace;
+  --r-xl: 24px; --r-lg: 18px; --r-md: 16px; --r-sm: 12px;
+  --shadow-card: 0 4px 12px rgba(10,11,13,.04);
+  background: var(--bg);
+  font-family: var(--sans);
+}
+.uni-shell .app-title { font-family: var(--sans); font-weight: 700; }
+.uni-shell .card { box-shadow: var(--shadow-card); }
+.uni-shell .modal-title { font-family: var(--sans); font-weight: 700; }
+.uni-shell .section-title { font-family: var(--sans); }
+
+/* ── hero (พื้นอ่อน Apple x Coinbase — เหมือน Money/Planner/Investment) ── */
+.uni-shell .hero { background: linear-gradient(160deg,var(--surface-2),var(--surface)); border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card); color: var(--text); }
+.uni-shell .hero::before { background: radial-gradient(circle,var(--accent-soft),transparent 70%); animation: none; }
+.uni-shell .hero-eyebrow { color: var(--accent); }
+.uni-shell .hero-figure { color: var(--text); font-variant-numeric: tabular-nums; }
+.uni-shell .hero-cap { color: var(--silver); }
+.uni-shell .hero-split { border-top: 1px solid var(--border-soft); }
+.uni-shell .hero-cell + .hero-cell { border-left: 1px solid var(--border-soft); }
+.uni-shell .hero-cell-lab { color: var(--silver); }
+.uni-shell .hero-cell-val { color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* ── tab bar — Apple minimal frosted ── */
+.uni-shell .tabbar { background: rgba(255,255,255,.72); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-soft); border-radius: var(--r-lg); box-shadow: 0 8px 20px -6px rgba(10,11,13,.14); }
+.uni-shell .tabbar .tab-item { color: var(--silver); border-radius: 11px; }
+.uni-shell .tabbar .tab-item.active { background: transparent; color: var(--accent); box-shadow: none; }
+.uni-shell .tabbar .tab-item.active svg { transform: none; }
+
+.uni { padding-top: 16px; }
+.uni-pane { display: none; }
+.uni-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
+
+/* ── hero progress bar ── */
+.uni-hero-bar { height: 6px; border-radius: 99px; background: var(--surface-3); margin-top: 16px; overflow: hidden; }
+.uni-hero-bar-fill { height: 100%; border-radius: 99px; background: var(--accent); transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── progress bar บนพื้นขาว ── */
+.uni-bar { position: relative; height: 8px; border-radius: 99px; background: var(--surface-3); margin-top: 10px; overflow: hidden; }
+.uni-bar-fill { position: absolute; left: 0; top: 0; height: 100%; border-radius: 99px; background: var(--accent); transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── by category ── */
+.uni-cat + .uni-cat { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-soft); }
+.uni-cat-head { display: flex; align-items: baseline; justify-content: space-between; font-size: 0.875rem; font-weight: 600; }
+.uni-cat-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
+
+.uni-note { font-size: 0.875rem; line-height: 1.6; color: var(--text); }
+
+/* ── group head (ชื่อหมวด + หน่วยกิตที่ผ่านแล้ว) ── */
+.uni-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.uni-group-sum { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.875rem; font-weight: 600; color: var(--text); }
+
+/* ── แถวรายวิชา ── */
+.uni-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; cursor: pointer; min-width: 0; }
+.uni-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+.uni-row:active { opacity: .55; }
+.uni-dot { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 99px; border: 1.8px solid var(--border);
+  display: flex; align-items: center; justify-content: center; color: #fff; }
+.uni-dot svg { width: 13px; height: 13px; }
+.uni-dot.passed { background: var(--green); border-color: var(--green); }
+.uni-dot.failed { background: var(--red); border-color: var(--red); }
+.uni-row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.uni-row-title { font-family: var(--mono); font-size: 0.9375rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uni-row-sub { font-size: 0.75rem; color: var(--silver); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uni-row-cr { flex: 0 0 auto; font-size: 0.75rem; color: var(--silver); font-weight: 500; white-space: nowrap; }
+.uni-grade-badge { flex: 0 0 auto; font-family: var(--mono); font-size: 0.9375rem; font-weight: 700; color: var(--accent);
+  background: var(--accent-soft); padding: 3px 10px; border-radius: 8px; }
+
+/* ── filter chips ── */
+.uni-filters { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+.uni-chipbtn { flex: 0 0 auto; border: 1px solid var(--border-soft); background: var(--surface); cursor: pointer; font-family: inherit;
+  color: var(--silver); font-size: 0.8125rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; transition: all .15s; white-space: nowrap; }
+.uni-chipbtn.on { background: var(--text); border-color: var(--text); color: #fff; }
+
+/* ── chips สถานะ ── */
+.chip.uni-chip-passed { background: rgba(5,177,105,.12); color: var(--green); }
+.chip.uni-chip-failed { background: rgba(207,32,47,.12); color: var(--red); }
+.chip.uni-chip-todo { background: var(--surface-3); color: var(--silver); }
+
+/* ── GPA card (แท็บ Grades) ── */
+.uni-gpa-big { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 2.5rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); margin-top: 4px; }
+.uni-gpa-sub { font-size: 0.8125rem; color: var(--silver); margin-top: 6px; }
+
+/* ── modal ── */
+.uni-price-block { display: flex; gap: 28px; margin-top: 16px; }
+.uni-price-lab { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 1px; color: var(--silver); font-weight: 700; }
+.uni-price-val { font-family: var(--mono); font-size: 1.375rem; font-weight: 600; letter-spacing: -.02em; margin-top: 3px; }
+.uni-price-val.muted { color: var(--silver); font-size: 1.125rem; }
