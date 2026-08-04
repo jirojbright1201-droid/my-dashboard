@@ -243,14 +243,15 @@
 .inv-track-claim { font-weight: 600; font-size: 0.875rem; line-height: 1.5; }
 .inv-track-note { font-size: 0.8125rem; color: var(--silver); line-height: 1.55; margin-top: 5px; }
 
-.inv-dd-comp { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
-.inv-dd-comp-row { padding-bottom: 14px; border-bottom: 1px solid var(--border-soft); }
-.inv-dd-comp-row:last-child { border-bottom: none; padding-bottom: 0; }
-.inv-dd-comp-name { font-weight: 700; font-size: 0.875rem; margin-bottom: 6px; }
-.inv-dd-comp-line { font-size: 0.78125rem; color: var(--silver); line-height: 1.55; margin-top: 3px; }
-.inv-dd-comp-line .l { display: inline-block; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
-.inv-dd-comp-line .l.good { color: var(--green); }
-.inv-dd-comp-line .l.bad { color: var(--red); }
+/* competitor cards — การ์ด+ไอคอน check/close แทน Strength/Weakness ตัวหนังสือ (reskin 5 ส.ค. 2026) */
+.inv-dd-comp-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.inv-dd-comp-card { border: 1px solid var(--border-soft); border-radius: 14px; padding: 14px; background: var(--surface); }
+.inv-dd-comp-name { font-weight: 700; font-size: 0.9375rem; }
+.inv-dd-comp-row { display: flex; gap: 8px; margin-top: 9px; align-items: flex-start; }
+.inv-dd-comp-row svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+.inv-dd-comp-row.g svg { color: var(--green); }
+.inv-dd-comp-row.b svg { color: var(--red); }
+.inv-dd-comp-row span { font-size: 0.8125rem; line-height: 1.55; color: var(--silver); }
 
 .inv-dd-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .inv-dd-chip { font-family: var(--mono); font-size: 0.71rem; color: var(--silver); border: 1px solid var(--border); border-radius: 9999px; padding: 4px 11px; }
@@ -268,3 +269,40 @@
 .inv-full-reader .inv-pr-twocol { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-soft); }
 .inv-full-reader .inv-pr-section:first-of-type { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border-soft); }
 .inv-full-reader .section-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--text); text-transform: none; letter-spacing: 0; margin-bottom: 12px; }
+
+/* ── Deep-Dive only, สโคปด้วย #invDeepArticle เท่านั้น ห้ามกระทบ Earnings ที่ใช้ .inv-full-reader ร่วมกัน (reskin 5 ส.ค. 2026 — cover+jump-nav+ไอคอนต่อหมวด แทนเอกสารตัวหนังสือล้วน) ── */
+.inv-dd-progress { height: 2px; background: var(--border-soft); flex-shrink: 0; }
+.inv-dd-progress i { display: block; height: 100%; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+
+.inv-dd-cover { background: var(--accent); margin: -22px -22px 0; padding: 24px 22px; }
+.inv-dd-cover-eyebrow { display: flex; }
+.inv-dd-cover-sector { font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.72); }
+.inv-dd-cover-ticker { font-family: var(--mono); font-size: 3.1rem; font-weight: 700; letter-spacing: -.02em; line-height: 1; color: #fff; margin-top: 12px; font-variant-numeric: tabular-nums; word-break: break-word; }
+.inv-dd-cover-name { font-size: 1rem; font-weight: 500; color: rgba(255,255,255,.78); margin-top: 6px; }
+.inv-dd-cover-tag { margin-top: 20px; padding-left: 14px; border-left: 3px solid rgba(255,255,255,.55); font-size: 0.9375rem; line-height: 1.7; color: #fff; }
+
+.inv-dd-jumpnav { margin: 0 -22px; padding: 12px 22px; border-bottom: 1px solid var(--border-soft); background: var(--surface); }
+.inv-dd-jumpnav-row { display: flex; justify-content: space-between; gap: 4px; }
+.inv-dd-jicon { width: 32px; height: 32px; border-radius: 9999px; border: none; cursor: pointer; background: var(--surface-2); color: var(--silver); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; transition: background .15s, color .15s; }
+.inv-dd-jicon svg { width: 15px; height: 15px; }
+.inv-dd-jicon.on { background: var(--accent); color: #fff; }
+
+.inv-dd-ic { width: 26px; height: 26px; border-radius: 8px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.inv-dd-ic svg { width: 14px; height: 14px; }
+#invDeepArticle .section-title { display: flex; align-items: center; gap: 10px; color: var(--accent); }
+#invDeepArticle .inv-pr-pos .section-title { color: var(--green); }
+#invDeepArticle .inv-pr-neg .section-title { color: var(--red); }
+#invDeepArticle .inv-pr-pos .inv-dd-ic { background: var(--green); }
+#invDeepArticle .inv-pr-neg .inv-dd-ic { background: var(--red); }
+/* jump-nav เองมีเส้นคั่นอยู่แล้ว ตัดเส้น+ระยะของ section แรกไม่ให้ซ้อนกันเป็น 2 เส้นติดกัน (เฉพาะ deep-dive จุดเดียว) */
+#invDeepArticle .inv-pr-section:first-of-type { margin-top: 10px; padding-top: 0; border-top: none; }
+
+/* Discussion — การ์ด Bull/Bear/คำถามเปิด ภาษาเดียวกันหมด ต่างแค่สีขอบ */
+.inv-dd-disc { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.inv-dd-case { border-radius: 12px; padding: 13px 14px; border-left: 3px solid var(--border); background: var(--surface-2); }
+.inv-dd-case.bull { border-left-color: var(--green); }
+.inv-dd-case.bear { border-left-color: var(--red); }
+.inv-dd-case .tag { font-family: var(--mono); font-size: 0.625rem; font-weight: 700; letter-spacing: .05em; color: var(--silver); }
+.inv-dd-case.bull .tag { color: var(--green); }
+.inv-dd-case.bear .tag { color: var(--red); }
+.inv-dd-case p { font-size: 0.8125rem; line-height: 1.6; color: var(--text); margin-top: 5px; }

@@ -28,6 +28,67 @@ window.InvestmentView = (function () {
   function bicon(macro) {
     return `<div class="inv-bicon${macro ? ' macro' : ''}">${macro ? ICON_EARTH_FILL : ICON_DOMAIN_FILL}</div>`;
   }
+  // ไอคอนทึบต่อหมวดของ Company Deep-Dive (cover + jump-nav + section badge ใช้ตัวเดียวกันหมด) — reskin 5 ส.ค. 2026
+  const ICON_DD = {
+    overview: F('<path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/>'), // office-building
+    technology: F('<path d="M6,4H18V5H21V7H18V9H21V11H18V13H21V15H18V17H21V19H18V20H6V19H3V17H6V15H3V13H6V11H3V9H6V7H3V5H6V4M11,15V18H12V15H11M13,15V18H14V15H13M15,15V18H16V15H15Z"/>'), // chip
+    market: F('<path d="M6.2,2.44L18.1,14.34L20.22,12.22L21.63,13.63L19.16,16.1L22.34,19.28C22.73,19.67 22.73,20.3 22.34,20.69L21.63,21.4C21.24,21.79 20.61,21.79 20.22,21.4L17,18.23L14.56,20.7L13.15,19.29L15.27,17.17L3.37,5.27V2.44H6.2M15.89,10L20.63,5.26V2.44H17.8L13.06,7.18L15.89,10M10.94,15L8.11,12.13L5.9,14.34L3.78,12.22L2.37,13.63L4.84,16.1L1.66,19.29C1.27,19.68 1.27,20.31 1.66,20.7L2.37,21.41C2.76,21.8 3.39,21.8 3.78,21.41L7,18.23L9.44,20.7L10.85,19.29L8.73,17.17L10.94,15Z"/>'), // sword-cross
+    financials: F('<path d="M6,16.5L3,19.44V11H6M11,14.66L9.43,13.32L8,14.64V7H11M16,13L13,16V3H16M18.81,12.81L17,11H22V16L20.21,14.21L13,21.36L9.53,18.34L5.75,22H3L9.47,15.66L13,18.64"/>'), // finance
+    management: F('<path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/>'), // account-group
+    cr: F('<path d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z"/>'), // scale-balance
+    catalysts: F('<path d="M13.13 22.19L11.5 18.36C13.07 17.78 14.54 17 15.9 16.09L13.13 22.19M5.64 12.5L1.81 10.87L7.91 8.1C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39C21.61 2.39 16.66 .269 11 5.93C8.81 8.12 7.5 10.53 6.65 12.64C6.37 13.39 6.56 14.21 7.11 14.77L9.24 16.89C9.79 17.45 10.61 17.63 11.36 17.35C13.5 16.53 15.88 15.19 18.07 13C23.73 7.34 21.61 2.39 21.61 2.39M14.54 9.46C13.76 8.68 13.76 7.41 14.54 6.63S16.59 5.85 17.37 6.63C18.14 7.41 18.15 8.68 17.37 9.46C16.59 10.24 15.32 10.24 14.54 9.46M8.88 16.53L7.47 15.12L8.88 16.53M6.24 22L9.88 18.36C9.54 18.27 9.21 18.12 8.91 17.91L4.83 22H6.24M2 22H3.41L8.18 17.24L6.76 15.83L2 20.59V22M2 19.17L6.09 15.09C5.88 14.79 5.73 14.47 5.64 14.12L2 17.76V19.17Z"/>'), // rocket-launch
+    risks: F('<path d="M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z"/>'), // alert
+    discussion: F('<path d="M17,12V3A1,1 0 0,0 16,2H3A1,1 0 0,0 2,3V17L6,13H16A1,1 0 0,0 17,12M21,6H19V15H6V17A1,1 0 0,0 7,18H18L22,22V7A1,1 0 0,0 21,6Z"/>'), // forum
+    check: F('<path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/>'), // check-circle
+    close: F('<path d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/>'), // close-circle
+  };
+  function ddIcon(key) { return `<span class="inv-dd-ic">${ICON_DD[key]}</span>`; }
+  const DD_SECTIONS = [
+    { id: 'dd-overview', label: 'Overview', icon: 'overview' },
+    { id: 'dd-tech', label: 'Tech', icon: 'technology' },
+    { id: 'dd-market', label: 'Market', icon: 'market' },
+    { id: 'dd-fin', label: 'Financials', icon: 'financials' },
+    { id: 'dd-mgmt', label: 'Management', icon: 'management' },
+    { id: 'dd-cr', label: 'Catalysts/Risks', icon: 'cr' },
+    { id: 'dd-disc', label: 'Discussion', icon: 'discussion' },
+  ];
+  function ddJumpNav() {
+    return `<div class="inv-dd-jumpnav"><div class="inv-dd-jumpnav-row">${DD_SECTIONS.map(s =>
+      `<button class="inv-dd-jicon" data-t="${s.id}" aria-label="${s.label}">${ICON_DD[s.icon]}</button>`
+    ).join('')}</div></div>`;
+  }
+  function wireDeepDiveNav() {
+    const scroll = $('invDDScroll');
+    const fill = $('invDDFill');
+    const chips = [...root.querySelectorAll('#invDDBody .inv-dd-jicon')];
+    if (!scroll || !chips.length) return;
+    chips[0].classList.add('on');
+    chips.forEach(ch => { ch.onclick = () => {
+      const t = $(ch.dataset.t);
+      if (t) scroll.scrollTo({ top: t.offsetTop - 8, behavior: 'smooth' });
+    }; });
+    scroll.onscroll = () => {
+      if (fill) {
+        const max = scroll.scrollHeight - scroll.clientHeight;
+        fill.style.transform = `scaleX(${max > 0 ? Math.min(scroll.scrollTop / max, 1) : 0})`;
+      }
+      const pos = scroll.scrollTop + 90;
+      let active = chips[0];
+      for (const ch of chips) { const el = $(ch.dataset.t); if (el && el.offsetTop <= pos) active = ch; }
+      chips.forEach(ch => ch.classList.toggle('on', ch === active));
+    };
+  }
+  function ddDiscussion(items) {
+    if (!items || !items.length) return '';
+    const re = /^(Bull case|Bear case):\s*(.*)$/;
+    let out = '', qn = 0;
+    items.forEach(x => {
+      const m = re.exec(x);
+      if (m) out += `<div class="inv-dd-case ${m[1] === 'Bull case' ? 'bull' : 'bear'}"><span class="tag">${esc(m[1])}</span><p>${esc(m[2])}</p></div>`;
+      else { qn++; out += `<div class="inv-dd-case q"><span class="tag">Q${qn}</span><p>${esc(x)}</p></div>`; }
+    });
+    return `<div class="inv-dd-disc">${out}</div>`;
+  }
   // เฉดน้ำเงิน Coinbase เข้ม→อ่อนตามลำดับ (เปลี่ยนจากคอรัลตอน reskin 4 ส.ค. 2026 — accent เดียวห้ามมีสีที่สอง)
   const ramp = (i, n) => {
     const t = n <= 1 ? 0 : i / (n - 1);
@@ -89,6 +150,7 @@ window.InvestmentView = (function () {
     <div class="inv-full-topbar">
       <button class="inv-full-backbtn" id="invDDBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     </div>
+    <div class="inv-dd-progress"><i id="invDDFill"></i></div>
     <div class="inv-art-scroll" id="invDDScroll">
       <div class="inv-art-body" id="invDDBody"></div>
     </div>
@@ -495,11 +557,11 @@ window.InvestmentView = (function () {
   }
   function compTable(rows) {
     if (!rows || !rows.length) return '';
-    return `<div class="inv-dd-comp">${rows.map(c => `
-      <div class="inv-dd-comp-row">
+    return `<div class="inv-dd-comp-grid">${rows.map(c => `
+      <div class="inv-dd-comp-card">
         <div class="inv-dd-comp-name">${esc(c.name)}</div>
-        <div class="inv-dd-comp-line"><span class="l good">Strength</span>${esc(c.strength)}</div>
-        <div class="inv-dd-comp-line"><span class="l bad">Weakness</span>${esc(c.weakness)}</div>
+        <div class="inv-dd-comp-row g">${ICON_DD.check}<span>${esc(c.strength)}</span></div>
+        <div class="inv-dd-comp-row b">${ICON_DD.close}<span>${esc(c.weakness)}</span></div>
       </div>`).join('')}</div>`;
   }
   function chipRow(items) {
@@ -583,44 +645,55 @@ window.InvestmentView = (function () {
 
   function openDeepDive(id) {
     const d = deepDiveById(id); if (!d) return;
+    const hasBreakdown = d.overviewBreakdown && d.overviewBreakdown.length;
+    const bigTitle = d.ticker || d.company;
+    const trend = trendBars(d.financialTrend, 'M');
     $('invDDBody').innerHTML = `
-      <div class="inv-art-h">${esc(d.ticker ? d.ticker + ' — ' + d.company : d.company)}</div>
-      <div class="inv-art-rule"></div>
-      <div class="inv-summary">${esc(d.tagline)}</div>
-      <div class="inv-pr-section">
-        <div class="section-title">Business Overview</div>
-        <div class="inv-summary">${esc(d.overview)}</div>
+      <div class="inv-dd-cover">
+        <div class="inv-dd-cover-eyebrow"><span class="inv-dd-cover-sector">${esc(d.sector)}</span></div>
+        <div class="inv-dd-cover-ticker">${esc(bigTitle)}</div>
+        ${d.ticker ? `<div class="inv-dd-cover-name">${esc(d.company)}</div>` : ''}
+        <div class="inv-dd-cover-tag">${esc(d.tagline)}</div>
       </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Technology &amp; Products</div>
+      ${ddJumpNav()}
+      <div class="inv-pr-section" id="dd-overview">
+        <div class="section-title">${ddIcon('overview')}Business Overview</div>
+        <div class="inv-summary">${esc(d.overview)}</div>
+        ${hasBreakdown ? bulletList(d.overviewBreakdown) : ''}
+        ${hasBreakdown && d.overviewOutro ? `<div class="inv-summary">${esc(d.overviewOutro)}</div>` : ''}
+      </div>
+      <div class="inv-pr-section" id="dd-tech">
+        <div class="section-title">${ddIcon('technology')}Technology &amp; Products</div>
         ${bulletList(d.technology)}
       </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Market &amp; Competition</div>
+      <div class="inv-pr-section" id="dd-market">
+        <div class="section-title">${ddIcon('market')}Market &amp; Competition</div>
         <div class="inv-summary">${esc(d.marketSummary)}</div>
         ${compTable(d.competitors)}
       </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Financials</div>
+      <div class="inv-pr-section" id="dd-fin">
+        <div class="section-title">${ddIcon('financials')}Financials</div>
         <div class="inv-summary">${esc(d.financialsSummary)}</div>
+        ${trend ? trend : ''}
         ${statTable(d.financialMetrics)}
       </div>
-      <div class="inv-pr-section">
-        <div class="section-title">Management &amp; Investors</div>
+      <div class="inv-pr-section" id="dd-mgmt">
+        <div class="section-title">${ddIcon('management')}Management &amp; Investors</div>
         ${bulletList((d.leadership || []).map(p => ({ label: `${p.name} — ${p.role}`, note: p.note })))}
         ${chipRow(d.investors)}
       </div>
-      <div class="inv-pr-twocol">
-        <div class="inv-pr-pos"><div class="section-title">Catalysts</div>${bulletList(d.catalysts)}</div>
-        <div class="inv-pr-neg"><div class="section-title">Risks</div>${bulletList(d.risks)}</div>
+      <div class="inv-pr-twocol" id="dd-cr">
+        <div class="inv-pr-pos"><div class="section-title">${ddIcon('catalysts')}Catalysts</div>${bulletList(d.catalysts)}</div>
+        <div class="inv-pr-neg"><div class="section-title">${ddIcon('risks')}Risks</div>${bulletList(d.risks)}</div>
       </div>
-      ${(d.discussion || []).length ? `<div class="inv-pr-section">
-        <div class="section-title">Discussion</div>
-        <ol class="inv-bullets">${d.discussion.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+      ${(d.discussion || []).length ? `<div class="inv-pr-section" id="dd-disc">
+        <div class="section-title">${ddIcon('discussion')}Discussion</div>
+        ${ddDiscussion(d.discussion)}
       </div>` : ''}
       <div class="inv-pr-caveats">${esc(d.caveats)}</div>`;
     $('invDeepArticle').classList.add('open');
     $('invDDScroll') && ($('invDDScroll').scrollTop = 0);
+    wireDeepDiveNav();
     pushOverlayState('deepdive');
   }
   function closeDeepArticle() {
