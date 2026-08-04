@@ -49,6 +49,8 @@ window.MONEY_DATA = {
       { "date": "2026-08-03", "amount": 25, "category": "Restaurant", "name": "Thai tea", "name_th": "ชาไทย", "notes": "" },
       { "date": "2026-08-03", "amount": 255, "category": "Shopping", "name": "Insulated tumbler", "name_th": "แก้วเก็บความเย็น", "notes": "" },
       { "date": "2026-08-03", "amount": 60, "category": "Restaurant", "name": "Dry wonton noodles (special)", "name_th": "บะหมี่เกี๊ยวแห้ง (พิเศษ)", "notes": "" },
+      { "date": "2026-08-03", "amount": 500, "category": "Emergency Fund", "name": "Emergency fund savings", "name_th": "เงินสำรองฉุกเฉิน", "notes": "" },
+      { "date": "2026-08-03", "amount": 1000, "category": "Investment", "name": "Investment contribution", "name_th": "เงินลงทุน", "notes": "" },
       { "date": "2026-08-04", "amount": 100, "category": "Study", "name": "YouTube membership (Longtoon Daily)", "name_th": "Member ช่องยูทูป \"ลงทุน Daily\"", "notes": "" },
       { "date": "2026-08-04", "amount": 15, "category": "Restaurant", "name": "Mineral water (7-Eleven)", "name_th": "น้ำแร่เซเว่น", "notes": "" },
       { "date": "2026-08-04", "amount": 50, "category": "Restaurant", "name": "Stir-fried basil rice with fried egg", "name_th": "ข้าวกระเพราไข่ดาว", "notes": "" }
@@ -57,4 +59,5 @@ window.MONEY_DATA = {
 };
 window.MONEY_KEYS = ["2026-08"];
 window.MONEY_UPDATED = "04/08/2026";
+
 
