@@ -51,7 +51,7 @@ window.MONEY_DATA = {
       { "date": "2026-08-03", "amount": 60, "category": "Restaurant", "name": "Dry wonton noodles (special)", "name_th": "บะหมี่เกี๊ยวแห้ง (พิเศษ)", "notes": "" },
       { "date": "2026-08-04", "amount": 100, "category": "Study", "name": "YouTube membership (Longtoon Daily)", "name_th": "Member ช่องยูทูป \"ลงทุน Daily\"", "notes": "" },
       { "date": "2026-08-04", "amount": 15, "category": "Restaurant", "name": "Mineral water (7-Eleven)", "name_th": "น้ำแร่เซเว่น", "notes": "" },
-      { "date": "2026-08-04", "amount": 59, "category": "Restaurant", "name": "Stir-fried basil rice with fried egg", "name_th": "ข้าวกระเพราไข่ดาว", "notes": "" }
+      { "date": "2026-08-04", "amount": 50, "category": "Restaurant", "name": "Stir-fried basil rice with fried egg", "name_th": "ข้าวกระเพราไข่ดาว", "notes": "" }
     ]
   }
 };
