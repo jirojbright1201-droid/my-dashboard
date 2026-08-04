@@ -51,8 +51,8 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "CNBC",
     url: "https://www.cnbc.com/2026/08/03/palantir-pltr-earnings-q2-2026.html",
-    image: "",
-    topic: ""
+    image: "https://s.yimg.com/lo/mysterio/api/28DAEECABE31231E360E2AE2F3399EB4A64BC4B53B36644F846EACDF178D329A/subgraphmysterio/resizefit_w960;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fbarchart_com_477%2F89a9024bc4bf1aa58a439641243780e3",
+    topic: "bigtech"
   },
   {
     id: "nw0006",
@@ -84,8 +84,8 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "TechCrunch",
     url: "https://techcrunch.com/2026/07/16/ubers-14-8b-delivery-hero-deal-would-nearly-double-its-global-footprint/",
-    image: "",
-    topic: ""
+    image: "https://techcrunch.com/wp-content/uploads/2020/01/GettyImages-1190485293.jpg?w=1024",
+    topic: "market"
   },
   {
     id: "nw0009",
@@ -107,7 +107,7 @@ window.INVESTMENT_BRIEFS = [
     sourceName: "StockTitan",
     url: "https://www.stocktitan.net/news/STRL/sterling-reports-record-second-quarter-results-and-raises-full-year-gwj4bq38afrk.html",
     image: "",
-    topic: ""
+    topic: "bigtech"
   }
 ];
 window.INVESTMENT_UPDATED = "04/08/2026";
