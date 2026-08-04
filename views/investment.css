@@ -298,7 +298,7 @@
    หมายเหตุบั๊กที่เจอ: ใช้ :first-of-type ไม่ได้ผล เพราะ .inv-dd-cover/.inv-dd-jumpnav ก็เป็น <div> เหมือนกัน ทำให้ section แรก
    ไม่ใช่ "div ตัวแรก" ของพี่น้องอีกต่อไป — :first-of-type เช็คตาม tag name ไม่ใช่ตาม class เลยไม่ match เลยสักที
    (เส้นคู่ที่ Bright เจอทั้ง SOFI/FICO คือผลจากบั๊กนี้ — ตัวเลือกเดิมไม่เคยทำงานจริงตั้งแต่แรก) ใช้ #dd-overview ตรงๆ แทน ชัวร์กว่า */
-#dd-overview { margin-top: 10px; padding-top: 0; border-top: none; }
+#dd-overview { margin-top: 26px; padding-top: 0; border-top: none; }
 
 /* Discussion — การ์ด Bull/Bear/คำถามเปิด ภาษาเดียวกันหมด ต่างแค่สีขอบ */
 .inv-dd-disc { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
