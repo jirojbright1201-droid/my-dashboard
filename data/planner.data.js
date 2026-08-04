@@ -8,9 +8,9 @@ window.PLANNER_DATA = {
   "2026-08": {
     "events": [
       {"date":"2026-08-03","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
-      {"date":"2026-08-04","title":"กินข้าว","time":"07:30","end_time":"08:00","icon":"food","notes":""},
+      {"date":"2026-08-04","title":"Eat","time":"07:30","end_time":"08:00","icon":"food","notes":""},
       {"date":"2026-08-04","title":"SetUp Ai","time":"08:00","end_time":"09:00","icon":"default","notes":""},
-      {"date":"2026-08-04","title":"ตัดผม","time":"09:00","end_time":"10:00","icon":"default","notes":""},
+      {"date":"2026-08-04","title":"Haircut","time":"09:00","end_time":"10:00","icon":"default","notes":""},
       {"date":"2026-08-04","title":"นอน","time":"10:00","end_time":"18:00","icon":"sleep","notes":""},
       {"date":"2026-08-04","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
       {"date":"2026-08-05","title":"Work at McDonald's","time":"23:00","end_time":"08:00","icon":"mcdonalds","notes":""},
