@@ -28,11 +28,14 @@ window.PlannerView = (function () {
     food:     F('<path d="M11,9H9V2H7V9H5V2H3V9C3,11.12 4.66,12.84 6.75,12.97V22H9.25V12.97C11.34,12.84 13,11.12 13,9V2H11V9M16,6V14H18.5V22H21V2C18.24,2 16,4.24 16,6Z"/>'), // mdi-silverware-fork-knife (เหมือน Restaurant ของ Money)
     game:     F('<path d="M7,6H17A6,6 0 0,1 23,12A6,6 0 0,1 17,18C15.22,18 13.63,17.23 12.53,16H11.47C10.37,17.23 8.78,18 7,18A6,6 0 0,1 1,12A6,6 0 0,1 7,6M6,9V11H4V13H6V15H8V13H10V11H8V9H6M15.5,12A1.5,1.5 0 0,0 14,13.5A1.5,1.5 0 0,0 15.5,15A1.5,1.5 0 0,0 17,13.5A1.5,1.5 0 0,0 15.5,12M18.5,9A1.5,1.5 0 0,0 17,10.5A1.5,1.5 0 0,0 18.5,12A1.5,1.5 0 0,0 20,10.5A1.5,1.5 0 0,0 18.5,9Z"/>'), // mdi-gamepad-variant
     shower:   F('<path d="M21,14V15C21,16.91 19.93,18.57 18.35,19.41L19,22H17L16.5,20C16.33,20 16.17,20 16,20H8C7.83,20 7.67,20 7.5,20L7,22H5L5.65,19.41C4.07,18.57 3,16.91 3,15V14H2V12H20V5A1,1 0 0,0 19,4C18.5,4 18.12,4.34 18,4.79C18.63,5.33 19,6.13 19,7H13A3,3 0 0,1 16,4C16.06,4 16.11,4 16.17,4C16.58,2.84 17.69,2 19,2A3,3 0 0,1 22,5V14H21V14M19,14H5V15A3,3 0 0,0 8,18H16A3,3 0 0,0 19,15V14Z"/>'), // mdi-shower
+    haircut:  F('<path d="M19,3L13,9L15,11L22,4V3M12,12.5A0.5,0.5 0 0,1 11.5,12A0.5,0.5 0 0,1 12,11.5A0.5,0.5 0 0,1 12.5,12A0.5,0.5 0 0,1 12,12.5M6,20A2,2 0 0,1 4,18C4,16.89 4.9,16 6,16A2,2 0 0,1 8,18C8,19.11 7.1,20 6,20M6,8A2,2 0 0,1 4,6C4,4.89 4.9,4 6,4A2,2 0 0,1 8,6C8,7.11 7.1,8 6,8M9.64,7.64C9.87,7.14 10,6.59 10,6A4,4 0 0,0 6,2A4,4 0 0,0 2,6A4,4 0 0,0 6,10C6.59,10 7.14,9.87 7.64,9.64L10,12L7.64,14.36C7.14,14.13 6.59,14 6,14A4,4 0 0,0 2,18A4,4 0 0,0 6,22A4,4 0 0,0 10,18C10,17.41 9.87,16.86 9.64,16.36L12,14L19,21H22V20L9.64,7.64Z"/>'), // mdi-content-cut
+    ai:       F('<path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"/>'), // mdi-robot
     default:  F('<path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1"/>') // mdi-calendar-blank
   };
   const ICON_LABELS = {
     mcdonalds: "Work (McDonald's)", work: 'Work', sleep: 'Sleep', exercise: 'Exercise', read: 'Reading',
-    clean: 'Cleaning', doc: 'Errands', video: 'Content', food: 'Food', game: 'Gaming', shower: 'Shower', default: 'Other'
+    clean: 'Cleaning', doc: 'Errands', video: 'Content', food: 'Food', game: 'Gaming', shower: 'Shower',
+    haircut: 'Haircut', ai: 'AI / Tech', default: 'Other'
   };
   function eventIconKey(e) {
     const title = typeof e === 'string' ? e : (e && e.title) || '';
@@ -43,6 +46,8 @@ window.PlannerView = (function () {
     if (has("mcdonald", "แมค")) return 'mcdonalds';
     if (has("sleep", "นอน")) return 'sleep';
     if (has("อาบน้ำ", "shower", "bath", "อาบ")) return 'shower';
+    if (has("ตัดผม", "haircut", "hair cut", "hairdresser", "barber", "ทำผม")) return 'haircut';
+    if (has("setup ai", "ai ", "artificial intelligence", "chatgpt", "หุ่นยนต์", "โมเดล ai")) return 'ai';
     if (has("กินข้าว", "กิน", "ข้าว", "อาหาร", "มื้อ", "food", "eat", "dinner", "lunch", "breakfast")) return 'food';
     if (has("เกม", "game")) return 'game';
     if (has("ออกกำลัง", "วิ่ง", "ยิม", "exercise", "gym", "เวท", "workout", "run")) return 'exercise';
