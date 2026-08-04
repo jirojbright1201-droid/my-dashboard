@@ -294,8 +294,11 @@
 #invDeepArticle .inv-pr-neg .section-title { color: var(--red); }
 #invDeepArticle .inv-pr-pos .inv-dd-ic { background: var(--green); }
 #invDeepArticle .inv-pr-neg .inv-dd-ic { background: var(--red); }
-/* jump-nav เองมีเส้นคั่นอยู่แล้ว ตัดเส้น+ระยะของ section แรกไม่ให้ซ้อนกันเป็น 2 เส้นติดกัน (เฉพาะ deep-dive จุดเดียว) */
-#invDeepArticle .inv-pr-section:first-of-type { margin-top: 10px; padding-top: 0; border-top: none; }
+/* jump-nav เองมีเส้นคั่นอยู่แล้ว ตัดเส้น+ระยะของ section แรกไม่ให้ซ้อนกันเป็น 2 เส้นติดกัน (เฉพาะ deep-dive จุดเดียว)
+   หมายเหตุบั๊กที่เจอ: ใช้ :first-of-type ไม่ได้ผล เพราะ .inv-dd-cover/.inv-dd-jumpnav ก็เป็น <div> เหมือนกัน ทำให้ section แรก
+   ไม่ใช่ "div ตัวแรก" ของพี่น้องอีกต่อไป — :first-of-type เช็คตาม tag name ไม่ใช่ตาม class เลยไม่ match เลยสักที
+   (เส้นคู่ที่ Bright เจอทั้ง SOFI/FICO คือผลจากบั๊กนี้ — ตัวเลือกเดิมไม่เคยทำงานจริงตั้งแต่แรก) ใช้ #dd-overview ตรงๆ แทน ชัวร์กว่า */
+#dd-overview { margin-top: 10px; padding-top: 0; border-top: none; }
 
 /* Discussion — การ์ด Bull/Bear/คำถามเปิด ภาษาเดียวกันหมด ต่างแค่สีขอบ */
 .inv-dd-disc { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
