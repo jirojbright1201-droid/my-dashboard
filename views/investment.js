@@ -649,7 +649,12 @@ window.InvestmentView = (function () {
 
   // ── ผูก overlay (หน้าอ่านข่าว/modal รีวิวพอร์ต) เข้ากับ browser history ──
   // ปุ่ม/ท่า back ของระบบ (Android) เป็นคนละกลไกกับปัดในแอป — ถ้าไม่ผูก history กด back เครื่องจะข้ามออกจากแอปทั้งที เลยต้องปิด overlay ก่อนเสมอ (22 ก.ค. 2026 jiroj ทักว่า back ของเครื่อง Android ไม่ย้อนกลับให้)
+  // overlayStack เก็บลำดับชั้นที่เปิดจริง (LIFO) — กันบัค "เปิดชั้นซ้อนกันแล้วกด back ครั้งเดียวปิดทุกชั้นพร้อมกัน"
+  // (พอร์ตจาก views/money.js 4 ส.ค. 2026 — เดิมที่นี่เช็คว่าชั้นไหน "active"/"open" อยู่แล้วปิดทุกชั้นพร้อมกันหมด
+  // ทั้งที่ back ควรปิดแค่ชั้นบนสุดที่เพิ่งถูก pop — ตอนนี้ปิดเฉพาะชั้นที่ pop ออกมาจาก stack เท่านั้น)
+  let overlayStack = [];
   function pushOverlayState(kind) {
+    overlayStack.push(kind);
     history.pushState({ invOverlay: kind }, '');
   }
   // ใช้แทนการปิด overlay ตรงๆ ทุกจุดที่ผู้ใช้กดปิดเอง (ปุ่ม X/back, แตะพื้นหลัง, ปัด) — ให้ history.back()
@@ -659,10 +664,11 @@ window.InvestmentView = (function () {
   }
   function wirePopstate() {
     window.addEventListener('popstate', () => {
-      if ($('invArticle').classList.contains('open')) closeArticle();
-      if ($('invDeepArticle').classList.contains('open')) closeDeepArticle();
-      if ($('invEarnArticle').classList.contains('open')) closeEarnArticle();
-      if ($('invOverlay').classList.contains('active')) closeModal();
+      const kind = overlayStack.pop();
+      if (kind === 'article') closeArticle();
+      else if (kind === 'deepdive') closeDeepArticle();
+      else if (kind === 'earnings') closeEarnArticle();
+      else if (kind === 'review') closeModal();
     });
   }
 
