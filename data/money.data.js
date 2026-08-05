@@ -57,7 +57,11 @@ window.MONEY_DATA = {
       { "date": "2026-08-04", "amount": 300, "category": "Beauty", "name": "Haircut", "name_th": "ตัดผม", "notes": "" },
       { "date": "2026-08-04", "amount": 330, "category": "Shopping", "name": "Photo shoot (digital file) for job application", "name_th": "ถ่ายรูป (ไฟล์ดิจิตอล) ไว้ใช้สมัครงาน", "notes": "" },
       { "date": "2026-08-04", "amount": 70, "category": "Restaurant", "name": "Curry powder fried rice with crispy pork", "name_th": "ข้าวผัดผงกระหรี่หมูกรอบ", "notes": "" },
-      { "date": "2026-08-04", "amount": 35, "category": "Restaurant", "name": "Longan juice", "name_th": "น้ำลำไย", "notes": "" }
+      { "date": "2026-08-04", "amount": 35, "category": "Restaurant", "name": "Longan juice", "name_th": "น้ำลำไย", "notes": "" },
+      { "date": "2026-08-04", "amount": 25, "category": "Restaurant", "name": "7-Eleven sausage bread", "name_th": "ขนมปังไส้กรอกเซเว่น", "notes": "" },
+      { "date": "2026-08-04", "amount": 20, "category": "Restaurant", "name": "M150 sparkling energy drink", "name_th": "", "notes": "" },
+      { "date": "2026-08-05", "amount": 40, "category": "Restaurant", "name": "Rice with curry", "name_th": "ข้าวราดแกง", "notes": "" },
+      { "date": "2026-08-05", "amount": 20, "category": "Restaurant", "name": "Thai tea", "name_th": "ชาไทย", "notes": "" }
     ]
   }
 };
