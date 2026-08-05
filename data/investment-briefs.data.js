@@ -117,7 +117,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "StockTitan",
     url: "https://www.stocktitan.net/news/AMD/amd-reports-second-quarter-2026-financial-s9qsl4zgkkw3.html",
-    image: "https://static.stocktitan.net/company-logo/amd-md-ext.png?v=fcfffc8e2a",
+    image: "https://s.yimg.com/lo/mysterio/api/2D4CB6BE338E39F63EF9612B1BF4316A9F2B833EBD8BC10E59D38FA80A0E691C/subgraphmysterio/resizefill_w1200_h800;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fmotleyfool.com%2Fc5a245c32d273ac178d144b452f700ea",
     topic: "chips"
   },
   {
@@ -139,7 +139,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "StockTitan",
     url: "https://www.stocktitan.net/news/ANET/arista-networks-inc-reports-second-quarter-2026-financial-h5wut2fehmt9.html",
-    image: "https://www.quiverquant.com/images/anet_rect_new.png",
+    image: "https://g.foolcdn.com/image/?url=https%3A%2F%2Fcdn.content.foolcdn.com%2Fimages%2F1umn9qeh%2Fproduction%2F97a331a2ba491da34dde659337a4c3eb1448dc1f-1200x800.png%3Fw%3D800%26q%3D75%26fit%3Dmax%26auto%3Dformat&w=1200&op=resize",
     topic: "bigtech"
   },
   {
@@ -150,7 +150,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "GuruFocus",
     url: "https://www.gurufocus.com/news/9004427/amgen-inc-amgn-q2-2026-earnings-call-highlights-revenue-surges-past-10-billion-guidance-raised-on-strong-portfolio-growth",
-    image: "https://static.stocktitan.net/company-logo/amgn.png",
+    image: "https://fortune.com/img-assets/wp-content/uploads/2026/06/Robert-A-Bradway.webp?format=webp&w=1440&q=100",
     topic: "market"
   },
   {
@@ -161,7 +161,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "The Motley Fool",
     url: "https://www.fool.com/coverage/stock-market-today/2026/08/05/stock-market-midday-aug-5-eli-lilly-pops-and-amd-drops-in-mixed-morning-markets/",
-    image: "https://static.stocktitan.net/company-logo/lly.png?v=da344af674",
+    image: "https://s.yimg.com/lo/mysterio/api/39E068B69685B6FEC92A251AE8BA01BF4906320F4A3345A67522DE1BCA434A04/subgraphmysterio/resizefill_w1200_h800;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Ffortune_175%2F95bdc985302ac2e4ccc0d855b05561e7",
     topic: "market"
   },
   {
@@ -172,7 +172,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "TheStreet",
     url: "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-aug-5-2026",
-    image: "https://static.stocktitan.net/company-logo/cat.png",
+    image: "https://s.yimg.com/lo/mysterio/api/02FAF0C2297DB88CBA148F63C382492435DA21FECAED82A9BF55595B90366AE2/subgraphmysterio/resizefill_w1200_h800;quality_80;format_webp/https:%2F%2Fd29szjachogqwa.cloudfront.net%2Fimages%2F2026-08%2F747a56f8-d4be-45b6-9639-3ed1f277c84a",
     topic: "market"
   },
   {
@@ -183,7 +183,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "Investing.com",
     url: "https://ng.investing.com/news/transcripts/earnings-call-transcript-compass-posts-q2-2026-beat-shares-jump-11-after-hours-93CH-2638118",
-    image: "https://static.stocktitan.net/company-logo/comp.png",
+    image: "https://s.yimg.com/lo/mysterio/api/9ADE1CF212F7778152CBF0CE1C1386B2E5C8503E8C2D953D6D8AF1A22594C9BD/subgraphmysterio/resizefill_w1200_h900;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fbusiness_insider_articles_888%2F321986e743dc097648b8bcdb2de412c2",
     topic: "market"
   }
 ];
