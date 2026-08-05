@@ -54,6 +54,11 @@
 .uni-cat-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.8125rem; color: var(--silver); font-weight: 600; }
 
 .uni-note { font-size: 0.875rem; line-height: 1.6; color: var(--text); }
+.uni-note-row { display: flex; align-items: center; gap: 14px; }
+.uni-note-icon { flex: 0 0 auto; width: 40px; height: 40px; border-radius: var(--r-sm); background: var(--accent);
+  display: flex; align-items: center; justify-content: center; color: #fff; }
+.uni-note-icon svg { width: 20px; height: 20px; }
+.uni-note-row .uni-note { font-weight: 600; }
 
 /* ── group head (ชื่อหมวด + หน่วยกิตที่ผ่านแล้ว) ── */
 .uni-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
