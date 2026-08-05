@@ -22,8 +22,16 @@ window.PLANNER_DATA = {
       {"date":"2026-08-08","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""}
     ],
     "habits": []
+  },
+  "2026-10": {
+    "events": [
+      {"date":"2026-10-17","title":"RAM1111 Exam","time":"","end_time":"","icon":"doc","notes":""},
+      {"date":"2026-10-18","title":"LAW1103 Exam","time":"","end_time":"","icon":"doc","notes":""},
+      {"date":"2026-10-25","title":"LAW1106 Exam","time":"","end_time":"","icon":"doc","notes":""}
+    ],
+    "habits": []
   }
 };
-window.PLANNER_KEYS = ["2026-08"];
-window.PLANNER_UPDATED = "04/08/2026";
+window.PLANNER_KEYS = ["2026-08", "2026-10"];
+window.PLANNER_UPDATED = "05/08/2026";
 
