@@ -61,11 +61,12 @@ window.MONEY_DATA = {
       { "date": "2026-08-04", "amount": 25, "category": "Restaurant", "name": "7-Eleven sausage bread", "name_th": "ขนมปังไส้กรอกเซเว่น", "notes": "" },
       { "date": "2026-08-04", "amount": 20, "category": "Restaurant", "name": "M150 sparkling energy drink", "name_th": "", "notes": "" },
       { "date": "2026-08-05", "amount": 40, "category": "Restaurant", "name": "Rice with curry", "name_th": "ข้าวราดแกง", "notes": "" },
-      { "date": "2026-08-05", "amount": 20, "category": "Restaurant", "name": "Thai tea", "name_th": "ชาไทย", "notes": "" }
+      { "date": "2026-08-05", "amount": 20, "category": "Restaurant", "name": "Thai tea", "name_th": "ชาไทย", "notes": "" },
+      { "date": "2026-08-05", "amount": 1525, "category": "Study", "name": "Tuition fee", "name_th": "ค่าเทอม", "notes": "" }
     ]
   }
 };
 window.MONEY_KEYS = ["2026-08"];
-window.MONEY_UPDATED = "04/08/2026";
+window.MONEY_UPDATED = "05/08/2026";
 
 
