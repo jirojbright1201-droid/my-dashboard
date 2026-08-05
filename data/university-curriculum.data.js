@@ -6,8 +6,7 @@ window.UNIVERSITY_CURRICULUM_UPDATED = '2026-08-05';
 window.UNIVERSITY_CURRICULUM_DATA = {
   program: {
     name: 'นิติศาสตรบัณฑิต 2565',
-    title: 'นักศึกษามหาวิทยาลัยรามคำแหง คณะนิติศาสตร์',
-    note: 'คณะนิติศาสตร์ มหาวิทยาลัยรามคำแหง',
+    note: 'นักศึกษามหาวิทยาลัยรามคำแหง คณะนิติศาสตร์',
     totalCredits: 140
   },
   categories: [

@@ -94,7 +94,11 @@ window.UniversityView = (function () {
     const currentTerm = examCourses.length ? examCourses[0].term : '';
 
     $('uni-overview').innerHTML = `
-      ${PROGRAM.title ? `<div class="uni-page-title">${esc(PROGRAM.title)}</div>` : ''}
+      ${PROGRAM.note ? `
+      <div class="card">
+        <div class="section-title">หลักสูตร</div>
+        <div class="uni-note">${esc(PROGRAM.note)}</div>
+      </div>` : ''}
       <div class="hero">
         <div class="hero-eyebrow">${esc(PROGRAM.name || 'Curriculum')}</div>
         <div class="hero-figure" data-count="${earned}" data-cprefix="" data-cdec="0">${earned}</div>
@@ -106,11 +110,6 @@ window.UniversityView = (function () {
           <div class="hero-cell"><div class="hero-cell-lab">คงเหลือ</div><div class="hero-cell-val">${Math.max(0, total - earned)} นก.</div></div>
         </div>
       </div>
-      ${PROGRAM.note ? `
-      <div class="card">
-        <div class="section-title">หลักสูตร</div>
-        <div class="uni-note">${esc(PROGRAM.note)}</div>
-      </div>` : ''}
       ${examCourses.length ? `
       <div class="card">
         <div class="section-title">วิชาเทอมนี้${currentTerm ? ' · ' + esc(currentTerm) : ''} — วันสอบ</div>

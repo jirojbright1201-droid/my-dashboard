@@ -37,7 +37,6 @@
 .uni-shell .tabbar .tab-item.active svg { transform: none; }
 
 .uni { padding-top: 16px; }
-.uni-page-title { font-family: var(--sans); font-weight: 700; font-size: 1.0625rem; color: var(--text); margin: 0 2px 14px; }
 .uni-pane { display: none; }
 .uni-pane.active { display: block; animation: viewIn .22s cubic-bezier(.32,.72,0,1); }
 
