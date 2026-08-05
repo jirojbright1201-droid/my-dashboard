@@ -21,7 +21,7 @@ window.PLANNER_DATA = {
       {"date":"2026-08-05","title":"Course Registration","time":"10:00","end_time":"11:30","icon":"doc","notes":""},
       {"date":"2026-08-05","title":"Eat","time":"11:30","end_time":"12:00","icon":"food","notes":""},
       {"date":"2026-08-05","title":"Watch AI Efficiency Videos","time":"12:00","end_time":"13:00","icon":"video","notes":""},
-      {"date":"2026-08-05","title":"Watch YouTube","time":"13:00","end_time":"14:00","icon":"video","notes":""},
+      {"date":"2026-08-05","title":"Entertainment (YouTube)","time":"13:00","end_time":"15:00","icon":"video","notes":""},
       {"date":"2026-08-05","title":"Work at McDonald's","time":"23:00","end_time":"08:00","icon":"mcdonalds","notes":""},
       {"date":"2026-08-06","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
       {"date":"2026-08-07","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
