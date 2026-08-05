@@ -105,6 +105,11 @@ window.UniversityView = (function () {
           <div class="hero-cell"><div class="hero-cell-lab">คงเหลือ</div><div class="hero-cell-val">${Math.max(0, total - earned)} นก.</div></div>
         </div>
       </div>
+      ${PROGRAM.note ? `
+      <div class="card">
+        <div class="section-title">หลักสูตร</div>
+        <div class="uni-note">${esc(PROGRAM.note)}</div>
+      </div>` : ''}
       ${examCourses.length ? `
       <div class="card">
         <div class="section-title">วิชาเทอมนี้${currentTerm ? ' · ' + esc(currentTerm) : ''} — วันสอบ</div>
@@ -129,11 +134,7 @@ window.UniversityView = (function () {
             <div class="uni-bar"><div class="uni-bar-fill" style="width:${p}%"></div></div>
           </div>`;
         }).join('')}
-      </div>${PROGRAM.note ? `
-      <div class="card">
-        <div class="section-title">หลักสูตร</div>
-        <div class="uni-note">${esc(PROGRAM.note)}</div>
-      </div>` : ''}`;
+      </div>`;
     if (window.UIFX) window.UIFX.countAll($('uni-overview'));
   }
 
