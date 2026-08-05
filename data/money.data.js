@@ -9,7 +9,7 @@ window.MONEY_DATA = {
       "Family": 3000,
       "Shopping": 300,
       "Investment": 0,
-      "Study": 1000,
+      "Study": 1700,
       "Entertainment": 135,
       "Emergency Fund": 500,
       "Beauty": 300,
