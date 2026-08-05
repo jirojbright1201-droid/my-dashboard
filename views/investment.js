@@ -183,7 +183,7 @@ window.InvestmentView = (function () {
     fx: WM('Stack_of_100_dollar_bills.jpg'),
     fed: WM('Marriner_S._Eccles_Federal_Reserve_Board_Building.jpg'),
     china: WM('Shanghai_-_Skyline_Sunset_0057.jpg'),
-    market: WM('NYSE-floor.jpg'),
+    market: WM('NYSE_facade.jpg'),
     chips: WM('Semiconductor_Wafer_of_Microelectronics.jpg'),
     bigtech: WM('Datacenter_Server_Racks_(22370909788).jpg'),
     auto: WM('Hyundai_car_assembly_line.jpg'),
