@@ -97,7 +97,7 @@ window.UniversityView = (function () {
     $('uni-overview').innerHTML = `
       ${PROGRAM.note ? `
       <div class="card">
-        <div class="section-title">หลักสูตร</div>
+        <div class="section-title">นักศึกษามหาวิทยาลัยรามคำแหง</div>
         <div class="uni-note-row">
           <span class="uni-note-icon">${ICON_SCALE}</span>
           <div class="uni-note">${PROGRAM.note.split('\n').map(esc).join('<br>')}</div>
