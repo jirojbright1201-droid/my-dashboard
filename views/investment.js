@@ -131,13 +131,14 @@ window.InvestmentView = (function () {
     </div>
     <div class="inv-art-scroll" id="invArtScroll">
       <div class="inv-art-body">
-        <div class="inv-art-byline" id="invArtByline"></div>
+        <div class="inv-art-eyebrow" id="invArtEyebrow"></div>
         <div class="inv-art-h" id="invArtH"></div>
+        <div class="inv-art-byline" id="invArtByline"></div>
         <div class="inv-art-media" id="invArtMedia"></div>
         <div class="inv-art-p" id="invArtP"></div>
       </div>
     </div>
-    <div class="inv-art-footer"><a class="inv-open-btn" id="invArtLink" href="#" target="_blank" rel="noopener">Open Original &#8599;</a></div>
+    <div class="inv-art-footer"><a class="inv-open-btn" id="invArtLink" href="#" target="_blank" rel="noopener"></a></div>
   </div>
 
   <div class="inv-article inv-full-reader" id="invDeepArticle">
@@ -159,9 +160,8 @@ window.InvestmentView = (function () {
     </div>
   </div>`;
 
-  function tagChip(macro) {
-    return `<span class="inv-tag ${macro ? 'macro' : 'company'}">${macro ? 'Macro' : 'Company'}</span>`;
-  }
+  // ไอคอนนาฬิกา (เวลาที่ใช้อ่านโดยประมาณ ในแถว byline ของหน้าอ่านเต็มจอ — News-only)
+  const ICON_CLOCK = S('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>');
   // ไอคอน fallback สุดท้าย ตามหมวด macro/company — ใช้เมื่อไม่มีทั้ง image จริงและรูปหมวด topic (ห้าม hotlink favicon/tile แบบเดิมที่เคยลองแล้วไม่สวย)
   const ICON_MACRO = S('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>');
   const ICON_COMPANY = S('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M2 20h20"/>');
@@ -225,9 +225,14 @@ window.InvestmentView = (function () {
       ${edMeta(b)}
     </div>`;
   }
+  function edThumb(b) {
+    const src = b.image || (b.topic ? TOPIC_IMAGES[b.topic] : '');
+    return `<div class="inv-nw-thumb ${b.macro ? 'm' : 'c'}">${b.macro ? ICON_MACRO : ICON_COMPANY}${src
+      ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}</div>`;
+  }
   function edItem(b) {
     return `<div class="inv-nw-row" data-id="${esc(b.id)}">
-      <span class="inv-nw-dot ${b.macro ? 'm' : 'c'}"></span>
+      ${edThumb(b)}
       <div class="inv-nw-body">
         <div class="inv-nw-h">${esc(b.title)}</div>
         <div class="inv-nw-rowmeta">${esc(b.sourceName)}</div>
@@ -698,10 +703,14 @@ window.InvestmentView = (function () {
   // ── detail: หน้าอ่านเต็มจอ (เปลี่ยนจาก bottom sheet มาเป็นแบบนี้ 22 ก.ค. 2026 — jiroj เลือกจาก mockup 3 แบบ, ชอบ full-screen article) ──
   function openBrief(id) {
     const b = briefById(id); if (!b) return;
+    const cls = b.macro ? 'm' : 'c';
+    const mins = Math.max(1, Math.round((b.summary || '').length / 500));
+    $('invArtEyebrow').innerHTML = `<span class="inv-art-eyebrow-cat ${cls}">${b.macro ? 'Macro News' : 'Company News'}</span><span class="inv-art-eyebrow-rule ${cls}"></span>`;
     $('invArtH').textContent = b.title;
-    $('invArtByline').innerHTML = `${tagChip(b.macro)}<span class="inv-source">${esc(b.sourceName)}</span> · ${fmtDate(b.date)}`;
+    $('invArtByline').innerHTML = `<span class="inv-source-pill ${cls}">${esc(b.sourceName)}</span><span class="inv-art-dot"></span><span>${fmtDate(b.date)}</span><span class="inv-art-readtime">${ICON_CLOCK}${mins} min</span>`;
     $('invArtP').textContent = b.summary;
     $('invArtLink').href = b.url;
+    $('invArtLink').textContent = `อ่านฉบับเต็มที่ ${b.sourceName} ↗`;
     renderArtMedia(b);
     $('invArticle').classList.add('open');
     $('invArtScroll') && ($('invArtScroll').scrollTop = 0);

@@ -88,9 +88,15 @@
   cursor: pointer; transition: opacity .15s ease; }
 .inv-nw-row:active { opacity: .6; }
 .inv-ed-dtog + .inv-nw-row, .inv-ed-mtog + .inv-nw-row { border-top: none; }
-.inv-nw-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
-.inv-nw-dot.m { background: var(--accent); }
-.inv-nw-dot.c { background: var(--silver); }
+/* ธัมเนลเล็กนำหน้าแถว (6 ส.ค. 2026, jiroj เห็นใน preview แล้วชอบ) — รูปจริงถ้ามี og:image/topic ไม่งั้นไอคอน fallback เดียวกับหน้าอ่านเต็มจอ (ICON_MACRO/ICON_COMPANY) ซ้อนอยู่ใต้ img เสมอ พอ onerror ซ่อน img ก็เห็นไอคอนทันที */
+.inv-nw-thumb { position: relative; width: 52px; height: 52px; border-radius: 10px; overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; }
+.inv-nw-thumb.m { background: var(--accent-soft); }
+.inv-nw-thumb.c { background: var(--surface-2); }
+.inv-nw-thumb svg { width: 38%; height: 38%; opacity: .5; }
+.inv-nw-thumb.m svg { color: var(--accent); }
+.inv-nw-thumb.c svg { color: var(--silver); }
+.inv-nw-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .inv-nw-body { flex: 1; min-width: 0; }
 .inv-nw-h { font-family: var(--serif); font-size: 0.875rem; font-weight: 700; line-height: 1.34; letter-spacing: -.005em;
   overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
@@ -145,10 +151,6 @@
 #invOverlay .modal-body { padding: 18px 22px 26px; }
 .inv-summary { font-size: 0.95rem; color: var(--text); line-height: 1.85; margin-top: 14px; white-space: pre-line; }
 /* pre-line เพิ่ม 25 ก.ค. 2026 — jiroj บ่นย่อหน้ายาวอ่านหนักตา รองรับ \n\n คั่นย่อหน้าในข้อมูล (overview/marketSummary/financialsSummary/snapshot) โดยไม่กระทบ field เดิมที่เป็นบรรทัดเดียว */
-.inv-source { color: var(--accent); font-weight: 600; }
-.inv-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; margin-right: 6px; }
-.inv-tag.macro { background: var(--accent-soft); color: var(--accent); }
-.inv-tag.company { background: var(--border-soft); color: var(--silver); }
 .inv-open-btn { display: block; text-align: center; text-decoration: none; margin-top: 24px; background: var(--accent); color: #fff;
   font-weight: 600; font-size: 0.875rem; padding: 13px; border-radius: 9999px; transition: transform .1s, background .15s; }
 .inv-open-btn:active { background: var(--accent-hover); transform: scale(.97); }
@@ -170,8 +172,23 @@
   border-top: 1px solid var(--border-soft); background: var(--surface); }
 .inv-art-footer .inv-open-btn { margin-top: 0; max-width: 640px; margin-left: auto; margin-right: auto; }
 @media (prefers-reduced-motion: reduce) { .inv-article { transition: none; } }
-/* byline ของ News ย้ายมาอยู่เหนือหัวข้อ (kicker) — Earnings ยัง h→rule→byline เดิมอยู่ สโคปด้วย #invArticle กันกระทบ .inv-art-byline ที่ใช้ร่วมกัน */
-#invArticle .inv-art-byline { margin-bottom: 10px; }
+/* ── News reader — เติมฟีล "กำลังอ่านข่าว" (6 ส.ค. 2026, อ้างอิงโครงจากหน้าบทความจริงของ thestandard.co: eyebrow+เส้น → พาดหัวหนา → byline+เวลาอ่าน → รูป → เนื้อหา)
+   Earnings/Deep-Dive ยังไม่มี eyebrow/read-time แบบนี้ — headline สโคปด้วย #invArticle กันกระทบ .inv-art-h ที่ Earnings ใช้ร่วมกัน */
+#invArticle .inv-art-h { margin-top: 10px; font-weight: 800; font-size: 1.375rem; line-height: 1.16; letter-spacing: -.02em; }
+#invArticle .inv-art-byline { margin-top: 12px; }
+.inv-art-eyebrow { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.inv-art-eyebrow-cat { font-family: var(--mono); font-size: 0.6875rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.inv-art-eyebrow-cat.m { color: var(--accent); }
+.inv-art-eyebrow-cat.c { color: var(--silver); }
+.inv-art-eyebrow-rule { width: 26px; height: 3px; border-radius: 2px; }
+.inv-art-eyebrow-rule.m { background: var(--accent); }
+.inv-art-eyebrow-rule.c { background: var(--silver); }
+.inv-source-pill { display: inline-flex; align-items: center; font-size: 0.6875rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; }
+.inv-source-pill.m { color: var(--accent); background: var(--accent-soft); }
+.inv-source-pill.c { color: var(--silver); background: var(--surface-2); }
+.inv-art-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--silver); flex-shrink: 0; }
+.inv-art-readtime { display: flex; align-items: center; gap: 4px; font-size: 0.71rem; color: var(--silver); margin-left: auto; }
+.inv-art-readtime svg { width: 12px; height: 12px; }
 /* รูปข่าวย้ายจาก hero เต็มจอบนสุด มาเป็นแผ่นมนคั่นหัวข้อกับเนื้อหาแทน — .inv-art-media/.inv-art-fallback เป็นคลาสเฉพาะ News (Earnings/Deep-Dive ไม่มีรูป) กำหนดใหม่ได้ตรงๆ ไม่ต้องสโคป */
 .inv-art-media { margin-top: 16px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: var(--surface-2); }
 .inv-art-media:empty { display: none; }
