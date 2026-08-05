@@ -17,20 +17,20 @@ window.UNIVERSITY_CURRICULUM_DATA = {
   ],
   courses: [
     // ── หมวดวิชาศึกษาทั่วไป 30 หน่วยกิต ──
-    { id: 'cr0001', code: 'RAM1103', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
+    { id: 'cr0001', code: 'RAM1103', category: 'gened', credits: 3, status: 'passed', grade: 'D', term: '1/2568', note: '' },
     { id: 'cr0002', code: 'RAM1111', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
     { id: 'cr0003', code: 'RAM1112', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
-    { id: 'cr0004', code: 'RAM1132', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
-    { id: 'cr0005', code: 'RAM1141', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
-    { id: 'cr0006', code: 'RAM1203', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
+    { id: 'cr0004', code: 'RAM1132', category: 'gened', credits: 3, status: 'passed', grade: 'C+', term: '1/2568', note: '' },
+    { id: 'cr0005', code: 'RAM1141', category: 'gened', credits: 3, status: 'passed', grade: 'B', term: '1/2568', note: '' },
+    { id: 'cr0006', code: 'RAM1203', category: 'gened', credits: 3, status: 'passed', grade: 'C+', term: '1/2568', note: '' },
     { id: 'cr0007', code: 'RAM1213', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
     { id: 'cr0008', code: 'RAM1301', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
     { id: 'cr0009', code: 'RAM1303', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
     { id: 'cr0010', code: 'RAM1312', category: 'gened', credits: 3, status: 'todo', grade: '', term: '', note: '' },
 
     // ── หมวดวิชาเฉพาะ 2.1 กลุ่มวิชาบังคับ 92 หน่วยกิต ──
-    { id: 'cr0011', code: 'LAW1101', category: 'required', credits: 2, status: 'todo', grade: '', term: '', note: '' },
-    { id: 'cr0012', code: 'LAW1102', category: 'required', credits: 2, status: 'todo', grade: '', term: '', note: '' },
+    { id: 'cr0011', code: 'LAW1101', category: 'required', credits: 2, status: 'passed', grade: 'D', term: '3/2568', note: '' },
+    { id: 'cr0012', code: 'LAW1102', category: 'required', credits: 2, status: 'passed', grade: 'C', term: '1/2568', note: '' },
     { id: 'cr0013', code: 'LAW1103', category: 'required', credits: 3, status: 'todo', grade: '', term: '', note: '' },
     { id: 'cr0014', code: 'LAW1106', category: 'required', credits: 3, status: 'todo', grade: '', term: '', note: '' },
     { id: 'cr0015', code: 'LAW2101', category: 'required', credits: 3, status: 'todo', grade: '', term: '', note: '' },
