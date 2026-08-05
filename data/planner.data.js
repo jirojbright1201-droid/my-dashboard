@@ -25,6 +25,7 @@ window.PLANNER_DATA = {
   },
   "2026-10": {
     "events": [
+      {"date":"2026-10-15","title":"LAW2106 Exam","time":"","end_time":"","icon":"doc","notes":""},
       {"date":"2026-10-17","title":"RAM1111 Exam","time":"","end_time":"","icon":"doc","notes":""},
       {"date":"2026-10-18","title":"LAW1103 Exam","time":"","end_time":"","icon":"doc","notes":""},
       {"date":"2026-10-20","title":"RAM1112 Exam","time":"","end_time":"","icon":"doc","notes":""},
