@@ -31,6 +31,7 @@ window.PLANNER_DATA = {
       {"date":"2026-08-06","title":"Study Law2106","time":"10:30","end_time":"11:30","icon":"read","notes":""},
       {"date":"2026-08-06","title":"Genshin Impact","time":"11:30","end_time":"12:30","icon":"game","notes":""},
       {"date":"2026-08-06","title":"Read Neverlie","time":"12:30","end_time":"13:00","icon":"read","notes":""},
+      {"date":"2026-08-06","title":"Sleep","time":"13:00","end_time":"21:00","icon":"sleep","notes":""},
       {"date":"2026-08-06","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
       {"date":"2026-08-07","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
       {"date":"2026-08-08","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""}
