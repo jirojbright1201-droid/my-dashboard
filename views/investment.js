@@ -23,11 +23,6 @@ window.InvestmentView = (function () {
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
   // ไอคอนทึบ MDI (earth/domain) สำหรับ badge หมวด Macro/Company ในลิสต์ข่าว — ทึบ = เนื้อหา/หมวด ตามมาตรฐาน reskin (ต่างจาก S() ที่เป็นเส้น outline สำหรับ nav/chrome)
   const F = p => `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${p}</svg>`;
-  const ICON_EARTH_FILL = F('<path d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>'); // mdi-earth
-  const ICON_DOMAIN_FILL = F('<path d="M18,15H16V17H18M18,11H16V13H18M20,19H12V17H14V15H12V13H14V11H12V9H20M10,7H8V5H10M10,11H8V9H10M10,15H8V13H10M10,19H8V17H10M6,7H4V5H6M6,11H4V9H6M6,15H4V13H6M6,19H4V17H6M12,7V3H2V21H22V7H12Z"/>'); // mdi-domain
-  function bicon(macro) {
-    return `<div class="inv-bicon${macro ? ' macro' : ''}">${macro ? ICON_EARTH_FILL : ICON_DOMAIN_FILL}</div>`;
-  }
   // ไอคอนทึบต่อหมวดของ Company Deep-Dive (cover + jump-nav + section badge ใช้ตัวเดียวกันหมด) — reskin 5 ส.ค. 2026
   const ICON_DD = {
     overview: F('<path d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z"/>'), // office-building
@@ -131,15 +126,14 @@ window.InvestmentView = (function () {
   </div>
 
   <div class="inv-article" id="invArticle">
-    <div class="inv-art-hero">
-      <div class="inv-art-media" id="invArtMedia"></div>
-      <button class="inv-art-back" id="invArtBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="inv-full-topbar">
+      <button class="inv-full-backbtn" id="invArtBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     </div>
     <div class="inv-art-scroll" id="invArtScroll">
       <div class="inv-art-body">
-        <div class="inv-art-h" id="invArtH"></div>
-        <div class="inv-art-rule"></div>
         <div class="inv-art-byline" id="invArtByline"></div>
+        <div class="inv-art-h" id="invArtH"></div>
+        <div class="inv-art-media" id="invArtMedia"></div>
         <div class="inv-art-p" id="invArtP"></div>
       </div>
     </div>
@@ -219,24 +213,25 @@ window.InvestmentView = (function () {
       ${sub ? `<div class="inv-mast-sub">${sub}</div>` : ''}
     </div>`;
   }
+  // ── list — compact rail (variant B, jiroj เลือก 6 ส.ค. 2026 จาก preview 3 แนว) ──
+  // ใช้คลาสใหม่ .inv-nw-* ทั้งหมด (ไม่แตะ .inv-ed-item/.inv-ed-lead เดิม เพราะ 2 คลาสนั้นใช้ร่วมกับ Portfolio/Earnings/Deep-Dive อยู่ — เปลี่ยนเฉพาะ News ไม่กระทบแท็บอื่น)
   function edMeta(b) {
-    return `<div class="inv-ed-meta">
-      <span class="inv-ed-src">${esc(b.sourceName)}</span><span>· ${fmtDate(b.date)}</span>
-    </div>`;
+    return `<div class="inv-nw-meta"><span class="inv-nw-meta-dot ${b.macro ? 'm' : 'c'}"></span><span>${b.macro ? 'Macro' : 'Company'} · <span class="src">${esc(b.sourceName)}</span></span></div>`;
   }
   function edLead(b) {
-    return `<div class="inv-ed-lead" data-id="${esc(b.id)}">
-      <div class="inv-ed-icontop">${bicon(b.macro)}<span class="inv-tag-txt ${b.macro ? 'm' : 'c'}">${b.macro ? 'Macro' : 'Company'}</span></div>
-      <div class="inv-ed-lead-h">${esc(b.title)}</div>
-      <div class="inv-ed-lead-sum">${esc(b.summary)}</div>
+    return `<div class="inv-nw-lead" data-id="${esc(b.id)}">
+      <div class="inv-nw-lead-h">${esc(b.title)}</div>
+      <div class="inv-nw-lead-sum">${esc(b.summary)}</div>
       ${edMeta(b)}
     </div>`;
   }
   function edItem(b) {
-    return `<div class="inv-ed-item" data-id="${esc(b.id)}">
-      <div class="inv-ed-icontop">${bicon(b.macro)}<span class="inv-tag-txt ${b.macro ? 'm' : 'c'}">${b.macro ? 'Macro' : 'Company'}</span></div>
-      <div class="inv-ed-h">${esc(b.title)}</div>
-      ${edMeta(b)}
+    return `<div class="inv-nw-row" data-id="${esc(b.id)}">
+      <span class="inv-nw-dot ${b.macro ? 'm' : 'c'}"></span>
+      <div class="inv-nw-body">
+        <div class="inv-nw-h">${esc(b.title)}</div>
+        <div class="inv-nw-rowmeta">${esc(b.sourceName)}</div>
+      </div>
     </div>`;
   }
 
