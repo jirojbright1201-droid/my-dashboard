@@ -17,6 +17,12 @@ window.UniversityView = (function () {
   const courseById = id => COURSES.find(c => c.id === id);
   const isGraded = c => c.grade && GRADE_POINTS.hasOwnProperty(c.grade);
 
+  const THAI_M = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+  function examDateLabel(d) {
+    const [, m, day] = d.split('-').map(Number);
+    return `${day} ${THAI_M[m - 1]}`;
+  }
+
   function creditsEarned(list) { return (list || COURSES).filter(c => c.status === 'passed').reduce((s, c) => s + (c.credits || 0), 0); }
   function totalRequired() { return CATEGORIES.reduce((s, c) => s + (c.credits || 0), 0) || PROGRAM.totalCredits || 0; }
   function gpa() {
@@ -84,6 +90,8 @@ window.UniversityView = (function () {
     const pct = total ? Math.round(earned / total * 100) : 0;
     const g = gpa();
     const passedCount = COURSES.filter(c => c.status === 'passed').length;
+    const examCourses = COURSES.filter(c => c.status === 'todo' && c.examDate).sort((a, b) => a.examDate.localeCompare(b.examDate));
+    const currentTerm = examCourses.length ? examCourses[0].term : '';
 
     $('uni-overview').innerHTML = `
       <div class="hero">
@@ -97,6 +105,18 @@ window.UniversityView = (function () {
           <div class="hero-cell"><div class="hero-cell-lab">คงเหลือ</div><div class="hero-cell-val">${Math.max(0, total - earned)} นก.</div></div>
         </div>
       </div>
+      ${examCourses.length ? `
+      <div class="card">
+        <div class="section-title">วิชาเทอมนี้${currentTerm ? ' · ' + esc(currentTerm) : ''} — วันสอบ</div>
+        ${examCourses.map(c => `<div class="uni-row" data-id="${esc(c.id)}">
+          ${statusDot(c)}
+          <span class="uni-row-body">
+            <span class="uni-row-title">${esc(c.code)}</span>
+            <span class="uni-row-sub">${esc(CAT_LABEL[c.category] || c.category)}${c.examSession ? ' · ช่วง' + esc(c.examSession) : ''}</span>
+          </span>
+          <span class="uni-row-cr">${examDateLabel(c.examDate)}</span>
+        </div>`).join('')}
+      </div>` : ''}
 
       <div class="card">
         <div class="section-title">ความคืบหน้าแต่ละหมวด</div>
