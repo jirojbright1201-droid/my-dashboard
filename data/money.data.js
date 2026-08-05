@@ -8,7 +8,7 @@ window.MONEY_DATA = {
       "Transport": 300,
       "Family": 3000,
       "Shopping": 300,
-      "Investment": 1000,
+      "Investment": 0,
       "Study": 1000,
       "Entertainment": 135,
       "Emergency Fund": 500,
