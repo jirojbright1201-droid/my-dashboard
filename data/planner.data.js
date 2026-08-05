@@ -29,6 +29,7 @@ window.PLANNER_DATA = {
       {"date":"2026-10-17","title":"RAM1111 Exam","time":"","end_time":"","icon":"doc","notes":"ช่วงเช้า"},
       {"date":"2026-10-18","title":"LAW1103 Exam","time":"","end_time":"","icon":"doc","notes":"ช่วงเช้า"},
       {"date":"2026-10-20","title":"RAM1112 Exam","time":"","end_time":"","icon":"doc","notes":"ช่วงเช้า"},
+      {"date":"2026-10-21","title":"RAM1303 Exam","time":"","end_time":"","icon":"doc","notes":"ช่วงเช้า"},
       {"date":"2026-10-25","title":"LAW1106 Exam","time":"","end_time":"","icon":"doc","notes":"ช่วงบ่าย"},
       {"date":"2026-10-25","title":"RAM1213 Exam","time":"","end_time":"","icon":"doc","notes":"ช่วงเช้า"},
       {"date":"2026-10-27","title":"RAM1301 Exam","time":"","end_time":"","icon":"doc","notes":"ช่วงเช้า"}
