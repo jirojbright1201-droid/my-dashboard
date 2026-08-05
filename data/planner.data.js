@@ -25,6 +25,12 @@ window.PLANNER_DATA = {
       {"date":"2026-08-05","title":"Watch YouTube","time":"14:00","end_time":"15:00","icon":"video","notes":""},
       {"date":"2026-08-05","title":"Sleep","time":"15:00","end_time":"22:00","icon":"sleep","notes":""},
       {"date":"2026-08-05","title":"Work at McDonald's","time":"23:00","end_time":"08:00","icon":"mcdonalds","notes":""},
+      {"date":"2026-08-06","title":"Eat","time":"08:30","end_time":"09:00","icon":"food","notes":""},
+      {"date":"2026-08-06","title":"Obsidian Clippers","time":"09:00","end_time":"09:30","icon":"doc","notes":""},
+      {"date":"2026-08-06","title":"Test AI System","time":"09:30","end_time":"10:30","icon":"ai","notes":""},
+      {"date":"2026-08-06","title":"Study Law2106","time":"10:30","end_time":"11:30","icon":"read","notes":""},
+      {"date":"2026-08-06","title":"Genshin Impact","time":"11:30","end_time":"12:30","icon":"game","notes":""},
+      {"date":"2026-08-06","title":"Read Neverlie","time":"12:30","end_time":"13:00","icon":"read","notes":""},
       {"date":"2026-08-06","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
       {"date":"2026-08-07","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""},
       {"date":"2026-08-08","title":"Work at McDonald's","time":"22:00","end_time":"07:00","icon":"mcdonalds","notes":""}
@@ -45,5 +51,5 @@ window.PLANNER_DATA = {
   }
 };
 window.PLANNER_KEYS = ["2026-08", "2026-10"];
-window.PLANNER_UPDATED = "05/08/2026";
+window.PLANNER_UPDATED = "06/08/2026";
 
