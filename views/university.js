@@ -94,6 +94,7 @@ window.UniversityView = (function () {
     const currentTerm = examCourses.length ? examCourses[0].term : '';
 
     $('uni-overview').innerHTML = `
+      ${PROGRAM.title ? `<div class="uni-page-title">${esc(PROGRAM.title)}</div>` : ''}
       <div class="hero">
         <div class="hero-eyebrow">${esc(PROGRAM.name || 'Curriculum')}</div>
         <div class="hero-figure" data-count="${earned}" data-cprefix="" data-cdec="0">${earned}</div>
