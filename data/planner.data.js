@@ -32,6 +32,7 @@ window.PLANNER_DATA = {
       {"date":"2026-10-20","title":"RAM1112 Exam","time":"","end_time":"","icon":"doc","notes":"ภาษาและวัฒนธรรมอังกฤษ · ช่วงเช้า"},
       {"date":"2026-10-21","title":"RAM1303 Exam","time":"","end_time":"","icon":"doc","notes":"วิทยาศาสตร์เพื่อการพัฒนาที่ยั่งยืน · ช่วงเช้า"},
       {"date":"2026-10-25","title":"LAW1106 Exam","time":"","end_time":"","icon":"doc","notes":"ประวัติศาสตร์กฎหมายไทยและระบบกฎหมายหลัก · ช่วงบ่าย"},
+      {"date":"2026-10-25","title":"RAM1213 Exam","time":"","end_time":"","icon":"doc","notes":"ภูมิปัญญาท้องถิ่นกับการพัฒนานวัตกรรม เพื่อสังคมและเศรษฐกิจ · ช่วงเช้า"},
       {"date":"2026-10-27","title":"RAM1301 Exam","time":"","end_time":"","icon":"doc","notes":"คุณธรรมคู่ความรู้ · ช่วงเช้า"}
     ],
     "habits": []
