@@ -117,7 +117,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "StockTitan",
     url: "https://www.stocktitan.net/news/AMD/amd-reports-second-quarter-2026-financial-s9qsl4zgkkw3.html",
-    image: "",
+    image: "https://static.stocktitan.net/company-logo/amd-md-ext.png?v=fcfffc8e2a",
     topic: "chips"
   },
   {
@@ -128,7 +128,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "Fortune",
     url: "https://fortune.com/2026/08/04/spacex-revenue-surges-92-to-7-8-billion-blowing-past-wall-street-expectations-by-nearly-1-billion/",
-    image: "",
+    image: "https://fortune.com/img-assets/wp-content/uploads/2026/08/GettyImages-2256971457-e1785873517435.jpg?format=webp&w=1440&q=100",
     topic: "aerospace"
   },
   {
@@ -139,7 +139,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "StockTitan",
     url: "https://www.stocktitan.net/news/ANET/arista-networks-inc-reports-second-quarter-2026-financial-h5wut2fehmt9.html",
-    image: "",
+    image: "https://www.quiverquant.com/images/anet_rect_new.png",
     topic: "bigtech"
   },
   {
@@ -150,7 +150,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "GuruFocus",
     url: "https://www.gurufocus.com/news/9004427/amgen-inc-amgn-q2-2026-earnings-call-highlights-revenue-surges-past-10-billion-guidance-raised-on-strong-portfolio-growth",
-    image: "",
+    image: "https://static.stocktitan.net/company-logo/amgn.png",
     topic: "market"
   },
   {
@@ -161,7 +161,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "The Motley Fool",
     url: "https://www.fool.com/coverage/stock-market-today/2026/08/05/stock-market-midday-aug-5-eli-lilly-pops-and-amd-drops-in-mixed-morning-markets/",
-    image: "",
+    image: "https://static.stocktitan.net/company-logo/lly.png?v=da344af674",
     topic: "market"
   },
   {
@@ -172,7 +172,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "TheStreet",
     url: "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-aug-5-2026",
-    image: "",
+    image: "https://static.stocktitan.net/company-logo/cat.png",
     topic: "market"
   },
   {
@@ -183,7 +183,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "Investing.com",
     url: "https://ng.investing.com/news/transcripts/earnings-call-transcript-compass-posts-q2-2026-beat-shares-jump-11-after-hours-93CH-2638118",
-    image: "",
+    image: "https://static.stocktitan.net/company-logo/comp.png",
     topic: "market"
   }
 ];
