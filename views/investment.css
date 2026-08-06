@@ -51,14 +51,7 @@
 .inv-hold-pct { display: inline-block; font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; color: var(--silver); }
 .inv-hold-empty-txt { font-size: 0.8125rem; color: var(--silver); line-height: 1.5; padding: 16px; }
 
-/* ── filter: segmented pill control (Coinbase button-secondary-light group) ── */
-.inv-ftabs { display: flex; gap: 4px; background: var(--surface-2); border-radius: 9999px; padding: 3px; margin: 0 0 18px; }
-.inv-ftab { flex: 1; border: none; background: transparent; cursor: pointer; font-family: var(--serif); font-size: 0.8125rem; font-weight: 600;
-  color: var(--silver); padding: 8px 0; border-radius: 9999px; transition: background .15s, color .15s; }
-.inv-ftab.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(10,11,13,.08); }
-.inv-ftab:active { opacity: .7; }
-
-/* ── story item (การ์ดเดี่ยว ใช้ร่วมกับ Earnings/Deep-Dive/Portfolio ผ่านคลาสเดียวกันนี้ — News ไม่ใช้แบบการ์ดนี้แล้ว ดูบล็อก .inv-nw-* ด้านล่างแทน) ── */
+/* ── story item (การ์ดเดี่ยว ใช้ร่วมกับ Earnings/Deep-Dive/Portfolio) ── */
 .inv-ed-lead { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 24px; box-shadow: var(--shadow-card);
   padding: 20px; margin-bottom: 12px; cursor: pointer; transition: opacity .15s ease; }
 .inv-ed-lead:active { opacity: .7; }
@@ -76,59 +69,10 @@
   font-size: 0.75rem; color: var(--silver); }
 .inv-ed-src { color: var(--accent); font-weight: 600; }
 
-/* ── News list — compact rail (variant B, jiroj เลือก 6 ส.ค. 2026 จาก preview 3 แนว) ──
-   คลาสเฉพาะ News เท่านั้น ไม่ใช้ร่วมกับ .inv-ed-item/.inv-ed-lead ด้านบน — ตัดพื้นการ์ด/เงาออก เหลือเส้นบางคั่นแถว เห็นข่าวได้เยอะขึ้นในจอเดียว */
-.inv-nw-lead { padding: 6px 2px 18px; cursor: pointer; transition: opacity .15s ease; }
-.inv-nw-lead:active { opacity: .7; }
-.inv-nw-lead-h { font-family: var(--serif); font-size: 1.05rem; font-weight: 800; line-height: 1.3; letter-spacing: -.01em; }
-.inv-nw-lead-sum { font-size: 0.8438rem; color: var(--silver); line-height: 1.6; margin-top: 9px;
-  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-
-.inv-nw-row { display: flex; align-items: flex-start; gap: 10px; padding: 12px 2px; border-top: 1px solid var(--border-soft);
-  cursor: pointer; transition: opacity .15s ease; }
-.inv-nw-row:active { opacity: .6; }
-.inv-ed-dtog + .inv-nw-row, .inv-ed-mtog + .inv-nw-row { border-top: none; }
-/* ธัมเนลเล็กนำหน้าแถว (6 ส.ค. 2026, jiroj เห็นใน preview แล้วชอบ) — รูปจริงถ้ามี og:image/topic ไม่งั้นไอคอน fallback เดียวกับหน้าอ่านเต็มจอ (ICON_MACRO/ICON_COMPANY) ซ้อนอยู่ใต้ img เสมอ พอ onerror ซ่อน img ก็เห็นไอคอนทันที */
-.inv-nw-thumb { position: relative; width: 52px; height: 52px; border-radius: 10px; overflow: hidden; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; }
-.inv-nw-thumb.m { background: var(--accent-soft); }
-.inv-nw-thumb.c { background: var(--surface-2); }
-.inv-nw-thumb svg { width: 38%; height: 38%; opacity: .5; }
-.inv-nw-thumb.m svg { color: var(--accent); }
-.inv-nw-thumb.c svg { color: var(--silver); }
-.inv-nw-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.inv-nw-body { flex: 1; min-width: 0; }
-.inv-nw-h { font-family: var(--serif); font-size: 0.875rem; font-weight: 700; line-height: 1.34; letter-spacing: -.005em;
-  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.inv-nw-rowmeta { font-size: 0.75rem; color: var(--silver); margin-top: 4px; }
-
-.inv-nw-meta { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 0.75rem; color: var(--silver); }
-.inv-nw-meta .src { color: var(--accent); font-weight: 600; }
-.inv-nw-meta-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-.inv-nw-meta-dot.m { background: var(--accent); }
-.inv-nw-meta-dot.c { background: var(--silver); }
-
-/* ── day breaks (Earlier) ── */
+/* ── day breaks (Earlier — ใช้ร่วมกับ Portfolio) ── */
 .inv-ed-day { padding: 24px 0 2px; font-size: 0.6875rem; font-weight: 700; letter-spacing: .06em;
   color: var(--silver); text-transform: uppercase; }
 .inv-ed-earlier { color: var(--accent); padding-top: 26px; }
-
-/* ── day toggle (วันเก่าใน Earlier พับเป็นหัววันที่) — reskin เป็น sans เรียบ ไม่ใช้ mono caps แน่นแบบเดิม ── */
-.inv-ed-dtog { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; cursor: pointer;
-  padding: 14px 2px; font-family: var(--serif); font-size: 0.8125rem; font-weight: 600;
-  color: var(--text); text-align: left; transition: opacity .15s; }
-.inv-ed-dtog:active { opacity: .6; }
-.inv-ed-dtog-rule { display: none; }
-.inv-ed-dtog-r { display: flex; align-items: center; gap: 8px; color: var(--silver); font-size: 0.75rem; font-weight: 500; }
-.inv-ed-chev { width: 13px; height: 13px; transition: transform .2s; stroke: var(--silver); }
-.inv-ed-dtog.open .inv-ed-chev, .inv-ed-mtog.open .inv-ed-chev { transform: rotate(180deg); }
-
-/* ── month toggle (เดือนเก่ากว่าเดือนปัจจุบัน ยุบเป็นแถวเดือน) ── */
-.inv-ed-mtog { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; cursor: pointer;
-  padding: 14px 2px; font-family: var(--serif); font-size: 0.8125rem; font-weight: 700;
-  color: var(--text); text-align: left; transition: opacity .15s; }
-.inv-ed-mtog:active { opacity: .6; }
-.inv-ed-dtog.in-month { padding-left: 16px; }
 
 /* ── empty state ── */
 .inv-ed-empty { text-align: center; padding: 56px 24px; }
@@ -155,9 +99,7 @@
   font-weight: 600; font-size: 0.875rem; padding: 13px; border-radius: 9999px; transition: transform .1s, background .15s; }
 .inv-open-btn:active { background: var(--accent-hover); transform: scale(.97); }
 
-/* ── news detail: หน้าอ่านเต็มจอ (แทน bottom sheet เดิม — jiroj เลือกจาก mockup 3 แบบ 22 ก.ค. 2026,
-   เปลี่ยนจาก hero เต็มจอเป็น text-first 6 ส.ค. 2026 — jiroj เลือกแบบ B จาก preview 3 แนว เพราะข่าวส่วนใหญ่ไม่มีรูปจริงอยู่แล้ว
-   ใช้ .inv-full-topbar/.inv-full-backbtn ร่วมกับ Earnings/Deep-Dive แทน .inv-art-hero/.inv-art-back เดิมที่ลบไป) ── */
+/* ── full-screen reader shell (ใช้ร่วมกัน Earnings/Deep-Dive — News ย้ายไปเป็น Discover mode แยกแล้ว 6 ส.ค. 2026 ไม่ใช้ shell นี้อีกต่อไป) ── */
 .inv-article { position: fixed; inset: 0; z-index: 120; background: var(--surface);
   display: flex; flex-direction: column; transform: translateX(100%);
   transition: transform .32s cubic-bezier(.32,.72,0,1); }
@@ -172,30 +114,60 @@
   border-top: 1px solid var(--border-soft); background: var(--surface); }
 .inv-art-footer .inv-open-btn { margin-top: 0; max-width: 640px; margin-left: auto; margin-right: auto; }
 @media (prefers-reduced-motion: reduce) { .inv-article { transition: none; } }
-/* ── News reader — เติมฟีล "กำลังอ่านข่าว" (6 ส.ค. 2026, อ้างอิงโครงจากหน้าบทความจริงของ thestandard.co: eyebrow+เส้น → พาดหัวหนา → byline+เวลาอ่าน → รูป → เนื้อหา)
-   Earnings/Deep-Dive ยังไม่มี eyebrow/read-time แบบนี้ — headline สโคปด้วย #invArticle กันกระทบ .inv-art-h ที่ Earnings ใช้ร่วมกัน */
-#invArticle .inv-art-h { margin-top: 10px; font-weight: 800; font-size: 1.375rem; line-height: 1.16; letter-spacing: -.02em; }
-#invArticle .inv-art-byline { margin-top: 12px; }
-.inv-art-eyebrow { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-.inv-art-eyebrow-cat { font-family: var(--mono); font-size: 0.6875rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
-.inv-art-eyebrow-cat.m { color: var(--accent); }
-.inv-art-eyebrow-cat.c { color: var(--silver); }
-.inv-art-eyebrow-rule { width: 26px; height: 3px; border-radius: 2px; }
-.inv-art-eyebrow-rule.m { background: var(--accent); }
-.inv-art-eyebrow-rule.c { background: var(--silver); }
-.inv-source-pill { display: inline-flex; align-items: center; font-size: 0.6875rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; }
-.inv-source-pill.m { color: var(--accent); background: var(--accent-soft); }
-.inv-source-pill.c { color: var(--silver); background: var(--surface-2); }
-.inv-art-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--silver); flex-shrink: 0; }
-.inv-art-readtime { display: flex; align-items: center; gap: 4px; font-size: 0.71rem; color: var(--silver); margin-left: auto; }
-.inv-art-readtime svg { width: 12px; height: 12px; }
-/* รูปข่าวย้ายจาก hero เต็มจอบนสุด มาเป็นแผ่นมนคั่นหัวข้อกับเนื้อหาแทน — .inv-art-media/.inv-art-fallback เป็นคลาสเฉพาะ News (Earnings/Deep-Dive ไม่มีรูป) กำหนดใหม่ได้ตรงๆ ไม่ต้องสโคป */
-.inv-art-media { margin-top: 16px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: var(--surface-2); }
-.inv-art-media:empty { display: none; }
-.inv-art-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.inv-art-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-  background: var(--accent-soft); color: var(--accent); }
-.inv-art-fallback svg { width: 18%; height: 18%; min-width: 32px; min-height: 32px; }
+
+/* ── News: Discover mode เต็มจอ ปัดอ่านทีละข่าว แทนลิสต์เดิม (6 ส.ค. 2026 รอบ 2 — jiroj ขอเปลี่ยนจาก compact rail list มาเป็นสไลด์เต็มจอ ตัดลิสต์+ตัวกรองออกทั้งหมด)
+   ทุกสไลด์ต้องมีรูปข่าวจริงเสมอตามนโยบายใหม่ของ skill investment-dashboard — พื้นหลังเข้ม/ไอคอน fallback ในนี้มีไว้กันพัง (record เก่า/hotlink แตก) ไม่ใช่สภาวะที่ตั้งใจให้เกิดกับ brief ใหม่
+   ไม่ใช่หน้าที่ "เปิด" ทับอะไร (ต่างจาก .inv-article) เลยไม่ผูก browser history — แค่โชว์/ซ่อนคู่กับแท็บอื่นตรงๆ, tabbar ลอย z-index 50 อยู่เหนือ z-index 40 นี้เสมอโดยไม่ต้องทำอะไรเพิ่ม */
+.inv-discover { position: fixed; inset: 0; z-index: 40; display: none; background: #0b1220; }
+.inv-discover.open { display: block; }
+/* progress bar ลอยทับบนสุดของฟีด (ไม่ดันฟีดลง) ให้สไลด์แรกสูงเต็มจอเหมือนสไลด์อื่น */
+.inv-disc-top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; padding: calc(14px + env(safe-area-inset-top)) 16px 10px; }
+.inv-disc-progress { display: flex; gap: 4px; }
+.inv-disc-progress i { flex: 1; height: 2.5px; border-radius: 99px; background: rgba(255,255,255,.4); transition: background .2s; }
+.inv-disc-progress i.done { background: #fff; }
+
+.inv-disc-feed { position: absolute; inset: 0; overflow-y: auto; scroll-snap-type: y mandatory; scrollbar-width: none; }
+.inv-disc-feed::-webkit-scrollbar { display: none; }
+
+.inv-disc-slide { position: relative; width: 100%; height: 100%; scroll-snap-align: start; scroll-snap-stop: always;
+  display: flex; flex-direction: column; overflow: hidden; background: #0b1220; }
+
+/* media สูง ~46% (ลดจาก 60% ที่เพิ่งลอง — คำนวณผิดทาง: ยิ่งแถบรูป "สูง" เทียบกับความกว้างจอ ยิ่งต้อง crop ซ้าย-ขวาแรงขึ้นไม่ใช่เบาลง เพราะรูปข่าวส่วนใหญ่เป็นแนวนอน 16:9 พอบีบให้สูงตามคอนเทนเนอร์ยิ่งต้องขยายจนกว้างล้นมากขึ้น — Bright ทักคนโดนตัดอีกรอบหลังลอง 60% 6 ส.ค. 2026 กลับมาที่ระดับ ~45-46% ที่เคยยืนยันแล้วว่าคนไม่ขาด) จางเข้าสีเดียวกับพื้นหลัง .inv-disc-body ด้านล่างเป๊ะ (ทั้งคู่ #0b1220) ให้ต่อเนื่องไร้รอยต่อ */
+.inv-disc-media { position: relative; flex: 0 0 46%; overflow: hidden; background: #0b1220; display: flex; align-items: center; justify-content: center; }
+.inv-disc-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.inv-disc-fallback-ic { color: rgba(255,255,255,.5); }
+.inv-disc-fallback-ic svg { width: 56px; height: 56px; }
+.inv-disc-media::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 85%; z-index: 1;
+  background: linear-gradient(180deg, rgba(11,18,32,0) 0%, rgba(11,18,32,.08) 30%, rgba(11,18,32,.4) 55%, rgba(11,18,32,.82) 80%, #0b1220 100%); }
+
+.inv-disc-body { flex: 1; min-height: 0; overflow-y: auto; position: relative; z-index: 2; background: #0b1220;
+  padding: 8px 18px calc(100px + env(safe-area-inset-bottom)) 18px; color: #fff; }
+.inv-disc-meta { display: flex; align-items: center; gap: 6px; font-size: 0.71rem; color: rgba(255,255,255,.72); margin-bottom: 9px; }
+.inv-disc-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.72); flex-shrink: 0; }
+.inv-disc-dot.m { background: #7db2ff; }
+.inv-disc-cat-m { color: #7db2ff; font-weight: 600; }
+.inv-disc-h { font-family: var(--serif); font-size: 1.2rem; font-weight: 800; line-height: 1.26; letter-spacing: -.015em; text-wrap: balance; }
+.inv-disc-sum { font-size: 0.8438rem; line-height: 1.65; color: rgba(255,255,255,.78); margin-top: 10px;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.inv-disc-sum.open { -webkit-line-clamp: unset; overflow: visible; }
+.inv-disc-more { margin-top: 6px; background: none; border: none; padding: 0; font-size: 0.75rem; font-weight: 700; color: #7db2ff; cursor: pointer; }
+.inv-disc-cta { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 14px;
+  background: var(--accent); color: #fff; font-weight: 600; font-size: 0.8125rem; padding: 12px; border-radius: 9999px;
+  text-decoration: none; box-shadow: 0 8px 18px -6px rgba(0,82,255,.4); transition: transform .1s, background .15s; }
+.inv-disc-cta:active { background: var(--accent-hover); transform: scale(.97); }
+
+.inv-disc-hint { position: absolute; right: 16px; bottom: 14px; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; color: #fff; background: rgba(255,255,255,.18);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-radius: 9999px; padding: 8px 10px;
+  animation: invDiscBob 1.8s ease-in-out infinite; }
+.inv-disc-hint svg { width: 16px; height: 16px; }
+.inv-disc-hint span { font-family: var(--mono); font-size: 0.5rem; letter-spacing: .06em; margin-top: 2px; display: block; }
+@keyframes invDiscBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .inv-disc-hint { animation: none; } }
+
+.inv-disc-empty { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px; }
+.inv-disc-empty .t { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; color: #fff; }
+.inv-disc-empty .s { font-size: 0.8125rem; color: rgba(255,255,255,.6); margin-top: 6px; }
 
 /* ── portfolio review modal ── */
 .inv-pr-section { margin-bottom: 18px; }

@@ -9,17 +9,6 @@ window.InvestmentView = (function () {
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
-  const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const fmtLong = d => {
-    const [y, m, day] = d.split('-').map(Number);
-    return `${WEEKDAYS[new Date(y, m - 1, day).getDay()]} · ${MONTH_NAMES[m - 1]} ${day}, ${y}`;
-  };
-  const fmtDayLabel = (d, refYear) => {
-    const [y, m, day] = d.split('-');
-    return `${parseInt(day, 10)} ${MONTH_NAMES[parseInt(m, 10) - 1]}${y !== refYear ? ' ' + y : ''}`;
-  };
-  const fmtMonth = ym => { const [y, m] = ym.split('-'); return `${MONTH_NAMES[parseInt(m, 10) - 1]} ${y}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
   // ไอคอนทึบ MDI (earth/domain) สำหรับ badge หมวด Macro/Company ในลิสต์ข่าว — ทึบ = เนื้อหา/หมวด ตามมาตรฐาน reskin (ต่างจาก S() ที่เป็นเส้น outline สำหรับ nav/chrome)
   const F = p => `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${p}</svg>`;
@@ -92,17 +81,14 @@ window.InvestmentView = (function () {
   };
 
   // ── state ──
-  let root, activeTab = 'news', archFilter = 'all', expandedDays = null, expandedMonths = null;
+  let root, activeTab = 'news';
   const $ = id => root.querySelector('#' + id);
-  const briefById = id => BRIEFS.find(b => b.id === id);
   const reviewById = id => REVIEWS.find(r => r.id === id);
   const earningsById = id => EARNINGS.find(e => e.id === id);
   const deepDiveById = id => DEEPDIVES.find(d => d.id === id);
-  const latestDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
 
   const TEMPLATE = `
   <div class="container inv">
-    <div id="inv-news" class="inv-pane active"></div>
     <div id="inv-portfolio" class="inv-pane"></div>
     <div id="inv-earnings" class="inv-pane"></div>
     <div id="inv-deepdive" class="inv-pane"></div>
@@ -114,6 +100,11 @@ window.InvestmentView = (function () {
     </nav>
   </div>
 
+  <div class="inv-discover open" id="invDiscover">
+    <div class="inv-disc-top"><div class="inv-disc-progress" id="invDiscProgress"></div></div>
+    <div class="inv-disc-feed" id="invDiscFeed"></div>
+  </div>
+
   <div class="overlay" id="invOverlay">
     <div class="modal">
       <div class="sheet-handle"></div>
@@ -123,22 +114,6 @@ window.InvestmentView = (function () {
       </div>
       <div class="modal-body" id="invMBody"></div>
     </div>
-  </div>
-
-  <div class="inv-article" id="invArticle">
-    <div class="inv-full-topbar">
-      <button class="inv-full-backbtn" id="invArtBack"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-    </div>
-    <div class="inv-art-scroll" id="invArtScroll">
-      <div class="inv-art-body">
-        <div class="inv-art-eyebrow" id="invArtEyebrow"></div>
-        <div class="inv-art-h" id="invArtH"></div>
-        <div class="inv-art-byline" id="invArtByline"></div>
-        <div class="inv-art-media" id="invArtMedia"></div>
-        <div class="inv-art-p" id="invArtP"></div>
-      </div>
-    </div>
-    <div class="inv-art-footer"><a class="inv-open-btn" id="invArtLink" href="#" target="_blank" rel="noopener"></a></div>
   </div>
 
   <div class="inv-article inv-full-reader" id="invDeepArticle">
@@ -160,14 +135,10 @@ window.InvestmentView = (function () {
     </div>
   </div>`;
 
-  // ไอคอนนาฬิกา (เวลาที่ใช้อ่านโดยประมาณ ในแถว byline ของหน้าอ่านเต็มจอ — News-only)
-  const ICON_CLOCK = S('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>');
   // ไอคอน fallback สุดท้าย ตามหมวด macro/company — ใช้เมื่อไม่มีทั้ง image จริงและรูปหมวด topic (ห้าม hotlink favicon/tile แบบเดิมที่เคยลองแล้วไม่สวย)
   const ICON_MACRO = S('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>');
   const ICON_COMPANY = S('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M2 20h20"/>');
-  function fallbackMediaHtml(macro) {
-    return `<div class="inv-art-fallback">${macro ? ICON_MACRO : ICON_COMPANY}</div>`;
-  }
+  const ICON_SWIPE = S('<path d="M7 8l5-5 5 5M7 16l5 5 5-5"/>');
   // รูปเชิงหมวด (จำลอง/ใกล้เคียง ไม่ใช่รูปข่าวนั้นจริง) — ใช้เมื่อ brief ไม่มี og:image จริง แต่มีการเดา topic ไว้
   // ทุกไฟล์โฮสต์ที่ Wikimedia Commons (ลิงก์ถาวร เหมือนโลโก้ Money — ดู CLAUDE.md ข้อ 8.5) เพิ่ม 22 ก.ค. 2026
   const WM = f => `https://commons.wikimedia.org/wiki/Special:FilePath/${f}?width=1200`;
@@ -183,26 +154,6 @@ window.InvestmentView = (function () {
     auto: WM('Hyundai_car_assembly_line.jpg'),
     aerospace: WM('Antonov_An-225_at_Farnborough_1990_airshow.jpg')
   };
-  function renderArtMedia(b) {
-    const media = $('invArtMedia');
-    const topicUrl = b.topic ? TOPIC_IMAGES[b.topic] : '';
-    const src = b.image || topicUrl;
-    if (src) {
-      media.innerHTML = '';
-      const img = document.createElement('img');
-      img.alt = '';
-      img.referrerPolicy = 'no-referrer';
-      // รูปจริงพังก่อน → ลองรูป topic (ถ้ายังไม่ได้ลอง) → ถึงจะตกไปไอคอน
-      img.onerror = () => {
-        if (b.image && topicUrl && img.src !== topicUrl) { img.src = topicUrl; }
-        else { media.innerHTML = fallbackMediaHtml(b.macro); }
-      };
-      img.src = src;
-      media.appendChild(img);
-    } else {
-      media.innerHTML = fallbackMediaHtml(b.macro);
-    }
-  }
 
   // ── editorial building blocks ──
   // masthead(eyebrow, title, sub) — เปลี่ยนจาก kicker บรรทัดเดียวเป็น 3 ชั้น (เพิ่ม 4 ส.ค. 2026 ตอน reskin)
@@ -213,98 +164,51 @@ window.InvestmentView = (function () {
       ${sub ? `<div class="inv-mast-sub">${sub}</div>` : ''}
     </div>`;
   }
-  // ── list — compact rail (variant B, jiroj เลือก 6 ส.ค. 2026 จาก preview 3 แนว) ──
-  // ใช้คลาสใหม่ .inv-nw-* ทั้งหมด (ไม่แตะ .inv-ed-item/.inv-ed-lead เดิม เพราะ 2 คลาสนั้นใช้ร่วมกับ Portfolio/Earnings/Deep-Dive อยู่ — เปลี่ยนเฉพาะ News ไม่กระทบแท็บอื่น)
-  function edMeta(b) {
-    return `<div class="inv-nw-meta"><span class="inv-nw-meta-dot ${b.macro ? 'm' : 'c'}"></span><span>${b.macro ? 'Macro' : 'Company'} · <span class="src">${esc(b.sourceName)}</span></span></div>`;
-  }
-  function edLead(b) {
-    return `<div class="inv-nw-lead" data-id="${esc(b.id)}">
-      <div class="inv-nw-lead-h">${esc(b.title)}</div>
-      <div class="inv-nw-lead-sum">${esc(b.summary)}</div>
-      ${edMeta(b)}
+  // ── news: Discover mode เต็มจอ ปัดอ่านทีละข่าว (6 ส.ค. 2026 รอบ 2 — jiroj ขอเปลี่ยนจาก compact rail list เป็นสไลด์เต็มจอ ตัดลิสต์+ตัวกรองออกทั้งหมด)
+  // ทุกสไลด์ต้องมีรูปข่าวจริงเสมอตามนโยบายใหม่ของ skill investment-dashboard (ดู SKILL.md) — โค้ด render นี้ยังคง fallback image→topic→icon ไว้
+  // เพื่อความทนทานกับ record เก่า/hotlink พังเฉยๆ ไม่ใช่ทางเลือกที่ตั้งใจให้เกิดกับ brief ใหม่
+  // media เป็นแถบสูง ~45% ของสไลด์ (ไม่ใช่เต็มจอ) — เต็มจอเคยลองแล้ว Bright ทัก 6 ส.ค. 2026 ว่า "ภาพไม่ชัด คนขาด": รูปข่าวจริงส่วนใหญ่เป็นแนวนอน (16:9) ส่วนสไลด์เต็มจอสูงมาก (~9:19)
+  // object-fit:cover ต้อง crop ซ้าย-ขวาแรงมาก (เหลือรูปแค่ ~1 ใน 4 ของความกว้างจริง) จนตัดคนในภาพขาด — ลดสัดส่วนพื้นที่รูปให้ใกล้เคียงอัตราส่วนภาพต้นฉบับมากขึ้นแทน crop จะเบาลงมาก
+  function discBg(b, hint) {
+    const src = b.image || (b.topic ? TOPIC_IMAGES[b.topic] : '');
+    return `<div class="inv-disc-media">
+      <div class="inv-disc-fallback-ic">${b.macro ? ICON_MACRO : ICON_COMPANY}</div>
+      ${src ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}
+      ${hint ? `<div class="inv-disc-hint">${ICON_SWIPE}<span>SWIPE</span></div>` : ''}
     </div>`;
   }
-  function edThumb(b) {
-    const src = b.image || (b.topic ? TOPIC_IMAGES[b.topic] : '');
-    return `<div class="inv-nw-thumb ${b.macro ? 'm' : 'c'}">${b.macro ? ICON_MACRO : ICON_COMPANY}${src
-      ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}</div>`;
-  }
-  function edItem(b) {
-    return `<div class="inv-nw-row" data-id="${esc(b.id)}">
-      ${edThumb(b)}
-      <div class="inv-nw-body">
-        <div class="inv-nw-h">${esc(b.title)}</div>
-        <div class="inv-nw-rowmeta">${esc(b.sourceName)}</div>
+  function discSlide(b, hint) {
+    const cls = b.macro ? 'm' : 'c';
+    return `<div class="inv-disc-slide">
+      ${discBg(b, hint)}
+      <div class="inv-disc-body">
+        <div class="inv-disc-meta"><span class="inv-disc-dot ${cls}"></span><span class="${cls === 'm' ? 'inv-disc-cat-m' : ''}">${b.macro ? 'Macro' : 'Company'}</span><span>· ${esc(b.sourceName)} · ${fmtDate(b.date)}</span></div>
+        <div class="inv-disc-h">${esc(b.title)}</div>
+        <div class="inv-disc-sum">${esc(b.summary)}</div>
+        <button class="inv-disc-more" type="button">อ่านเพิ่ม</button>
+        <a class="inv-disc-cta" href="${esc(b.url)}" target="_blank" rel="noopener">เปิดต้นฉบับที่ ${esc(b.sourceName)} ↗</a>
       </div>
     </div>`;
   }
-
-  // ── news: masthead + ข่าววันล่าสุด (ตัวแรกเป็น lead) + Earlier คั่นด้วยหัววันที่ ──
-  function renderNews() {
-    const ld = latestDate();
-    const list = archFilter === 'all' ? BRIEFS : BRIEFS.filter(b => (archFilter === 'macro' ? b.macro : !b.macro));
-    const latestItems = list.filter(b => b.date === ld);
-    const earlier = list.filter(b => b.date !== ld);
-
-    const tabs = [
-      { k: 'all', l: 'All' }, { k: 'macro', l: 'Macro' }, { k: 'company', l: 'Company' }
-    ].map(c => `<button class="inv-ftab${archFilter === c.k ? ' on' : ''}" data-filt="${c.k}">${c.l}</button>`).join('');
-
-    const todaySec = latestItems.length
-      ? edLead(latestItems[0]) + latestItems.slice(1).map(b => edItem(b)).join('')
-      : '';
-
-    const earlierDates = [...new Set(earlier.map(b => b.date))].sort((a, b) => b.localeCompare(a));
-    // default = พับทุกวัน/ทุกเดือน (jiroj สั่ง 21 ก.ค. 2026 — ไม่กางวันล่าสุดให้อัตโนมัติแล้ว)
-    if (expandedDays === null) expandedDays = new Set();
-    if (expandedMonths === null) expandedMonths = new Set();
-
-    const nBriefs = n => `${n} ${n === 1 ? 'brief' : 'briefs'}`;
-    const chev = cls => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
-    const dayRow = (d, yearRef, indent) => {
-      const items = earlier.filter(b => b.date === d);
-      const open = expandedDays.has(d);
-      return `<button class="inv-ed-dtog${open ? ' open' : ''}${indent ? ' in-month' : ''}" data-day="${d}">
-        <span>${fmtDayLabel(d, yearRef)}</span>
-        <span class="inv-ed-dtog-rule"></span>
-        <span class="inv-ed-dtog-r">${nBriefs(items.length)}${chev('inv-ed-chev')}</span>
-      </button>${open ? items.map(b => edItem(b)).join('') : ''}`;
-    };
-
-    // ทุกเดือนที่มีข่าว (รวมเดือนปัจจุบัน) ยุบเป็นแถวเดือนเสมอ กดกางออกเป็นแถววันข้างใน (jiroj ขอเพิ่มเลเยอร์เดือนแม้อยู่เดือนปัจจุบัน 22 ก.ค. 2026)
-    const allMonths = [...new Set(earlierDates.map(d => d.slice(0, 7)))].sort((a, b) => b.localeCompare(a));
-    const earlierSec = allMonths.map(ym => {
-      const mDates = earlierDates.filter(d => d.slice(0, 7) === ym);
-      const mCount = earlier.filter(b => b.date.slice(0, 7) === ym).length;
-      const open = expandedMonths.has(ym);
-      return `<button class="inv-ed-mtog${open ? ' open' : ''}" data-emonth="${ym}">
-        <span>${fmtMonth(ym)}</span>
-        <span class="inv-ed-dtog-rule"></span>
-        <span class="inv-ed-dtog-r">${nBriefs(mCount)}${chev('inv-ed-chev')}</span>
-      </button>${open ? mDates.map(d => dayRow(d, ym.slice(0, 4), true)).join('') : ''}`;
-    }).join('');
-
-    const total = BRIEFS.length;
-    const ldCount = ld ? BRIEFS.filter(b => b.date === ld).length : 0;
-
-    $('inv-news').innerHTML = `
-      ${masthead('News', ld ? fmtLong(ld) : 'No briefs yet', ld ? `${ldCount} ${ldCount === 1 ? 'brief' : 'briefs'} today` : '')}
-      <div class="inv-ftabs">${tabs}</div>
-      ${todaySec}
-      ${earlierSec ? `<div class="inv-ed-day inv-ed-earlier">Earlier</div>` : ''}${earlierSec}
-      ${total && (todaySec || earlierSec) ? '' : '<div class="inv-ed-empty"><div class="t">Nothing here</div><div class="s">No briefs match this filter yet</div></div>'}`;
-    root.querySelectorAll('[data-filt]').forEach(b => b.onclick = () => { archFilter = b.dataset.filt; renderNews(); });
-    root.querySelectorAll('[data-day]').forEach(b => b.onclick = () => {
-      const d = b.dataset.day;
-      if (expandedDays.has(d)) expandedDays.delete(d); else expandedDays.add(d);
-      renderNews();
-    });
-    root.querySelectorAll('[data-emonth]').forEach(b => b.onclick = () => {
-      const ym = b.dataset.emonth;
-      if (expandedMonths.has(ym)) expandedMonths.delete(ym); else expandedMonths.add(ym);
-      renderNews();
-    });
+  function renderDiscover() {
+    const list = [...BRIEFS].sort((a, b) => b.date.localeCompare(a.date));
+    const feed = $('invDiscFeed');
+    const progressWrap = $('invDiscProgress');
+    if (!list.length) {
+      feed.innerHTML = `<div class="inv-disc-empty"><div class="t">No briefs yet</div><div class="s">Ask Jarvis to sync today's investing news</div></div>`;
+      progressWrap.innerHTML = '';
+      return;
+    }
+    feed.innerHTML = list.map((b, i) => discSlide(b, i === 0 && list.length > 1)).join('');
+    progressWrap.innerHTML = '';
+    const slides = [...feed.querySelectorAll('.inv-disc-slide')];
+    slides.forEach((s, i) => { s.dataset.vi = i; progressWrap.appendChild(document.createElement('i')); });
+    const updateProgress = idx => { [...progressWrap.children].forEach((seg, i) => seg.classList.toggle('done', i <= idx)); };
+    updateProgress(0);
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting && e.intersectionRatio > 0.6) updateProgress(parseInt(e.target.dataset.vi, 10)); });
+    }, { root: feed, threshold: [0.6] });
+    slides.forEach(s => io.observe(s));
   }
 
   // ── current holdings (data/holdings.data.js — snapshot ที่ Jarvis อัปเดตทุกครั้งที่ jiroj แจ้งซื้อ-ขาย ใช้ทั้ง UI นี้และ cloud routine รีวิวพอร์ตวันศุกร์) ──
@@ -700,25 +604,6 @@ window.InvestmentView = (function () {
     $('invDeepArticle').classList.remove('open');
   }
 
-  // ── detail: หน้าอ่านเต็มจอ (เปลี่ยนจาก bottom sheet มาเป็นแบบนี้ 22 ก.ค. 2026 — jiroj เลือกจาก mockup 3 แบบ, ชอบ full-screen article) ──
-  function openBrief(id) {
-    const b = briefById(id); if (!b) return;
-    const cls = b.macro ? 'm' : 'c';
-    const mins = Math.max(1, Math.round((b.summary || '').length / 500));
-    $('invArtEyebrow').innerHTML = `<span class="inv-art-eyebrow-cat ${cls}">${b.macro ? 'Macro News' : 'Company News'}</span><span class="inv-art-eyebrow-rule ${cls}"></span>`;
-    $('invArtH').textContent = b.title;
-    $('invArtByline').innerHTML = `<span class="inv-source-pill ${cls}">${esc(b.sourceName)}</span><span class="inv-art-dot"></span><span>${fmtDate(b.date)}</span><span class="inv-art-readtime">${ICON_CLOCK}${mins} min</span>`;
-    $('invArtP').textContent = b.summary;
-    $('invArtLink').href = b.url;
-    $('invArtLink').textContent = `อ่านฉบับเต็มที่ ${b.sourceName} ↗`;
-    renderArtMedia(b);
-    $('invArticle').classList.add('open');
-    $('invArtScroll') && ($('invArtScroll').scrollTop = 0);
-    pushOverlayState('article');
-  }
-  function closeArticle() {
-    $('invArticle').classList.remove('open');
-  }
   function closeModal() {
     const o = $('invOverlay'); o.classList.add('closing');
     setTimeout(() => o.classList.remove('active', 'closing'), 300);
@@ -742,19 +627,19 @@ window.InvestmentView = (function () {
   function wirePopstate() {
     window.addEventListener('popstate', () => {
       const kind = overlayStack.pop();
-      if (kind === 'article') closeArticle();
-      else if (kind === 'deepdive') closeDeepArticle();
+      if (kind === 'deepdive') closeDeepArticle();
       else if (kind === 'earnings') closeEarnArticle();
       else if (kind === 'review') closeModal();
     });
   }
 
-  // ── tabs ──
+  // ── tabs ── (News = Discover overlay ที่โชว์/ซ่อนคู่ขนานกับ .inv-pane ปกติ ไม่ใช่หน้าที่ "เปิด" ทับอะไร เลยไม่ผูก browser history เหมือนแท็บอื่น)
   function switchTab(tab) {
     activeTab = tab;
     root.querySelectorAll('.inv-tabbtn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     root.querySelectorAll('.inv-pane').forEach(p => p.classList.toggle('active', p.id === 'inv-' + tab));
-    if (tab === 'news') renderNews();
+    $('invDiscover').classList.toggle('open', tab === 'news');
+    if (tab === 'news') renderDiscover();
     else if (tab === 'portfolio') renderPortfolio();
     else if (tab === 'earnings') renderEarnings();
     else if (tab === 'deepdive') renderDeepDive();
@@ -763,14 +648,19 @@ window.InvestmentView = (function () {
   function wire() {
     root.querySelectorAll('.inv-tabbtn').forEach(b => b.onclick = () => switchTab(b.dataset.tab));
     root.addEventListener('click', e => {
+      const more = e.target.closest('.inv-disc-more');
+      if (more) {
+        const sum = more.previousElementSibling;
+        const open = sum.classList.toggle('open');
+        more.textContent = open ? 'ย่อ' : 'อ่านเพิ่ม';
+        return;
+      }
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
       const er = e.target.closest('[data-er-id]'); if (er) { openEarnings(er.dataset.erId); return; }
       const dd = e.target.closest('[data-dd-id]'); if (dd) { openDeepDive(dd.dataset.ddId); return; }
-      const c = e.target.closest('[data-id]'); if (c) openBrief(c.dataset.id);
     });
     $('invMClose').onclick = goBackIfOverlay;
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) goBackIfOverlay(); };
-    $('invArtBack').onclick = goBackIfOverlay;
     $('invDDBack').onclick = goBackIfOverlay;
     $('invEarnBack').onclick = goBackIfOverlay;
     wirePopstate();
