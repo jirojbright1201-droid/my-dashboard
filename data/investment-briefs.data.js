@@ -174,6 +174,116 @@ window.INVESTMENT_BRIEFS = [
     url: "https://ng.investing.com/news/transcripts/earnings-call-transcript-compass-posts-q2-2026-beat-shares-jump-11-after-hours-93CH-2638118",
     image: "https://s.yimg.com/lo/mysterio/api/9ADE1CF212F7778152CBF0CE1C1386B2E5C8503E8C2D953D6D8AF1A22594C9BD/subgraphmysterio/resizefill_w1200_h900;quality_80;format_webp/https:%2F%2Fmedia.zenfs.com%2Fen%2Fbusiness_insider_articles_888%2F321986e743dc097648b8bcdb2de412c2",
     topic: "market"
+  },
+  {
+    id: "nw0020",
+    date: "2026-08-06",
+    title: "อิหร่าน-โอมานบรรลุข้อตกลงเส้นทางเดินเรือชั่วคราวผ่านช่องแคบฮอร์มุซ ราคาน้ำมันเคลื่อนไหวผันผวน",
+    summary: "อิหร่านและโอมานบรรลุข้อตกลงกำหนดพิกัดเส้นทางเดินเรือผ่านช่องแคบฮอร์มุซ (Strait of Hormuz) ชั่วคราวเป็นเวลา 2-4 เดือน โดยเรือขาเข้าจะแล่นผ่านน่านน้ำอิหร่าน ส่วนเรือขาออกผ่านน่านน้ำโอมานภายใต้การประสานงานกับเตหะราน ราคาน้ำมันดิบเบรนท์ (Brent) เคลื่อนไหวใกล้ระดับ 79 ดอลลาร์สหรัฐต่อบาร์เรล ส่วน WTI อยู่ที่ราว 75 ดอลลาร์ นักลงทุนยังระมัดระวังเพราะเคยมีข้อตกลงชั่วคราวลักษณะเดียวกันในเดือนมิถุนายนที่ล่มไม่นานหลังประกาศ",
+    macro: true,
+    sourceName: "The Irish Times",
+    url: "https://www.irishtimes.com/business/markets/2026/08/06/oil-holds-losses-as-iran-and-oman-reach-agreement-over-hormuz/",
+    image: "https://www.irishtimes.com/resizer/v2/HQHW4SFJNASBN7AE6I5YK3ZEEI.jpg?smart=true&auth=d9926232d590c9f4dc094fd9e9b6b219f6d3cefe53b4ac49eed48f91e6a45bf9&width=1200&height=630",
+    topic: "oil"
+  },
+  {
+    id: "nw0021",
+    date: "2026-08-06",
+    title: "รายงาน Challenger ชี้ยอดเลิกจ้างในสหรัฐฯ เดือนก.ค. ต่ำสุดรอบ 2 ปี ขณะ AI ยังครองอันดับ 1 เหตุผลเลิกจ้าง",
+    summary: "Challenger, Gray & Christmas รายงานว่านายจ้างในสหรัฐฯ ประกาศเลิกจ้างพนักงาน 33,429 ตำแหน่งในเดือนกรกฎาคม 2026 ลดลง 27% จากเดือนก่อนหน้าและลดลง 46% จากช่วงเดียวกันปีก่อน ต่ำสุดในรอบ 2 ปี โดยปัญญาประดิษฐ์ (AI) ยังเป็นเหตุผลอันดับหนึ่งของการเลิกจ้างต่อเนื่องเป็นเดือนที่ 5 ที่ 10,970 ตำแหน่ง นำโดยภาคเทคโนโลยีที่เลิกจ้างมากสุด ขณะที่แผนการจ้างงานเพิ่มขึ้น 47% จากเดือนก่อน สะท้อนตลาดแรงงานสหรัฐฯ ที่เริ่มทรงตัวก่อนรายงาน Nonfarm Payrolls รอบถัดไป",
+    macro: true,
+    sourceName: "Challenger, Gray & Christmas",
+    url: "https://www.challengergray.com/blog/challenger-report-layoffs-fall-hiring-picks-up-ai-leads-for-fifth-straight-month/",
+    image: "https://www.challengergray.com/wp-content/uploads/2026/08/July-Challenger-Report-Head.png",
+    topic: "market"
+  },
+  {
+    id: "nw0022",
+    date: "2026-08-06",
+    title: "Fiserv หั่นเป้ากำไรปี 2026 หลังผลไตรมาส 2 พลาดคาด หุ้นร่วงเกือบ 10%",
+    summary: "Fiserv บริษัทผู้ให้บริการชำระเงิน รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 5.29 พันล้านดอลลาร์สหรัฐ สูงกว่าคาด 4.9% แต่กำไรต่อหุ้นปรับปรุงอยู่ที่ 1.84 ดอลลาร์ ต่ำกว่าตลาดคาดที่ 1.92 ดอลลาร์ บริษัทปรับลดคาดการณ์กำไรต่อหุ้นปรับปรุงทั้งปีเหลือค่ากลางราว 7.30 ดอลลาร์ ลดลงจากเดิมราว 10.4% จากอัตราการเติบโตของรายได้ที่ชะลอตัวต่อเนื่อง ส่งผลให้หุ้น Fiserv ร่วงลงเกือบ 10% หลังประกาศผล",
+    macro: false,
+    sourceName: "StockStory",
+    url: "https://markets.financialcontent.com/stocks/article/stockstory-2026-8-6-fiservs-nasdaqfisv-q2-cy2026-sales-beat-estimates-but-stock-drops",
+    image: "",
+    topic: "market"
+  },
+  {
+    id: "nw0023",
+    date: "2026-08-06",
+    title: "HubSpot กำไรเกินคาดแต่หั่นเป้ารายได้ทั้งปี หุ้นดิ่งกว่า 20% หลังลูกค้าใหม่ต่ำเป้า",
+    summary: "HubSpot รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 912 ล้านดอลลาร์สหรัฐ เพิ่มขึ้น 20% จากปีก่อนและเกินคาด พร้อมกำไรต่อหุ้นปรับปรุง 3.26 ดอลลาร์ สูงกว่าที่ตลาดคาดที่ 3.02 ดอลลาร์ แต่บริษัทปรับลดเป้ารายได้ทั้งปีเหลือราว 3.68 พันล้านดอลลาร์ที่ค่ากลาง ต่ำกว่าที่นักวิเคราะห์คาด หลังเพิ่มลูกค้าใหม่สุทธิเพียง 7,000 ราย ต่ำกว่าเป้าภายในที่ตั้งไว้ 9,000-10,000 ราย จากการปรับกลยุทธ์ราคาแบบอิงผลลัพธ์ (Outcome-based Pricing) ที่ทำให้วงจรการขายยาวขึ้น ส่งผลให้หุ้น HubSpot ดิ่งลงกว่า 20% หลังประกาศผล",
+    macro: false,
+    sourceName: "The Motley Fool",
+    url: "https://www.fool.com/investing/2026/08/06/why-hubspot-stock-is-plummeting-today/",
+    image: "",
+    topic: "market"
+  },
+  {
+    id: "nw0024",
+    date: "2026-08-06",
+    title: "Datadog กำไร-รายได้เกินคาดและปรับเป้าขึ้น แต่หุ้นร่วงเกือบ 15% หลังลูกค้า AI รายใหญ่ลดการใช้งาน",
+    summary: "Datadog รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 1.12 พันล้านดอลลาร์สหรัฐ เติบโต 36% จากปีก่อนและเกินคาด พร้อมกำไรต่อหุ้นปรับปรุง 0.65 ดอลลาร์ สูงกว่าที่คาดที่ 0.58 ดอลลาร์ บริษัทปรับเป้ารายได้ทั้งปีขึ้นเป็น 4.45-4.47 พันล้านดอลลาร์ แต่หุ้นกลับร่วงลงเกือบ 15% หลังผู้บริหารเปิดเผยว่าลูกค้ากลุ่ม AI รายใหญ่ที่สุดซึ่งเพิ่งต่อสัญญามูลค่าระดับร้อยล้านดอลลาร์ครอบคลุม 17 ผลิตภัณฑ์ มีแผนลดการใช้งานตั้งแต่ไตรมาส 3 เป็นต้นไป สะท้อนความเสี่ยงจากโมเดลคิดค่าบริการตามการใช้งานจริง (Consumption-based Pricing)",
+    macro: false,
+    sourceName: "Investing.com",
+    url: "https://www.investing.com/news/stock-market-news/datadog-stock-drops-14-after-earnings-despite-36-revenue-growth-still-trades-above-fair-value-93CH-4842435",
+    image: "",
+    topic: "market"
+  },
+  {
+    id: "nw0025",
+    date: "2026-08-06",
+    title: "UWM Holdings ขาดทุนไตรมาส 2 กว่า 450 ล้านดอลลาร์ ระงับปันผล-ระดมทุนฉุกเฉิน 2.05 พันล้านดอลลาร์ หุ้นดิ่ง 40%",
+    summary: "UWM Holdings บริษัทแม่ของ United Wholesale Mortgage รายงานผลขาดทุนสุทธิไตรมาส 2 ปี 2026 ที่ 451.9 ล้านดอลลาร์สหรัฐ เทียบกับกำไร 314.5 ล้านดอลลาร์ในปีก่อน แม้รายได้จะเติบโต 17% เป็น 888 ล้านดอลลาร์ บริษัทประกาศระงับจ่ายเงินปันผลรายไตรมาสและระดมทุนฉุกเฉิน 2.05 พันล้านดอลลาร์จาก Oaktree Capital Management และตระกูล Ishbia เพื่อลดหนี้และเสริมงบดุล หลังอัตราส่วนหนี้สินที่ไม่เกี่ยวกับการปล่อยกู้ต่อส่วนของผู้ถือหุ้นพุ่งขึ้นเป็น 6.13 เท่า ส่งผลให้หุ้น UWM ร่วงลงราว 40% หลังประกาศผล",
+    macro: false,
+    sourceName: "CNBC",
+    url: "https://www.cnbc.com/2026/08/06/united-wholesale-mortgage-plunges-40percent-suspends-dividend-raises-capital-.html",
+    image: "https://www.housingwire.com/wp-content/uploads/2025/12/Mat-Ishbia-3Points.jpg",
+    topic: "market"
+  },
+  {
+    id: "nw0026",
+    date: "2026-08-06",
+    title: "Albemarle กำไรทะลุคาดจากราคาลิเทียมฟื้นตัว หุ้นปรับขึ้นหลังประกาศผลไตรมาส 2",
+    summary: "Albemarle ผู้ผลิตลิเทียมรายใหญ่ รายงานกำไรต่อหุ้นปรับปรุงไตรมาส 2 ปี 2026 ที่ 3.75 ดอลลาร์สหรัฐ สูงกว่าที่ตลาดคาดที่ 3.03 ดอลลาร์ราว 23.8% ขณะที่รายได้อยู่ที่ 1.74 พันล้านดอลลาร์ เกินคาด 9.4% ได้แรงหนุนจากราคาลิเทียมที่ปรับตัวขึ้นและสัดส่วนผลิตภัณฑ์กลุ่มพิเศษ (Specialties) ที่ดีขึ้น กำไรก่อนหักดอกเบี้ย ภาษี ค่าเสื่อมและค่าตัดจำหน่ายปรับปรุง (Adjusted EBITDA) เพิ่มขึ้นกว่าเท่าตัวเป็น 858 ล้านดอลลาร์ ผู้บริหารยังส่งสัญญาณว่าผลงานทั้งปีมีแนวโน้มแตะระดับสูงของเป้าหมายที่วางไว้ ส่งผลให้หุ้น Albemarle ปรับตัวขึ้นหลังประกาศผล",
+    macro: false,
+    sourceName: "Investing.com",
+    url: "https://m.investing.com/news/transcripts/earnings-call-transcript-albemarle-tops-q2-2026-estimates-shares-rise-premarket-93CH-4842529",
+    image: "",
+    topic: "market"
+  },
+  {
+    id: "nw0027",
+    date: "2026-08-06",
+    title: "Parker-Hannifin กำไรพุ่งเกินคาด backlog ทำสถิติสูงสุด หุ้นทำนิวไฮรอบ 52 สัปดาห์",
+    summary: "Parker-Hannifin ผู้ผลิตชิ้นส่วนอุตสาหกรรม รายงานผลประกอบการไตรมาส 4 ปีงบการเงิน 2026 (สิ้นสุด 30 มิ.ย. 2026) ด้วยรายได้ 5.76-5.8 พันล้านดอลลาร์สหรัฐ เพิ่มขึ้นราว 9.8% จากปีก่อนและเกินคาด ขณะที่กำไรต่อหุ้นปรับปรุงทำสถิติสูงสุดที่ 9.27 ดอลลาร์ เติบโต 21% จากปีก่อน ได้แรงหนุนจากธุรกิจการบิน-อวกาศและอุตสาหกรรมที่แข็งแกร่ง ยอดค้างส่งมอบ (Backlog) รวมทำสถิติสูงสุดที่ 1.28 หมื่นล้านดอลลาร์ บริษัทยังให้เป้ากำไรต่อหุ้นปรับปรุงปีงบการเงิน 2027 ที่ 34.25-35.25 ดอลลาร์ สูงกว่าที่ตลาดคาด ส่งผลให้หุ้น Parker-Hannifin ปรับขึ้นทำระดับสูงสุดในรอบ 52 สัปดาห์",
+    macro: false,
+    sourceName: "StockStory",
+    url: "https://markets.financialcontent.com/stocks/article/stockstory-2026-8-6-parker-hannifin-nyseph-reports-bullish-q2-cy2026-stock-soars",
+    image: "",
+    topic: "market"
+  },
+  {
+    id: "nw0028",
+    date: "2026-08-06",
+    title: "Peloton ทำกำไรเต็มปีครั้งแรก แต่หุ้นร่วงเกือบ 13% หลังจำนวนสมาชิกยังหดตัวต่อเนื่อง",
+    summary: "Peloton รายงานผลประกอบการไตรมาส 4 และรวมทั้งปีงบการเงิน 2026 (สิ้นสุด 30 มิ.ย. 2026) โดยรายได้สูงกว่าเป้าที่วางไว้ ได้แรงหนุนจากยอดขายอุปกรณ์ทั้งแบรนด์ Peloton และ Precor บริษัทระบุว่าปีงบการเงิน 2026 เป็นปีแรกที่ทำกำไรสุทธิได้ตลอดทั้งปี จากรายได้ที่ฟื้นตัวและการควบคุมต้นทุนที่ดีขึ้นอย่างมีนัยสำคัญ อย่างไรก็ตาม จำนวนสมาชิก Connected Fitness ที่จ่ายเงินลดลง 8.8% จากปีก่อนเหลือ 2.553 ล้านราย ส่งผลให้หุ้น Peloton ร่วงลงเกือบ 13% หลังประกาศผล แม้ตัวเลขรายได้จะเกินเป้า",
+    macro: false,
+    sourceName: "StockTitan",
+    url: "https://www.stocktitan.net/news/PTON/peloton-announces-q4-fy2026-financial-xz5rc3xtrz4o.html",
+    image: "https://www.stocktitan.net/news_covers/Peloton_Announces_Q4_FY2026_Financial_Results__1172056.webp",
+    topic: "market"
+  },
+  {
+    id: "nw0029",
+    date: "2026-08-06",
+    title: "ล็อกอัพหุ้น SpaceX ชุดแรกหมดอายุ ปลดล็อกหุ้นกว่า 9 แสนล้านหุ้นมูลค่าราว 1 แสนล้านดอลลาร์",
+    summary: "ข้อตกลงล็อกอัพ (Lockup) ที่ห้ามผู้ถือหุ้นเดิมของ SpaceX ขายหุ้นหมดอายุลงในวันที่ 6 สิงหาคม 2026 ทำให้หุ้นของบุคคลภายในราว 911.5 ล้านหุ้น คิดเป็นมูลค่าประมาณ 1 แสนล้านดอลลาร์สหรัฐ พร้อมเข้าสู่ตลาดซื้อขายได้ในสัดส่วนสูงสุด 20% ของหุ้นที่เข้าเงื่อนไข ขณะที่หุ้นอีกส่วนราว 455.8 ล้านหุ้นยังคงถูกล็อกไว้ เนื่องจากราคาหุ้น SpaceX ปัจจุบันที่ราว 110 ดอลลาร์ยังต่ำกว่าราคา IPO ที่ 135 ดอลลาร์ตามเงื่อนไขปลดล็อกก่อนกำหนด การปลดล็อกครั้งต่อไปอีกราว 319 ล้านหุ้นจะเกิดขึ้นในวันที่ 12 สิงหาคม นักวิเคราะห์เตือนว่าปริมาณหุ้นหมุนเวียนที่เพิ่มขึ้นหลายเท่าตัวอาจสร้างแรงกดดันต่อราคาหุ้นในระยะสั้น",
+    macro: false,
+    sourceName: "The Motley Fool",
+    url: "https://www.fool.com/investing/2026/08/05/spacexs-lockup-expires-on-aug-6-heres-why-9115-mil/",
+    image: "",
+    topic: "aerospace"
   }
 ];
-window.INVESTMENT_UPDATED = "05/08/2026";
+window.INVESTMENT_UPDATED = "06/08/2026";
