@@ -190,15 +190,17 @@ window.InvestmentView = (function () {
       </div>
     </div>`;
   }
+  // Discover โชว์เฉพาะ brief ของ "วันล่าสุดที่มีข่าว" เท่านั้น (ไม่ใช่ทุกวันรวมกัน — Bright ขอ 6 ส.ค. 2026) ไม่จำเป็นต้องเป็นวันนี้เป๊ะ เผื่อยังไม่ได้ sync ของวันนี้
   function renderDiscover() {
-    const list = [...BRIEFS].sort((a, b) => b.date.localeCompare(a.date));
     const feed = $('invDiscFeed');
     const progressWrap = $('invDiscProgress');
-    if (!list.length) {
+    if (!BRIEFS.length) {
       feed.innerHTML = `<div class="inv-disc-empty"><div class="t">No briefs yet</div><div class="s">Ask Jarvis to sync today's investing news</div></div>`;
       progressWrap.innerHTML = '';
       return;
     }
+    const latestDate = BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0].date);
+    const list = BRIEFS.filter(b => b.date === latestDate).slice().reverse();
     feed.innerHTML = list.map((b, i) => discSlide(b, i === 0 && list.length > 1)).join('');
     progressWrap.innerHTML = '';
     const slides = [...feed.querySelectorAll('.inv-disc-slide')];
