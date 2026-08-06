@@ -284,6 +284,17 @@ window.INVESTMENT_BRIEFS = [
     url: "https://www.fool.com/investing/2026/08/05/spacexs-lockup-expires-on-aug-6-heres-why-9115-mil/",
     image: "",
     topic: "aerospace"
+  },
+  {
+    id: "nw0030",
+    date: "2026-08-06",
+    title: "AppLovin รายได้-แนวโน้มพลาดเป้าครั้งแรก หุ้นทรุดกว่า 20% แม้กำไรเป็นไปตามคาด",
+    summary: "AppLovin ผู้ให้บริการแพลตฟอร์มโฆษณาแอปพลิเคชันด้วย AI รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 1.92 พันล้านดอลลาร์สหรัฐ เติบโต 53% จากปีก่อนแต่ต่ำกว่าที่ตลาดคาดไว้ที่ 1.95 พันล้านดอลลาร์ ขณะที่กำไรต่อหุ้น (GAAP) 3.76 ดอลลาร์ ใกล้เคียงกับที่คาดไว้ บริษัทให้เป้ารายได้ไตรมาส 3 ที่ 2.07 พันล้านดอลลาร์และ Adjusted EBITDA 1.73 พันล้านดอลลาร์ ต่ำกว่าที่นักวิเคราะห์คาดทั้งคู่ นับเป็นครั้งแรกนับตั้งแต่เข้าตลาดหลักทรัพย์ที่ AppLovin พลาดเป้ากลางของทั้งรายได้และ EBITDA ที่เคยให้แนวโน้มไว้เอง ส่งผลให้หุ้นทรุดตัวลงกว่า 20% หลังประกาศผล",
+    macro: false,
+    sourceName: "StockStory",
+    url: "https://markets.financialcontent.com/stocks/article/stockstory-2026-8-5-applovin-nasdaqapp-misses-q2-cy2026-revenue-estimates-stock-drops-21",
+    image: "https://stockstory.org/stockstory/company-image/APP",
+    topic: "market"
   }
 ];
 window.INVESTMENT_UPDATED = "06/08/2026";
