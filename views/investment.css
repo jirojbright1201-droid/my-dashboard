@@ -118,7 +118,7 @@
 /* ── News: Discover mode เต็มจอ ปัดอ่านทีละข่าว แทนลิสต์เดิม (6 ส.ค. 2026 รอบ 2 — jiroj ขอเปลี่ยนจาก compact rail list มาเป็นสไลด์เต็มจอ ตัดลิสต์+ตัวกรองออกทั้งหมด)
    ทุกสไลด์ต้องมีรูปข่าวจริงเสมอตามนโยบายใหม่ของ skill investment-dashboard — พื้นหลังเข้ม/ไอคอน fallback ในนี้มีไว้กันพัง (record เก่า/hotlink แตก) ไม่ใช่สภาวะที่ตั้งใจให้เกิดกับ brief ใหม่
    ไม่ใช่หน้าที่ "เปิด" ทับอะไร (ต่างจาก .inv-article) เลยไม่ผูก browser history — แค่โชว์/ซ่อนคู่กับแท็บอื่นตรงๆ, tabbar ลอย z-index 50 อยู่เหนือ z-index 40 นี้เสมอโดยไม่ต้องทำอะไรเพิ่ม */
-.inv-discover { position: fixed; inset: 0; z-index: 40; display: none; background: var(--surface); }
+.inv-discover { position: fixed; inset: 0; z-index: 40; display: none; background: #0b1220; }
 .inv-discover.open { display: block; }
 /* progress bar ลอยทับบนสุดของฟีด (ไม่ดันฟีดลง) ให้สไลด์แรกสูงเต็มจอเหมือนสไลด์อื่น */
 .inv-disc-top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; padding: calc(14px + env(safe-area-inset-top)) 16px 10px; }
@@ -147,35 +147,33 @@
 .inv-disc-feed::-webkit-scrollbar { display: none; }
 
 .inv-disc-slide { position: relative; width: 100%; height: 100%; scroll-snap-align: start; scroll-snap-stop: always;
-  display: flex; flex-direction: column; overflow: hidden; background: var(--surface); }
+  display: flex; flex-direction: column; overflow: hidden; background: #0b1220; }
 
-/* media สูง ~46% (ยิ่งแถบรูป "สูง" เทียบกับความกว้างจอ ยิ่งต้อง crop ซ้าย-ขวาแรงขึ้นไม่ใช่เบาลง เพราะรูปข่าวส่วนใหญ่เป็นแนวนอน 16:9 — ลอง 60%/100% แล้วตัดคนขาด, ~46% คือระดับที่ยืนยันแล้วว่าคนไม่ขาด) จางเข้าพื้นผิวขาวของแอป (7 ส.ค. 2026 — Bright เทียบดำ/ขาวแล้วสรุปว่าขาวเข้าธีม Apple x Coinbase ของทั้งแอปมากกว่า แท็บ Portfolio/Earnings/Deep-Dive ก็สว่างหมด ไม่อยากมีแท็บเดียวที่มืด) */
+/* media สูง ~46% (ยิ่งแถบรูป "สูง" เทียบกับความกว้างจอ ยิ่งต้อง crop ซ้าย-ขวาแรงขึ้นไม่ใช่เบาลง เพราะรูปข่าวส่วนใหญ่เป็นแนวนอน 16:9 — ลอง 60%/100% แล้วตัดคนขาด, ~46% คือระดับที่ยืนยันแล้วว่าคนไม่ขาด) จางเข้าสีเดียวกับพื้นหลัง .inv-disc-body ด้านล่างเป๊ะ (ทั้งคู่ #0b1220) — กลับมาใช้ธีมดำอีกครั้ง (7 ส.ค. 2026 รอบ 2 — Bright บอกอ่านสบายตากว่า หลังลองขาวไปแล้วไม่นาน) */
 .inv-disc-media { position: relative; flex: 0 0 46%; overflow: hidden; background: #0b1220; display: flex; align-items: center; justify-content: center; }
 .inv-disc-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
 .inv-disc-fallback-ic { color: rgba(255,255,255,.5); }
 .inv-disc-fallback-ic svg { width: 56px; height: 56px; }
-/* ทุก stop เป็นสีขาวไล่ความทึบเดียวกันหมด (7 ส.ค. 2026 แก้บั๊ก — เดิม copy สีจากเวอร์ชันดำมาแค่ปรับ stop ท้ายๆ เป็นขาว ทำให้กลางทางผ่านสีเทาหม่นก่อนเด้งเป็นขาว เห็นเป็นแถบเทาสกปรกทับรูปโดยเฉพาะโซนที่รูปเองก็สว่างอยู่แล้ว) */
 .inv-disc-media::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 85%; z-index: 1;
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.12) 35%, rgba(255,255,255,.5) 60%, rgba(255,255,255,.88) 82%, var(--surface) 100%); }
+  background: linear-gradient(180deg, rgba(11,18,32,0) 0%, rgba(11,18,32,.08) 30%, rgba(11,18,32,.4) 55%, rgba(11,18,32,.82) 80%, #0b1220 100%); }
 
-.inv-disc-body { flex: 1; min-height: 0; overflow-y: auto; position: relative; z-index: 2; background: var(--surface);
-  padding: 8px 18px calc(100px + env(safe-area-inset-bottom)) 18px; color: var(--text); }
-.inv-disc-meta { display: flex; align-items: center; gap: 6px; font-size: 0.71rem; color: var(--silver); margin-bottom: 9px; }
-.inv-disc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--silver); flex-shrink: 0; }
-.inv-disc-dot.m { background: var(--accent); }
-.inv-disc-cat-m { color: var(--accent); font-weight: 600; }
+.inv-disc-body { flex: 1; min-height: 0; overflow-y: auto; position: relative; z-index: 2; background: #0b1220;
+  padding: 8px 18px calc(100px + env(safe-area-inset-bottom)) 18px; color: #fff; }
+.inv-disc-meta { display: flex; align-items: center; gap: 6px; font-size: 0.71rem; color: rgba(255,255,255,.72); margin-bottom: 9px; }
+.inv-disc-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.72); flex-shrink: 0; }
+.inv-disc-dot.m { background: #7db2ff; }
+.inv-disc-cat-m { color: #7db2ff; font-weight: 600; }
 .inv-disc-h { font-family: var(--serif); font-size: 1.2rem; font-weight: 800; line-height: 1.26; letter-spacing: -.015em; text-wrap: balance; }
-.inv-disc-sum { font-size: 0.8438rem; line-height: 1.65; color: var(--silver); margin-top: 10px;
+.inv-disc-sum { font-size: 0.8438rem; line-height: 1.65; color: rgba(255,255,255,.78); margin-top: 10px;
   display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-disc-sum.open { -webkit-line-clamp: unset; overflow: visible; }
-.inv-disc-more { margin-top: 6px; background: none; border: none; padding: 0; font-size: 0.75rem; font-weight: 700; color: var(--accent); cursor: pointer; }
+.inv-disc-more { margin-top: 6px; background: none; border: none; padding: 0; font-size: 0.75rem; font-weight: 700; color: #7db2ff; cursor: pointer; }
 .inv-disc-cta { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 14px;
   background: var(--accent); color: #fff; font-weight: 600; font-size: 0.8125rem; padding: 12px; border-radius: 9999px;
   text-decoration: none; box-shadow: 0 8px 18px -6px rgba(0,82,255,.4); transition: transform .1s, background .15s; }
 .inv-disc-cta:active { background: var(--accent-hover); transform: scale(.97); }
 
-/* วางไว้ที่ ~35% จากบนของ media (โซนที่ยังไม่โดน fade แตะเลย) ไม่ใช่ bottom:14px แบบเดิม — พอสลับ fade เป็นขาว (7 ส.ค. 2026) โซนล่างใกล้ขาวจนชิปขาวจางหายไปกับพื้น อ่านไม่ออก */
-.inv-disc-hint { position: absolute; right: 16px; top: 35%; z-index: 2;
+.inv-disc-hint { position: absolute; right: 16px; bottom: 14px; z-index: 2;
   display: flex; flex-direction: column; align-items: center; color: #fff; background: rgba(255,255,255,.18);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-radius: 9999px; padding: 8px 10px;
   animation: invDiscBob 1.8s ease-in-out infinite; }
@@ -185,8 +183,8 @@
 @media (prefers-reduced-motion: reduce) { .inv-disc-hint { animation: none; } }
 
 .inv-disc-empty { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px; }
-.inv-disc-empty .t { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; color: var(--text); }
-.inv-disc-empty .s { font-size: 0.8125rem; color: var(--silver); margin-top: 6px; }
+.inv-disc-empty .t { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; color: #fff; }
+.inv-disc-empty .s { font-size: 0.8125rem; color: rgba(255,255,255,.6); margin-top: 6px; }
 
 /* ── portfolio review modal ── */
 .inv-pr-section { margin-bottom: 18px; }
