@@ -172,8 +172,9 @@
 .inv-disc-sum { font-size: 0.8438rem; line-height: 1.65; color: var(--silver); margin-top: 10px;
   display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-disc-sum.open { -webkit-line-clamp: unset; overflow: visible; }
-/* margin-top:auto = หัวใจของ bottom-anchored: ดันกลุ่มปุ่มไปชิดขอบล่างสุดของ .inv-disc-body (เหนือ padding-bottom ที่กันไว้ให้ tabbar อยู่แล้ว) เสมอ ไม่ว่าเนื้อหาข้างบนจะสั้นหรือยาว — ถ้ากด "อ่านเพิ่ม" แล้วเนื้อหายาวจนล้น auto margin จะยุบเป็น 0 เอง ปุ่มก็ไหลตามเนื้อหาแล้วเลื่อนดูได้ตามปกติ (ไม่ต้องเขียน logic แยก) */
-.inv-disc-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+/* spacer แทน margin-top:auto ตรงๆ (แก้ 7 ส.ค. 2026 — Bright บ่นช่องว่างระหว่างสรุปกับปุ่มเยอะไปตอนข่าวสั้น) — เพดาน max-height กันไม่ให้ดันไกลเกิน 26px แม้เนื้อหาจะสั้นแค่ไหน ต่างจาก margin-top:auto เดิมที่ยอมให้ห่างได้ไม่จำกัด (เต็มพื้นที่ที่เหลือทั้งหมด) เนื้อหาส่วนใหญ่เขียนใกล้เพดาน 4 บรรทัดอยู่แล้วตามสเปค skill เลยตำแหน่งปุ่มยังนิ่งใกล้เคียงเดิมในเคสทั่วไป ต่างกันจริงเฉพาะข่าวที่สรุปสั้นผิดปกติเท่านั้น (ยอมรับ trade-off นี้แทนช่องว่างมหาศาล) */
+.inv-disc-spacer { flex: 1 1 auto; max-height: 26px; }
+.inv-disc-actions { display: flex; flex-direction: column; gap: 6px; }
 .inv-disc-more { background: none; border: none; padding: 0; font-size: 0.75rem; font-weight: 700; color: var(--accent); cursor: pointer; text-align: center; }
 .inv-disc-cta { display: flex; align-items: center; justify-content: center; gap: 6px;
   background: var(--accent); color: #fff; font-weight: 600; font-size: 0.8125rem; padding: 12px; border-radius: 9999px;
