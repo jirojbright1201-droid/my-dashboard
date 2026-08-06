@@ -293,7 +293,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "StockStory",
     url: "https://markets.financialcontent.com/stocks/article/stockstory-2026-8-5-applovin-nasdaqapp-misses-q2-cy2026-revenue-estimates-stock-drops-21",
-    image: "https://stockstory.org/stockstory/company-image/APP",
+    image: "https://imageio.forbes.com/specials-images/imageserve/6996d4312172f5afdb742e59/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "market"
   }
 ];
