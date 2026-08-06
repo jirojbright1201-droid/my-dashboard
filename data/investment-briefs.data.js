@@ -51,7 +51,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "Forbes",
     url: "https://www.forbes.com/sites/investor-hub/article/spacex-first-earnings-report-what-to-look-out-for/",
-    image: "",
+    image: "https://imageio.forbes.com/specials-images/imageserve/6a6ccc8ece14218777f808e5/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "aerospace"
   },
   {
