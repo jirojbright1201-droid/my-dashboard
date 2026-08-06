@@ -9,6 +9,9 @@ window.InvestmentView = (function () {
 
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const fmtDate = d => { if (!d) return ''; const [y, m, day] = d.split('-'); return `${day}/${m}/${y.slice(2)}`; };
+  const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const fmtDayShort = d => { const [, m, day] = d.split('-'); return `${parseInt(day, 10)} ${MONTH_SHORT[parseInt(m, 10) - 1]}`; };
+  const fmtDayFull = d => { const [y, m, day] = d.split('-'); return `${parseInt(day, 10)} ${MONTH_SHORT[parseInt(m, 10) - 1]} ${y}`; };
   const S = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
   // ไอคอนทึบ MDI (earth/domain) สำหรับ badge หมวด Macro/Company ในลิสต์ข่าว — ทึบ = เนื้อหา/หมวด ตามมาตรฐาน reskin (ต่างจาก S() ที่เป็นเส้น outline สำหรับ nav/chrome)
   const F = p => `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${p}</svg>`;
@@ -81,7 +84,7 @@ window.InvestmentView = (function () {
   };
 
   // ── state ──
-  let root, activeTab = 'news';
+  let root, activeTab = 'news', discDate = null; // discDate = วันที่กำลังดูอยู่ใน Discover, null = ยังไม่เลือก (ใช้วันล่าสุดเป็น default)
   const $ = id => root.querySelector('#' + id);
   const reviewById = id => REVIEWS.find(r => r.id === id);
   const earningsById = id => EARNINGS.find(e => e.id === id);
@@ -101,7 +104,15 @@ window.InvestmentView = (function () {
   </div>
 
   <div class="inv-discover open" id="invDiscover">
-    <div class="inv-disc-top"><div class="inv-disc-progress" id="invDiscProgress"></div></div>
+    <div class="inv-disc-top">
+      <div class="inv-disc-toprow">
+        <div class="inv-disc-progress" id="invDiscProgress"></div>
+        <button class="inv-disc-daybtn" id="invDiscDayBtn">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span id="invDiscDayLabel"></span>
+        </button>
+      </div>
+    </div>
     <div class="inv-disc-feed" id="invDiscFeed"></div>
   </div>
 
@@ -190,17 +201,22 @@ window.InvestmentView = (function () {
       </div>
     </div>`;
   }
-  // Discover โชว์เฉพาะ brief ของ "วันล่าสุดที่มีข่าว" เท่านั้น (ไม่ใช่ทุกวันรวมกัน — Bright ขอ 6 ส.ค. 2026) ไม่จำเป็นต้องเป็นวันนี้เป๊ะ เผื่อยังไม่ได้ sync ของวันนี้
+  const latestBriefDate = () => BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0] ? BRIEFS[0].date : '');
+  // Discover โชว์เฉพาะ brief ของ 1 วันต่อครั้ง (ไม่ใช่ทุกวันรวมกันในฟีดเดียว — Bright ขอ 6 ส.ค. 2026) default = วันล่าสุดที่มีข่าว
+  // สลับไปดูวันเก่ากว่าได้ผ่านปุ่มเลือกวันมุมบนขวา (openDayPicker) — เพิ่มหลัง Bright ถามว่าข่าววันเก่าจะอ่านจากไหนหลังตัด list ออก
   function renderDiscover() {
     const feed = $('invDiscFeed');
     const progressWrap = $('invDiscProgress');
+    const dayBtn = $('invDiscDayLabel');
     if (!BRIEFS.length) {
       feed.innerHTML = `<div class="inv-disc-empty"><div class="t">No briefs yet</div><div class="s">Ask Jarvis to sync today's investing news</div></div>`;
       progressWrap.innerHTML = '';
+      if (dayBtn) dayBtn.textContent = '';
       return;
     }
-    const latestDate = BRIEFS.reduce((m, b) => (b.date > m ? b.date : m), BRIEFS[0].date);
-    const list = BRIEFS.filter(b => b.date === latestDate).slice().reverse();
+    if (!discDate || !BRIEFS.some(b => b.date === discDate)) discDate = latestBriefDate();
+    const list = BRIEFS.filter(b => b.date === discDate).slice().reverse();
+    if (dayBtn) dayBtn.textContent = fmtDayShort(discDate);
     feed.innerHTML = list.map((b, i) => discSlide(b, i === 0 && list.length > 1)).join('');
     progressWrap.innerHTML = '';
     const slides = [...feed.querySelectorAll('.inv-disc-slide')];
@@ -516,6 +532,21 @@ window.InvestmentView = (function () {
     $('invEarnArticle').classList.remove('open');
   }
 
+  // ── เลือกวันของ Discover (ใช้ modal/overlay ตัวเดียวกับ Portfolio Review เพื่อไม่ต้องสร้าง component ใหม่) ──
+  function openDayPicker() {
+    const dates = [...new Set(BRIEFS.map(b => b.date))].sort((a, b) => b.localeCompare(a));
+    $('invMTitle').textContent = 'Choose a day';
+    $('invMSub').textContent = '';
+    $('invMBody').innerHTML = `<div class="inv-daypick">${dates.map(d => {
+      const n = BRIEFS.filter(b => b.date === d).length;
+      return `<button class="inv-daypick-row${d === discDate ? ' on' : ''}" data-pickday="${d}">
+        <span class="inv-daypick-date">${fmtDayFull(d)}</span>
+        <span class="inv-daypick-count">${n} ${n === 1 ? 'brief' : 'briefs'}</span>
+      </button>`;
+    }).join('')}</div>`;
+    $('invOverlay').classList.add('active');
+    pushOverlayState('daypicker');
+  }
   function openReview(id) {
     const r = reviewById(id); if (!r) return;
     $('invMTitle').textContent = 'Portfolio Review';
@@ -632,6 +663,7 @@ window.InvestmentView = (function () {
       if (kind === 'deepdive') closeDeepArticle();
       else if (kind === 'earnings') closeEarnArticle();
       else if (kind === 'review') closeModal();
+      else if (kind === 'daypicker') closeModal();
     });
   }
 
@@ -660,7 +692,10 @@ window.InvestmentView = (function () {
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
       const er = e.target.closest('[data-er-id]'); if (er) { openEarnings(er.dataset.erId); return; }
       const dd = e.target.closest('[data-dd-id]'); if (dd) { openDeepDive(dd.dataset.ddId); return; }
+      const pick = e.target.closest('[data-pickday]');
+      if (pick) { discDate = pick.dataset.pickday; renderDiscover(); goBackIfOverlay(); return; }
     });
+    $('invDiscDayBtn').onclick = openDayPicker;
     $('invMClose').onclick = goBackIfOverlay;
     $('invOverlay').onclick = e => { if (e.target === $('invOverlay')) goBackIfOverlay(); };
     $('invDDBack').onclick = goBackIfOverlay;
