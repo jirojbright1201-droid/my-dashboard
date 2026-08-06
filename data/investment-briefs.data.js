@@ -205,7 +205,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "StockStory",
     url: "https://markets.financialcontent.com/stocks/article/stockstory-2026-8-6-fiservs-nasdaqfisv-q2-cy2026-sales-beat-estimates-but-stock-drops",
-    image: "",
+    image: "https://imageio.forbes.com/specials-images/imageserve/699be56033db98f9b139b0a4/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "market"
   },
   {
@@ -216,7 +216,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "The Motley Fool",
     url: "https://www.fool.com/investing/2026/08/06/why-hubspot-stock-is-plummeting-today/",
-    image: "",
+    image: "https://imageio.forbes.com/specials-images/imageserve/693029d9d436a77698b92bb4/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "market"
   },
   {
@@ -227,7 +227,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "Investing.com",
     url: "https://www.investing.com/news/stock-market-news/datadog-stock-drops-14-after-earnings-despite-36-revenue-growth-still-trades-above-fair-value-93CH-4842435",
-    image: "",
+    image: "https://imageio.forbes.com/specials-images/imageserve/6960c2023475d10a676a82d1/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "market"
   },
   {
@@ -249,7 +249,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "Investing.com",
     url: "https://m.investing.com/news/transcripts/earnings-call-transcript-albemarle-tops-q2-2026-estimates-shares-rise-premarket-93CH-4842529",
-    image: "",
+    image: "https://imageio.forbes.com/specials-images/imageserve/6163fa44bc417ee44b0b4d79/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "market"
   },
   {
@@ -282,7 +282,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "The Motley Fool",
     url: "https://www.fool.com/investing/2026/08/05/spacexs-lockup-expires-on-aug-6-heres-why-9115-mil/",
-    image: "",
+    image: "https://imageio.forbes.com/specials-images/imageserve/6925e7314452829ceb481b47/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "aerospace"
   },
   {
