@@ -260,7 +260,7 @@ window.INVESTMENT_BRIEFS = [
     macro: false,
     sourceName: "StockStory",
     url: "https://markets.financialcontent.com/stocks/article/stockstory-2026-8-6-parker-hannifin-nyseph-reports-bullish-q2-cy2026-stock-soars",
-    image: "",
+    image: "https://media.barchart.com/contributors-admin/common-images/images/S%26P%20500%20Companies/Industrials%20(names%20J%20-%20Z)/Parker-Hannifin%20Corp_%20factory-by%20Jonathan%20Weiss%20via%20Shutterstock.jpg",
     topic: "market"
   },
   {
