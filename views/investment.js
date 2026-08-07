@@ -221,6 +221,21 @@ window.InvestmentView = (function () {
     progressWrap.innerHTML = '';
     const slides = [...feed.querySelectorAll('.inv-disc-slide')];
     slides.forEach((s, i) => { s.dataset.vi = i; progressWrap.appendChild(document.createElement('i')); });
+    // ซ่อนปุ่ม "อ่านเพิ่ม" ถ้าข้อความสั้นพอไม่โดน line-clamp ตัด (scrollHeight <= clientHeight = ไม่มีอะไรให้กด "อ่านเพิ่ม" อยู่แล้ว)
+    // วัด clientHeight ทันทีหลัง innerHTML แทรกเข้า DOM จะอ่านได้ 0 เสมอ (layout ของ flex column ยังไม่ settle รอบแรก) — ลอง requestAnimationFrame (ชั้นเดียว/สองชั้น) แล้วยังแข่งกับ timing จริงไม่ชนะทุกครั้ง
+    // ใช้ ResizeObserver แทน: ยิง callback ก็ต่อเมื่อ browser จัด layout จริงให้ element นี้เสร็จแล้วเท่านั้น ไม่ต้องเดาจำนวน frame
+    slides.forEach(s => {
+      const sum = s.querySelector('.inv-disc-sum');
+      const more = s.querySelector('.inv-disc-more');
+      if (!sum || !more) return;
+      const ro = new ResizeObserver(() => {
+        if (sum.clientHeight > 0) {
+          more.style.display = sum.scrollHeight <= sum.clientHeight + 1 ? 'none' : '';
+          ro.disconnect();
+        }
+      });
+      ro.observe(sum);
+    });
     const updateProgress = idx => { [...progressWrap.children].forEach((seg, i) => seg.classList.toggle('done', i <= idx)); };
     updateProgress(0);
     const io = new IntersectionObserver(entries => {
