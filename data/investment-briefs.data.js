@@ -328,6 +328,28 @@ window.INVESTMENT_BRIEFS = [
     url: "https://www.benzinga.com/markets/earnings/26/08/61025469/atlassian-stock-soars-on-q4-results-guidance-what-investors-need-to-know",
     image: "https://cdn.benzinga.com/cdn-cgi/image/width=1200,height=800,fit=crop/files/images/story/2026/08/06/Atlassian-Logo-At-Hq-Of-Australian-Enter.jpg",
     topic: "market"
+  },
+  {
+    id: "nw0034",
+    date: "2026-08-07",
+    title: "Trade Desk เปิดงบไตรมาส 2 พลาดเป้าทั้งรายได้-กำไร แนวโน้มอ่อนแอ หุ้นร่วงกว่า 25%",
+    summary: "The Trade Desk (TTD) รายงานรายได้ไตรมาส 2 ปี 2026 ที่ 715 ล้านดอลลาร์ โตเพียง 3% จากปีก่อน ต่ำกว่าคาดที่ 751.4 ล้านดอลลาร์ กำไรต่อหุ้นปรับปรุง (adjusted EPS) 0.34 ดอลลาร์ พลาดคาดที่ 0.40 ดอลลาร์ พร้อมให้แนวโน้มไตรมาส 3 ต่ำกว่าคาดกว่า 19% และเปลี่ยนตัว CFO-CMO-หัวหน้าฝ่ายพาณิชย์พร้อมกัน หุ้นร่วงกว่า 25% ซีอีโอ Jeff Green อ้างปัจจัยกดดันจากภาษีนำเข้า ราคาน้ำมัน และกำลังซื้อกลุ่มรายได้น้อยที่อ่อนแอ",
+    macro: false,
+    sourceName: "Yahoo Finance",
+    url: "https://finance.yahoo.com/media-advertising/articles/trade-desk-stock-crashes-earnings-123858832.html",
+    image: "https://cdn.benzinga.com/cdn-cgi/image/width=1200,height=800,fit=crop/files/images/story/2026/08/07/Portland--Or--Usa---Jan-21--2021-The-Tra.jpg",
+    topic: "market"
+  },
+  {
+    id: "nw0035",
+    date: "2026-08-07",
+    title: "ส่งออกจีนเดือน ก.ค. โต 23.9% ดีกว่าคาด หนุนโดยความต้องการชิป AI พุ่ง 117%",
+    summary: "สำนักงานศุลกากรจีนรายงานส่งออกเดือนกรกฎาคม 2026 โต 23.9% จากปีก่อน แตะ 3.9785 แสนล้านดอลลาร์ ดีกว่าโพล Reuters คาดที่ 22.2% แม้ชะลอจาก 27% ในเดือนมิถุนายน โดยส่งออกชิปเซมิคอนดักเตอร์พุ่ง 117% จากความต้องการสินค้าเทคโนโลยีสาย AI และการเร่งส่งสินค้าไปสหรัฐฯ ก่อนภาษีนำเข้าใหม่มีผล ด้านนำเข้าโต 27.5% ทำให้เกินดุลการค้า 1.125 แสนล้านดอลลาร์ สูงกว่าคาดแม้แคบลงจากเดือนก่อน",
+    macro: true,
+    sourceName: "CNBC",
+    url: "https://www.cnbc.com/2026/08/07/china-july-trade-exports-imports-surplus-imbalance-tariffs-.html",
+    image: "https://image.cnbcfm.com/api/v1/image/108304828-1778492689574-gettyimages-2274002556-img_4105.jpeg?v=1778492905&w=1920&h=1080",
+    topic: "china"
   }
 ];
 window.INVESTMENT_UPDATED = "07/08/2026";
