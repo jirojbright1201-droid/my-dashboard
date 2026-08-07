@@ -150,7 +150,6 @@ window.InvestmentView = (function () {
   const ICON_MACRO = S('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>');
   const ICON_COMPANY = S('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M2 20h20"/>');
   const ICON_SWIPE = S('<path d="M7 8l5-5 5 5M7 16l5 5 5-5"/>');
-  const ICON_CHEVDOWN = S('<path d="M6 9l6 6 6-6"/>');
   // รูปเชิงหมวด (จำลอง/ใกล้เคียง ไม่ใช่รูปข่าวนั้นจริง) — ใช้เมื่อ brief ไม่มี og:image จริง แต่มีการเดา topic ไว้
   // ทุกไฟล์โฮสต์ที่ Wikimedia Commons (ลิงก์ถาวร เหมือนโลโก้ Money — ดู CLAUDE.md ข้อ 8.5) เพิ่ม 22 ก.ค. 2026
   const WM = f => `https://commons.wikimedia.org/wiki/Special:FilePath/${f}?width=1200`;
@@ -194,14 +193,12 @@ window.InvestmentView = (function () {
     return `<div class="inv-disc-slide">
       ${discBg(b, hint)}
       <div class="inv-disc-body">
-        <div class="inv-disc-group">
-          <div class="inv-disc-meta"><span class="inv-disc-dot ${cls}"></span><span class="${cls === 'm' ? 'inv-disc-cat-m' : ''}">${b.macro ? 'Macro' : 'Company'}</span><span>· ${esc(b.sourceName)} · ${fmtDate(b.date)}</span></div>
-          <div class="inv-disc-h">${esc(b.title)}</div>
-          <div class="inv-disc-sum">${esc(b.summary)}</div>
-          <div class="inv-disc-actions">
-            <button class="inv-disc-more" type="button"><span>อ่านเพิ่ม</span>${ICON_CHEVDOWN}</button>
-            <a class="inv-disc-cta" href="${esc(b.url)}" target="_blank" rel="noopener">เปิดต้นฉบับที่ ${esc(b.sourceName)} ↗</a>
-          </div>
+        <div class="inv-disc-meta"><span class="inv-disc-dot ${cls}"></span><span class="${cls === 'm' ? 'inv-disc-cat-m' : ''}">${b.macro ? 'Macro' : 'Company'}</span><span>· ${esc(b.sourceName)} · ${fmtDate(b.date)}</span></div>
+        <div class="inv-disc-h">${esc(b.title)}</div>
+        <div class="inv-disc-sum">${esc(b.summary)}</div>
+        <div class="inv-disc-actions">
+          <button class="inv-disc-more" type="button">อ่านเพิ่ม</button>
+          <a class="inv-disc-cta" href="${esc(b.url)}" target="_blank" rel="noopener">เปิดต้นฉบับที่ ${esc(b.sourceName)} ↗</a>
         </div>
       </div>
     </div>`;
@@ -691,8 +688,7 @@ window.InvestmentView = (function () {
       if (more) {
         const sum = more.closest('.inv-disc-body').querySelector('.inv-disc-sum');
         const open = sum.classList.toggle('open');
-        more.classList.toggle('open', open);
-        more.querySelector('span').textContent = open ? 'ย่อ' : 'อ่านเพิ่ม';
+        more.textContent = open ? 'ย่อ' : 'อ่านเพิ่ม';
         return;
       }
       const pr = e.target.closest('[data-pr-id]'); if (pr) { openReview(pr.dataset.prId); return; }
