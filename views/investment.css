@@ -170,7 +170,7 @@
 .inv-disc-h { font-family: var(--serif); font-size: 1.2rem; font-weight: 800; line-height: 1.26; letter-spacing: -.015em; text-wrap: balance;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-disc-sum { font-size: 0.8438rem; line-height: 1.65; color: var(--silver); margin-top: 10px;
-  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-disc-sum.open { -webkit-line-clamp: unset; overflow: visible; }
 /* margin-top:auto = หัวใจของ bottom-anchored: ดันกลุ่มปุ่มไปชิดขอบล่างสุดของ .inv-disc-body (เหนือ padding-bottom ที่กันไว้ให้ tabbar อยู่แล้ว) เสมอ ไม่ว่าเนื้อหาข้างบนจะสั้นหรือยาว — ถ้ากด "อ่านเพิ่ม" แล้วเนื้อหายาวจนล้น auto margin จะยุบเป็น 0 เอง ปุ่มก็ไหลตามเนื้อหาแล้วเลื่อนดูได้ตามปกติ (ไม่ต้องเขียน logic แยก) */
 .inv-disc-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
