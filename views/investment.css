@@ -158,10 +158,15 @@
 .inv-disc-media::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 85%; z-index: 1;
   background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.12) 35%, rgba(255,255,255,.5) 60%, rgba(255,255,255,.88) 82%, var(--surface) 100%); }
 
-/* body เป็น flex column ให้ .inv-disc-actions ใช้ margin-top:auto ดันตัวเองไปชิดขอบล่างของโซนเนื้อหาได้ (bottom-anchored action bar, เพิ่ม 7 ส.ค. 2026 — Bright บ่นปุ่มขยับตำแหน่งเวลาข่าวสั้น/ยาวไม่เท่ากัน ปัดสไลด์แล้วไม่นิ่ง) */
+/* body เป็น flex column, .inv-disc-group (meta+headline+summary+actions ทั้งก้อน) ใช้ margin-top:auto ดันตัวเองไปชิดขอบล่างเสมอ
+   (bottom-anchored, เพิ่ม 7 ส.ค. 2026 — Bright บ่นปุ่มขยับตำแหน่งเวลาข่าวสั้น/ยาวไม่เท่ากัน ปัดสไลด์แล้วไม่นิ่ง)
+   แก้รอบสอง (7 ส.ค. 2026): ย้าย anchor จาก .inv-disc-actions เดี่ยวๆ มาที่ .inv-disc-group ทั้งก้อนแทน — เดิม anchor อยู่แค่ปุ่ม
+   ทำให้ช่องว่างแปรผันไปกองอยู่ตรงกลางระหว่างสรุปกับปุ่ม (Bright บ่นว่าเยอะเกินไป) ย้ายมาที่ทั้งก้อนแล้วช่องว่างแปรผันจะไปกอง
+   อยู่เหนือ meta แทน (ติดโซน fade ของรูปอยู่แล้ว เนียนกว่า) ระยะสรุป-ปุ่มเลยคงที่เสมอ */
 .inv-disc-body { flex: 1; min-height: 0; overflow-y: auto; position: relative; z-index: 2; background: var(--surface);
   padding: 8px 18px calc(100px + env(safe-area-inset-bottom)) 18px; color: var(--text);
   display: flex; flex-direction: column; }
+.inv-disc-group { margin-top: auto; display: flex; flex-direction: column; }
 .inv-disc-meta { display: flex; align-items: center; gap: 6px; font-size: 0.71rem; color: var(--silver); margin-bottom: 9px; }
 .inv-disc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--silver); flex-shrink: 0; }
 .inv-disc-dot.m { background: var(--accent); }
@@ -172,9 +177,14 @@
 .inv-disc-sum { font-size: 0.8438rem; line-height: 1.65; color: var(--silver); margin-top: 10px;
   display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-disc-sum.open { -webkit-line-clamp: unset; overflow: visible; }
-/* margin-top:auto = หัวใจของ bottom-anchored: ดันกลุ่มปุ่มไปชิดขอบล่างสุดของ .inv-disc-body (เหนือ padding-bottom ที่กันไว้ให้ tabbar อยู่แล้ว) เสมอ ไม่ว่าเนื้อหาข้างบนจะสั้นหรือยาว — ถ้ากด "อ่านเพิ่ม" แล้วเนื้อหายาวจนล้น auto margin จะยุบเป็น 0 เอง ปุ่มก็ไหลตามเนื้อหาแล้วเลื่อนดูได้ตามปกติ (ไม่ต้องเขียน logic แยก) */
-.inv-disc-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
-.inv-disc-more { background: none; border: none; padding: 0; font-size: 0.75rem; font-weight: 700; color: var(--accent); cursor: pointer; text-align: center; }
+.inv-disc-actions { margin-top: 0; padding-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+/* ปุ่ม "อ่านเพิ่ม" เป็น pill จริงมีพื้นหลัง+ไอคอน (แก้ 7 ส.ค. 2026 — เดิม text-only ไม่มีพื้นผิว/ขอบเขต Bright บอกดูไม่น่ากด) แทนตัวหนังสือลอยกลางจอเฉยๆ */
+.inv-disc-more { align-self: center; display: inline-flex; align-items: center; gap: 4px;
+  background: var(--accent-soft); border: none; padding: 7px 16px; border-radius: 9999px;
+  font-size: 0.75rem; font-weight: 700; color: var(--accent); cursor: pointer; }
+.inv-disc-more:active { background: rgba(0,82,255,.16); }
+.inv-disc-more svg { width: 13px; height: 13px; transition: transform .2s; }
+.inv-disc-more.open svg { transform: rotate(180deg); }
 .inv-disc-cta { display: flex; align-items: center; justify-content: center; gap: 6px;
   background: var(--accent); color: #fff; font-weight: 600; font-size: 0.8125rem; padding: 12px; border-radius: 9999px;
   text-decoration: none; box-shadow: 0 8px 18px -6px rgba(0,82,255,.4); transition: transform .1s, background .15s; }
