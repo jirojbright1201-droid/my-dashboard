@@ -172,9 +172,9 @@
 .inv-disc-sum { font-size: 0.8438rem; line-height: 1.65; color: var(--silver); margin-top: 10px;
   display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-disc-sum.open { -webkit-line-clamp: unset; overflow: visible; }
-/* spacer แทน margin-top:auto ตรงๆ (แก้ 7 ส.ค. 2026 — Bright บ่นช่องว่างระหว่างสรุปกับปุ่มเยอะไปตอนข่าวสั้น) — เพดาน max-height กันไม่ให้ดันไกลเกิน 26px แม้เนื้อหาจะสั้นแค่ไหน ต่างจาก margin-top:auto เดิมที่ยอมให้ห่างได้ไม่จำกัด (เต็มพื้นที่ที่เหลือทั้งหมด) เนื้อหาส่วนใหญ่เขียนใกล้เพดาน 4 บรรทัดอยู่แล้วตามสเปค skill เลยตำแหน่งปุ่มยังนิ่งใกล้เคียงเดิมในเคสทั่วไป ต่างกันจริงเฉพาะข่าวที่สรุปสั้นผิดปกติเท่านั้น (ยอมรับ trade-off นี้แทนช่องว่างมหาศาล) */
-.inv-disc-spacer { flex: 1 1 auto; max-height: 26px; }
-.inv-disc-actions { display: flex; flex-direction: column; gap: 6px; }
+/* margin-top:auto ย้ายมาอยู่ที่ .inv-disc-group (ครอบ meta+headline+summary+actions ทั้งก้อน) แทนที่จะอยู่ที่ .inv-disc-actions เฉยๆ (แก้ 7 ส.ค. 2026 รอบ 2 — เดิมใส่ auto margin เฉพาะปุ่มแล้วคั่นด้วย spacer เพดาน 26px ทำให้ปุ่มใกล้ข้อความขึ้นก็จริง แต่ดันไปเหลือพื้นที่ว่างข้างล่างสุดก่อนถึง tabbar แทน — ย้าย margin-top:auto มาที่ก้อนทั้งหมดแก้ได้ตรงจุด: ก้อนทั้งก้อนถูกดันไปชิดขอบล่างของ .inv-disc-body เสมอ (ไม่มีพื้นที่ว่างเหลือด้านล่างอีก) ส่วนช่องว่างที่ผันแปรตามความยาวข่าวจะไปกองอยู่เหนือ meta แทน (เนียนกว่า เพราะติดกับรูปอยู่แล้ว) ระยะห่างภายในก้อน (ข้อความ→ปุ่ม) คงที่เสมอไม่ว่าข่าวจะสั้นยาวแค่ไหน */
+.inv-disc-group { margin-top: auto; display: flex; flex-direction: column; }
+.inv-disc-actions { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
 .inv-disc-more { background: none; border: none; padding: 0; font-size: 0.75rem; font-weight: 700; color: var(--accent); cursor: pointer; text-align: center; }
 .inv-disc-cta { display: flex; align-items: center; justify-content: center; gap: 6px;
   background: var(--accent); color: #fff; font-weight: 600; font-size: 0.8125rem; padding: 12px; border-radius: 9999px;
