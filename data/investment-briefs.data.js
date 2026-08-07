@@ -295,6 +295,39 @@ window.INVESTMENT_BRIEFS = [
     url: "https://markets.financialcontent.com/stocks/article/stockstory-2026-8-5-applovin-nasdaqapp-misses-q2-cy2026-revenue-estimates-stock-drops-21",
     image: "https://imageio.forbes.com/specials-images/imageserve/6996d4312172f5afdb742e59/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
     topic: "market"
+  },
+  {
+    id: "nw0031",
+    date: "2026-08-07",
+    title: "ตัวเลขจ้างงานสหรัฐฯ เดือน ก.ค. หลุดคาดการณ์แรง ตลาดเก็งเฟดชะลอขึ้นดอกเบี้ย หุ้นปรับขึ้น",
+    summary: "กระทรวงแรงงานสหรัฐฯ รายงานตัวเลขจ้างงานนอกภาคเกษตร (nonfarm payrolls) เดือนกรกฎาคมลดลง 23,000 ตำแหน่ง สวนทางกับที่นักเศรษฐศาสตร์คาดว่าจะเพิ่มขึ้น 83,000 ตำแหน่ง ขณะที่อัตราว่างงานลดลงมาที่ 4.1% จากคาดทรงตัวที่ 4.2% ส่วนหนึ่งเพราะอัตราการมีส่วนร่วมในกำลังแรงงานร่วงต่ำสุดในรอบกว่า 5 ปี ตลาดตีความว่าตัวเลขอ่อนแอนี้ลดโอกาสที่ Federal Reserve จะขึ้นดอกเบี้ยเดือนกันยายน ดัน S&P 500 บวก 0.4% แนสแด็กบวก 0.9% มีแนวโน้มปิดสัปดาห์ดีที่สุดนับตั้งแต่เมษายน",
+    macro: true,
+    sourceName: "CNBC",
+    url: "https://www.cnbc.com/2026/08/06/stock-market-today-live-updates.html",
+    image: "https://image.cnbcfm.com/api/v1/image/108346032-1786040339564-108346032-1786028135974-Traders-Photo-20260805-KK-PRESS-014.jpg?v=1786040349&w=1920&h=1080",
+    topic: "fed"
+  },
+  {
+    id: "nw0032",
+    date: "2026-08-07",
+    title: "Honeywell Aerospace เปิดงบไตรมาสแรกในฐานะบริษัทแยกตัว พลาดคาดจนหุ้นร่วงกว่า 23%",
+    summary: "Honeywell Aerospace (HONA) รายงานผลประกอบการไตรมาสแรกในฐานะบริษัทแยกตัวจาก Honeywell (สมบูรณ์เมื่อ 29 มิ.ย. 2026) กำไรต่อหุ้นปรับปรุง (adjusted EPS) 1.87 ดอลลาร์ ลดลง 32% จากปีก่อน ขณะรายได้โต 5% เป็น 4.52 พันล้านดอลลาร์ บริษัทปรับลดเป้าการเติบโตยอดขายทั้งปีเหลือ 4-5% จากเดิม 7-9% เพราะขาดแคลนชิ้นส่วนหล่อโลหะแม่นยำ (precision casting) ทำให้หุ้นร่วงกว่า 23% แม้ backlog ยังโต 9% แตะ 1.815 หมื่นล้านดอลลาร์",
+    macro: false,
+    sourceName: "24/7 Wall St.",
+    url: "https://247wallst.com/investing/2026/08/07/honeywell-aerospace-tumbles-on-disappointing-debut-report-but-bull-case-remains-intact/",
+    image: "https://image.cnbcfm.com/api/v1/image/108316279-17805152672026-06-03t153815z_1019885991_rc25mlaptmp6_rtrmadp_0_aerospace-honeywell.jpeg?v=1780515367&w=1920&h=1080",
+    topic: "aerospace"
+  },
+  {
+    id: "nw0033",
+    date: "2026-08-07",
+    title: "Atlassian โชว์งบไตรมาส 4 กำไร-รายได้เกินคาด หุ้นพุ่งกว่า 35%",
+    summary: "Atlassian (TEAM) รายงานรายได้ไตรมาส 4 ปีงบการเงิน 2026 ที่ 1.766 พันล้านดอลลาร์ เพิ่มขึ้น 28% จากปีก่อน สูงกว่าตลาดคาดที่ 1.66 พันล้านดอลลาร์ กำไรต่อหุ้น 1.87 ดอลลาร์ เกินคาดที่ 1.50 ดอลลาร์ รายได้คลาวด์โต 31% มูลค่าสัญญาสมัครสมาชิกต่อปี (subscription ARR) แตะ 6.61 พันล้านดอลลาร์ เพิ่มขึ้น 23% นักลงทุนตอบรับทั้งตัวเลขเกินคาดและทิศทางธุรกิจคลาวด์-AI จนหุ้นพุ่งกว่า 35% แม้เป้า ARR ปีหน้าจะชะลอเหลือ 18% จาก 23% ก็ตาม",
+    macro: false,
+    sourceName: "Benzinga",
+    url: "https://www.benzinga.com/markets/earnings/26/08/61025469/atlassian-stock-soars-on-q4-results-guidance-what-investors-need-to-know",
+    image: "https://cdn.benzinga.com/cdn-cgi/image/width=1200,height=800,fit=crop/files/images/story/2026/08/06/Atlassian-Logo-At-Hq-Of-Australian-Enter.jpg",
+    topic: "market"
   }
 ];
-window.INVESTMENT_UPDATED = "06/08/2026";
+window.INVESTMENT_UPDATED = "07/08/2026";
