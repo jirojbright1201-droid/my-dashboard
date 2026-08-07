@@ -193,15 +193,11 @@ window.InvestmentView = (function () {
     return `<div class="inv-disc-slide">
       ${discBg(b, hint)}
       <div class="inv-disc-body">
-        <div class="inv-disc-group">
-          <div class="inv-disc-meta"><span class="inv-disc-dot ${cls}"></span><span class="${cls === 'm' ? 'inv-disc-cat-m' : ''}">${b.macro ? 'Macro' : 'Company'}</span><span>· ${esc(b.sourceName)} · ${fmtDate(b.date)}</span></div>
-          <div class="inv-disc-h">${esc(b.title)}</div>
-          <div class="inv-disc-sum">${esc(b.summary)}</div>
-          <div class="inv-disc-actions">
-            <button class="inv-disc-more" type="button">อ่านเพิ่ม</button>
-            <a class="inv-disc-cta" href="${esc(b.url)}" target="_blank" rel="noopener">เปิดต้นฉบับที่ ${esc(b.sourceName)} ↗</a>
-          </div>
-        </div>
+        <div class="inv-disc-meta"><span class="inv-disc-dot ${cls}"></span><span class="${cls === 'm' ? 'inv-disc-cat-m' : ''}">${b.macro ? 'Macro' : 'Company'}</span><span>· ${esc(b.sourceName)} · ${fmtDate(b.date)}</span></div>
+        <div class="inv-disc-h">${esc(b.title)}</div>
+        <div class="inv-disc-sum">${esc(b.summary)}</div>
+        <button class="inv-disc-more" type="button">อ่านเพิ่ม</button>
+        <a class="inv-disc-cta" href="${esc(b.url)}" target="_blank" rel="noopener">เปิดต้นฉบับที่ ${esc(b.sourceName)} ↗</a>
       </div>
     </div>`;
   }
@@ -688,7 +684,7 @@ window.InvestmentView = (function () {
     root.addEventListener('click', e => {
       const more = e.target.closest('.inv-disc-more');
       if (more) {
-        const sum = more.closest('.inv-disc-body').querySelector('.inv-disc-sum');
+        const sum = more.previousElementSibling;
         const open = sum.classList.toggle('open');
         more.textContent = open ? 'ย่อ' : 'อ่านเพิ่ม';
         return;
