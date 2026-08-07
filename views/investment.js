@@ -149,7 +149,6 @@ window.InvestmentView = (function () {
   // ไอคอน fallback สุดท้าย ตามหมวด macro/company — ใช้เมื่อไม่มีทั้ง image จริงและรูปหมวด topic (ห้าม hotlink favicon/tile แบบเดิมที่เคยลองแล้วไม่สวย)
   const ICON_MACRO = S('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>');
   const ICON_COMPANY = S('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M2 20h20"/>');
-  const ICON_SWIPE = S('<path d="M7 8l5-5 5 5M7 16l5 5 5-5"/>');
   // รูปเชิงหมวด (จำลอง/ใกล้เคียง ไม่ใช่รูปข่าวนั้นจริง) — ใช้เมื่อ brief ไม่มี og:image จริง แต่มีการเดา topic ไว้
   // ทุกไฟล์โฮสต์ที่ Wikimedia Commons (ลิงก์ถาวร เหมือนโลโก้ Money — ดู CLAUDE.md ข้อ 8.5) เพิ่ม 22 ก.ค. 2026
   const WM = f => `https://commons.wikimedia.org/wiki/Special:FilePath/${f}?width=1200`;
@@ -180,18 +179,17 @@ window.InvestmentView = (function () {
   // เพื่อความทนทานกับ record เก่า/hotlink พังเฉยๆ ไม่ใช่ทางเลือกที่ตั้งใจให้เกิดกับ brief ใหม่
   // media เป็นแถบสูง ~45% ของสไลด์ (ไม่ใช่เต็มจอ) — เต็มจอเคยลองแล้ว Bright ทัก 6 ส.ค. 2026 ว่า "ภาพไม่ชัด คนขาด": รูปข่าวจริงส่วนใหญ่เป็นแนวนอน (16:9) ส่วนสไลด์เต็มจอสูงมาก (~9:19)
   // object-fit:cover ต้อง crop ซ้าย-ขวาแรงมาก (เหลือรูปแค่ ~1 ใน 4 ของความกว้างจริง) จนตัดคนในภาพขาด — ลดสัดส่วนพื้นที่รูปให้ใกล้เคียงอัตราส่วนภาพต้นฉบับมากขึ้นแทน crop จะเบาลงมาก
-  function discBg(b, hint) {
+  function discBg(b) {
     const src = b.image || (b.topic ? TOPIC_IMAGES[b.topic] : '');
     return `<div class="inv-disc-media">
       <div class="inv-disc-fallback-ic">${b.macro ? ICON_MACRO : ICON_COMPANY}</div>
       ${src ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}
-      ${hint ? `<div class="inv-disc-hint">${ICON_SWIPE}<span>SWIPE</span></div>` : ''}
     </div>`;
   }
-  function discSlide(b, hint) {
+  function discSlide(b) {
     const cls = b.macro ? 'm' : 'c';
     return `<div class="inv-disc-slide">
-      ${discBg(b, hint)}
+      ${discBg(b)}
       <div class="inv-disc-body">
         <div class="inv-disc-meta"><span class="inv-disc-dot ${cls}"></span><span class="${cls === 'm' ? 'inv-disc-cat-m' : ''}">${b.macro ? 'Macro' : 'Company'}</span><span>· ${esc(b.sourceName)} · ${fmtDate(b.date)}</span></div>
         <div class="inv-disc-h">${esc(b.title)}</div>
@@ -219,7 +217,7 @@ window.InvestmentView = (function () {
     if (!discDate || !BRIEFS.some(b => b.date === discDate)) discDate = latestBriefDate();
     const list = BRIEFS.filter(b => b.date === discDate).slice().reverse();
     if (dayBtn) dayBtn.textContent = fmtDayShort(discDate);
-    feed.innerHTML = list.map((b, i) => discSlide(b, i === 0 && list.length > 1)).join('');
+    feed.innerHTML = list.map(b => discSlide(b)).join('');
     progressWrap.innerHTML = '';
     const slides = [...feed.querySelectorAll('.inv-disc-slide')];
     slides.forEach((s, i) => { s.dataset.vi = i; progressWrap.appendChild(document.createElement('i')); });

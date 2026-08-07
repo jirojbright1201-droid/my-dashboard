@@ -173,22 +173,12 @@
   display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
 .inv-disc-sum.open { -webkit-line-clamp: unset; overflow: visible; }
 /* margin-top:auto = หัวใจของ bottom-anchored: ดันกลุ่มปุ่มไปชิดขอบล่างสุดของ .inv-disc-body (เหนือ padding-bottom ที่กันไว้ให้ tabbar อยู่แล้ว) เสมอ ไม่ว่าเนื้อหาข้างบนจะสั้นหรือยาว — ถ้ากด "อ่านเพิ่ม" แล้วเนื้อหายาวจนล้น auto margin จะยุบเป็น 0 เอง ปุ่มก็ไหลตามเนื้อหาแล้วเลื่อนดูได้ตามปกติ (ไม่ต้องเขียน logic แยก) */
-.inv-disc-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.inv-disc-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 14px; }
 .inv-disc-more { background: none; border: none; padding: 0; font-size: 0.75rem; font-weight: 700; color: var(--accent); cursor: pointer; text-align: center; }
 .inv-disc-cta { display: flex; align-items: center; justify-content: center; gap: 6px;
   background: var(--accent); color: #fff; font-weight: 600; font-size: 0.8125rem; padding: 12px; border-radius: 9999px;
   text-decoration: none; box-shadow: 0 8px 18px -6px rgba(0,82,255,.4); transition: transform .1s, background .15s; }
 .inv-disc-cta:active { background: var(--accent-hover); transform: scale(.97); }
-
-/* วางไว้ที่ ~35% จากบนของ media (โซนที่ยังไม่โดน fade แตะเลย) ไม่ใช่ bottom:14px แบบเดิม — พอสลับ fade เป็นขาว (7 ส.ค. 2026) โซนล่างใกล้ขาวจนชิปขาวจางหายไปกับพื้น อ่านไม่ออก */
-.inv-disc-hint { position: absolute; right: 16px; top: 35%; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; color: #fff; background: rgba(255,255,255,.18);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-radius: 9999px; padding: 8px 10px;
-  animation: invDiscBob 1.8s ease-in-out infinite; }
-.inv-disc-hint svg { width: 16px; height: 16px; }
-.inv-disc-hint span { font-family: var(--mono); font-size: 0.5rem; letter-spacing: .06em; margin-top: 2px; display: block; }
-@keyframes invDiscBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
-@media (prefers-reduced-motion: reduce) { .inv-disc-hint { animation: none; } }
 
 .inv-disc-empty { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px; }
 .inv-disc-empty .t { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; color: var(--text); }
